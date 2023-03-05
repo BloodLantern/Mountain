@@ -19,12 +19,16 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\rendering\color.hpp" />
+    <ClInclude Include="include\rendering\draw.hpp" />
     <ClInclude Include="include\entity.hpp" />
-    <ClInclude Include="include\renderer.hpp" />
+    <ClInclude Include="include\rendering\renderer.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\rendering\color.cpp" />
+    <ClCompile Include="src\rendering\draw.cpp" />
     <ClCompile Include="src\entity.cpp" />
-    <ClCompile Include="src\renderer.cpp" />
+    <ClCompile Include="src\rendering\renderer.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -82,13 +86,13 @@
     <ExternalIncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);externals/include</ExternalIncludePath>
     <OutDir>$(SolutionDir)bin\</OutDir>
     <TargetName>mountaind</TargetName>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);include</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);include;include\rendering</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ExternalIncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);externals/include</ExternalIncludePath>
     <OutDir>$(SolutionDir)bin\</OutDir>
     <TargetName>mountain</TargetName>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);include</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);include;include\rendering</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
