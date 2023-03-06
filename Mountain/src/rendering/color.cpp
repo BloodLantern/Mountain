@@ -59,3 +59,23 @@ mountain::ColorHSV::operator mountain::Color() const
         return { v, p, q, a };
     }
 }
+
+mountain::Color mountain::operator+(const Color c1, const Color c2)
+{
+    return Color(
+        c1.r + c2.r > 0xFF ? 0xFF : c1.r + c2.r,
+        c1.g + c2.g > 0xFF ? 0xFF : c1.g + c2.g,
+        c1.b + c2.b > 0xFF ? 0xFF : c1.b + c2.b,
+        c1.a + c2.a > 0xFF ? 0xFF : c1.a + c2.a
+    );
+}
+
+mountain::Color mountain::operator*(const Color c1, const Color c2)
+{
+    return Color(
+        c1.r * c2.r > 0xFF ? 0xFF : c1.r * c2.r,
+        c1.g * c2.g > 0xFF ? 0xFF : c1.g * c2.g,
+        c1.b * c2.b > 0xFF ? 0xFF : c1.b * c2.b,
+        c1.a * c2.a > 0xFF ? 0xFF : c1.a * c2.a
+    );
+}

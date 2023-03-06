@@ -6,7 +6,7 @@
 mountain::Renderer* mountain::Renderer::sInstance = nullptr;
 
 mountain::Renderer::Renderer()
-    : Renderer(OpenGLVersion{ "#version 130", 3, 0 })
+    : Renderer(OpenGLVersion())
 {
 }
 
@@ -45,25 +45,17 @@ void mountain::Renderer::Initialize(const int windowWidth, const int windowHeigh
     glfwSwapInterval(vsync); // Enable vsync
 }
 
-void mountain::Renderer::MainLoop()
+void mountain::Renderer::PreFrame()
 {
-    while (!glfwWindowShouldClose(mWindow))
-    {
-        double t = glfwGetTime();
+    glfwPollEvents();
 
-        glfwPollEvents();
+    glClearColor(clearColor.r / 255.f, clearColor.g / 255.f, clearColor.b / 255.f, clearColor.a / 255.f);
+    glClear(GL_COLOR_BUFFER_BIT);
+}
 
-        glClearColor(0.45f, 0.55f, 0.60f, 1.00f);
-        glClear(GL_COLOR_BUFFER_BIT);
-
-        // Call user game loop
-        if (mUserGameLoop)
-            mUserGameLoop(mDeltaTime);
-
-        glfwSwapBuffers(mWindow);
-
-        mDeltaTime = (float) (glfwGetTime() - t);
-    }
+void mountain::Renderer::PostFrame()
+{
+    glfwSwapBuffers(mWindow);
 }
 
 void mountain::Renderer::Shutdown()

@@ -16,6 +16,9 @@ namespace mountain
         operator ColorHSV() const;
     };
 
+    Color operator+(const Color c1, const Color c2);
+    Color operator*(const Color c1, const Color c2);
+
     /// @brief The ColorHSV struct represents a color in HSVA color space.
     ///        It uses values from 0 to 255 (0xFF). The default alpha value is 255.
     struct ColorHSV

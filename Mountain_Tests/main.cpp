@@ -1,19 +1,11 @@
 #include <iostream>
 
-#include <renderer.hpp>
-
-void mainLoop(const double deltaTime);
+#include "game_example.hpp"
 
 int main(int, char*[])
 {
-	mountain::Renderer renderer;
-	renderer.Initialize();
-	renderer.BindUserGameLoop(mainLoop);
-	renderer.MainLoop();
-	renderer.Shutdown();
-}
-
-void mainLoop(const double deltaTime)
-{
-
+	test::GameExample game;
+	game.Initialize();
+	game.MainLoop();
+	game.Shutdown();
 }
