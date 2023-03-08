@@ -15,6 +15,8 @@ namespace mountain
         // You can't instantiate this class.
         Draw() = delete;
 
+        static void Points(const Vector2 positions[], const size_t count, const Color color);
+
         static void Line(const Vector2& p1, const Vector2& p2, const Color color);
 
         static void Rect(const Vector2& position, const Vector2& size, const Color color);

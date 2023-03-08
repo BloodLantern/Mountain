@@ -2,7 +2,16 @@
 
 #include <numbers>
 
-void mountain::Draw::Line(const Vector2& p1, const Vector2& p2, const Color color)
+void mountain::Draw::Points(const Vector2 positions[], const size_t count, const Color color)
+{
+    glBegin(GL_POINTS);
+    glColor4ub(color.r, color.g, color.b, color.a);
+    for (size_t i = 0; i < count; i++)
+        glVertex2f(positions[i].x, positions[i].y);
+    glEnd();
+}
+
+void mountain::Draw::Line(const Vector2 &p1, const Vector2 &p2, const Color color)
 {
     glBegin(GL_LINES);
     glColor4ub(color.r, color.g, color.b, color.a);
