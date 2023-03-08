@@ -20,6 +20,7 @@ namespace mountain
         inline float Right() const override { return mPosition.x + mSize.x; }
         inline float Top() const override { return mPosition.y; }
         inline float Bottom() const override { return mPosition.y + mSize.y; }
+        inline Vector2 Center() const override { return mPosition + mSize / 2; }
 
         Vector2 GetSize() const { return mSize; }
         void SetSize(const Vector2& size) { mSize = size; }

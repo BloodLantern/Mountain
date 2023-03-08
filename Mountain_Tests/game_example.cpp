@@ -7,7 +7,6 @@
 #include <draw.hpp>
 #include <entity.hpp>
 #include <iostream>
-#include <typeinfo>
 
 test::GameExample::GameExample(const char* const windowTitle)
 	: Game(windowTitle)
@@ -32,15 +31,21 @@ void test::GameExample::Shutdown()
 
 void ColliderCallback(mountain::Entity& entity, mountain::Entity& other)
 {
-	bool entityWall = typeid(entity) == typeid(test::Wall&), otherWall = typeid(other) == typeid(test::Wall&);
+	const bool entityWall = typeid(entity) == typeid(test::Wall&), otherWall = typeid(other) == typeid(test::Wall&);
 	if (entityWall && otherWall)
 		return;
 
-	const Vector2 distance = other.GetPosition() - entity.GetPosition();
+	const Vector2 direction = (other.GetCollider()->Center() - entity.GetCollider()->Center()).Normalize();
 	if (!entityWall)
-		dynamic_cast<test::Ball&>(entity).velocity = -distance.Normalize() * 10;
+	{
+		Vector2& vel = dynamic_cast<test::Ball&>(entity).velocity;
+		vel = -direction * vel.Norm();
+	}
 	if (!otherWall)
-		dynamic_cast<test::Ball&>(entity).velocity = distance.Normalize() * 10;
+	{
+		Vector2& vel = dynamic_cast<test::Ball&>(other).velocity;
+		vel = direction * vel.Norm();
+	}
 }
 
 void test::GameExample::Update()
@@ -61,7 +66,7 @@ void test::GameExample::Update()
 		ball->velocity = Vector2(350, 0);
 		mEntities.push_back(ball);
 		ballCount++;
-		ballTimer = 0.8f;
+		ballTimer = 0.05f;
 	}
 
 	mountain::Collide::CheckCollisions(colliders, ColliderCallback);

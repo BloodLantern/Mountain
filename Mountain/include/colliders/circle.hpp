@@ -22,6 +22,7 @@ namespace mountain
         inline float Right() const override { return mPosition.x + mRadius; }
         inline float Top() const override { return mPosition.y; }
         inline float Bottom() const override { return mPosition.y + mRadius; }
+        inline Vector2 Center() const override { return mPosition; }
 
     private:
         float mRadius = 0.f;

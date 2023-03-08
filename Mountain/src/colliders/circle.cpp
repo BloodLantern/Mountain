@@ -29,7 +29,7 @@ namespace mountain
 
     bool Circle::CheckCollision(const Circle& circle) const
     {
-        return circle.mPosition - mPosition < mRadius + circle.mRadius;
+        return (circle.mPosition - mPosition).Norm() < mRadius + circle.mRadius;
     }
 
     bool Circle::Intersect(const Vector2& p1, const Vector2& p2) const

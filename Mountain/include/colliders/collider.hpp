@@ -37,6 +37,7 @@ namespace mountain
         virtual inline float Right() const = 0;
         virtual inline float Top() const = 0;
         virtual inline float Bottom() const = 0;
+        virtual inline Vector2 Center() const = 0;
 
         Vector2 GetPosition() const { return mPosition; }
         void SetPosition(const Vector2& position) { mPosition = position; }
