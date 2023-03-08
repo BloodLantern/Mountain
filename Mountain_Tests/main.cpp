@@ -4,7 +4,7 @@
 
 int main(int, char*[])
 {
-	test::GameExample game;
+	test::GameExample game("Mountain tests");
 	game.Initialize();
 	game.MainLoop();
 	game.Shutdown();

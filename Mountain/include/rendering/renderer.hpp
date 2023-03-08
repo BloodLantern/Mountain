@@ -1,6 +1,7 @@
 #pragma once
 
 #include <GLFW/glfw3.h>
+#include <vector2i.hpp>
 
 #include "color.hpp"
 
@@ -18,13 +19,15 @@ namespace mountain
     public:
         static Renderer* sInstance;
 
-        bool pixelMode = false;
-        Color clearColor = Color(0x73, 0x8C, 0x99);
+        Vector2i resolution = Vector2i(1920, 1080);
+        Vector2i windowPosition;
+        Vector2i windowSize;
+        Colorf clearColor = Colorf(0.45f, 0.55f, 0.60f);
 
         Renderer();
         Renderer(OpenGLVersion glVersion);
 
-        void Initialize(const int windowWidth = 1280, const int windowHeight = 720, const bool vsync = true);
+        void Initialize(const char* const windowTitle, const int windowWidth = 1280, const int windowHeight = 720, const bool vsync = true);
         void PreFrame();
         void PostFrame();
         void Shutdown();
@@ -38,5 +41,7 @@ namespace mountain
     private:
         GLFWwindow* mWindow = nullptr;
         OpenGLVersion mGlVersion;
+
+        void UpdateWindowFields();
     };
 }

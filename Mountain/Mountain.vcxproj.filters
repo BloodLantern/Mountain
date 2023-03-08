@@ -30,6 +30,18 @@
     <ClInclude Include="include\game.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\colliders\circle.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\colliders\collide.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\colliders\collider.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\colliders\hitbox.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\entity.cpp">
@@ -45,6 +57,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\colliders\circle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\colliders\collide.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\colliders\collider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\colliders\hitbox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

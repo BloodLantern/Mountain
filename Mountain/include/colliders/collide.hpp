@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "colliders/collider.hpp"
+#include "collider.hpp"
 #include "entity.hpp"
 
 namespace mountain

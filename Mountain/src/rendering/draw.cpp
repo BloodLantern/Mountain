@@ -1,9 +1,8 @@
 #include "draw.hpp"
 
-#include <GLFW/glfw3.h>
 #include <numbers>
 
-void mountain::Draw::DrawLine(const Vector2 p1, const Vector2 p2, const Color color)
+void mountain::Draw::Line(const Vector2& p1, const Vector2& p2, const Color color)
 {
     glBegin(GL_LINES);
     glColor4ub(color.r, color.g, color.b, color.a);
@@ -12,7 +11,7 @@ void mountain::Draw::DrawLine(const Vector2 p1, const Vector2 p2, const Color co
     glEnd();
 }
 
-void mountain::Draw::DrawRect(const Vector2 position, const Vector2 size, const Color color)
+void mountain::Draw::Rect(const Vector2& position, const Vector2& size, const Color color)
 {
     glBegin(GL_LINE_LOOP);
     glColor4ub(color.r, color.g, color.b, color.a);
@@ -23,10 +22,9 @@ void mountain::Draw::DrawRect(const Vector2 position, const Vector2 size, const 
     glEnd();
 }
 
-void mountain::Draw::DrawRectFilled(const Vector2 position, const Vector2 size, const Color color)
+void mountain::Draw::RectFilled(const Vector2& position, const Vector2& size, const Color color)
 {
     glBegin(GL_QUADS);
-    printf("%f %f %f %f\n", position.x, position.y, size.x, size.y);
     glColor4ub(color.r, color.g, color.b, color.a);
     glVertex2f(position.x, position.y);
     glVertex2f(position.x + size.x, position.y);
@@ -35,11 +33,24 @@ void mountain::Draw::DrawRectFilled(const Vector2 position, const Vector2 size, 
     glEnd();
 }
 
-void mountain::Draw::DrawCircle(const Vector2 position, const float radius, const Color color, const unsigned int segments)
+void mountain::Draw::Circle(const Vector2& position, const float radius, const Color color, unsigned int segments)
 {
+    CircleInternal(position, radius, color, segments);
+}
+
+void mountain::Draw::CircleFilled(const Vector2 &position, const float radius, const Color color, unsigned int segments)
+{
+    CircleInternal(position, radius, color, segments, GL_POLYGON);
+}
+
+void mountain::Draw::CircleInternal(const Vector2 &position, const float radius, const Color color, unsigned int segments, const GLenum mode)
+{
+    if (segments == 0)
+        segments = 30;
+
     assert(segments >= 2 && "Cannot draw a circle with less than 2 segments");
 
-    glBegin(GL_LINE_LOOP);
+    glBegin(mode);
     glColor4ub(color.r, color.g, color.b, color.a);
     const float angle = 2 * (float) std::numbers::pi / segments;
     for (unsigned int i = 0; i < segments; i++)

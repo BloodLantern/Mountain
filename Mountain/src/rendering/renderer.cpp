@@ -19,7 +19,7 @@ mountain::Renderer::Renderer(OpenGLVersion glVersion)
         assert(false && "Renderer is a singleton.");
 }
 
-void mountain::Renderer::Initialize(const int windowWidth, const int windowHeight, const bool vsync)
+void mountain::Renderer::Initialize(const char* const windowTitle, const int windowWidth, const int windowHeight, const bool vsync)
 {
     // Setup GLFW
     glfwSetErrorCallback(
@@ -37,20 +37,26 @@ void mountain::Renderer::Initialize(const int windowWidth, const int windowHeigh
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, mGlVersion.minor);
 
     // Create window with graphics context
-    mWindow = glfwCreateWindow(windowWidth, windowHeight, "Celeste", NULL, NULL);
+    mWindow = glfwCreateWindow(windowWidth, windowHeight, windowTitle, NULL, NULL);
     if (mWindow == NULL)
         assert(false && "Failed to create GLFW window.");
 
     glfwMakeContextCurrent(mWindow);
     glfwSwapInterval(vsync); // Enable vsync
+
+    UpdateWindowFields();
 }
 
 void mountain::Renderer::PreFrame()
 {
     glfwPollEvents();
 
-    glClearColor(clearColor.r / 255.f, clearColor.g / 255.f, clearColor.b / 255.f, clearColor.a / 255.f);
+    glClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
     glClear(GL_COLOR_BUFFER_BIT);
+
+    UpdateWindowFields();
+
+    MakeOpenGLCoordinatesAbsolute(windowPosition.x, windowPosition.y, windowSize.x, windowSize.y);
 }
 
 void mountain::Renderer::PostFrame()
@@ -64,14 +70,23 @@ void mountain::Renderer::Shutdown()
     glfwTerminate();
 }
 
-void mountain::Renderer::MakeOpenGLCoordinatesAbsolute(const int windowX, const int windowY, const int windowWidth, const int windowHeight)
+void mountain::Renderer::MakeOpenGLCoordinatesAbsolute(const int, const int, const int windowWidth, const int windowHeight)
 {
-    glViewport(windowX, windowY, windowWidth, windowHeight);
+    //glViewport(windowX, windowY, windowWidth, windowHeight);
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glOrtho(windowX, windowX + windowWidth, windowY, windowY + windowHeight, -1, 1);
+    glOrtho(0, windowWidth, windowHeight, 0, 0, 1);
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
+}
+
+void mountain::Renderer::UpdateWindowFields()
+{
+    int windowX, windowY, windowW, windowH;
+    glfwGetWindowPos(mWindow, &windowX, &windowY);
+    glfwGetWindowSize(mWindow, &windowW, &windowH);
+    windowPosition = Vector2i(windowX, windowY);
+    windowSize = Vector2i(windowW, windowH);
 }

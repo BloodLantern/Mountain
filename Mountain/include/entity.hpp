@@ -15,9 +15,10 @@ namespace mountain
         virtual void Update(const float deltaTime) = 0;
         virtual void Draw() = 0;
 
-        const Vector2& GetPosition() const { return mPosition; }
+        Vector2 GetPosition() const { return mPosition; }
+        Vector2& GetPosition() { return mPosition; }
         void SetPosition(const Vector2& position) { mPosition = position; }
-        const Collider* GetCollider() const { return mCollider; }
+        Collider* GetCollider() const { return mCollider; }
         void SetCollider(Collider& collider) { mCollider = &collider; }
 
     protected:

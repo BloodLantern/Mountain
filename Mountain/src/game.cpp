@@ -1,8 +1,8 @@
 #include "game.hpp"
 
-mountain::Game::Game()
+mountain::Game::Game(const char* const windowTitle, const int windowWidth, const int windowHeight)
 {
-    mRenderer.Initialize();
+    mRenderer.Initialize(windowTitle, windowWidth, windowHeight);
 }
 
 mountain::Game::~Game()

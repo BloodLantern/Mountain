@@ -19,6 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\colliders\circle.hpp" />
+    <ClInclude Include="include\colliders\collide.hpp" />
+    <ClInclude Include="include\colliders\collider.hpp" />
+    <ClInclude Include="include\colliders\hitbox.hpp" />
     <ClInclude Include="include\game.hpp" />
     <ClInclude Include="include\rendering\color.hpp" />
     <ClInclude Include="include\rendering\draw.hpp" />
@@ -26,6 +30,10 @@
     <ClInclude Include="include\rendering\renderer.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\colliders\circle.cpp" />
+    <ClCompile Include="src\colliders\collide.cpp" />
+    <ClCompile Include="src\colliders\collider.cpp" />
+    <ClCompile Include="src\colliders\hitbox.cpp" />
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\rendering\color.cpp" />
     <ClCompile Include="src\rendering\draw.cpp" />
@@ -88,13 +96,13 @@
     <ExternalIncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);externals/include</ExternalIncludePath>
     <OutDir>$(SolutionDir)bin\</OutDir>
     <TargetName>mountaind</TargetName>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);include;include\rendering</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);include;include\rendering;include\colliders</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ExternalIncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);externals/include</ExternalIncludePath>
     <OutDir>$(SolutionDir)bin\</OutDir>
     <TargetName>mountain</TargetName>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);include;include\rendering</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);include;include\rendering;include\colliders</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -147,7 +155,7 @@
       <TreatLibWarningAsErrors>true</TreatLibWarningAsErrors>
     </Lib>
     <PostBuildEvent>
-      <Command>copy /d /y "$(ProjectDir)include\*" "$(OutDir)include"</Command>
+      <Command>for /f "tokens=*" %%a in ('dir /b /s /a-d $(ProjectDir)include') do @copy /y %%a $(OutDir)include</Command>
     </PostBuildEvent>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -179,7 +187,7 @@
       <TreatLibWarningAsErrors>true</TreatLibWarningAsErrors>
     </Lib>
     <PostBuildEvent>
-      <Command>copy /d /y "$(ProjectDir)include\*" "$(OutDir)include"</Command>
+      <Command>for /f "tokens=*" %%a in ('dir /b /s /a-d $(ProjectDir)include') do @copy /y %%a $(OutDir)include</Command>
     </PostBuildEvent>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>

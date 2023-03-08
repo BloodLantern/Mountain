@@ -21,9 +21,21 @@
     <ClCompile Include="game_example.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ball.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="wall.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game_example.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ball.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="wall.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

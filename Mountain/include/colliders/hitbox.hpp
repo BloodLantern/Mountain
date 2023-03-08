@@ -1,6 +1,6 @@
 #pragma once
 
-#include "colliders/collider.hpp"
+#include "collider.hpp"
 
 namespace mountain
 {

@@ -79,3 +79,13 @@ mountain::Color mountain::operator*(const Color c1, const Color c2)
         c1.a * c2.a > 0xFF ? 0xFF : c1.a * c2.a
     );
 }
+
+mountain::Colorf::operator mountain::Color() const
+{
+    return Color((unsigned char) r * 255, (unsigned char) g * 255, (unsigned char) b * 255, (unsigned char) a * 255);
+}
+
+mountain::Color::operator mountain::Colorf() const
+{
+    return Colorf(r / 255.f, g / 255.f, b / 255.f, a / 255.f);
+}
