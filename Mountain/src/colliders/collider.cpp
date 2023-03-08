@@ -1,9 +1,9 @@
-#include "colliders/collider.hpp"
+#include "collider.hpp"
 
 #include <cassert>
 
-#include "colliders/hitbox.hpp"
-#include "colliders/circle.hpp"
+#include "hitbox.hpp"
+#include "circle.hpp"
 
 namespace mountain
 {

@@ -1,7 +1,7 @@
-#include "colliders/hitbox.hpp"
+#include "hitbox.hpp"
 
 #include "draw.hpp"
-#include "colliders/circle.hpp"
+#include "circle.hpp"
 
 namespace mountain
 {
