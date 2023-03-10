@@ -10,9 +10,9 @@ namespace mountain
         float Radius = 0.f;
 
         Circle() { Type = ColliderType::CIRCLE; }
-        Circle(const Vector2& position, const float& radius);
+        Circle(const Vector2& position, const float radius);
 
-        void Draw(Color color) const override;
+        void Draw(const Color& color) const override;
 
         bool CheckCollision(const Vector2& point) const override;
         bool CheckCollision(const Hitbox& hitbox) const override;
