@@ -12,7 +12,7 @@ namespace mountain
         Hitbox() { Type = ColliderType::HITBOX; }
         Hitbox(const Vector2& position, const Vector2& size);
 
-        void Draw(const Color& color) const override;
+        void Draw(const Color color) const override;
 
         bool CheckCollision(const Vector2& point) const override;
         bool CheckCollision(const Hitbox& hitbox) const override;

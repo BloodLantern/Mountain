@@ -29,7 +29,7 @@ namespace mountain
         Collider(const Vector2& position);
         virtual ~Collider() {}
 
-        virtual void Draw(const Color& color) const = 0;
+        virtual void Draw(const Color color) const = 0;
 
         bool CheckCollision(const Entity& entity) const { return CheckCollision(*entity.Collider); };
         bool CheckCollision(const Collider& collider) const;

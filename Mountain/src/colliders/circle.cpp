@@ -11,7 +11,7 @@ mountain::Circle::Circle(const Vector2& position, const float radius)
     Type = ColliderType::CIRCLE;
 }
 
-void mountain::Circle::Draw(const Color& color) const
+void mountain::Circle::Draw(const Color color) const
 {
     Draw::Circle(Position, Radius, color);
 }
