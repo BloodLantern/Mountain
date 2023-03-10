@@ -19,6 +19,7 @@ namespace mountain
     public:
         static Renderer* sInstance;
 
+        Vector2 ScreenOrigin = 0;
         Vector2i Resolution = Vector2i(1920, 1080);
         Vector2i WindowPosition;
         Vector2i WindowSize;
