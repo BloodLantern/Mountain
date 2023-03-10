@@ -42,5 +42,8 @@ namespace mountain
         virtual inline float Top() const = 0;
         virtual inline float Bottom() const = 0;
         virtual inline Vector2 Center() const = 0;
+        virtual inline float Width() const { return Right() - Left(); }
+        virtual inline float Height() const { return Bottom() - Top(); }
+        virtual inline Vector2 Size() const { return Vector2(Width(), Height()); }
     };
 }
