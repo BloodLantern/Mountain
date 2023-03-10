@@ -2,21 +2,21 @@
 
 mountain::Game::Game(const char* const windowTitle, const int windowWidth, const int windowHeight)
 {
-    mRenderer.Initialize(windowTitle, windowWidth, windowHeight);
+    Renderer.Initialize(windowTitle, windowWidth, windowHeight);
 }
 
 mountain::Game::~Game()
 {
-    mRenderer.Shutdown();
+    Renderer.Shutdown();
 }
 
 void mountain::Game::MainLoop()
 {
-    while (!glfwWindowShouldClose(mRenderer.GetWindow()))
+    while (!glfwWindowShouldClose(Renderer.GetWindow()))
     {
         double t = glfwGetTime();
 
-        mRenderer.PreFrame();
+        Renderer.PreFrame();
         PreRender();
 
         // Call game loop
@@ -24,8 +24,8 @@ void mountain::Game::MainLoop()
         Render();
 
         PostRender();
-        mRenderer.PostFrame();
+        Renderer.PostFrame();
 
-        mDeltaTime = (float) (glfwGetTime() - t);
+        DeltaTime = (float) (glfwGetTime() - t);
     }
 }

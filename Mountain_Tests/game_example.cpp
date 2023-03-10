@@ -17,16 +17,16 @@ void test::GameExample::Initialize()
 {
 	ballCount = 0;
 
-	mEntities.push_back((mountain::Entity*) new Wall(Vector2(0, 0), Vector2(100, (float) mRenderer.windowSize.y)));
-	mEntities.push_back((mountain::Entity*) new Wall(Vector2((float) mRenderer.windowSize.x - 100, 0), Vector2(100, (float) mRenderer.windowSize.y)));
-	mEntities.push_back((mountain::Entity*) new Wall(Vector2(0, (float) mRenderer.windowSize.y - 100), Vector2((float) mRenderer.windowSize.x, 100)));
+	Entities.push_back((mountain::Entity*) new Wall(Vector2(0, 0), Vector2(100, (float) mRenderer.WindowSize.y)));
+	Entities.push_back((mountain::Entity*) new Wall(Vector2((float) mRenderer.WindowSize.x - 100, 0), Vector2(100, (float) mRenderer.WindowSize.y)));
+	Entities.push_back((mountain::Entity*) new Wall(Vector2(0, (float) mRenderer.WindowSize.y - 100), Vector2((float) mRenderer.WindowSize.x, 100)));
 }
 
 void test::GameExample::Shutdown()
 {
-	for (std::vector<mountain::Entity*>::iterator it = mEntities.begin(); it != mEntities.end(); it++)
+	for (std::vector<mountain::Entity*>::iterator it = Entities.begin(); it != Entities.end(); it++)
 		delete* it;
-	mEntities.clear();
+	Entities.clear();
 }
 
 void ColliderCallback(mountain::Entity& entity, mountain::Entity& other)
@@ -50,21 +50,21 @@ void ColliderCallback(mountain::Entity& entity, mountain::Entity& other)
 
 void test::GameExample::Update()
 {
-	std::vector<const mountain::Collider*> colliders(mEntities.size());
-	for (std::vector<mountain::Entity*>::iterator it = mEntities.begin(); it != mEntities.end(); it++)
+	std::vector<const mountain::Collider*> colliders(Entities.size());
+	for (std::vector<mountain::Entity*>::iterator it = Entities.begin(); it != Entities.end(); it++)
 	{
 		colliders.push_back((*it)->Collider);
-		(*it)->Update(mDeltaTime);
+		(*it)->Update(DeltaTime);
 	}
 
-	ballTimer -= mDeltaTime;
+	ballTimer -= DeltaTime;
 
 	if (ballCount < 2000 && ballTimer <= 0)
 	{
 		lastBallColor.h++;
 		Ball* ball = new Ball(Vector2(150, 150), lastBallColor);
 		ball->velocity = Vector2(350, 0);
-		mEntities.push_back(ball);
+		Entities.push_back(ball);
 		ballCount++;
 		ballTimer = 0.05f;
 	}
@@ -74,6 +74,6 @@ void test::GameExample::Update()
 
 void test::GameExample::Render()
 {
-	for (std::vector<mountain::Entity*>::iterator it = mEntities.begin(); it != mEntities.end(); it++)
+	for (std::vector<mountain::Entity*>::iterator it = Entities.begin(); it != Entities.end(); it++)
 		(*it)->Draw();
 }

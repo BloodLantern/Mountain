@@ -9,7 +9,7 @@ namespace mountain
 {
     struct OpenGLVersion
     {
-        const char* glsl = "#version 130";
+        const char* const glsl = "#version 130";
         int major = 3;
         int minor = 0;
     };
@@ -19,10 +19,10 @@ namespace mountain
     public:
         static Renderer* sInstance;
 
-        Vector2i resolution = Vector2i(1920, 1080);
-        Vector2i windowPosition;
-        Vector2i windowSize;
-        Colorf clearColor = Colorf(0.45f, 0.55f, 0.60f);
+        Vector2i Resolution = Vector2i(1920, 1080);
+        Vector2i WindowPosition;
+        Vector2i WindowSize;
+        Colorf ClearColor = Colorf(0.45f, 0.55f, 0.60f);
 
         Renderer();
         Renderer(OpenGLVersion glVersion);

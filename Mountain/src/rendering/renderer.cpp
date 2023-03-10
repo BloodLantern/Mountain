@@ -51,12 +51,12 @@ void mountain::Renderer::PreFrame()
 {
     glfwPollEvents();
 
-    glClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
+    glClearColor(ClearColor.r, ClearColor.g, ClearColor.b, ClearColor.a);
     glClear(GL_COLOR_BUFFER_BIT);
 
     UpdateWindowFields();
 
-    MakeOpenGLCoordinatesAbsolute(windowPosition.x, windowPosition.y, windowSize.x, windowSize.y);
+    MakeOpenGLCoordinatesAbsolute(WindowPosition.x, WindowPosition.y, WindowSize.x, WindowSize.y);
 }
 
 void mountain::Renderer::PostFrame()
@@ -87,6 +87,6 @@ void mountain::Renderer::UpdateWindowFields()
     int windowX, windowY, windowW, windowH;
     glfwGetWindowPos(mWindow, &windowX, &windowY);
     glfwGetWindowSize(mWindow, &windowW, &windowH);
-    windowPosition = Vector2i(windowX, windowY);
-    windowSize = Vector2i(windowW, windowH);
+    WindowPosition = Vector2i(windowX, windowY);
+    WindowSize = Vector2i(windowW, windowH);
 }
