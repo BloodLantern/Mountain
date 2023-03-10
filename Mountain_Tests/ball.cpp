@@ -7,19 +7,19 @@
 test::Ball::Ball(const Vector2& position, const mountain::Color color)
 	: Entity(position), color(color)
 {
-	mCollider = new mountain::Circle(0, 3);
-	mCollider->SetEntity(this);
+	Collider = new mountain::Circle(0, 3);
+	Collider->SetEntity(this);
 }
 
 void test::Ball::Update(const float deltaTime)
 {
-	mPosition += velocity * deltaTime;
+	Position += velocity * deltaTime;
 	velocity.y += 100 * deltaTime;
 
-	mCollider->SetPosition(mPosition);
+	Collider->SetPosition(Position);
 }
 
 void test::Ball::Draw()
 {
-	mountain::Draw::CircleFilled(mPosition, 3, color);
+	mountain::Draw::CircleFilled(Position, 3, color);
 }

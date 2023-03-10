@@ -17,11 +17,13 @@ void mountain::Game::MainLoop()
         double t = glfwGetTime();
 
         mRenderer.PreFrame();
+        PreRender();
 
         // Call game loop
         Update();
         Render();
 
+        PostRender();
         mRenderer.PostFrame();
 
         mDeltaTime = (float) (glfwGetTime() - t);

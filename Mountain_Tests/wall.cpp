@@ -6,8 +6,8 @@
 test::Wall::Wall(const Vector2& position, const Vector2& size)
 	: Entity(position), mSize(size)
 {
-	mCollider = new mountain::Hitbox(position, size);
-	mCollider->SetEntity(this);
+	Collider = new mountain::Hitbox(position, size);
+	Collider->SetEntity(this);
 }
 
 void test::Wall::Update(const float)
@@ -16,5 +16,5 @@ void test::Wall::Update(const float)
 
 void test::Wall::Draw()
 {
-	mountain::Draw::RectFilled(mPosition, mSize, mountain::ColorGray);
+	mountain::Draw::RectFilled(Position, mSize, mountain::ColorGray);
 }

@@ -37,7 +37,7 @@ void mountain::Collide::CheckCollisions(const std::vector<const Collider *> &col
                     continue;
 
                 if (CheckCollision(*collider, *other))
-                    callback(*collider->GetEntity(), *other->GetEntity());
+                    callback(*collider->Owner, *other->Owner);
             }
     }
 }

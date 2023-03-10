@@ -17,6 +17,9 @@ namespace mountain
         void MainLoop();
         virtual void Shutdown() {}
 
+        virtual void PreRender() {}
+        virtual void PostRender() {}
+
         virtual void Update() = 0;
         virtual void Render() = 0;
 

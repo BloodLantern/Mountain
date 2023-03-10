@@ -21,13 +21,17 @@ namespace mountain
     class Collider
     {
     public:
+        Vector2 Position;
+        Entity* Owner = nullptr;
+        ColliderType Type = ColliderType::NONE;
+
         Collider() {};
         Collider(const Vector2& position);
         virtual ~Collider() {}
 
         virtual void Draw(Color color) const = 0;
 
-        bool CheckCollision(const Entity& entity) const { return CheckCollision(*entity.GetCollider()); };
+        bool CheckCollision(const Entity& entity) const { return CheckCollision(*entity.Collider); };
         bool CheckCollision(const Collider& collider) const;
         virtual bool CheckCollision(const Vector2& point) const = 0;
         virtual bool CheckCollision(const Hitbox& hitbox) const = 0;
@@ -38,17 +42,5 @@ namespace mountain
         virtual inline float Top() const = 0;
         virtual inline float Bottom() const = 0;
         virtual inline Vector2 Center() const = 0;
-
-        Vector2 GetPosition() const { return mPosition; }
-        void SetPosition(const Vector2& position) { mPosition = position; }
-        ColliderType GetType() const { return mType; }
-        void SetType(const ColliderType type) { mType = type; }
-        Entity* GetEntity() const { return mEntity; }
-        void SetEntity(Entity* entity) { mEntity = entity; }
-
-    protected:
-        Vector2 mPosition;
-        Entity* mEntity = nullptr;
-        ColliderType mType = ColliderType::NONE;
     };
 }

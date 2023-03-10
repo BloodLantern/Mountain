@@ -8,15 +8,15 @@
 namespace mountain
 {
     Collider::Collider(const Vector2& position)
-        : mPosition(position)
+        : Position(position)
     {
     }
 
     bool Collider::CheckCollision(const Collider& collider) const
     {
-        assert(collider.mType != ColliderType::NONE && "Invalid collider type in collision check.");
+        assert(collider.Type != ColliderType::NONE && "Invalid collider type in collision check.");
 
-        switch(collider.mType)
+        switch(collider.Type)
         {
             case ColliderType::HITBOX:
                 return CheckCollision(dynamic_cast<const Hitbox&>(collider));

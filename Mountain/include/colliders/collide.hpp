@@ -20,7 +20,7 @@ namespace mountain
         static std::pair<bool, Vector2> LinesIntersect(const Vector2& p1, const Vector2& p2, const Vector2& p3, const Vector2& p4);
         
         static bool CheckCollision(const Collider& a, const Collider& b) { return a.CheckCollision(b); }
-        static bool CheckCollision(const Entity& a, const Entity& b) { return CheckCollision(*a.GetCollider(), *b.GetCollider()); }
+        static bool CheckCollision(const Entity& a, const Entity& b) { return CheckCollision(*a.Collider, *b.Collider); }
 
         static void CheckCollisions(const std::vector<const Collider*>& colliders, ColliderHitCallback callback);
     };

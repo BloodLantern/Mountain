@@ -7,7 +7,7 @@ namespace mountain
     class Hitbox : public Collider
     {
     public:
-        Hitbox() { mType = ColliderType::HITBOX; }
+        Hitbox() { Type = ColliderType::HITBOX; }
         Hitbox(const Vector2& position, const Vector2& size);
 
         void Draw(Color color) const override;
@@ -16,11 +16,11 @@ namespace mountain
         bool CheckCollision(const Hitbox& hitbox) const override;
         bool CheckCollision(const Circle& circle) const override;
 
-        inline float Left() const override { return mPosition.x; }
-        inline float Right() const override { return mPosition.x + mSize.x; }
-        inline float Top() const override { return mPosition.y; }
-        inline float Bottom() const override { return mPosition.y + mSize.y; }
-        inline Vector2 Center() const override { return mPosition + mSize / 2; }
+        inline float Left() const override { return Position.x; }
+        inline float Right() const override { return Position.x + mSize.x; }
+        inline float Top() const override { return Position.y; }
+        inline float Bottom() const override { return Position.y + mSize.y; }
+        inline Vector2 Center() const override { return Position + mSize / 2; }
 
         Vector2 GetSize() const { return mSize; }
         void SetSize(const Vector2& size) { mSize = size; }

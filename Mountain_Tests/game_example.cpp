@@ -35,7 +35,7 @@ void ColliderCallback(mountain::Entity& entity, mountain::Entity& other)
 	if (entityWall && otherWall)
 		return;
 
-	const Vector2 direction = (other.GetCollider()->Center() - entity.GetCollider()->Center()).Normalize();
+	const Vector2 direction = (other.Collider->Center() - entity.Collider->Center()).Normalize();
 	if (!entityWall)
 	{
 		Vector2& vel = dynamic_cast<test::Ball&>(entity).velocity;
@@ -53,7 +53,7 @@ void test::GameExample::Update()
 	std::vector<const mountain::Collider*> colliders(mEntities.size());
 	for (std::vector<mountain::Entity*>::iterator it = mEntities.begin(); it != mEntities.end(); it++)
 	{
-		colliders.push_back((*it)->GetCollider());
+		colliders.push_back((*it)->Collider);
 		(*it)->Update(mDeltaTime);
 	}
 

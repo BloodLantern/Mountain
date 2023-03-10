@@ -7,7 +7,7 @@ namespace mountain
     class Circle : public Collider
     {
     public:
-        Circle() { mType = ColliderType::CIRCLE; }
+        Circle() { Type = ColliderType::CIRCLE; }
         Circle(const Vector2& position, const float& radius);
 
         void Draw(Color color) const override;
@@ -18,11 +18,11 @@ namespace mountain
 
         bool Intersect(const Vector2& p1, const Vector2& p2) const;
 
-        inline float Left() const override { return mPosition.x; }
-        inline float Right() const override { return mPosition.x + mRadius; }
-        inline float Top() const override { return mPosition.y; }
-        inline float Bottom() const override { return mPosition.y + mRadius; }
-        inline Vector2 Center() const override { return mPosition; }
+        inline float Left() const override { return Position.x; }
+        inline float Right() const override { return Position.x + mRadius; }
+        inline float Top() const override { return Position.y; }
+        inline float Bottom() const override { return Position.y + mRadius; }
+        inline Vector2 Center() const override { return Position; }
 
     private:
         float mRadius = 0.f;

@@ -8,12 +8,12 @@ namespace mountain
     Hitbox::Hitbox(const Vector2 &position, const Vector2& size)
         : Collider(position), mSize(size)
     {
-        mType = ColliderType::HITBOX;
+        Type = ColliderType::HITBOX;
     }
 
     void Hitbox::Draw(Color color) const
     {
-        Draw::Rect(mPosition, mPosition + mSize, color);
+        Draw::Rect(Position, Position + mSize, color);
     }
 
     bool Hitbox::CheckCollision(const Vector2& point) const
@@ -24,7 +24,7 @@ namespace mountain
 
     bool Hitbox::CheckCollision(const Hitbox& hitbox) const
     {
-        Vector2 position = hitbox.mPosition, size = hitbox.mSize;
+        Vector2 position = hitbox.Position, size = hitbox.mSize;
 
         // Check for a collision with any of the hitbox's corners
         if (CheckCollision(position) // Top left
@@ -40,13 +40,13 @@ namespace mountain
 
     bool Hitbox::CheckCollision(const Circle& circle) const
     {
-        if (CheckCollision(circle.GetPosition()))
+        if (CheckCollision(circle.Position))
             return true;
 
-        const Vector2& topLeft = mPosition;
-        const Vector2 topRight(mPosition.x + mSize.x, mPosition.y),
-            bottomLeft(mPosition.x, mPosition.y + mSize.y),
-            bottomRight(mPosition.x + mSize.x, mPosition.y + mSize.y);
+        const Vector2& topLeft = Position;
+        const Vector2 topRight(Position.x + mSize.x, Position.y),
+            bottomLeft(Position.x, Position.y + mSize.y),
+            bottomRight(Position.x + mSize.x, Position.y + mSize.y);
             
         return circle.Intersect(topLeft, topRight)
             || circle.Intersect(topRight, bottomRight)
