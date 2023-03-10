@@ -8,10 +8,11 @@ namespace test
 	class Ball : public mountain::Entity
 	{
 	public:
-		Vector2 velocity;
-		mountain::Color color;
+		Vector2 Velocity;
+		mountain::Color Color;
+		bool Collides = true;
 
-		Ball(const Vector2& position, const mountain::Color color);
+		Ball(const Vector2& position, const mountain::Color color, const float radius = 3);
 
 		// Inherited via Entity
 		virtual void Update(const float deltaTime) override;

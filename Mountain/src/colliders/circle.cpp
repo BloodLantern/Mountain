@@ -34,9 +34,18 @@ bool mountain::Circle::CheckCollision(const Circle& circle) const
 
 bool mountain::Circle::Intersect(const Vector2& p1, const Vector2& p2) const
 {
-    Vector2 centerProjection = Vector2::DotProduct(p1, (p2 - p1).Normalize()) * p1 + p1;
+    // Code from: https://stackoverflow.com/questions/67116296/is-this-code-for-determining-if-a-circle-and-line-segment-intersects-correct
 
-    if (centerProjection >= p1 && centerProjection <= p2)
-        return (centerProjection - Position).SquaredNorm() <= SQ(Radius);
-    return false;
+    float x_linear = p2.x - p1.x;
+    float x_constant = p1.x - Position.x;
+    float y_linear = p2.y - p1.y;
+    float y_constant = p1.y - Position.y;
+    float a = x_linear * x_linear + y_linear * y_linear;
+    float half_b = x_linear * x_constant + y_linear * y_constant;
+    float c = x_constant * x_constant + y_constant * y_constant - SQ(Radius);
+    return (
+        half_b * half_b >= a * c &&
+        (-half_b <= a || c + half_b + half_b + a <= 0) &&
+        (half_b <= 0 || c <= 0)
+    );
 }

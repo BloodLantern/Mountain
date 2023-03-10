@@ -1,12 +1,15 @@
 #pragma once
 
 #include <entity.hpp>
+#include <color.hpp>
 
 namespace test
 {
-	class Wall : mountain::Entity
+	class Wall : public mountain::Entity
 	{
 	public:
+		mountain::Color Color = mountain::ColorGray;
+
 		Wall(const Vector2& position, const Vector2& size);
 
 		// Inherited via Entity
