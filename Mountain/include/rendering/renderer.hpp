@@ -9,7 +9,7 @@ namespace mountain
 {
     struct OpenGLVersion
     {
-        const char* const glsl = "#version 130";
+        const char* glsl = "#version 130";
         int major = 3;
         int minor = 0;
     };
@@ -17,32 +17,28 @@ namespace mountain
     class Renderer
     {
     public:
-        static Renderer* sInstance;
+        static Vector2 ScreenOrigin;
+        static Vector2i Resolution;
+        static Vector2i WindowPosition;
+        static Vector2i WindowSize;
+        static Colorf ClearColor;
 
-        Vector2 ScreenOrigin = 0;
-        Vector2i Resolution = Vector2i(1920, 1080);
-        Vector2i WindowPosition;
-        Vector2i WindowSize;
-        Colorf ClearColor = Colorf(0.45f, 0.55f, 0.60f);
+        static void Initialize(const char* const windowTitle,
+            const int windowWidth = 1280, const int windowHeight = 720,
+            const bool vsync = true, const OpenGLVersion& glVersion = OpenGLVersion());
+        static void PreFrame();
+        static void PostFrame();
+        static void Shutdown();
 
-        Renderer();
-        Renderer(OpenGLVersion glVersion);
+        static void MakeOpenGLCoordinatesAbsolute(const int windowWidth, const int windowHeight);
 
-        void Initialize(const char* const windowTitle, const int windowWidth = 1280, const int windowHeight = 720, const bool vsync = true);
-        void PreFrame();
-        void PostFrame();
-        void Shutdown();
-
-        void MakeOpenGLCoordinatesAbsolute(const int windowX, const int windowY, const int windowWidth, const int windowHeight);
-
-        GLFWwindow* GetWindow() { return mWindow; }
-        OpenGLVersion GetOpenGLVersion() const { return mGlVersion; }
-        OpenGLVersion& GetOpenGLVersion() { return mGlVersion; }
+        static GLFWwindow* GetWindow() { return mWindow; }
+        static OpenGLVersion& GetOpenGLVersion() { return mGlVersion; }
 
     private:
-        GLFWwindow* mWindow = nullptr;
-        OpenGLVersion mGlVersion;
+        static GLFWwindow* mWindow;
+        static OpenGLVersion mGlVersion;
 
-        void UpdateWindowFields();
+        static void UpdateWindowFields();
     };
 }

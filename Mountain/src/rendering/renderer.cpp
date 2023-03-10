@@ -3,24 +3,18 @@
 #include <iostream>
 #include <cassert>
 
-mountain::Renderer* mountain::Renderer::sInstance = nullptr;
+Vector2 mountain::Renderer::ScreenOrigin = 0;
+Vector2i mountain::Renderer::Resolution = Vector2i(1920, 1080);
+Vector2i mountain::Renderer::WindowPosition;
+Vector2i mountain::Renderer::WindowSize;
+mountain::Colorf mountain::Renderer::ClearColor = Colorf(0.45f, 0.55f, 0.60f);
+GLFWwindow* mountain::Renderer::mWindow = nullptr;
+mountain::OpenGLVersion mountain::Renderer::mGlVersion;
 
-mountain::Renderer::Renderer()
-    : Renderer(OpenGLVersion())
+void mountain::Renderer::Initialize(const char* const windowTitle, const int windowWidth, const int windowHeight, const bool vsync, const OpenGLVersion& glVersion)
 {
-}
+    mGlVersion = glVersion;
 
-mountain::Renderer::Renderer(OpenGLVersion glVersion)
-    : mGlVersion(glVersion)
-{
-    if (sInstance == nullptr)
-        sInstance = this;
-    else
-        assert(false && "Renderer is a singleton.");
-}
-
-void mountain::Renderer::Initialize(const char* const windowTitle, const int windowWidth, const int windowHeight, const bool vsync)
-{
     // Setup GLFW
     glfwSetErrorCallback(
         [](int error, const char* description)
@@ -56,7 +50,9 @@ void mountain::Renderer::PreFrame()
 
     UpdateWindowFields();
 
-    MakeOpenGLCoordinatesAbsolute(WindowPosition.x, WindowPosition.y, WindowSize.x, WindowSize.y);
+    MakeOpenGLCoordinatesAbsolute(WindowSize.x, WindowSize.y);
+
+    glTranslatef(ScreenOrigin.x, ScreenOrigin.y, 0);
 }
 
 void mountain::Renderer::PostFrame()
@@ -70,10 +66,8 @@ void mountain::Renderer::Shutdown()
     glfwTerminate();
 }
 
-void mountain::Renderer::MakeOpenGLCoordinatesAbsolute(const int, const int, const int windowWidth, const int windowHeight)
+void mountain::Renderer::MakeOpenGLCoordinatesAbsolute(const int windowWidth, const int windowHeight)
 {
-    //glViewport(windowX, windowY, windowWidth, windowHeight);
-
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     glOrtho(0, windowWidth, windowHeight, 0, 0, 1);

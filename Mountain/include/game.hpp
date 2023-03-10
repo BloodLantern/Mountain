@@ -3,7 +3,6 @@
 #include <vector>
 
 #include "entity.hpp"
-#include "renderer.hpp"
 
 namespace mountain
 {
@@ -11,7 +10,6 @@ namespace mountain
     {
     public:
         std::vector<Entity*> Entities;
-        Renderer Renderer;
         float DeltaTime = 0.f;
 
         Game(const char* const windowTitle, const int windowWidth = 1280, const int windowHeight = 720);
