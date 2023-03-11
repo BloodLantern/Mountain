@@ -5,6 +5,9 @@
 
 namespace calc
 {
+    /// @brief The Earth gravitational constant
+    constexpr float Gravity = 9.80665f;
+
     [[nodiscard]] constexpr char Sign(const float value)
     {
         // std::signbit returns whether the value is negative
