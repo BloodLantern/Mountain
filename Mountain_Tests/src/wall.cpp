@@ -7,14 +7,14 @@ test::Wall::Wall(const Vector2& position, const Vector2& size)
 	: Entity(position), mSize(size)
 {
 	Collider = new mountain::Hitbox(position, size);
-	Collider->SetEntity(this);
+	Collider->Owner = this;
 	Collider = new mountain::Hitbox(position, size);
-	Collider->SetEntity(this);
+	Collider->Owner = this;
 }
 
 void test::Wall::Update(const float)
 {
-	Collider->SetPosition(Position);
+	Collider->Position = Position;
 }
 
 void test::Wall::Draw()

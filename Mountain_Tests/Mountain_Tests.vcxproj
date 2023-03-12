@@ -72,9 +72,11 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ExternalIncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)bin/include;$(SolutionDir)Mountain\externals\include</ExternalIncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);include;externals\include</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ExternalIncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)bin/include;$(SolutionDir)Mountain\externals\include</ExternalIncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);include;externals\include</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -112,12 +114,14 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <EnableModules>true</EnableModules>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);mountaind.lib;toolboxd.lib;opengl32.lib;glfw3.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)bin;$(SolutionDir)Mountain\externals\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>MSVCRT</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -130,6 +134,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <EnableModules>true</EnableModules>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -138,18 +143,37 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);mountain.lib;toolbox.lib;opengl32.lib;glfw3.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)bin;$(SolutionDir)Mountain\externals\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>MSVCRT</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ball.cpp" />
-    <ClCompile Include="game_example.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="wall.cpp" />
+    <ClCompile Include="externals\src\imgui.cpp" />
+    <ClCompile Include="externals\src\imgui_demo.cpp" />
+    <ClCompile Include="externals\src\imgui_draw.cpp" />
+    <ClCompile Include="externals\src\imgui_impl_glfw.cpp" />
+    <ClCompile Include="externals\src\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="externals\src\imgui_tables.cpp" />
+    <ClCompile Include="externals\src\imgui_widgets.cpp" />
+    <ClCompile Include="externals\src\stb_image.cpp" />
+    <ClCompile Include="src\ball.cpp" />
+    <ClCompile Include="src\game_example.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\wall.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ball.hpp" />
-    <ClInclude Include="game_example.hpp" />
-    <ClInclude Include="wall.hpp" />
+    <ClInclude Include="externals\include\imconfig.h" />
+    <ClInclude Include="externals\include\imgui.h" />
+    <ClInclude Include="externals\include\imgui_impl_glfw.h" />
+    <ClInclude Include="externals\include\imgui_impl_opengl3.h" />
+    <ClInclude Include="externals\include\imgui_impl_opengl3_loader.h" />
+    <ClInclude Include="externals\include\imgui_internal.h" />
+    <ClInclude Include="externals\include\imstb_rectpack.h" />
+    <ClInclude Include="externals\include\imstb_textedit.h" />
+    <ClInclude Include="externals\include\imstb_truetype.h" />
+    <ClInclude Include="externals\include\stb_image.h" />
+    <ClInclude Include="include\ball.hpp" />
+    <ClInclude Include="include\game_example.hpp" />
+    <ClInclude Include="include\wall.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

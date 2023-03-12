@@ -1,6 +1,7 @@
 #pragma once
 
 #include <game.hpp>
+#include <color.hpp>
 
 namespace test
 {
@@ -14,8 +15,11 @@ namespace test
 
 		GameExample(const char* const windowTitle);
 
+		// Inherited from Game
 		void Initialize() override;
 		void Shutdown() override;
+		void PreRender() override;
+		void PostRender() override;
 		void Update() override;
 		void Render() override;
 	};
