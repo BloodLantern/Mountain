@@ -47,8 +47,8 @@ void test::GameExample::Initialize()
 
 	ballCount = 0;
 
-	Entities.push_back(new Wall(Vector2(0, 0), Vector2(100, (float) mountain::Renderer::WindowSize.y)));
-	Entities.push_back(new Wall(Vector2((float) mountain::Renderer::WindowSize.x - 100, 0), Vector2(100, (float) mountain::Renderer::WindowSize.y)));
+	Entities.push_back(new Wall(Vector2(0, FLT_MIN), Vector2(100, (float) mountain::Renderer::WindowSize.y)));
+	Entities.push_back(new Wall(Vector2((float) mountain::Renderer::WindowSize.x - 100, FLT_MIN), Vector2(100, (float) mountain::Renderer::WindowSize.y)));
 	Entities.push_back(new Wall(Vector2(0, (float)mountain::Renderer::WindowSize.y - 100), Vector2((float)mountain::Renderer::WindowSize.x, 100)));
 
 	cursor->Collides = false;
@@ -96,69 +96,75 @@ void ResolveCollision(test::Ball& ball, const test::Wall& other)
 	const Vector2 depth(difference.x > 0 ? minDist.x - difference.x : -minDist.x - difference.x,
 		difference.y > 0 ? minDist.y - difference.y : -minDist.y - difference.y);
 
-	//__assume(depth != 0);
-
 	if (std::abs(depth.x) < std::abs(depth.y))
 	{
 		ball.Position.x += depth.x;
-		ball.Velocity.x = -ball.Velocity.x;
+		ball.Velocity.x *= -0.85f;
 	}
 	else
 	{
 		ball.Position.y += depth.y;
-		ball.Velocity.y = -ball.Velocity.y;
+		ball.Velocity.y *= -0.85f;
 	}
+	ball.Collider->Position = ball.Position;
 }
 
-void ResolveCollision(test::Ball& ball, const test::Ball& other)
+void ResolveCollision(test::Ball& ball, test::Ball& other)
 {
 	if (!ball.Collides)
 		return;
 
-	const Vector2 difference = ball.Collider->Center() - other.Collider->Center();
+	Vector2 difference = ball.Collider->Center() - other.Collider->Center();
 	const Vector2 minDist = ball.Collider->Size() / 2 + other.Collider->Size() / 2;
 	const Vector2 depth(difference.x > 0 ? minDist.x - difference.x : -minDist.x - difference.x,
 		difference.y > 0 ? minDist.y - difference.y : -minDist.y - difference.y);
 
-	//__assume(depth != 0);
+	ball.Position += depth;
+	ball.Collider->Position = ball.Position;
 
-	if (std::abs(depth.x) < std::abs(depth.y))
-	{
-		ball.Position.x += depth.x;
-		ball.Velocity.x = -ball.Velocity.x;
-		ball.Velocity.y = ball.Velocity.y + (other.Velocity.y - ball.Velocity.y);
-	}
-	else
-	{
-		ball.Position.y += depth.y;
-		ball.Velocity.x = ball.Velocity.x + (other.Velocity.x - ball.Velocity.x);
-		ball.Velocity.y = -ball.Velocity.y;
-	}
+	// Get the components of the velocity vectors which are parallel to the collision.
+    // The perpendicular component remains the same for both fish
+    difference = difference.Normalize();
+    float aci = Vector2::DotProduct(ball.Velocity, difference);
+    float bci = Vector2::DotProduct(other.Velocity, difference);
+
+    // Solve for the new velocities using the 1-dimensional elastic collision equations.
+    // Turns out it's really simple when the masses are the same.
+    float acf = bci;
+    float bcf = aci;
+
+    // Replace the collision velocity components with the new ones
+    ball.Velocity += (acf - aci) * difference;
+    other.Velocity += (bcf - bci) * difference;
 }
 
 void ColliderCallback(mountain::Entity& entity, mountain::Entity& other)
 {
-	const bool entityWall = typeid(entity) == typeid(test::Wall&), otherWall = typeid(other) == typeid(test::Wall&);
+	const bool entityWall = entity.Type == 0, otherWall = other.Type == 0;
 	if (entityWall && otherWall)
 		return;
 
 	if (!entityWall)
 	{
+		test::Ball& ballEntity = dynamic_cast<test::Ball&>(entity);
 		if (otherWall)
-			ResolveCollision(dynamic_cast<test::Ball&>(entity), dynamic_cast<test::Wall&>(other));
+			ResolveCollision(ballEntity, dynamic_cast<test::Wall&>(other));
 		else
-			ResolveCollision(dynamic_cast<test::Ball&>(entity), dynamic_cast<test::Ball&>(other));
+			ResolveCollision(ballEntity, dynamic_cast<test::Ball&>(other));
 	}
 	if (!otherWall)
 	{
+		test::Ball& ballOther = dynamic_cast<test::Ball&>(other);
 		if (entityWall)
-			ResolveCollision(dynamic_cast<test::Ball&>(other), dynamic_cast<test::Wall&>(entity));
+			ResolveCollision(ballOther, dynamic_cast<test::Wall&>(entity));
 		else
-			ResolveCollision(dynamic_cast<test::Ball&>(other), dynamic_cast<test::Ball&>(entity));
+			ResolveCollision(ballOther, dynamic_cast<test::Ball&>(entity));
 	}
 }
 
 bool throwBalls = false;
+int maxBalls = 10;
+float ballSpawnDelay = 0.05f;
 
 void test::GameExample::Update()
 {
@@ -178,71 +184,83 @@ void test::GameExample::Update()
 	ballTimer -= DeltaTime;
 
 	if (throwBalls)
-		if (ballCount < 2000 && ballTimer <= 0)
+		if (ballCount < maxBalls && ballTimer <= 0)
 		{
 			lastBallColor.h++;
 			Ball* ball = new Ball(Vector2(150, 150), lastBallColor);
 			ball->Velocity = Vector2(350, 0);
 			Entities.push_back(ball);
 			ballCount++;
-			ballTimer = 0.05f;
+			ballTimer = ballSpawnDelay;
 		}
 
 	mountain::Collide::CheckCollisions(colliders, ColliderCallback);
 }
+
+bool showInputs = false;
 
 void test::GameExample::Render()
 {
 	for (std::vector<mountain::Entity*>::iterator it = Entities.begin(); it != Entities.end(); it++)
 	{
 		(*it)->Draw();
-		(*it)->Collider->Draw(mountain::ColorRed);
+		//(*it)->Collider->Draw(mountain::ColorRed);
 	}
 
 	ImGui::Begin("Debug");
 	ImGui::Checkbox("Throw balls", &throwBalls);
+	ImGui::Checkbox("Show inputs window", &showInputs);
+	ImGui::InputInt("Max balls", &maxBalls);
+	ImGui::InputFloat("Ball spawn delay", &ballSpawnDelay);
 	ImGui::End();
 
-	ImGui::Begin("Inputs");
-	if (ImGui::TreeNode("Mouse"))
+	if (showInputs)
 	{
-		ImGui::Text("Position: %d, %d", mountain::Input::MousePosition.x, mountain::Input::MousePosition.y);
-		for (unsigned char i = 0; i < mountain::MouseButton_MaxCount; i++)
+		ImGui::Begin("Inputs");
+		if (ImGui::TreeNode("Mouse"))
 		{
-			ImGui::Text("Button down %d: %d", i + 1, mountain::Input::MouseDown[i]);
-			ImGui::Text("Button release %d: %d", i + 1, mountain::Input::MouseRelease[i]);
-		}
-		ImGui::Text("Wheel: %f, %f", mountain::Input::MouseWheel.x, mountain::Input::MouseWheel.y);
-		ImGui::TreePop();
-	}
-
-	if (ImGui::TreeNode("Keyboard"))
-	{
-		ImGui::Text("Key down B: %d", mountain::Input::KeyboardKeyDown[mountain::KeyboardKey_B]);
-		ImGui::Text("Key release B: %d", mountain::Input::KeyboardKeyRelease[mountain::KeyboardKey_B]);
-		ImGui::TreePop();
-	}
-
-	ImGui::Text("Controllers connected: %u", mountain::Input::ControllerConnectedCount);
-	for (unsigned char i = 0; i < mountain::Input::ControllerConnectedCount; i++)
-	{
-		char nameBuffer[14];
-		sprintf_s(nameBuffer, "Controller %u", i + 1);
-		if (ImGui::TreeNode(nameBuffer))
-		{
-			ImGui::Text("Left stick axis: %f, %f", mountain::Input::ControllerStickAxis[i][mountain::Controller_StickLeft].x, mountain::Input::ControllerStickAxis[i][mountain::Controller_StickLeft].y);
-			ImGui::Text("Right stick axis: %f, %f", mountain::Input::ControllerStickAxis[i][mountain::Controller_StickRight].x, mountain::Input::ControllerStickAxis[i][mountain::Controller_StickRight].y);
-			
-			ImGui::Text("Left trigger axis: %f", mountain::Input::ControllerTriggerAxis[i][mountain::Controller_TriggerLeft]);
-			ImGui::Text("Right trigger axis: %f", mountain::Input::ControllerTriggerAxis[i][mountain::Controller_TriggerRight]);
-
-			for (unsigned char j = 0; j < mountain::Controller_ButtonCount; j++)
-				ImGui::Text("Button %d: %d", j + 1, mountain::Input::ControllerButton[i][j]);
-
-			ImGui::Text("Directional pad direction: %u", mountain::Input::ControllerDirectionalPad[i]);
-			
+			ImGui::Text("Position: %d, %d", mountain::Input::MousePosition.x, mountain::Input::MousePosition.y);
+			for (unsigned char i = 0; i < mountain::inputs::MouseButton_MaxCount; i++)
+			{
+				ImGui::Text("Button down %d: %d", i + 1, mountain::Input::MouseDown[i]);
+				ImGui::Text("Button release %d: %d", i + 1, mountain::Input::MouseRelease[i]);
+			}
+			ImGui::Text("Wheel: %f, %f", mountain::Input::MouseWheel.x, mountain::Input::MouseWheel.y);
 			ImGui::TreePop();
 		}
+
+		if (ImGui::TreeNode("Keyboard"))
+		{
+			ImGui::Text("Key down B: %d", mountain::Input::KeyboardKeyDown[mountain::inputs::KeyboardKey_B]);
+			ImGui::Text("Key release B: %d", mountain::Input::KeyboardKeyRelease[mountain::inputs::KeyboardKey_B]);
+			ImGui::TreePop();
+		}
+
+		ImGui::Text("Controllers connected: %u", mountain::Input::ControllerConnectedCount);
+		for (unsigned char i = 0; i < mountain::Input::ControllerConnectedCount; i++)
+		{
+			char nameBuffer[14];
+			sprintf_s(nameBuffer, "Controller %u", i + 1);
+			if (ImGui::TreeNode(nameBuffer))
+			{
+				ImGui::Text("Left stick axis: %f, %f",
+					mountain::Input::ControllerStickAxis[i][mountain::inputs::Controller_StickLeft].x,
+					mountain::Input::ControllerStickAxis[i][mountain::inputs::Controller_StickLeft].y);
+				ImGui::Text("Right stick axis: %f, %f",
+					mountain::Input::ControllerStickAxis[i][mountain::inputs::Controller_StickRight].x,
+					mountain::Input::ControllerStickAxis[i][mountain::inputs::Controller_StickRight].y);
+				
+				ImGui::Text("Left trigger axis: %f", mountain::Input::ControllerTriggerAxis[i][mountain::inputs::Controller_TriggerLeft]);
+				ImGui::Text("Right trigger axis: %f", mountain::Input::ControllerTriggerAxis[i][mountain::inputs::Controller_TriggerRight]);
+
+				for (unsigned char j = 0; j < mountain::inputs::Controller_ButtonCount; j++)
+					ImGui::Text("Button %d: %d", j + 1, mountain::Input::ControllerButton[i][j]);
+
+				ImGui::Text("Directional pad direction: %u", mountain::Input::ControllerDirectionalPad[i]);
+				
+				ImGui::TreePop();
+			}
+		}
+		ImGui::End();
 	}
-	ImGui::End();
 }
