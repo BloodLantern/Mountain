@@ -180,12 +180,14 @@
         constexpr unsigned char Controller_ButtonSonyTriangle = 3;
         constexpr unsigned char Controller_ButtonSonyL1 = 4; // Button above the left trigger.
         constexpr unsigned char Controller_ButtonSonyR1 = 5; // Button above the right trigger.
-        constexpr unsigned char Controller_ButtonSonyShare = 6;
-        constexpr unsigned char Controller_ButtonSonyOptions = 7;
-        constexpr unsigned char Controller_ButtonSonyHome = 8; // Sony button.
-        constexpr unsigned char Controller_ButtonSonyTouchPad = 9; // Touch pad press.
-        constexpr unsigned char Controller_ButtonSonyL3 = 10; // Left stick press.
-        constexpr unsigned char Controller_ButtonSonyR3 = 11; // Right stick press.
+        constexpr unsigned char Controller_ButtonSonyL2 = 6; // Left trigger. True when the trigger axis is greater than -1 (default value).
+        constexpr unsigned char Controller_ButtonSonyR2 = 7; // Right trigger. True when the trigger axis is greater than -1 (default value).
+        constexpr unsigned char Controller_ButtonSonyShare = 8;
+        constexpr unsigned char Controller_ButtonSonyOptions = 9;
+        constexpr unsigned char Controller_ButtonSonyHome = 10; // Sony button.
+        constexpr unsigned char Controller_ButtonSonyTouchPad = 11; // Touch pad press.
+        constexpr unsigned char Controller_ButtonSonyL3 = 12; // Left stick press.
+        constexpr unsigned char Controller_ButtonSonyR3 = 13; // Right stick press.
         
         constexpr unsigned char Controller_ButtonMicrosoftX = Controller_ButtonSonySquare;
         constexpr unsigned char Controller_ButtonMicrosoftA = Controller_ButtonSonyCross;
@@ -193,6 +195,8 @@
         constexpr unsigned char Controller_ButtonMicrosoftY = Controller_ButtonSonyTriangle;
         constexpr unsigned char Controller_ButtonMicrosoftLeftBumper = Controller_ButtonSonyL1; // Button above the left trigger.
         constexpr unsigned char Controller_ButtonMicrosoftRightBumper = Controller_ButtonSonyR1; // Button above the right trigger.
+        constexpr unsigned char Controller_ButtonMicrosoftLeftTrigger = Controller_ButtonSonyL2; // Left trigger. True when the trigger axis is greater than -1 (default value).
+        constexpr unsigned char Controller_ButtonMicrosoftRightTrigger = Controller_ButtonSonyR2; // Right trigger. True when the trigger axis is greater than -1 (default value).
         constexpr unsigned char Controller_ButtonMicrosoftBack = Controller_ButtonSonyShare;
         constexpr unsigned char Controller_ButtonMicrosoftStart = Controller_ButtonSonyOptions;
         constexpr unsigned char Controller_ButtonMicrosoftGuide = Controller_ButtonSonyHome; // Microsoft button.
@@ -205,6 +209,8 @@
         constexpr unsigned char Controller_ButtonNintendoX = Controller_ButtonSonyTriangle;
         constexpr unsigned char Controller_ButtonNintendoL = Controller_ButtonSonyL1; // Button above the left trigger.
         constexpr unsigned char Controller_ButtonNintendoR = Controller_ButtonSonyR1; // Button above the right trigger.
+        constexpr unsigned char Controller_ButtonNintendoZL = Controller_ButtonSonyL2; // Left trigger. True when the trigger axis is greater than -1 (default value).
+        constexpr unsigned char Controller_ButtonNintendoZR = Controller_ButtonSonyR2; // Right trigger. True when the trigger axis is greater than -1 (default value).
         constexpr unsigned char Controller_ButtonNintendoMinus = Controller_ButtonSonyShare;
         constexpr unsigned char Controller_ButtonNintendoPlus = Controller_ButtonSonyOptions;
         constexpr unsigned char Controller_ButtonNintendoHome = Controller_ButtonSonyHome;
@@ -225,7 +231,7 @@
 
     constexpr unsigned char Controller_StickCount = 2;
     constexpr unsigned char Controller_TriggerCount = 2;
-    constexpr unsigned char Controller_ButtonCount = 12;
+    constexpr unsigned char Controller_ButtonCount = 14;
 
     constexpr unsigned char Controller_MaxCount = GLFW_JOYSTICK_LAST + 1;
 #pragma endregion
