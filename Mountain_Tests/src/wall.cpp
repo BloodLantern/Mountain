@@ -8,8 +8,7 @@ test::Wall::Wall(const Vector2& position, const Vector2& size)
 {
 	Collider = new mountain::Hitbox(position, size);
 	Collider->Owner = this;
-	Collider = new mountain::Hitbox(position, size);
-	Collider->Owner = this;
+	Type = 0;
 }
 
 void test::Wall::Update(const float)

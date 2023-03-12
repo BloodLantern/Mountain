@@ -9,7 +9,7 @@ namespace test
 	{
 	public:
         std::vector<mountain::Entity*> Entities;
-		unsigned int ballCount = 0;
+		int ballCount = 0;
 		float ballTimer = 0;
 		mountain::ColorHSV lastBallColor = mountain::ColorRed;
 

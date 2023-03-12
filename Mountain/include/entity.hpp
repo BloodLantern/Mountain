@@ -11,7 +11,7 @@ namespace mountain
     public:
         Vector2 Position = 0;
         Collider* Collider = nullptr;
-        unsigned char Type = 0;
+        int Type = 0;
 
         Entity(const Vector2& position) : Position(position) {}
         virtual ~Entity() {}

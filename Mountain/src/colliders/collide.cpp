@@ -6,7 +6,7 @@ std::pair<bool, Vector2> mountain::Collide::LinesIntersect(const Vector2 &p1, co
 
     // Lines are collinear or parallel
     if (rxs == 0)
-        return std::pair<bool, Vector2>(false, Vector2(0));
+        return std::pair<bool, Vector2>(false, Vector2());
 
     const Vector2 p3mp1 = p3 - p1;
     const float p3mp1xp4 = Vector2::CrossProduct(p3mp1, p4);
@@ -20,9 +20,9 @@ std::pair<bool, Vector2> mountain::Collide::LinesIntersect(const Vector2 &p1, co
         return std::pair<bool, Vector2>(true, p1 + t * p2);
 
     // Lines are not collinear or parallel and do not intersect
-    return std::pair<bool, Vector2>(false, Vector2(0));
-
+    return std::pair<bool, Vector2>(false, Vector2());
 }
+
 void mountain::Collide::CheckCollisions(const std::vector<const Collider *> &colliders, ColliderHitCallback callback)
 {
     for (std::vector<const Collider*>::const_iterator it = colliders.begin(); it != colliders.end(); it++)
@@ -31,13 +31,13 @@ void mountain::Collide::CheckCollisions(const std::vector<const Collider *> &col
         if (collider)
             for (std::vector<const Collider*>::const_iterator it2 = colliders.begin(); it2 != colliders.end(); it2++)
             {
-                const Collider* other = *it2;
-
-                if (other == collider || !other)
+                if (it == it2)
                     continue;
 
-                if (CheckCollision(*collider, *other))
-                    callback(*collider->Owner, *other->Owner);
+                const Collider* other = *it2;
+                if (other)
+                    if (CheckCollision(*collider, *other))
+                        callback(*collider->Owner, *other->Owner);
             }
     }
 }

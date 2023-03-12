@@ -24,12 +24,12 @@ bool mountain::Hitbox::CheckCollision(const Hitbox& hitbox) const
 {
     Vector2 position = hitbox.Position, size = hitbox.BoxSize;
 
-        // Check for a collision with any of the hitbox's corners
-        if (CheckCollision(position) // Top left
-            || CheckCollision(Vector2(position.x + size.x, position.y)) // Top right
-            || CheckCollision(Vector2(position.x, position.y + size.y)) // Bottom left
-            || CheckCollision(Vector2(position.x + size.x, position.y + size.y))) // Bottom right
-            return true;
+    // Check for a collision with any of the hitbox's corners
+    if (CheckCollision(position) // Top left
+        || CheckCollision(Vector2(position.x + size.x, position.y)) // Top right
+        || CheckCollision(Vector2(position.x, position.y + size.y)) // Bottom left
+        || CheckCollision(Vector2(position.x + size.x, position.y + size.y))) // Bottom right
+        return true;
 
     // Check if one of the edges is inside this hitbox
     return hitbox.Left() < Right() && hitbox.Right() > Left()
@@ -41,10 +41,10 @@ bool mountain::Hitbox::CheckCollision(const Circle& circle) const
     if (CheckCollision(circle.Position))
         return true;
 
-        const Vector2& topLeft = Position;
-        const Vector2 topRight(Position.x + BoxSize.x, Position.y),
-            bottomLeft(Position.x, Position.y + BoxSize.y),
-            bottomRight(Position.x + BoxSize.x, Position.y + BoxSize.y);
+    const Vector2& topLeft = Position;
+    const Vector2 topRight(Position.x + BoxSize.x, Position.y),
+        bottomLeft(Position.x, Position.y + BoxSize.y),
+        bottomRight(Position.x + BoxSize.x, Position.y + BoxSize.y);
             
     return circle.Intersect(topLeft, topRight)
         || circle.Intersect(topRight, bottomRight)
