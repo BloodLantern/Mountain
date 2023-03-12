@@ -1,10 +1,12 @@
 #include "game.hpp"
 
 #include "renderer.hpp"
+#include "input.hpp"
 
 mountain::Game::Game(const char* const windowTitle, const int windowWidth, const int windowHeight)
 {
     Renderer::Initialize(windowTitle, windowWidth, windowHeight);
+    Input::Initialize();
 }
 
 mountain::Game::~Game()
@@ -20,6 +22,7 @@ void mountain::Game::MainLoop()
 
         Renderer::PreFrame();
         PreRender();
+        Input::Update();
 
         // Call game loop
         Update();
