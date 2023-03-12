@@ -14,20 +14,19 @@ namespace mountain
     {
     public:
         static Vector2i MousePosition; // Mouse position Vector2.
-        static bool MouseDown[MouseButton_Count]; // Mouse button down state array.
-        static bool MouseRelease[MouseButton_Count]; // Mouse button release state array.
+        static bool MouseDown[MouseButton_MaxCount]; // Mouse button down state array.
+        static bool MouseRelease[MouseButton_MaxCount]; // Mouse button release state array.
         static Vector2 MouseWheel; // Mouse wheel offset Vector2. Includes keyboard wheel.
 
-        static bool KeyDown[Key_Count]; // Keyboard key down state array.
-        static bool KeyRelease[Key_Count]; // Keyboard key release state array.
+        static bool KeyboardKeyDown[KeyboardKey_MaxCount]; // Keyboard key down state array.
+        static bool KeyboardKeyRelease[KeyboardKey_MaxCount]; // Keyboard key release state array.
 
-        static bool ControllerConnected[Controller_Count]; // Controller connected state array.
-        static int ControllerStickCount[Controller_Count]; // Controller stick count array.
-        static Vector2* ControllerStickAxis[Controller_Count]; // Controller stick axis array.
-        static int ControllerButtonCount[Controller_Count]; // Controller button count array.
-        static bool* ControllerButtonStates[Controller_Count]; // Controller button states array.
-        static int ControllerDirectionalPadCount[Controller_Count]; // Controller directional pad (D-Pad) count array.
-        static unsigned char* ControllerDirectionalPad[Controller_Count]; // Controller directional pad (D-Pad) states array.
+        static unsigned char ControllerConnectedCount; // Controller connected count. Ranges from 0 to 16.
+        static bool ControllerConnected[Controller_MaxCount]; // Controller connected state array.
+        static Vector2 ControllerStickAxis[Controller_MaxCount][Controller_StickCount]; // Controller stick axis array. Ranges from -1 to 1.
+        static float ControllerTriggerAxis[Controller_MaxCount][Controller_TriggerCount]; // Controller trigger axis array. Ranges from -1 to 1, -1 being not pressed and 1 being fully pressed.
+        static bool ControllerButton[Controller_MaxCount][Controller_ButtonCount]; // Controller button states array.
+        static unsigned char ControllerDirectionalPad[Controller_MaxCount]; // Controller directional pad (D-Pad) value array. Values are bits and therefore should be used with bitwise operators.
 
         // You can't instantiate this class.
         Input() = delete;

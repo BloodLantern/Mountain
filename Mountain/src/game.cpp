@@ -20,9 +20,9 @@ void mountain::Game::MainLoop()
     {
         double t = glfwGetTime();
 
+        Input::Update();
         Renderer::PreFrame();
         PreRender();
-        Input::Update();
 
         // Call game loop
         Update();

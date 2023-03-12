@@ -3,20 +3,19 @@
 #include "renderer.hpp"
 
 Vector2i mountain::Input::MousePosition;
-bool mountain::Input::MouseDown[MouseButton_Count];
-bool mountain::Input::MouseRelease[MouseButton_Count];
+bool mountain::Input::MouseDown[MouseButton_MaxCount];
+bool mountain::Input::MouseRelease[MouseButton_MaxCount];
 Vector2 mountain::Input::MouseWheel;
 
-bool mountain::Input::KeyDown[Key_Count];
-bool mountain::Input::KeyRelease[Key_Count];
+bool mountain::Input::KeyboardKeyDown[KeyboardKey_MaxCount];
+bool mountain::Input::KeyboardKeyRelease[KeyboardKey_MaxCount];
 
-bool mountain::Input::ControllerConnected[Controller_Count];
-int mountain::Input::ControllerStickCount[Controller_Count];
-Vector2* mountain::Input::ControllerStickAxis[Controller_Count];
-int mountain::Input::ControllerButtonCount[Controller_Count];
-bool* mountain::Input::ControllerButtonStates[Controller_Count];
-int mountain::Input::ControllerDirectionalPadCount[Controller_Count];
-unsigned char* mountain::Input::ControllerDirectionalPad[Controller_Count];
+unsigned char mountain::Input::ControllerConnectedCount = 0;
+bool mountain::Input::ControllerConnected[Controller_MaxCount];
+Vector2 mountain::Input::ControllerStickAxis[Controller_MaxCount][Controller_StickCount];
+float mountain::Input::ControllerTriggerAxis[Controller_MaxCount][Controller_TriggerCount];
+bool mountain::Input::ControllerButton[Controller_MaxCount][Controller_ButtonCount];
+unsigned char mountain::Input::ControllerDirectionalPad[Controller_MaxCount];
 
 void MousePositionCallback(GLFWwindow*, double x, double y)
 {
@@ -49,21 +48,27 @@ void KeyCallback(GLFWwindow*, int key, int, int action, int)
 
     if (action == GLFW_PRESS)
     {
-        mountain::Input::KeyDown[key] = true;
+        mountain::Input::KeyboardKeyDown[key] = true;
     }
     else if (action == GLFW_RELEASE)
     {
-        mountain::Input::KeyDown[key] = false;
-        mountain::Input::KeyRelease[key] = true;
+        mountain::Input::KeyboardKeyDown[key] = false;
+        mountain::Input::KeyboardKeyRelease[key] = true;
     }
 }
 
 void JoystickCallback(int jid, int event)
 {
     if (event == GLFW_CONNECTED)
+    {
         mountain::Input::ControllerConnected[jid] = true;
+        mountain::Input::ControllerConnectedCount++;
+    }
     else if (event == GLFW_DISCONNECTED)
+    {
         mountain::Input::ControllerConnected[jid] = false;
+        mountain::Input::ControllerConnectedCount--;
+    }
 }
 
 void mountain::Input::Initialize()
@@ -78,72 +83,79 @@ void mountain::Input::Initialize()
 
     glfwSetJoystickCallback(JoystickCallback);
 
-    for (unsigned char i = 0; i < MouseButton_Count; i++)
+    for (unsigned char i = 0; i < MouseButton_MaxCount; i++)
     {
         MouseDown[i] = false;
         MouseRelease[i] = false;
     }
 
-    for (unsigned short i = 0; i < Key_Count; i++)
+    for (unsigned short i = 0; i < KeyboardKey_MaxCount; i++)
     {
-        KeyDown[i] = false;
-        KeyRelease[i] = false;
+        KeyboardKeyDown[i] = false;
+        KeyboardKeyRelease[i] = false;
     }
 
-    for (unsigned char i = 0; i < Controller_Count; i++)
+    // Count connected controllers
+    for (unsigned char i = 0; i < Controller_MaxCount; i++)
     {
-        ControllerConnected[i] = false;
-        ControllerStickCount[i] = 0;
-        ControllerStickAxis[i] = nullptr;
-        ControllerButtonStates[i] = nullptr;
-        ControllerDirectionalPad[i] = nullptr;
+        const bool present = glfwJoystickPresent(i);
+        if (present)
+            ControllerConnectedCount++;
+        ControllerConnected[i] = present;
     }
 }
 
 void mountain::Input::Update()
 {
-    for (unsigned char i = 0; i < MouseButton_Count; i++)
+    for (unsigned char i = 0; i < MouseButton_MaxCount; i++)
         if (MouseRelease[i])
             MouseRelease[i] = false;
+    mountain::Input::MouseWheel = 0;
 
-    for (unsigned short i = 0; i < Key_Count; i++)
-        if (KeyRelease[i])
-            KeyRelease[i] = false;
+    for (unsigned short i = 0; i < KeyboardKey_MaxCount; i++)
+        if (KeyboardKeyRelease[i])
+            KeyboardKeyRelease[i] = false;
 
-    for (unsigned char i = 0; i < Controller_Count; i++)
+    for (unsigned char i = 0; i < Controller_MaxCount; i++)
         if (ControllerConnected[i])
         {
             {
-                // Stick axis
-                const float* stickAxis = glfwGetJoystickAxes(i, &ControllerStickCount[i]);
+                // Stick and trigger axis
+                int count;
+                const float* stickAxis = glfwGetJoystickAxes(i, &count);
 
-                delete ControllerStickAxis[i];
-                ControllerStickAxis[i] = new Vector2[ControllerStickCount[i]];
+                ControllerStickAxis[i][0] = Vector2(stickAxis[0], -stickAxis[1]);
+                ControllerStickAxis[i][1] = Vector2(stickAxis[2], -stickAxis[5]);
 
-                for (int j = 0; j < ControllerStickCount[i]; j++)
-                    ControllerStickAxis[i][j] = Vector2(stickAxis[j * 2], -stickAxis[j * 2 + 1]);
+                ControllerTriggerAxis[i][0] = stickAxis[3];
+                ControllerTriggerAxis[i][1] = stickAxis[4];
             }
 
             {
                 // Button states
-                const unsigned char* buttonStates = glfwGetJoystickButtons(i, &ControllerButtonCount[i]);
+                int count;
+                const unsigned char* buttonStates = glfwGetJoystickButtons(i, &count);
 
-                delete ControllerButtonStates[i];
-                ControllerButtonStates[i] = new bool[ControllerButtonCount[i]];
-
-                for (int j = 0; j < ControllerButtonCount[i]; j++)
-                    ControllerButtonStates[i][j] = buttonStates[j];
+                ControllerButton[i][Controller_ButtonSonySquare] = buttonStates[0];
+                ControllerButton[i][Controller_ButtonSonyCross] = buttonStates[1];
+                ControllerButton[i][Controller_ButtonSonyCircle] = buttonStates[2];
+                ControllerButton[i][Controller_ButtonSonyTriangle] = buttonStates[3];
+                ControllerButton[i][Controller_ButtonSonyL1] = buttonStates[4];
+                ControllerButton[i][Controller_ButtonSonyR1] = buttonStates[5];
+                ControllerButton[i][Controller_ButtonSonyShare] = buttonStates[8];
+                ControllerButton[i][Controller_ButtonSonyOptions] = buttonStates[9];
+                ControllerButton[i][Controller_ButtonSonyL3] = buttonStates[10];
+                ControllerButton[i][Controller_ButtonSonyR3] = buttonStates[11];
+                ControllerButton[i][Controller_ButtonSonyHome] = buttonStates[12];
+                ControllerButton[i][Controller_ButtonSonyTouchPad] = buttonStates[13];
             }
 
             {
                 // Directional pad states
-                const unsigned char* directionalPad = glfwGetJoystickHats(i, &ControllerDirectionalPadCount[i]);
+                int count;
+                const unsigned char* directionalPad = glfwGetJoystickHats(i, &count);
 
-                delete ControllerDirectionalPad[i];
-                ControllerDirectionalPad[i] = new unsigned char[ControllerDirectionalPadCount[i]];
-
-                for (int j = 0; j < ControllerDirectionalPadCount[i]; j++)
-                    ControllerDirectionalPad[i][j] = directionalPad[j];
+                ControllerDirectionalPad[i] = directionalPad[0];
             }
         }
 }

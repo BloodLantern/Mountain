@@ -7,6 +7,7 @@
 #include <draw.hpp>
 #include <entity.hpp>
 #include <renderer.hpp>
+#include <input.hpp>
 
 #include <iostream>
 
@@ -157,6 +158,8 @@ void ColliderCallback(mountain::Entity& entity, mountain::Entity& other)
 	}
 }
 
+bool throwBalls = false;
+
 void test::GameExample::Update()
 {
 	double x, y;
@@ -174,15 +177,16 @@ void test::GameExample::Update()
 
 	ballTimer -= DeltaTime;
 
-	if (ballCount < 2000 && ballTimer <= 0)
-	{
-		lastBallColor.h++;
-		Ball* ball = new Ball(Vector2(150, 150), lastBallColor);
-		ball->Velocity = Vector2(350, 0);
-		Entities.push_back(ball);
-		ballCount++;
-		ballTimer = 0.05f;
-	}
+	if (throwBalls)
+		if (ballCount < 2000 && ballTimer <= 0)
+		{
+			lastBallColor.h++;
+			Ball* ball = new Ball(Vector2(150, 150), lastBallColor);
+			ball->Velocity = Vector2(350, 0);
+			Entities.push_back(ball);
+			ballCount++;
+			ballTimer = 0.05f;
+		}
 
 	mountain::Collide::CheckCollisions(colliders, ColliderCallback);
 }
@@ -194,4 +198,51 @@ void test::GameExample::Render()
 		(*it)->Draw();
 		(*it)->Collider->Draw(mountain::ColorRed);
 	}
+
+	ImGui::Begin("Debug");
+	ImGui::Checkbox("Throw balls", &throwBalls);
+	ImGui::End();
+
+	ImGui::Begin("Inputs");
+	if (ImGui::TreeNode("Mouse"))
+	{
+		ImGui::Text("Position: %d, %d", mountain::Input::MousePosition.x, mountain::Input::MousePosition.y);
+		for (unsigned char i = 0; i < mountain::MouseButton_MaxCount; i++)
+		{
+			ImGui::Text("Button down %d: %d", i + 1, mountain::Input::MouseDown[i]);
+			ImGui::Text("Button release %d: %d", i + 1, mountain::Input::MouseRelease[i]);
+		}
+		ImGui::Text("Wheel: %f, %f", mountain::Input::MouseWheel.x, mountain::Input::MouseWheel.y);
+		ImGui::TreePop();
+	}
+
+	if (ImGui::TreeNode("Keyboard"))
+	{
+		ImGui::Text("Key down B: %d", mountain::Input::KeyboardKeyDown[mountain::KeyboardKey_B]);
+		ImGui::Text("Key release B: %d", mountain::Input::KeyboardKeyRelease[mountain::KeyboardKey_B]);
+		ImGui::TreePop();
+	}
+
+	ImGui::Text("Controllers connected: %u", mountain::Input::ControllerConnectedCount);
+	for (unsigned char i = 0; i < mountain::Input::ControllerConnectedCount; i++)
+	{
+		char nameBuffer[14];
+		sprintf_s(nameBuffer, "Controller %u", i + 1);
+		if (ImGui::TreeNode(nameBuffer))
+		{
+			ImGui::Text("Left stick axis: %f, %f", mountain::Input::ControllerStickAxis[i][mountain::Controller_StickLeft].x, mountain::Input::ControllerStickAxis[i][mountain::Controller_StickLeft].y);
+			ImGui::Text("Right stick axis: %f, %f", mountain::Input::ControllerStickAxis[i][mountain::Controller_StickRight].x, mountain::Input::ControllerStickAxis[i][mountain::Controller_StickRight].y);
+			
+			ImGui::Text("Left trigger axis: %f", mountain::Input::ControllerTriggerAxis[i][mountain::Controller_TriggerLeft]);
+			ImGui::Text("Right trigger axis: %f", mountain::Input::ControllerTriggerAxis[i][mountain::Controller_TriggerRight]);
+
+			for (unsigned char j = 0; j < mountain::Controller_ButtonCount; j++)
+				ImGui::Text("Button %d: %d", j + 1, mountain::Input::ControllerButton[i][j]);
+
+			ImGui::Text("Directional pad direction: %u", mountain::Input::ControllerDirectionalPad[i]);
+			
+			ImGui::TreePop();
+		}
+	}
+	ImGui::End();
 }
