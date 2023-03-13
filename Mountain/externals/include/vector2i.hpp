@@ -36,11 +36,20 @@ public:
 	/// @brief Returns a normalized vector.
 	/// @return A vector with the same direction but a length of one.
 	[[nodiscard]]
-	Vector2 Normalize() const;
+	Vector2 Normalized() const;
 	/// @brief Returns the normal vector to this one.
 	/// @return A vector with the same length but a normal direction.
 	[[nodiscard]]
 	Vector2 Normal() const;
+	/// @brief Returns the dot product of this Vector2i with 'other'.
+	[[nodiscard]]
+	float Dot(const Vector2i other) const;
+	/// @brief Returns the cross product of this Vector2i with 'other'.
+	[[nodiscard]]
+	float Cross(const Vector2i other) const;
+	/// @brief Returns the determinant of this Vector2i with 'other'.
+	[[nodiscard]]
+	float Determinant(const Vector2i other) const;
 	/// @brief Returns the angle between the beginning and the end of this vector.
 	/// @return An angle in radians.
 	[[nodiscard]]
@@ -69,10 +78,10 @@ public:
 	static float Angle(const Vector2i a, const Vector2i b);
 	/// @brief Returns a · b.
 	[[nodiscard]]
-	static float DotProduct(const Vector2i a, const Vector2i b);
+	static float Dot(const Vector2i a, const Vector2i b);
 	/// @brief Returns a x b.
 	[[nodiscard]]
-	static float CrossProduct(const Vector2i a, const Vector2i b);
+	static float Cross(const Vector2i a, const Vector2i b);
 	/// @brief Returns the determinant of 'a' and 'b'.
 	[[nodiscard]]
 	static float Determinant(const Vector2i a, const Vector2i b);

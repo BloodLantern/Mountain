@@ -114,28 +114,16 @@ void ResolveCollision(test::Ball& ball, test::Ball& other)
 	if (!ball.Collides)
 		return;
 
-	Vector2 difference = ball.Collider->Center() - other.Collider->Center();
+	Vector2 distance = (other.Collider->Center() - ball.Collider->Center()).Normalized();
 	const Vector2 minDist = ball.Collider->Size() / 2 + other.Collider->Size() / 2;
-	const Vector2 depth(difference.x > 0 ? minDist.x - difference.x : -minDist.x - difference.x,
-		difference.y > 0 ? minDist.y - difference.y : -minDist.y - difference.y);
-
-	ball.Position += depth;
+	ball.Position = other.Position - distance * minDist;
 	ball.Collider->Position = ball.Position;
-
-	// Get the components of the velocity vectors which are parallel to the collision.
-    // The perpendicular component remains the same for both fish
-    difference = difference.Normalize();
-    float aci = Vector2::DotProduct(ball.Velocity, difference);
-    float bci = Vector2::DotProduct(other.Velocity, difference);
-
-    // Solve for the new velocities using the 1-dimensional elastic collision equations.
-    // Turns out it's really simple when the masses are the same.
-    float acf = bci;
-    float bcf = aci;
-
-    // Replace the collision velocity components with the new ones
-    ball.Velocity += (acf - aci) * difference;
-    other.Velocity += (bcf - bci) * difference;
+	
+	Vector2 relativeVelocity = other.Velocity - ball.Velocity;
+	float relativeSpeed = relativeVelocity.Dot(distance);
+	Vector2 impulse = -1 * relativeSpeed * distance;
+	ball.Velocity -= impulse;
+	other.Velocity += impulse;
 }
 
 void ColliderCallback(mountain::Entity& entity, mountain::Entity& other)

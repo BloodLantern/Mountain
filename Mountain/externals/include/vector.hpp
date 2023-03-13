@@ -31,7 +31,13 @@ public:
 	/// @brief Returns a normalized vector.
 	/// @return A vector with the same direction but a length of one.
 	[[nodiscard]]
-	Vector Normalize() const;
+	Vector Normalized() const;
+	/// @brief Returns the dot product of this Vector with 'other'.
+	[[nodiscard]]
+	float Dot(const Vector& other) const;
+	/// @brief Returns the cross product of this Vector with 'other'.
+	[[nodiscard]]
+	Vector Cross(const Vector& other) const;
 
     /// @brief Returns a Vector2 representing the size of this matrix. This operation
     ///        casts two size_t to floats and therefore might be inaccurate if used
@@ -41,10 +47,10 @@ public:
 
 	/// @brief Returns a · b.
 	[[nodiscard]]
-	static float DotProduct(const Vector& a, const Vector& b);
+	static float Dot(const Vector& a, const Vector& b);
 	/// @brief Returns a x b.
 	[[nodiscard]]
-	static Vector CrossProduct(const Vector& a, const Vector& b);
+	static Vector Cross(const Vector& a, const Vector& b);
 
 	[[nodiscard]]
 	float  operator[](const size_t i) const;

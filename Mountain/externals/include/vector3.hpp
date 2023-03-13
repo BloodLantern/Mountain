@@ -38,7 +38,13 @@ public:
 	/// @brief Normalizes the vector.
 	/// @return A vector with the same direction but a length of one.
 	[[nodiscard]]
-	Vector3 Normalize() const;
+	Vector3 Normalized() const;
+	/// @brief Returns the dot product of this Vector3& with 'other'.
+	[[nodiscard]]
+	float Dot(const Vector3& other) const;
+	/// @brief Returns the cross product of this Vector3& with 'other'.
+	[[nodiscard]]
+	Vector3 Cross(const Vector3& other) const;
 	/// @brief Rotates the vector by the specified angle around an axis.
 	/// @param angle The angle in radians.
 	[[nodiscard]]
@@ -63,10 +69,10 @@ public:
 	static float Angle(const Vector3& a, const Vector3& b);
 	/// @brief Returns a · b.
 	[[nodiscard]]
-	static float DotProduct(const Vector3& a, const Vector3& b);
+	static float Dot(const Vector3& a, const Vector3& b);
 	/// @brief Returns a x b.
 	[[nodiscard]]
-	static Vector3 CrossProduct(const Vector3& a, const Vector3& b);
+	static Vector3 Cross(const Vector3& a, const Vector3& b);
 
 	[[nodiscard]]
 	float  operator[](const size_t i) const;
