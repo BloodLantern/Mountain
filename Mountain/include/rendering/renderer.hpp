@@ -24,8 +24,8 @@ namespace mountain
         static Colorf ClearColor;
 
         static void Initialize(const char* const windowTitle,
-            const int windowWidth = 1280, const int windowHeight = 720,
-            const bool vsync = true, const OpenGLVersion& glVersion = OpenGLVersion());
+            const int windowWidth, const int windowHeight,
+            const bool vsync, const OpenGLVersion& glVersion = OpenGLVersion());
         static void PreFrame();
         static void PostFrame();
         static void Shutdown();
@@ -34,6 +34,7 @@ namespace mountain
 
         static GLFWwindow* GetWindow() { return mWindow; }
         static OpenGLVersion& GetOpenGLVersion() { return mGlVersion; }
+        static void SetVSync(const bool vsync) { glfwSwapInterval(vsync); }
 
     private:
         static GLFWwindow* mWindow;

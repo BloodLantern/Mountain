@@ -11,7 +11,7 @@ namespace mountain
     public:
         float DeltaTime = 0.f;
 
-        Game(const char* const windowTitle, const int windowWidth = 1280, const int windowHeight = 720);
+        Game(const char* const windowTitle, const int windowWidth = 1280, const int windowHeight = 720, const bool vsync = true);
         ~Game();
 
         /// @brief To be called by the user when starting execution. Empty by default,

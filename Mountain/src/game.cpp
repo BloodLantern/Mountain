@@ -3,9 +3,9 @@
 #include "renderer.hpp"
 #include "input.hpp"
 
-mountain::Game::Game(const char* const windowTitle, const int windowWidth, const int windowHeight)
+mountain::Game::Game(const char* const windowTitle, const int windowWidth, const int windowHeight, const bool vsync)
 {
-    Renderer::Initialize(windowTitle, windowWidth, windowHeight);
+    Renderer::Initialize(windowTitle, windowWidth, windowHeight, vsync);
     Input::Initialize();
 }
 
