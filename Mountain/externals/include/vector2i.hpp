@@ -108,9 +108,9 @@ Vector2i operator*(const Vector2i a, const Vector2i b);
 [[nodiscard]]
 Vector2i operator*(const Vector2i v, const int factor);
 [[nodiscard]]
-Vector2i operator/(const Vector2i a, const Vector2i b);
+Vector2 operator/(const Vector2i a, const Vector2i b);
 [[nodiscard]]
-Vector2i operator/(const Vector2i v, const int factor);
+Vector2 operator/(const Vector2i v, const float factor);
 
 Vector2i& operator+=(Vector2i& a, const Vector2i b);
 Vector2i& operator+=(Vector2i& v, const int factor);
@@ -118,7 +118,5 @@ Vector2i& operator-=(Vector2i& a, const Vector2i b);
 Vector2i& operator-=(Vector2i& v, const int factor);
 Vector2i& operator*=(Vector2i& a, const Vector2i b);
 Vector2i& operator*=(Vector2i& v, const int factor);
-Vector2i& operator/=(Vector2i& a, const Vector2i b);
-Vector2i& operator/=(Vector2i& v, const int factor);
 
 std::ostream& operator<<(std::ostream& out, const Vector2i v);

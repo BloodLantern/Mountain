@@ -61,7 +61,7 @@ void mountain::Renderer::PreFrame()
         TRS[3][0], TRS[3][1], TRS[3][2], TRS[3][3]
     };
     glLoadMatrixf(trs);
-    const Vector2 scale = 1 / Resolution / TargetResolution;
+    const Vector2 scale = 1 / (Resolution / TargetResolution);
     glScalef(scale.x, scale.y, 1);
     glTranslatef(ScreenOrigin.x, ScreenOrigin.y, 0);
 }
