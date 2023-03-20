@@ -2,6 +2,7 @@
 
 #include <GLFW/glfw3.h>
 #include <vector2i.hpp>
+#include <matrix.hpp>
 
 #include "color.hpp"
 
@@ -19,9 +20,11 @@ namespace mountain
     public:
         static Vector2 ScreenOrigin;
         static Vector2i Resolution;
+        static Vector2i TargetResolution;
         static Vector2i WindowPosition;
         static Vector2i WindowSize;
-        static Colorf ClearColor;
+        static Colorf ClearColor; // Color used to fill the window before each frame.
+        static Matrix TRS; // This is the TRS matrix that will be applied before rendering.
 
         static void Initialize(const char* const windowTitle,
             const int windowWidth, const int windowHeight,

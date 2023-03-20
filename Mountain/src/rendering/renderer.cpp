@@ -4,12 +4,14 @@
 #include <cassert>
 
 Vector2 mountain::Renderer::ScreenOrigin = 0;
-Vector2i mountain::Renderer::Resolution = Vector2i(1920, 1080);
+Vector2i mountain::Renderer::Resolution = TargetResolution;
+Vector2i mountain::Renderer::TargetResolution = Vector2i(1920, 1080);
 Vector2i mountain::Renderer::WindowPosition;
 Vector2i mountain::Renderer::WindowSize;
 mountain::Colorf mountain::Renderer::ClearColor = Colorf(0.45f, 0.55f, 0.60f);
 GLFWwindow* mountain::Renderer::mWindow = nullptr;
 mountain::OpenGLVersion mountain::Renderer::mGlVersion;
+Matrix mountain::Renderer::TRS = Matrix::Identity(4);
 
 void mountain::Renderer::Initialize(const char* const windowTitle, const int windowWidth, const int windowHeight, const bool vsync, const OpenGLVersion& glVersion)
 {
@@ -19,7 +21,7 @@ void mountain::Renderer::Initialize(const char* const windowTitle, const int win
     glfwSetErrorCallback(
         [](int error, const char* description)
         {
-            fprintf(stderr, "GLFW error %d: %s\n", error, description);
+            std::fprintf(stderr, "GLFW error %d: %s\n", error, description);
         }
     );
 
@@ -29,12 +31,11 @@ void mountain::Renderer::Initialize(const char* const windowTitle, const int win
     // GL 3.0
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, mGlVersion.major);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, mGlVersion.minor);
-    glfwInitHint(GLFW_JOYSTICK_HAT_BUTTONS, GLFW_FALSE);
+    glfwInitHint(GLFW_JOYSTICK_HAT_BUTTONS, false);
 
     // Create window with graphics context
-    mWindow = glfwCreateWindow(windowWidth, windowHeight, windowTitle, NULL, NULL);
-    if (mWindow == NULL)
-        assert(false && "Failed to create GLFW window.");
+    mWindow = glfwCreateWindow(windowWidth, windowHeight, windowTitle, nullptr, nullptr);
+    assert(mWindow && "Failed to create GLFW window.");
 
     glfwMakeContextCurrent(mWindow);
     glfwSwapInterval(vsync); // Enable vsync
@@ -53,6 +54,15 @@ void mountain::Renderer::PreFrame()
 
     MakeOpenGLCoordinatesAbsolute(WindowSize.x, WindowSize.y);
 
+    const float trs[16] = {
+        TRS[0][0], TRS[0][1], TRS[0][2], TRS[0][3],
+        TRS[1][0], TRS[1][1], TRS[1][2], TRS[1][3],
+        TRS[2][0], TRS[2][1], TRS[2][2], TRS[2][3],
+        TRS[3][0], TRS[3][1], TRS[3][2], TRS[3][3]
+    };
+    glLoadMatrixf(trs);
+    const Vector2i scale = 1 / Resolution / TargetResolution;
+    glScalef(scale.x, scale.y, 1);
     glTranslatef(ScreenOrigin.x, ScreenOrigin.y, 0);
 }
 
