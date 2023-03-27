@@ -4,6 +4,7 @@
 #include <compare>
 #include <cassert>
 
+class Vector2i;
 class Vector3;
 class Matrix;
 
@@ -91,8 +92,9 @@ public:
 	float  operator[](const size_t i) const;
 	[[nodiscard]]
 	float& operator[](const size_t i);
+	explicit operator Vector2i() const;
     explicit operator Vector3() const;
-    operator Matrix() const;
+	operator Matrix() const;
 
     // Automatically generates all comparison operators
 	[[nodiscard]]
