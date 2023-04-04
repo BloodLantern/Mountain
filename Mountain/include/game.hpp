@@ -40,6 +40,6 @@ namespace mountain
         virtual void Render() = 0;
 
         /// @brief Forces the game to repaint itself. Does nothing if RenderEachFrame is true.
-        void Repaint();
+        void Redraw();
     };
 }

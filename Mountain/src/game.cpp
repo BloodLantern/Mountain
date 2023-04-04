@@ -47,6 +47,16 @@ void mountain::Game::MainLoop()
     }
 }
 
-void mountain::Game::Repaint()
+void mountain::Game::Redraw()
 {
+    if (RenderEachFrame)
+        return;
+
+    Renderer::PreFrame();
+    PreRender();
+
+    Render();
+
+    PostRender();
+    Renderer::PostFrame();
 }
