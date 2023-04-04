@@ -19,6 +19,7 @@ namespace mountain
         operator ColorHSV() const;
         operator Colorf() const;
     };
+    typedef Color ColorRGB;
 
     /// @brief The Colorf struct represents a color in RGBA color space.
     ///        It uses values from 0 to 1. The default alpha value is 1.

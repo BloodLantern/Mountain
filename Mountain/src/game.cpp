@@ -20,17 +20,33 @@ void mountain::Game::MainLoop()
     {
         double t = glfwGetTime();
 
-        Input::Update();
-        Renderer::PreFrame();
-        PreRender();
+        if (RenderEachFrame)
+        {
+            Renderer::PreFrame();
+            PreRender();
+        }
+        else
+            glfwPollEvents();
 
-        // Call game loop
-        Update();
-        Render();
+        if (UpdateInputsEachFrame)
+            Input::Update();
+            
+        if (UpdateEachFrame)
+            Update();
+        if (RenderEachFrame)
+        {
+            Render();
 
-        PostRender();
-        Renderer::PostFrame();
+            PostRender();
+            Renderer::PostFrame();
+        }
+        else
+            glfwSwapBuffers(Renderer::GetWindow());
 
         DeltaTime = (float) (glfwGetTime() - t);
     }
+}
+
+void mountain::Game::Repaint()
+{
 }

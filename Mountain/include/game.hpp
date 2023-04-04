@@ -10,6 +10,9 @@ namespace mountain
     {
     public:
         float DeltaTime = 0.f;
+        bool UpdateInputsEachFrame = true;
+        bool UpdateEachFrame = true;
+        bool RenderEachFrame = true;
 
         Game(const char* const windowTitle, const int windowWidth = 1280, const int windowHeight = 720, const bool vsync = true);
         ~Game();
@@ -35,5 +38,8 @@ namespace mountain
         virtual void Update() = 0;
         /// @brief Called once each frame after Game::Update. To be overriden by the user.
         virtual void Render() = 0;
+
+        /// @brief Forces the game to repaint itself. Does nothing if RenderEachFrame is true.
+        void Repaint();
     };
 }
