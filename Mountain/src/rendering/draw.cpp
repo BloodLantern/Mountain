@@ -22,7 +22,27 @@ void mountain::Draw::Line(const Vector2 &p1, const Vector2 &p2, const Color colo
     glEnd();
 }
 
-void mountain::Draw::Rect(const Vector2& position, const Vector2& size, const Color color)
+void mountain::Draw::Triangle(const Vector2 &p1, const Vector2 &p2, const Vector2 &p3, const Color color)
+{
+    glBegin(GL_LINE_LOOP);
+    glColor4ub(color.r, color.g, color.b, color.a);
+    glVertex2f(p1.x, p1.y);
+    glVertex2f(p2.x, p2.y);
+    glVertex2f(p3.x, p3.y);
+    glEnd();
+}
+
+void mountain::Draw::TriangleFilled(const Vector2 &p1, const Vector2 &p2, const Vector2 &p3, const Color color)
+{
+    glBegin(GL_TRIANGLES);
+    glColor4ub(color.r, color.g, color.b, color.a);
+    glVertex2f(p1.x, p1.y);
+    glVertex2f(p2.x, p2.y);
+    glVertex2f(p3.x, p3.y);
+    glEnd();
+}
+
+void mountain::Draw::Rect(const Vector2 &position, const Vector2 &size, const Color color)
 {
     glBegin(GL_LINE_LOOP);
     glColor4ub(color.r, color.g, color.b, color.a);

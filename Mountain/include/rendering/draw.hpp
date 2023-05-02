@@ -19,6 +19,9 @@ namespace mountain
 
         static void Line(const Vector2& p1, const Vector2& p2, const Color color);
 
+        static void Triangle(const Vector2& p1, const Vector2& p2, const Vector2& p3, const Color color);
+        static void TriangleFilled(const Vector2& p1, const Vector2& p2, const Vector2& p3, const Color color);
+
         static void Rect(const Vector2& position, const Vector2& size, const Color color);
         static void RectFilled(const Vector2& position, const Vector2& size, const Color color);
 
