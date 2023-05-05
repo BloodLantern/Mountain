@@ -26,8 +26,8 @@ namespace mountain
         inline float Top() const override { return Position.y; }
         inline float Bottom() const override { return Position.y + Radius; }
         inline Vector2 Center() const override { return Position; }
-        virtual inline float Width() const { return Radius * 2; }
-        virtual inline float Height() const { return Radius * 2; }
-        virtual inline Vector2 Size() const { return Vector2(Radius * 2); }
+        inline float Width() const override { return Radius * 2; }
+        inline float Height() const override { return Radius * 2; }
+        inline Vector2 Size() const override { return Vector2(Radius * 2); }
     };
 }

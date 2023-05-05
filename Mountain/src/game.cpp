@@ -43,7 +43,7 @@ void mountain::Game::MainLoop()
         else
             glfwSwapBuffers(Renderer::GetWindow());
 
-        DeltaTime = (float) (glfwGetTime() - t);
+        DeltaTime = (float) (glfwGetTime() - t) * TimeScale;
     }
 }
 

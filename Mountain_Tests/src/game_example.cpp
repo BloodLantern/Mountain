@@ -199,11 +199,11 @@ bool showInputs = false;
 
 void test::GameExample::Render()
 {
-	/*for (std::vector<mountain::Entity*>::iterator it = Entities.begin(); it != Entities.end(); it++)
+	for (std::vector<mountain::Entity*>::iterator it = Entities.begin(); it != Entities.end(); it++)
 	{
 		(*it)->Draw();
 		//(*it)->Collider->Draw(mountain::ColorRed);
-	}*/
+	}
 
 	grid.Draw(mountain::ColorRed);
 
@@ -212,6 +212,7 @@ void test::GameExample::Render()
 	ImGui::Checkbox("Show inputs window", &showInputs);
 	ImGui::InputInt("Max balls", &maxBalls);
 	ImGui::InputFloat("Ball spawn delay", &ballSpawnDelay);
+	ImGui::InputFloat("Time scale", &TimeScale);
 	ImGui::End();
 
 	if (showInputs)

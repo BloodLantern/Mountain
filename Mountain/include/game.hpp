@@ -10,6 +10,7 @@ namespace mountain
     {
     public:
         float DeltaTime = 0.f;
+        float TimeScale = 1.f;
         bool UpdateInputsEachFrame = true;
         bool UpdateEachFrame = true;
         bool RenderEachFrame = true;
