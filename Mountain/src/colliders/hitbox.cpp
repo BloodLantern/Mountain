@@ -2,6 +2,7 @@
 
 #include "draw.hpp"
 #include "circle.hpp"
+#include "grid.hpp"
 
 mountain::Hitbox::Hitbox(const Vector2 &position, const Vector2& size)
     : Collider(position), BoxSize(size)
@@ -14,6 +15,17 @@ void mountain::Hitbox::Draw(const Color color) const
     Draw::Rect(Position, BoxSize, color);
 }
 
+bool mountain::Hitbox::Intersects(const Hitbox &other) const
+{
+    Vector2 position = other.Position, size = other.BoxSize;
+
+    // Check for a collision with any of the hitbox's corners
+    return CheckCollision(position) // Top left
+        || CheckCollision(Vector2(position.x + size.x, position.y)) // Top right
+        || CheckCollision(Vector2(position.x, position.y + size.y)) // Bottom left
+        || CheckCollision(Vector2(position.x + size.x, position.y + size.y)); // Bottom right
+}
+
 bool mountain::Hitbox::CheckCollision(const Vector2& point) const
 {
     return point.x < Right() && point.x > Left()
@@ -22,13 +34,7 @@ bool mountain::Hitbox::CheckCollision(const Vector2& point) const
 
 bool mountain::Hitbox::CheckCollision(const Hitbox& hitbox) const
 {
-    Vector2 position = hitbox.Position, size = hitbox.BoxSize;
-
-    // Check for a collision with any of the hitbox's corners
-    if (CheckCollision(position) // Top left
-        || CheckCollision(Vector2(position.x + size.x, position.y)) // Top right
-        || CheckCollision(Vector2(position.x, position.y + size.y)) // Bottom left
-        || CheckCollision(Vector2(position.x + size.x, position.y + size.y))) // Bottom right
+    if (Intersects(hitbox))
         return true;
 
     // Check if one of the edges is inside this hitbox
@@ -50,4 +56,10 @@ bool mountain::Hitbox::CheckCollision(const Circle& circle) const
         || circle.Intersect(topRight, bottomRight)
         || circle.Intersect(bottomRight, bottomLeft)
         || circle.Intersect(bottomLeft, topLeft);
+}
+
+bool mountain::Hitbox::CheckCollision(const Grid &grid) const
+{
+    // Implementation is in 'colliders/grid.cpp'
+    return grid.CheckCollision(*this);
 }

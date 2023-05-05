@@ -2,6 +2,7 @@
 
 #include <game.hpp>
 #include <color.hpp>
+#include <grid.hpp>
 
 namespace test
 {
@@ -12,6 +13,7 @@ namespace test
 		int ballCount = 0;
 		float ballTimer = 0;
 		mountain::ColorHSV lastBallColor = mountain::ColorRed;
+		mountain::Grid grid;
 
 		GameExample(const char* const windowTitle);
 

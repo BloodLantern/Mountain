@@ -17,6 +17,7 @@ namespace mountain
         bool CheckCollision(const Vector2& point) const override;
         bool CheckCollision(const Hitbox& hitbox) const override;
         bool CheckCollision(const Circle& circle) const override;
+        bool CheckCollision(const Grid& grid) const override;
 
         bool Intersect(const Vector2& p1, const Vector2& p2) const;
 

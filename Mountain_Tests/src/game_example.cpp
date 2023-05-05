@@ -16,7 +16,8 @@
 #include <imgui_impl_opengl3.h>
 
 test::GameExample::GameExample(const char* const windowTitle)
-	: Game(windowTitle)
+	: Game(windowTitle),
+	grid(Vector2i(10, 10), Vector2(64, 64), Vector2(150))
 {
 }
 
@@ -53,6 +54,15 @@ void test::GameExample::Initialize()
 
 	cursor->Collides = false;
 	Entities.push_back(cursor);
+
+	grid.Tiles[0][0] = true;
+	grid.Tiles[0][1] = true;
+	grid.Tiles[1][0] = true;
+	grid.Tiles[1][1] = true;
+	grid.Tiles[1][2] = true;
+	grid.Tiles[1][3] = true;
+	grid.Tiles[2][3] = true;
+	grid.Tiles[4][3] = true;
 }
 
 void test::GameExample::Shutdown()
@@ -189,11 +199,13 @@ bool showInputs = false;
 
 void test::GameExample::Render()
 {
-	for (std::vector<mountain::Entity*>::iterator it = Entities.begin(); it != Entities.end(); it++)
+	/*for (std::vector<mountain::Entity*>::iterator it = Entities.begin(); it != Entities.end(); it++)
 	{
 		(*it)->Draw();
 		//(*it)->Collider->Draw(mountain::ColorRed);
-	}
+	}*/
+
+	grid.Draw(mountain::ColorRed);
 
 	ImGui::Begin("Debug");
 	ImGui::Checkbox("Throw balls", &throwBalls);
@@ -208,6 +220,8 @@ void test::GameExample::Render()
 		if (ImGui::TreeNode("Mouse"))
 		{
 			ImGui::Text("Position: %d, %d", mountain::Input::MousePosition.x, mountain::Input::MousePosition.y);
+			ImGui::Text("Button down right: %d", mountain::Input::MouseDown[mountain::inputs::MouseButton_Right]);
+			ImGui::Text("Button release right: %d", mountain::Input::MouseRelease[mountain::inputs::MouseButton_Right]);
 			for (unsigned char i = 0; i < mountain::inputs::MouseButton_MaxCount; i++)
 			{
 				ImGui::Text("Button down %d: %d", i + 1, mountain::Input::MouseDown[i]);

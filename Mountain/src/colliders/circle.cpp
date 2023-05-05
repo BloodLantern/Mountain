@@ -2,6 +2,7 @@
 
 #include "draw.hpp"
 #include "hitbox.hpp"
+#include "grid.hpp"
 
 #define SQ(x) (x * x)
 
@@ -30,6 +31,12 @@ bool mountain::Circle::CheckCollision(const Hitbox& hitbox) const
 bool mountain::Circle::CheckCollision(const Circle& circle) const
 {
     return (circle.Position - Position).SquaredNorm() < SQ(Radius + circle.Radius);
+}
+
+bool mountain::Circle::CheckCollision(const Grid &grid) const
+{
+    // Implementation is in 'colliders/grid.cpp'
+    return grid.CheckCollision(*this);
 }
 
 bool mountain::Circle::Intersect(const Vector2& p1, const Vector2& p2) const

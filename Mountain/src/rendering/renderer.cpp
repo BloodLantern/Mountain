@@ -31,6 +31,7 @@ void mountain::Renderer::Initialize(const char* const windowTitle, const int win
     // GL 3.0
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, mGlVersion.major);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, mGlVersion.minor);
+    glfwWindowHint(GLFW_RESIZABLE, false);
     glfwInitHint(GLFW_JOYSTICK_HAT_BUTTONS, false);
 
     // Create window with graphics context

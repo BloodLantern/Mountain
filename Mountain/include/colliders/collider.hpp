@@ -11,12 +11,14 @@ namespace mountain
     {
         NONE,
         HITBOX,
-        CIRCLE
+        CIRCLE,
+        GRID
     };
 
     // Colliders forward declarations
     class Hitbox;
     class Circle;
+    class Grid;
 
     class Collider
     {
@@ -31,11 +33,12 @@ namespace mountain
 
         virtual void Draw(const Color color) const = 0;
 
-        bool CheckCollision(const Entity& entity) const { return CheckCollision(*entity.Collider); };
+        bool CheckCollision(const Entity& entity) const { return CheckCollision(*entity.Collider); }
         bool CheckCollision(const Collider& collider) const;
         virtual bool CheckCollision(const Vector2& point) const = 0;
         virtual bool CheckCollision(const Hitbox& hitbox) const = 0;
         virtual bool CheckCollision(const Circle& circle) const = 0;
+        virtual bool CheckCollision(const Grid& grid) const = 0;
 
         virtual inline float Left() const = 0;
         virtual inline float Right() const = 0;
