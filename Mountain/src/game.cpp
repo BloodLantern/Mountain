@@ -31,7 +31,7 @@ void mountain::Game::MainLoop()
         if (UpdateInputsEachFrame)
             Input::Update();
             
-        if (UpdateEachFrame)
+        if (UpdateEachFrame && FreezeTimer <= 0)
             Update();
         if (RenderEachFrame)
         {
@@ -43,6 +43,7 @@ void mountain::Game::MainLoop()
         else
             glfwSwapBuffers(Renderer::GetWindow());
 
+        FreezeTimer -= DeltaTime;
         DeltaTime = (float) (glfwGetTime() - t) * TimeScale;
     }
 }
