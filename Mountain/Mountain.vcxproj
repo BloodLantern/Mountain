@@ -160,7 +160,7 @@
       <TreatLibWarningAsErrors>true</TreatLibWarningAsErrors>
     </Lib>
     <PostBuildEvent>
-      <Command>for /f "tokens=*" %%a in ('dir /b /s /a-d $(ProjectDir)include') do @copy /y %%a $(OutDir)include</Command>
+      <Command>mkdir "$(ProjectDir)..\bin" &amp; mkdir "$(ProjectDir)..\bin\include" &amp; for /f "tokens=*" %%a in ('dir /b /s /a-d $(ProjectDir)include') do @copy /y %%a $(OutDir)include</Command>
     </PostBuildEvent>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -192,7 +192,7 @@
       <TreatLibWarningAsErrors>true</TreatLibWarningAsErrors>
     </Lib>
     <PostBuildEvent>
-      <Command>for /f "tokens=*" %%a in ('dir /b /s /a-d $(ProjectDir)include') do @copy /y %%a $(OutDir)include</Command>
+      <Command>mkdir "$(ProjectDir)..\bin" &amp; mkdir "$(ProjectDir)..\bin\include" &amp; for /f "tokens=*" %%a in ('dir /b /s /a-d $(ProjectDir)include') do @copy /y %%a $(OutDir)include</Command>
     </PostBuildEvent>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
