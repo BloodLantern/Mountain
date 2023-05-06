@@ -93,9 +93,9 @@ bool mountain::Grid::CheckCollision(const Hitbox& hitbox) const
     if (y + height > GridSize.y)
         height = GridSize.y - y;
 
-    for (int index1 = 0; index1 < width; ++index1)
-        for (int index2 = 0; index2 < height; ++index2)
-            if (Tiles[x + index1][y + index2])
+    for (int i = 0; i < width; ++i)
+        for (int j = 0; j < height; ++j)
+            if (Tiles[x + i][y + j])
                 return true;
 
     return false;
