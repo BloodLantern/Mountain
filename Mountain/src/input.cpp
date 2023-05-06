@@ -22,6 +22,8 @@ void MousePositionCallback(GLFWwindow*, double x, double y)
     mountain::Input::MousePosition = Vector2i((int) x, (int) y);
 }
 
+bool mouseReleasedLastFrame[mountain::inputs::MouseButton_MaxCount];
+
 void MouseButtonCallback(GLFWwindow*, int button, int action, int)
 {
     if (action == GLFW_PRESS)
@@ -32,6 +34,7 @@ void MouseButtonCallback(GLFWwindow*, int button, int action, int)
     {
         mountain::Input::MouseDown[button] = false;
         mountain::Input::MouseRelease[button] = true;
+        mouseReleasedLastFrame[button] = true;
     }
 }
 
@@ -39,6 +42,8 @@ void MouseScrollCallback(GLFWwindow*, double xoffset, double yoffset)
 {
     mountain::Input::MouseWheel = Vector2((float) xoffset, (float) yoffset);
 }
+
+bool keyReleasedLastFrame[mountain::inputs::KeyboardKey_MaxCount];
 
 void KeyCallback(GLFWwindow*, int key, int, int action, int)
 {
@@ -54,6 +59,7 @@ void KeyCallback(GLFWwindow*, int key, int, int action, int)
     {
         mountain::Input::KeyboardKeyDown[key] = false;
         mountain::Input::KeyboardKeyRelease[key] = true;
+        keyReleasedLastFrame[key] = true;
     }
 }
 
@@ -87,6 +93,7 @@ void mountain::Input::Initialize()
     {
         MouseDown[i] = false;
         MouseRelease[i] = false;
+        mouseReleasedLastFrame[i] = false;
     }
 
     for (unsigned short i = 0; i < inputs::KeyboardKey_MaxCount; i++)
@@ -109,12 +116,22 @@ void mountain::Input::Update()
 {
     for (unsigned char i = 0; i < inputs::MouseButton_MaxCount; i++)
         if (MouseRelease[i])
-            MouseRelease[i] = false;
+        {
+            if (!mouseReleasedLastFrame[i])
+                MouseRelease[i] = false;
+            else
+                mouseReleasedLastFrame[i] = false;
+        }
     mountain::Input::MouseWheel = 0;
 
     for (unsigned short i = 0; i < inputs::KeyboardKey_MaxCount; i++)
         if (KeyboardKeyRelease[i])
-            KeyboardKeyRelease[i] = false;
+        {
+            if (!keyReleasedLastFrame[i])
+                KeyboardKeyRelease[i] = false;
+            else
+                keyReleasedLastFrame[i] = false;
+        }
 
     for (unsigned char i = 0; i < inputs::Controller_MaxCount; i++)
         if (ControllerConnected[i])

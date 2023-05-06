@@ -183,9 +183,6 @@ void test::GameExample::Update()
 		}
 
 	mountain::Collide::CheckCollisions(colliders, ColliderCallback);
-
-	if (mountain::Input::MouseDown[mountain::inputs::MouseButton_Left])
-		FreezeTimer = 0.5f;
 }
 
 bool showInputs = false;

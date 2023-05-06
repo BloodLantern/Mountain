@@ -4,14 +4,10 @@
 
 #include <vector2i.hpp>
 
+#include "input_constants.hpp"
+
 namespace mountain
 {
-    namespace inputs
-    {
-        // Volontary include preprocessor inside the namespace.
-        #include "input_constants.hpp"
-    }
-    
     class Input // Static class used to get keyboard, mouse and controller input.
     {
     public:
