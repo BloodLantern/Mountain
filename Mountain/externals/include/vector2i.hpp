@@ -12,6 +12,9 @@ class Vector2i
 public:
 	int x, y;
 
+	consteval static Vector2i UnitX() { return Vector2i(1, 0); }
+	consteval static Vector2i UnitY() { return Vector2i(0, 1); }
+
 	constexpr Vector2i() : x(0), y(0) {}
 	/// @brief Constructs a Vector2i with both its components set to 'xy'.
 	constexpr Vector2i(const int xy) : x(xy), y(xy) {}
@@ -118,5 +121,12 @@ Vector2i& operator-=(Vector2i& a, const Vector2i b);
 Vector2i& operator-=(Vector2i& v, const int factor);
 Vector2i& operator*=(Vector2i& a, const Vector2i b);
 Vector2i& operator*=(Vector2i& v, const int factor);
+
+bool operator==(const Vector2i& v, const int i);
+bool operator!=(const Vector2i& v, const int i);
+bool operator<(const Vector2i& v, const int i);
+bool operator>(const Vector2i& v, const int i);
+bool operator<=(const Vector2i& v, const int i);
+bool operator>=(const Vector2i& v, const int i);
 
 std::ostream& operator<<(std::ostream& out, const Vector2i v);

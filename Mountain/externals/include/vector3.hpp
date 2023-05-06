@@ -13,8 +13,12 @@ class Vector3
 public:
 	float x, y, z;
 
+	consteval static Vector3 UnitX() { return Vector3(1.0f, 0.0f, 0.0f); }
+	consteval static Vector3 UnitY() { return Vector3(0.0f, 1.0f, 0.0f); }
+	consteval static Vector3 UnitZ() { return Vector3(0.0f, 0.0f, 1.0f); }
+
 	constexpr Vector3()	: x(0), y(0), z(0) {}
-	/// @brief Constructs a Vector3 with both its components set to 'xy'.
+	/// @brief Constructs a Vector3 with all its components set to 'xyz'.
 	constexpr Vector3(const float xyz) : x(xyz), y(xyz), z(xyz) {}
 	constexpr Vector3(const float x, const float y, const float z) : x(x), y(y), z(z) {}
 	constexpr Vector3(const std::initializer_list<float>& values)
@@ -109,5 +113,12 @@ Vector3& operator*=(Vector3& a, const Vector3& b);
 Vector3& operator*=(Vector3& v, const float factor);
 Vector3& operator/=(Vector3& a, const Vector3& b);
 Vector3& operator/=(Vector3& v, const float factor);
+
+bool operator==(const Vector3& v, const float f);
+bool operator!=(const Vector3& v, const float f);
+bool operator<(const Vector3& v, const float f);
+bool operator>(const Vector3& v, const float f);
+bool operator<=(const Vector3& v, const float f);
+bool operator>=(const Vector3& v, const float f);
 
 std::ostream& operator<<(std::ostream& out, const Vector3& v);

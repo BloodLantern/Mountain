@@ -1,9 +1,12 @@
 #pragma once
 
 #include <vector>
-#include "vector2.hpp"
-#include "vector3.hpp"
 #include "vector.hpp"
+#include "vector2i.hpp"
+
+class Matrix2x2;
+class Matrix3x3;
+class Matrix4x4;
 
 /// @brief The Matrix class represents a two-dimensional array mainly used for mathematical operations.
 ///        The easiest way to create a matrix is to use the std::initializer_list constructor which allows
@@ -67,10 +70,10 @@ public:
     Matrix& Inverse(this Matrix& self);
 
     /// @brief Returns a Vector2 representing the size of this matrix. This operation
-    ///        casts two size_t to floats and therefore might be inaccurate if used
+    ///        casts two size_t to ints and therefore might be inaccurate if used
     ///        with huge numbers.
     [[nodiscard]]
-    constexpr Vector2 GetSize() const { return Vector2((float) mRows, (float) mCols); }
+    constexpr Vector2i GetSize() const { return Vector2i((int) mRows, (int) mCols); }
     [[nodiscard]]
     constexpr size_t GetRows() const { return mRows; }
     [[nodiscard]]
@@ -163,6 +166,9 @@ public:
     explicit operator Vector2() const;
     explicit operator Vector3() const;
     explicit operator Vector() const;
+    explicit operator Matrix2x2() const;
+    explicit operator Matrix3x3() const;
+    explicit operator Matrix4x4() const;
 
 private:
     std::vector<Vector> mData;
