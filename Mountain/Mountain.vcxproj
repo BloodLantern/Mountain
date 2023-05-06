@@ -31,6 +31,7 @@
     <ClInclude Include="include\rendering\draw.hpp" />
     <ClInclude Include="include\entity.hpp" />
     <ClInclude Include="include\rendering\renderer.hpp" />
+    <ClInclude Include="include\run_length_encoding.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\colliders\circle.cpp" />
@@ -44,6 +45,7 @@
     <ClCompile Include="src\rendering\draw.cpp" />
     <ClCompile Include="src\entity.cpp" />
     <ClCompile Include="src\rendering\renderer.cpp" />
+    <ClCompile Include="src\run_length_encoding.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

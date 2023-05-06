@@ -12,7 +12,7 @@ std::string mountain::RunLengthEncoding::Encode(const std::string& str)
             count++;
             j++;
         }
-        letters += count;
+        letters += std::to_string(count);
         letters.push_back(str[j]);
     }
 
