@@ -39,7 +39,12 @@ void mountain::Renderer::Initialize(const char* const windowTitle, const int win
     assert(mWindow && "Failed to create GLFW window.");
 
     glfwMakeContextCurrent(mWindow);
-    glfwSwapInterval(vsync); // Enable vsync
+    // Enable vsync
+    glfwSwapInterval(vsync);
+
+    // Enable transparency
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glEnable(GL_BLEND);
 
     UpdateWindowFields();
 }
