@@ -26,7 +26,7 @@ std::string mountain::RunLengthEncoding::Decode(const std::string& data)
     std::string result;
 
     for (size_t i = 0; i < data.size(); i += 2)
-        result.append(data[i], data[i + 1]);
+        result.append((unsigned char) data[i], data[i + 1]);
 
     return result;
 }
