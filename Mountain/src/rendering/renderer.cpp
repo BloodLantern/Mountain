@@ -85,9 +85,13 @@ void mountain::Renderer::UpdateModelViewMatrix()
 {
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    Matrix4x4 temp = Camera.Transpose();
+    Matrix4x4 temp = Camera;
+    const Vector2 resolutionMultiplier = 1 / (Resolution / TargetResolution);
+    temp[0][3] *= resolutionMultiplier.x;
+    temp[1][3] *= resolutionMultiplier.y;
+    temp.Transpose();
     glLoadMatrixf(&temp[0][0]);
-    const Vector2 scale = 1 / (Resolution / TargetResolution);
+    const Vector2 scale = resolutionMultiplier;
     glScalef(scale.x, scale.y, 1);
     glTranslatef(ScreenOrigin.x, ScreenOrigin.y, 0);
 }
