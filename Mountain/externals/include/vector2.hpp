@@ -96,7 +96,7 @@ public:
 	[[nodiscard]]
 	float& operator[](const size_t i);
 	explicit operator Vector2i() const;
-    explicit operator Vector3() const;
+    operator Vector3() const;
 	operator Matrix() const;
 
     // Automatically generates all comparison operators
