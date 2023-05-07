@@ -17,7 +17,7 @@ public:
     /// @brief Returns the identity matrix.
     ///        The identity matrix is a matrix with its diagonal
     ///        set to one and everything else set to zero.
-    static constexpr Matrix4x4 Identity();
+    static Matrix4x4 Identity();
 
     /// @brief Creates a matrix with all its values set to this default value.
     constexpr Matrix4x4(const float defaultValue = 0.f)
