@@ -16,7 +16,7 @@ public:
     /// @brief Returns the identity matrix.
     ///        The identity matrix is a matrix with its diagonal
     ///        set to one and everything else set to zero.
-    static consteval Matrix3x3 Identity();
+    static constexpr Matrix3x3 Identity();
 
     /// @brief Creates a matrix with all its values set to this default value.
     constexpr Matrix3x3(const float defaultValue = 0.f)

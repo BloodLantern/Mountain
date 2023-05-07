@@ -12,8 +12,8 @@ class Vector2i
 public:
 	int x, y;
 
-	consteval static Vector2i UnitX() { return Vector2i(1, 0); }
-	consteval static Vector2i UnitY() { return Vector2i(0, 1); }
+	static constexpr Vector2i UnitX() { return Vector2i(1, 0); }
+	static constexpr Vector2i UnitY() { return Vector2i(0, 1); }
 
 	constexpr Vector2i() : x(0), y(0) {}
 	/// @brief Constructs a Vector2i with both its components set to 'xy'.

@@ -14,8 +14,8 @@ class Vector2
 public:
 	float x, y;
 
-	consteval static Vector2 UnitX() { return Vector2(1.0f, 0.0f); }
-	consteval static Vector2 UnitY() { return Vector2(0.0f, 1.0f); }
+	static constexpr Vector2 UnitX() { return Vector2(1.0f, 0.0f); }
+	static constexpr Vector2 UnitY() { return Vector2(0.0f, 1.0f); }
 
 	constexpr Vector2()	: x(0), y(0) {}
 	/// @brief Constructs a Vector2 with both its components set to 'xy'.

@@ -2,7 +2,7 @@
 
 #include <GLFW/glfw3.h>
 #include <vector2i.hpp>
-#include <matrix.hpp>
+#include <matrix4x4.hpp>
 
 #include "color.hpp"
 
@@ -24,7 +24,7 @@ namespace mountain
         static Vector2i WindowPosition;
         static Vector2i WindowSize;
         static Colorf ClearColor; // Color used to fill the window before each frame.
-        static Matrix TRS; // This is the TRS matrix that will be applied before rendering.
+        static Matrix4x4 Camera; // This is the TRS matrix that will be applied before rendering.
 
         static void Initialize(const char* const windowTitle,
             const int windowWidth, const int windowHeight,
@@ -34,6 +34,8 @@ namespace mountain
         static void Shutdown();
 
         static void MakeOpenGLCoordinatesAbsolute(const int windowWidth, const int windowHeight);
+        static void UpdateModelViewMatrix();
+        static void ResetModelViewMatrix();
 
         static GLFWwindow* GetWindow() { return mWindow; }
         static OpenGLVersion& GetOpenGLVersion() { return mGlVersion; }
