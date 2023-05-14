@@ -27,6 +27,7 @@
     <ClInclude Include="include\game.hpp" />
     <ClInclude Include="include\input.hpp" />
     <ClInclude Include="include\input_constants.hpp" />
+    <ClInclude Include="include\random.hpp" />
     <ClInclude Include="include\rendering\color.hpp" />
     <ClInclude Include="include\rendering\draw.hpp" />
     <ClInclude Include="include\entity.hpp" />
@@ -43,6 +44,7 @@
     <ClCompile Include="src\colliders\hitbox.cpp" />
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\input.cpp" />
+    <ClCompile Include="src\random.cpp" />
     <ClCompile Include="src\rendering\color.cpp" />
     <ClCompile Include="src\rendering\draw.cpp" />
     <ClCompile Include="src\entity.cpp" />
