@@ -21,7 +21,7 @@ void mountain::Renderer::Initialize(const char* const windowTitle, const int win
     glfwSetErrorCallback(
         [](int error, const char* description)
         {
-            std::fprintf(stderr, "GLFW error %d: %s\n", error, description);
+            std::cerr << "GLFW error " << error << ": " << description << std::endl;
         }
     );
 
@@ -65,6 +65,7 @@ void mountain::Renderer::PreFrame()
 
 void mountain::Renderer::PostFrame()
 {
+    glFlush();
     glfwSwapBuffers(mWindow);
 }
 

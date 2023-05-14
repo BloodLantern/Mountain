@@ -39,7 +39,7 @@ void ShutdownImGui()
 	ImGui::DestroyContext();
 }
 
-test::Ball* cursor = new test::Ball(0, mountain::ColorWhite, 20);
+test::Ball* cursor = new test::Ball(0, mountain::Color::White, 20);
 
 void test::GameExample::Initialize()
 {
@@ -53,6 +53,8 @@ void test::GameExample::Initialize()
 
 	cursor->Collides = false;
 	Entities.push_back(cursor);
+
+	texture.Load();
 }
 
 void test::GameExample::Shutdown()
@@ -194,6 +196,8 @@ void test::GameExample::Render()
 		(*it)->Draw();
 		//(*it)->Collider->Draw(mountain::ColorRed);
 	}
+
+	mountain::Draw::Image(texture.id, 300, 56, 0, 1, mountain::Color(0x7F, 0x7F, 0x7F, 0x7F));
 
 	ImGui::Begin("Debug");
 	ImGui::Checkbox("Throw balls", &throwBalls);

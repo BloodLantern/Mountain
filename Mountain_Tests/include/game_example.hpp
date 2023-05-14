@@ -3,6 +3,7 @@
 #include <game.hpp>
 #include <color.hpp>
 #include <grid.hpp>
+#include <texture.hpp>
 
 namespace test
 {
@@ -12,7 +13,8 @@ namespace test
         std::vector<mountain::Entity*> Entities;
 		int ballCount = 0;
 		float ballTimer = 0;
-		mountain::ColorHSV lastBallColor = mountain::ColorRed;
+		mountain::ColorHSV lastBallColor = mountain::Color::Red;
+		mountain::Texture texture = "assets/strawberry.png";
 
 		GameExample(const char* const windowTitle);
 

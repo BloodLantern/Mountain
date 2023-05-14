@@ -27,9 +27,7 @@ bool mouseReleasedLastFrame[mountain::inputs::MouseButton_MaxCount];
 void MouseButtonCallback(GLFWwindow*, int button, int action, int)
 {
     if (action == GLFW_PRESS)
-    {
         mountain::Input::MouseDown[button] = true;
-    }
     else if (action == GLFW_RELEASE)
     {
         mountain::Input::MouseDown[button] = false;
@@ -52,9 +50,7 @@ void KeyCallback(GLFWwindow*, int key, int, int action, int)
         return;
 
     if (action == GLFW_PRESS)
-    {
         mountain::Input::KeyboardKeyDown[key] = true;
-    }
     else if (action == GLFW_RELEASE)
     {
         mountain::Input::KeyboardKeyDown[key] = false;

@@ -18,5 +18,5 @@ void test::Wall::Update(const float)
 
 void test::Wall::Draw()
 {
-	mountain::Draw::RectFilled(Position, mSize, mountain::ColorGray);
+	mountain::Draw::RectFilled(Position, mSize, Color);
 }
