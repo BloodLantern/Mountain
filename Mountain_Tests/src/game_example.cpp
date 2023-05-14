@@ -8,6 +8,7 @@
 #include <entity.hpp>
 #include <renderer.hpp>
 #include <input.hpp>
+#include <random.hpp>
 
 #include <iostream>
 
@@ -196,6 +197,12 @@ void test::GameExample::Render()
 		(*it)->Draw();
 		//(*it)->Collider->Draw(mountain::ColorRed);
 	}
+
+	mountain::Draw::CircleFilled(500, 50, mountain::Color::Black);
+	Vector2 points[100];
+	for (int i = 0; i < 100; ++i)
+		points[i] = mountain::Random::PointInCircle(500, 50);
+	mountain::Draw::Points(points, 100, mountain::Color::Green);
 
 	mountain::Draw::Image(texture.id, 300, 56, 0, 1, mountain::Color(0x7F, 0x7F, 0x7F, 0x7F));
 
