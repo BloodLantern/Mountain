@@ -8,7 +8,7 @@ namespace test
 	class Wall : public mountain::Entity
 	{
 	public:
-		mountain::Color Color = mountain::ColorGray;
+		mountain::Color Color = mountain::Color::Gray;
 
 		Wall(const Vector2& position, const Vector2& size);
 

@@ -74,6 +74,24 @@ void mountain::Draw::CircleFilled(const Vector2 &position, const float radius, c
     CircleInternal(position, radius, color, segments, GL_POLYGON);
 }
 
+void mountain::Draw::Image(const unsigned int textureId, const Vector2 &position, const Vector2 &size, const Vector2& uv0, const Vector2& uv1, const Color color)
+{
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, textureId);
+    glBegin(GL_QUADS);
+    glColor4ub(color.r, color.g, color.b, color.a);
+    glTexCoord2f(uv0.x, uv0.y);
+    glVertex2f(position.x, position.y);
+    glTexCoord2f(uv1.x, uv0.y);
+    glVertex2f(position.x + size.x, position.y);
+    glTexCoord2f(uv1.x, uv1.y);
+    glVertex2f(position.x + size.x, position.y + size.y);
+    glTexCoord2f(uv0.x, uv1.y);
+    glVertex2f(position.x, position.y + size.y);
+    glEnd();
+    glDisable(GL_TEXTURE_2D);
+}
+
 void mountain::Draw::CircleInternal(const Vector2 &position, const float radius, const Color color, unsigned int segments, const GLenum mode)
 {
     if (segments == 0)

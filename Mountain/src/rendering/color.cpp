@@ -4,6 +4,16 @@
 
 #define HUE_ANGLE 43
 
+const mountain::Color mountain::Color::White   = Color(0xFF, 0xFF, 0xFF);
+const mountain::Color mountain::Color::Gray    = Color(0x7F, 0x7F, 0x7F);
+const mountain::Color mountain::Color::Black   = Color(0x00, 0x00, 0x00);
+const mountain::Color mountain::Color::Red     = Color(0xFF, 0x00, 0x00);
+const mountain::Color mountain::Color::Green   = Color(0x00, 0xFF, 0x00);
+const mountain::Color mountain::Color::Blue    = Color(0x00, 0x00, 0xFF);
+const mountain::Color mountain::Color::Yellow  = Color(0xFF, 0xFF, 0x00);
+const mountain::Color mountain::Color::Cyan    = Color(0x00, 0xFF, 0xFF);
+const mountain::Color mountain::Color::Magenta = Color(0xFF, 0x00, 0xFF);
+
 mountain::Color::operator mountain::ColorHSV() const
 {
     ColorHSV hsv = { 0, 0, 0, a };
