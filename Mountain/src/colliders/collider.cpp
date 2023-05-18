@@ -13,15 +13,15 @@ mountain::Collider::Collider(const Vector2& position)
 
 bool mountain::Collider::CheckCollision(const Collider& collider) const
 {
-    assert(collider.Type != ColliderType::NONE && "Invalid collider type in collision check.");
+    assert(collider.Type != ColliderType::None && "Invalid collider type in collision check.");
 
     switch(collider.Type)
     {
-        case ColliderType::HITBOX:
+        case ColliderType::Hitbox:
             return CheckCollision(dynamic_cast<const Hitbox&>(collider));
-        case ColliderType::CIRCLE:
+        case ColliderType::Circle:
             return CheckCollision(dynamic_cast<const Circle&>(collider));
-        case ColliderType::GRID:
+        case ColliderType::Grid:
             return CheckCollision(dynamic_cast<const Grid&>(collider));
         default:
             throw std::runtime_error("Invalid collider type in collision check.");

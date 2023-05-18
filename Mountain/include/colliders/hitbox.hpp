@@ -9,7 +9,7 @@ namespace mountain
     public:
         Vector2 BoxSize;
 
-        Hitbox() { Type = ColliderType::HITBOX; }
+        Hitbox() { Type = ColliderType::Hitbox; }
         Hitbox(const Vector2& position, const Vector2& size);
 
         void Draw(const Color color) const override;
