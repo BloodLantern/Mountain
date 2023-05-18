@@ -7,7 +7,7 @@
 mountain::Hitbox::Hitbox(const Vector2 &position, const Vector2& size)
     : Collider(position), BoxSize(size)
 {
-    Type = ColliderType::HITBOX;
+    Type = ColliderType::Hitbox;
 }
 
 void mountain::Hitbox::Draw(const Color color) const

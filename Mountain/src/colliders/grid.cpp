@@ -20,6 +20,7 @@ mountain::Grid::Grid(const Vector2i size, const Vector2 tileSize)
     TileSize(tileSize),
     Tiles(SetupGrid(size))
 {
+    Type = ColliderType::Grid;
 }
 
 mountain::Grid::Grid(const Vector2i size, const Vector2 tileSize, const Vector2 position)
@@ -28,6 +29,7 @@ mountain::Grid::Grid(const Vector2i size, const Vector2 tileSize, const Vector2 
     TileSize(tileSize),
     Tiles(SetupGrid(size))
 {
+    Type = ColliderType::Grid;
 }
 
 mountain::Grid::~Grid()

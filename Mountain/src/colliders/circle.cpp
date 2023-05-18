@@ -9,7 +9,7 @@
 mountain::Circle::Circle(const Vector2& position, const float radius)
     : Collider(position), Radius(radius)
 {
-    Type = ColliderType::CIRCLE;
+    Type = ColliderType::Circle;
 }
 
 void mountain::Circle::Draw(const Color color) const

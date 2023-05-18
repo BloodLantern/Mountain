@@ -9,10 +9,10 @@ namespace mountain
 {
     enum class ColliderType : unsigned char
     {
-        NONE,
-        HITBOX,
-        CIRCLE,
-        GRID
+        None,
+        Hitbox,
+        Circle,
+        Grid
     };
 
     // Colliders forward declarations
@@ -25,7 +25,7 @@ namespace mountain
     public:
         Vector2 Position;
         Entity* Owner = nullptr;
-        ColliderType Type = ColliderType::NONE;
+        ColliderType Type = ColliderType::None;
 
         Collider() {};
         Collider(const Vector2& position);
