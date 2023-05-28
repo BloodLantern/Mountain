@@ -1,9 +1,9 @@
 #pragma once
 
-#include <game.hpp>
-#include <color.hpp>
-#include <grid.hpp>
-#include <texture.hpp>
+#include <include/game.hpp>
+#include <include/color.hpp>
+#include <include/grid.hpp>
+#include <include/texture.hpp>
 
 namespace test
 {
@@ -14,7 +14,7 @@ namespace test
 		int ballCount = 0;
 		float ballTimer = 0;
 		mountain::ColorHSV lastBallColor = mountain::Color::Red;
-		mountain::Texture texture = "assets/strawberry.png";
+		mountain::Texture texture = mountain::Texture("assets/strawberry.png");
 
 		GameExample(const char* const windowTitle);
 
