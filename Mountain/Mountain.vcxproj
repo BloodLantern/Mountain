@@ -105,14 +105,14 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <ExternalIncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);externals/include</ExternalIncludePath>
-    <OutDir>$(SolutionDir)bin\</OutDir>
+    <ExternalIncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);externals\include;$(ProjectDir)..\MathToolbox\bin\include</ExternalIncludePath>
+    <OutDir>$(ProjectDir)..\bin\</OutDir>
     <TargetName>mountaind</TargetName>
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);include;include\rendering;include\colliders</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <ExternalIncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);externals/include</ExternalIncludePath>
-    <OutDir>$(SolutionDir)bin\</OutDir>
+    <ExternalIncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);externals\include;$(ProjectDir)..\MathToolbox\bin\include</ExternalIncludePath>
+    <OutDir>$(ProjectDir)..\bin\</OutDir>
     <TargetName>mountain</TargetName>
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);include;include\rendering;include\colliders</IncludePath>
   </PropertyGroup>
@@ -162,12 +162,12 @@
       <AdditionalDependencies>toolboxd.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>externals/libs</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>externals/libs;$(ProjectDir)..\MathToolbox\bin</AdditionalLibraryDirectories>
       <AdditionalDependencies>toolboxd.lib;opengl32.lib;glfw3.lib</AdditionalDependencies>
       <TreatLibWarningAsErrors>true</TreatLibWarningAsErrors>
     </Lib>
     <PostBuildEvent>
-      <Command>mkdir "$(ProjectDir)..\bin" &amp; mkdir "$(ProjectDir)..\bin\include" &amp; for /f "tokens=*" %%a in ('dir /b /s /a-d $(ProjectDir)include') do @copy /y %%a $(OutDir)include</Command>
+      <Command>mkdir "$(ProjectDir)..\bin" &amp; mkdir "$(ProjectDir)..\bin\include" &amp; mkdir "$(ProjectDir)..\bin\include\Mountain" &amp; for /f "tokens=*" %%a in ('dir /b /s /a-d $(ProjectDir)include') do @copy /y %%a $(ProjectDir)..\bin\include\Mountain</Command>
     </PostBuildEvent>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -194,12 +194,12 @@
       <AdditionalDependencies>toolbox.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>externals/libs</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>externals/libs;$(ProjectDir)..\MathToolbox\bin</AdditionalLibraryDirectories>
       <AdditionalDependencies>toolbox.lib;opengl32.lib;glfw3.lib</AdditionalDependencies>
       <TreatLibWarningAsErrors>true</TreatLibWarningAsErrors>
     </Lib>
     <PostBuildEvent>
-      <Command>mkdir "$(ProjectDir)..\bin" &amp; mkdir "$(ProjectDir)..\bin\include" &amp; for /f "tokens=*" %%a in ('dir /b /s /a-d $(ProjectDir)include') do @copy /y %%a $(OutDir)include</Command>
+      <Command>mkdir "$(ProjectDir)..\bin" &amp; mkdir "$(ProjectDir)..\bin\include" &amp; mkdir "$(ProjectDir)..\bin\include\Mountain" &amp; for /f "tokens=*" %%a in ('dir /b /s /a-d $(ProjectDir)include') do @copy /y %%a $(ProjectDir)..\bin\include\Mountain</Command>
     </PostBuildEvent>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>

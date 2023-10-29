@@ -2,6 +2,7 @@
 
 #include <GLFW/glfw3.h>
 
+#include <vector2.hpp>
 #include <vector2i.hpp>
 
 #include "input_constants.hpp"
