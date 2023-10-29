@@ -1,9 +1,9 @@
 #pragma once
 
-#include <include/game.hpp>
-#include <include/color.hpp>
-#include <include/grid.hpp>
-#include <include/texture.hpp>
+#include <game.hpp>
+#include <color.hpp>
+#include <grid.hpp>
+#include <texture.hpp>
 
 namespace test
 {
