@@ -71,12 +71,14 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <ExternalIncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)bin/include;$(SolutionDir)Mountain\externals\include</ExternalIncludePath>
+    <ExternalIncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)..\bin\include\Mountain;$(ProjectDir)..\Mountain\externals\include;$(ProjectDir)..\MathToolbox\bin\include</ExternalIncludePath>
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);include;externals\include</IncludePath>
+    <OutDir>$(ProjectDir)..\$(Platform)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <ExternalIncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)bin/include;$(SolutionDir)Mountain\externals\include</ExternalIncludePath>
+    <ExternalIncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)..\bin\include\Mountain;$(ProjectDir)..\Mountain\externals\include;$(ProjectDir)..\MathToolbox\bin\include</ExternalIncludePath>
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);include;externals\include</IncludePath>
+    <OutDir>$(ProjectDir)..\$(Platform)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -120,7 +122,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);mountaind.lib;toolboxd.lib;opengl32.lib;glfw3.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)bin;$(SolutionDir)Mountain\externals\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\bin;$(ProjectDir)..\Mountain\externals\libs;$(ProjectDir)..\MathToolbox\bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>MSVCRT</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
@@ -142,7 +144,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);mountain.lib;toolbox.lib;opengl32.lib;glfw3.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)bin;$(SolutionDir)Mountain\externals\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\bin;$(ProjectDir)..\Mountain\externals\libs;$(ProjectDir)..\MathToolbox\bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
     </Link>
