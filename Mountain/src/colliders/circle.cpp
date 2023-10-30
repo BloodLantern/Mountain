@@ -3,6 +3,7 @@
 #include "draw.hpp"
 #include "hitbox.hpp"
 #include "grid.hpp"
+#include "collider_list.hpp"
 
 #define SQ(x) (x * x)
 
@@ -37,6 +38,11 @@ bool mountain::Circle::CheckCollision(const Grid &grid) const
 {
     // Implementation is in 'colliders/grid.cpp'
     return grid.CheckCollision(*this);
+}
+
+bool mountain::Circle::CheckCollision(const ColliderList& list) const
+{
+    return list.CheckCollision(*this);
 }
 
 bool mountain::Circle::Intersect(const Vector2& p1, const Vector2& p2) const

@@ -20,6 +20,7 @@ namespace mountain
         bool CheckCollision(const Hitbox& hitbox) const override;
         bool CheckCollision(const Circle& circle) const override;
         bool CheckCollision(const Grid& grid) const override;
+        bool CheckCollision(const ColliderList& list) const override;
 
         inline float Left() const override { return Position.x; }
         inline float Right() const override { return Position.x + BoxSize.x; }

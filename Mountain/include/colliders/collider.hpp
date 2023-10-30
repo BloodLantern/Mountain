@@ -12,13 +12,15 @@ namespace mountain
         None,
         Hitbox,
         Circle,
-        Grid
+        Grid,
+        List
     };
 
     // Colliders forward declarations
     class Hitbox;
     class Circle;
     class Grid;
+    class ColliderList;
 
     class Collider
     {
@@ -39,14 +41,15 @@ namespace mountain
         virtual bool CheckCollision(const Hitbox& hitbox) const = 0;
         virtual bool CheckCollision(const Circle& circle) const = 0;
         virtual bool CheckCollision(const Grid& grid) const = 0;
+        virtual bool CheckCollision(const ColliderList& list) const = 0;
 
         virtual inline float Left() const = 0;
         virtual inline float Right() const = 0;
         virtual inline float Top() const = 0;
         virtual inline float Bottom() const = 0;
-        virtual inline Vector2 Center() const = 0;
         virtual inline float Width() const { return Right() - Left(); }
         virtual inline float Height() const { return Bottom() - Top(); }
         virtual inline Vector2 Size() const { return Vector2(Width(), Height()); }
+        virtual inline Vector2 Center() const { return Vector2(Left() + Width() / 2, Top() + Height() / 2); }
     };
 }

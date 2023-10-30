@@ -22,6 +22,7 @@
     <ClInclude Include="include\colliders\circle.hpp" />
     <ClInclude Include="include\colliders\collide.hpp" />
     <ClInclude Include="include\colliders\collider.hpp" />
+    <ClInclude Include="include\colliders\collider_list.hpp" />
     <ClInclude Include="include\colliders\grid.hpp" />
     <ClInclude Include="include\colliders\hitbox.hpp" />
     <ClInclude Include="include\game.hpp" />
@@ -37,6 +38,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="externals\src\stb_image.cpp" />
+    <ClCompile Include="src\colliders\collider_list.cpp" />
     <ClCompile Include="src\colliders\circle.cpp" />
     <ClCompile Include="src\colliders\collide.cpp" />
     <ClCompile Include="src\colliders\collider.cpp" />

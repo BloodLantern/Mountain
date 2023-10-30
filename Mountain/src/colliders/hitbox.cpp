@@ -3,6 +3,7 @@
 #include "draw.hpp"
 #include "circle.hpp"
 #include "grid.hpp"
+#include "collider_list.hpp"
 
 mountain::Hitbox::Hitbox(const Vector2 &position, const Vector2& size)
     : Collider(position), BoxSize(size)
@@ -62,4 +63,9 @@ bool mountain::Hitbox::CheckCollision(const Grid &grid) const
 {
     // Implementation is in 'colliders/grid.cpp'
     return grid.CheckCollision(*this);
+}
+
+bool mountain::Hitbox::CheckCollision(const ColliderList& list) const
+{
+    return list.CheckCollision(*this);
 }

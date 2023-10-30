@@ -2,6 +2,7 @@
 
 #include "hitbox.hpp"
 #include "draw.hpp"
+#include "collider_list.hpp"
 
 bool* const* const SetupGrid(const Vector2i size)
 {
@@ -111,4 +112,9 @@ bool mountain::Grid::CheckCollision(const Circle&) const
 bool mountain::Grid::CheckCollision(const Grid&) const
 {
     throw std::runtime_error("Cannot check collision between grids.");
+}
+
+bool mountain::Grid::CheckCollision(const ColliderList& list) const
+{
+    return list.CheckCollision(*this);
 }
