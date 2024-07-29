@@ -33,15 +33,15 @@ public:
     DELETE_COPY_MOVE_OPERATIONS(AudioTrack)
 
     // We keep both function overloads and only override one
-    using Resource::Load;
+    using Resource::Preload;
     
-    MOUNTAIN_API bool_t Load(const uint8_t* buffer, int64_t length) override;
+    MOUNTAIN_API bool_t Preload(const uint8_t* buffer, int64_t length) override;
     
-    MOUNTAIN_API void CreateInInterface() override;
-    
-    MOUNTAIN_API void DestroyInInterface() override;
+    MOUNTAIN_API void Load() override;
     
     MOUNTAIN_API void Unload() override;
+    
+    MOUNTAIN_API void PostUnload() override;
     
     /// @brief Gets the raw data of the texture
     /// @tparam T Type

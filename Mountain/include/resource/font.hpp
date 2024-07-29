@@ -28,7 +28,7 @@ public:
     
     MOUNTAIN_API bool_t Load(const Pointer<File>& file, uint32_t size);  // NOLINT(clang-diagnostic-overloaded-virtual)
 
-    MOUNTAIN_API void Unload() override;
+    MOUNTAIN_API void PostUnload() override;
 
     MOUNTAIN_API float_t CalcTextSize(std::string_view text, float_t scale = 1.f) const;
 
@@ -45,9 +45,9 @@ private:
 
     uint32_t m_Size = 0;
     
-    void CreateInInterface() override;
+    void Load() override;
     
-    void DestroyInInterface() override;
+    void Unload() override;
 
     friend class Draw;
 };
