@@ -33,7 +33,7 @@ public:
     [[nodiscard]]
     MOUNTAIN_API explicit File(std::filesystem::path&& filepath);
 
-    /// @brief Destructs the File instance by calling Unload.
+    /// @brief Destructs the File instance by calling PostUnload.
     MOUNTAIN_API ~File() override;
 
     DEFAULT_COPY_MOVE_OPERATIONS(File)

@@ -75,7 +75,7 @@ File::Type File::GetType() const
 
 void File::Delete() const
 {
-    // We need copies of these variables because they may otherwise be destroyed by FileManager::Unload
+    // We need copies of these variables because they may otherwise be destroyed by FileManager::PostUnload
     const std::filesystem::path path = m_Path;
     const Pointer<Resource> resource = m_Resource;
     

@@ -67,7 +67,7 @@ void ResourceManager::LoadAll()
 
     const size_t oldResourceCount = m_Resources.size();
 
-    // Load resource data asynchronously
+    // Preload resource data asynchronously
     std::for_each(
         std::execution::par,
         files.begin(),
@@ -103,20 +103,20 @@ void ResourceManager::LoadAll()
             else
                 shader = Add<Shader>(filenameNoExtension);
 
-            shader->Load(file);
+            shader->Preload(file);
             loadedShaders.push_back(shader);
         }
         else if (!std::ranges::contains(Font::FileExtensions, extension))
         {
             if (Contains(file))
-                Get(file)->CreateInInterface();
+                Get(file)->Load();
         }
     }
 
     for (Pointer<Shader>& shader : loadedShaders)
     {
-        if (!shader->IsLoadedInInterface())
-            shader->CreateInInterface();
+        if (!shader->IsLoaded())
+            shader->Load();
     }
 
     Logger::LogDebug(
@@ -167,8 +167,8 @@ void ResourceManager::LoadAllBinaries()
 
     for (Pointer<Shader>& shader : loadedShaders)
     {
-        if (!shader->IsLoadedInInterface())
-            shader->CreateInInterface();
+        if (!shader->IsLoaded())
+            shader->Load();
     }
 
     Logger::LogDebug(
@@ -243,11 +243,11 @@ void ResourceManager::Unload(const std::string& name)
         return;
     }
     
-    if (resource->second->IsLoadedInInterface())
-        resource->second->DestroyInInterface();
-
     if (resource->second->IsLoaded())
         resource->second->Unload();
+
+    if (resource->second->IsPreloaded())
+        resource->second->PostUnload();
 
     m_Resources.erase(resource);
 }
@@ -262,11 +262,11 @@ void ResourceManager::UnloadAll()
     {
         Logger::LogDebug("Unloading resource {}", resource.first);
         
-        if (resource.second->IsLoadedInInterface())
-            resource.second->DestroyInInterface();
-        
         if (resource.second->IsLoaded())
             resource.second->Unload();
+        
+        if (resource.second->IsPreloaded())
+            resource.second->PostUnload();
     }
     // Smart pointers are deleted automatically, we only need to clear the container
     m_Resources.clear();

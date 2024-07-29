@@ -10,10 +10,10 @@ using namespace Mountain;
 
 AudioTrack::~AudioTrack()
 {
-    AudioTrack::Unload();
+    AudioTrack::PostUnload();
 }
 
-bool_t AudioTrack::Load(const uint8_t* const buffer, const int64_t length)
+bool_t AudioTrack::Preload(const uint8_t* const buffer, const int64_t length)
 {
     const char_t* const type = reinterpret_cast<const char_t*>(buffer);
 
@@ -28,26 +28,26 @@ bool_t AudioTrack::Load(const uint8_t* const buffer, const int64_t length)
     return false;
 }
 
-void AudioTrack::CreateInInterface()
+void AudioTrack::Load()
 {
     m_Buffer = new AudioBuffer(this);
     Audio::RegisterBuffer(m_Buffer);
     
-    m_LoadedInInterface = true;
+    m_Loaded = true;
 }
 
-void AudioTrack::DestroyInInterface()
+void AudioTrack::Unload()
 {
     Audio::UnregisterBuffer(m_Buffer);
     delete m_Buffer;
     m_Buffer = nullptr;
     
-    m_LoadedInInterface = false;
+    m_Loaded = false;
 }
 
-void AudioTrack::Unload()
+void AudioTrack::PostUnload()
 {
-    if (!m_Loaded)
+    if (!m_Preloaded)
         return;
     
     switch (m_Format)
@@ -69,7 +69,7 @@ void AudioTrack::Unload()
     m_SampleRate = 0;
     m_BitDepth = 0;
     
-    m_Loaded = false;
+    m_Preloaded = false;
 }
 
 int32_t AudioTrack::GetDataSize() const { return m_DataSize; }
@@ -105,7 +105,7 @@ bool_t AudioTrack::LoadWavefront(const uint8_t* const buffer, const int64_t leng
             offset++;
     }
 
-    m_Loaded = true;
+    m_Preloaded = true;
     return true;
 }
 
@@ -160,7 +160,7 @@ bool_t AudioTrack::LoadOggVorbis(const uint8_t* buffer, const int64_t length)
     m_DataSize = static_cast<int32_t>(decodedSamples * sizeof(short) * channels);
     m_BitDepth = 16;
     
-    m_Loaded = true;
+    m_Preloaded = true;
     return true;
 }
 
@@ -179,6 +179,6 @@ bool_t AudioTrack::LoadMp3(const uint8_t* buffer, const int64_t length)
     m_SampleRate = fileInfo.hz;
     m_BitDepth = 16;
     
-    m_Loaded = true;
+    m_Preloaded = true;
     return true;
 }

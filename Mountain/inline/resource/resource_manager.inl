@@ -57,14 +57,14 @@ Pointer<T> ResourceManager::Load(const Pointer<File>& file, bool_t loadInInterfa
     if (Contains(file->GetPathString()))
     {
         Pointer<T> resource = GetNoCheck<T>(file->GetPathString());
-        const bool_t loaded = resource->IsLoaded();
+        const bool_t loaded = resource->IsPreloaded();
         Logger::LogWarning(
             "This resource has already been {}, consider using ResourceManager::Get instead{}",
             loaded ? "loaded" : "added but isn't loaded",
             loaded ? "" : ". Loading it"
         );
 
-        resource->Load(file);
+        resource->Preload(file);
 
         return resource;
     }
@@ -197,11 +197,11 @@ void ResourceManager::Unload(const Pointer<T>& resource)
         Pointer<Resource>& storedResource = it->second;
         if (storedResource == Utils::DynamicPointerCast<Resource>(resource))
         {
-            if (storedResource->IsLoadedInInterface())
-                storedResource->DestroyInInterface();
-            
             if (storedResource->IsLoaded())
                 storedResource->Unload();
+            
+            if (storedResource->IsPreloaded())
+                storedResource->PostUnload();
 
             it = m_Resources.erase(it);
 
@@ -245,12 +245,12 @@ Pointer<T> ResourceManager::LoadNoCheck(Pointer<File> file, const bool_t loadInR
     // Make sure to return a weak reference
     resource.ToWeakReference();
 
-    resource->Load(file);
+    resource->Preload(file);
 
     file->m_Resource = std::move(Pointer<Resource>(resource, false));
 
     if (loadInRhi)
-        resource->CreateInInterface();
+        resource->Load();
 
     return resource;
 }

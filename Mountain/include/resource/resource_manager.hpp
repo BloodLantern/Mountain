@@ -15,7 +15,7 @@ BEGIN_MOUNTAIN
 /// @brief Static class used to add, load, get, or unload @ref Mountain::Resource "Resources".
 ///
 /// It contains all wrapper instances of the Resource class. These are either added or loaded using the corresponding
-/// function: ResourceManager::Add and ResourceManager::Load.
+/// function: ResourceManager::Add and ResourceManager::Preload.
 class ResourceManager final
 {
     STATIC_CLASS(ResourceManager)
