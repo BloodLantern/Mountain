@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="Debug|Win32">
-      <Configuration>Debug</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Release|Win32">
-      <Configuration>Release</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
       <Platform>x64</Platform>
@@ -19,40 +11,276 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\colliders\circle.hpp" />
-    <ClInclude Include="include\colliders\collide.hpp" />
-    <ClInclude Include="include\colliders\collider.hpp" />
-    <ClInclude Include="include\colliders\collider_list.hpp" />
-    <ClInclude Include="include\colliders\grid.hpp" />
-    <ClInclude Include="include\colliders\hitbox.hpp" />
+    <ClInclude Include="binary_resources\embedded_resources\resource_10560615441756428011.hpp" />
+    <ClInclude Include="binary_resources\embedded_resources\resource_12540647052611605547.hpp" />
+    <ClInclude Include="binary_resources\embedded_resources\resource_13130013495108453755.hpp" />
+    <ClInclude Include="binary_resources\embedded_resources\resource_16475344919504352316.hpp" />
+    <ClInclude Include="binary_resources\embedded_resources\resource_17139022876316836076.hpp" />
+    <ClInclude Include="binary_resources\embedded_resources\resource_5290845577426867131.hpp" />
+    <ClInclude Include="binary_resources\embedded_resources\resource_7344767717205508100.hpp" />
+    <ClInclude Include="binary_resources\embedded_resources\resource_8397852258098769587.hpp" />
+    <ClInclude Include="binary_resources\embedded_resources\resource_8915932256763674668.hpp" />
+    <ClInclude Include="binary_resources\embedded_resources\resource_918666155165273692.hpp" />
+    <ClInclude Include="binary_resources\embedded_resources\resource_9650581743241132555.hpp" />
+    <ClInclude Include="binary_resources\embedded_resources\resource_9914516617300152348.hpp" />
+    <ClInclude Include="binary_resources\resource.hpp" />
+    <ClInclude Include="binary_resources\resource_holder.hpp" />
+    <ClInclude Include="binary_resources\span.hpp" />
+    <ClInclude Include="externals\include\AL\al.h" />
+    <ClInclude Include="externals\include\AL\alc.h" />
+    <ClInclude Include="externals\include\AL\alext.h" />
+    <ClInclude Include="externals\include\AL\efx-creative.h" />
+    <ClInclude Include="externals\include\AL\efx-presets.h" />
+    <ClInclude Include="externals\include\AL\efx.h" />
+    <ClInclude Include="externals\include\freetype\config\ftconfig.h" />
+    <ClInclude Include="externals\include\freetype\config\ftheader.h" />
+    <ClInclude Include="externals\include\freetype\config\ftmodule.h" />
+    <ClInclude Include="externals\include\freetype\config\ftoption.h" />
+    <ClInclude Include="externals\include\freetype\config\ftstdlib.h" />
+    <ClInclude Include="externals\include\freetype\config\integer-types.h" />
+    <ClInclude Include="externals\include\freetype\config\mac-support.h" />
+    <ClInclude Include="externals\include\freetype\config\public-macros.h" />
+    <ClInclude Include="externals\include\freetype\freetype.h" />
+    <ClInclude Include="externals\include\freetype\ftadvanc.h" />
+    <ClInclude Include="externals\include\freetype\ftbbox.h" />
+    <ClInclude Include="externals\include\freetype\ftbdf.h" />
+    <ClInclude Include="externals\include\freetype\ftbitmap.h" />
+    <ClInclude Include="externals\include\freetype\ftbzip2.h" />
+    <ClInclude Include="externals\include\freetype\ftcache.h" />
+    <ClInclude Include="externals\include\freetype\ftchapters.h" />
+    <ClInclude Include="externals\include\freetype\ftcid.h" />
+    <ClInclude Include="externals\include\freetype\ftcolor.h" />
+    <ClInclude Include="externals\include\freetype\ftdriver.h" />
+    <ClInclude Include="externals\include\freetype\fterrdef.h" />
+    <ClInclude Include="externals\include\freetype\fterrors.h" />
+    <ClInclude Include="externals\include\freetype\ftfntfmt.h" />
+    <ClInclude Include="externals\include\freetype\ftgasp.h" />
+    <ClInclude Include="externals\include\freetype\ftglyph.h" />
+    <ClInclude Include="externals\include\freetype\ftgxval.h" />
+    <ClInclude Include="externals\include\freetype\ftgzip.h" />
+    <ClInclude Include="externals\include\freetype\ftimage.h" />
+    <ClInclude Include="externals\include\freetype\ftincrem.h" />
+    <ClInclude Include="externals\include\freetype\ftlcdfil.h" />
+    <ClInclude Include="externals\include\freetype\ftlist.h" />
+    <ClInclude Include="externals\include\freetype\ftlogging.h" />
+    <ClInclude Include="externals\include\freetype\ftlzw.h" />
+    <ClInclude Include="externals\include\freetype\ftmac.h" />
+    <ClInclude Include="externals\include\freetype\ftmm.h" />
+    <ClInclude Include="externals\include\freetype\ftmodapi.h" />
+    <ClInclude Include="externals\include\freetype\ftmoderr.h" />
+    <ClInclude Include="externals\include\freetype\ftotval.h" />
+    <ClInclude Include="externals\include\freetype\ftoutln.h" />
+    <ClInclude Include="externals\include\freetype\ftparams.h" />
+    <ClInclude Include="externals\include\freetype\ftpfr.h" />
+    <ClInclude Include="externals\include\freetype\ftrender.h" />
+    <ClInclude Include="externals\include\freetype\ftsizes.h" />
+    <ClInclude Include="externals\include\freetype\ftsnames.h" />
+    <ClInclude Include="externals\include\freetype\ftstroke.h" />
+    <ClInclude Include="externals\include\freetype\ftsynth.h" />
+    <ClInclude Include="externals\include\freetype\ftsystem.h" />
+    <ClInclude Include="externals\include\freetype\fttrigon.h" />
+    <ClInclude Include="externals\include\freetype\fttypes.h" />
+    <ClInclude Include="externals\include\freetype\ftwinfnt.h" />
+    <ClInclude Include="externals\include\freetype\otsvg.h" />
+    <ClInclude Include="externals\include\freetype\t1tables.h" />
+    <ClInclude Include="externals\include\freetype\ttnameid.h" />
+    <ClInclude Include="externals\include\freetype\tttables.h" />
+    <ClInclude Include="externals\include\freetype\tttags.h" />
+    <ClInclude Include="externals\include\ft2build.h" />
+    <ClInclude Include="externals\include\glad\glad.h" />
+    <ClInclude Include="externals\include\GLFW\glfw3.h" />
+    <ClInclude Include="externals\include\GLFW\glfw3native.h" />
+    <ClInclude Include="externals\include\ImGui\imconfig.h" />
+    <ClInclude Include="externals\include\ImGui\imgui.h" />
+    <ClInclude Include="externals\include\ImGui\imgui_impl_glfw.h" />
+    <ClInclude Include="externals\include\ImGui\imgui_impl_opengl3.h" />
+    <ClInclude Include="externals\include\ImGui\imgui_impl_opengl3_loader.h" />
+    <ClInclude Include="externals\include\ImGui\imgui_internal.h" />
+    <ClInclude Include="externals\include\ImGui\imgui_stdlib.h" />
+    <ClInclude Include="externals\include\ImGui\imstb_rectpack.h" />
+    <ClInclude Include="externals\include\ImGui\imstb_textedit.h" />
+    <ClInclude Include="externals\include\ImGui\imstb_truetype.h" />
+    <ClInclude Include="externals\include\KHR\khrplatform.h" />
+    <ClInclude Include="externals\include\magic_enum\magic_enum.hpp" />
+    <ClInclude Include="externals\include\magic_enum\magic_enum_all.hpp" />
+    <ClInclude Include="externals\include\magic_enum\magic_enum_containers.hpp" />
+    <ClInclude Include="externals\include\magic_enum\magic_enum_flags.hpp" />
+    <ClInclude Include="externals\include\magic_enum\magic_enum_format.hpp" />
+    <ClInclude Include="externals\include\magic_enum\magic_enum_fuse.hpp" />
+    <ClInclude Include="externals\include\magic_enum\magic_enum_iostream.hpp" />
+    <ClInclude Include="externals\include\magic_enum\magic_enum_switch.hpp" />
+    <ClInclude Include="externals\include\magic_enum\magic_enum_utility.hpp" />
+    <ClInclude Include="externals\include\Maths\calc.hpp" />
+    <ClInclude Include="externals\include\Maths\definitions.hpp" />
+    <ClInclude Include="externals\include\Maths\easing.hpp" />
+    <ClInclude Include="externals\include\Maths\math.hpp" />
+    <ClInclude Include="externals\include\Maths\matrix.hpp" />
+    <ClInclude Include="externals\include\Maths\matrix3.hpp" />
+    <ClInclude Include="externals\include\Maths\quaternion.hpp" />
+    <ClInclude Include="externals\include\Maths\vector2.hpp" />
+    <ClInclude Include="externals\include\Maths\vector2i.hpp" />
+    <ClInclude Include="externals\include\Maths\vector3.hpp" />
+    <ClInclude Include="externals\include\Maths\vector4.hpp" />
+    <ClInclude Include="externals\include\minimp3.h" />
+    <ClInclude Include="externals\include\minimp3_ex.h" />
+    <ClInclude Include="externals\include\RapidXML\rapidxml.hpp" />
+    <ClInclude Include="externals\include\RapidXML\RapidXMLSTD.hpp" />
+    <ClInclude Include="externals\include\RapidXML\rapidxml_iterators.hpp" />
+    <ClInclude Include="externals\include\RapidXML\rapidxml_print.hpp" />
+    <ClInclude Include="externals\include\RapidXML\rapidxml_utils.hpp" />
+    <ClInclude Include="externals\include\stb_image.h" />
+    <ClInclude Include="externals\include\stb_vorbis.h" />
+    <ClInclude Include="include\audio\audio.hpp" />
+    <ClInclude Include="include\audio\audio_buffer.hpp" />
+    <ClInclude Include="include\audio\audio_context.hpp" />
+    <ClInclude Include="include\audio\audio_device.hpp" />
+    <ClInclude Include="include\audio\component\audio_listener.hpp" />
+    <ClInclude Include="include\audio\component\audio_source.hpp" />
+    <ClInclude Include="include\collision\circle.hpp" />
+    <ClInclude Include="include\collision\collide.hpp" />
+    <ClInclude Include="include\collision\collider.hpp" />
+    <ClInclude Include="include\collision\collider_list.hpp" />
+    <ClInclude Include="include\collision\grid.hpp" />
+    <ClInclude Include="include\collision\hitbox.hpp" />
+    <ClInclude Include="include\core.hpp" />
+    <ClInclude Include="include\file\directory.hpp" />
+    <ClInclude Include="include\file\entry.hpp" />
+    <ClInclude Include="include\file\file.hpp" />
+    <ClInclude Include="include\file\file_manager.hpp" />
+    <ClInclude Include="include\input\gamepad_input.hpp" />
+    <ClInclude Include="include\input\input.hpp" />
+    <ClInclude Include="include\input\keyboard_input.hpp" />
+    <ClInclude Include="include\input\mouse_input.hpp" />
+    <ClInclude Include="include\input\time.hpp" />
     <ClInclude Include="include\game.hpp" />
-    <ClInclude Include="include\input.hpp" />
-    <ClInclude Include="include\input_constants.hpp" />
-    <ClInclude Include="include\random.hpp" />
-    <ClInclude Include="include\rendering\color.hpp" />
     <ClInclude Include="include\rendering\draw.hpp" />
-    <ClInclude Include="include\entity.hpp" />
     <ClInclude Include="include\rendering\renderer.hpp" />
-    <ClInclude Include="include\rendering\texture.hpp" />
-    <ClInclude Include="include\run_length_encoding.hpp" />
+    <ClInclude Include="include\rendering\render_target.hpp" />
+    <ClInclude Include="include\resource\audio_track.hpp" />
+    <ClInclude Include="include\resource\font.hpp" />
+    <ClInclude Include="include\resource\resource.hpp" />
+    <ClInclude Include="include\resource\resource_manager.hpp" />
+    <ClInclude Include="include\resource\shader.hpp" />
+    <ClInclude Include="include\resource\texture.hpp" />
+    <ClInclude Include="include\scene\component.hpp" />
+    <ClInclude Include="include\scene\entity.hpp" />
+    <ClInclude Include="include\screen.hpp" />
+    <ClInclude Include="include\utils\color.hpp" />
+    <ClInclude Include="include\utils\concepts.hpp" />
+    <ClInclude Include="include\utils\coroutine.hpp" />
+    <ClInclude Include="include\utils\event.hpp" />
+    <ClInclude Include="include\utils\file_system_watcher.hpp" />
+    <ClInclude Include="include\utils\formatter.hpp" />
+    <ClInclude Include="include\utils\guid.hpp" />
+    <ClInclude Include="include\utils\imgui_utils.hpp" />
+    <ClInclude Include="include\utils\list.hpp" />
+    <ClInclude Include="include\utils\logger.hpp" />
+    <ClInclude Include="include\utils\message_box.hpp" />
+    <ClInclude Include="include\utils\meta_programming.hpp" />
+    <ClInclude Include="include\utils\pointer.hpp" />
+    <ClInclude Include="include\utils\random.hpp" />
+    <ClInclude Include="include\utils\rectangle.hpp" />
+    <ClInclude Include="include\utils\reference_counter.hpp" />
+    <ClInclude Include="include\utils\run_length_encoding.hpp" />
+    <ClInclude Include="include\utils\ts_queue.hpp" />
+    <ClInclude Include="include\utils\utils.hpp" />
+    <ClInclude Include="include\utils\windows.hpp" />
+    <ClInclude Include="include\window.hpp" />
+    <ClInclude Include="inline\collision\hitbox.inl" />
+    <ClInclude Include="inline\file\file.inl" />
+    <ClInclude Include="inline\file\file_manager.inl" />
+    <ClInclude Include="inline\rendering\draw.inl" />
+    <ClInclude Include="inline\resource\audio_track.inl" />
+    <ClInclude Include="inline\resource\resource_manager.inl" />
+    <ClInclude Include="inline\resource\texture.inl" />
+    <ClInclude Include="inline\scene\entity.inl" />
+    <ClInclude Include="inline\utils\color.inl" />
+    <ClInclude Include="inline\utils\event.inl" />
+    <ClInclude Include="inline\utils\list.inl" />
+    <ClInclude Include="inline\utils\logger.inl" />
+    <ClInclude Include="inline\utils\pointer.inl" />
+    <ClInclude Include="inline\utils\rectangle.inl" />
+    <ClInclude Include="inline\utils\reference_counter.inl" />
+    <ClInclude Include="inline\utils\ts_queue.inl" />
+    <ClInclude Include="inline\utils\utils.inl" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="externals\src\stb_image.cpp" />
-    <ClCompile Include="src\colliders\collider_list.cpp" />
-    <ClCompile Include="src\colliders\circle.cpp" />
-    <ClCompile Include="src\colliders\collide.cpp" />
-    <ClCompile Include="src\colliders\collider.cpp" />
-    <ClCompile Include="src\colliders\grid.cpp" />
-    <ClCompile Include="src\colliders\hitbox.cpp" />
+    <ClCompile Include="externals\src\glad.c" />
+    <ClCompile Include="externals\src\ImGui\imgui.cpp" />
+    <ClCompile Include="externals\src\ImGui\imgui_demo.cpp" />
+    <ClCompile Include="externals\src\ImGui\imgui_draw.cpp" />
+    <ClCompile Include="externals\src\ImGui\imgui_impl_glfw.cpp" />
+    <ClCompile Include="externals\src\ImGui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="externals\src\ImGui\imgui_stdlib.cpp" />
+    <ClCompile Include="externals\src\ImGui\imgui_tables.cpp" />
+    <ClCompile Include="externals\src\ImGui\imgui_widgets.cpp" />
+    <ClCompile Include="externals\src\minimp3.c" />
+    <ClCompile Include="externals\src\RapidXMLSTD.cpp" />
+    <ClCompile Include="externals\src\stb_image.c" />
+    <ClCompile Include="externals\src\stb_vorbis.c" />
+    <ClCompile Include="src\audio\audio.cpp" />
+    <ClCompile Include="src\audio\audio_buffer.cpp" />
+    <ClCompile Include="src\audio\audio_context.cpp" />
+    <ClCompile Include="src\audio\audio_device.cpp" />
+    <ClCompile Include="src\audio\component\audio_listener.cpp" />
+    <ClCompile Include="src\audio\component\audio_source.cpp" />
+    <ClCompile Include="src\collision\circle.cpp" />
+    <ClCompile Include="src\collision\collide.cpp" />
+    <ClCompile Include="src\collision\collider.cpp" />
+    <ClCompile Include="src\collision\collider_list.cpp" />
+    <ClCompile Include="src\collision\grid.cpp" />
+    <ClCompile Include="src\collision\hitbox.cpp" />
+    <ClCompile Include="src\file\directory.cpp" />
+    <ClCompile Include="src\file\entry.cpp" />
+    <ClCompile Include="src\file\file.cpp" />
+    <ClCompile Include="src\file\file_manager.cpp" />
     <ClCompile Include="src\game.cpp" />
-    <ClCompile Include="src\input.cpp" />
-    <ClCompile Include="src\random.cpp" />
-    <ClCompile Include="src\rendering\color.cpp" />
+    <ClCompile Include="src\input\gamepad_input.cpp" />
+    <ClCompile Include="src\input\input.cpp" />
+    <ClCompile Include="src\input\time.cpp" />
     <ClCompile Include="src\rendering\draw.cpp" />
-    <ClCompile Include="src\entity.cpp" />
     <ClCompile Include="src\rendering\renderer.cpp" />
-    <ClCompile Include="src\rendering\texture.cpp" />
-    <ClCompile Include="src\run_length_encoding.cpp" />
+    <ClCompile Include="src\rendering\render_target.cpp" />
+    <ClCompile Include="src\resource\audio_track.cpp" />
+    <ClCompile Include="src\resource\font.cpp" />
+    <ClCompile Include="src\resource\resource.cpp" />
+    <ClCompile Include="src\resource\resource_manager.cpp" />
+    <ClCompile Include="src\resource\shader.cpp" />
+    <ClCompile Include="src\resource\texture.cpp" />
+    <ClCompile Include="src\scene\component.cpp" />
+    <ClCompile Include="src\scene\entity.cpp" />
+    <ClCompile Include="src\screen.cpp" />
+    <ClCompile Include="src\utils\color.cpp" />
+    <ClCompile Include="src\utils\coroutine.cpp" />
+    <ClCompile Include="src\utils\file_system_watcher.cpp" />
+    <ClCompile Include="src\utils\guid.cpp" />
+    <ClCompile Include="src\utils\imgui_utils.cpp" />
+    <ClCompile Include="src\utils\logger.cpp" />
+    <ClCompile Include="src\utils\message_box.cpp" />
+    <ClCompile Include="src\utils\random.cpp" />
+    <ClCompile Include="src\utils\run_length_encoding.cpp" />
+    <ClCompile Include="src\utils\utils.cpp" />
+    <ClCompile Include="src\utils\windows.cpp" />
+    <ClCompile Include="src\window.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="binary_resources\embed.exe" />
+    <Content Include="binary_resources\generate_resources.cmd" />
+    <Content Include="shaders\circle\circle.frag" />
+    <Content Include="shaders\circle\circle.vert" />
+    <Content Include="shaders\post_processing\post_processing.frag" />
+    <Content Include="shaders\post_processing\post_processing.vert" />
+    <Content Include="shaders\primitive\primitive.frag" />
+    <Content Include="shaders\primitive\primitive.vert" />
+    <Content Include="shaders\primitive_colored\primitive_colored.frag" />
+    <Content Include="shaders\primitive_colored\primitive_colored.vert" />
+    <Content Include="shaders\texture\texture.frag" />
+    <Content Include="shaders\texture\texture.vert" />
+    <Content Include="shaders\text\text.frag" />
+    <Content Include="shaders\text\text.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="Mountain.natvis" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -62,27 +290,14 @@
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
-    <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -93,12 +308,6 @@
   </ImportGroup>
   <ImportGroup Label="Shared">
   </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
@@ -106,73 +315,31 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <ExternalIncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);externals\include;$(ProjectDir)..\MathToolbox\bin\include</ExternalIncludePath>
-    <OutDir>$(ProjectDir)..\bin\</OutDir>
-    <TargetName>mountaind</TargetName>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);include;include\rendering;include\colliders</IncludePath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <ExternalIncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);externals\include;$(ProjectDir)..\MathToolbox\bin\include</ExternalIncludePath>
-    <OutDir>$(ProjectDir)..\bin\</OutDir>
-    <TargetName>mountain</TargetName>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);include;include\rendering;include\colliders</IncludePath>
-  </PropertyGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
-      <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
-    </ClCompile>
-    <Link>
-      <SubSystem>Console</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
-    </ClCompile>
-    <Link>
-      <SubSystem>Console</SubSystem>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <OptimizeReferences>true</OptimizeReferences>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-    </Link>
-  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);MOUNTAIN_EXPORT;MATH_TOOLBOX_DLL_EXPORT;MATH_DEFINE_FORMATTER;IMGUI_EXPORT;RAPID_XML_EXPORT;AL_ALEXT_PROTOTYPES</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
-      <TreatWarningAsError>true</TreatWarningAsError>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <EnableModules>true</EnableModules>
+      <AdditionalIncludeDirectories>include;include\rendering;include\colliders;include\utils;inline;inline\utils;externals\include;binary_resources</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>externals/libs</AdditionalLibraryDirectories>
-      <AdditionalDependencies>toolboxd.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>externals/libs/static/$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>toolbox.lib;glfw3.lib;freetype.lib;OpenAL32.lib;soft_oal.lib;libtmxlite-s-d.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/WHOLEARCHIVE:toolbox.lib</AdditionalOptions>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>externals/libs;$(ProjectDir)..\MathToolbox\bin</AdditionalLibraryDirectories>
-      <AdditionalDependencies>toolboxd.lib;opengl32.lib;glfw3.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>externals/libs/static/$(Configuration);externals/libs/static/Common</AdditionalLibraryDirectories>
+      <AdditionalDependencies>toolbox.lib;opengl32.lib;glfw3.lib;freetype.lib;OpenAL32.lib</AdditionalDependencies>
       <TreatLibWarningAsErrors>true</TreatLibWarningAsErrors>
+      <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
     </Lib>
-    <PostBuildEvent>
-      <Command>mkdir "$(ProjectDir)..\bin" &amp; mkdir "$(ProjectDir)..\bin\include" &amp; mkdir "$(ProjectDir)..\bin\include\Mountain" &amp; for /f "tokens=*" %%a in ('dir /b /s /a-d $(ProjectDir)include') do @copy /y %%a $(ProjectDir)..\bin\include\Mountain</Command>
-    </PostBuildEvent>
     <ProjectReference>
-      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
     </ProjectReference>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -181,33 +348,40 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);MOUNTAIN_EXPORT;MATH_TOOLBOX_DLL_EXPORT;MATH_DEFINE_FORMATTER;IMGUI_EXPORT;RAPID_XML_EXPORT;AL_ALEXT_PROTOTYPES</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
-      <TreatWarningAsError>true</TreatWarningAsError>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <EnableModules>true</EnableModules>
+      <AdditionalIncludeDirectories>include;include\rendering;include\colliders;include\utils;inline;inline\utils;externals\include;binary_resources</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>toolbox.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>toolbox.lib;glfw3.lib;freetype.lib;OpenAL32.lib;soft_oal.lib;libtmxlite-s.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>externals/libs/static/$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalOptions>/WHOLEARCHIVE:toolbox.lib</AdditionalOptions>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>externals/libs;$(ProjectDir)..\MathToolbox\bin</AdditionalLibraryDirectories>
-      <AdditionalDependencies>toolbox.lib;opengl32.lib;glfw3.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>externals/libs/static/$(Configuration);externals/libs/static/Common</AdditionalLibraryDirectories>
+      <AdditionalDependencies>toolbox.lib;opengl32.lib;glfw3.lib;freetype.lib;OpenAL32.lib</AdditionalDependencies>
       <TreatLibWarningAsErrors>true</TreatLibWarningAsErrors>
+      <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
     </Lib>
-    <PostBuildEvent>
-      <Command>mkdir "$(ProjectDir)..\bin" &amp; mkdir "$(ProjectDir)..\bin\include" &amp; mkdir "$(ProjectDir)..\bin\include\Mountain" &amp; for /f "tokens=*" %%a in ('dir /b /s /a-d $(ProjectDir)include') do @copy /y %%a $(ProjectDir)..\bin\include\Mountain</Command>
-    </PostBuildEvent>
     <ProjectReference>
-      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
     </ProjectReference>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <Target Name="CopyDynamicExternals" AfterTargets="Build">
+    <ItemGroup>
+      <DynamicExternals Include="$(ProjectDir)externals\libs\dynamic\$(Configuration)\*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(DynamicExternals)" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" />
+    <Message Text="Copy external DLLs to output directory" Importance="high" />
+  </Target>
 </Project>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<AutoVisualizer xmlns="http://schemas.microsoft.com/vstudio/debugger/natvis/2010">
+	
+	<!--Audio-->
+	<Type Name="Mountain::AudioDevice">
+		<DisplayString>{{Name = {m_Name}}}</DisplayString>
+	</Type>
+	
+	<!--Collision-->
+	<Type Name="Mountain::Circle">
+		<DisplayString>{{Center = {position}, Radius = {radius}}}</DisplayString>
+	</Type>
+	<Type Name="Mountain::Collider">
+		<DisplayString>{{Position = {position}}}</DisplayString>
+	</Type>
+	<Type Name="Mountain::ColliderList">
+		<DisplayString>{{Position = {position}, List size = {list.m_Vector.size()}}}</DisplayString>
+	</Type>
+	<Type Name="Mountain::Grid">
+		<DisplayString>{{Position = {position}, Size = {gridSize}, Tile size = {tileSize}}}</DisplayString>
+	</Type>
+	<Type Name="Mountain::Hitbox">
+		<DisplayString>{{Position = {position}, Size = {size}}}</DisplayString>
+	</Type>
+
+	<!--File-->
+	<Type Name="Mountain::Entry">
+		<DisplayString>{{Path = {m_Path}}}</DisplayString>
+	</Type>
+
+	<!--Rendering-->
+	<Type Name="Mountain::RenderTarget">
+		<DisplayString>{{Size = {m_Size}}}</DisplayString>
+	</Type>
+
+	<!--Resource-->
+	<Type Name="Mountain::Resource">
+		<DisplayString>{{Name = {m_Name}}}</DisplayString>
+	</Type>
+
+	<!--Scene-->
+	<Type Name="Mountain::Component">
+		<DisplayString>{{Entity = {m_Entity}}}</DisplayString>
+	</Type>
+	<Type Name="Mountain::Entity" Inheritable="false">
+		<DisplayString>{{Position = {position}, Collider = {m_Collider}, Component count = {m_Components.m_Vector.size()}}}</DisplayString>
+	</Type>
+
+	<!--Utils-->
+	<Type Name="Mountain::Event&lt;*&gt;">
+		<DisplayString>{{Registered function count = {m_Functions.m_Vector.size()}}}</DisplayString>
+	</Type>
+	<Type Name="Mountain::FileSystemWatcher">
+		<DisplayString>{{Path = {m_Path}}}</DisplayString>
+	</Type>
+	<Type Name="Mountain::List&lt;*&gt;">
+		<DisplayString>{{Size = {m_Vector.size()}}}</DisplayString>
+		<Expand>
+			<ExpandedItem>m_Vector</ExpandedItem>
+		</Expand>
+	</Type>
+	<Type Name="Mountain::Pointer&lt;*&gt;">
+		<DisplayString Condition="m_ReferenceCounter == nullptr">{{Null}}</DisplayString>
+		<DisplayString>{{Value = {m_ReferenceCounter->m_Pointer}, Strong = {m_IsStrongReference}}}</DisplayString>
+		<Expand>
+			<ExpandedItem>m_ReferenceCounter->m_Pointer</ExpandedItem>
+		</Expand>
+	</Type>
+	<Type Name="Mountain::Rectangle">
+		<DisplayString>{{Left = {Left()}, Right = {Right()}, Top = {Top()}, Bottom = {Bottom()}}}</DisplayString>
+	</Type>
+	<Type Name="Mountain::TsQueue&lt;*&gt;">
+		<DisplayString>{{Size = {m_Queue.size()}}}</DisplayString>
+		<Expand>
+			<ExpandedItem>m_Queue</ExpandedItem>
+		</Expand>
+	</Type>
+
+</AutoVisualizer>
