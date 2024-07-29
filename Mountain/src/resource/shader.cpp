@@ -18,7 +18,7 @@ ShaderType Shader::FileExtensionToType(const std::string& extension)
     throw std::invalid_argument("Invalid file extension for shader");
 }
 
-bool_t Shader::Load(const Pointer<File>& shader)
+bool_t Shader::Preload(const Pointer<File>& shader)
 {
     const ShaderType type = FileExtensionToType(shader->GetExtension());
 
@@ -27,7 +27,7 @@ bool_t Shader::Load(const Pointer<File>& shader)
 
     m_Files[static_cast<size_t>(type)] = shader;
     
-    m_Loaded = true;
+    m_Preloaded = true;
     
     return true;
 }
@@ -38,12 +38,12 @@ bool_t Shader::Load(const char_t* const buffer, const int64_t length, const Shad
     code.code = std::string(buffer, length);
     code.type = type;
     
-    m_Loaded = true;
+    m_Preloaded = true;
     
     return true;
 }
 
-void Shader::CreateInInterface()
+void Shader::Load()
 {
     m_Id = glCreateProgram();
 
@@ -76,18 +76,18 @@ void Shader::CreateInInterface()
 
     CheckLinkError();
     
-    m_LoadedInInterface = true;
+    m_Loaded = true;
 }
 
-void Shader::DestroyInInterface()
+void Shader::Unload()
 {
 	glDeleteProgram(m_Id);
     
     m_Id = 0;
-    m_LoadedInInterface = false;
+    m_Loaded = false;
 }
 
-void Shader::Unload()
+void Shader::PostUnload()
 {
     m_Files.fill(nullptr);
     m_Code.fill({});

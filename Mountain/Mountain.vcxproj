@@ -130,6 +130,22 @@
     <ClInclude Include="externals\include\RapidXML\rapidxml_utils.hpp" />
     <ClInclude Include="externals\include\stb_image.h" />
     <ClInclude Include="externals\include\stb_vorbis.h" />
+    <ClInclude Include="externals\include\tmxlite\Config.hpp" />
+    <ClInclude Include="externals\include\tmxlite\detail\Android.hpp" />
+    <ClInclude Include="externals\include\tmxlite\detail\Log.hpp" />
+    <ClInclude Include="externals\include\tmxlite\FreeFuncs.hpp" />
+    <ClInclude Include="externals\include\tmxlite\ImageLayer.hpp" />
+    <ClInclude Include="externals\include\tmxlite\Layer.hpp" />
+    <ClInclude Include="externals\include\tmxlite\LayerGroup.hpp" />
+    <ClInclude Include="externals\include\tmxlite\Map.hpp" />
+    <ClInclude Include="externals\include\tmxlite\Object.hpp" />
+    <ClInclude Include="externals\include\tmxlite\ObjectGroup.hpp" />
+    <ClInclude Include="externals\include\tmxlite\ObjectTypes.hpp" />
+    <ClInclude Include="externals\include\tmxlite\Property.hpp" />
+    <ClInclude Include="externals\include\tmxlite\TileLayer.hpp" />
+    <ClInclude Include="externals\include\tmxlite\Tileset.hpp" />
+    <ClInclude Include="externals\include\tmxlite\Types.hpp" />
+    <ClInclude Include="externals\include\tmxlite\Types.inl" />
     <ClInclude Include="include\audio\audio.hpp" />
     <ClInclude Include="include\audio\audio_buffer.hpp" />
     <ClInclude Include="include\audio\audio_context.hpp" />
@@ -319,7 +335,7 @@
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);MOUNTAIN_EXPORT;MATH_TOOLBOX_DLL_EXPORT;MATH_DEFINE_FORMATTER;IMGUI_EXPORT;RAPID_XML_EXPORT;AL_ALEXT_PROTOTYPES</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);MOUNTAIN_EXPORT;MATH_TOOLBOX_DLL_EXPORT;MATH_DEFINE_FORMATTER;IMGUI_EXPORT;RAPID_XML_EXPORT;AL_ALEXT_PROTOTYPES;TMXLITE_STATIC</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -348,7 +364,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);MOUNTAIN_EXPORT;MATH_TOOLBOX_DLL_EXPORT;MATH_DEFINE_FORMATTER;IMGUI_EXPORT;RAPID_XML_EXPORT;AL_ALEXT_PROTOTYPES</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);MOUNTAIN_EXPORT;MATH_TOOLBOX_DLL_EXPORT;MATH_DEFINE_FORMATTER;IMGUI_EXPORT;RAPID_XML_EXPORT;AL_ALEXT_PROTOTYPES;TMXLITE_STATIC</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>

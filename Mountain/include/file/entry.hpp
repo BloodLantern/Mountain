@@ -35,7 +35,7 @@ public:
 
     /// @brief Reloads the contents of this Entry.
     ///
-    /// This if effectively the same as calling Unload() and then Load().
+    /// This if effectively the same as calling PostUnload() and then Preload().
     MOUNTAIN_API virtual bool_t Reload();
 
     /// @brief Opens this Entry in the file explorer
@@ -79,7 +79,7 @@ protected:
 
     /// @brief Whether this Entry has been loaded.
     /// 
-    /// Default implementation of Load and Unload functions in the Entry class already change this value accordingly.
+    /// Default implementation of Preload and PostUnload functions in the Entry class already change this value accordingly.
     /// Any override of such function must either call the parent implementation or update this variable so that GetLoaded
     /// returns the correct state.
     bool_t m_Loaded = false;

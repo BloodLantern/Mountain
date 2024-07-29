@@ -64,12 +64,12 @@ public:
 
 	using Resource::Resource;
 
-	using Resource::Load;
+	using Resource::Preload;
 
 	/// @brief Loads a single shader file
 	/// @param shader File
 	/// @return Whether the load succeeded
-	MOUNTAIN_API bool_t Load(const Pointer<File>& shader) override;
+	MOUNTAIN_API bool_t Preload(const Pointer<File>& shader) override;
 
 	/// @brief Loads raw shader code
 	/// @param buffer Raw data
@@ -78,13 +78,13 @@ public:
 	MOUNTAIN_API bool_t Load(const char_t* buffer, int64_t length, ShaderType type);
 
 	/// @brief Creates the shader in OpenGL
-	MOUNTAIN_API void CreateInInterface() override;
+	MOUNTAIN_API void Load() override;
 
 	/// @brief Destroys the shader in OpenGL
-	MOUNTAIN_API void DestroyInInterface() override;
+	MOUNTAIN_API void Unload() override;
 
 	/// @brief Unloads the shader
-	MOUNTAIN_API void Unload() override;
+	MOUNTAIN_API void PostUnload() override;
 
 	/// @brief Sets an int (signed, 32 bits) variable in a shader
 	/// @param keyName Variable name

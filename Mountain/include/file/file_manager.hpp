@@ -17,7 +17,7 @@ BEGIN_MOUNTAIN
 /// @brief Static class used to add, load, get, or unload @ref File "Files" and @ref Directory "Directories".
 ///
 /// It contains all wrapper instances of the File and Directory classes. These are either added or loaded using the corresponding
-/// function: FileManager::Add and FileManager::Load for @ref File "Files",and FileManager::AddDirectory and
+/// function: FileManager::Add and FileManager::Preload for @ref File "Files",and FileManager::AddDirectory and
 /// FileManager::LoadDirectory for @ref Directory "Directories".
 class FileManager final
 {
@@ -34,7 +34,7 @@ public:
     MOUNTAIN_API static Pointer<Directory> AddDirectory(std::filesystem::path path);
     
     /// @brief Creates the Directory corresponding to the given @p path and loads it.
-    /// @see Directory::Load
+    /// @see Directory::Preload
     MOUNTAIN_API static Pointer<Directory> LoadDirectory(std::filesystem::path path);
 
     /// @brief Checks whether the FileManager contains the specified Entry path.

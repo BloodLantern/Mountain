@@ -143,8 +143,6 @@ void GameExample::Render()
 
     Draw::Text(*font, "Hello, big World!", { 10.f, 160.f }, 2.f);
 
-    Audio::DebugDevices();
-    
     ImGui::Begin("Debug");
     
     if (ImGui::CollapsingHeader("Window"))
