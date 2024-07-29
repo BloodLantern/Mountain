@@ -1,47 +1,39 @@
 #pragma once
 
-#include <vector>
+#include "core.hpp"
 
-#include "entity.hpp"
+#include <Maths/vector2i.hpp>
 
-namespace mountain
+BEGIN_MOUNTAIN
+
+class MOUNTAIN_API Game
 {
-    class Game
-    {
-    public:
-        float DeltaTime = 0.f;
-        float TimeScale = 1.f;
-        float FreezeTimer = 0.f;
-        bool UpdateInputsEachFrame = true;
-        bool UpdateEachFrame = true;
-        bool RenderEachFrame = true;
+public:
+    float_t freezeTimer = 0.f;
 
-        Game(const char* const windowTitle, const int windowWidth = 1280, const int windowHeight = 720, const bool vsync = true);
-        ~Game();
+    explicit Game(const char_t* windowTitle, Vector2i windowSize = Vector2i(1280, 720), bool_t vsync = true);
+    virtual ~Game();
 
-        /// @brief To be called by the user when starting execution. Empty by default,
-        ///        can be overriden to initialize custom variables or fields.
-        virtual void Initialize() {}
-        /// @brief Called once. Runs until the window is closed and calls all the
-        ///        necessary functions of the game.
-        void MainLoop();
-        /// @brief To be called by the user when closing the window. Empty by default,
-        ///        can be overriden to destroy custom variables or fields.
-        virtual void Shutdown() {}
+    DEFAULT_COPY_MOVE_OPERATIONS(Game)
 
-        /// @brief Automatically called once at the beginning of each frame. Empty by
-        ///        default, can be overriden.
-        virtual void PreRender() {}
-        /// @brief Automatically called once at the end of each frame. Empty by default,
-        ///        can be overriden.
-        virtual void PostRender() {}
+    void Play();
 
-        /// @brief Called once each frame before Game::Render. To be overriden by the user.
-        virtual void Update() = 0;
-        /// @brief Called once each frame after Game::Update. To be overriden by the user.
-        virtual void Render() = 0;
+private:
+    /// @brief To be called by the user when starting execution. Empty by default,
+    ///        can be overridden to initialize custom variables or fields.
+    virtual void Initialize();
+    virtual void LoadResources();
+    /// @brief Called once. Runs until the window is closed and calls all the
+    ///        necessary functions of the game.
+    void MainLoop();
+    /// @brief To be called by the user when closing the window. Empty by default,
+    ///        can be overridden to destroy custom variables or fields.
+    virtual void Shutdown();
 
-        /// @brief Forces the game to repaint itself. Does nothing if RenderEachFrame is true.
-        void Redraw();
-    };
-}
+    /// @brief Called once each frame before Game::Render. To be overridden by the user.
+    virtual void Update() = 0;
+    /// @brief Called once each frame after Game::Update. To be overridden by the user.
+    virtual void Render() = 0;
+};
+
+END_MOUNTAIN

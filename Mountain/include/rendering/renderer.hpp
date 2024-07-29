@@ -1,51 +1,53 @@
 #pragma once
 
-#include <GLFW/glfw3.h>
-#include <vector2.hpp>
-#include <vector2i.hpp>
-#include <matrix4x4.hpp>
+#include "core.hpp"
 
-#include "color.hpp"
+#include <stack>
 
-namespace mountain
+#include <ft2build.h>
+#include FT_FREETYPE_H
+
+#include <Maths/matrix.hpp>
+#include <Maths/vector2i.hpp>
+
+#include "render_target.hpp"
+#include "utils/color.hpp"
+
+// ReSharper disable once CppInconsistentNaming
+struct GLFWwindow;
+
+BEGIN_MOUNTAIN
+
+struct MOUNTAIN_API OpenGlVersion
 {
-    struct OpenGLVersion
-    {
-        const char* glsl = "#version 130";
-        int major = 3;
-        int minor = 0;
-    };
+    const char_t* glsl = "#version 460";
+    int32_t major = 4;
+    int32_t minor = 4;
+};
 
-    class Renderer
-    {
-    public:
-        static Vector2 ScreenOrigin;
-        static Vector2i Resolution;
-        static Vector2i TargetResolution;
-        static Vector2i WindowPosition;
-        static Vector2i WindowSize;
-        static Colorf ClearColor; // Color used to fill the window before each frame.
-        static Matrix4x4 Camera; // This is the TRS matrix that will be applied before rendering.
+class Renderer
+{
+public:
+    MOUNTAIN_API static void PushRenderTarget(RenderTarget& renderTarget);
+    MOUNTAIN_API static RenderTarget& PopRenderTarget();
 
-        static void Initialize(const char* const windowTitle,
-            const int windowWidth, const int windowHeight,
-            const bool vsync, const OpenGLVersion& glVersion = OpenGLVersion());
-        static void PreFrame();
-        static void PostFrame();
-        static void Shutdown();
+    MOUNTAIN_API static OpenGlVersion& GetOpenGlVersion();
 
-        static void MakeOpenGLCoordinatesAbsolute(const int windowWidth, const int windowHeight);
-        static void UpdateModelViewMatrix();
-        static void ResetModelViewMatrix();
+private:
+    static inline OpenGlVersion m_GlVersion;
+    static inline FT_Library m_Freetype;
 
-        static GLFWwindow* GetWindow() { return mWindow; }
-        static OpenGLVersion& GetOpenGLVersion() { return mGlVersion; }
-        static void SetVSync(const bool vsync) { glfwSwapInterval(vsync); }
+    static inline std::stack<RenderTarget*> m_RenderTargets;
+    static inline RenderTarget* m_RenderTarget;
 
-    private:
-        static GLFWwindow* mWindow;
-        static OpenGLVersion mGlVersion;
+    static bool Initialize(const char_t* windowTitle, Vector2i windowSize, bool_t vsync, const OpenGlVersion& glVersion = {});
+    static void PreFrame();
+    static void PostFrame();
+    static void Shutdown();
+    
+    friend class Draw;
+    friend class Font;
+    friend class Game;
+};
 
-        static void UpdateWindowFields();
-    };
-}
+END_MOUNTAIN

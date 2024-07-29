@@ -1,63 +1,92 @@
 #include "game.hpp"
 
-#include "renderer.hpp"
-#include "input.hpp"
+#include "coroutine.hpp"
+#include "window.hpp"
+#include "audio/audio.hpp"
+#include "input/input.hpp"
+#include "input/time.hpp"
+#include "rendering/renderer.hpp"
+#include "resource/resource_manager.hpp"
+#include "utils/logger.hpp"
 
-mountain::Game::Game(const char* const windowTitle, const int windowWidth, const int windowHeight, const bool vsync)
-{
-    Renderer::Initialize(windowTitle, windowWidth, windowHeight, vsync);
-    Input::Initialize();
-}
+using namespace Mountain;
 
-mountain::Game::~Game()
+Game::Game(const char_t* const windowTitle, const Vector2i windowSize, const bool_t vsync)
 {
-    Renderer::Shutdown();
-}
-
-void mountain::Game::MainLoop()
-{
-    while (!glfwWindowShouldClose(Renderer::GetWindow()))
+    Logger::Start();
+    Logger::OpenDefaultFile();
+    
+    Logger::LogInfo("Initializing Mountain Framework");
+    
+    if (!Renderer::Initialize(windowTitle, windowSize, vsync))
     {
-        double t = glfwGetTime();
-
-        if (RenderEachFrame)
-        {
-            Renderer::PreFrame();
-            PreRender();
-        }
-        else
-            glfwPollEvents();
-
-        if (UpdateInputsEachFrame)
-            Input::Update();
-            
-        if (UpdateEachFrame && FreezeTimer <= 0)
-            Update();
-        if (RenderEachFrame)
-        {
-            Render();
-
-            PostRender();
-            Renderer::PostFrame();
-        }
-        else
-            glfwSwapBuffers(Renderer::GetWindow());
-
-        FreezeTimer -= DeltaTime;
-        DeltaTime = (float) (glfwGetTime() - t) * TimeScale;
+        Logger::LogFatal("Failed to initialize renderer, shutting down");
+        throw std::runtime_error("Failed to initialize renderer");
     }
+    
+    if (!Audio::Initialize())
+        Logger::LogError("Failed to initialize audio");
 }
 
-void mountain::Game::Redraw()
+Game::~Game()
 {
-    if (RenderEachFrame)
-        return;
+    Logger::LogInfo("Shutting down Mountain Framework...");
+    
+    ResourceManager::UnloadAll();
+    FileManager::UnloadAll();
+    
+    Audio::Shutdown();
+    Renderer::Shutdown();
+    
+    Logger::Stop();
+}
 
-    Renderer::PreFrame();
-    PreRender();
+void Game::Play()
+{
+    Initialize();
+    LoadResources();
+    MainLoop();
+    Shutdown();
+}
 
-    Render();
+void Game::Initialize()
+{
+}
 
-    PostRender();
-    Renderer::PostFrame();
+void Game::LoadResources()
+{
+}
+
+void Game::MainLoop()
+{
+    Window::SetVisible(true);
+    
+    while (!Window::ShouldClose())
+    {
+        Window::PollEvents();
+        
+        Time::Update();
+        Input::Update();
+        Audio::Update();
+        
+        Renderer::PreFrame();
+            
+        if (freezeTimer <= 0)
+            Update();
+        Render();
+
+        Renderer::PostFrame();
+        Window::SwapBuffers();
+        
+        Coroutine::UpdateAll();
+		Input::Reset();
+
+        freezeTimer -= Time::GetDeltaTime();
+    }
+
+	Coroutine::StopAll();
+}
+
+void Game::Shutdown()
+{
 }
