@@ -9,6 +9,8 @@
 
 BEGIN_MOUNTAIN
 
+// TODO - Add a target delta time for fixed FPS (60FPS on a 144Hz screen for example)
+
 /// @brief Defines utility functions to access information regarding time
 class Time
 {

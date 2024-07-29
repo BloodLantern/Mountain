@@ -17,58 +17,56 @@ Resource::Resource(std::string name)
 
 Resource::~Resource() = default;
 
-bool_t Resource::Load(const uint8_t* const, const int64_t) { return false; }
+bool_t Resource::Preload(const uint8_t* const, const int64_t) { return false; }
 
-bool_t Resource::Load(const Pointer<File>& file)
+bool_t Resource::Preload(const Pointer<File>& file)
 {
     m_File = file;
     
-    return Load(file->GetData<uint8_t>(), file->GetSize());
+    return Preload(file->GetData<uint8_t>(), file->GetSize());
 }
 
-void Resource::CreateInInterface() { m_LoadedInInterface = true; }
+void Resource::Load() {}
 
-void Resource::DestroyInInterface() { m_LoadedInInterface = false; }
+void Resource::Unload() {}
 
-void Resource::Unload()
+void Resource::PostUnload() {}
+
+bool_t Resource::Reload(const uint8_t* buffer, const int64_t length, const bool_t reloadInBackend)
 {
-}
-
-bool_t Resource::Reload(const uint8_t* buffer, const int64_t length, const bool_t reloadInInterface)
-{
-    if (reloadInInterface)
-        DestroyInInterface();
+    if (reloadInBackend)
+        Unload();
     
-    Unload();
+    PostUnload();
     
-    const bool_t result = Load(buffer, length);
+    const bool_t result = Preload(buffer, length);
     
-    if (reloadInInterface)
-        CreateInInterface();
+    if (reloadInBackend)
+        Load();
     
     return result;
 }
 
-bool_t Resource::Reload(const Pointer<File>& file, const bool_t reloadInInterface)
+bool_t Resource::Reload(const Pointer<File>& file, const bool_t reloadInBackend)
 {
-    if (reloadInInterface)
-        DestroyInInterface();
+    if (reloadInBackend)
+        Unload();
     
-    Unload();
+    PostUnload();
     
-    const bool_t result = Load(file);
+    const bool_t result = Preload(file);
     
-    if (reloadInInterface)
-        CreateInInterface();
+    if (reloadInBackend)
+        Load();
     
     return result;
 }
 
-bool_t Resource::Reload(const bool_t reloadInInterface) { return Reload(FileManager::Get(m_Name), reloadInInterface); }
+bool_t Resource::Reload(const bool_t reloadInBackend) { return Reload(FileManager::Get(m_Name), reloadInBackend); }
+
+bool_t Resource::IsPreloaded() const { return m_Preloaded; }
 
 bool_t Resource::IsLoaded() const { return m_Loaded; }
-
-bool_t Resource::IsLoadedInInterface() const { return m_LoadedInInterface; }
 
 std::string Resource::GetName() const { return m_Name; }
 

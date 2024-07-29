@@ -12,6 +12,16 @@ BEGIN_MOUNTAIN
 class File;
 
 /// @brief Interface for resources, which encapsulates most objects used in the engine that come from a file
+///
+/// A Resource is loaded in two steps:
+/// - @code Preload(const Pointer<File>&)@endcode or @code Preload(const uint8_t*, int64_t)@endcode
+/// - @c Load()
+/// 
+/// And is also unloaded in two steps:
+/// - @c Unload()
+/// - @c PostUnload()
+///
+/// It can be reloaded using the predefined @c Reload() functions.
 class Resource
 {
 public:
@@ -28,51 +38,51 @@ public:
     /// @brief Loads data from memory.
     ///
     /// @returns @c true if the loading succeeded, @c false otherwise.
-    MOUNTAIN_API virtual bool_t Load(const uint8_t* buffer, int64_t length);
+    MOUNTAIN_API virtual bool_t Preload(const uint8_t* buffer, int64_t length);
 
     /// @brief Loads data from file.
     ///
     /// @returns @c true if the loading succeeded, @c false otherwise.
-    MOUNTAIN_API virtual bool_t Load(const Pointer<File>& file);
+    MOUNTAIN_API virtual bool_t Preload(const Pointer<File>& file);
 
-    /// @brief Creates the Resource in the current interface (OpenGL/OpenAL/FreeType).
-    MOUNTAIN_API virtual void CreateInInterface();
+    /// @brief Loads the Resource in the backend.
+    MOUNTAIN_API virtual void Load();
 
-    /// @brief Destroys the Resource in the current interface (OpenGL/OpenAL/FreeType).
-    MOUNTAIN_API virtual void DestroyInInterface();
-
-    /// @brief Unloads the loaded data.
+    /// @brief Unloads the Resource in the backend.
     MOUNTAIN_API virtual void Unload();
 
-    /// @brief Unloads and then loads back this Resource.
-    ///
-    /// This is effectively equivalent to calling Unload and then @ref Load(const uint8_t* buffer, int64_t length) "Load".
-    /// 
-    /// @returns @c true if the loading succeeded, @c false otherwise.
-    MOUNTAIN_API virtual bool_t Reload(const uint8_t* buffer, int64_t length, bool_t reloadInInterface = true);
+    /// @brief Unloads the loaded data.
+    MOUNTAIN_API virtual void PostUnload();
 
     /// @brief Unloads and then loads back this Resource.
     ///
-    /// This is effectively equivalent to calling Unload and then @ref Load(const Pointer<File>&) "Load".
+    /// This is effectively equivalent to calling PostUnload and then @ref Preload(const uint8_t* buffer, int64_t length) "Preload".
     /// 
     /// @returns @c true if the loading succeeded, @c false otherwise.
-    MOUNTAIN_API virtual bool_t Reload(const Pointer<File>& file, bool_t reloadInInterface = true);
+    MOUNTAIN_API virtual bool_t Reload(const uint8_t* buffer, int64_t length, bool_t reloadInBackend = true);
 
     /// @brief Unloads and then loads back this Resource.
     ///
-    /// This is effectively equivalent to calling Unload and then Load(const Pointer<File>&)
+    /// This is effectively equivalent to calling PostUnload and then @ref Preload(const Pointer<File>&) "Preload".
+    /// 
+    /// @returns @c true if the loading succeeded, @c false otherwise.
+    MOUNTAIN_API virtual bool_t Reload(const Pointer<File>& file, bool_t reloadInBackend = true);
+
+    /// @brief Unloads and then loads back this Resource.
+    ///
+    /// This is effectively equivalent to calling PostUnload and then Preload(const Pointer<File>&)
     /// using FileManager::Get(const std::filesystem::path&) as a parameter.
     /// 
     /// @returns @c true if the loading succeeded, @c false otherwise.
-    MOUNTAIN_API virtual bool_t Reload(bool_t reloadInInterface = true);
+    MOUNTAIN_API virtual bool_t Reload(bool_t reloadInBackend = true);
 
-    /// @brief Returns whether the Resource has already been loaded.
+    /// @brief Returns whether the Resource has already been preloaded (@c true) or post-unloaded (@c false).
+    [[nodiscard]]
+    MOUNTAIN_API bool_t IsPreloaded() const;
+
+    /// @brief Returns whether the Resource has already been loaded in the backend.
     [[nodiscard]]
     MOUNTAIN_API bool_t IsLoaded() const;
-
-    /// @brief Returns whether the Resource has already been loaded in the associated interface (Rhi/Audio).
-    [[nodiscard]]
-    MOUNTAIN_API bool_t IsLoadedInInterface() const;
 
     /// @brief Returns the name of this Resource.
     [[nodiscard]]
@@ -93,10 +103,10 @@ public:
     MOUNTAIN_API void SetFile(const Pointer<File>& file);
 
 protected:
-    /// @brief Whether the resource was loaded
+    /// @brief Whether the resource was preloaded (@c true) or post-unloaded (@c false)
+    bool_t m_Preloaded = false;
+    /// @brief Whether the resource was loaded in the backend
     bool_t m_Loaded = false;
-    /// @brief Whether the resource was loaded in the associated interface (Rhi/Audio)
-    bool_t m_LoadedInInterface = false;
 
     /// @brief Name of the resource
     std::string m_Name;

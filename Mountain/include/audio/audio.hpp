@@ -49,8 +49,6 @@ public:
 
     MOUNTAIN_API static void SetDistanceFactor(float_t newDistanceFactor);
 
-    MOUNTAIN_API static void DebugDevices();
-
 private:
     MOUNTAIN_API static inline AudioDevice* m_CurrentDevice = nullptr;
     MOUNTAIN_API static inline AudioContext* m_CurrentContext = nullptr;

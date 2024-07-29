@@ -27,6 +27,8 @@ source distribution.
 
 #pragma once
 
+#pragma warning(push, 0)
+
 #include <tmxlite/Config.hpp>
 #include <tmxlite/Property.hpp>
 #include <tmxlite/ObjectGroup.hpp>
@@ -294,3 +296,5 @@ namespace tmx
         void createMissingTile(std::uint32_t ID);
     };
 }
+
+#pragma warning(pop)

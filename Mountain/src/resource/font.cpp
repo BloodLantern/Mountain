@@ -13,37 +13,37 @@ using namespace Mountain;
 
 Font::~Font()
 {
-    if (m_LoadedInInterface)
-        Font::DestroyInInterface();
-    
     if (m_Loaded)
         Font::Unload();
+    
+    if (m_Preloaded)
+        Font::PostUnload();
 }
 
 bool_t Font::Load(const Pointer<File>& file, const uint32_t size)
 {
-    if (m_Loaded)
+    if (m_Preloaded)
         return false;
 
-    Resource::Load(file);
+    Resource::Preload(file);
 
     m_Size = size;
-    CreateInInterface();
+    Load();
 
-    m_Loaded = true;
+    m_Preloaded = true;
 
     return true;
 }
 
-void Font::Unload()
+void Font::PostUnload()
 {
-    if (!m_Loaded)
+    if (!m_Preloaded)
         return;
     
-    DestroyInInterface();
+    Unload();
     m_Size = 0;
 
-    m_Loaded = false;
+    m_Preloaded = false;
 }
 
 float_t Font::CalcTextSize(const std::string_view text, const float_t scale) const
@@ -56,9 +56,9 @@ float_t Font::CalcTextSize(const std::string_view text, const float_t scale) con
     return result;
 }
 
-void Font::CreateInInterface()
+void Font::Load()
 {
-    if (m_LoadedInInterface)
+    if (m_Loaded)
         return;
     
     FT_Face face = nullptr;
@@ -114,13 +114,13 @@ void Font::CreateInInterface()
 
     FT_Done_Face(face);
     
-    m_LoadedInInterface = true;
+    m_Loaded = true;
 }
 
-void Font::DestroyInInterface()
+void Font::Unload()
 {
     for (auto&& character : m_Characters | std::views::values)
         glDeleteTextures(1, &character.textureId);
 
-    m_LoadedInInterface = false;
+    m_Loaded = false;
 }

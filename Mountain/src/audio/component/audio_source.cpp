@@ -72,10 +72,10 @@ void AudioSource::Play(AudioTrack& track)
 {
     Audio::GetContext()->MakeCurrent();
     
-    if (!track.IsLoadedInInterface())
+    if (!track.IsLoaded())
     {
         Logger::LogWarning("Tried to play an AudioTrack ({}) that wasn't loaded in the audio interface. Loading it", track.GetName());
-        track.CreateInInterface();
+        track.Load();
     }
 
     alSourceRewind(m_Handle);
