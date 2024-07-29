@@ -528,7 +528,7 @@ FodyWeavers.xsd
 
 # End of https://www.toptal.com/developers/gitignore/api/c++,visualstudio,rider,visualstudiocode
 
-!Mountain/externals/libs
+!Mountain/externals/libs/**
 
 Mountain/binary_resources/**
 !Mountain/binary_resources/generate_resources.cmd
