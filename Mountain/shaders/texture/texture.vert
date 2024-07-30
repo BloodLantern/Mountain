@@ -8,12 +8,13 @@ uniform vec2 imagePixelSize;
 uniform vec2 position;
 uniform vec2 scale;
 uniform float rotation;
+uniform vec2 uv0, uv1;
 
-out vec2 uvs;
+out vec2 textureCoordinates;
 
 void main()
 {
-    uvs = vertex.zw;
+    textureCoordinates = vertex.zw;
 
     vec2 halfImagePixelSize = imagePixelSize * 0.5f;
     vec2 vertexPosition = vertex.xy;

@@ -7,18 +7,18 @@
 /// When building a DLL using this library, see definitions.hpp.
 /// </summary>
 
-#include "definitions.hpp"
+#include "Maths/definitions.hpp"
 
-#include "calc.hpp"
+#include "Maths/calc.hpp"
 
-#include "easing.hpp"
+#include "Maths/easing.hpp"
 
-#include "matrix3.hpp"
-#include "matrix.hpp"
+#include "Maths/matrix3.hpp"
+#include "Maths/matrix.hpp"
 
-#include "vector2.hpp"
-#include "vector2i.hpp"
-#include "vector3.hpp"
-#include "vector4.hpp"
+#include "Maths/vector2.hpp"
+#include "Maths/vector2i.hpp"
+#include "Maths/vector3.hpp"
+#include "Maths/vector4.hpp"
 
-#include "quaternion.hpp"
+#include "Maths/quaternion.hpp"

@@ -1,6 +1,6 @@
 #version 460 core
 
-in vec2 uvs;
+in vec2 textureCoordinates;
 
 uniform sampler2D framebuffer;
 
@@ -10,5 +10,5 @@ out vec4 fragmentColor;
 // TODO - Add bloom
 void main()
 {
-    fragmentColor = texture(framebuffer, uvs);
+    fragmentColor = texture(framebuffer, textureCoordinates);
 }
