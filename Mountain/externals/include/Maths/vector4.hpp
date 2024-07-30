@@ -7,9 +7,9 @@
 
 #include <ostream>
 
-#include "calc.hpp"
-#include "vector2.hpp"
-#include "vector3.hpp"
+#include "Maths/calc.hpp"
+#include "Maths/vector2.hpp"
+#include "Maths/vector3.hpp"
 
 /// @file vector4.hpp
 /// @brief Defines the Vector4 class.

@@ -7,8 +7,8 @@
 
 #include <ostream>
 
-#include "calc.hpp"
-#include "vector2.hpp"
+#include "Maths/calc.hpp"
+#include "Maths/vector2.hpp"
 
 /// @file vector3.hpp
 /// @brief Defines the Vector3 class.

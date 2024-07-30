@@ -1,6 +1,6 @@
 #pragma once
 
-#include "calc.hpp"
+#include "Maths/calc.hpp"
 
 /// @file easing.hpp
 /// @brief Defines the Easing namespace in which the common <a href="https://easings.net">easing functions</a> are defined.
