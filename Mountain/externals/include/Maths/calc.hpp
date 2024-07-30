@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <numbers>
 
-#include "definitions.hpp"
+#include "Maths/definitions.hpp"
 
 /// @file calc.hpp
 /// @brief A collection of general-use constants and useful functions.
