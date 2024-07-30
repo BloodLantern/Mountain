@@ -116,12 +116,20 @@ public:
 	/// @returns A vector with the same direction but a length of one.
 	[[nodiscard]]
 	Vector2 Normalized() const noexcept;
-	
+
 	/// @brief Returns the normal vector to this one.
 	/// 
 	/// @returns A vector with the same length but a normal direction.
 	[[nodiscard]]
 	Vector2 Normal() const noexcept;
+
+	/// @brief Returns this vector, rotated by @p angle radians.
+	[[nodiscard]]
+	Vector2 Rotated(float_t angle) const noexcept;
+
+	/// @brief Returns this vector, rotated using the given cos and sin values.
+	[[nodiscard]]
+	Vector2 Rotated(float_t c, float_t s) const noexcept;
 
 	/// @brief 	Check whether all of this vector's components are infinite.
 	[[nodiscard]]

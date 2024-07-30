@@ -1,6 +1,8 @@
 #ifndef RAPIDXML_PRINT_HPP_INCLUDED
 #define RAPIDXML_PRINT_HPP_INCLUDED
 
+#pragma warning(push, 0)
+
 // Copyright (C) 2006, 2009 Marcin Kalicinski
 // Copyright (C) 2019 https://github.com/Fe-Bell/RapidXML
 // Version 1.16
@@ -446,5 +448,7 @@ namespace rapidxml
 #endif
 
 }
+
+#pragma warning(pop)
 
 #endif
