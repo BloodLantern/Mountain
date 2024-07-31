@@ -19,7 +19,7 @@ Texture::~Texture()
 
 bool_t Texture::SetSourceData(const uint8_t* const buffer, const int64_t length)
 {
-    m_Data = stbi_load_from_memory(buffer, static_cast<int32_t>(length), &m_Size.x, &m_Size.y, &m_DataChannels, 0);
+    m_Data = stbi_load_from_memory(buffer, static_cast<int32_t>(length), &m_Size.x, &m_Size.y, nullptr, STBI_rgb_alpha);
     
     m_SourceDataSet = true;
 
@@ -37,7 +37,7 @@ void Texture::Load()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, m_Size.x, m_Size.y, 0, m_DataChannels == 3 ? GL_RGB : GL_RGBA, GL_UNSIGNED_BYTE, m_Data);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, m_Size.x, m_Size.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, m_Data);
     glBindTexture(GL_TEXTURE_2D, 0);
     
     m_Loaded = true;
@@ -61,16 +61,6 @@ void Texture::ResetSourceData()
 Vector2i Texture::GetSize() const
 {
     return m_Size;
-}
-
-int32_t Texture::GetDataChannels() const
-{
-    return m_DataChannels;
-}
-
-int32_t Texture::GetChannels() const
-{
-    return m_DataChannels;
 }
 
 void Texture::Use() const

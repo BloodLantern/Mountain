@@ -44,17 +44,11 @@ void Window::SetVisible(const bool_t newVisible)
     m_Visible = newVisible;
 }
 
-void Window::SetIcon(Pointer<Texture> icon)
+void Window::SetIcon(const Pointer<Texture>& icon)
 {
     if (!icon)
     {
         glfwSetWindowIcon(m_Window, 1, nullptr);
-        return;
-    }
-    
-    if (icon->GetChannels() != 4)
-    {
-        Logger::LogError("Invalid texture for window icon {}", icon->GetName());
         return;
     }
     
@@ -64,7 +58,7 @@ void Window::SetIcon(Pointer<Texture> icon)
     {
         .width = size.x,
         .height = size.y,
-        .pixels = icon->GetData<uint8_t>()
+        .pixels = Pointer(icon)->GetData<uint8_t>()
     };
     
     glfwSetWindowIcon(m_Window, 1, &image);

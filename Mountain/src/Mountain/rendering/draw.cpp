@@ -409,22 +409,6 @@ void Draw::Initialize()
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RectangleEbo);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indexData), indexData.data(), GL_STATIC_DRAW);
 
-    // Image VBO/VAO
-    glBindVertexArray(m_ImageVao);
-    glBindBuffer(GL_ARRAY_BUFFER, m_ImageVbo);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RectangleEbo);
-    constexpr std::array vertices = {
-        // pos          // UVs
-        -1.f, -1.f,     0.f, 0.f,
-         1.f, -1.f,     1.f, 0.f,
-         1.f,  1.f,     1.f, 1.f,
-        -1.f,  1.f,     0.f, 1.f
-    };
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), &vertices, GL_STATIC_DRAW);
-
-    glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(Vector4), nullptr);
-    glEnableVertexAttribArray(0);
-
     // Text VBO/VAO
     glBindVertexArray(m_TextVao);
     glBindBuffer(GL_ARRAY_BUFFER, m_TextVbo);
@@ -433,6 +417,8 @@ void Draw::Initialize()
 
     glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(Vector4), nullptr);
     glEnableVertexAttribArray(0);
+    
+    glBindVertexArray(0);
     
 
     m_PrimitiveShader = ResourceManager::Get<Shader>("primitive");
@@ -764,16 +750,33 @@ void Draw::TextureInternal(
     const Color& color
 )
 {
+    if (uv0.x > uv1.x || uv0.y > uv1.y)
+        throw std::invalid_argument("UV0 cannot be greater than UV1");
+    
     glBindVertexArray(m_ImageVao);
+    glBindBuffer(GL_ARRAY_BUFFER, m_ImageVbo);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RectangleEbo);
+
+    const std::array vertices = {
+        // pos          // UVs
+        -1.f, -1.f,     uv0.x, uv0.y,
+         1.f, -1.f,     uv1.x, uv0.y,
+         1.f,  1.f,     uv1.x, uv1.y,
+        -1.f,  1.f,     uv0.x, uv1.y
+    };
+    
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), &vertices, GL_STATIC_DRAW);
+
+    glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(Vector4), nullptr);
+    glEnableVertexAttribArray(0);
     
     shader.Use();
-    shader.SetUniform("imagePixelSize", textureSize);
-    shader.SetUniform("position", cameraMatrix * position);
+    shader.SetUniform("halfImagePixelSize", textureSize * (uv1 - uv0) * 0.5f);
+    shader.SetUniform("position", position);
     shader.SetUniform("scale", scale);
     shader.SetUniform("rotation", rotation);
     shader.SetUniform("color", color);
-    shader.SetUniform("uv0", uv0);
-    shader.SetUniform("uv1", uv1);
+    shader.SetUniform("camera", cameraMatrix); // TODO - Precompute projection * cameraMatrix
     
     glBindTexture(GL_TEXTURE_2D, textureId);
 

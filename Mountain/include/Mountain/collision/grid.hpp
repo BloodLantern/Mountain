@@ -11,8 +11,11 @@ BEGIN_MOUNTAIN
 class Grid : public Collider
 {
 public:
-    Vector2i gridSize; // The size of the grid in tiles.
-    Vector2 tileSize; // The size of a tile in the grid in pixels.
+    /// @brief The size of the grid in tiles.
+    Vector2i gridSize;
+    /// @brief The size of a tile in the grid in pixels.
+    Vector2 tileSize;
+    /// @brief The tile array, stored in [y, x] indices
     List<List<bool_t>> tiles;
 
     MOUNTAIN_API Grid();
