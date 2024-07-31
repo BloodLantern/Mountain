@@ -11,16 +11,35 @@
 using namespace Mountain;
 
 // ReSharper disable once CppPossiblyUninitializedMember
-RenderTarget::RenderTarget(const Vector2i size, const MagnificationFilter filter)
-    : m_Size(size)
-    , m_Projection(ComputeProjection(size))
+RenderTarget::RenderTarget(const Vector2i size, const MagnificationFilter filter) { Initialize(size, filter); }
+
+RenderTarget::~RenderTarget() { Reset(); }
+
+void RenderTarget::Use() const
 {
+    if (!m_Initialized)
+        throw std::logic_error("Cannot use an uninitialized RenderTarget");
+    
+    glBindFramebuffer(GL_FRAMEBUFFER, m_Framebuffer);
+    glViewport(0, 0, m_Size.x, m_Size.y);
+    
+    Draw::SetProjectionMatrix(m_Projection);
+}
+
+void RenderTarget::Initialize(const Vector2i size, const MagnificationFilter filter)
+{
+    if (m_Initialized)
+        return;
+    
+    m_Size = size;
+    m_Projection = ComputeProjection(size);
+    
     // Color Texture
     
     glGenTextures(2, &m_Texture);
     glBindTexture(GL_TEXTURE_2D, m_Texture);
 
-    const int32_t magFilter = MagnificationFilterToOpenGl(filter);
+    const int32_t magFilter = ToOpenGl(filter);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, magFilter);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, magFilter);
     
@@ -68,36 +87,43 @@ RenderTarget::RenderTarget(const Vector2i size, const MagnificationFilter filter
         Logger::LogError("Incomplete framebuffer after RenderTarget creation");
     
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+    m_Initialized = true;
 }
 
-RenderTarget::~RenderTarget()
+void RenderTarget::Reset()
 {
+    if (!m_Initialized)
+        return;
+    
+    m_Size = Vector2i::Zero();
+    m_Projection = Matrix::Identity();
+    
     glDeleteVertexArrays(1, &m_Vao);
     glDeleteBuffers(1, &m_Vbo);
     glDeleteFramebuffers(1, &m_Framebuffer);
     glDeleteTextures(2, &m_Texture);
-}
-
-void RenderTarget::Use() const
-{
-    glBindFramebuffer(GL_FRAMEBUFFER, m_Framebuffer);
-    glViewport(0, 0, m_Size.x, m_Size.y);
     
-    Draw::SetProjectionMatrix(m_Projection);
+    m_Initialized = false;
 }
 
-uint32_t RenderTarget::GetTextureId() const
+void RenderTarget::Reset(const Vector2i size, const MagnificationFilter filter)
 {
-    return m_Texture;
+    Reset();
+    Initialize(size, filter);
 }
 
-Vector2i RenderTarget::GetSize() const
-{
-    return m_Size;
-}
+uint32_t RenderTarget::GetTextureId() const { return m_Texture; }
+
+bool_t RenderTarget::GetInitialized() const { return m_Initialized; }
+
+Vector2i RenderTarget::GetSize() const { return m_Size; }
 
 void RenderTarget::SetSize(const Vector2i size)
 {
+    if (!m_Initialized)
+        throw std::logic_error("Cannot set the size of an uninitialized RenderTarget");
+    
     glBindTexture(GL_TEXTURE_2D, m_Texture);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, size.x, size.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
     glBindTexture(GL_TEXTURE_2D, 0);
@@ -117,9 +143,12 @@ MagnificationFilter RenderTarget::GetFilter() const
 
 void RenderTarget::SetFilter(const MagnificationFilter filter)
 {
+    if (!m_Initialized)
+        throw std::logic_error("Cannot set the filter of an uninitialized RenderTarget");
+    
     glBindTexture(GL_TEXTURE_2D, m_Texture);
 
-    const int32_t magFilter = MagnificationFilterToOpenGl(filter);
+    const int32_t magFilter = ToOpenGl(filter);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, magFilter);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, magFilter);
     
@@ -131,7 +160,7 @@ void RenderTarget::SetFilter(const MagnificationFilter filter)
     m_Filter = filter;
 }
 
-int32_t RenderTarget::MagnificationFilterToOpenGl(const MagnificationFilter filter)
+int32_t RenderTarget::ToOpenGl(const MagnificationFilter filter)
 {
     switch (filter)
     {

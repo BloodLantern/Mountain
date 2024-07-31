@@ -29,31 +29,71 @@ Grid::Grid(const Vector2i size, const Vector2 tileSize, const Vector2 position) 
 
 void Grid::DebugRender(const Color& color) const
 {
-    for (int32_t i = 0; i < gridSize.x; i++)
+    for (int32_t y = 0; y < gridSize.y; y++)
     {
-        for (int32_t j = 0; j < gridSize.y; j++)
+        for (int32_t x = 0; x < gridSize.x; x++)
         {
-            if (tiles[i][j])
+            if (tiles[y][x])
             {
-                if (i > 0)
+                if (y > 0)
                 {
-                    if (!tiles[i - 1][j])
-                        Draw::Line(position + Vector2(static_cast<float_t>(i) * tileSize.x, static_cast<float_t>(j) * tileSize.y), position + Vector2(static_cast<float_t>(i) * tileSize.x, static_cast<float_t>(j + 1) * tileSize.y), color);
+                    if (!tiles[y - 1][x])
+                        Draw::Line(
+                            position + Vector2(
+                                static_cast<float_t>(x) * tileSize.x,
+                                static_cast<float_t>(y) * tileSize.y
+                            ),
+                            position + Vector2(
+                                static_cast<float_t>(x + 1) * tileSize.x,
+                                static_cast<float_t>(y) * tileSize.y
+                            ),
+                            color
+                        );
                 }
-                if (j > 0)
+                if (x > 0)
                 {
-                    if (!tiles[i][j - 1])
-                        Draw::Line(position + Vector2(static_cast<float_t>(i) * tileSize.x, static_cast<float_t>(j) * tileSize.y), position + Vector2(static_cast<float_t>(i + 1) * tileSize.x, static_cast<float_t>(j) * tileSize.y), color);
+                    if (!tiles[y][x - 1])
+                        Draw::Line(
+                            position + Vector2(
+                                static_cast<float_t>(x) * tileSize.x,
+                                static_cast<float_t>(y) * tileSize.y
+                            ),
+                            position + Vector2(
+                                static_cast<float_t>(x) * tileSize.x,
+                                static_cast<float_t>(y + 1) * tileSize.y
+                            ),
+                            color
+                        );
                 }
-                if (i < gridSize.x - 1)
+                if (y < gridSize.y - 1)
                 {
-                    if (!tiles[i + 1][j])
-                        Draw::Line(position + Vector2(static_cast<float_t>(i + 1) * tileSize.x, static_cast<float_t>(j) * tileSize.y), position + Vector2(static_cast<float_t>(i + 1) * tileSize.x, static_cast<float_t>(j + 1) * tileSize.y), color);
+                    if (!tiles[y + 1][x])
+                        Draw::Line(
+                            position + Vector2(
+                                static_cast<float_t>(x) * tileSize.x,
+                                static_cast<float_t>(y + 1) * tileSize.y
+                            ),
+                            position + Vector2(
+                                static_cast<float_t>(x + 1) * tileSize.x,
+                                static_cast<float_t>(y + 1) * tileSize.y
+                            ),
+                            color
+                        );
                 }
-                if (j < gridSize.y - 1)
+                if (x < gridSize.x - 1)
                 {
-                    if (!tiles[i][j + 1])
-                        Draw::Line(position + Vector2(static_cast<float_t>(i) * tileSize.x, static_cast<float_t>(j + 1) * tileSize.y), position + Vector2(static_cast<float_t>(i + 1) * tileSize.x, static_cast<float_t>(j + 1) * tileSize.y), color);
+                    if (!tiles[y][x + 1])
+                        Draw::Line(
+                            position + Vector2(
+                                static_cast<float_t>(x + 1) * tileSize.x,
+                                static_cast<float_t>(y) * tileSize.y
+                            ),
+                            position + Vector2(
+                                static_cast<float_t>(x + 1) * tileSize.x,
+                                static_cast<float_t>(y + 1) * tileSize.y
+                            ),
+                            color
+                        );
                 }
             }
         }
@@ -66,18 +106,18 @@ bool_t Grid::CheckCollision(const Vector2& point) const
         && point.y >= Top()
         && point.x < Right()
         && point.y < Bottom()
-        && tiles[static_cast<uint32_t>((point.x - Left()) / tileSize.x)][static_cast<uint32_t>((point.y - Top()) / tileSize.y)];
+        && tiles[static_cast<uint32_t>((point.y - Top()) / tileSize.y)][static_cast<uint32_t>((point.x - Left()) / tileSize.x)];
 }
 
 bool_t Grid::CheckCollision(const Hitbox& hitbox) const
 {
-    if (!hitbox.Intersects(Hitbox(position, static_cast<Vector2>(gridSize))))
+    if (!Hitbox(position, gridSize * tileSize).Intersects(hitbox))
         return false;
 
     int32_t x = static_cast<int32_t>((hitbox.Left() - Left()) / tileSize.x);
     int32_t y = static_cast<int32_t>((hitbox.Top() - Top()) / tileSize.y);
-    int32_t width = static_cast<int32_t>((hitbox.Right() - Left() - 1) / tileSize.x) - x + 1;
-    int32_t height = static_cast<int32_t>((hitbox.Bottom() - Top() - 1) / tileSize.y) - y + 1;
+    int32_t width = static_cast<int32_t>((hitbox.Right() - Left() - 1.f) / tileSize.x) - x + 1;
+    int32_t height = static_cast<int32_t>((hitbox.Bottom() - Top() - 1.f) / tileSize.y) - y + 1;
 
     if (x < 0)
     {
@@ -95,11 +135,11 @@ bool_t Grid::CheckCollision(const Hitbox& hitbox) const
     if (y + height > gridSize.y)
         height = gridSize.y - y;
 
-    for (int i = 0; i < width; ++i)
+    for (int32_t i = 0; i < width; ++i)
     {
-        for (int j = 0; j < height; ++j)
+        for (int32_t j = 0; j < height; ++j)
         {
-            if (tiles[x + i][y + j])
+            if (tiles[y + j][x + i])
                 return true;
         }
     }
@@ -133,12 +173,12 @@ float_t Grid::Width() const { return static_cast<float_t>(gridSize.x) * tileSize
 
 float_t Grid::Height() const { return static_cast<float_t>(gridSize.y) * tileSize.y; }
 
-Vector2 Grid::Size() const { return static_cast<Vector2>(gridSize) * tileSize; }
+Vector2 Grid::Size() const { return gridSize * tileSize; }
 
 void Grid::ResizeGrid()
 {
-    tiles.Resize(gridSize.x);
+    tiles.Resize(gridSize.y);
 
-    for (auto&& col : tiles)
-        col.Resize(gridSize.y);
+    for (auto&& row : tiles)
+        row.Resize(gridSize.x);
 }

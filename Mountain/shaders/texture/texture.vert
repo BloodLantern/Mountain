@@ -4,11 +4,11 @@ layout (location = 0) in vec4 vertex; // vec2 position, vec2 textureCoordinates
 
 uniform mat4 projection;
 
-uniform vec2 imagePixelSize;
+uniform vec2 halfImagePixelSize;
 uniform vec2 position;
 uniform vec2 scale;
 uniform float rotation;
-uniform vec2 uv0, uv1;
+uniform mat4 camera;
 
 out vec2 textureCoordinates;
 
@@ -16,7 +16,6 @@ void main()
 {
     textureCoordinates = vertex.zw;
 
-    vec2 halfImagePixelSize = imagePixelSize * 0.5f;
     vec2 vertexPosition = vertex.xy;
 
     // Apply scale
@@ -29,5 +28,5 @@ void main()
     // And eventually translate the points to where the image should be drawn
     vertexPosition += position + halfImagePixelSize * scale;
 
-    gl_Position = projection * vec4(vertexPosition, 0.f, 1.f);
+    gl_Position = projection * camera * vec4(vertexPosition, 0.f, 1.f);
 }

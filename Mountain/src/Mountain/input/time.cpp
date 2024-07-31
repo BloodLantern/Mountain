@@ -34,6 +34,8 @@ void Time::Update()
     m_DeltaTimeUnscaled = std::min(m_TotalTimeUnscaled - m_LastTotalTimeUnscaled, maxDeltaTime);
     m_DeltaTime = m_DeltaTimeUnscaled * timeScale;
 
+    freezeTimer -= m_DeltaTimeUnscaled;
+
     m_TotalTime += m_DeltaTime;
 
     m_TotalFrameCount++;
