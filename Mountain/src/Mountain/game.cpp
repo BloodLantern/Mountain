@@ -74,7 +74,7 @@ void Game::MainLoop()
         
         Renderer::PreFrame();
             
-        if (freezeTimer <= 0)
+        if (Time::freezeTimer <= 0.f)
             Update();
         Render();
 
@@ -83,8 +83,6 @@ void Game::MainLoop()
         
         Coroutine::UpdateAll();
 		Input::Reset();
-
-        freezeTimer -= Time::GetDeltaTime();
     }
 
 	Coroutine::StopAll();

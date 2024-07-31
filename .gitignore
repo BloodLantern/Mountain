@@ -530,9 +530,9 @@ FodyWeavers.xsd
 
 !Mountain/externals/libs/**
 
-Mountain/binary_resources/**
-!Mountain/binary_resources/generate_resources.cmd
-!Mountain/binary_resources/embed.exe
+Mountain/include/Mountain/binary_resources/**
+!Mountain/tools/generate_resources.cmd
+!Mountain/tools/embed.exe
 
 docs
 
