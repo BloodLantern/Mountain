@@ -9,8 +9,6 @@ BEGIN_MOUNTAIN
 class MOUNTAIN_API Game
 {
 public:
-    float_t freezeTimer = 0.f;
-
     explicit Game(const char_t* windowTitle, Vector2i windowSize = Vector2i(1280, 720), bool_t vsync = true);
     virtual ~Game();
 

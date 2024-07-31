@@ -61,16 +61,6 @@ public:
     [[nodiscard]]
     MOUNTAIN_API Vector2i GetSize() const;
 
-    /// @brief Gets the number of channels of the file of the texture
-    /// @return Number of channels
-    [[nodiscard]]
-    MOUNTAIN_API int32_t GetDataChannels() const;
-
-    /// @brief Gets the loaded number of channels of the texture
-    /// @return Number of channels
-    [[nodiscard]]
-    MOUNTAIN_API int32_t GetChannels() const;
-
     /// @brief Binds the texture
     MOUNTAIN_API void Use() const;
     
@@ -85,7 +75,6 @@ public:
 private:
     uint8_t* m_Data = nullptr;
     Vector2i m_Size;
-    int32_t m_DataChannels = 0;
     uint32_t m_Id = 0;
 };
 

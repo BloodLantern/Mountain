@@ -23,6 +23,9 @@ public:
 
     /// @brief The maximum delta time value. This is to prevent from clipping during a lag spike
     MOUNTAIN_API static inline float_t maxDeltaTime = 0.1f;
+
+    /// @brief If this is above 0, the game updates will be frozen for that amount of time
+    MOUNTAIN_API static inline float_t freezeTimer = 0.f;
     
     /// @brief Gets the total elapsed time
     MOUNTAIN_API static float_t GetTotalTime();

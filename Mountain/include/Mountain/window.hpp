@@ -69,7 +69,7 @@ public:
 
     /// @brief Sets the icon for the window
     /// @param icon Icon
-    static void SetIcon(Pointer<Texture> icon);
+    static void SetIcon(const Pointer<Texture>& icon);
 
     /// @brief Handles hiding or displaying the cursor
     /// @param value @c true hides, @c false displays
