@@ -16,40 +16,48 @@ void Coroutine::Awaitable::await_suspend(std::coroutine_handle<promise_type>) {}
 
 void Coroutine::Awaitable::await_resume() {}
 
-Guid Coroutine::Start(const Coroutine& coroutine)
+Guid Coroutine::Start(Coroutine&& coroutine)
 {
     Guid id = Guid::New();
-    m_RunningRoutines.emplace(id, Coroutine(id, coroutine.m_Handle));
+    
+    coroutine.m_Id = id;
+    m_RunningRoutines.emplace(id, std::move(coroutine));
+    
     return id;
 }
 
-void Coroutine::Start(const Coroutine& coroutine, Guid* const coroutineId)
+void Coroutine::Start(Coroutine&& coroutine, Guid* const coroutineId)
 {
-    Guid& ref = *coroutineId;
-    if (ref != Guid::Empty() && IsRunning(ref))
-        Stop(ref);
-    ref = Start(coroutine);
+    Guid& id = *coroutineId;
+    if (id != Guid::Empty() && IsRunning(id))
+        Stop(id);
+    
+    coroutine.m_Id = id;
+    id = Start(std::move(coroutine));
 }
 
 void Coroutine::UpdateAll()
 {
-    std::vector<Coroutine*> finishedRoutines;
+    std::vector<const Coroutine*> finishedRoutines;
     
-    for (auto&& entry : std::views::values(m_RunningRoutines))
+    for (const auto& routine : m_RunningRoutines | std::views::values)
     {
-        auto& awaitValue = entry.m_Handle.promise().awaitValue;
+        if (!routine.Valid())
+            continue;
+        
+        auto& awaitValue = routine.m_Handle.promise().awaitValue;
         
         awaitValue -= AwaitType(Time::GetDeltaTime());
         if (awaitValue > AwaitType::zero())
             continue;
         
-        entry.Resume();
+        routine.Resume();
 
-        if (entry.Finished())
-            finishedRoutines.push_back(&entry);
+        if (routine.Finished())
+            finishedRoutines.push_back(&routine);
     }
 
-    for (auto&& routine : finishedRoutines)
+    for (const auto& routine : finishedRoutines)
         Stop(routine->GetId());
 }
 

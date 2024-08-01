@@ -25,7 +25,7 @@ Game::Game(const char_t* const windowTitle, const Vector2i windowSize, const boo
     }
     
     if (!Audio::Initialize())
-        Logger::LogError("Failed to initialize audio");
+        Logger::LogError("Failed to initialize audio {}", windowSize);
 }
 
 Game::~Game()
