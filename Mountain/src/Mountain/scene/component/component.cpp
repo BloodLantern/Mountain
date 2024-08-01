@@ -1,4 +1,4 @@
-﻿#include "Mountain/scene/component.hpp"
+﻿#include "Mountain/scene/component/component.hpp"
 
 using namespace Mountain;
 

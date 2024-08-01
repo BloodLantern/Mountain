@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Mountain/core.hpp"
+
 #include "Mountain/resource/font.hpp"
 #include "Mountain/utils/color.hpp"
 
@@ -12,6 +13,7 @@ BEGIN_MOUNTAIN
 class Resource;
 class Entry;
 class Component;
+class Entity;
 
 /// @namespace Concepts
 /// @brief Contains useful general-use concepts.
@@ -36,6 +38,10 @@ namespace Concepts
     /// @brief Concept that forces a type to be a child of Component
     template <class T>
     concept ComponentT = std::is_base_of_v<Component, T>;
+    
+    /// @brief Concept that forces a type to be a child of Entity
+    template <class T>
+    concept EntityT = std::is_base_of_v<Entity, T>;
 
     /// @brief The Formattable concept requires a type to be formattable.
     ///
@@ -70,6 +76,9 @@ namespace Concepts
     /// @brief Concept that forces a type to be of an integral type
     template <typename T>
     concept IntegralT = std::is_integral_v<T>;
+
+    template <typename T>
+    concept EnumT = std::is_enum_v<T>;
 }
 
 END_MOUNTAIN

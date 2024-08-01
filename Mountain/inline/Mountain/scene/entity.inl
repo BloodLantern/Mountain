@@ -2,10 +2,10 @@
 
 BEGIN_MOUNTAIN
 
-template <Concepts::ComponentT T>
-T* Entity::AddComponent()
+template <Concepts::ComponentT T, typename... Args>
+T* Entity::AddComponent(Args&&... args)
 {
-    T* t = new T;
+    T* t = new T(FORWARD(args)...);
     AddComponent(t);
     return t;
 }
