@@ -182,62 +182,62 @@ void ImGuiUtils::DirectionVector(const std::string_view label, Vector2* const va
 
 void ImGuiUtils::ShowInputsWindow()
 {
-        ImGui::Begin("Inputs");
-        if (ImGui::TreeNode("Mouse"))
+    ImGui::Begin("Inputs");
+    if (ImGui::TreeNode("Mouse"))
+    {
+        const Vector2i mousePos = static_cast<Vector2i>(Input::GetMousePosition());
+        ImGui::Text("Position: %d, %d", mousePos.x, mousePos.y);
+        ImGui::Text("Button down right: %d", Input::GetMouseButton(MouseButton::Right));
+        ImGui::Text("Button release right: %d", Input::GetMouseButton(MouseButton::Right, MouseButtonStatus::Release));
+        for (uint32_t i = 0; i < MouseButtonCount; i++)
         {
-            const Vector2i mousePos = static_cast<Vector2i>(Input::GetMousePosition());
-            ImGui::Text("Position: %d, %d", mousePos.x, mousePos.y);
-            ImGui::Text("Button down right: %d", Input::GetMouseButton(MouseButton::Right));
-            ImGui::Text("Button release right: %d", Input::GetMouseButton(MouseButton::Right, MouseButtonStatus::Release));
-            for (uint32_t i = 0; i < MouseButtonCount; i++)
+            ImGui::Text("Button down %d: %d", i + 1, Input::GetMouseButton(static_cast<MouseButton>(i)));
+            ImGui::Text("Button release %d: %d", i + 1, Input::GetMouseButton(static_cast<MouseButton>(i), MouseButtonStatus::Release));
+        }
+        //ImGui::Text("Wheel: %f, %f", Mountain::Input::mouseWheel.x, Mountain::Input::mouseWheel.y);
+        ImGui::TreePop();
+    }
+
+    if (ImGui::TreeNode("Keyboard"))
+    {
+        ImGui::Text("Key down B: %d", Input::GetKey(Key::B));
+        ImGui::Text("Key release B: %d", Input::GetKey(Key::B, KeyStatus::Release));
+        ImGui::TreePop();
+    }
+
+    ImGui::Text("Gamepads connected: %u", Input::GetGamepadsConnected());
+    for (uint32_t i = 0; i < Input::GamepadMax; i++)
+    {
+        const GamepadInput& gamepad = Input::GetGamepad(i);
+        
+        if (!gamepad.GetConnected())
+            continue;
+        
+        if (ImGui::TreeNode(std::format("Gamepad {} - {}", i, gamepad.GetName()).c_str()))
+        {
+            ImGui::Text("Left stick axis: %f, %f", gamepad.GetAxis(GamepadAxis::LeftStickHorizontal), gamepad.GetAxis(GamepadAxis::LeftStickVertical));
+            Vector2 leftStick = gamepad.GetStick(GamepadStick::Left);
+            ImGuiUtils::DirectionVector("Left stick", &leftStick);
+            ImGui::Text("Right stick axis: %f, %f", gamepad.GetAxis(GamepadAxis::RightStickHorizontal), gamepad.GetAxis(GamepadAxis::RightStickVertical));
+            Vector2 rightStick = gamepad.GetStick(GamepadStick::Right);
+            ImGuiUtils::DirectionVector("Left stick", &rightStick);
+            
+            ImGui::Text("Left trigger axis: %f", gamepad.GetAxis(GamepadAxis::LeftTrigger));
+            ImGui::Text("Right trigger axis: %f", gamepad.GetAxis(GamepadAxis::RightTrigger));
+
+            for (uint32_t j = 0; j < GamepadButtonCount; j++)
             {
-                ImGui::Text("Button down %d: %d", i + 1, Input::GetMouseButton(static_cast<MouseButton>(i)));
-                ImGui::Text("Button release %d: %d", i + 1, Input::GetMouseButton(static_cast<MouseButton>(i), MouseButtonStatus::Release));
+                const GamepadButton button = static_cast<GamepadButton>(j);
+                ImGui::Text("Button %d - %s: %d", j, magic_enum::enum_name(button).data(), gamepad.GetButton(button));
             }
-            //ImGui::Text("Wheel: %f, %f", Mountain::Input::mouseWheel.x, Mountain::Input::mouseWheel.y);
+
+            Vector2 dpad = static_cast<Vector2>(gamepad.GetDirectionalPad());
+            DirectionVector("Directional pad", &dpad);
+            
             ImGui::TreePop();
         }
-
-        if (ImGui::TreeNode("Keyboard"))
-        {
-            ImGui::Text("Key down B: %d", Input::GetKey(Key::B));
-            ImGui::Text("Key release B: %d", Input::GetKey(Key::B, KeyStatus::Release));
-            ImGui::TreePop();
-        }
-
-        ImGui::Text("Gamepads connected: %u", Input::GetGamepadsConnected());
-        for (uint32_t i = 0; i < Input::GamepadMax; i++)
-        {
-            const GamepadInput& gamepad = Input::GetGamepad(i);
-            
-            if (!gamepad.GetConnected())
-                continue;
-            
-            if (ImGui::TreeNode(std::format("Gamepad {} - {}", i, gamepad.GetName()).c_str()))
-            {
-                ImGui::Text("Left stick axis: %f, %f", gamepad.GetAxis(GamepadAxis::LeftStickHorizontal), gamepad.GetAxis(GamepadAxis::LeftStickVertical));
-                Vector2 leftStick = gamepad.GetStick(GamepadStick::Left);
-                ImGuiUtils::DirectionVector("Left stick", &leftStick);
-                ImGui::Text("Right stick axis: %f, %f", gamepad.GetAxis(GamepadAxis::RightStickHorizontal), gamepad.GetAxis(GamepadAxis::RightStickVertical));
-                Vector2 rightStick = gamepad.GetStick(GamepadStick::Right);
-                ImGuiUtils::DirectionVector("Left stick", &rightStick);
-                
-                ImGui::Text("Left trigger axis: %f", gamepad.GetAxis(GamepadAxis::LeftTrigger));
-                ImGui::Text("Right trigger axis: %f", gamepad.GetAxis(GamepadAxis::RightTrigger));
-
-                for (uint32_t j = 0; j < GamepadButtonCount; j++)
-                {
-                    const GamepadButton button = static_cast<GamepadButton>(j);
-                    ImGui::Text("Button %d - %s: %d", j, magic_enum::enum_name(button).data(), gamepad.GetButton(button));
-                }
-
-                Vector2 dpad = static_cast<Vector2>(gamepad.GetDirectionalPad());
-                DirectionVector("Directional pad", &dpad);
-                
-                ImGui::TreePop();
-            }
-        }
-        ImGui::End();
+    }
+    ImGui::End();
 }
 
 bool ImGui::DragAngle(

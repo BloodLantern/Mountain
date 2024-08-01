@@ -11,6 +11,8 @@
 #include <Windows.h>
 #undef XMLDocument
 
+#undef near
+#undef far
 #undef min
 #undef max
 #undef MessageBox
