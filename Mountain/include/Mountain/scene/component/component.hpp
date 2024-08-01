@@ -15,7 +15,7 @@ public:
     Component() = default;
     virtual ~Component() = default;
 
-    DEFAULT_COPY_MOVE_OPERATIONS(Component)
+    DEFAULT_VIRTUAL_COPY_MOVE_OPERATIONS(Component)
 
     /// @brief Called when the component is added to an Entity
     virtual void Added() {}

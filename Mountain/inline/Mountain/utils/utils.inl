@@ -97,4 +97,13 @@ constexpr size_t Utils::FunctionAddress(std::function<Ret(Args...)> f)
     return reinterpret_cast<size_t>(*fnPointer);
 }
 
+template <typename R, typename ... Args>
+R Utils::CallSafe(const std::function<R(Args...)>& function, Args&&... args)
+{
+    if (function)
+        return function(FORWARD(args)...);
+
+    return R{}; // Might not compile if R isn't default constructible
+}
+
 END_MOUNTAIN
