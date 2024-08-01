@@ -16,6 +16,7 @@
 #include <Maths/vector3.hpp>
 
 #include "Mountain/utils/color.hpp"
+#include "Mountain/utils/concepts.hpp"
 #include "Mountain/utils/list.hpp"
 #include "Mountain/utils/pointer.hpp"
 
@@ -204,6 +205,9 @@ namespace Meta
     /// @tparam T Type
     template <typename T>
     constexpr bool_t IsColorType = IsAny<T, Color, ColorHsva>;
+
+    template <Concepts::EnumT T>
+    using UnderlyingEnumType = std::underlying_type_t<T>;
 }
 
 END_MOUNTAIN;
