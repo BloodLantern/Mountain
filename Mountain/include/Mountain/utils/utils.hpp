@@ -181,6 +181,9 @@ namespace Utils
     MOUNTAIN_API void CreateEmptyFile(const std::filesystem::path& path);
 
     MOUNTAIN_API void SetThreadName(std::thread& thread, const std::wstring& name);
+
+    template <typename R, typename... Args>
+    R CallSafe(const std::function<R(Args...)>& function, Args&&... args);
 }
 
 END_MOUNTAIN

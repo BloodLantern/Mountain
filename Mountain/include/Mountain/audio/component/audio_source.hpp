@@ -5,7 +5,7 @@
 #include <Maths/vector2.hpp>
 
 #include "Mountain/resource/audio_track.hpp"
-#include "Mountain/scene/component.hpp"
+#include "Mountain/scene/component/component.hpp"
 
 BEGIN_MOUNTAIN
 

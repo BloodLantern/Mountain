@@ -4,6 +4,7 @@
 #include <ranges>
 
 #include "Mountain/input/time.hpp"
+// ReSharper disable once CppUnusedIncludeDirective
 #include "Mountain/utils/formatter.hpp"
 #include "Mountain/utils/logger.hpp"
 
@@ -63,7 +64,7 @@ void Coroutine::Stop(const Guid& coroutineId)
 
 void Coroutine::StopAll()
 {
-    for (const auto& coroutine : m_RunningRoutines | std::views::values)
+    for (auto& coroutine : m_RunningRoutines | std::views::values)
         coroutine.Destroy();
 
     m_RunningRoutines.clear();
@@ -94,7 +95,7 @@ void Coroutine::promise_type::unhandled_exception()
     }
 }
 
-void Coroutine::promise_type::return_void() { finished = true; }
+void Coroutine::promise_type::return_void() {}
 
 Coroutine::Awaitable Coroutine::promise_type::await_transform(const AwaitType& duration)
 {
@@ -102,17 +103,76 @@ Coroutine::Awaitable Coroutine::promise_type::await_transform(const AwaitType& d
     return {};
 }
 
-Coroutine::Awaitable Coroutine::promise_type::await_transform(float_t duration) { return await_transform(AwaitType(duration)); }
+Coroutine::Awaitable Coroutine::promise_type::await_transform(const float_t duration) { return await_transform(AwaitType(duration)); }
 
 std::suspend_always Coroutine::promise_type::yield_value(nullptr_t) { return {}; }
 
 Coroutine::Coroutine(const HandleType handle) : m_Handle(handle) {}
 
+Coroutine::~Coroutine() { DestroySafe(); }
+
+Coroutine::Coroutine(Coroutine&& other) noexcept
+    : m_Handle(other.m_Handle)
+    , m_Id(other.m_Id)
+{
+    other.Reset();
+}
+
+Coroutine& Coroutine::operator=(Coroutine&& other) noexcept
+{
+    m_Handle = other.m_Handle;
+    m_Id = other.m_Id;
+
+    other.Reset();
+
+    return *this;
+}
+
+Coroutine& Coroutine::operator=(const HandleType handle) noexcept
+{
+    m_Handle = handle;
+    m_Id = {};
+
+    return *this;
+}
+
 void Coroutine::Resume() const { m_Handle.resume(); }
 
-bool_t Coroutine::Finished() const { return m_Handle.promise().finished; }
+void Coroutine::ResumeSafe() const
+{
+    if (Valid())
+        Resume();
+}
 
-void Coroutine::Destroy() const { m_Handle.destroy(); }
+bool_t Coroutine::Finished() const { return m_Handle.done(); }
+
+bool_t Coroutine::FinishedSafe() const
+{
+    if (Valid())
+        return Finished();
+    
+    return false;
+}
+
+void Coroutine::Destroy()
+{
+    m_Handle.destroy();
+    m_Handle = {};
+}
+
+void Coroutine::DestroySafe()
+{
+    if (Valid())
+        Destroy();
+}
+
+bool_t Coroutine::Valid() const { return static_cast<bool_t>(m_Handle); }
+
+void Coroutine::Reset()
+{
+    m_Handle = {};
+    m_Id = {};
+}
 
 Guid Coroutine::GetId() const { return m_Id; }
 

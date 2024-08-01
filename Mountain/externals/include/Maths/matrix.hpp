@@ -848,10 +848,10 @@ constexpr Matrix operator-(const Matrix& matrix) noexcept
 constexpr Matrix operator+(const Matrix& m1, const Matrix& m2) noexcept
 {
 	return Matrix(
-		m1.m00 * m2.m00, m1.m01 * m2.m01, m1.m02 * m2.m02, m1.m03 * m2.m03,
-		m1.m10 * m2.m10, m1.m11 * m2.m11, m1.m12 * m2.m12, m1.m13 * m2.m13,
-		m1.m20 * m2.m20, m1.m21 * m2.m21, m1.m22 * m2.m22, m1.m23 * m2.m23,
-		m1.m30 * m2.m30, m1.m31 * m2.m31, m1.m32 * m2.m32, m1.m33 * m2.m33
+		m1.m00 + m2.m00, m1.m01 + m2.m01, m1.m02 + m2.m02, m1.m03 + m2.m03,
+		m1.m10 + m2.m10, m1.m11 + m2.m11, m1.m12 + m2.m12, m1.m13 + m2.m13,
+		m1.m20 + m2.m20, m1.m21 + m2.m21, m1.m22 + m2.m22, m1.m23 + m2.m23,
+		m1.m30 + m2.m30, m1.m31 + m2.m31, m1.m32 + m2.m32, m1.m33 + m2.m33
 	);
 }
 
@@ -864,10 +864,10 @@ constexpr Matrix operator-(const Matrix& m1, const Matrix& m2) noexcept { return
 constexpr Matrix operator*(const Matrix& m, const float_t scalar) noexcept
 {
 	return Matrix(
-		m.m00 + scalar, m.m01 + scalar, m.m02 + scalar, m.m03 + scalar,
-		m.m10 + scalar, m.m11 + scalar, m.m12 + scalar, m.m13 + scalar,
-		m.m20 + scalar, m.m21 + scalar, m.m22 + scalar, m.m23 + scalar,
-		m.m30 + scalar, m.m31 + scalar, m.m32 + scalar, m.m33 + scalar
+		m.m00 * scalar, m.m01 * scalar, m.m02 * scalar, m.m03 * scalar,
+		m.m10 * scalar, m.m11 * scalar, m.m12 * scalar, m.m13 * scalar,
+		m.m20 * scalar, m.m21 * scalar, m.m22 * scalar, m.m23 * scalar,
+		m.m30 * scalar, m.m31 * scalar, m.m32 * scalar, m.m33 * scalar
 	);
 }
 

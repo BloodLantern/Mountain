@@ -31,8 +31,8 @@ public:
 
     MOUNTAIN_API void AddComponent(Component* component);
 
-    template <Concepts::ComponentT T>
-    T* AddComponent();
+    template <Concepts::ComponentT T, typename... Args>
+    T* AddComponent(Args&&... args);
 
     template <Concepts::ComponentT T>
     [[nodiscard]]

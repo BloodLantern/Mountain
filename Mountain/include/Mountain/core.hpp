@@ -3,6 +3,7 @@
 
 #include <cmath>
 #include <cstdint>
+#include <functional>
 
 /// @file core.hpp
 /// @brief This file is meant to be included by every single other header file of this project.
@@ -30,6 +31,8 @@ typedef char char_t;
 ///
 /// @see @ref char_t for reason.
 typedef bool bool_t;
+
+using Action = std::function<void()>;
 
 /// @brief Macro used for DLL export/import.
 ///
@@ -88,11 +91,17 @@ namespace Mountain {}
 /// @endcode
 /// 
 /// @param type The type to default the copy and move operations of.
-#define DEFAULT_COPY_MOVE_OPERATIONS(type)         \
+#define DEFAULT_COPY_MOVE_OPERATIONS(type)                  \
     type(const type& other) noexcept = default;             \
     type(type&& other) noexcept = default;                  \
     type& operator=(const type& other) noexcept = default;  \
     type& operator=(type&& other) noexcept = default;
+
+#define DEFAULT_VIRTUAL_COPY_MOVE_OPERATIONS(type)                  \
+    type(const type& other) noexcept = default;                     \
+    type(type&& other) noexcept = default;                          \
+    virtual type& operator=(const type& other) noexcept = default;  \
+    virtual type& operator=(type&& other) noexcept = default;
 
 /// @brief Deletes the copy and move operations of a given @p type.
 /// 
@@ -135,7 +144,7 @@ using stdstring = std::string;
 #endif
 
 /// @brief Forwards a value with its own type as template.
-#define FORWARD(value) std::forward<decltype(value)>(value)
+#define FORWARD(value) std::forward<std::remove_reference_t<decltype(value)>>(value)
 
 /// @brief Defines binary flag operators for an enum type
 /// @param enumName The enum
