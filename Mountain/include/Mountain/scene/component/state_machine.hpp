@@ -59,6 +59,7 @@ public:
     /// @brief Force the new state
     void ForceState(T newState);
     /// @brief Set the new state if @c locked is not set
+    // ReSharper disable once CppEnforceOverridingFunctionStyle
     StateMachine& operator=(T newState);
     
     /// @brief Get the previous state

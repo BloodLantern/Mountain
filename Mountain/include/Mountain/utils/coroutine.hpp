@@ -120,12 +120,12 @@ public:
     /// @brief The coroutine handle type.
     using HandleType = std::coroutine_handle<promise_type>;
 
-    MOUNTAIN_API static Guid Start(const Coroutine& coroutine);
+    MOUNTAIN_API static Guid Start(Coroutine&& coroutine);
 
     /// @brief Starts a coroutine using an existing coroutine Guid.
     ///
     /// This stops the existing coroutine if it is still running and assigns the guid with a newly created one.
-    MOUNTAIN_API static void Start(const Coroutine& coroutine, Guid* coroutineId);
+    MOUNTAIN_API static void Start(Coroutine&& coroutine, Guid* coroutineId);
 
     MOUNTAIN_API static void UpdateAll();
 
