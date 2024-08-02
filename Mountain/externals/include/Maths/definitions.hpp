@@ -19,8 +19,10 @@
 #define MATH_TOOLBOX
 #endif
 
+// ReSharper disable once CppEnforceTypeAliasCodeStyle
 /// @private
 typedef bool bool_t;
+// ReSharper disable once CppEnforceTypeAliasCodeStyle
 /// @private
 typedef char char_t;
 
