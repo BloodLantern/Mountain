@@ -5,7 +5,6 @@
 
 #include <ostream>
 
-#include "Maths/calc.hpp"
 #include "Maths/vector2.hpp"
 
 /// @file vector3.hpp
@@ -60,7 +59,6 @@ public:
 	static constexpr Vector3 One() noexcept;
 
     /// @brief Returns a Vector3 with all of its components set to @c 1.
-	[[nodiscard]]
 	static constexpr void One(Vector3* result) noexcept;
 
 	/// @brief Returns a · b.
@@ -234,11 +232,6 @@ constexpr Vector3 Vector3::Cross(const Vector3& a, const Vector3& b) noexcept { 
 
 constexpr void Vector3::Cross(const Vector3& a, const Vector3& b, Vector3* result) noexcept { *result = Vector3(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x); }
 
-constexpr Vector3 Vector3::Clamp(Vector3 value, Vector3 min, Vector3 max) noexcept
-{
-    return Vector3(std::clamp(value.x, min.x, max.x), std::clamp(value.y, min.y, max.y), std::clamp(value.z, min.z, max.z));
-}
-
 constexpr const float_t* Vector3::Raw() const noexcept { return &x; }
 
 constexpr float_t* Vector3::Raw() noexcept { return &x; }
@@ -313,16 +306,16 @@ constexpr Vector3 &operator/=(Vector3 &a, const Vector3& b) noexcept { return a 
 /// @brief Divides a Vector3 by a @p factor according to @ref operator/(const Vector3&, const float_t), placing the result in @p v.
 constexpr Vector3& operator/=(Vector3& v, const float_t factor) noexcept { return v = v / factor; }
 
-/// @brief Checks if two Vector3 are considered equal using @ref Calc::Equals.
+/// @brief Checks if two Vector3 are equal.
 [[nodiscard]]
 constexpr bool_t operator==(const Vector3 a, const Vector3 b) noexcept
 {
-	return Calc::Equals(a.x, b.x)
-		&& Calc::Equals(a.y, b.y)
-		&& Calc::Equals(a.z, b.z);
+	return a.x == b.x
+		&& a.y == b.y
+		&& a.z == b.z;
 }
 
-/// @brief Checks if two Vector3 are considered different using @ref Calc::Equals.
+/// @brief Checks if two Vector3 are different.
 [[nodiscard]]
 constexpr bool_t operator!=(const Vector3 a, const Vector3 b) noexcept { return !(a == b); }
 

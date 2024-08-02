@@ -6,8 +6,8 @@
 #include <ostream>
 
 #include "Maths/calc.hpp"
-#include "Maths/vector3.hpp"
 #include "Maths/quaternion.hpp"
+#include "Maths/vector3.hpp"
 
 /// @file matrix3.hpp
 /// @brief Defines the Matrix3 class.
@@ -458,7 +458,7 @@ constexpr Vector3& operator*=(const Matrix3& m, Vector3& v) noexcept { return v 
 /// @brief Multiplies two @ref Matrix3 "Matrices" according to @ref operator*(const Matrix&, const Matrix&), placing the result in @p m1.
 constexpr Matrix3& operator*=(Matrix3& m1, const Matrix3& m2) noexcept { return m1 = m1 * m2; }
 
-/// @brief	Checks if two Matrices are considered equal using @c Calc::Equals.
+/// @brief	Checks if two Matrices are equal.
 [[nodiscard]]
 constexpr bool_t operator==(const Matrix3& a, const Matrix3& b)
 {
@@ -467,7 +467,7 @@ constexpr bool_t operator==(const Matrix3& a, const Matrix3& b)
         && a.m20 == b.m20 && a.m21 == b.m21 && a.m22 == b.m22;
 }
 
-/// @brief Checks if two Matrices are considered different using @c Calc::Equals.
+/// @brief Checks if two Matrices are different.
 [[nodiscard]]
 constexpr bool_t operator!=(const Matrix3& a, const Matrix3& b) { return !(a == b); }
 

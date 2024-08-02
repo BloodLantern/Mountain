@@ -4,6 +4,9 @@
 #include <numbers>
 
 #include "Maths/definitions.hpp"
+#include "Maths/vector2.hpp"
+#include "Maths/vector3.hpp"
+#include "Maths/vector4.hpp"
 
 /// @file calc.hpp
 /// @brief A collection of general-use constants and useful functions.
@@ -58,33 +61,153 @@ namespace Calc
     [[nodiscard]]
 	MATH_TOOLBOX constexpr float_t Sign(float_t number) noexcept;
 
-    /// @brief	A constexpr version of the <c>std::abs</c> function.
-    /// 
-    /// @param number The number to get the absolute value of.
-    /// @returns The absolute value of @p number.
-    [[nodiscard]]
-    MATH_TOOLBOX constexpr float_t Abs(float_t number) noexcept;
+	/// @brief	A constexpr version of the <c>std::abs</c> function.
+	/// 
+	/// @param number The number to get the absolute value of.
+	/// @returns The absolute value of @p number.
+	[[nodiscard]]
+	MATH_TOOLBOX constexpr float_t Abs(float_t number) noexcept;
 
-    /// @brief	A constexpr version of the <c>std::round</c> function.
-    /// 
-    /// @param number The number to round to the nearest integer value.
-    /// @returns The rounded value of @p number.
-    [[nodiscard]]
-    MATH_TOOLBOX constexpr float_t Round(float_t number) noexcept;
+	/// @brief	A constexpr version of the <c>std::abs</c> function for Vector2.
+	/// 
+	/// @param vector The vector to get the absolute value of.
+	/// @returns A Vector2 whose components are the absolute values of @p vector.
+	[[nodiscard]]
+	MATH_TOOLBOX constexpr Vector2 Abs(Vector2 vector) noexcept;
+
+	/// @brief	A constexpr version of the <c>std::abs</c> function for Vector3.
+	/// 
+	/// @param vector The vector to get the absolute value of.
+	/// @returns A Vector3 whose components are the absolute values of @p vector.
+	[[nodiscard]]
+	MATH_TOOLBOX constexpr Vector3 Abs(const Vector3& vector) noexcept;
+
+	/// @brief	A constexpr version of the <c>std::abs</c> function for Vector4.
+	/// 
+	/// @param vector The vector to get the absolute value of.
+	/// @returns A Vector4 whose components are the absolute values of @p vector.
+	[[nodiscard]]
+	MATH_TOOLBOX constexpr Vector4 Abs(const Vector4& vector) noexcept;
+
+	/// @brief	A constexpr version of the <c>std::round</c> function.
+	/// 
+	/// @param number The number to round to the nearest integer value.
+	/// @returns The rounded value of @p number.
+	[[nodiscard]]
+	MATH_TOOLBOX constexpr float_t Round(float_t number) noexcept;
+
+	/// @brief	A constexpr version of the <c>std::round</c> function for Vector2.
+	/// 
+	/// @param vector The vector to round to the nearest integer value.
+	/// @returns A Vector2 whose components are the rounded values of @p vector.
+	[[nodiscard]]
+	MATH_TOOLBOX constexpr Vector2 Round(Vector2 vector) noexcept;
+
+	/// @brief	A constexpr version of the <c>std::round</c> function for Vector3.
+	/// 
+	/// @param vector The vector to round to the nearest integer value.
+	/// @returns A Vector3 whose components are the rounded values of @p vector.
+	[[nodiscard]]
+	MATH_TOOLBOX constexpr Vector3 Round(const Vector3& vector) noexcept;
+
+	/// @brief	A constexpr version of the <c>std::round</c> function for Vector4.
+	/// 
+	/// @param vector The vector to round to the nearest integer value.
+	/// @returns A Vector4 whose components are the rounded values of @p vector.
+	[[nodiscard]]
+	MATH_TOOLBOX constexpr Vector4 Round(const Vector4& vector) noexcept;
 
     /// @brief	A constexpr version of the <c>std::floor</c> function.
     /// 
     /// @param number The number to floor.
     /// @returns The floor value of @p number.
     [[nodiscard]]
-    MATH_TOOLBOX constexpr float_t Floor(float_t number) noexcept;
+	MATH_TOOLBOX constexpr float_t Floor(float_t number) noexcept;
+
+	/// @brief	A constexpr version of the <c>std::floor</c> function for Vector2.
+	/// 
+	/// @param vector The vector to round to the nearest integer value.
+	/// @returns A Vector2 whose components are the floored values of @p vector.
+	[[nodiscard]]
+	MATH_TOOLBOX constexpr Vector2 Floor(Vector2 vector) noexcept;
+
+	/// @brief	A constexpr version of the <c>std::floor</c> function for Vector3.
+	/// 
+	/// @param vector The vector to round to the nearest integer value.
+	/// @returns A Vector3 whose components are the floored values of @p vector.
+	[[nodiscard]]
+	MATH_TOOLBOX constexpr Vector3 Floor(const Vector3& vector) noexcept;
+
+	/// @brief	A constexpr version of the <c>std::floor</c> function for Vector4.
+	/// 
+	/// @param vector The vector to round to the nearest integer value.
+	/// @returns A Vector4 whose components are the floored values of @p vector.
+	[[nodiscard]]
+	MATH_TOOLBOX constexpr Vector4 Floor(const Vector4& vector) noexcept;
 
     /// @brief	A constexpr version of the <c>std::ceil</c> function.
     /// 
     /// @param number The number to ceil.
     /// @returns The ceil value of @p number.
     [[nodiscard]]
-    MATH_TOOLBOX constexpr float_t Ceil(float_t number) noexcept;
+	MATH_TOOLBOX constexpr float_t Ceil(float_t number) noexcept;
+
+	/// @brief	A constexpr version of the <c>std::ceil</c> function for Vector2.
+	/// 
+	/// @param vector The vector to round to the nearest integer value.
+	/// @returns A Vector2 whose components are the ceiled values of @p vector.
+	[[nodiscard]]
+	MATH_TOOLBOX constexpr Vector2 Ceil(Vector2 vector) noexcept;
+
+	/// @brief	A constexpr version of the <c>std::ceil</c> function for Vector3.
+	/// 
+	/// @param vector The vector to round to the nearest integer value.
+	/// @returns A Vector3 whose components are the ceiled values of @p vector.
+	[[nodiscard]]
+	MATH_TOOLBOX constexpr Vector3 Ceil(const Vector3& vector) noexcept;
+
+	/// @brief	A constexpr version of the <c>std::ceil</c> function for Vector4.
+	/// 
+	/// @param vector The vector to round to the nearest integer value.
+	/// @returns A Vector4 whose components are the ceiled values of @p vector.
+	[[nodiscard]]
+	MATH_TOOLBOX constexpr Vector4 Ceil(const Vector4& vector) noexcept;
+
+	/// @brief	A constexpr version of the <c>std::clamp</c> function.
+	/// 
+	/// @param number The number to clamp between two values.
+	/// @param min The minimum value.
+	/// @param max The maximum value.
+	/// @returns The clamped number.
+	[[nodiscard]]
+	MATH_TOOLBOX constexpr float_t Clamp(float_t number, float_t min, float_t max) noexcept;
+
+	/// @brief	A constexpr version of the <c>std::clamp</c> function for Vector2.
+	/// 
+	/// @param vector The vector to clamp between two positions.
+	/// @param min The minimum position.
+	/// @param max The maximum position.
+	/// @returns The clamped vector.
+	[[nodiscard]]
+	MATH_TOOLBOX constexpr Vector2 Clamp(Vector2 vector, Vector2 min, Vector2 max) noexcept;
+
+	/// @brief	A constexpr version of the <c>std::clamp</c> function for Vector3.
+	/// 
+	/// @param vector The vector to clamp between two positions.
+	/// @param min The minimum position.
+	/// @param max The maximum position.
+	/// @returns The clamped vector.
+	[[nodiscard]]
+	MATH_TOOLBOX constexpr Vector3 Clamp(const Vector3& vector, const Vector3& min, const Vector3& max) noexcept;
+
+	/// @brief	A constexpr version of the <c>std::clamp</c> function for Vector4.
+	/// 
+	/// @param vector The vector to clamp between two positions.
+	/// @param min The minimum position.
+	/// @param max The maximum position.
+	/// @returns The clamped vector.
+	[[nodiscard]]
+	MATH_TOOLBOX constexpr Vector4 Clamp(const Vector4& vector, const Vector4& min, const Vector4& max) noexcept;
 
 	/// @brief	A constexpr version of the <c>std::fmodf</c> function.
 	/// 
@@ -215,17 +338,65 @@ constexpr float_t Calc::Sign(const float_t number) noexcept { return number < 0.
 
 constexpr float_t Calc::Abs(const float_t number) noexcept { return number < 0.f ? -number : number; }
 
+constexpr Vector2 Calc::Abs(const Vector2 vector) noexcept { return { Abs(vector.x), Abs(vector.y) }; }
+
+constexpr Vector3 Calc::Abs(const Vector3& vector) noexcept { return { Abs(vector.x), Abs(vector.y), Abs(vector.z) }; }
+
+constexpr Vector4 Calc::Abs(const Vector4& vector) noexcept { return { Abs(vector.x), Abs(vector.y), Abs(vector.z), Abs(vector.w) }; }
+
 constexpr float_t Calc::Round(const float_t number) noexcept
 {
     const int32_t lower = static_cast<int32_t>(number);
-    const int32_t upper = static_cast<int32_t>(number + 0.5f);
+    const int32_t upper = static_cast<int32_t>(number + 0.5f);  // NOLINT(bugprone-incorrect-roundings)
 
     return static_cast<float_t>(lower < upper ? upper : lower);
 }
 
+constexpr Vector2 Calc::Round(const Vector2 vector) noexcept { return { Round(vector.x), Round(vector.y) }; }
+
+constexpr Vector3 Calc::Round(const Vector3& vector) noexcept { return { Round(vector.x), Round(vector.y), Round(vector.z) }; }
+
+constexpr Vector4 Calc::Round(const Vector4& vector) noexcept { return { Round(vector.x), Round(vector.y), Round(vector.z), Round(vector.w) }; }
+
 constexpr float_t Calc::Floor(const float_t number) noexcept { return Round(number - 0.5f); }
 
+constexpr Vector2 Calc::Floor(const Vector2 vector) noexcept { return { Floor(vector.x), Floor(vector.y) }; }
+
+constexpr Vector3 Calc::Floor(const Vector3& vector) noexcept { return { Floor(vector.x), Floor(vector.y), Floor(vector.z) }; }
+
+constexpr Vector4 Calc::Floor(const Vector4& vector) noexcept { return { Floor(vector.x), Floor(vector.y), Floor(vector.z), Floor(vector.w) }; }
+
 constexpr float_t Calc::Ceil(const float_t number) noexcept { return Round(number + 0.5f); }
+
+constexpr Vector2 Calc::Ceil(const Vector2 vector) noexcept { return { Ceil(vector.x), Ceil(vector.y) }; }
+
+constexpr Vector3 Calc::Ceil(const Vector3& vector) noexcept { return { Ceil(vector.x), Ceil(vector.y), Ceil(vector.z) }; }
+
+constexpr Vector4 Calc::Ceil(const Vector4& vector) noexcept { return { Ceil(vector.x), Ceil(vector.y), Ceil(vector.z), Ceil(vector.w) }; }
+
+constexpr float_t Calc::Clamp(const float_t number, const float_t min, const float_t max) noexcept
+{
+	if (number < min)
+		return min;
+	if (number > max)
+		return max;
+	return number;
+}
+
+constexpr Vector2 Calc::Clamp(const Vector2 vector, const Vector2 min, const Vector2 max) noexcept
+{
+	return { Clamp(vector.x, min.x, max.x), Clamp(vector.y, min.y, max.y) };
+}
+
+constexpr Vector3 Calc::Clamp(const Vector3& vector, const Vector3& min, const Vector3& max) noexcept
+{
+	return { Clamp(vector.x, min.x, max.x), Clamp(vector.y, min.y, max.y), Clamp(vector.z, min.z, max.z) };
+}
+
+constexpr Vector4 Calc::Clamp(const Vector4& vector, const Vector4& min, const Vector4& max) noexcept
+{
+	return { Clamp(vector.x, min.x, max.x), Clamp(vector.y, min.y, max.y), Clamp(vector.z, min.z, max.z), Clamp(vector.w, min.w, max.w) };
+}
 
 constexpr float_t Calc::Modulo(const float_t a, const float_t b) noexcept { return a - static_cast<float_t>(static_cast<int64_t>(a / b)) * b; }
 
@@ -244,7 +415,7 @@ constexpr void Calc::Approach(float_t &value, const float_t target, const float_
 
 constexpr float_t Calc::YoYo(const float_t value) noexcept { return value <= 0.5f ? value * 2.f : 1.f - (value - 0.5f) * 2.f; }
 
-constexpr bool_t Calc::OnInterval(float_t value, float_t lastValue, float_t interval) { return Calc::IsZero(interval) || (int) (lastValue / interval) != (int) (value / interval); }
+constexpr bool_t Calc::OnInterval(const float_t value, const float_t lastValue, const float_t interval) { return Calc::IsZero(interval) || (int) (lastValue / interval) != (int) (value / interval); }
 
 constexpr bool_t Calc::IsZero(const float_t value) noexcept { return IsZero(value, Zero); }
 
