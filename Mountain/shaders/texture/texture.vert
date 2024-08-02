@@ -8,7 +8,9 @@ uniform vec2 halfImagePixelSize;
 uniform vec2 position;
 uniform vec2 scale;
 uniform float rotation;
-uniform mat4 camera;
+
+uniform mat2 diagonalFlip;
+uniform mat2 antiDiagonalFlip;
 
 out vec2 textureCoordinates;
 
@@ -18,8 +20,12 @@ void main()
 
     vec2 vertexPosition = vertex.xy;
 
-    // Apply scale
+    // Apply scaling
     vertexPosition *= scale * halfImagePixelSize;
+
+    // Apply diagonal flipping
+    vertexPosition = diagonalFlip * vertexPosition;
+    vertexPosition = antiDiagonalFlip * vertexPosition;
 
     // Apply rotation
     float c = cos(rotation), s = sin(rotation);
@@ -28,5 +34,5 @@ void main()
     // And eventually translate the points to where the image should be drawn
     vertexPosition += position + halfImagePixelSize * scale;
 
-    gl_Position = projection * camera * vec4(vertexPosition, 0.f, 1.f);
+    gl_Position = projection * vec4(vertexPosition, 0.f, 1.f);
 }

@@ -4,6 +4,8 @@
 
 #include <array>
 
+#include <magic_enum/magic_enum.hpp>
+
 #include <Maths/vector2.hpp>
 
 #include "Mountain/rendering/render_target.hpp"
@@ -14,6 +16,15 @@
 #include "Mountain/utils/rectangle.hpp"
 
 BEGIN_MOUNTAIN
+
+enum class DrawTextureFlipping
+{
+    None,
+    Horizontal      = 1 << 0,
+    Vertical        = 1 << 1,
+    Diagonal        = 1 << 2,
+    AntiDiagonal    = 1 << 3
+};
 
 /// @brief The Draw class is a helper class that contains static functions to draw shapes.
 class Draw
@@ -239,6 +250,7 @@ public:
     /// @param uv0 The first texture UV position
     /// @param uv1 The second texture UV position
     /// @param color The tint color of the texture. Use white for default colors
+    /// @param flipFlags Flip flags from the @c DrawTextureFlipping enum.
     MOUNTAIN_API static void Texture(
         const Texture& texture,
         Vector2 position,
@@ -246,7 +258,8 @@ public:
         float_t rotation = 0.f,
         Vector2 uv0 = Vector2::Zero(),
         Vector2 uv1 = Vector2::One(),
-        const Color& color = Color::White()
+        const Color& color = Color::White(),
+        uint8_t flipFlags = static_cast<uint8_t>(DrawTextureFlipping::None)
     );
 
     /// @brief Draw text
@@ -262,19 +275,27 @@ public:
     /// @param position The top-left position of the RenderTarget
     /// @param scale The scale to apply to the RenderTarget
     /// @param rotation The rotation in radians to apply to the RenderTarget
+    /// @param uv0 The first texture UV position
+    /// @param uv1 The second texture UV position
     /// @param color The color of the RenderTarget
+    /// @param flipFlags Whether to flip the texture anti-diagonally (using the top-left to bottom-right diagonal)
     MOUNTAIN_API static void RenderTarget(
         const RenderTarget& renderTarget,
         Vector2 position = Vector2::Zero(),
         Vector2 scale = Vector2::One(),
         float_t rotation = 0,
-        const Color& color = Color::White()
+        Vector2 uv0 = Vector2::Zero(),
+        Vector2 uv1 = Vector2::One(),
+        const Color& color = Color::White(),
+        uint8_t flipFlags = static_cast<uint8_t>(DrawTextureFlipping::None)
     );
 
 private:
     MOUNTAIN_API static inline Pointer<Shader> m_PrimitiveShader, m_PrimitiveColoredShader, m_CircleShader, m_TextureShader, m_TextShader, m_PostProcessingShader;
 
     MOUNTAIN_API static inline uint32_t m_RectangleEbo, m_Vbo, m_ImageVbo, m_TextVbo, m_Vao, m_ImageVao, m_TextVao;
+
+    MOUNTAIN_API static inline Matrix m_Projection;
 
     static void Initialize();
     static void Shutdown();
@@ -317,7 +338,8 @@ private:
         float_t rotation,
         Vector2 uv0,
         Vector2 uv1,
-        const Color& color
+        const Color& color,
+        uint8_t flipFlags = static_cast<uint8_t>(DrawTextureFlipping::None)
     );
     
     friend class Renderer;
@@ -325,5 +347,7 @@ private:
 };
 
 END_MOUNTAIN
+
+ENUM_FLAGS(Mountain::DrawTextureFlipping, uint8_t)
 
 #include "Mountain/rendering/draw.inl"

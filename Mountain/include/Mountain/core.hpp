@@ -151,18 +151,20 @@ using stdstring = std::string;
 /// @param integerType The integral type in which the flags are used
 ///
 /// This macro **must** be used in the global namespace, as it declares a template specialization of magic_enum
-#define ENUM_FLAGS(enumName, integerType)                                                                                                       \
-    inline integerType operator&(enumName left, enumName right) { return static_cast<integerType>(left) & static_cast<integerType>(right); }    \
-    inline integerType operator|(enumName left, enumName right) { return static_cast<integerType>(left) & static_cast<integerType>(right); }    \
-    inline integerType operator&(const integerType left, enumName right) { return left & static_cast<integerType>(right); }                     \
-    inline integerType operator|(const integerType left, enumName right) { return left & static_cast<integerType>(right); }                     \
-    inline integerType operator&(enumName left, const integerType right) { return static_cast<integerType>(left) & right; }                     \
-    inline integerType operator|(enumName left, const integerType right) { return static_cast<integerType>(left) & right; }                     \
-                                                                                                                                                \
-    template <>                                                                                                                                 \
-    struct magic_enum::customize::enum_range<enumName>                                                                                        \
-    {                                                                                                                                           \
-        static constexpr bool is_flags = true;                                                                                                  \
+#define ENUM_FLAGS(enumName, integerType)                                                                                                                   \
+    inline integerType operator&(const enumName left, const enumName right) { return static_cast<integerType>(left) & static_cast<integerType>(right); }    \
+    inline integerType operator|(const enumName left, const enumName right) { return static_cast<integerType>(left) | static_cast<integerType>(right); }    \
+    inline integerType operator&(const integerType left, const enumName right) { return left & static_cast<integerType>(right); }                           \
+    inline integerType operator|(const integerType left, const enumName right) { return left | static_cast<integerType>(right); }                           \
+    inline integerType operator&(const enumName left, const integerType right) { return static_cast<integerType>(left) & right; }                           \
+    inline integerType operator|(const enumName left, const integerType right) { return static_cast<integerType>(left) | right; }                           \
+    inline integerType& operator&=(integerType& left, const enumName right) { return left = left & right; }                                                 \
+    inline integerType& operator|=(integerType& left, const enumName right) { return left = left | right; }                                                 \
+                                                                                                                                                            \
+    template <>                                                                                                                                             \
+    struct magic_enum::customize::enum_range<enumName>                                                                                                      \
+    {                                                                                                                                                       \
+        static constexpr bool is_flags = true;                                                                                                              \
     };
 
 #define ENUM_COUNT(enumName) constexpr size_t enumName##Count = static_cast<size_t>(enumName::Count);

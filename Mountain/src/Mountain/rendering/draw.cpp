@@ -324,10 +324,11 @@ void Draw::Texture(
     const float_t rotation,
     const Vector2 uv0,
     const Vector2 uv1,
-    const Color& color
+    const Color& color,
+    const uint8_t flipFlags
 )
 {
-    TextureInternal(texture.GetId(), texture.GetSize(), *m_TextureShader, position, scale, rotation, uv0, uv1, color);
+    TextureInternal(texture.GetId(), texture.GetSize(), *m_TextureShader, position, scale, rotation, uv0, uv1, color, flipFlags);
 }
 
 void Draw::Text(const Font& font, const std::string_view text, Vector2 position, const float_t scale, const Color& color)
@@ -379,7 +380,10 @@ void Draw::RenderTarget(
     const Vector2 position,
     const Vector2 scale,
     const float_t rotation,
-    const Color& color
+    const Vector2 uv0,
+    const Vector2 uv1,
+    const Color& color,
+    const uint8_t flipFlags
 )
 {
     TextureInternal(
@@ -389,9 +393,10 @@ void Draw::RenderTarget(
         position,
         scale,
         rotation,
-        Vector2::Zero(),
-        Vector2::One(),
-        color
+        uv0,
+        uv1,
+        color,
+        flipFlags
     );
 }
 
@@ -442,15 +447,13 @@ void Draw::SetProjectionMatrix(const Matrix& projection)
     m_PrimitiveShader->SetUniform("projection", projection);
     m_PrimitiveColoredShader->Use();
     m_PrimitiveColoredShader->SetUniform("projection", projection);
-    m_TextureShader->Use();
-    m_TextureShader->SetUniform("projection", projection);
     m_CircleShader->Use();
     m_CircleShader->SetUniform("projection", projection);
-    m_PostProcessingShader->Use();
-    m_PostProcessingShader->SetUniform("projection", projection);
     m_TextShader->Use();
     m_TextShader->SetUniform("projection", projection);
     m_TextShader->Unuse();
+    
+    m_Projection = projection;
 }
 
 void Draw::TriangleInternal(
@@ -747,7 +750,8 @@ void Draw::TextureInternal(
     const float_t rotation,
     const Vector2 uv0,
     const Vector2 uv1,
-    const Color& color
+    const Color& color,
+    const uint8_t flipFlags
 )
 {
     if (uv0.x > uv1.x || uv0.y > uv1.y)
@@ -757,12 +761,27 @@ void Draw::TextureInternal(
     glBindBuffer(GL_ARRAY_BUFFER, m_ImageVbo);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RectangleEbo);
 
+    const Vector2 uvDiff = uv1 - uv0;
+    Vector2 lowerUv = uv0, higherUv = uv1;
+
+    if (flipFlags & DrawTextureFlipping::Horizontal)
+    {
+        higherUv.x = lowerUv.x;
+        lowerUv.x += uvDiff.x;
+    }
+
+    if (flipFlags & DrawTextureFlipping::Vertical)
+    {
+        higherUv.y = lowerUv.y;
+        lowerUv.y += uvDiff.y;
+    }
+
     const std::array vertices = {
         // pos          // UVs
-        -1.f, -1.f,     uv0.x, uv0.y,
-         1.f, -1.f,     uv1.x, uv0.y,
-         1.f,  1.f,     uv1.x, uv1.y,
-        -1.f,  1.f,     uv0.x, uv1.y
+        -1.f, -1.f,     lowerUv.x,  lowerUv.y,
+         1.f, -1.f,     higherUv.x, lowerUv.y,
+         1.f,  1.f,     higherUv.x, higherUv.y,
+        -1.f,  1.f,     lowerUv.x,  higherUv.y
     };
     
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), &vertices, GL_STATIC_DRAW);
@@ -771,12 +790,34 @@ void Draw::TextureInternal(
     glEnableVertexAttribArray(0);
     
     shader.Use();
-    shader.SetUniform("halfImagePixelSize", textureSize * (uv1 - uv0) * 0.5f);
+    
+    shader.SetUniform("projection", m_Projection * cameraMatrix);
+    
+    shader.SetUniform("halfImagePixelSize", textureSize * uvDiff * 0.5f);
     shader.SetUniform("position", position);
     shader.SetUniform("scale", scale);
     shader.SetUniform("rotation", rotation);
+
+    shader.SetUniform("horizontalFlip", flipFlags & DrawTextureFlipping::Horizontal);
+    shader.SetUniform("verticalFlip", flipFlags & DrawTextureFlipping::Vertical);
+
+    Matrix2 diagonalFlip = Matrix2::Identity();
+    if (flipFlags & DrawTextureFlipping::Diagonal)
+    {
+        constexpr Matrix2 m(1.f, 1.f, -1.f, 1.f);
+        diagonalFlip = m * Matrix2::Scaling({ 1.f, -1.f }) * m.Inverted();
+    }
+    shader.SetUniform("diagonalFlip", diagonalFlip);
+
+    Matrix2 antiDiagonalFlip = Matrix2::Identity();
+    if (flipFlags & DrawTextureFlipping::AntiDiagonal)
+    {
+        constexpr Matrix2 m(-1.f, 1.f, 1.f, 1.f);
+        antiDiagonalFlip = m * Matrix2::Scaling({ 1.f, -1.f }) * m.Inverted();
+    }
+    shader.SetUniform("antiDiagonalFlip", antiDiagonalFlip);
+    
     shader.SetUniform("color", color);
-    shader.SetUniform("camera", cameraMatrix); // TODO - Precompute projection * cameraMatrix
     
     glBindTexture(GL_TEXTURE_2D, textureId);
 

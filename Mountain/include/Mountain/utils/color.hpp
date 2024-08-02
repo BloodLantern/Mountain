@@ -703,7 +703,7 @@ struct MOUNTAIN_API ColorHsva
     constexpr ColorHsva(const float_t h, const float_t s, const float_t v, const float_t a = 1.f)
     : h(h), s(s), v(v), a(a) {}
     
-    /// @brief Converts the ColorHsva to a Colorf
+    /// @brief Converts the ColorHsva to a Color
     [[nodiscard]]
     constexpr explicit operator Color() const;
 
@@ -716,35 +716,35 @@ struct MOUNTAIN_API ColorHsva
     constexpr explicit operator Vector4() const;
 };
 
-/// @brief Adds 2 Colorf, caps at @c 1.f
+/// @brief Adds 2 Color, caps at @c 1.f
 /// @param c1 A
 /// @param c2 B
 /// @return A + B
 [[nodiscard]]
 constexpr Color operator+(const Color& c1, const Color& c2);
 
-/// @brief Multiplies 2 Colorf
+/// @brief Multiplies 2 Color
 /// @param c1 A
 /// @param c2 B
 /// @return A * B
 [[nodiscard]]
 constexpr Color operator*(const Color& c1, const Color& c2);
 
-/// @brief Multiplies the alpha component of a Colorf
+/// @brief Multiplies the alpha component of a Color
 /// @param color Color
 /// @param alphaFactor Alpha factor
 /// @return Color.a * alphaFactor
 [[nodiscard]]
 constexpr Color operator*(Color color, float_t alphaFactor);
 
-/// @brief Compares 2 Colorf component-wise
+/// @brief Compares 2 Color component-wise
 /// @param c1 A
 /// @param c2 B
 /// @return A == B
 [[nodiscard]]
 constexpr bool_t operator==(const Color& c1, const Color& c2);
 
-/// @brief Compares 2 Colorf component-wise
+/// @brief Compares 2 Color component-wise
 /// @param c1 A
 /// @param c2 B
 /// @return A != B
@@ -786,7 +786,7 @@ struct std::formatter<Mountain::Color>
             return it;
  
         if (*it != '}')
-            throw std::format_error("Invalid format args for Colorf");
+            throw std::format_error("Invalid format args for Color");
  
         return it;
     }
