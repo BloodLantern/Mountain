@@ -95,72 +95,32 @@ void Shader::ResetSourceData()
     m_Code.fill({});
 }
 
-void Shader::SetUniform(const std::string_view& keyName, const int32_t value) const
-{
-	const GLint location = glGetUniformLocation(m_Id, keyName.data());
-    glUniform1i(location, value);
-}
+void Shader::SetUniform(const std::string_view& keyName, const int32_t value) const { glUniform1i(GetUniformLocation(keyName.data()), value); }
 
-void Shader::SetUniform(const std::string_view& keyName, const bool_t value) const
-{
-    SetUniform(keyName, static_cast<int32_t>(value));
-}
+void Shader::SetUniform(const std::string_view& keyName, const bool_t value) const { SetUniform(keyName, static_cast<int32_t>(value)); }
 
-void Shader::SetUniform(const std::string_view& keyName, const float_t value) const
-{
-    const GLint location = glGetUniformLocation(m_Id, keyName.data());
-    glUniform1f(location, value);
-}
+void Shader::SetUniform(const std::string_view& keyName, const float_t value) const { glUniform1f(GetUniformLocation(keyName.data()), value); }
 
-void Shader::SetUniform(const std::string_view& keyName, const Vector2& value) const
-{
-    const GLint location = glGetUniformLocation(m_Id, keyName.data());
-    glUniform2fv(location, 1, value.Raw());
-}
+void Shader::SetUniform(const std::string_view& keyName, const Vector2& value) const { glUniform2fv(GetUniformLocation(keyName.data()), 1, value.Raw()); }
 
-void Shader::SetUniform(const std::string_view& keyName, const Vector3& value) const
-{
-    const GLint location = glGetUniformLocation(m_Id, keyName.data());
-    glUniform3fv(location, 1, value.Raw());
-}
+void Shader::SetUniform(const std::string_view& keyName, const Vector3& value) const { glUniform3fv(GetUniformLocation(keyName.data()), 1, value.Raw()); }
 
-void Shader::SetUniform(const std::string_view& keyName, const Vector4& value) const
-{
-    const GLint location = glGetUniformLocation(m_Id, keyName.data());
-    glUniform4fv(location, 1, value.Raw());
-}
+void Shader::SetUniform(const std::string_view& keyName, const Vector4& value) const { glUniform4fv(GetUniformLocation(keyName.data()), 1, value.Raw()); }
 
-void Shader::SetUniform(const std::string_view& keyName, const Color& value) const
-{
-    SetUniform(keyName, static_cast<Vector4>(value));
-}
+void Shader::SetUniform(const std::string_view& keyName, const Color& value) const { SetUniform(keyName, static_cast<Vector4>(value)); }
 
-void Shader::SetUniform(const std::string_view& keyName, const Matrix3& value) const
-{
-    const GLint location = glGetUniformLocation(m_Id, keyName.data());
-    glUniformMatrix3fv(location, 1, GL_FALSE, value.Raw());
-}
+void Shader::SetUniform(const std::string_view& keyName, const Matrix2& value) const { glUniformMatrix2fv(GetUniformLocation(keyName.data()), 1, GL_FALSE, value.Raw()); }
 
-void Shader::SetUniform(const std::string_view& keyName, const Matrix& value) const
-{
-    const GLint location = glGetUniformLocation(m_Id, keyName.data());
-    glUniformMatrix4fv(location, 1, GL_FALSE, value.Raw());
-}
+void Shader::SetUniform(const std::string_view& keyName, const Matrix3& value) const { glUniformMatrix3fv(GetUniformLocation(keyName.data()), 1, GL_FALSE, value.Raw()); }
 
-uint32_t Shader::GetId() const
-{
-    return m_Id;
-}
+void Shader::SetUniform(const std::string_view& keyName, const Matrix& value) const { glUniformMatrix4fv(GetUniformLocation(keyName.data()), 1, GL_FALSE, value.Raw()); }
 
-void Shader::Use() const
-{
-	glUseProgram(m_Id);
-}
+uint32_t Shader::GetId() const { return m_Id; }
 
-void Shader::Unuse() const
-{
-	glUseProgram(0);
-}
+void Shader::Use() const { glUseProgram(m_Id); }
+
+// ReSharper disable once CppMemberFunctionMayBeStatic
+void Shader::Unuse() const { glUseProgram(0); }
 
 uint32_t Shader::ShaderTypeToOpenGl(const ShaderType shaderType)
 {
@@ -206,3 +166,5 @@ void Shader::CheckLinkError()
         Logger::LogError("Error while linking shader program '{}': {}", m_Name, infoLog.data());
     }
 }
+
+int32_t Shader::GetUniformLocation(const std::string_view& keyName) const { return glGetUniformLocation(m_Id, keyName.data()); }

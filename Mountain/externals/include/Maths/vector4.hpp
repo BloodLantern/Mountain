@@ -1,9 +1,7 @@
 #pragma once
 
-#ifdef MATH_DEFINE_FORMATTER
 #include <format>
 #include <sstream>
-#endif
 
 #include <ostream>
 
@@ -321,7 +319,6 @@ constexpr Vector4 Vector4::Lerp(const Vector4& value, const Vector4& target, con
 
 constexpr void Vector4::Lerp(const Vector4& value, const Vector4& target, const float_t t, Vector4* result) noexcept { *result = value + (target - value) * t; }
 
-#ifdef MATH_DEFINE_FORMATTER
 template <>
 struct std::formatter<Vector4>
 {
@@ -357,4 +354,3 @@ typename FmtContext::iterator std::formatter<Vector4>::format(Vector4 v, FmtCont
 
     return std::ranges::copy(std::move(out).str(), ctx.out()).out;
 }
-#endif

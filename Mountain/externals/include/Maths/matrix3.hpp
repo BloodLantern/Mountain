@@ -1,9 +1,7 @@
 #pragma once
 
-#ifdef MATH_DEFINE_FORMATTER
 #include <format>
 #include <sstream>
-#endif
 
 #include <ostream>
 
@@ -328,106 +326,220 @@ static_assert(std::is_copy_assignable_v<Matrix3>, "Class Matrix3 must be copy as
 static_assert(std::is_move_assignable_v<Matrix3>, "Class Matrix3 must be move assignable.");
 
 constexpr Matrix3::Matrix3(const float_t defaultValue) noexcept
-        : m00(defaultValue), m10(defaultValue), m20(defaultValue)
-        , m01(defaultValue), m11(defaultValue), m21(defaultValue)
-        , m02(defaultValue), m12(defaultValue), m22(defaultValue)
+    : m00(defaultValue), m10(defaultValue), m20(defaultValue)
+    , m01(defaultValue), m11(defaultValue), m21(defaultValue)
+    , m02(defaultValue), m12(defaultValue), m22(defaultValue)
 {
 }
 
 constexpr Matrix3::Matrix3(const float_t* const data) noexcept
-        : m00(data[0]), m10(data[1]), m20(data[2])
-        , m01(data[3]), m11(data[4]), m21(data[5])
-        , m02(data[6]), m12(data[7]), m22(data[8])
+    : m00(data[0]), m10(data[1]), m20(data[2])
+    , m01(data[3]), m11(data[4]), m21(data[5])
+    , m02(data[6]), m12(data[7]), m22(data[8])
 {
 }
 
 constexpr Matrix3::Matrix3(const Vector3& c0, const Vector3& c1, const Vector3& c2) noexcept
-        : m00(c0.x), m10(c1.x), m20(c2.x)
-        , m01(c0.y), m11(c1.y), m21(c2.y)
-        , m02(c0.z), m12(c1.z), m22(c2.z)
+    : m00(c0.x), m10(c1.x), m20(c2.x)
+    , m01(c0.y), m11(c1.y), m21(c2.y)
+    , m02(c0.z), m12(c1.z), m22(c2.z)
 {
 }
 
 constexpr Matrix3::Matrix3(
-        const float_t m00, const float_t m01, const float_t m02,
-        const float_t m10, const float_t m11, const float_t m12,
-        const float_t m20, const float_t m21, const float_t m22
+    const float_t m00, const float_t m01, const float_t m02,
+    const float_t m10, const float_t m11, const float_t m12,
+    const float_t m20, const float_t m21, const float_t m22
 ) noexcept
-        : m00(m00), m10(m10), m20(m20)
-        , m01(m01), m11(m11), m21(m21)
-        , m02(m02), m12(m12), m22(m22)
+    : m00(m00), m10(m10), m20(m20)
+    , m01(m01), m11(m11), m21(m21)
+    , m02(m02), m12(m12), m22(m22)
 {
 }
+
+/// @brief Returns the opposite of a Matrix3.
+///
+/// This effectively means replacing all values of this Matrix3 with their opposite.
+[[nodiscard]]
+constexpr Matrix3 operator-(const Matrix3& matrix) noexcept
+{
+    return Matrix3(
+        -matrix.m00, -matrix.m01, -matrix.m02,
+        -matrix.m10, -matrix.m11, -matrix.m12,
+        -matrix.m20, -matrix.m21, -matrix.m22
+    );
+}
+
+/// @brief Adds the values of two @ref Matrix3 "3x3 Matrices" one by one.
+[[nodiscard]]
+constexpr Matrix3 operator+(const Matrix3& m1, const Matrix3& m2) noexcept
+{
+    return Matrix3(
+        m1.m00 + m2.m00, m1.m01 + m2.m01, m1.m02 + m2.m02,
+        m1.m10 + m2.m10, m1.m11 + m2.m11, m1.m12 + m2.m12,
+        m1.m20 + m2.m20, m1.m21 + m2.m21, m1.m22 + m2.m22
+    );
+}
+
+/// @brief Subtracts the values of two @ref Matrix3 "Matrices" one by one.
+[[nodiscard]]
+constexpr Matrix3 operator-(const Matrix3& m1, const Matrix3& m2) noexcept { return m1 + -m2; }
+
+/// @brief Multiplies all values of a Matrix by a @p scalar.
+[[nodiscard]]
+constexpr Matrix3 operator*(const Matrix3& m, const float_t scalar) noexcept
+{
+    return Matrix3(
+        m.m00 * scalar, m.m01 * scalar, m.m02 * scalar,
+        m.m10 * scalar, m.m11 * scalar, m.m12 * scalar,
+        m.m20 * scalar, m.m21 * scalar, m.m22 * scalar
+    );
+}
+
+/// @brief Multiplies all values of a Matrix by a @p scalar.
+[[nodiscard]]
+constexpr Matrix3 operator*(const float_t factor, const Matrix3& m) noexcept { return m * factor; }
+
+/// @brief Multiplies a Vector2 by a Matrix3.
+[[nodiscard]]
+constexpr Vector2 operator*(const Matrix3& m, const Vector2& v) noexcept
+{
+    return Vector2(
+        v.x * m.m00 + v.y * m.m01 + m.m02,
+        v.x * m.m10 + v.y * m.m11 + m.m12
+    );
+}
+
+/// @brief Multiplies a Vector3 by a Matrix3.
+[[nodiscard]]
+constexpr Vector3 operator*(const Matrix3& m, const Vector3& v) noexcept
+{
+    return Vector3(
+        v.x * m.m00 + v.y * m.m01 + v.z * m.m02,
+        v.x * m.m10 + v.y * m.m11 + v.z * m.m12,
+        v.x * m.m20 + v.y * m.m21 + v.z * m.m22
+    );
+}
+
+/// @brief Multiplies two @ref Matrix3 "Matrices".
+[[nodiscard]]
+constexpr Matrix3 operator*(const Matrix3& m1, const Matrix3& m2) noexcept
+{
+    return Matrix3(
+        m1.m00 * m2.m00 + m1.m01 * m2.m10 + m1.m02 * m2.m20,
+        m1.m00 * m2.m01 + m1.m01 * m2.m11 + m1.m02 * m2.m21,
+        m1.m00 * m2.m02 + m1.m01 * m2.m12 + m1.m02 * m2.m22,
+        
+        m1.m10 * m2.m00 + m1.m11 * m2.m10 + m1.m12 * m2.m20,
+        m1.m10 * m2.m01 + m1.m11 * m2.m11 + m1.m12 * m2.m21,
+        m1.m10 * m2.m02 + m1.m11 * m2.m12 + m1.m12 * m2.m22,
+        
+        m1.m20 * m2.m00 + m1.m21 * m2.m10 + m1.m22 * m2.m20,
+        m1.m20 * m2.m01 + m1.m21 * m2.m11 + m1.m22 * m2.m21,
+        m1.m20 * m2.m02 + m1.m21 * m2.m12 + m1.m22 * m2.m22
+    );
+}
+
+/// @brief Adds two @ref Matrix3 "Matrices" according to @ref operator+(const Matrix&, const Matrix&), placing the result in @p m1.
+constexpr Matrix3& operator+=(Matrix3& m1, const Matrix3& m2) noexcept { return m1 = m1 + m2; }
+
+/// @brief Subtracts two @ref Matrix3 "Matrices" according to @ref operator-(const Matrix&, const Matrix&), placing the result in @p m1.
+constexpr Matrix3& operator-=(Matrix3& m1, const Matrix3& m2) noexcept { return m1 = m1 - m2; }
+
+/// @brief Multiplies a Matrix by a @p scalar according to @ref operator*(const Matrix&, const float_t), placing the result in @p m.
+constexpr Matrix3& operator*=(Matrix3& m, const float_t scalar) noexcept { return m = m * scalar; }
+
+/// @brief Multiplies a Matrix by a Vector2 according to @ref operator*(const Matrix&, const Vector2&), placing the result in @p m.
+constexpr Vector2& operator*=(const Matrix3& m, Vector2& v) noexcept { return v = m * v; }
+
+/// @brief Multiplies a Matrix by a Vector3 according to @ref operator*(const Matrix&, const Vector3&), placing the result in @p m.
+constexpr Vector3& operator*=(const Matrix3& m, Vector3& v) noexcept { return v = m * v; }
+
+/// @brief Multiplies two @ref Matrix3 "Matrices" according to @ref operator*(const Matrix&, const Matrix&), placing the result in @p m1.
+constexpr Matrix3& operator*=(Matrix3& m1, const Matrix3& m2) noexcept { return m1 = m1 * m2; }
+
+/// @brief	Checks if two Matrices are considered equal using @c Calc::Equals.
+[[nodiscard]]
+constexpr bool_t operator==(const Matrix3& a, const Matrix3& b)
+{
+    return a.m00 == b.m00 && a.m01 == b.m01 && a.m02 == b.m02
+        && a.m10 == b.m10 && a.m11 == b.m11 && a.m12 == b.m12
+        && a.m20 == b.m20 && a.m21 == b.m21 && a.m22 == b.m22;
+}
+
+/// @brief Checks if two Matrices are considered different using @c Calc::Equals.
+[[nodiscard]]
+constexpr bool_t operator!=(const Matrix3& a, const Matrix3& b) { return !(a == b); }
 
 constexpr Matrix3 Matrix3::Identity() noexcept
 {
     return Matrix3(
-            1.f, 0.f, 0.f,
-            0.f, 1.f, 0.f,
-            0.f, 0.f, 1.f
+        1.f, 0.f, 0.f,
+        0.f, 1.f, 0.f,
+        0.f, 0.f, 1.f
     );
 }
 
 constexpr void Matrix3::Identity(Matrix3* result) noexcept
 {
     *result = Matrix3(
-            1.f, 0.f, 0.f,
-            0.f, 1.f, 0.f,
-            0.f, 0.f, 1.f
+        1.f, 0.f, 0.f,
+        0.f, 1.f, 0.f,
+        0.f, 0.f, 1.f
     );
 }
 
 constexpr Matrix3 Matrix3::RotationX(const float_t cos, const float_t sin) noexcept
 {
     return Matrix3(
-            1.f,    0.f,    0.f,
-            0.f,    cos,   -sin,
-            0.f,    sin,    cos
+        1.f,    0.f,    0.f,
+        0.f,    cos,   -sin,
+        0.f,    sin,    cos
     );
 }
 
 constexpr void Matrix3::RotationX(const float_t cos, const float_t sin, Matrix3* result) noexcept
 {
     *result = Matrix3(
-            1.f,    0.f,    0.f,
-            0.f,    cos,   -sin,
-            0.f,    sin,    cos
+        1.f,    0.f,    0.f,
+        0.f,    cos,   -sin,
+        0.f,    sin,    cos
     );
 }
 
 constexpr Matrix3 Matrix3::RotationY(const float_t cos, const float_t sin) noexcept
 {
     return Matrix3(
-            cos,    0.f,    sin,
-            0.f,    1.f,    0.f,
-            -sin,   0.f,    cos
+        cos,    0.f,    sin,
+        0.f,    1.f,    0.f,
+        -sin,   0.f,    cos
     );
 }
 
 constexpr void Matrix3::RotationY(const float_t cos, const float_t sin, Matrix3* result) noexcept
 {
     *result = Matrix3(
-            cos,    0.f,    sin,
-            0.f,    1.f,    0.f,
-            -sin,   0.f,    cos
+        cos,    0.f,    sin,
+        0.f,    1.f,    0.f,
+        -sin,   0.f,    cos
     );
 }
 
 constexpr Matrix3 Matrix3::RotationZ(const float_t cos, const float_t sin) noexcept
 {
     return Matrix3(
-            cos,   -sin,    0.f,
-            sin,    cos,    0.f,
-            0.f,    0.f,    1.f
+        cos,   -sin,    0.f,
+        sin,    cos,    0.f,
+        0.f,    0.f,    1.f
     );
 }
 
 constexpr void Matrix3::RotationZ(const float_t cos, const float_t sin, Matrix3* result) noexcept
 {
     *result = Matrix3(
-            cos,   -sin,    0.f,
-            sin,    cos,    0.f,
-            0.f,    0.f,    1.f
+        cos,   -sin,    0.f,
+        sin,    cos,    0.f,
+        0.f,    0.f,    1.f
     );
 }
 
@@ -452,27 +564,27 @@ constexpr void Matrix3::Rotation(const Quaternion& rotation, Matrix3* result) no
     const float_t wx = rotation.X() * rotation.W();
 
     *result = Matrix3(
-            1.f - 2.f * (yy + zz), 2.f * (xy - wz), 2.f * (xz + wy),
-            2.f * (xy + wz), 1.f - 2.f * (zz + xx), 2.f * (yz - wx),
-            2.f * (xz - wy), 2.f * (yz + wx), 1.f - 2.f * (yy + xx)
+        1.f - 2.f * (yy + zz), 2.f * (xy - wz), 2.f * (xz + wy),
+        2.f * (xy + wz), 1.f - 2.f * (zz + xx), 2.f * (yz - wx),
+        2.f * (xz - wy), 2.f * (yz + wx), 1.f - 2.f * (yy + xx)
     );
 }
 
 constexpr Matrix3 Matrix3::Scaling(const Vector3 &scale) noexcept
 {
     return Matrix3(
-            scale.x,     0.f,     0.f,
-            0.f,     scale.y,     0.f,
-            0.f,         0.f, scale.z
+        scale.x,     0.f,     0.f,
+        0.f,     scale.y,     0.f,
+        0.f,         0.f, scale.z
     );
 }
 
 constexpr void Matrix3::Scaling(const Vector3& scale, Matrix3* result) noexcept
 {
     *result = Matrix3(
-            scale.x,     0.f,     0.f,
-            0.f,     scale.y,     0.f,
-            0.f,         0.f, scale.z
+        scale.x,     0.f,     0.f,
+        0.f,     scale.y,     0.f,
+        0.f,         0.f, scale.z
     );
 }
 
@@ -524,8 +636,8 @@ constexpr float_t Matrix3::Trace() const noexcept { return m00 + m11 + m22; }
 constexpr float_t Matrix3::Determinant() const noexcept
 {
     return m00 * (m11 * m22 - m21 * m12)
-           - m10 * (m12 * m20 - m22 * m10)
-           + m20 * (m01 * m12 - m11 * m02);
+         - m10 * (m12 * m20 - m22 * m10)
+         + m20 * (m01 * m12 - m11 * m02);
 }
 
 constexpr Matrix3 Matrix3::Transposed() const noexcept
@@ -555,26 +667,24 @@ constexpr Matrix3 Matrix3::Inverted() const
 
 constexpr void Matrix3::Inverted(Matrix3* result) const
 {
-    if (Determinant() == 0.f) [[unlikely]]
+    const float_t determinant = Determinant();
+    
+    if (determinant == 0.f) [[unlikely]]
         throw std::invalid_argument("Matrix3 isn't invertible");
 
-    // Definition from MonoGame/XNA: https://github.com/MonoGame/MonoGame/blob/b30122c99597eaf81b81f32ab1d467a7b4185c73/MonoGame.Framework/Matrix3.cs
-
-    const float invDeterminant = 1.0f / Determinant();
-
     *result = Matrix3(
-        (m11 * m22 - m12 * m21) * invDeterminant,
-        -(m01 * m22 - m02 * m21) * invDeterminant,
-        (m01 * m12 - m02 * m11) * invDeterminant,
+        m11 * m22 - m12 * m21,
+      -(m01 * m22 - m02 * m21),
+        m01 * m12 - m02 * m11,
 
-        -(m10 * m22 - m12 * m20) * invDeterminant,
-        (m00 * m22 - m02 * m20) * invDeterminant,
-        -(m00 * m12 - m02 * m10) * invDeterminant,
+      -(m10 * m22 - m12 * m20),
+        m00 * m22 - m02 * m20,
+      -(m00 * m12 - m02 * m10),
 
-        (m10 * m21 - m11 * m20) * invDeterminant,
-        -(m00 * m21 - m01 * m20) * invDeterminant,
-        (m00 * m11 - m01 * m10) * invDeterminant
-    );
+        m10 * m21 - m11 * m20,
+      -(m00 * m21 - m01 * m20),
+        m00 * m11 - m01 * m10
+    ) * (1.f / determinant);
 }
 
 constexpr float_t Matrix3::At(const size_t row, const size_t col) const
@@ -606,123 +716,11 @@ constexpr Vector3& Matrix3::operator[](const size_t col)
     return *static_cast<Vector3*>(static_cast<void*>(Raw() + static_cast<ptrdiff_t>(col) * 3));
 }
 
-/// @brief Returns the opposite of a Matrix3.
-///
-/// This effectively means replacing all values of this Matrix3 with their opposite.
-[[nodiscard]]
-constexpr Matrix3 operator-(const Matrix3& matrix) noexcept
-{
-    return Matrix3(
-        -matrix.m00, -matrix.m01, -matrix.m02,
-        -matrix.m10, -matrix.m11, -matrix.m12,
-        -matrix.m20, -matrix.m21, -matrix.m22
-    );
-}
-
-/// @brief Adds the values of two @ref Matrix3 "3x3 Matrices" one by one.
-[[nodiscard]]
-constexpr Matrix3 operator+(const Matrix3& m1, const Matrix3& m2) noexcept
-{
-    return Matrix3(
-        m1.m00 + m2.m00, m1.m01 + m2.m01, m1.m02 + m2.m02,
-        m1.m10 + m2.m10, m1.m11 + m2.m11, m1.m12 + m2.m12,
-        m1.m20 + m2.m20, m1.m21 + m2.m21, m1.m22 + m2.m22
-    );
-}
-
-/// @brief Subtracts the values of two @ref Matrix3 "Matrices" one by one.
-[[nodiscard]]
-constexpr Matrix3 operator-(const Matrix3& m1, const Matrix3& m2) noexcept { return m1 + -m2; }
-
-/// @brief Multiplies all values of a Matrix by a @p scalar.
-[[nodiscard]]
-constexpr Matrix3 operator*(const Matrix3& m, const float_t scalar) noexcept
-{
-    return Matrix3(
-        m.m00 * scalar, m.m01 * scalar, m.m02 * scalar,
-        m.m10 * scalar, m.m11 * scalar, m.m12 * scalar,
-        m.m20 * scalar, m.m21 * scalar, m.m22 * scalar
-    );
-}
-
-/// @brief Multiplies all values of a Matrix by a @p scalar.
-[[nodiscard]]
-constexpr Matrix3 operator*(const float_t factor, const Matrix3 m) noexcept { return m * factor; }
-
-/// @brief Multiplies a Vector2 by a Matrix3.
-[[nodiscard]]
-constexpr Vector2 operator*(const Matrix3& m, const Vector2& v) noexcept
-{
-    return Vector2(
-        v.x * m.m00 + v.y * m.m01,
-        v.x * m.m10 + v.y * m.m11
-    );
-}
-
-/// @brief Multiplies a Vector3 by a Matrix3.
-[[nodiscard]]
-constexpr Vector3 operator*(const Matrix3& m, const Vector3& v) noexcept
-{
-    return Vector3(
-            v.x * m.m00 + v.y * m.m01 + v.z * m.m02,
-            v.x * m.m10 + v.y * m.m11 + v.z * m.m12,
-            v.x * m.m20 + v.y * m.m21 + v.z * m.m22
-    );
-}
-
-/// @brief Multiplies two @ref Matrix3 "Matrices".
-[[nodiscard]]
-constexpr Matrix3 operator*(const Matrix3& m1, const Matrix3& m2) noexcept
-{
-    return Matrix3(
-            m1.m00 * m2.m00 + m1.m01 * m2.m10 + m1.m02 * m2.m20,
-            m1.m00 * m2.m01 + m1.m01 * m2.m11 + m1.m02 * m2.m21,
-            m1.m00 * m2.m02 + m1.m01 * m2.m12 + m1.m02 * m2.m22,
-            
-            m1.m10 * m2.m00 + m1.m11 * m2.m10 + m1.m12 * m2.m20,
-            m1.m10 * m2.m01 + m1.m11 * m2.m11 + m1.m12 * m2.m21,
-            m1.m10 * m2.m02 + m1.m11 * m2.m12 + m1.m12 * m2.m22,
-            
-            m1.m20 * m2.m00 + m1.m21 * m2.m10 + m1.m22 * m2.m20,
-            m1.m20 * m2.m01 + m1.m21 * m2.m11 + m1.m22 * m2.m21,
-            m1.m20 * m2.m02 + m1.m21 * m2.m12 + m1.m22 * m2.m22
-    );
-}
-
-/// @brief Adds two @ref Matrix3 "Matrices" according to @ref operator+(const Matrix&, const Matrix&), placing the result in @p m1.
-constexpr Matrix3& operator+=(Matrix3& m1, const Matrix3& m2) noexcept { return m1 = m1 + m2; }
-
-/// @brief Subtracts two @ref Matrix3 "Matrices" according to @ref operator-(const Matrix&, const Matrix&), placing the result in @p m1.
-constexpr Matrix3& operator-=(Matrix3& m1, const Matrix3& m2) noexcept { return m1 = m1 - m2; }
-
-/// @brief Multiplies a Matrix by a @p scalar according to @ref operator*(const Matrix&, const float_t), placing the result in @p m.
-constexpr Matrix3& operator*=(Matrix3& m, const float_t scalar) noexcept { return m = m * scalar; }
-
-/// @brief Multiplies a Matrix by a Vector3 according to @ref operator*(const Matrix&, const Vector3&), placing the result in @p m.
-constexpr Vector3& operator*=(const Matrix3& m, Vector3& v) noexcept { return v = m * v; }
-
-/// @brief Multiplies two @ref Matrix3 "Matrices" according to @ref operator*(const Matrix&, const Matrix&), placing the result in @p m1.
-constexpr Matrix3& operator*=(Matrix3& m1, const Matrix3& m2) noexcept { return m1 = m1 * m2; }
-
-/// @brief	Checks if two Matrices are considered equal using @c Calc::Equals.
-[[nodiscard]]
-constexpr bool_t operator==(const Matrix3& a, const Matrix3& b)
-{
-    return Calc::Equals(a.m00, b.m00) && Calc::Equals(a.m01, b.m01) && Calc::Equals(a.m02, b.m02)
-        && Calc::Equals(a.m10, b.m10) && Calc::Equals(a.m11, b.m11) && Calc::Equals(a.m12, b.m12)
-        && Calc::Equals(a.m20, b.m20) && Calc::Equals(a.m21, b.m21) && Calc::Equals(a.m22, b.m22);
-}
-
-/// @brief Checks if two Matrices are considered different using @c Calc::Equals.
-[[nodiscard]]
-constexpr bool_t operator!=(const Matrix3& a, const Matrix3& b) { return !(a == b); }
-
-/// @brief Streams a Matrix into @p out, printing its values one by one on a single line.
+/// @brief Streams a Matrix3 into @p out, printing its values one by one on a single line.
 ///
 /// If you instead want a multiline print, you can use Matrix::DebugPrint.
 MATH_TOOLBOX std::ostream& operator<<(std::ostream& out, const Matrix3& m);
 
-#ifdef MATH_DEFINE_FORMATTER
 template <>
 struct std::formatter<Matrix3>
 {
@@ -770,4 +768,3 @@ private:
     std::string m_Format;
     bool_t m_Multiline = false;
 };
-#endif
