@@ -1,9 +1,7 @@
 #pragma once
 
-#ifdef MATH_DEFINE_FORMATTER
 #include <format>
 #include <sstream>
-#endif
 
 #include <ostream>
 
@@ -253,7 +251,6 @@ constexpr bool_t operator!=(const Vector2i a, const Vector2i b) noexcept { retur
 /// @brief Streams a Vector2i into @p out, printing its values one by one on a single line.
 MATH_TOOLBOX std::ostream& operator<<(std::ostream& out, Vector2i v) noexcept;
 
-#ifdef MATH_DEFINE_FORMATTER
 template <>
 struct std::formatter<Vector2i>
 {
@@ -289,4 +286,3 @@ typename FmtContext::iterator std::formatter<Vector2i>::format(Vector2i v, FmtCo
 
     return std::ranges::copy(std::move(out).str(), ctx.out()).out;
 }
-#endif

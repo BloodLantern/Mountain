@@ -18,6 +18,14 @@
 #define ZERO 1e-6f
 #endif
 
+class Matrix2;
+class Matrix3;
+class Matrix;
+class Quaternion;
+class Vector2;
+class Vector3;
+class Vector4;
+
 /// @namespace Calc
 /// @brief This namespace contains mathematical constants and useful functions/macros.
 namespace Calc
@@ -136,7 +144,7 @@ namespace Calc
     /// @param zero The value under which a number is considered to be zero.
     /// @returns Whether the value is considered to be zero.
     [[nodiscard]]
-    MATH_TOOLBOX constexpr float_t MakeZero(float_t value, float_t zero) noexcept;
+	MATH_TOOLBOX constexpr float_t MakeZero(float_t value, float_t zero) noexcept;
 
 	/// @brief Checks if two values are considered equal using @ref IsZero(float_t).
 	/// 
@@ -145,6 +153,62 @@ namespace Calc
 	/// @returns Whether the values are considered equal.
 	[[nodiscard]]
 	MATH_TOOLBOX constexpr bool_t Equals(float_t a, float_t b) noexcept;
+
+	/// @brief Checks if two values are considered equal using @ref IsZero(float_t).
+	/// 
+	/// @param a The first value.
+	/// @param b The second value.
+	/// @returns Whether the values are considered equal.
+	[[nodiscard]]
+	MATH_TOOLBOX bool_t Equals(Vector2 a, Vector2 b) noexcept;
+
+	/// @brief Checks if two values are considered equal using @ref IsZero(float_t).
+	/// 
+	/// @param a The first value.
+	/// @param b The second value.
+	/// @returns Whether the values are considered equal.
+	[[nodiscard]]
+	MATH_TOOLBOX bool_t Equals(const Vector3& a, const Vector3& b) noexcept;
+
+	/// @brief Checks if two values are considered equal using @ref IsZero(float_t).
+	/// 
+	/// @param a The first value.
+	/// @param b The second value.
+	/// @returns Whether the values are considered equal.
+	[[nodiscard]]
+	MATH_TOOLBOX bool_t Equals(const Vector4& a, const Vector4& b) noexcept;
+
+	/// @brief Checks if two values are considered equal using @ref IsZero(float_t).
+	/// 
+	/// @param a The first value.
+	/// @param b The second value.
+	/// @returns Whether the values are considered equal.
+	[[nodiscard]]
+	MATH_TOOLBOX bool_t Equals(const Matrix2& a, const Matrix2& b) noexcept;
+
+	/// @brief Checks if two values are considered equal using @ref IsZero(float_t).
+	/// 
+	/// @param a The first value.
+	/// @param b The second value.
+	/// @returns Whether the values are considered equal.
+	[[nodiscard]]
+	MATH_TOOLBOX bool_t Equals(const Matrix3& a, const Matrix3& b) noexcept;
+
+	/// @brief Checks if two values are considered equal using @ref IsZero(float_t).
+	/// 
+	/// @param a The first value.
+	/// @param b The second value.
+	/// @returns Whether the values are considered equal.
+	[[nodiscard]]
+	MATH_TOOLBOX bool_t Equals(const Matrix& a, const Matrix& b) noexcept;
+
+	/// @brief Checks if two values are considered equal using @ref IsZero(float_t).
+	/// 
+	/// @param a The first value.
+	/// @param b The second value.
+	/// @returns Whether the values are considered equal.
+	[[nodiscard]]
+	MATH_TOOLBOX bool_t Equals(const Quaternion& a, const Quaternion& b) noexcept;
 }
 
 constexpr float_t Calc::Sign(const float_t number) noexcept { return number < 0.f ? -1.f : 1.f; }

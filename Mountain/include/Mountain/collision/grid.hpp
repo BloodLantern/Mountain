@@ -8,6 +8,8 @@
 
 BEGIN_MOUNTAIN
 
+// TODO - Add an operator[] function for accessing the tiles
+
 class Grid : public Collider
 {
 public:
