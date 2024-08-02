@@ -116,8 +116,8 @@ bool_t Grid::CheckCollision(const Hitbox& hitbox) const
 
     int32_t x = static_cast<int32_t>((hitbox.Left() - Left()) / tileSize.x);
     int32_t y = static_cast<int32_t>((hitbox.Top() - Top()) / tileSize.y);
-    int32_t width = static_cast<int32_t>((hitbox.Right() - Left() - 1.f) / tileSize.x) - x + 1;
-    int32_t height = static_cast<int32_t>((hitbox.Bottom() - Top() - 1.f) / tileSize.y) - y + 1;
+    int32_t width = static_cast<int32_t>((hitbox.Right() - Left() - 0.5f) / tileSize.x) - x + 1;
+    int32_t height = static_cast<int32_t>((hitbox.Bottom() - Top() - 0.5f) / tileSize.y) - y + 1;
 
     if (x < 0)
     {
