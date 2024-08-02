@@ -182,7 +182,7 @@ void ImGuiUtils::DirectionVector(const std::string_view label, Vector2* const va
 
 void ImGuiUtils::ShowInputsWindow()
 {
-    ImGui::Begin("Inputs");
+    ImGui::Begin("Mountain Inputs");
     if (ImGui::TreeNode("Mouse"))
     {
         const Vector2i mousePos = static_cast<Vector2i>(Input::GetMousePosition());
