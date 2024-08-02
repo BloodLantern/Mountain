@@ -13,8 +13,9 @@
 
 #include "Maths/easing.hpp"
 
-#include "Maths/matrix3.hpp"
 #include "Maths/matrix.hpp"
+#include "Maths/matrix2.hpp"
+#include "Maths/matrix3.hpp"
 
 #include "Maths/vector2.hpp"
 #include "Maths/vector2i.hpp"

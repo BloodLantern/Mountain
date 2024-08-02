@@ -1,9 +1,7 @@
 #pragma once
 
-#ifdef MATH_DEFINE_FORMATTER
 #include <format>
 #include <sstream>
-#endif
 
 #include <ostream>
 
@@ -337,7 +335,6 @@ constexpr void Vector3::Lerp(const Vector3& value, const Vector3& target, const 
 
 constexpr Vector3 Vector3::Combine(const Vector3& a, const Vector3& b, const float_t aScale, const float_t bScale) noexcept { return (a * aScale) + (b * bScale); }
 
-#ifdef MATH_DEFINE_FORMATTER
 template <>
 struct std::formatter<Vector3>
 {
@@ -373,4 +370,3 @@ typename FmtContext::iterator std::formatter<Vector3>::format(Vector3 v, FmtCont
 
     return std::ranges::copy(std::move(out).str(), ctx.out()).out;
 }
-#endif

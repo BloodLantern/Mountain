@@ -1,9 +1,7 @@
 #pragma once
 
-#ifdef MATH_DEFINE_FORMATTER
 #include <format>
 #include <sstream>
-#endif
 
 #include <ostream>
 
@@ -465,6 +463,147 @@ constexpr Matrix::Matrix(
 {
 }
 
+constexpr Matrix::operator Matrix3() const
+{
+    return Matrix3(
+        m00, m01, m02,
+        m10, m11, m12,
+        m20, m21, m22
+    );
+}
+
+/// @brief Returns the opposite of a Matrix.
+///
+/// This effectively means replacing all values of this Matrix with their opposite.
+[[nodiscard]]
+constexpr Matrix operator-(const Matrix& matrix) noexcept
+{
+	return Matrix(
+		-matrix.m00, -matrix.m01, -matrix.m02, -matrix.m03,
+		-matrix.m10, -matrix.m11, -matrix.m12, -matrix.m13,
+		-matrix.m20, -matrix.m21, -matrix.m22, -matrix.m23,
+		-matrix.m30, -matrix.m31, -matrix.m32, -matrix.m33
+	);
+}
+
+/// @brief Adds the values of two @ref Matrix "Matrices" one by one.
+[[nodiscard]]
+constexpr Matrix operator+(const Matrix& m1, const Matrix& m2) noexcept
+{
+	return Matrix(
+		m1.m00 + m2.m00, m1.m01 + m2.m01, m1.m02 + m2.m02, m1.m03 + m2.m03,
+		m1.m10 + m2.m10, m1.m11 + m2.m11, m1.m12 + m2.m12, m1.m13 + m2.m13,
+		m1.m20 + m2.m20, m1.m21 + m2.m21, m1.m22 + m2.m22, m1.m23 + m2.m23,
+		m1.m30 + m2.m30, m1.m31 + m2.m31, m1.m32 + m2.m32, m1.m33 + m2.m33
+	);
+}
+
+/// @brief Subtracts the values of two @ref Matrix "Matrices" one by one.
+[[nodiscard]]
+constexpr Matrix operator-(const Matrix& m1, const Matrix& m2) noexcept { return m1 + -m2; }
+
+/// @brief Multiplies all values of a Matrix by a @p scalar.
+[[nodiscard]]
+constexpr Matrix operator*(const Matrix& m, const float_t scalar) noexcept
+{
+	return Matrix(
+		m.m00 * scalar, m.m01 * scalar, m.m02 * scalar, m.m03 * scalar,
+		m.m10 * scalar, m.m11 * scalar, m.m12 * scalar, m.m13 * scalar,
+		m.m20 * scalar, m.m21 * scalar, m.m22 * scalar, m.m23 * scalar,
+		m.m30 * scalar, m.m31 * scalar, m.m32 * scalar, m.m33 * scalar
+	);
+}
+
+/// @brief Multiplies all values of a Matrix by a @p scalar.
+[[nodiscard]]
+constexpr Matrix operator*(const float_t factor, const Matrix& m) noexcept { return m * factor; }
+
+/// @brief Multiplies a Vector2 by a Matrix.
+[[nodiscard]]
+constexpr Vector2 operator*(const Matrix& m, const Vector2& v) noexcept
+{
+	return Vector2(
+		v.x * m.m00 + v.y * m.m01 + m.m02 + m.m03,
+		v.x * m.m10 + v.y * m.m11 + m.m12 + m.m13
+	);
+}
+
+/// @brief Multiplies a Vector3 by a Matrix.
+[[nodiscard]]
+constexpr Vector3 operator*(const Matrix& m, const Vector3& v) noexcept
+{
+	return Vector3(
+		v.x * m.m00 + v.y * m.m01 + v.z * m.m02 + m.m03,
+		v.x * m.m10 + v.y * m.m11 + v.z * m.m12 + m.m13,
+		v.x * m.m20 + v.y * m.m21 + v.z * m.m22 + m.m23
+	);
+}
+
+/// @brief Multiplies a Vector4 by a Matrix.
+[[nodiscard]]
+constexpr Vector4 operator*(const Matrix& m, const Vector4& v) noexcept
+{
+	return Vector4(
+		v.x * m.m00 + v.y * m.m01 + v.z * m.m02 + m.m03,
+		v.x * m.m10 + v.y * m.m11 + v.z * m.m12 + m.m13,
+		v.x * m.m20 + v.y * m.m21 + v.z * m.m22 + m.m23,
+		v.x * m.m30 + v.y * m.m31 + v.z * m.m32 + m.m33
+	);
+}
+
+/// @brief Multiplies two @ref Matrix "Matrices".
+[[nodiscard]]
+constexpr Matrix operator*(const Matrix& m1, const Matrix& m2) noexcept
+{
+	return Matrix(
+		m1.m00 * m2.m00 + m1.m01 * m2.m10 + m1.m02 * m2.m20 + m1.m03 * m2.m30,
+        m1.m00 * m2.m01 + m1.m01 * m2.m11 + m1.m02 * m2.m21 + m1.m03 * m2.m31,
+        m1.m00 * m2.m02 + m1.m01 * m2.m12 + m1.m02 * m2.m22 + m1.m03 * m2.m32,
+        m1.m00 * m2.m03 + m1.m01 * m2.m13 + m1.m02 * m2.m23 + m1.m03 * m2.m33,
+        
+        m1.m10 * m2.m00 + m1.m11 * m2.m10 + m1.m12 * m2.m20 + m1.m13 * m2.m30,
+        m1.m10 * m2.m01 + m1.m11 * m2.m11 + m1.m12 * m2.m21 + m1.m13 * m2.m31,
+        m1.m10 * m2.m02 + m1.m11 * m2.m12 + m1.m12 * m2.m22 + m1.m13 * m2.m32,
+        m1.m10 * m2.m03 + m1.m11 * m2.m13 + m1.m12 * m2.m23 + m1.m13 * m2.m33,
+        
+        m1.m20 * m2.m00 + m1.m21 * m2.m10 + m1.m22 * m2.m20 + m1.m23 * m2.m30,
+        m1.m20 * m2.m01 + m1.m21 * m2.m11 + m1.m22 * m2.m21 + m1.m23 * m2.m31,
+        m1.m20 * m2.m02 + m1.m21 * m2.m12 + m1.m22 * m2.m22 + m1.m23 * m2.m32,
+        m1.m20 * m2.m03 + m1.m21 * m2.m13 + m1.m22 * m2.m23 + m1.m23 * m2.m33,
+        
+        m1.m30 * m2.m00 + m1.m31 * m2.m10 + m1.m32 * m2.m20 + m1.m33 * m2.m30,
+        m1.m30 * m2.m01 + m1.m31 * m2.m11 + m1.m32 * m2.m21 + m1.m33 * m2.m31,
+        m1.m30 * m2.m02 + m1.m31 * m2.m12 + m1.m32 * m2.m22 + m1.m33 * m2.m32,
+        m1.m30 * m2.m03 + m1.m31 * m2.m13 + m1.m32 * m2.m23 + m1.m33 * m2.m33
+	);
+}
+
+/// @brief Adds two @ref Matrix "Matrices" according to @ref operator+(const Matrix&, const Matrix&), placing the result in @p m1.
+constexpr Matrix& operator+=(Matrix& m1, const Matrix& m2) noexcept { return m1 = m1 + m2; }
+
+/// @brief Subtracts two @ref Matrix "Matrices" according to @ref operator-(const Matrix&, const Matrix&), placing the result in @p m1.
+constexpr Matrix& operator-=(Matrix& m1, const Matrix& m2) noexcept { return m1 = m1 - m2; }
+
+/// @brief Multiplies a Matrix by a @p scalar according to @ref operator*(const Matrix&, const float_t), placing the result in @p m.
+constexpr Matrix& operator*=(Matrix& m, const float_t scalar) noexcept { return m = m * scalar; }
+
+/// @brief Multiplies two @ref Matrix "Matrices" according to @ref operator*(const Matrix&, const Matrix&), placing the result in @p m1.
+constexpr Matrix& operator*=(Matrix& m1, const Matrix& m2) noexcept { return m1 = m1 * m2; }
+
+/// @brief	Checks if two Matrices are considered equal using @c Calc::Equals.
+[[nodiscard]]
+constexpr bool_t operator==(const Matrix& a, const Matrix& b)
+{
+	return a.m00 == b.m00 && a.m01 == b.m01 && a.m02 == b.m02 && a.m03 == b.m03
+		&& a.m10 == b.m10 && a.m11 == b.m11 && a.m12 == b.m12 && a.m13 == b.m13
+		&& a.m20 == b.m20 && a.m21 == b.m21 && a.m22 == b.m22 && a.m23 == b.m23
+		&& a.m30 == b.m30 && a.m31 == b.m31 && a.m32 == b.m32 && a.m33 == b.m33;
+}
+
+/// @brief	Checks if two Matrices are considered different using @c Calc::Equals.
+[[nodiscard]]
+constexpr bool_t operator!=(const Matrix& a, const Matrix& b) { return !(a == b); }
+
 constexpr Matrix Matrix::Identity() noexcept
 {
     return Matrix(
@@ -820,147 +959,6 @@ constexpr Vector4& Matrix::operator[](const size_t col)
     return *static_cast<Vector4*>(static_cast<void*>(Raw() + static_cast<ptrdiff_t>(col) * 4));
 }
 
-constexpr Matrix::operator Matrix3() const
-{
-    return Matrix3(
-        m00, m01, m02,
-        m10, m11, m12,
-        m20, m21, m22
-    );
-}
-
-/// @brief Returns the opposite of a Matrix.
-///
-/// This effectively means replacing all values of this Matrix with their opposite.
-[[nodiscard]]
-constexpr Matrix operator-(const Matrix& matrix) noexcept
-{
-	return Matrix(
-		-matrix.m00, -matrix.m01, -matrix.m02, -matrix.m03,
-		-matrix.m10, -matrix.m11, -matrix.m12, -matrix.m13,
-		-matrix.m20, -matrix.m21, -matrix.m22, -matrix.m23,
-		-matrix.m30, -matrix.m31, -matrix.m32, -matrix.m33
-	);
-}
-
-/// @brief Adds the values of two @ref Matrix "Matrices" one by one.
-[[nodiscard]]
-constexpr Matrix operator+(const Matrix& m1, const Matrix& m2) noexcept
-{
-	return Matrix(
-		m1.m00 + m2.m00, m1.m01 + m2.m01, m1.m02 + m2.m02, m1.m03 + m2.m03,
-		m1.m10 + m2.m10, m1.m11 + m2.m11, m1.m12 + m2.m12, m1.m13 + m2.m13,
-		m1.m20 + m2.m20, m1.m21 + m2.m21, m1.m22 + m2.m22, m1.m23 + m2.m23,
-		m1.m30 + m2.m30, m1.m31 + m2.m31, m1.m32 + m2.m32, m1.m33 + m2.m33
-	);
-}
-
-/// @brief Subtracts the values of two @ref Matrix "Matrices" one by one.
-[[nodiscard]]
-constexpr Matrix operator-(const Matrix& m1, const Matrix& m2) noexcept { return m1 + -m2; }
-
-/// @brief Multiplies all values of a Matrix by a @p scalar.
-[[nodiscard]]
-constexpr Matrix operator*(const Matrix& m, const float_t scalar) noexcept
-{
-	return Matrix(
-		m.m00 * scalar, m.m01 * scalar, m.m02 * scalar, m.m03 * scalar,
-		m.m10 * scalar, m.m11 * scalar, m.m12 * scalar, m.m13 * scalar,
-		m.m20 * scalar, m.m21 * scalar, m.m22 * scalar, m.m23 * scalar,
-		m.m30 * scalar, m.m31 * scalar, m.m32 * scalar, m.m33 * scalar
-	);
-}
-
-/// @brief Multiplies all values of a Matrix by a @p scalar.
-[[nodiscard]]
-constexpr Matrix operator*(const float_t factor, const Matrix& m) noexcept { return m * factor; }
-
-/// @brief Multiplies a Vector2 by a Matrix.
-[[nodiscard]]
-constexpr Vector2 operator*(const Matrix& m, const Vector2& v) noexcept
-{
-	return Vector2(
-		v.x * m.m00 + v.y * m.m01 + m.m03,
-		v.x * m.m10 + v.y * m.m11 + m.m13
-	);
-}
-
-/// @brief Multiplies a Vector3 by a Matrix.
-[[nodiscard]]
-constexpr Vector3 operator*(const Matrix& m, const Vector3& v) noexcept
-{
-	return Vector3(
-		v.x * m.m00 + v.y * m.m01 + v.z * m.m02 + m.m03,
-		v.x * m.m10 + v.y * m.m11 + v.z * m.m12 + m.m13,
-		v.x * m.m20 + v.y * m.m21 + v.z * m.m22 + m.m23
-	);
-}
-
-/// @brief Multiplies a Vector4 by a Matrix.
-[[nodiscard]]
-constexpr Vector4 operator*(const Matrix& m, const Vector4& v) noexcept
-{
-	return Vector4(
-		v.x * m.m00 + v.y * m.m01 + v.z * m.m02 + m.m03,
-		v.x * m.m10 + v.y * m.m11 + v.z * m.m12 + m.m13,
-		v.x * m.m20 + v.y * m.m21 + v.z * m.m22 + m.m23,
-		v.x * m.m30 + v.y * m.m31 + v.z * m.m32 + m.m33
-	);
-}
-
-/// @brief Multiplies two @ref Matrix "Matrices".
-[[nodiscard]]
-constexpr Matrix operator*(const Matrix& m1, const Matrix& m2) noexcept
-{
-	return Matrix(
-		m1.m00 * m2.m00 + m1.m01 * m2.m10 + m1.m02 * m2.m20 + m1.m03 * m2.m30,
-        m1.m00 * m2.m01 + m1.m01 * m2.m11 + m1.m02 * m2.m21 + m1.m03 * m2.m31,
-        m1.m00 * m2.m02 + m1.m01 * m2.m12 + m1.m02 * m2.m22 + m1.m03 * m2.m32,
-        m1.m00 * m2.m03 + m1.m01 * m2.m13 + m1.m02 * m2.m23 + m1.m03 * m2.m33,
-        
-        m1.m10 * m2.m00 + m1.m11 * m2.m10 + m1.m12 * m2.m20 + m1.m13 * m2.m30,
-        m1.m10 * m2.m01 + m1.m11 * m2.m11 + m1.m12 * m2.m21 + m1.m13 * m2.m31,
-        m1.m10 * m2.m02 + m1.m11 * m2.m12 + m1.m12 * m2.m22 + m1.m13 * m2.m32,
-        m1.m10 * m2.m03 + m1.m11 * m2.m13 + m1.m12 * m2.m23 + m1.m13 * m2.m33,
-        
-        m1.m20 * m2.m00 + m1.m21 * m2.m10 + m1.m22 * m2.m20 + m1.m23 * m2.m30,
-        m1.m20 * m2.m01 + m1.m21 * m2.m11 + m1.m22 * m2.m21 + m1.m23 * m2.m31,
-        m1.m20 * m2.m02 + m1.m21 * m2.m12 + m1.m22 * m2.m22 + m1.m23 * m2.m32,
-        m1.m20 * m2.m03 + m1.m21 * m2.m13 + m1.m22 * m2.m23 + m1.m23 * m2.m33,
-        
-        m1.m30 * m2.m00 + m1.m31 * m2.m10 + m1.m32 * m2.m20 + m1.m33 * m2.m30,
-        m1.m30 * m2.m01 + m1.m31 * m2.m11 + m1.m32 * m2.m21 + m1.m33 * m2.m31,
-        m1.m30 * m2.m02 + m1.m31 * m2.m12 + m1.m32 * m2.m22 + m1.m33 * m2.m32,
-        m1.m30 * m2.m03 + m1.m31 * m2.m13 + m1.m32 * m2.m23 + m1.m33 * m2.m33
-	);
-}
-
-/// @brief Adds two @ref Matrix "Matrices" according to @ref operator+(const Matrix&, const Matrix&), placing the result in @p m1.
-constexpr Matrix& operator+=(Matrix& m1, const Matrix& m2) noexcept { return m1 = m1 + m2; }
-
-/// @brief Subtracts two @ref Matrix "Matrices" according to @ref operator-(const Matrix&, const Matrix&), placing the result in @p m1.
-constexpr Matrix& operator-=(Matrix& m1, const Matrix& m2) noexcept { return m1 = m1 - m2; }
-
-/// @brief Multiplies a Matrix by a @p scalar according to @ref operator*(const Matrix&, const float_t), placing the result in @p m.
-constexpr Matrix& operator*=(Matrix& m, const float_t scalar) noexcept { return m = m * scalar; }
-
-/// @brief Multiplies two @ref Matrix "Matrices" according to @ref operator*(const Matrix&, const Matrix&), placing the result in @p m1.
-constexpr Matrix& operator*=(Matrix& m1, const Matrix& m2) noexcept { return m1 = m1 * m2; }
-
-/// @brief	Checks if two Matrices are considered equal using @c Calc::Equals.
-[[nodiscard]]
-constexpr bool_t operator==(const Matrix& a, const Matrix& b)
-{
-	return Calc::Equals(a.m00, b.m00) && Calc::Equals(a.m01, b.m01) && Calc::Equals(a.m02, b.m02) && Calc::Equals(a.m03, b.m03)
-		&& Calc::Equals(a.m10, b.m10) && Calc::Equals(a.m11, b.m11) && Calc::Equals(a.m12, b.m12) && Calc::Equals(a.m13, b.m13)
-		&& Calc::Equals(a.m20, b.m20) && Calc::Equals(a.m21, b.m21) && Calc::Equals(a.m22, b.m22) && Calc::Equals(a.m23, b.m23)
-		&& Calc::Equals(a.m30, b.m30) && Calc::Equals(a.m31, b.m31) && Calc::Equals(a.m32, b.m32) && Calc::Equals(a.m33, b.m33);
-}
-
-/// @brief	Checks if two Matrices are considered different using @c Calc::Equals.
-[[nodiscard]]
-constexpr bool_t operator!=(const Matrix& a, const Matrix& b) { return !(a == b); }
-
 /// @brief Streams a Matrix into @p out, printing its values one by one on a single line.
 ///
 /// If you instead want a multiline print, you can use Matrix::DebugPrint.
@@ -996,7 +994,6 @@ constexpr void Matrix::Trs(const Vector3& translation, const Matrix& rotation, c
 	*result = *result * rotation * temp;
 }
 
-#ifdef MATH_DEFINE_FORMATTER
 template <>
 struct std::formatter<Matrix>
 {
@@ -1052,4 +1049,3 @@ typename FmtContext::iterator std::formatter<Matrix>::format(Matrix m, FmtContex
 
     return std::ranges::copy(std::move(out).str(), ctx.out()).out;
 }
-#endif

@@ -25,6 +25,8 @@ class Circle;
 class Grid;
 class ColliderList;
 
+// TODO - Add a Vector2* that points to the attached Entity's position and rename the current 'position' Vector2 to 'offset'
+
 class MOUNTAIN_API Collider
 {
     friend class Entity;

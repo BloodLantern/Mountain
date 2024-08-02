@@ -1,14 +1,12 @@
 #pragma once
 
-#ifdef MATH_DEFINE_FORMATTER
 #include <format>
 #include <sstream>
-#endif
 
 #include <stdexcept>
 #include <ostream>
 
-#include "calc.hpp"
+#include "Maths/calc.hpp"
 
 /// @file vector2.hpp
 /// @brief Defines the Vector2 class.
@@ -287,7 +285,6 @@ MATH_TOOLBOX std::ostream& operator<<(std::ostream& out, Vector2 v) noexcept;
 
 constexpr Vector2 Vector2::Lerp(const Vector2 value, const Vector2 target, const float_t t) noexcept { return value + (target - value) * t; }
 
-#ifdef MATH_DEFINE_FORMATTER
 template <>
 struct std::formatter<Vector2>
 {
@@ -323,4 +320,3 @@ typename FmtContext::iterator std::formatter<Vector2>::format(Vector2 v, FmtCont
 
     return std::ranges::copy(std::move(out).str(), ctx.out()).out;
 }
-#endif
