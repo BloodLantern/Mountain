@@ -53,6 +53,8 @@ void StateMachine<T>::SetCallbacks(T state, StateMachineCallbacks&& callbacks)  
 template <Concepts::EnumT T>
 void StateMachine<T>::Update()
 {
+    Utils::CallSafe(m_Updates[GetStateIntegral()]);
+
     if (m_StateChanged)
     {
         const UnderlyingType stateIntegral = GetStateIntegral();
@@ -61,11 +63,10 @@ void StateMachine<T>::Update()
         Utils::CallSafe(m_Begins[stateIntegral]);
 
         m_CurrentCoroutine = Utils::CallSafe(m_Coroutines[stateIntegral]);
+        
+        m_StateChanged = false;
     }
     
-    m_StateChanged = false;
-    Utils::CallSafe(m_Updates[GetStateIntegral()]);
-
     if (m_CurrentCoroutine.Valid())
     {
         m_CurrentCoroutine.Resume();
