@@ -322,7 +322,7 @@ constexpr Vector2& operator*=(const Matrix2& m, Vector2& v) noexcept { return v 
 /// @brief Multiplies two @ref Matrix2 "Matrices" according to @ref operator*(const Matrix&, const Matrix&), placing the result in @p m1.
 constexpr Matrix2& operator*=(Matrix2& m1, const Matrix2& m2) noexcept { return m1 = m1 * m2; }
 
-/// @brief	Checks if two Matrices are considered equal using @c Calc::Equals.
+/// @brief	Checks if two Matrices are equal.
 [[nodiscard]]
 constexpr bool_t operator==(const Matrix2& a, const Matrix2& b)
 {
@@ -330,7 +330,7 @@ constexpr bool_t operator==(const Matrix2& a, const Matrix2& b)
         && a.m10 == b.m10 && a.m11 == b.m11;
 }
 
-/// @brief Checks if two Matrices are considered different using @c Calc::Equals.
+/// @brief Checks if two Matrices are different.
 [[nodiscard]]
 constexpr bool_t operator!=(const Matrix2& a, const Matrix2& b) { return !(a == b); }
 

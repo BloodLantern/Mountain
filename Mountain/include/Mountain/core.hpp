@@ -143,9 +143,6 @@ namespace Mountain {}
 using stdstring = std::string;
 #endif
 
-/// @brief Forwards a value with its own type as template.
-#define FORWARD(value) std::forward<std::remove_reference_t<decltype(value)>>(value)
-
 /// @brief Defines binary flag operators for an enum type
 /// @param enumName The enum
 /// @param integerType The integral type in which the flags are used
