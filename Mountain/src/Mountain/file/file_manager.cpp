@@ -126,7 +126,7 @@ Pointer<Directory> FileManager::LoadDirectory(std::filesystem::path path)
     Pointer<Directory> directory;
     try
     {
-        directory = Pointer<Directory>::New(std::forward<std::filesystem::path>(path));
+        directory = Pointer<Directory>::New(std::move(path));
     }
     catch (const std::invalid_argument& ex)
     {
@@ -135,15 +135,20 @@ Pointer<Directory> FileManager::LoadDirectory(std::filesystem::path path)
         return directory;
     }
 
-    if (!directory->Load())
-        throw std::runtime_error("An error occured while loading directory");
+    const std::filesystem::path& p = directory->GetPath();
 
-    m_Entries[directory->GetPath()] = directory.CreateStrongReference();
+    m_Entries[p] = directory.CreateStrongReference();
+
+    if (!directory->Load())
+    {
+        m_Entries.erase(p);
+        throw std::runtime_error("An error occured while loading directory");
+    }
 
     // Make sure to return a weak reference
     directory.ToWeakReference();
 
-    Logger::LogDebug("Directory {} load successful. Took {}", directory->GetPath(), std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - start));
+    Logger::LogDebug("Directory {} load successful. Took {}", p, std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - start));
 
     return directory;
 }
