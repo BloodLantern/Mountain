@@ -34,6 +34,8 @@ void Window::MakeContextCurrent() { glfwMakeContextCurrent(m_Window); }
 
 GLFWwindow* Window::GetHandle() { return m_Window; }
 
+bool_t Window::GetVisible() { return m_Visible; }
+
 void Window::SetVisible(const bool_t newVisible)
 {
     if (newVisible)
@@ -70,18 +72,16 @@ void Window::SetCursorPosition(const Vector2 newPosition) { glfwSetCursorPos(m_W
 
 void Window::SetVSync(const bool_t vsync) { glfwSwapInterval(vsync); }
 
-void Window::SwapBuffers() { glfwSwapBuffers(m_Window); }
+bool_t Window::GetFullscreen() { return m_Fullscreen; }
 
-FullscreenMode Window::GetFullscreenMode() { return m_FullscreenMode; }
-
-void Window::SetFullscreenMode(const FullscreenMode newMode)
+void Window::SetFullscreen(const bool_t newFullscreen)
 {
-    if (newMode == m_FullscreenMode)
+    if (newFullscreen == m_Fullscreen)
         return;
     
-    static Vector2i lastWindowedPosition, lastWindowedSize;
+    static Vector2i lastWindowedPosition = m_Position, lastWindowedSize = m_Size;
 
-    if (m_FullscreenMode == FullscreenMode::Windowed)
+    if (!m_Fullscreen)
     {
         lastWindowedPosition = m_Position;
         lastWindowedSize = m_Size;
@@ -91,35 +91,27 @@ void Window::SetFullscreenMode(const FullscreenMode newMode)
     Vector2i position;
     Vector2i size;
 
-    switch (newMode)
+    if (newFullscreen)
     {
-        case FullscreenMode::Windowed:
-            position = lastWindowedPosition;
-            size = lastWindowedSize;
-            break;
-        
-        case FullscreenMode::Fullscreen:
-            monitor = Screen::m_Monitors[m_CurrentScreen];
-            [[fallthrough]];
-        
-        case FullscreenMode::Borderless:
-            // TODO - Window is behind task bar
-            position = Vector2i::Zero();
-            size = Screen::GetSize(static_cast<int32_t>(m_CurrentScreen));
-            break;
-
-        case FullscreenMode::Count:
-            throw std::invalid_argument("Invalid fullscreen mode");
+        monitor = Screen::m_Monitors[m_CurrentScreen];
+        size = Screen::GetSize(static_cast<int32_t>(m_CurrentScreen));
+    }
+    else
+    {
+        position = lastWindowedPosition;
+        size = lastWindowedSize;
     }
     
     glfwSetWindowMonitor(m_Window, monitor, position.x, position.y, size.x, size.y, GLFW_DONT_CARE);
 
-    m_Position = position;
-    m_Size = size;
-    m_FullscreenMode = newMode;
+    m_Fullscreen = newFullscreen;
 }
 
 uint32_t Window::GetCurrentScreen() { return m_CurrentScreen; }
+
+std::string_view Window::GetTitle() { return glfwGetWindowTitle(m_Window); }
+
+void Window::SetTitle(const std::string_view title) { glfwSetWindowTitle(m_Window, title.data()); }
 
 void Window::Initialize(const std::string_view windowTitle, const Vector2i windowSize, const bool_t vsync, const OpenGlVersion& glVersion)
 {
@@ -137,8 +129,16 @@ void Window::Initialize(const std::string_view windowTitle, const Vector2i windo
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, glVersion.major);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, glVersion.minor);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    glfwWindowHint(GLFW_RESIZABLE, false);
+    glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
     glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
+
+#ifdef _DEBUG
+    glfwWindowHint(GLFW_CONTEXT_DEBUG, GLFW_TRUE);
+#endif
+    
+    const Vector2i screenSize = Screen::GetSize();
+    glfwWindowHint(GLFW_POSITION_X, screenSize.x / 2 - windowSize.x / 2);
+    glfwWindowHint(GLFW_POSITION_Y, screenSize.y / 2 - windowSize.y / 2);
 
     glfwInitHint(GLFW_JOYSTICK_HAT_BUTTONS, false);
 
@@ -165,9 +165,29 @@ void Window::Shutdown()
 
 void Window::UpdateFields()
 {
+    // Position
+    
+    const Vector2i oldPosition = m_Position;
+    
     glfwGetWindowPos(m_Window, &m_Position.x, &m_Position.y);
-    glfwGetWindowSize(m_Window, &m_Size.x, &m_Size.y);
+    
+    if (oldPosition != m_Position)
+        onPositionChanged(m_Position);
 
+    // Size
+    
+    const Vector2i oldSize = m_Size;
+    
+    if (m_Fullscreen)
+        m_Size = Screen::GetSize();
+    else
+        glfwGetWindowSize(m_Window, &m_Size.x, &m_Size.y);
+    
+    if (oldSize != m_Size)
+        onSizeChanged(m_Size);
+
+    // Current screen
+    
     UpdateCurrentScreen();
 }
 
@@ -195,3 +215,5 @@ void Window::UpdateCurrentScreen()
         }
     }
 }
+
+void Window::SwapBuffers() { glfwSwapBuffers(m_Window); }

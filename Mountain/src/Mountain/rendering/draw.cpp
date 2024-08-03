@@ -331,21 +331,23 @@ void Draw::Texture(
     TextureInternal(texture.GetId(), texture.GetSize(), *m_TextureShader, position, scale, rotation, uv0, uv1, color, flipFlags);
 }
 
-void Draw::Text(const Font& font, const std::string_view text, Vector2 position, const float_t scale, const Color& color)
+void Draw::Text(const Font& font, const std::string_view text, const Vector2 position, const float_t scale, const Color& color)
 {
     glBindVertexArray(m_TextVao);
 
     m_TextShader->Use();
     m_TextShader->SetUniform("color", color);
-    
+
+    Vector2 offset = position + Vector2::UnitY() * font.CalcTextSize(text, scale).y;
+
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RectangleEbo);
     for (const char_t c : text)
     {
         const Font::Character& character = font.m_Characters.at(c);
 
         const Vector2 pos = cameraMatrix * Vector2(
-            position.x + static_cast<float_t>(character.bearing.x) * scale,
-            position.y - static_cast<float_t>(character.bearing.y) * scale
+            offset.x + static_cast<float_t>(character.bearing.x) * scale,
+            offset.y - static_cast<float_t>(character.bearing.y) * scale
         );
         const Vector2 size = cameraMatrix * (character.size * scale);
 
@@ -365,7 +367,7 @@ void Draw::Text(const Font& font, const std::string_view text, Vector2 position,
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
         
         // Now advance cursors for next glyph (note that advance is number of 1/64 pixels)
-        position.x += static_cast<float_t>(character.advance >> 6) * scale; // bitshift by 6 to get value in pixels (2^6 = 64)
+        offset.x += static_cast<float_t>(character.advance >> 6) * scale; // bitshift by 6 to get value in pixels (2^6 = 64)
     }
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindTexture(GL_TEXTURE_2D, 0);

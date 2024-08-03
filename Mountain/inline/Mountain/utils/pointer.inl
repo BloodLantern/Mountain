@@ -213,10 +213,20 @@ template <typename T>
 Pointer<T>::operator bool_t() const { return IsValid(); }
 
 template <typename T>
-T& Pointer<T>::operator*() { return *m_ReferenceCounter->GetPointer(); }
+T& Pointer<T>::operator*()
+{
+    if (!m_ReferenceCounter)
+        throw std::runtime_error("Cannot dereference a null Pointer");
+    return *m_ReferenceCounter->GetPointer();
+}
 
 template <typename T>
-const T& Pointer<T>::operator*() const { return *m_ReferenceCounter->GetPointer(); }
+const T& Pointer<T>::operator*() const
+{
+    if (!m_ReferenceCounter)
+        throw std::runtime_error("Cannot dereference a null Pointer");
+    return *m_ReferenceCounter->GetPointer();
+}
 
 template <typename T>
 T* Pointer<T>::operator->()
