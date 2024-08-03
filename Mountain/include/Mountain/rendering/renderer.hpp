@@ -39,7 +39,7 @@ private:
     static inline std::stack<RenderTarget*> m_RenderTargets;
     static inline RenderTarget* m_RenderTarget;
 
-    static bool Initialize(const char_t* windowTitle, Vector2i windowSize, bool_t vsync, const OpenGlVersion& glVersion = {});
+    static bool Initialize(std::string_view windowTitle, Vector2i windowSize, bool_t vsync, const OpenGlVersion& glVersion = {});
     static void PreFrame();
     static void PostFrame();
     static void Shutdown();

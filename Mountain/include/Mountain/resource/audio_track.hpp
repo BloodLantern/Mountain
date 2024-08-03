@@ -17,7 +17,7 @@ class AudioTrack : public Resource
 {
 public:
     /// @brief Allowed extensions for audio files
-    MOUNTAIN_API static constexpr std::array<const char_t*, 4> FileExtensions
+    MOUNTAIN_API static constexpr std::array FileExtensions
     {
         ".wav",
         ".wave",

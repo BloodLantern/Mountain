@@ -24,12 +24,12 @@ public:
     /// @brief Special prefix used to store added @ref Shader "Shaders"
     ///
     /// This is mainly used in LoadAll
-    static constexpr const char_t* const ReservedShaderPrefix = "_shaders/";
+    static constexpr std::string_view ReservedShaderPrefix = "_shaders/";
     
     /// @brief Special prefix used to store added @ref Font "Fonts"
     ///
     /// This is used to differentiate fonts that use the same file but different sizes
-    static constexpr const char_t* const ReservedFontPrefix = "_fonts/";
+    static constexpr std::string_view ReservedFontPrefix = "_fonts/";
     
     /// @brief Creates the Resource corresponding to the given @p name without loading it.
     template <Concepts::LoadableResourceT T>

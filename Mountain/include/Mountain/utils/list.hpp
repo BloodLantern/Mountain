@@ -58,6 +58,19 @@ public:
     /// @param array Array
     template <size_t Size>
     explicit List(const std::array<T, Size>& array);
+    
+    /// @brief Creates a list with the specified vector. This creates a copy of the given vector.
+    ///
+    /// @param vector Vector
+    explicit List(const std::vector<T>& vector);
+    
+    /// @brief Creates a list with the specified vector.
+    ///
+    /// @param vector Vector
+    explicit List(std::vector<T>&& vector);
+    
+    /// @brief Creates a list with the specified vector.
+    explicit List(Iterator b, Iterator e);
 
     /// @brief Creates a list with the specified values
     /// 

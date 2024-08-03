@@ -102,7 +102,7 @@ private:
     static inline bool_t m_Visible;
 
     /// @brief Initializes the window
-    static void Initialize(const char_t* windowTitle, Vector2i windowSize, bool_t vsync, const OpenGlVersion &glVersion);
+    static void Initialize(std::string_view windowTitle, Vector2i windowSize, bool_t vsync, const OpenGlVersion &glVersion);
 
     /// @brief Terminates the window
     static void Shutdown();
