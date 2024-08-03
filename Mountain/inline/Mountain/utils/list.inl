@@ -38,6 +38,26 @@ List<T>::List(const std::array<T, Size>& array)
 }
 
 template <typename T>
+List<T>::List(const std::vector<T>& vector)
+    : m_Vector(vector.size())
+{
+    for (size_t i = 0; i < vector.size(); i++)
+        m_Vector[i] = vector[i];
+}
+
+template <typename T>
+List<T>::List(std::vector<T>&& vector)
+    : m_Vector(std::move(vector))
+{
+}
+
+template <typename T>
+List<T>::List(Iterator b, Iterator e)
+    : m_Vector(b, e)
+{
+}
+
+template <typename T>
 List<T>::List(const std::initializer_list<T>& values)
     : m_Vector(values)
 {

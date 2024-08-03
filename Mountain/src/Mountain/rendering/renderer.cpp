@@ -39,7 +39,7 @@ Mountain::RenderTarget& Mountain::Renderer::PopRenderTarget()
 
 Mountain::OpenGlVersion& Mountain::Renderer::GetOpenGlVersion() { return m_GlVersion; }
 
-bool Mountain::Renderer::Initialize(const char_t* const windowTitle, const Vector2i windowSize, const bool_t vsync, const OpenGlVersion &glVersion)
+bool Mountain::Renderer::Initialize(const std::string_view windowTitle, const Vector2i windowSize, const bool_t vsync, const OpenGlVersion &glVersion)
 {
     Logger::LogDebug("Initializing renderer");
 

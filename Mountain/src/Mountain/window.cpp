@@ -121,7 +121,7 @@ void Window::SetFullscreenMode(const FullscreenMode newMode)
 
 uint32_t Window::GetCurrentScreen() { return m_CurrentScreen; }
 
-void Window::Initialize(const char_t* const windowTitle, const Vector2i windowSize, const bool_t vsync, const OpenGlVersion& glVersion)
+void Window::Initialize(const std::string_view windowTitle, const Vector2i windowSize, const bool_t vsync, const OpenGlVersion& glVersion)
 {
     glfwSetErrorCallback(
         [](int error, const char* description)
@@ -142,7 +142,7 @@ void Window::Initialize(const char_t* const windowTitle, const Vector2i windowSi
 
     glfwInitHint(GLFW_JOYSTICK_HAT_BUTTONS, false);
 
-    m_Window = glfwCreateWindow(windowSize.x, windowSize.y, windowTitle, nullptr, nullptr);
+    m_Window = glfwCreateWindow(windowSize.x, windowSize.y, windowTitle.data(), nullptr, nullptr);
 
     MakeContextCurrent();
 
