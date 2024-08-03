@@ -15,7 +15,7 @@ class Font : public Resource
 {
 public:
     /// @brief Allowed extensions for font files
-    MOUNTAIN_API static constexpr std::array<const char_t*, 1> FileExtensions
+    MOUNTAIN_API static constexpr std::array FileExtensions
     {
         ".ttf"
     };

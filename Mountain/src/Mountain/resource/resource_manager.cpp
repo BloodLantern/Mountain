@@ -22,7 +22,7 @@ Pointer<Font> ResourceManager::LoadFont(const Pointer<File>& file, const uint32_
 {
     Logger::LogDebug("Loading font {} with size {}", file->GetPath(), size);
 
-    std::string name = std::format("{}/{}", ReservedFontPrefix + file->GetPathString(), size);
+    std::string name = std::format("{}/{}", ReservedFontPrefix.data() + file->GetPathString(), size);
 
     Pointer<Font> font;
     
@@ -97,7 +97,7 @@ void ResourceManager::LoadAll()
             Pointer<Shader> shader;
 
             // We use an underscore before the name to make sure it isn't used elsewhere
-            const std::string&& filenameNoExtension = ReservedShaderPrefix + file->GetNameNoExtension();
+            const std::string&& filenameNoExtension = ReservedShaderPrefix.data() + file->GetNameNoExtension();
             if (Contains(filenameNoExtension))
                 shader = Get<Shader>(filenameNoExtension);
             else
@@ -149,7 +149,7 @@ void ResourceManager::LoadAllBinaries()
             Pointer<Shader> shader;
 
             // We use an underscore before the name to make sure it isn't used elsewhere
-            const std::string&& filenameNoExtension = ReservedShaderPrefix + path.stem().string();
+            const std::string&& filenameNoExtension = ReservedShaderPrefix.data() + path.stem().string();
             if (Contains(filenameNoExtension))
                 shader = Get<Shader>(filenameNoExtension);
             else
@@ -193,7 +193,7 @@ bool ResourceManager::Contains(const Pointer<File>& file)
 
 Pointer<Font> ResourceManager::GetFont(const std::string& name, uint32_t size)
 {
-    std::string internalName = std::format("{}/{}", ReservedFontPrefix + name, size);
+    std::string internalName = std::format("{}/{}", ReservedFontPrefix.data() + name, size);
     
     if (!Contains(internalName))
     {
