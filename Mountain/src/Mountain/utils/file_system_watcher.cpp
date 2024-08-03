@@ -65,6 +65,8 @@ void FileSystemWatcher::SetPath(const std::filesystem::path& newPath)
     m_PathChanged = true;
 }
 
+bool_t FileSystemWatcher::GetRunning() const { return m_Running; }
+
 void FileSystemWatcher::Run()
 {
     Utils::SetThreadName(m_Thread, L"FileSystemWatcher Thread");
@@ -82,7 +84,7 @@ void FileSystemWatcher::Run()
         if (m_PathChanged)
         {
             const std::filesystem::path&& abs = absolute(m_Path);
-            watchedPath = abs;
+            watchedPath = abs.parent_path();
             pathAbs = abs.string();
             
             file = CreateFileW(watchedPath.c_str(), FILE_LIST_DIRECTORY, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS | FILE_FLAG_OVERLAPPED, nullptr);
