@@ -5,6 +5,7 @@
 #include "Mountain/core.hpp"
 #include "Mountain/rendering/renderer.hpp"
 #include "Mountain/resource/texture.hpp"
+#include "Mountain/utils/event.hpp"
 
 /// @file window.hpp
 /// @brief Defines the Mountain::Window class.
@@ -14,85 +15,90 @@ struct GLFWwindow;
 
 BEGIN_MOUNTAIN
 
-enum class FullscreenMode
-{
-    Windowed,
-    Fullscreen,
-    Borderless,
-    Count
-};
-
-constexpr size_t FullscreenModeCount = static_cast<size_t>(FullscreenMode::Count);
-
 /// @brief A wrapper for the main window
-class MOUNTAIN_API Window
+class Window
 {
     STATIC_CLASS(Window)
-
-    friend class Renderer;
     
 public:
+    /// @brief Event called when the window position changed. The parameter is the new position.
+    MOUNTAIN_API static inline Event<Vector2i> onPositionChanged;
+    /// @brief Event called when the window size changed. The parameter is the new size.
+    MOUNTAIN_API static inline Event<Vector2i> onSizeChanged;
+    
     /// @brief Gets the screen position in pixels of the window
     /// @return Position
     [[nodiscard]]
-    static Vector2i GetPosition();
+    MOUNTAIN_API static Vector2i GetPosition();
 
-    static void SetPosition(Vector2i newPosition);
+    MOUNTAIN_API static void SetPosition(Vector2i newPosition);
 
     /// @brief Gets the size in pixels of the window
     /// @return Size
     [[nodiscard]]
-    static Vector2i GetSize();
+    MOUNTAIN_API static Vector2i GetSize();
 
-    static void SetSize(Vector2i newSize);
+    MOUNTAIN_API static void SetSize(Vector2i newSize);
 
     /// @brief Gets whether the window should close
     [[nodiscard]]
-    static bool_t GetShouldClose();
+    MOUNTAIN_API static bool_t GetShouldClose();
 
     /// @brief Sets whether the window should close
-    static void SetShouldClose(bool_t newShouldClose);
+    MOUNTAIN_API static void SetShouldClose(bool_t newShouldClose);
 
     /// @brief Polls the events of the window
-    static void PollEvents();
+    MOUNTAIN_API static void PollEvents();
 
     /// @brief Sets the window to be the current context
-    static void MakeContextCurrent();
+    MOUNTAIN_API static void MakeContextCurrent();
     
     /// @brief Gets the native handle of the window
     /// @return Native handle
     [[nodiscard]]
-    static GLFWwindow* GetHandle();
+    MOUNTAIN_API static GLFWwindow* GetHandle();
+
+    /// @brief Gets whether the window is visible or hidden.
+    [[nodiscard]]
+    MOUNTAIN_API static bool_t GetVisible();
 
     /// @brief Sets whether the window should be visible or hidden.
-    static void SetVisible(bool_t newVisible);
+    MOUNTAIN_API static void SetVisible(bool_t newVisible);
 
     /// @brief Sets the icon for the window
     /// @param icon Icon
-    static void SetIcon(const Pointer<Texture>& icon);
+    MOUNTAIN_API static void SetIcon(const Pointer<Texture>& icon);
 
     /// @brief Handles hiding or displaying the cursor
     /// @param value @c true hides, @c false displays
-    static void SetCursorHidden(bool_t value);
+    MOUNTAIN_API static void SetCursorHidden(bool_t value);
 
     /// @brief Sets the mouse cursor position in screen space.
-    static void SetCursorPosition(Vector2 newPosition);
+    MOUNTAIN_API static void SetCursorPosition(Vector2 newPosition);
     
-    static void SetVSync(bool_t vsync);
+    MOUNTAIN_API static void SetVSync(bool_t vsync);
 
-    static void SwapBuffers();
+    /// @brief Gets whether the window is in fullscreen mode
+    [[nodiscard]]
+    MOUNTAIN_API static bool_t GetFullscreen();
 
-    static FullscreenMode GetFullscreenMode();
+    /// @brief Sets whether the window is in fullscreen mode
+    MOUNTAIN_API static void SetFullscreen(bool_t newFullscreen);
 
-    static void SetFullscreenMode(FullscreenMode newMode);
+    /// @brief Gets the index of the screen on which this window currently is
+    [[nodiscard]]
+    MOUNTAIN_API static uint32_t GetCurrentScreen();
 
-    static uint32_t GetCurrentScreen();
+    [[nodiscard]]
+    MOUNTAIN_API static std::string_view GetTitle();
+
+    MOUNTAIN_API static void SetTitle(std::string_view title);
 
 private:
     /// @brief Native window handle
     static inline GLFWwindow* m_Window = nullptr;
 
-    static inline FullscreenMode m_FullscreenMode = FullscreenMode::Windowed;
+    static inline bool_t m_Fullscreen = false;
 
     static inline uint32_t m_CurrentScreen;
 
@@ -110,6 +116,11 @@ private:
     static void UpdateFields();
 
     static void UpdateCurrentScreen();
+
+    static void SwapBuffers();
+
+    friend class Renderer;
+    friend class Game;
 };
     
 END_MOUNTAIN
