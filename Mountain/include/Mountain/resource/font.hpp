@@ -26,12 +26,14 @@ public:
     using Resource::Resource;
     
     MOUNTAIN_API ~Font() override;
-    
-    MOUNTAIN_API bool_t Load(const Pointer<File>& file, uint32_t size);  // NOLINT(clang-diagnostic-overloaded-virtual)
 
+    /// This also loads the font
+    MOUNTAIN_API bool_t SetSourceData(const Pointer<File>& file, uint32_t size);  // NOLINT(clang-diagnostic-overloaded-virtual)
+
+    /// This also unloads the font
     MOUNTAIN_API void ResetSourceData() override;
 
-    MOUNTAIN_API float_t CalcTextSize(std::string_view text, float_t scale = 1.f) const;
+    MOUNTAIN_API Vector2 CalcTextSize(std::string_view text, float_t scale = 1.f) const;
 
 private:
     struct Character

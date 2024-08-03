@@ -31,7 +31,7 @@ Pointer<Font> ResourceManager::LoadFont(const Pointer<File>& file, const uint32_
         font = GetNoCheck<Font>(name);
         Logger::LogWarning("This font has already been loaded, consider using ResourceManager::Get instead");
 
-        font->Load(file, size);
+        font->SetSourceData(file, size);
 
         return font;
     }
@@ -46,14 +46,14 @@ Pointer<Font> ResourceManager::LoadFont(const Pointer<File>& file, const uint32_
     // Make sure to return a weak reference
     font.ToWeakReference();
 
-    font->Load(file, size);
+    font->SetSourceData(file, size);
 
     return font;
 }
 
-Pointer<Font> ResourceManager::LoadFont(const std::string& filename, const uint32_t size)
+Pointer<Font> ResourceManager::LoadFont(const std::string& name, const uint32_t size)
 {
-    return LoadFont(FileManager::Get(filename), size);
+    return LoadFont(FileManager::Get(name), size);
 }
 
 void ResourceManager::LoadAll()
@@ -80,8 +80,6 @@ void ResourceManager::LoadAll()
                 Load<Texture>(file, false);
             else if (std::ranges::contains(AudioTrack::FileExtensions, extension))
                 Load<AudioTrack>(file, false);
-            else if (std::ranges::contains(Font::FileExtensions, extension))
-                LoadFont(file, 11);
         }
     );
 

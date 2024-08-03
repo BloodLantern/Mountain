@@ -104,13 +104,11 @@ void Mountain::Renderer::PreFrame()
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
 
-    const Vector2i oldWindowSize = Window::GetSize();
-
     Window::UpdateFields();
 
-    const Vector2i newWindowSize = Window::GetSize();
-    if (oldWindowSize != newWindowSize)
-        m_RenderTarget->SetSize(newWindowSize);
+    const Vector2i windowSize = Window::GetSize();
+    if (windowSize != m_RenderTarget->GetSize())
+        m_RenderTarget->SetSize(windowSize);
 
     PushRenderTarget(*m_RenderTarget);
 }

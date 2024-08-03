@@ -20,7 +20,7 @@ Font::~Font()
         Font::ResetSourceData();
 }
 
-bool_t Font::Load(const Pointer<File>& file, const uint32_t size)
+bool_t Font::SetSourceData(const Pointer<File>& file, const uint32_t size)
 {
     if (m_SourceDataSet)
         return false;
@@ -46,12 +46,19 @@ void Font::ResetSourceData()
     m_SourceDataSet = false;
 }
 
-float_t Font::CalcTextSize(const std::string_view text, const float_t scale) const
+Vector2 Font::CalcTextSize(const std::string_view text, const float_t scale) const
 {
-    float_t result = 0.f;
+    Vector2 result;
     
     for (const char_t c : text)
-        result += static_cast<float_t>(m_Characters.at(c).advance >> 6) * scale;
+    {
+        const Character& character = m_Characters.at(c);
+        
+        result.x += static_cast<float_t>(character.advance >> 6) * scale;
+        
+        if (character.size.y > result.y)
+            result.y = static_cast<float_t>(character.size.y);
+    }
 
     return result;
 }
@@ -76,12 +83,12 @@ void Font::Load()
     {
         if (FT_Load_Char(face, c, FT_LOAD_RENDER))
         {
-            Logger::LogError("Error freetype : Failed to load Glyph");
+            Logger::LogError("Failed to load Glyph in Font {}", m_Name);
             continue;
         }
 
         const Vector2i glyphSize = Vector2i(static_cast<int32_t>(face->glyph->bitmap.width), static_cast<int32_t>(face->glyph->bitmap.rows));
-        
+
         Character character {
             .size = glyphSize,
             .bearing = { face->glyph->bitmap_left, face->glyph->bitmap_top },

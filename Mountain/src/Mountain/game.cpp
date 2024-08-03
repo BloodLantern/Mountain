@@ -71,6 +71,7 @@ void Game::MainLoop()
         Time::Update();
         Input::Update();
         Audio::Update();
+        Coroutine::UpdateAll();
         
         Renderer::PreFrame();
             
@@ -81,7 +82,6 @@ void Game::MainLoop()
         Renderer::PostFrame();
         Window::SwapBuffers();
         
-        Coroutine::UpdateAll();
 		Input::Reset();
     }
 
