@@ -194,7 +194,7 @@ void ImGuiUtils::ShowInputsWindow()
             ImGui::Text("Button down %d: %d", i + 1, Input::GetMouseButton(static_cast<MouseButton>(i)));
             ImGui::Text("Button release %d: %d", i + 1, Input::GetMouseButton(static_cast<MouseButton>(i), MouseButtonStatus::Release));
         }
-        //ImGui::Text("Wheel: %f, %f", Mountain::Input::mouseWheel.x, Mountain::Input::mouseWheel.y);
+        ImGui::Text("Wheel: %f, %f", Input::GetMouseWheel().x, Input::GetMouseWheel().y);
         ImGui::TreePop();
     }
 

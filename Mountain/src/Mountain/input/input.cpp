@@ -88,7 +88,7 @@ void Input::HandleMouseButton(GLFWwindow*, const int32_t mouseButton, const int3
 
 void Input::HandleMouseWheel(GLFWwindow*, const double_t wheelX, const double_t wheelY)
 {
-    m_MouseWheel = { static_cast<float_t>(wheelX), static_cast<float_t>(wheelY) };
+    m_MouseWheel += { static_cast<float_t>(wheelX), static_cast<float_t>(wheelY) };
 }
 
 void Input::HandleJoyStickCallBack(const int32_t jid, const int32_t event)
@@ -240,6 +240,8 @@ void Input::Reset()
         button.at(static_cast<size_t>(MouseButtonStatus::Pressed)) = false;
         button.at(static_cast<size_t>(MouseButtonStatus::Release)) = false;
     }
+    
+    m_MouseWheel = Vector2::Zero();
 
     for (auto& key : m_Keyboard)
     {
