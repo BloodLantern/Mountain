@@ -36,7 +36,7 @@ void RenderTarget::Initialize(const Vector2i size, const MagnificationFilter fil
     
     // Color Texture
     
-    glGenTextures(2, &m_Texture);
+    glGenTextures(1, &m_Texture);
     glBindTexture(GL_TEXTURE_2D, m_Texture);
 
     const int32_t magFilter = ToOpenGl(filter);
@@ -102,7 +102,7 @@ void RenderTarget::Reset()
     glDeleteVertexArrays(1, &m_Vao);
     glDeleteBuffers(1, &m_Vbo);
     glDeleteFramebuffers(1, &m_Framebuffer);
-    glDeleteTextures(2, &m_Texture);
+    glDeleteTextures(1, &m_Texture);
     
     m_Initialized = false;
 }
