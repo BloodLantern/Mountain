@@ -54,6 +54,8 @@ public:
 
     FswNotifyFilters notifyFilters = FswNotifyFilters::Default;
     
+    MOUNTAIN_API FileSystemWatcher() = default;
+    
     MOUNTAIN_API explicit FileSystemWatcher(const std::string& path);
 
     MOUNTAIN_API ~FileSystemWatcher();
@@ -70,6 +72,8 @@ public:
     MOUNTAIN_API std::filesystem::path GetPath() const;
 
     MOUNTAIN_API void SetPath(const std::filesystem::path& newPath);
+
+    MOUNTAIN_API bool_t GetRunning() const;
 
 private:
     std::thread m_Thread;
