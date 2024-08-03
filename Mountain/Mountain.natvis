@@ -48,7 +48,7 @@
 
 	<!--Utils-->
 	<Type Name="Mountain::Event&lt;*&gt;">
-		<DisplayString>{{Registered function count = {m_Functions.m_Vector.size()}}}</DisplayString>
+		<DisplayString>{{Registered functions = {m_Functions.m_Vector.size()}}}</DisplayString>
 	</Type>
 	<Type Name="Mountain::FileSystemWatcher">
 		<DisplayString>{{Path = {m_Path}}}</DisplayString>
