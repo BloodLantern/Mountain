@@ -17,7 +17,7 @@ class Texture final : public Resource
 {
 public:
     /// @brief Allowed extensions for texture files
-    MOUNTAIN_API static constexpr std::array<const char_t*, 3> FileExtensions
+    MOUNTAIN_API static constexpr std::array FileExtensions
     {
         ".jpg",
         ".jpeg",

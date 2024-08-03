@@ -9,7 +9,7 @@ BEGIN_MOUNTAIN
 class MOUNTAIN_API Game
 {
 public:
-    explicit Game(const char_t* windowTitle, Vector2i windowSize = Vector2i(1280, 720), bool_t vsync = true);
+    explicit Game(std::string_view windowTitle, Vector2i windowSize = Vector2i(1280, 720), bool_t vsync = true);
     virtual ~Game();
 
     DEFAULT_COPY_MOVE_OPERATIONS(Game)

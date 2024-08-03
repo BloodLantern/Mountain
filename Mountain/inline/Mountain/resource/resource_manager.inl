@@ -29,7 +29,7 @@ Pointer<T> ResourceManager::Add(const std::string& name)
 template <>
 inline Pointer<Shader> ResourceManager::Add<Shader>(const std::string& name)
 {
-    const std::string&& n = name.starts_with(ReservedShaderPrefix) ? name : ReservedShaderPrefix + name;
+    const std::string&& n = name.starts_with(ReservedShaderPrefix) ? name : ReservedShaderPrefix.data() + name;
     
     Logger::LogDebug("Adding shader {}", n);
 
@@ -88,8 +88,8 @@ inline Pointer<Shader> ResourceManager::Get<Shader>(const std::string& name)
 {
     if (!Contains(name))
     {
-        if (Contains(ReservedShaderPrefix + name))
-            return GetNoCheck<Shader>(ReservedShaderPrefix + name);
+        if (Contains(ReservedShaderPrefix.data() + name))
+            return GetNoCheck<Shader>(ReservedShaderPrefix.data() + name);
         
         Logger::LogError("Attempt to get an unknown shader: {}", name);
         return nullptr;

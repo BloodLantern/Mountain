@@ -11,7 +11,7 @@
 
 using namespace Mountain;
 
-Game::Game(const char_t* const windowTitle, const Vector2i windowSize, const bool_t vsync)
+Game::Game(const std::string_view windowTitle, const Vector2i windowSize, const bool_t vsync)
 {
     Logger::Start();
     Logger::OpenDefaultFile();

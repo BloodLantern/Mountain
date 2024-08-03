@@ -40,7 +40,7 @@ class Shader final : public Resource
 {
 public:
 	/// @brief Allowed extensions for vertex shaders
-	MOUNTAIN_API static constexpr std::array<const char_t*, 3> VertexFileExtensions
+	MOUNTAIN_API static constexpr std::array VertexFileExtensions
 	{
 		".vert",
 		".vertex",
@@ -48,7 +48,7 @@ public:
 	};
 
 	/// @brief Allowed extensions for fragment shaders
-	MOUNTAIN_API static constexpr std::array<const char_t*, 3> FragmentFileExtensions
+	MOUNTAIN_API static constexpr std::array FragmentFileExtensions
 	{
 		".frag",
 		".fragment",
