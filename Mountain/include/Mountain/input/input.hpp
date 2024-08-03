@@ -13,8 +13,6 @@
 
 BEGIN_MOUNTAIN
 
-// TODO - Add a GetAxis function like in Unity
-
 /// @brief Used to fetch inputs from the current @ref Window.
 class Input
 {
@@ -56,14 +54,6 @@ public:
     /// @brief Get the mouse wheel delta
     MOUNTAIN_API static Vector2 GetMouseWheel();
 
-    /// @brief Initialize the input manager
-    MOUNTAIN_API static void Initialize();
-
-    /// @brief Update the input manager
-    MOUNTAIN_API static void Update();
-
-    MOUNTAIN_API static void Reset();
-
 private:
     using KeyStatuses = std::array<bool_t, KeyStatusCount>;
     
@@ -87,6 +77,14 @@ private:
 
     MOUNTAIN_API static inline GLFWwindow* m_WindowHandle = nullptr;
 
+    /// @brief Initialize the input manager
+    MOUNTAIN_API static void Initialize();
+
+    /// @brief Update the input manager
+    MOUNTAIN_API static void Update();
+
+    MOUNTAIN_API static void Reset();
+
     static void HandleKeyboard(GLFWwindow* window, int32_t key, int32_t scancode, int32_t action, int32_t mods);
     
     static void HandleMouseButton(GLFWwindow* window, int32_t mouseButton, int32_t action, int32_t mods);
@@ -98,6 +96,9 @@ private:
     static void UpdateGamepads();
 
     static void UpdateConnectedGamepads();
+
+    friend class Window;
+    friend class Game;
 };
 
 END_MOUNTAIN
