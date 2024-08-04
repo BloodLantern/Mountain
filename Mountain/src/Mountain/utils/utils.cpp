@@ -42,7 +42,7 @@ std::string Utils::HumanizeString(const std::string& str)
 
     const std::string::const_iterator& sBegin = str.begin();
     std::string::iterator rBegin = result.begin();
-    for (std::sregex_iterator it = begin; it != end; ++it)
+    for (std::sregex_iterator it = begin; it != end; it++)
     {
         const std::smatch& match = *it;
         // Get results for capture groups 1 and 2
