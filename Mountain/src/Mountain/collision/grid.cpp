@@ -135,9 +135,9 @@ bool_t Grid::CheckCollision(const Hitbox& hitbox) const
     if (y + height > gridSize.y)
         height = gridSize.y - y;
 
-    for (int32_t i = 0; i < width; ++i)
+    for (int32_t i = 0; i < width; i++)
     {
-        for (int32_t j = 0; j < height; ++j)
+        for (int32_t j = 0; j < height; j++)
         {
             if (tiles[y + j][x + i])
                 return true;
