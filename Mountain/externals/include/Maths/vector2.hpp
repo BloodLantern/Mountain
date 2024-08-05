@@ -6,7 +6,7 @@
 #include <ostream>
 #include <stdexcept>
 
-#include "Maths/definitions.hpp"
+#include "Maths/core.hpp"
 
 /// @file vector2.hpp
 /// @brief Defines the Vector2 class.
@@ -54,15 +54,6 @@ public:
     /// @brief Returns the determinant of 'a' and 'b'.
     [[nodiscard]]
     static constexpr float_t Determinant(Vector2 a, Vector2 b) noexcept;
-
-    /// @brief Lerp between two positions in a 2-dimensional space.
-    /// 
-    /// @param value The current position.
-    /// @param target The target position.
-    /// @param t The time to lerp.
-    /// @returns The lerp position.
-    [[nodiscard]]
-    static constexpr Vector2 Lerp(Vector2 value, Vector2 target, float_t t) noexcept;
 
     /// @brief Constructs a Vector2 with both its components set to 0.
     constexpr Vector2() = default;
@@ -273,8 +264,6 @@ constexpr bool_t operator!=(const Vector2 a, const Vector2 b) noexcept { return 
 
 /// @brief Streams a Vector2 into @p out, printing its values one by one on a single line.
 MATH_TOOLBOX std::ostream& operator<<(std::ostream& out, Vector2 v) noexcept;
-
-constexpr Vector2 Vector2::Lerp(const Vector2 value, const Vector2 target, const float_t t) noexcept { return value + (target - value) * t; }
 
 template <>
 struct std::formatter<Vector2>

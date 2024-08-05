@@ -11,3 +11,33 @@ uint32_t Color::GetPackedValue() const
 
     return byteA << 24 | byteB << 16 | byteG << 8 | byteR;
 }
+
+Color Calc::Lerp(const Color& value, const Color& target, const float_t time)
+{
+    const Vector4 v = static_cast<Vector4>(value);
+    const Vector4 t = static_cast<Vector4>(target);
+
+    Vector4 result = Lerp(v * v, t * t, time);
+
+    result.x = std::sqrt(result.x);
+    result.y = std::sqrt(result.y);
+    result.z = std::sqrt(result.z);
+    result.w = std::sqrt(result.w);
+    
+    return Color(result);
+}
+
+Color Calc::Lerp(const Color& value, const Color& target, const float_t time, const Easing::Easer easer)
+{
+    const Vector4 v = static_cast<Vector4>(value);
+    const Vector4 t = static_cast<Vector4>(target);
+
+    Vector4 result = Lerp(v * v, t * t, time, easer);
+
+    result.x = std::sqrt(result.x);
+    result.y = std::sqrt(result.y);
+    result.z = std::sqrt(result.z);
+    result.w = std::sqrt(result.w);
+    
+    return Color(result);
+}

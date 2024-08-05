@@ -33,7 +33,7 @@ public:
     /// This also unloads the font
     MOUNTAIN_API void ResetSourceData() override;
 
-    MOUNTAIN_API Vector2 CalcTextSize(std::string_view text, float_t scale = 1.f) const;
+    MOUNTAIN_API Vector2 CalcTextSize(std::string_view text) const;
 
 private:
     struct Character

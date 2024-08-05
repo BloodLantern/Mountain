@@ -46,7 +46,7 @@ void Font::ResetSourceData()
     m_SourceDataSet = false;
 }
 
-Vector2 Font::CalcTextSize(const std::string_view text, const float_t scale) const
+Vector2 Font::CalcTextSize(const std::string_view text) const
 {
     Vector2 result;
     
@@ -54,9 +54,9 @@ Vector2 Font::CalcTextSize(const std::string_view text, const float_t scale) con
     {
         const Character& character = m_Characters.at(c);
         
-        result.x += static_cast<float_t>(character.advance >> 6) * scale;
+        result.x += static_cast<float_t>(character.advance >> 6);
         
-        if (character.size.y > result.y)
+        if (static_cast<float_t>(character.size.y) > result.y)
             result.y = static_cast<float_t>(character.size.y);
     }
 

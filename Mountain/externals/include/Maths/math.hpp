@@ -7,7 +7,7 @@
 /// When building a DLL using this library, see definitions.hpp.
 /// </summary>
 
-#include "Maths/definitions.hpp"
+#include "Maths/core.hpp"
 
 #include "Maths/calc.hpp"
 

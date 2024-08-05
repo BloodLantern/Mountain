@@ -2,7 +2,8 @@
 #include "Maths/calc.hpp"
 
 BEGIN_MOUNTAIN
-    static constexpr float_t HueCircle = 1.f; // A circle is 360 degrees, normalized as 1 here
+
+static constexpr float_t HueCircle = 1.f; // A circle is 360 degrees, normalized as 1 here
 static constexpr float_t HueCircleOver3 = HueCircle / 3.f;
 static constexpr float_t HueCircleOver6 = HueCircle / 6.f;
 
