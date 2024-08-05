@@ -132,23 +132,6 @@ public:
     [[nodiscard]]
     static constexpr float_t Dot(const Vector4& a, const Vector4& b) noexcept;
 
-    /// @brief Lerp between two positions in a 4-dimensional space.
-    /// 
-    /// @param value The current position.
-    /// @param target The target position.
-    /// @param t The time to lerp.
-    /// @returns The lerp position.
-    [[nodiscard]]
-    static constexpr Vector4 Lerp(const Vector4& value, const Vector4& target, float_t t) noexcept;
-
-    /// @brief Lerp between two positions in a 4-dimensional space.
-    /// 
-    /// @param value The current position.
-    /// @param target The target position.
-    /// @param t The time to lerp.
-    /// @param result The lerp position.
-    static constexpr void Lerp(const Vector4& value, const Vector4& target, float_t t, Vector4* result) noexcept;
-
     /// @brief Retrieves this vector's component at index i.
     ///
     /// @param i The index of the component to get. It would be 0 for x, 1 for y, etc...
@@ -303,10 +286,6 @@ constexpr bool_t operator!=(const Vector4 a, const Vector4 b) noexcept { return 
 
 /// @brief Streams a Vector4 into @p out, printing its values one by one on a single line.
 MATH_TOOLBOX std::ostream& operator<<(std::ostream& out, const Vector4& v) noexcept;
-
-constexpr Vector4 Vector4::Lerp(const Vector4& value, const Vector4& target, const float_t t) noexcept { return value + (target - value) * t; }
-
-constexpr void Vector4::Lerp(const Vector4& value, const Vector4& target, const float_t t, Vector4* result) noexcept { *result = value + (target - value) * t; }
 
 template <>
 struct std::formatter<Vector4>

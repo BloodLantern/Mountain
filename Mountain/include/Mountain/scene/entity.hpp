@@ -12,8 +12,6 @@ BEGIN_MOUNTAIN
 
 class Entity
 {
-    List<Component*> m_Components;
-    
 public:
     Vector2 position;
 
@@ -39,10 +37,10 @@ public:
     T* GetComponent() const;
 
     [[nodiscard]]
-    MOUNTAIN_API decltype(m_Components)& GetComponents();
+    MOUNTAIN_API List<Component*>& GetComponents();
 
     [[nodiscard]]
-    MOUNTAIN_API const decltype(m_Components)& GetComponents() const;
+    MOUNTAIN_API const List<Component*>& GetComponents() const;
 
     MOUNTAIN_API void RemoveComponent(Component* component);
 
@@ -57,6 +55,9 @@ public:
 
 protected:
     Collider* m_Collider = nullptr;
+
+private:
+    List<Component*> m_Components;
 };
 
 END_MOUNTAIN
