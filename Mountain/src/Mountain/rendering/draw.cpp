@@ -338,7 +338,7 @@ void Draw::Text(const Font& font, const std::string_view text, const Vector2 pos
     m_TextShader->Use();
     m_TextShader->SetUniform("color", color);
 
-    Vector2 offset = position + Vector2::UnitY() * font.CalcTextSize(text, scale).y;
+    Vector2 offset = position + Vector2::UnitY() * font.CalcTextSize(text).y * scale;
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RectangleEbo);
     for (const char_t c : text)

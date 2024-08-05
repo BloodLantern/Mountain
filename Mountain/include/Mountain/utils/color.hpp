@@ -3,6 +3,7 @@
 #include <format>
 #include <sstream>
 
+#include <Maths/easing.hpp>
 #include <Maths/vector3.hpp>
 #include <Maths/vector4.hpp>
 
@@ -606,6 +607,14 @@ struct MOUNTAIN_API Color
     [[nodiscard]]
     Color() = default;
 
+    /// @brief Constructs a grayscale color with each component equal to @p rgb
+    /// 
+    /// @param rgb Red, Green and Blue components
+    /// @param a Alpha component
+    [[nodiscard]]
+    explicit constexpr Color(const float_t rgb, const float_t a = 1.f)
+    : r(rgb), g(rgb), b(rgb), a(a) {}
+
     /// @brief Constructs a color with each specified component
     /// 
     /// @param r Red component
@@ -615,6 +624,21 @@ struct MOUNTAIN_API Color
     [[nodiscard]]
     constexpr Color(const float_t r, const float_t g, const float_t b, const float_t a = 1.f)
     : r(r), g(g), b(b), a(a) {}
+
+    /// @brief Constructs a color from a Vector3 and an alpha value
+    /// 
+    /// @param rgb Red, Green and Blue components
+    /// @param a Alpha component
+    [[nodiscard]]
+    explicit constexpr Color(const Vector3& rgb, const float_t a = 1.f)
+    : r(rgb.x), g(rgb.y), b(rgb.z), a(a) {}
+
+    /// @brief Constructs a color from a Vector4
+    /// 
+    /// @param rgba Color components
+    [[nodiscard]]
+    explicit constexpr Color(const Vector4& rgba)
+    : r(rgba.x), g(rgba.y), b(rgba.z), a(rgba.w) {}
 
     [[nodiscard]]
     uint32_t GetPackedValue() const;
@@ -835,5 +859,14 @@ struct std::formatter<Mountain::ColorHsva>
 private:
     std::string m_Format;
 };
+
+namespace Calc
+{
+    [[nodiscard]]
+    Mountain::Color Lerp(const Mountain::Color& value, const Mountain::Color& target, float_t time);
+
+    [[nodiscard]]
+    Mountain::Color Lerp(const Mountain::Color& value, const Mountain::Color& target, float_t time, Easing::Easer easer);
+}
 
 #include "Mountain/utils/color.inl"

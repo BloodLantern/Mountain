@@ -9,6 +9,7 @@
 BEGIN_MOUNTAIN
 
 // TODO - Add an operator[] function for accessing the tiles
+// TODO - Add a template type instead of bool_t
 
 class Grid : public Collider
 {
