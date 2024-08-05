@@ -3,7 +3,8 @@
 #include <algorithm>
 #include <numbers>
 
-#include "Maths/definitions.hpp"
+#include "Maths/core.hpp"
+#include "Maths/easing.hpp"
 #include "Maths/vector2.hpp"
 #include "Maths/vector3.hpp"
 #include "Maths/vector4.hpp"
@@ -283,7 +284,7 @@ namespace Calc
 	/// @param b The second value.
 	/// @returns Whether the values are considered equal.
 	[[nodiscard]]
-	MATH_TOOLBOX bool_t Equals(Vector2 a, Vector2 b) noexcept;
+	MATH_TOOLBOX constexpr bool_t Equals(Vector2 a, Vector2 b) noexcept;
 
 	/// @brief Checks if two values are considered equal using @ref IsZero(float_t).
 	/// 
@@ -291,7 +292,7 @@ namespace Calc
 	/// @param b The second value.
 	/// @returns Whether the values are considered equal.
 	[[nodiscard]]
-	MATH_TOOLBOX bool_t Equals(const Vector3& a, const Vector3& b) noexcept;
+	MATH_TOOLBOX constexpr bool_t Equals(const Vector3& a, const Vector3& b) noexcept;
 
 	/// @brief Checks if two values are considered equal using @ref IsZero(float_t).
 	/// 
@@ -299,7 +300,7 @@ namespace Calc
 	/// @param b The second value.
 	/// @returns Whether the values are considered equal.
 	[[nodiscard]]
-	MATH_TOOLBOX bool_t Equals(const Vector4& a, const Vector4& b) noexcept;
+	MATH_TOOLBOX constexpr bool_t Equals(const Vector4& a, const Vector4& b) noexcept;
 
 	/// @brief Checks if two values are considered equal using @ref IsZero(float_t).
 	/// 
@@ -332,6 +333,30 @@ namespace Calc
 	/// @returns Whether the values are considered equal.
 	[[nodiscard]]
 	MATH_TOOLBOX bool_t Equals(const Quaternion& a, const Quaternion& b) noexcept;
+	
+	[[nodiscard]]
+	constexpr float_t Lerp(float_t value, float_t target, float_t time);
+	
+	[[nodiscard]]
+	constexpr float_t Lerp(float_t value, float_t target, float_t time, Easing::Easer easer);
+	
+	[[nodiscard]]
+	constexpr Vector2 Lerp(Vector2 value, Vector2 target, float_t time);
+	
+	[[nodiscard]]
+	constexpr Vector2 Lerp(Vector2 value, Vector2 target, float_t time, Easing::Easer easer);
+	
+	[[nodiscard]]
+	constexpr Vector3 Lerp(const Vector3& value, const Vector3& target, float_t time);
+	
+	[[nodiscard]]
+	constexpr Vector3 Lerp(const Vector3& value, const Vector3& target, float_t time, Easing::Easer easer);
+	
+	[[nodiscard]]
+	constexpr Vector4 Lerp(const Vector4& value, const Vector4& target, float_t time);
+	
+	[[nodiscard]]
+	constexpr Vector4 Lerp(const Vector4& value, const Vector4& target, float_t time, Easing::Easer easer);
 }
 
 constexpr float_t Calc::Sign(const float_t number) noexcept { return number < 0.f ? -1.f : 1.f; }
@@ -426,5 +451,39 @@ constexpr float_t Calc::MakeZero(const float_t value) noexcept { return MakeZero
 constexpr float_t Calc::MakeZero(const float_t value, const float_t zero) noexcept { return IsZero(value, zero) ? 0.f : value; }
 
 constexpr bool_t Calc::Equals(const float_t a, const float_t b) noexcept { return IsZero(a - b); }
+
+constexpr bool_t Calc::Equals(const Vector2 a, const Vector2 b) noexcept { return Equals(a.x, b.x) && Equals(a.y, b.y); }
+
+constexpr bool_t Calc::Equals(const Vector3& a, const Vector3& b) noexcept { return Equals(a.x, b.x) && Equals(a.y, b.y) && Equals(a.z, b.z); }
+
+constexpr bool_t Calc::Equals(const Vector4& a, const Vector4& b) noexcept { return Equals(a.x, b.x) && Equals(a.y, b.y) && Equals(a.z, b.z) && Equals(a.w, b.w); }
+
+constexpr float_t Calc::Lerp(const float_t value, const float_t target, const float_t time) { return value + (target - value) * time; }
+
+constexpr float_t Calc::Lerp(const float_t value, const float_t target, const float_t time, const Easing::Easer easer)
+{
+	return value + (target - value) * easer(time);
+}
+
+constexpr Vector2 Calc::Lerp(const Vector2 value, const Vector2 target, const float_t time) { return value + (target - value) * time; }
+
+constexpr Vector2 Calc::Lerp(const Vector2 value, const Vector2 target, const float_t time, const Easing::Easer easer)
+{
+	return value + (target - value) * easer(time);
+}
+
+constexpr Vector3 Calc::Lerp(const Vector3& value, const Vector3& target, const float_t time) { return value + (target - value) * time; }
+
+constexpr Vector3 Calc::Lerp(const Vector3& value, const Vector3& target, const float_t time, const Easing::Easer easer)
+{
+	return value + (target - value) * easer(time);
+}
+
+constexpr Vector4 Calc::Lerp(const Vector4& value, const Vector4& target, const float_t time) { return value + (target - value) * time; }
+
+constexpr Vector4 Calc::Lerp(const Vector4& value, const Vector4& target, const float_t time, const Easing::Easer easer)
+{
+	return value + (target - value) * easer(time);
+}
 
 #undef ZERO

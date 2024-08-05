@@ -40,9 +40,9 @@ void Entity::AddComponent(Component* component)
     component->Added();
 }
 
-decltype(Entity::m_Components)& Entity::GetComponents() { return m_Components; }
+List<Component*>& Entity::GetComponents() { return m_Components; }
 
-const decltype(Entity::m_Components)& Entity::GetComponents() const { return m_Components; }
+const List<Component*>& Entity::GetComponents() const { return m_Components; }
 
 void Entity::RemoveComponent(Component* component)
 {

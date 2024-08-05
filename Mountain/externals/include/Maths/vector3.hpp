@@ -72,27 +72,6 @@ public:
 	/// @brief Returns a x b.
 	static constexpr void Cross(const Vector3& a, const Vector3& b, Vector3* result) noexcept;
 
-    /// @brief Clamps the given @p value between @p min and @p max.
-    [[nodiscard]]
-    static constexpr Vector3 Clamp(Vector3 value, Vector3 min, Vector3 max) noexcept;
-
-	/// @brief Lerp between two positions in a 3-dimensional space.
-	/// 
-	/// @param value The current position.
-	/// @param target The target position.
-	/// @param t The time to lerp.
-	/// @returns The lerp position.
-	[[nodiscard]]
-	static constexpr Vector3 Lerp(const Vector3& value, const Vector3& target, float_t t) noexcept;
-
-	/// @brief Lerp between two positions in a 3-dimensional space.
-	/// 
-	/// @param value The current position.
-	/// @param target The target position.
-	/// @param t The time to lerp.
-	/// @param result The lerp position.
-	static constexpr void Lerp(const Vector3& value, const Vector3& target, float_t t, Vector3* result) noexcept;
-
     /// @brief Combines 2 Vector3
     /// @param a First vector
     /// @param b Second vector
@@ -321,10 +300,6 @@ constexpr bool_t operator!=(const Vector3 a, const Vector3 b) noexcept { return 
 
 /// @brief Streams a Vector3 into @p out, printing its values one by one on a single line.
 MATH_TOOLBOX std::ostream& operator<<(std::ostream& out, const Vector3& v) noexcept;
-
-constexpr Vector3 Vector3::Lerp(const Vector3& value, const Vector3& target, const float_t t) noexcept { return value + (target - value) * t; }
-
-constexpr void Vector3::Lerp(const Vector3& value, const Vector3& target, const float_t t, Vector3* result) noexcept { *result = value + (target - value) * t; }
 
 constexpr Vector3 Vector3::Combine(const Vector3& a, const Vector3& b, const float_t aScale, const float_t bScale) noexcept { return (a * aScale) + (b * bScale); }
 
