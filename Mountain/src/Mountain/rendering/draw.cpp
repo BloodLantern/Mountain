@@ -345,11 +345,13 @@ void Draw::Text(const Font& font, const std::string_view text, const Vector2 pos
     {
         const Font::Character& character = font.m_Characters.at(c);
 
-        const Vector2 pos = cameraMatrix * Vector2(
-            offset.x + static_cast<float_t>(character.bearing.x) * scale,
-            offset.y - static_cast<float_t>(character.bearing.y) * scale
+        const Vector2 pos = Calc::Round(
+            cameraMatrix * Vector2(
+                offset.x + static_cast<float_t>(character.bearing.x) * scale,
+                offset.y - static_cast<float_t>(character.bearing.y) * scale
+            )
         );
-        const Vector2 size = cameraMatrix * (character.size * scale);
+        const Vector2 size = Calc::Round(cameraMatrix * (character.size * scale));
 
         const std::array vertices = {
             pos.x,          pos.y,           0.f, 0.f,
@@ -369,7 +371,6 @@ void Draw::Text(const Font& font, const std::string_view text, const Vector2 pos
         // Now advance cursors for next glyph (note that advance is number of 1/64 pixels)
         offset.x += static_cast<float_t>(character.advance >> 6) * scale; // bitshift by 6 to get value in pixels (2^6 = 64)
     }
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindTexture(GL_TEXTURE_2D, 0);
     
     m_TextShader->Unuse();
