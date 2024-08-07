@@ -4,7 +4,6 @@
 #include "scene/entity.hpp"
 #include "utils/pointer.hpp"
 
-// TODO - Add a state machine
 // TODO - Add a way to handle sprite animations
 
 class Player : public Mountain::Entity
