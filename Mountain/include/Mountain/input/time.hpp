@@ -21,7 +21,7 @@ class Time
 public:
     MOUNTAIN_API static inline float_t timeScale = 1.f;
 
-    /// @brief The maximum delta time value. This is to prevent from clipping during a lag spike
+    /// @brief The maximum delta time value. This is to prevent clipping during a lag spike
     MOUNTAIN_API static inline float_t maxDeltaTime = 0.1f;
 
     /// @brief If this is above 0, the game updates will be frozen for that amount of time
