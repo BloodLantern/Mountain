@@ -8,7 +8,6 @@
 
 BEGIN_MOUNTAIN
 
-// TODO - Add an operator[] function for accessing the tiles
 // TODO - Add a template type instead of bool_t
 
 class Grid : public Collider
@@ -28,15 +27,15 @@ public:
     // Inherited via Collider
     MOUNTAIN_API void DebugRender(const Color& color) const override;
     [[nodiscard]]
-    MOUNTAIN_API bool CheckCollision(const Vector2& point) const override;
+    MOUNTAIN_API bool_t CheckCollision(const Vector2& point) const override;
     [[nodiscard]]
-    MOUNTAIN_API bool CheckCollision(const Hitbox& hitbox) const override;
+    MOUNTAIN_API bool_t CheckCollision(const Hitbox& hitbox) const override;
     [[nodiscard]]
-    MOUNTAIN_API bool CheckCollision(const Circle& circle) const override;
+    MOUNTAIN_API bool_t CheckCollision(const Circle& circle) const override;
     [[nodiscard]]
-    MOUNTAIN_API bool CheckCollision(const Grid& grid) const override;
+    MOUNTAIN_API bool_t CheckCollision(const Grid& grid) const override;
     [[nodiscard]]
-    MOUNTAIN_API bool CheckCollision(const ColliderList& list) const override;
+    MOUNTAIN_API bool_t CheckCollision(const ColliderList& list) const override;
 
     [[nodiscard]]
     MOUNTAIN_API float Left() const override;
@@ -54,6 +53,16 @@ public:
     MOUNTAIN_API float Height() const override;
     [[nodiscard]]
     MOUNTAIN_API Vector2 Size() const override;
+
+    [[nodiscard]]
+    MOUNTAIN_API List<bool_t>& operator[](size_t y);
+    [[nodiscard]]
+    MOUNTAIN_API const List<bool_t>& operator[](size_t y) const;
+
+    [[nodiscard]]
+    MOUNTAIN_API bool_t At(size_t y, size_t x) const;
+    [[nodiscard]]
+    MOUNTAIN_API bool_t At(Vector2i tilePosition) const;
 
 private:
     void ResizeGrid();
