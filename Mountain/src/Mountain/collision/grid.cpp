@@ -175,6 +175,14 @@ float_t Grid::Height() const { return static_cast<float_t>(gridSize.y) * tileSiz
 
 Vector2 Grid::Size() const { return gridSize * tileSize; }
 
+List<bool_t>& Grid::operator[](const size_t y) { return tiles[y]; }
+
+const List<bool_t>& Grid::operator[](const size_t y) const { return tiles[y]; }
+
+bool_t Grid::At(const size_t y, const size_t x) const { return tiles[y][x]; }
+
+bool_t Grid::At(const Vector2i tilePosition) const { return tiles[tilePosition.y][tilePosition.x]; }
+
 void Grid::ResizeGrid()
 {
     tiles.Resize(gridSize.y);
