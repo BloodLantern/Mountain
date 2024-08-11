@@ -7,11 +7,16 @@ in float circleRadius;
 
 uniform vec4 color;
 
+uniform vec2 cameraScale;
+
 out vec4 fragmentColor;
 
 void main()
 {
-    if (length(gl_FragCoord.xy - circleCenter) > circleRadius)
+    vec2 centerToFragment = (gl_FragCoord.xy - circleCenter) / cameraScale;
+    float centerToFragmentDistanceSquared = centerToFragment.x * centerToFragment.x + centerToFragment.y * centerToFragment.y;
+    float centerSourceRadiusSquared = circleRadius * circleRadius;
+    if (centerToFragmentDistanceSquared > centerSourceRadiusSquared)
         discard;
     
     fragmentColor = color;

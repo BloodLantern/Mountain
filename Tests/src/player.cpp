@@ -1,15 +1,21 @@
 ﻿#include "player.hpp"
 
-#include "audio/component/audio_listener.hpp"
-#include "input/input.hpp"
-#include "input/time.hpp"
-#include "rendering/draw.hpp"
-#include "resource/resource_manager.hpp"
+#include "Mountain/input/input.hpp"
+#include "Mountain/input/time.hpp"
+#include "Mountain/rendering/draw.hpp"
+#include "Mountain/resource/resource_manager.hpp"
+#include "Mountain/scene/component/audio_listener.hpp"
+#include "Mountain/scene/component/light_source.hpp"
 
-Player::Player(const Vector2& position)  // NOLINT(clang-diagnostic-shadow-field)
-    : Entity(position)
+Player::Player(const Vector2& pos)
+    : Entity(pos)
 {
-    AddComponent<Mountain::AudioListener>();
+    const auto listener = AddComponent<Mountain::AudioListener>();
+    listener->SetVolume(0.f);
+    
+    const auto light = AddComponent<Mountain::LightSource>();
+    light->intensity = 1.f;
+    light->radius = 50.f;
 }
 
 void Player::LoadResources()
@@ -31,12 +37,20 @@ void Player::Update()
     if (Mountain::Input::GetKey(Mountain::Key::Down))
         movement.y =  1.f;
 
-    position += movement * movementSpeed * Mountain::Time::GetDeltaTime();
+    position += movement.Normalized() * movementSpeed * Mountain::Time::GetDeltaTime();
 }
 
 void Player::Render()
 {
     Entity::Render();
 
-    Mountain::Draw::Texture(*m_Texture, position - m_Texture->GetSize() * 0.5f, Vector2::One(), 0.f, Mountain::Color::White());
+    Mountain::Draw::Texture(
+        *m_Texture,
+        position - m_Texture->GetSize() * 0.5f,
+        Vector2::One(),
+        0.f,
+        Vector2::Zero(),
+        Vector2::One(),
+        Mountain::Color::White()
+    );
 }

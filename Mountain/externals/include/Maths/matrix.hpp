@@ -317,13 +317,13 @@ public:
     /// 
     /// @returns A pointer to the first value of this Matrix.
     [[nodiscard]]
-    constexpr const float_t* Raw() const noexcept;
+    constexpr const float_t* Data() const noexcept;
 
     /// @brief Gets a pointer to the first value of this Matrix.
     /// 
     /// @returns A pointer to the first value of this Matrix.
     [[nodiscard]]
-    constexpr float_t* Raw() noexcept;
+    constexpr float_t* Data() noexcept;
 
     /// @brief Uses the @c std::cout stream to print the values of this matrix in a square-like shape, e.g. by using newlines to make it easier to read.
     void DebugPrint() const noexcept;
@@ -782,9 +782,9 @@ constexpr void Matrix::Orthographic(const float_t left, const float_t right, con
     );
 }
 
-constexpr const float_t* Matrix::Raw() const noexcept { return &m00; }
+constexpr const float_t* Matrix::Data() const noexcept { return &m00; }
 
-constexpr float_t* Matrix::Raw() noexcept { return &m00; }
+constexpr float_t* Matrix::Data() noexcept { return &m00; }
 
 constexpr bool_t Matrix::IsDiagonal() const noexcept
 {
@@ -933,7 +933,7 @@ constexpr void Matrix::Inverted(Matrix* result) const
 constexpr float_t Matrix::At(const size_t row, const size_t col) const
 {
     if (row < 4 && col < 4) [[likely]]
-        return Raw()[row * 4 + col];
+        return Data()[row * 4 + col];
     
     [[unlikely]]
     throw std::out_of_range("Matrix subscript out of range");
@@ -942,7 +942,7 @@ constexpr float_t Matrix::At(const size_t row, const size_t col) const
 constexpr float_t& Matrix::At(const size_t row, const size_t col)
 {
     if (row < 4 && col < 4) [[likely]]
-        return Raw()[row * 4 + col];
+        return Data()[row * 4 + col];
     
     [[unlikely]]
     throw std::out_of_range("Matrix subscript out of range");
@@ -950,13 +950,13 @@ constexpr float_t& Matrix::At(const size_t row, const size_t col)
 
 constexpr Vector4 Matrix::operator[](const size_t col) const
 {
-    return Vector4(Raw() + static_cast<ptrdiff_t>(col) * 4);
+    return Vector4(Data() + static_cast<ptrdiff_t>(col) * 4);
 }
 
 constexpr Vector4& Matrix::operator[](const size_t col)
 {
     // Pointer arithmetic magic to get around not being able to use reinterpret_cast
-    return *static_cast<Vector4*>(static_cast<void*>(Raw() + static_cast<ptrdiff_t>(col) * 4));
+    return *static_cast<Vector4*>(static_cast<void*>(Data() + static_cast<ptrdiff_t>(col) * 4));
 }
 
 /// @brief Streams a Matrix into @p out, printing its values one by one on a single line.
