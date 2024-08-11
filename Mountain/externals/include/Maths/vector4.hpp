@@ -93,13 +93,13 @@ public:
     /// 
     /// @returns A pointer to the first component of this vector.
     [[nodiscard]]
-    constexpr const float_t* Raw() const noexcept;
+    constexpr const float_t* Data() const noexcept;
 
     /// @brief Gets a pointer to the first component of this vector.
     /// 
     /// @returns A pointer to the first component of this vector.
     [[nodiscard]]
-    constexpr float_t* Raw() noexcept;
+    constexpr float_t* Data() noexcept;
 
     /// @brief Returns the length of the vector.
     [[nodiscard]]
@@ -194,9 +194,9 @@ constexpr Vector4 Vector4::One() noexcept { return Vector4(1); }
 
 constexpr void Vector4::One(Vector4* result) noexcept { *result = Vector4(1); }
 
-constexpr const float_t* Vector4::Raw() const noexcept { return &x; }
+constexpr const float_t* Vector4::Data() const noexcept { return &x; }
 
-constexpr float_t* Vector4::Raw() noexcept { return &x; }
+constexpr float_t* Vector4::Data() noexcept { return &x; }
 
 constexpr float_t Vector4::SquaredLength() const noexcept { return SQ(x) + SQ(y) + SQ(z) + SQ(w); }
 
@@ -205,7 +205,7 @@ constexpr float_t Vector4::Dot(const Vector4& a, const Vector4& b) noexcept {	re
 constexpr float_t Vector4::operator[](const size_t i) const
 {
     if (i < 4) [[likely]]
-        return *(Raw() + i);
+        return *(Data() + i);
     [[unlikely]]
         throw std::out_of_range("Vector4 subscript out of range");
 }
@@ -213,7 +213,7 @@ constexpr float_t Vector4::operator[](const size_t i) const
 constexpr float_t& Vector4::operator[](const size_t i)
 {
     if (i < 4) [[likely]]
-        return *(Raw() + i);
+        return *(Data() + i);
     [[unlikely]]
         throw std::out_of_range("Vector4 subscript out of range");
 }

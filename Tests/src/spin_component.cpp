@@ -1,11 +1,12 @@
 ﻿#include "spin_component.hpp"
 
+#include "Mountain/input/time.hpp"
+#include "Mountain/rendering/draw.hpp"
+#include "Mountain/resource/resource_manager.hpp"
+#include "Mountain/scene/entity.hpp"
+#include "Mountain/scene/component/audio_source.hpp"
+
 #include "test_game.hpp"
-#include "audio/component/audio_source.hpp"
-#include "input/time.hpp"
-#include "rendering/draw.hpp"
-#include "resource/resource_manager.hpp"
-#include "scene/entity.hpp"
 
 void SpinComponent::Added()
 {

@@ -251,13 +251,13 @@ public:
     /// 
     /// @returns A pointer to the first component of this vector.
     [[nodiscard]]
-    constexpr const float_t* Raw() const noexcept;
+    constexpr const float_t* Data() const noexcept;
 
     /// @brief Gets a pointer to the first component of this vector.
     /// 
     /// @returns A pointer to the first component of this vector.
     [[nodiscard]]
-    constexpr float_t* Raw() noexcept;
+    constexpr float_t* Data() noexcept;
 
     /// @brief Returns a copy of the @c x component of this Quaternion.
     [[nodiscard]]
@@ -395,9 +395,9 @@ constexpr void Quaternion::Identity(Quaternion* result) noexcept { *result = Uni
 
 constexpr float_t Quaternion::Dot(const Quaternion& a, const Quaternion& b) noexcept { return a.X() * b.X() + a.Y() * b.Y() + a.Z() * b.Z() + a.W() * b.W(); }
 
-constexpr const float_t* Quaternion::Raw() const noexcept { return &imaginary.x; }
+constexpr const float_t* Quaternion::Data() const noexcept { return &imaginary.x; }
 
-constexpr float_t* Quaternion::Raw() noexcept { return &imaginary.x; }
+constexpr float_t* Quaternion::Data() noexcept { return &imaginary.x; }
 
 constexpr float_t& Quaternion::X() noexcept { return imaginary.x; }
 
@@ -424,7 +424,7 @@ constexpr float_t Quaternion::SquaredLength() const noexcept { return SQ(imagina
 constexpr float_t Quaternion::operator[](const size_t i) const
 {
     if (i < 4) [[likely]]
-        return *(Raw() + i);
+        return *(Data() + i);
     [[unlikely]]
         throw std::out_of_range("Quaternion subscript out of range");
 }
@@ -432,7 +432,7 @@ constexpr float_t Quaternion::operator[](const size_t i) const
 constexpr float_t& Quaternion::operator[](const size_t i)
 {
     if (i < 4) [[likely]]
-        return *(Raw() + i);
+        return *(Data() + i);
     [[unlikely]]
         throw std::out_of_range("Quaternion subscript out of range");
 }

@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "scene/component.hpp"
+#include "Mountain/scene/component/component.hpp"
 
 class SpinComponent : public Mountain::Component
 {
