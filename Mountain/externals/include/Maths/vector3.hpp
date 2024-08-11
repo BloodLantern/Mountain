@@ -107,13 +107,13 @@ public:
 	/// 
 	/// @returns A pointer to the first component of this vector.
 	[[nodiscard]]
-	constexpr const float_t* Raw() const noexcept;
+	constexpr const float_t* Data() const noexcept;
 
 	/// @brief Gets a pointer to the first component of this vector.
 	/// 
 	/// @returns A pointer to the first component of this vector.
 	[[nodiscard]]
-	constexpr float_t* Raw() noexcept;
+	constexpr float_t* Data() noexcept;
 
 	/// @brief Returns the length of the vector.
 	[[nodiscard]]
@@ -211,16 +211,16 @@ constexpr Vector3 Vector3::Cross(const Vector3& a, const Vector3& b) noexcept { 
 
 constexpr void Vector3::Cross(const Vector3& a, const Vector3& b, Vector3* result) noexcept { *result = Vector3(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x); }
 
-constexpr const float_t* Vector3::Raw() const noexcept { return &x; }
+constexpr const float_t* Vector3::Data() const noexcept { return &x; }
 
-constexpr float_t* Vector3::Raw() noexcept { return &x; }
+constexpr float_t* Vector3::Data() noexcept { return &x; }
 
 constexpr float_t Vector3::SquaredLength() const noexcept { return SQ(x) + SQ(y) + SQ(z); }
 
 constexpr float_t Vector3::operator[](const size_t i) const
 {
 	if (i < 3) [[likely]]
-		return *(Raw() + i);
+		return *(Data() + i);
 	[[unlikely]]
 	throw std::out_of_range("Vector3 subscript out of range");
 }
@@ -228,7 +228,7 @@ constexpr float_t Vector3::operator[](const size_t i) const
 constexpr float_t& Vector3::operator[](const size_t i)
 {
 	if (i < 3) [[likely]]
-		return *(Raw() + i);
+		return *(Data() + i);
 	[[unlikely]]
 	throw std::out_of_range("Vector3 subscript out of range");
 }

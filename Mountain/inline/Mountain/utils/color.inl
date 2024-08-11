@@ -150,6 +150,10 @@ constexpr Color Color::WhiteSmoke() { return Color(0xf5 / 255.f, 0xf5 / 255.f, 0
 constexpr Color Color::Yellow() { return Color(0xff / 255.f, 0xff / 255.f, 0x00 / 255.f); }
 constexpr Color Color::YellowGreen() { return Color(0x9a / 255.f, 0xcd / 255.f, 0x32 / 255.f); }
 
+constexpr float_t* Color::Data() { return &r; }
+
+constexpr const float_t* Color::Data() const { return &r; }
+
 constexpr Color::operator ColorHsva() const
 {
     ColorHsva hsv = { 0.f, 0.f, 0.f, a };

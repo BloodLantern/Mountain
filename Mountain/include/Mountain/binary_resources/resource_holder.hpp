@@ -5,14 +5,14 @@
 #include "embedded_resources/resource_17139022876316836076.hpp"
 #include "embedded_resources/resource_10560615441756428011.hpp"
 #include "embedded_resources/resource_9914516617300152348.hpp"
-#include "embedded_resources/resource_12540647052611605547.hpp"
 #include "embedded_resources/resource_918666155165273692.hpp"
+#include "embedded_resources/resource_12540647052611605547.hpp"
 #include "embedded_resources/resource_9650581743241132555.hpp"
 #include "embedded_resources/resource_16475344919504352316.hpp"
 #include "embedded_resources/resource_8397852258098769587.hpp"
 #include "embedded_resources/resource_7344767717205508100.hpp"
-#include "embedded_resources/resource_5290845577426867131.hpp"
 #include "embedded_resources/resource_8915932256763674668.hpp"
+#include "embedded_resources/resource_5290845577426867131.hpp"
 
 namespace {
 class ResourceHolder {
@@ -22,14 +22,14 @@ private:
 		Resource(resource_17139022876316836076,	resource_17139022876316836076_path),
 		Resource(resource_10560615441756428011,	resource_10560615441756428011_path),
 		Resource(resource_9914516617300152348,	resource_9914516617300152348_path),
-		Resource(resource_12540647052611605547,	resource_12540647052611605547_path),
 		Resource(resource_918666155165273692,	resource_918666155165273692_path),
+		Resource(resource_12540647052611605547,	resource_12540647052611605547_path),
 		Resource(resource_9650581743241132555,	resource_9650581743241132555_path),
 		Resource(resource_16475344919504352316,	resource_16475344919504352316_path),
 		Resource(resource_8397852258098769587,	resource_8397852258098769587_path),
 		Resource(resource_7344767717205508100,	resource_7344767717205508100_path),
-		Resource(resource_5290845577426867131,	resource_5290845577426867131_path),
 		Resource(resource_8915932256763674668,	resource_8915932256763674668_path),
+		Resource(resource_5290845577426867131,	resource_5290845577426867131_path),
 	};
 
 public:

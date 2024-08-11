@@ -74,13 +74,13 @@ public:
     /// @brief 	Gets a pointer to the first component of this vector.
     /// @returns A pointer to the first component of this vector.
     [[nodiscard]]
-    constexpr const int32_t* Raw() const noexcept;
+    constexpr const int32_t* Data() const noexcept;
 
     /// @brief 	Gets a pointer to the first component of this vector.
     /// 
     /// @returns A pointer to the first component of this vector.
     [[nodiscard]]
-    constexpr int32_t* Raw() noexcept;
+    constexpr int32_t* Data() noexcept;
 
     /// @brief Returns the length of the vector.
     [[nodiscard]]
@@ -154,16 +154,16 @@ constexpr float_t Vector2i::Cross(const Vector2i a, const Vector2i b) noexcept {
 
 constexpr float_t Vector2i::Determinant(const Vector2i a, const Vector2i b) noexcept { return static_cast<float_t>(a.x * b.y - b.x * a.y); }
 
-constexpr const int32_t* Vector2i::Raw() const noexcept { return &x; }
+constexpr const int32_t* Vector2i::Data() const noexcept { return &x; }
 
-constexpr int32_t* Vector2i::Raw() noexcept { return &x; }
+constexpr int32_t* Vector2i::Data() noexcept { return &x; }
 
 constexpr float_t Vector2i::SquaredLength() const noexcept { return static_cast<float_t>(x * x + y * y); }
 
 constexpr int32_t Vector2i::operator[](const size_t i) const
 {
     if (i < 2) [[likely]]
-        return *(Raw() + i);
+        return *(Data() + i);
     [[unlikely]]
         throw std::out_of_range("Vector2i subscript out of range");
 }
@@ -171,7 +171,7 @@ constexpr int32_t Vector2i::operator[](const size_t i) const
 constexpr int32_t& Vector2i::operator[](const size_t i)
 {
     if (i < 2) [[likely]]
-        return *(Raw() + i);
+        return *(Data() + i);
     [[unlikely]]
         throw std::out_of_range("Vector2i subscript out of range");
 }

@@ -80,13 +80,13 @@ public:
     /// 
     /// @returns A pointer to the first component of this vector.
     [[nodiscard]]
-    constexpr const float_t* Raw() const noexcept;
+    constexpr const float_t* Data() const noexcept;
 
     /// @brief 	Gets a pointer to the first component of this vector.
     /// 
     /// @returns A pointer to the first component of this vector.
     [[nodiscard]]
-    constexpr float_t* Raw() noexcept;
+    constexpr float_t* Data() noexcept;
 
     /// @brief Returns the length of the vector.
     [[nodiscard]]
@@ -176,16 +176,16 @@ constexpr float_t Vector2::Cross(const Vector2 a, const Vector2 b) noexcept { re
 
 constexpr float_t Vector2::Determinant(const Vector2 a, const Vector2 b) noexcept { return a.x * b.y - b.x * a.y; }
 
-constexpr const float_t* Vector2::Raw() const noexcept { return& x; }
+constexpr const float_t* Vector2::Data() const noexcept { return& x; }
 
-constexpr float_t* Vector2::Raw() noexcept { return& x; }
+constexpr float_t* Vector2::Data() noexcept { return& x; }
 
 constexpr float_t Vector2::SquaredLength() const noexcept { return SQ(x) + SQ(y); }
 
 constexpr float_t Vector2::operator[](const size_t i) const
 {
     if (i < 2) [[likely]]
-        return *(Raw() + i);
+        return *(Data() + i);
     [[unlikely]]
     throw std::out_of_range("Vector2 subscript out of range");
 }
@@ -193,7 +193,7 @@ constexpr float_t Vector2::operator[](const size_t i) const
 constexpr float_t& Vector2::operator[](const size_t i)
 {
     if (i < 2) [[likely]]
-        return *(Raw() + i);
+        return *(Data() + i);
     [[unlikely]]
     throw std::out_of_range("Vector2 subscript out of range");
 }

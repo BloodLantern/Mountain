@@ -6,6 +6,7 @@
 
 #include "Mountain/window.hpp"
 #include "Mountain/rendering/draw.hpp"
+#include "Mountain/scene/component/light_source.hpp"
 #include "Mountain/utils/logger.hpp"
 
 using namespace Mountain;
@@ -24,6 +25,13 @@ void RenderTarget::Use() const
     glViewport(0, 0, m_Size.x, m_Size.y);
     
     Draw::SetProjectionMatrix(m_Projection);
+    UpdateDrawCamera();
+}
+
+void RenderTarget::UpdateDrawCamera() const
+{
+    Draw::m_CameraMatrix = m_CameraMatrix;
+    Draw::m_CameraScale = m_CameraScale;
 }
 
 void RenderTarget::Initialize(const Vector2i size, const MagnificationFilter filter)
@@ -107,11 +115,23 @@ void RenderTarget::Reset()
     m_Initialized = false;
 }
 
-void RenderTarget::Reset(const Vector2i size, const MagnificationFilter filter)
+void RenderTarget::Reset(const Vector2i newSize, const MagnificationFilter newFilter)
 {
     Reset();
-    Initialize(size, filter);
+    Initialize(newSize, newFilter);
 }
+
+void RenderTarget::AddLightSource(const LightSource* lightSource)
+{
+    if (std::ranges::contains(m_LightSources, lightSource))
+        return;
+
+    m_LightSources.push_back(lightSource);
+}
+
+void RenderTarget::RemoveLightSource(const LightSource* lightSource) { std::erase(m_LightSources, lightSource); }
+
+const std::vector<const LightSource*>& RenderTarget::GetLightSources() const { return m_LightSources; }
 
 uint32_t RenderTarget::GetTextureId() const { return m_Texture; }
 
@@ -119,21 +139,21 @@ bool_t RenderTarget::GetInitialized() const { return m_Initialized; }
 
 Vector2i RenderTarget::GetSize() const { return m_Size; }
 
-void RenderTarget::SetSize(const Vector2i size)
+void RenderTarget::SetSize(const Vector2i newSize)
 {
     if (!m_Initialized)
         throw std::logic_error("Cannot set the size of an uninitialized RenderTarget");
     
     glBindTexture(GL_TEXTURE_2D, m_Texture);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, size.x, size.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, newSize.x, newSize.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
     glBindTexture(GL_TEXTURE_2D, 0);
     
     glBindFramebuffer(GL_FRAMEBUFFER, m_Framebuffer);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_Texture, 0);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     
-    m_Size = size;
-    m_Projection = ComputeProjection(size);
+    m_Size = newSize;
+    m_Projection = ComputeProjection(newSize);
 }
 
 MagnificationFilter RenderTarget::GetFilter() const
@@ -141,14 +161,14 @@ MagnificationFilter RenderTarget::GetFilter() const
     return m_Filter;
 }
 
-void RenderTarget::SetFilter(const MagnificationFilter filter)
+void RenderTarget::SetFilter(const MagnificationFilter newFilter)
 {
     if (!m_Initialized)
         throw std::logic_error("Cannot set the filter of an uninitialized RenderTarget");
     
     glBindTexture(GL_TEXTURE_2D, m_Texture);
 
-    const int32_t magFilter = ToOpenGl(filter);
+    const int32_t magFilter = ToOpenGl(newFilter);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, magFilter);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, magFilter);
     
@@ -157,8 +177,29 @@ void RenderTarget::SetFilter(const MagnificationFilter filter)
     
     glBindTexture(GL_TEXTURE_2D, 0);
     
-    m_Filter = filter;
+    m_Filter = newFilter;
 }
+
+const Matrix& RenderTarget::GetCameraMatrix() const { return m_CameraMatrix; }
+
+void RenderTarget::SetCameraMatrix(const Matrix& newCameraMatrix)
+{
+    m_CameraMatrix = newCameraMatrix;
+
+    // Find the scaling applied by the matrix
+    const Vector2 a = m_CameraMatrix * -Vector2::One();
+    const Vector2 b = m_CameraMatrix * Vector2(1.f, -1.f);
+    const Vector2 c = m_CameraMatrix * Vector2::One();
+    m_CameraScale = { (b - a).Length() * 0.5f, (c - b).Length() * 0.5f };
+
+    // Update the Draw class fields only if this RenderTarget is the current one
+    GLint framebuffer;
+    glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING, &framebuffer);
+    if (framebuffer == static_cast<GLint>(m_Framebuffer))
+        UpdateDrawCamera();
+}
+
+const Vector2& RenderTarget::GetCameraScale() const { return m_CameraScale; }
 
 int32_t RenderTarget::ToOpenGl(const MagnificationFilter filter)
 {
