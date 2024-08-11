@@ -4,23 +4,24 @@
 
 #include <ImGui/imgui.h>
 
-#include "collision/collide.hpp"
-#include "input/input.hpp"
-#include "rendering/draw.hpp"
-#include "rendering/renderer.hpp"
-#include "scene/entity.hpp"
-#include "utils/logger.hpp"
-#include "utils/random.hpp"
+#include <magic_enum/magic_enum.hpp>
 
-#include "screen.hpp"
+#include "Mountain/screen.hpp"
+#include "Mountain/audio/audio.hpp"
+#include "Mountain/collision/collide.hpp"
+#include "Mountain/file/file_manager.hpp"
+#include "Mountain/input/input.hpp"
+#include "Mountain/input/time.hpp"
+#include "Mountain/rendering/draw.hpp"
+#include "Mountain/rendering/renderer.hpp"
+#include "Mountain/resource/resource_manager.hpp"
+#include "Mountain/scene/entity.hpp"
+#include "Mountain/scene/component/audio_listener.hpp"
+#include "Mountain/utils/imgui_utils.hpp"
+#include "Mountain/utils/logger.hpp"
+#include "Mountain/utils/random.hpp"
+
 #include "spin_component.hpp"
-#include "audio/audio.hpp"
-#include "audio/component/audio_listener.hpp"
-#include "file/file_manager.hpp"
-#include "input/time.hpp"
-#include "magic_enum/magic_enum.hpp"
-#include "resource/resource_manager.hpp"
-#include "utils/imgui_utils.hpp"
 
 using namespace Mountain;
 
@@ -28,6 +29,7 @@ GameExample::GameExample(const char_t* const windowTitle)
     : Game(windowTitle)
     , renderTarget(BaseResolution, MagnificationFilter::Nearest)
 {
+    renderTarget.ambientLight = Color(0.1f);
 }
 
 void GameExample::Initialize()
@@ -35,6 +37,7 @@ void GameExample::Initialize()
     ballCount = 0;
 
     player = new Player({ 10.f, 100.f });
+    renderTarget.AddLightSource(player->GetComponent<LightSource>());
 }
 
 void GameExample::LoadResources()
@@ -73,31 +76,32 @@ int32_t circleSegments = 20;
 
 void GameExample::Render()
 {
-    Draw::Clear(Color::CornflowerBlue());
-    
-    Renderer::PushRenderTarget(renderTarget);
     Draw::Clear(Color::Transparent());
+
+    renderTarget.SetCameraMatrix(camera.matrix);
+    Renderer::PushRenderTarget(renderTarget);
+    Draw::Clear(Color::Black());
     
     for (Entity* const entity : entities)
         entity->Render();
 
     const Vector2 resolutionFactor = renderTarget.GetSize() / BaseResolution;
 
-    const std::array points {
-        Vector2(1.f, 0.f) * resolutionFactor,
-        Vector2(320.f, 0.f) * resolutionFactor,
-        Vector2(320.f, 179.f) * resolutionFactor,
-        Vector2(1.f, 179.f) * resolutionFactor
+    constexpr std::array points {
+        Vector2(1.f, 0.f),
+        Vector2(320.f, 0.f),
+        Vector2(320.f, 179.f),
+        Vector2(1.f, 179.f)
     };
 
     Draw::Line(points[0], points[1], Color::Red());
     Draw::Line(points[1], points[2], Color::Green());
     Draw::Line(points[2], points[3], Color::Blue());
-    Draw::Line(points[3], points[0], Color::Black());
+    Draw::Line(points[3], points[0], Color::White());
 
     // Screen origin
-    Draw::Line(Vector2::One() * -15.f * resolutionFactor, Vector2::One() * 15.f * resolutionFactor, Color::Red());
-    Draw::Line(Vector2(15.f, -15.f) * resolutionFactor, Vector2(-15.f, 15.f) * resolutionFactor, Color::Red());
+    Draw::Line(Vector2::One() * -15.f, Vector2::One() * 15.f, Color::Red());
+    Draw::Line(Vector2(15.f, -15.f), Vector2(-15.f, 15.f), Color::Red());
 
     Draw::Points(points);
 
@@ -107,19 +111,19 @@ void GameExample::Render()
         Vector2(120.f, 90.f)
     };
     
-    Draw::Triangle(trianglePoints[0] * resolutionFactor, trianglePoints[1] * resolutionFactor, trianglePoints[2] * resolutionFactor, Color::Aqua());
+    Draw::Triangle(trianglePoints[0], trianglePoints[1], trianglePoints[2], Color::Aqua());
     
-    Draw::TriangleFilled(trianglePoints[0] * resolutionFactor * 2.f, trianglePoints[1] * resolutionFactor * 2.f, trianglePoints[2] * resolutionFactor * 2.f, Color::Brown());
+    Draw::TriangleFilled(trianglePoints[0] * 2.f, trianglePoints[1] * 2.f, trianglePoints[2] * 2.f, Color::Brown());
 
-    Draw::Rectangle(Vector2(20.f) * resolutionFactor, Vector2(60.f, 40.f) * resolutionFactor, Color::Goldenrod());
+    Draw::Rectangle(Vector2(20.f), Vector2(60.f, 40.f), Color::Goldenrod());
 
-    Draw::Circle(Vector2(130.f) * resolutionFactor, 15.f * std::min(resolutionFactor.x, resolutionFactor.y), Color::Salmon(), circleSegments);
+    Draw::Circle(Vector2(130.f), 15.f * std::min(resolutionFactor.x, resolutionFactor.y), Color::Salmon(), circleSegments);
 
-    Draw::CircleDotted(Vector2(160.f, 130.f) * resolutionFactor, 15.f * std::min(resolutionFactor.x, resolutionFactor.y), Color::Firebrick(), circleSegments / 2);
+    Draw::CircleDotted(Vector2(160.f, 130.f), 15.f * std::min(resolutionFactor.x, resolutionFactor.y), Color::Firebrick(), circleSegments / 2);
 
-    Draw::CircleFilled(Vector2(100.f, 130.f) * resolutionFactor, 15.f * std::min(resolutionFactor.x, resolutionFactor.y), Color::Khaki());
+    Draw::CircleFilled(Vector2(100.f, 130.f), 15.f * std::min(resolutionFactor.x, resolutionFactor.y), Color::Khaki());
     
-    Draw::TriangleFilled(Vector2(160.f, 70.f) * resolutionFactor, Vector2(140.f, 110.f) * resolutionFactor, Vector2(180.f, 110.f) * resolutionFactor, Color::Red(), Color::Green(), Color::Blue());
+    Draw::TriangleFilled(Vector2(160.f, 70.f), Vector2(140.f, 110.f), Vector2(180.f, 110.f), Color::Red(), Color::Green(), Color::Blue());
 
     Draw::Texture(*ResourceManager::Get<Texture>("assets/oldlady/idle00.png"), { 10.f, 80.f });
 
@@ -133,38 +137,31 @@ void GameExample::Render()
         player->DebugRender();
     }
 
-    Draw::Text(*font, "Hello, tiny World!", { 100.f, 30.f });
+    Draw::Text(*font, "Hello, tiny World!", { 90.f, 30.f });
 
     Renderer::PopRenderTarget();
 
-    Draw::RenderTarget(renderTarget, camera.position, Window::GetSize() / renderTarget.GetSize() * camera.scale, camera.rotation);
+    Draw::RenderTarget(renderTarget, Vector2::Zero(), Window::GetSize() / renderTarget.GetSize());
 
     Draw::Texture(*ResourceManager::Get<Texture>("assets/oldlady/idle00.png"), { 10.f, 80.f });
 
-    Draw::Text(*font, "Hello, big World!", { 10.f, 160.f }, 2.f);
+    Draw::Text(*font, "Hello, big World!", { 10.f, 160.f });
 
     ImGui::Begin("Debug");
     
     if (ImGui::CollapsingHeader("Window"))
     {
         Vector2i position = Window::GetPosition();
-        ImGui::DragInt2("Position", position.Raw());
+        ImGui::DragInt2("Position", position.Data());
         Window::SetPosition(position);
         
         Vector2i size = Window::GetSize();
-        ImGui::DragInt2("Size", size.Raw());
+        ImGui::DragInt2("Size", size.Data());
         Window::SetSize(size);
         
-        if (ImGui::BeginCombo("Fullscreen mode", magic_enum::enum_name(Window::GetFullscreenMode()).data()))
-        {
-            for (size_t i = 0; i < FullscreenModeCount; ++i)
-            {
-                const FullscreenMode mode = static_cast<FullscreenMode>(i);
-                if (ImGui::Selectable(magic_enum::enum_name(mode).data()))
-                    Window::SetFullscreenMode(mode);
-            }
-            ImGui::EndCombo();
-        }
+        static bool_t fullscreen = false;
+        ImGui::Checkbox("Enable fullscreen", &fullscreen);
+        Window::SetFullscreen(fullscreen);
     }
     
     if (ImGui::CollapsingHeader("Renderer"))
@@ -172,18 +169,26 @@ void GameExample::Render()
         ImGui::PushID("Renderer");
         
         static Vector2i resolution = renderTarget.GetSize();
-        ImGui::DragInt2("Game resolution", resolution.Raw());
+        ImGui::DragInt2("Game resolution", resolution.Data());
         if (resolution != renderTarget.GetSize())
             renderTarget.SetSize(resolution);
         
         ImGui::SeparatorText("Camera");
-        ImGui::DragFloat2("Position", camera.position.Raw());
-        float_t cameraRotation = camera.rotation * Calc::Rad2Deg;
-        ImGui::DragFloat("Rotation", &cameraRotation);
-        camera.rotation = cameraRotation * Calc::Deg2Rad;
-        ImGui::DragFloat("Scale", &camera.scale, 0.1f, 0.1f);
+        ImGui::DragFloat2("Position", camera.position.Data());
+        ImGui::DragAngle("Rotation", &camera.rotation);
+        ImGui::DragFloat2("Scale", camera.scale.Data(), 0.1f, 0.1f);
 
         camera.UpdateMatrix();
+
+        ImGui::SeparatorText("Lighting");
+        ImGui::ColorEdit4("Ambient color", renderTarget.ambientLight.Data());
+        LightSource* lightSource = player->GetComponent<LightSource>();
+        ImGui::ColorEdit4("Source color", lightSource->color.Data());
+        ImGui::DragFloat("Source intensity", &lightSource->intensity, 0.1f);
+        ImGui::DragFloat("Source radius", &lightSource->radius, 0.1f);
+        ImGui::DragAngle("Source angle min", &lightSource->angleMin, 0.1f);
+        ImGui::DragAngle("Source angle max", &lightSource->angleMax, 0.1f);
+        ImGui::Text("Source position: %.2f, %.2f", lightSource->GetPosition().x, lightSource->GetPosition().y);
         
         ImGui::PopID();
     }
@@ -199,7 +204,7 @@ void GameExample::Render()
     
     if (ImGui::CollapsingHeader("Player"))
     {
-        ImGui::DragFloat2("Position", player->position.Raw());
+        ImGui::DragFloat2("Position", player->position.Data());
         ImGui::DragFloat("Movement speed", &player->movementSpeed);
         
         AudioListener* listener = player->GetComponent<AudioListener>();

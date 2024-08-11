@@ -95,25 +95,43 @@ void Shader::ResetSourceData()
     m_Code.fill({});
 }
 
-void Shader::SetUniform(const std::string_view& keyName, const int32_t value) const { glUniform1i(GetUniformLocation(keyName.data()), value); }
+void Shader::SetUniform(const std::string_view& keyName, const int32_t value) const { glProgramUniform1i(m_Id, GetUniformLocation(keyName.data()), value); }
 
 void Shader::SetUniform(const std::string_view& keyName, const bool_t value) const { SetUniform(keyName, static_cast<int32_t>(value)); }
 
-void Shader::SetUniform(const std::string_view& keyName, const float_t value) const { glUniform1f(GetUniformLocation(keyName.data()), value); }
+void Shader::SetUniform(const std::string_view& keyName, const float_t value) const { glProgramUniform1f(m_Id, GetUniformLocation(keyName.data()), value); }
 
-void Shader::SetUniform(const std::string_view& keyName, const Vector2& value) const { glUniform2fv(GetUniformLocation(keyName.data()), 1, value.Raw()); }
+void Shader::SetUniform(const std::string_view& keyName, const Vector2& value) const
+{
+    glProgramUniform2fv(m_Id, GetUniformLocation(keyName.data()), 1, value.Data());
+}
 
-void Shader::SetUniform(const std::string_view& keyName, const Vector3& value) const { glUniform3fv(GetUniformLocation(keyName.data()), 1, value.Raw()); }
+void Shader::SetUniform(const std::string_view& keyName, const Vector3& value) const
+{
+    glProgramUniform3fv(m_Id, GetUniformLocation(keyName.data()), 1, value.Data());
+}
 
-void Shader::SetUniform(const std::string_view& keyName, const Vector4& value) const { glUniform4fv(GetUniformLocation(keyName.data()), 1, value.Raw()); }
+void Shader::SetUniform(const std::string_view& keyName, const Vector4& value) const
+{
+    glProgramUniform4fv(m_Id, GetUniformLocation(keyName.data()), 1, value.Data());
+}
 
 void Shader::SetUniform(const std::string_view& keyName, const Color& value) const { SetUniform(keyName, static_cast<Vector4>(value)); }
 
-void Shader::SetUniform(const std::string_view& keyName, const Matrix2& value) const { glUniformMatrix2fv(GetUniformLocation(keyName.data()), 1, GL_FALSE, value.Raw()); }
+void Shader::SetUniform(const std::string_view& keyName, const Matrix2& value) const
+{
+    glProgramUniformMatrix2fv(m_Id, GetUniformLocation(keyName.data()), 1, GL_FALSE, value.Data());
+}
 
-void Shader::SetUniform(const std::string_view& keyName, const Matrix3& value) const { glUniformMatrix3fv(GetUniformLocation(keyName.data()), 1, GL_FALSE, value.Raw()); }
+void Shader::SetUniform(const std::string_view& keyName, const Matrix3& value) const
+{
+    glProgramUniformMatrix3fv(m_Id, GetUniformLocation(keyName.data()), 1, GL_FALSE, value.Data());
+}
 
-void Shader::SetUniform(const std::string_view& keyName, const Matrix& value) const { glUniformMatrix4fv(GetUniformLocation(keyName.data()), 1, GL_FALSE, value.Raw()); }
+void Shader::SetUniform(const std::string_view& keyName, const Matrix& value) const
+{
+    glProgramUniformMatrix4fv(m_Id, GetUniformLocation(keyName.data()), 1, GL_FALSE, value.Data());
+}
 
 uint32_t Shader::GetId() const { return m_Id; }
 

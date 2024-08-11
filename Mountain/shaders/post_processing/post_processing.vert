@@ -13,6 +13,7 @@ uniform mat2 diagonalFlip;
 uniform mat2 antiDiagonalFlip;
 
 out vec2 textureCoordinates;
+out vec2 fragmentPosition;
 
 void main()
 {
@@ -34,5 +35,6 @@ void main()
     // And eventually translate the points to where the image should be drawn
     vertexPosition += position + halfImagePixelSize * scale;
 
+    fragmentPosition = vertexPosition;
     gl_Position = projection * vec4(vertexPosition, 0.f, 1.f);
 }

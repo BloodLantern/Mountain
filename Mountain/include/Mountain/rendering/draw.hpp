@@ -32,8 +32,6 @@ class Draw
     STATIC_CLASS(Draw)
 
 public:
-    MOUNTAIN_API static inline Matrix cameraMatrix = Matrix::Identity();
-
     /// @brief Clear the current RenderTarget
     /// @param color The new color of all the pixels
     MOUNTAIN_API static void Clear(const Color& color);
@@ -223,24 +221,24 @@ public:
     );
 
     /// @brief Draw a hollow circle
-    /// @param position The center position of the circle
+    /// @param center The center position of the circle
     /// @param radius The radius of the circle
     /// @param color The color of the circle
     /// @param segments The circle is drawn using multiple segment lines. The higher this number is, the more accurate the circle
     ///        will be but the more computations it will take
-    MOUNTAIN_API static void Circle(Vector2 position, float_t radius, const Color& color = Color::White(), uint32_t segments = 20);
+    MOUNTAIN_API static void Circle(Vector2 center, float_t radius, const Color& color = Color::White(), uint32_t segments = 20);
     /// @brief Draw a dotted hollow circle
-    /// @param position The center position of the circle
+    /// @param center The center position of the circle
     /// @param radius The radius of the circle
     /// @param color The color of the circle
     /// @param segments The circle is drawn using multiple segment lines. The higher this number is, the more accurate the circle
     ///        will be but the more computations it will take. This value represents how many dotted lines will be drawn
-    MOUNTAIN_API static void CircleDotted(Vector2 position, float_t radius, const Color& color = Color::White(), uint32_t segments = 10);
+    MOUNTAIN_API static void CircleDotted(Vector2 center, float_t radius, const Color& color = Color::White(), uint32_t segments = 10);
     /// @brief Draw a filled circle
-    /// @param position The center position of the circle
+    /// @param center The center position of the circle
     /// @param radius The radius of the circle
     /// @param color The color of the circle
-    MOUNTAIN_API static void CircleFilled(Vector2 position, float_t radius, const Color& color = Color::White());
+    MOUNTAIN_API static void CircleFilled(Vector2 center, float_t radius, const Color& color = Color::White());
 
     /// @brief Draw a texture
     /// @param texture The texture to draw
@@ -297,6 +295,9 @@ private:
 
     MOUNTAIN_API static inline Matrix m_Projection;
 
+    MOUNTAIN_API static inline Matrix m_CameraMatrix = Matrix::Identity();
+    MOUNTAIN_API static inline Vector2 m_CameraScale = Vector2::One();
+
     static void Initialize();
     static void Shutdown();
 
@@ -327,20 +328,7 @@ private:
         bool_t filled
     );
 
-    static void CircleInternal(Vector2 position, float_t radius, const Color& color, uint32_t segments, bool_t dotted);
-    
-    static void TextureInternal(
-        uint32_t textureId,
-        Vector2i textureSize,
-        const Shader& shader,
-        Vector2 position,
-        Vector2 scale,
-        float_t rotation,
-        Vector2 uv0,
-        Vector2 uv1,
-        const Color& color,
-        uint8_t flipFlags = static_cast<uint8_t>(DrawTextureFlipping::None)
-    );
+    static void CircleInternal(Vector2 center, float_t radius, const Color& color, uint32_t segments, bool_t dotted);
     
     friend class Renderer;
     friend class RenderTarget;
@@ -348,6 +336,6 @@ private:
 
 END_MOUNTAIN
 
-ENUM_FLAGS(Mountain::DrawTextureFlipping, uint8_t)
+ENUM_FLAGS(Mountain::DrawTextureFlipping, std::underlying_type_t<Mountain::DrawTextureFlipping>)
 
 #include "Mountain/rendering/draw.inl"

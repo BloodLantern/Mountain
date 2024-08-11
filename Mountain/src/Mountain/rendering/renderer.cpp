@@ -37,6 +37,8 @@ Mountain::RenderTarget& Mountain::Renderer::PopRenderTarget()
     return *renderTarget;
 }
 
+Mountain::RenderTarget& Mountain::Renderer::GetCurrentRenderTarget() { return *m_RenderTargets.top(); }
+
 Mountain::OpenGlVersion& Mountain::Renderer::GetOpenGlVersion() { return m_GlVersion; }
 
 bool Mountain::Renderer::Initialize(const std::string_view windowTitle, const Vector2i windowSize, const bool_t vsync, const OpenGlVersion &glVersion)

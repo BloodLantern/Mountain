@@ -643,6 +643,12 @@ struct MOUNTAIN_API Color
     [[nodiscard]]
     uint32_t GetPackedValue() const;
 
+    [[nodiscard]]
+    constexpr float_t* Data();
+    
+    [[nodiscard]]
+    constexpr const float_t* Data() const;
+
     /// @brief Converts the Color to a ColorHsv
     [[nodiscard]]
     constexpr explicit operator ColorHsva() const;

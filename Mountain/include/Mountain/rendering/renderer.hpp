@@ -29,6 +29,7 @@ class Renderer
 public:
     MOUNTAIN_API static void PushRenderTarget(RenderTarget& renderTarget);
     MOUNTAIN_API static RenderTarget& PopRenderTarget();
+    MOUNTAIN_API static RenderTarget& GetCurrentRenderTarget();
 
     MOUNTAIN_API static OpenGlVersion& GetOpenGlVersion();
 
