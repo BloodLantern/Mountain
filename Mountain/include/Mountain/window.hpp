@@ -66,17 +66,17 @@ public:
     MOUNTAIN_API static void SetVisible(bool_t newVisible);
 
     /// @brief Sets the icon for the window
-    /// @param icon Icon
-    MOUNTAIN_API static void SetIcon(const Pointer<Texture>& icon);
+    /// @param newIcon Icon
+    MOUNTAIN_API static void SetIcon(const Pointer<Texture>& newIcon);
 
     /// @brief Handles hiding or displaying the cursor
-    /// @param value @c true hides, @c false displays
-    MOUNTAIN_API static void SetCursorHidden(bool_t value);
+    /// @param newCursorHidden @c true hides, @c false displays
+    MOUNTAIN_API static void SetCursorHidden(bool_t newCursorHidden);
 
     /// @brief Sets the mouse cursor position in screen space.
     MOUNTAIN_API static void SetCursorPosition(Vector2 newPosition);
     
-    MOUNTAIN_API static void SetVSync(bool_t vsync);
+    MOUNTAIN_API static void SetVSync(bool_t newVsync);
 
     /// @brief Gets whether the window is in fullscreen mode
     [[nodiscard]]
@@ -92,7 +92,10 @@ public:
     [[nodiscard]]
     MOUNTAIN_API static std::string_view GetTitle();
 
-    MOUNTAIN_API static void SetTitle(std::string_view title);
+    MOUNTAIN_API static void SetTitle(std::string_view newTitle);
+
+    [[nodiscard]]
+    MOUNTAIN_API static bool_t GetMinimized();
 
 private:
     /// @brief Native window handle
@@ -106,6 +109,7 @@ private:
     static inline Vector2i m_Size;
 
     static inline bool_t m_Visible;
+    static inline bool_t m_Minimized = false;
 
     /// @brief Initializes the window
     static void Initialize(std::string_view windowTitle, Vector2i windowSize, bool_t vsync, const OpenGlVersion &glVersion);
@@ -118,6 +122,8 @@ private:
     static void UpdateCurrentScreen();
 
     static void SwapBuffers();
+
+    static void WindowMinimizeCallback(GLFWwindow* window, int minimized);
 
     friend class Renderer;
     friend class Game;

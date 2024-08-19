@@ -121,7 +121,7 @@ public:
 	/// @param value Value
 	MOUNTAIN_API void SetUniform(const std::string_view& keyName, const Color& value) const;
 
-	/// @brief Sets a Matrix3 (4 floats, 128 bits) variable in a shader
+	/// @brief Sets a Matrix2 (4 floats, 128 bits) variable in a shader
 	/// @param keyName Variable name
 	/// @param value Value
 	MOUNTAIN_API void SetUniform(const std::string_view& keyName, const Matrix2& value) const;
