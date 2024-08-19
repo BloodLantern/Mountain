@@ -11,8 +11,18 @@ out vec4 color;
 void main()
 {
     color = instanceColor;
-    
-    vec2 pos = gl_VertexID % 2 == 0 ? p1 : p2;
+
+    vec2 pos;
+    switch (gl_VertexID % 2)
+    {
+        case 0:
+            pos = p1;
+            break;
+
+        case 1:
+            pos = p2;
+            break;
+    }
     
     gl_Position = vec4((projection * vec4(pos, 0.f, 1.f)).xy, 0.f, 1.f);
 }

@@ -16,7 +16,7 @@ public:
     float_t angleMin = 0.f;
     float_t angleMax = Calc::TwoPi;
 
-    MOUNTAIN_API void Render() override;
+    MOUNTAIN_API void Update() override;
 
     [[nodiscard]]
     MOUNTAIN_API Vector2 GetPosition() const;

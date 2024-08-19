@@ -4,6 +4,6 @@
 
 using namespace Mountain;
 
-void LightSource::Render() { m_Position = m_Entity->position; }
+void LightSource::Update() { m_Position = m_Entity->position; }
 
 Vector2 LightSource::GetPosition() const { return m_Position; }

@@ -98,7 +98,7 @@ public:
     explicit Pointer(Pointer<U>&& other) noexcept;
 
     /// @brief Destroys this Pointer, deallocating any memory if this is the last strong reference.
-    virtual ~Pointer();
+    ~Pointer();
 
     /// @brief Creates a new strong reference to this pointer.
     [[nodiscard]]
