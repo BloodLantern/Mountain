@@ -11,7 +11,7 @@ BEGIN_MOUNTAIN
 class MOUNTAIN_API AudioListener : public Component
 {
 public:
-    bool_t dopplerEffect = true;
+    bool_t dopplerEffect = false;
     
     void Update() override;
     

@@ -87,45 +87,49 @@ void GameExample::Render()
 
     const Vector2 resolutionFactor = renderTarget.GetSize() / BaseResolution;
 
-    constexpr std::array points {
+    static constexpr std::array Points {
         Vector2(1.f, 0.f),
         Vector2(320.f, 0.f),
         Vector2(320.f, 179.f),
         Vector2(1.f, 179.f)
     };
 
-    Draw::Line(points[0], points[1], Color::Red());
-    Draw::Line(points[1], points[2], Color::Green());
-    Draw::Line(points[2], points[3], Color::Blue());
-    Draw::Line(points[3], points[0], Color::White());
+    Draw::Line(Points[0], Points[1], Color::Red());
+    Draw::Line(Points[1], Points[2], Color::Green());
+    Draw::Line(Points[2], Points[3], Color::Blue());
+    Draw::Line(Points[3], Points[0], Color::White());
 
     // Screen origin
-    Draw::Line(Vector2::One() * -15.f, Vector2::One() * 15.f, Color::Red());
-    Draw::Line(Vector2(15.f, -15.f), Vector2(-15.f, 15.f), Color::Red());
+    Draw::Line(Vector2::One() * -15.f, Vector2::One() * 15.f, Color::Red(), Color::Green());
+    Draw::Line(Vector2(15.f, -15.f), Vector2(-15.f, 15.f), Color::Blue(), Color::White());
 
-    Draw::Points(points);
+    //Draw::Points(Points);
 
-    constexpr std::array trianglePoints {
+    static constexpr std::array TrianglePoints {
         Vector2(100.f, 40.f),
         Vector2(80.f, 80.f),
         Vector2(120.f, 90.f)
     };
     
-    Draw::Triangle(trianglePoints[0], trianglePoints[1], trianglePoints[2], Color::Aqua());
+    Draw::Triangle(TrianglePoints[0], TrianglePoints[1], TrianglePoints[2], Color::Aqua());
     
-    Draw::TriangleFilled(trianglePoints[0] * 2.f, trianglePoints[1] * 2.f, trianglePoints[2] * 2.f, Color::Brown());
+    Draw::TriangleFilled(TrianglePoints[0] * 2.f, TrianglePoints[1] * 2.f, TrianglePoints[2] * 2.f, Color::Brown());
 
     Draw::Rectangle(Vector2(20.f), Vector2(60.f, 40.f), Color::Goldenrod());
+    Draw::RectangleFilled(Vector2(23.f), Vector2(57.f, 37.f), Color::Azure());
 
-    Draw::Circle(Vector2(130.f), 15.f * std::min(resolutionFactor.x, resolutionFactor.y), Color::Salmon(), circleSegments);
+    Draw::Rectangle(Vector2(25.f), Vector2(55.f, 35.f), Color::Lavender());
+    Draw::RectangleFilled(Vector2(27.f), Vector2(54.f, 34.f), Color::Cornsilk());
+
+    /*Draw::Circle(Vector2(130.f), 15.f * std::min(resolutionFactor.x, resolutionFactor.y), Color::Salmon(), circleSegments);
 
     Draw::CircleDotted(Vector2(160.f, 130.f), 15.f * std::min(resolutionFactor.x, resolutionFactor.y), Color::Firebrick(), circleSegments / 2);
 
-    Draw::CircleFilled(Vector2(100.f, 130.f), 15.f * std::min(resolutionFactor.x, resolutionFactor.y), Color::Khaki());
+    Draw::CircleFilled(Vector2(100.f, 130.f), 15.f * std::min(resolutionFactor.x, resolutionFactor.y), Color::Khaki());*/
     
     Draw::TriangleFilled(Vector2(160.f, 70.f), Vector2(140.f, 110.f), Vector2(180.f, 110.f), Color::Red(), Color::Green(), Color::Blue());
 
-    Draw::Texture(*ResourceManager::Get<Texture>("assets/oldlady/idle00.png"), { 10.f, 80.f });
+    /*Draw::Texture(*ResourceManager::Get<Texture>("assets/oldlady/idle00.png"), { 10.f, 80.f });
 
     player->Render();
 
@@ -137,15 +141,15 @@ void GameExample::Render()
         player->DebugRender();
     }
 
-    Draw::Text(*font, "Hello, tiny World!", { 90.f, 30.f });
+    Draw::Text(*font, "Hello, tiny World!", { 90.f, 30.f });*/
 
     Renderer::PopRenderTarget();
 
     Draw::RenderTarget(renderTarget, Vector2::Zero(), Window::GetSize() / renderTarget.GetSize());
 
-    Draw::Texture(*ResourceManager::Get<Texture>("assets/oldlady/idle00.png"), { 10.f, 80.f });
+    /*Draw::Texture(*ResourceManager::Get<Texture>("assets/oldlady/idle00.png"), { 10.f, 80.f });
 
-    Draw::Text(*font, "Hello, big World!", { 10.f, 160.f });
+    Draw::Text(*font, "Hello, big World!", { 10.f, 160.f });*/
 
     ImGui::Begin("Debug");
     
@@ -174,6 +178,12 @@ void GameExample::Render()
             renderTarget.SetSize(resolution);
         
         ImGui::SeparatorText("Camera");
+        if (ImGui::Button("Reset"))
+        {
+            camera.position = Vector2::Zero();
+            camera.rotation = 0.f;
+            camera.scale = Vector2::One();
+        }
         ImGui::DragFloat2("Position", camera.position.Data());
         ImGui::DragAngle("Rotation", &camera.rotation);
         ImGui::DragFloat2("Scale", camera.scale.Data(), 0.1f, 0.1f);

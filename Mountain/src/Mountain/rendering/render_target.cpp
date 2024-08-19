@@ -28,11 +28,7 @@ void RenderTarget::Use() const
     UpdateDrawCamera();
 }
 
-void RenderTarget::UpdateDrawCamera() const
-{
-    Draw::m_CameraMatrix = m_CameraMatrix;
-    Draw::m_CameraScale = m_CameraScale;
-}
+void RenderTarget::UpdateDrawCamera() const { Draw::SetCamera(m_CameraMatrix, m_CameraScale); }
 
 void RenderTarget::Initialize(const Vector2i size, const MagnificationFilter filter)
 {
@@ -66,7 +62,7 @@ void RenderTarget::Initialize(const Vector2i size, const MagnificationFilter fil
 
     // Draw buffers
 
-    glGenBuffers(1, &m_Vbo);
+    glCreateBuffers(1, &m_Vbo);
     glGenVertexArrays(1, &m_Vao);
     
     glBindVertexArray(m_Vao);
@@ -81,8 +77,7 @@ void RenderTarget::Initialize(const Vector2i size, const MagnificationFilter fil
         -1.f,  1.f,     0.f, 1.f
     };
     
-    glBindBuffer(GL_ARRAY_BUFFER, m_Vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(VertexData), VertexData.data(), GL_STATIC_DRAW);
+    glNamedBufferData(m_Vbo, sizeof(VertexData), VertexData.data(), GL_STATIC_DRAW);
 
     // VAO
     

@@ -13,11 +13,13 @@
 #include "Mountain/resource/shader.hpp"
 #include "Mountain/resource/texture.hpp"
 #include "Mountain/utils/color.hpp"
+#include "Mountain/utils/list.hpp"
+#include "Mountain/utils/meta_programming.hpp"
 #include "Mountain/utils/rectangle.hpp"
 
 BEGIN_MOUNTAIN
 
-enum class DrawTextureFlipping
+enum class DrawTextureFlipping : uint8_t
 {
     None,
     Horizontal      = 1 << 0,
@@ -26,7 +28,7 @@ enum class DrawTextureFlipping
     AntiDiagonal    = 1 << 3
 };
 
-/// @brief The Draw class is a helper class that contains static functions to draw shapes.
+/// @brief The Draw class contains static functions to draw various things on screen.
 class Draw
 {
     STATIC_CLASS(Draw)
@@ -109,34 +111,23 @@ public:
     /// @param rectangle The rectangle position and size
     /// @param color The color of the rectangle
     MOUNTAIN_API static void Rectangle(const Mountain::Rectangle& rectangle, const Color& color = Color::White());
+    /// @brief Draw a filled rectangle
+    /// @param position The top-left position of the rectangle
+    /// @param size The size of the rectangle
+    /// @param color The color of the rectangle
+    MOUNTAIN_API static void RectangleFilled(Vector2 position, Vector2 size, const Color& color = Color::White());
+    /// @brief Draw a filled rectangle
+    /// @param rectangle The rectangle position and size
+    /// @param color The color of the rectangle
+    MOUNTAIN_API static void RectangleFilled(const Mountain::Rectangle& rectangle, const Color& color = Color::White());
+    
     /// @brief Draw a hollow rectangle
     /// @param point1 The position of the first point
     /// @param point2 The position of the second point
     /// @param point3 The position of the third point
     /// @param point4 The position of the fourth point
     /// @param color The color of the rectangle
-    MOUNTAIN_API static void Rectangle(Vector2 point1, Vector2 point2, Vector2 point3, Vector2 point4, const Color& color = Color::White());
-    /// @brief Draw a hollow rectangle
-    /// @param position The top-left position of the rectangle
-    /// @param size The size of the rectangle
-    /// @param color1 The color of the first point
-    /// @param color2 The color of the second point
-    /// @param color3 The color of the third point
-    /// @param color4 The color of the fourth point
-    MOUNTAIN_API static void Rectangle(Vector2 position, Vector2 size, const Color& color1, const Color& color2, const Color& color3, const Color& color4);
-    /// @brief Draw a hollow rectangle
-    /// @param rectangle The rectangle position and size
-    /// @param color1 The color of the first point
-    /// @param color2 The color of the second point
-    /// @param color3 The color of the third point
-    /// @param color4 The color of the fourth point
-    MOUNTAIN_API static void Rectangle(
-        const Mountain::Rectangle& rectangle,
-        const Color& color1,
-        const Color& color2,
-        const Color& color3,
-        const Color& color4
-    );
+    MOUNTAIN_API static void Quad(Vector2 point1, Vector2 point2, Vector2 point3, Vector2 point4, const Color& color = Color::White());
     /// @brief Draw a hollow rectangle
     /// @param point1 The position of the first point
     /// @param point2 The position of the second point
@@ -146,7 +137,7 @@ public:
     /// @param color2 The color of the second point
     /// @param color3 The color of the third point
     /// @param color4 The color of the fourth point
-    MOUNTAIN_API static void Rectangle(
+    MOUNTAIN_API static void Quad(
         Vector2 point1,
         Vector2 point2,
         Vector2 point3,
@@ -157,49 +148,12 @@ public:
         const Color& color4
     );
     /// @brief Draw a filled rectangle
-    /// @param position The top-left position of the rectangle
-    /// @param size The size of the rectangle
-    /// @param color The color of the rectangle
-    MOUNTAIN_API static void RectangleFilled(Vector2 position, Vector2 size, const Color& color = Color::White());
-    /// @brief Draw a filled rectangle
-    /// @param rectangle The rectangle position and size
-    /// @param color The color of the rectangle
-    MOUNTAIN_API static void RectangleFilled(const Mountain::Rectangle& rectangle, const Color& color = Color::White());
-    /// @brief Draw a filled rectangle
     /// @param point1 The position of the first point
     /// @param point2 The position of the second point
     /// @param point3 The position of the third point
     /// @param point4 The position of the fourth point
     /// @param color The color of the rectangle
-    MOUNTAIN_API static void RectangleFilled(Vector2 point1, Vector2 point2, Vector2 point3, Vector2 point4, const Color& color = Color::White());
-    /// @brief Draw a filled rectangle
-    /// @param position The top-left position of the rectangle
-    /// @param size The size of the rectangle
-    /// @param color1 The color of the first point
-    /// @param color2 The color of the second point
-    /// @param color3 The color of the third point
-    /// @param color4 The color of the fourth point
-    MOUNTAIN_API static void RectangleFilled(
-        Vector2 position,
-        Vector2 size,
-        const Color& color1,
-        const Color& color2,
-        const Color& color3,
-        const Color& color4
-    );
-    /// @brief Draw a filled rectangle
-    /// @param rectangle The rectangle position and size
-    /// @param color1 The color of the first point
-    /// @param color2 The color of the second point
-    /// @param color3 The color of the third point
-    /// @param color4 The color of the fourth point
-    MOUNTAIN_API static void RectangleFilled(
-        const Mountain::Rectangle& rectangle,
-        const Color& color1,
-        const Color& color2,
-        const Color& color3,
-        const Color& color4
-    );
+    MOUNTAIN_API static void QuadFilled(Vector2 point1, Vector2 point2, Vector2 point3, Vector2 point4, const Color& color = Color::White());
     /// @brief Draw a filled rectangle
     /// @param point1 The position of the first point
     /// @param point2 The position of the second point
@@ -209,7 +163,7 @@ public:
     /// @param color2 The color of the second point
     /// @param color3 The color of the third point
     /// @param color4 The color of the fourth point
-    MOUNTAIN_API static void RectangleFilled(
+    MOUNTAIN_API static void QuadFilled(
         Vector2 point1,
         Vector2 point2,
         Vector2 point3,
@@ -248,7 +202,7 @@ public:
     /// @param uv0 The first texture UV position
     /// @param uv1 The second texture UV position
     /// @param color The tint color of the texture. Use white for default colors
-    /// @param flipFlags Flip flags from the @c DrawTextureFlipping enum.
+    /// @param flipFlags Flip flags from the @c DrawTextureFlipping enum
     MOUNTAIN_API static void Texture(
         const Texture& texture,
         Vector2 position,
@@ -257,7 +211,7 @@ public:
         Vector2 uv0 = Vector2::Zero(),
         Vector2 uv1 = Vector2::One(),
         const Color& color = Color::White(),
-        uint8_t flipFlags = static_cast<uint8_t>(DrawTextureFlipping::None)
+        Meta::UnderlyingEnumType<DrawTextureFlipping> flipFlags = static_cast<Meta::UnderlyingEnumType<DrawTextureFlipping>>(DrawTextureFlipping::None)
     );
 
     /// @brief Draw text
@@ -276,7 +230,7 @@ public:
     /// @param uv0 The first texture UV position
     /// @param uv1 The second texture UV position
     /// @param color The color of the RenderTarget
-    /// @param flipFlags Whether to flip the texture anti-diagonally (using the top-left to bottom-right diagonal)
+    /// @param flipFlags Flip flags from the @c DrawTextureFlipping enum
     MOUNTAIN_API static void RenderTarget(
         const RenderTarget& renderTarget,
         Vector2 position = Vector2::Zero(),
@@ -285,23 +239,197 @@ public:
         Vector2 uv0 = Vector2::Zero(),
         Vector2 uv1 = Vector2::One(),
         const Color& color = Color::White(),
-        uint8_t flipFlags = static_cast<uint8_t>(DrawTextureFlipping::None)
+        Meta::UnderlyingEnumType<DrawTextureFlipping> flipFlags = static_cast<Meta::UnderlyingEnumType<DrawTextureFlipping>>(DrawTextureFlipping::None)
     );
 
 private:
-    MOUNTAIN_API static inline Pointer<Shader> m_PrimitiveShader, m_PrimitiveColoredShader, m_CircleShader, m_TextureShader, m_TextShader, m_PostProcessingShader;
+    struct PointsData
+    {
+        List<Vector2> positions;
+        Color color;
+    };
 
-    MOUNTAIN_API static inline uint32_t m_RectangleEbo, m_Vbo, m_ImageVbo, m_TextVbo, m_Vao, m_ImageVao, m_TextVao;
+    struct PointsColoredData
+    {
+        List<Vector2> positions;
+        List<Color> colors;
+    };
+    
+    struct LineData
+    {
+        Vector2 p1, p2;
+        Color color;
+    };
 
-    MOUNTAIN_API static inline Matrix m_Projection;
+    struct LineColoredData
+    {
+        Vector2 p1, p2;
+        Color c1, c2;
+    };
+    
+    struct TriangleData
+    {
+        Vector2 p1, p2, p3;
+        Color color;
+    };
 
-    MOUNTAIN_API static inline Matrix m_CameraMatrix = Matrix::Identity();
-    MOUNTAIN_API static inline Vector2 m_CameraScale = Vector2::One();
+    struct TriangleColoredData
+    {
+        Vector2 p1, p2, p3;
+        Color c1, c2, c3;
+    };
+    
+    struct RectangleData
+    {
+        Matrix transformation;
+        Color color;
+    };
+    
+    struct QuadData
+    {
+        Vector2 p1, p2, p3, p4;
+        Color color;
+    };
+
+    struct QuadColoredData
+    {
+        Vector2 p1, p2, p3, p4;
+        Color c1, c2, c3, c4;
+    };
+    
+    struct CircleData
+    {
+        Vector2 center;
+        float_t radius;
+        uint32_t segments;
+        Color color;
+    };
+    
+    struct CircleFilledData
+    {
+        Vector2 center;
+        float_t radius;
+        Color color;
+    };
+    
+    struct TextureData
+    {
+        Pointer<Mountain::Texture> texture;
+        Vector2 position;
+        float_t rotation;
+        Vector2 scale;
+        Vector2 uv0, uv1;
+        Color color;
+        Meta::UnderlyingEnumType<DrawTextureFlipping> flipFlags;
+    };
+    
+    struct TextData
+    {
+        Pointer<Font> font;
+        std::string text;
+        Vector2 position;
+        Vector2 scale;
+        Color color;
+    };
+    
+    struct RenderTargetData
+    {
+        const Mountain::RenderTarget* renderTarget;
+        Vector2 position;
+        float_t rotation;
+        Vector2 scale;
+        Vector2 uv0, uv1;
+        Color color;
+        Meta::UnderlyingEnumType<DrawTextureFlipping> flipFlags;
+    };
+
+    enum class DrawDataType : uint8_t
+    {
+        Points,
+        PointsColored,
+        Line,
+        LineColored,
+        Triangle,
+        TriangleColored,
+        TriangleFilled,
+        TriangleColoredFilled,
+        Rectangle,
+        RectangleFilled,
+        Quad,
+        QuadColored,
+        QuadFilled,
+        QuadColoredFilled,
+        Circle,
+        CircleFilled,
+        Texture,
+        Text,
+        RenderTarget
+    };
+
+    class DrawList
+    {
+    public:
+        List<PointsData> points;
+        List<PointsColoredData> pointsColored;
+        List<LineData> line;
+        List<LineColoredData> lineColored;
+        List<TriangleData> triangle;
+        List<TriangleColoredData> triangleColored;
+        List<TriangleData> triangleFilled;
+        List<TriangleColoredData> triangleColoredFilled;
+        List<RectangleData> rectangle;
+        List<RectangleData> rectangleFilled;
+        List<QuadData> quad;
+        List<QuadColoredData> quadColored;
+        List<QuadData> quadFilled;
+        List<QuadColoredData> quadColoredFilled;
+        List<CircleData> circle;
+        List<CircleFilledData> circleFilled;
+        List<TextureData> texture;
+        List<TextData> text;
+        List<RenderTargetData> renderTarget;
+
+        List<DrawDataType> order;
+
+        void Clear();
+    };
+    
+    static inline Pointer<Shader> m_LineShader;
+    static inline Pointer<Shader> m_LineColoredShader;
+    static inline Pointer<Shader> m_TriangleShader;
+    static inline Pointer<Shader> m_TriangleColoredShader;
+    static inline Pointer<Shader> m_RectangleShader;
+    
+    static inline Pointer<Shader> m_PrimitiveShader;
+    static inline Pointer<Shader> m_PrimitiveColoredShader;
+    static inline Pointer<Shader> m_CircleShader, m_TextureShader, m_TextShader, m_PostProcessingShader;
+
+    static inline uint32_t m_RectangleEbo, m_Vbo, m_RectangleVbo, m_ImageVbo, m_TextVbo;
+    static inline uint32_t m_Vao, m_LineVao, m_LineColoredVao, m_TriangleVao, m_TriangleColoredVao, m_RectangleVao, m_ImageVao, m_TextVao;
+
+    static inline Matrix m_ProjectionMatrix;
+
+    static inline Matrix m_CameraMatrix = Matrix::Identity();
+    static inline Vector2 m_CameraScale = Vector2::One();
+
+    static inline DrawList m_DrawList;
 
     static void Initialize();
+    static void LoadResources();
     static void Shutdown();
 
-    static void SetProjectionMatrix(const Matrix& projection);
+    static void InitializeLineBuffers();
+    static void InitializeLineColoredBuffers();
+    static void InitializeTriangleBuffers();
+    static void InitializeTriangleColoredBuffers();
+    static void InitializeRectangleBuffers();
+    static void InitializeTextBuffers();
+
+    static void Render();
+
+    static void SetProjectionMatrix(const Matrix& newProjectionMatrix);
+    static void SetCamera(const Matrix& newCameraMatrix, Vector2 newCameraScale);
+    static void UpdateShaderMatrices();
 
     static void TriangleInternal(Vector2 point1, Vector2 point2, Vector2 point3, const Color& color, bool_t filled);
     static void TriangleInternal(Vector2 point1, Vector2 point2, Vector2 point3, const Color& color1, const Color& color2, const Color& color3, bool_t filled);
@@ -315,8 +443,8 @@ private:
         const Color& color4,
         bool_t filled
     );
-    static void RectangleInternal(Vector2 point1, Vector2 point2, Vector2 point3, Vector2 point4, const Color& color, bool_t filled);
-    static void RectangleInternal(
+    static void QuadInternal(Vector2 point1, Vector2 point2, Vector2 point3, Vector2 point4, const Color& color, bool_t filled);
+    static void QuadInternal(
         Vector2 point1,
         Vector2 point2,
         Vector2 point3,
@@ -329,6 +457,14 @@ private:
     );
 
     static void CircleInternal(Vector2 center, float_t radius, const Color& color, uint32_t segments, bool_t dotted);
+
+    static void RenderLineData(const List<LineData>& lines, size_t index, size_t count);
+    static void RenderLineColoredData(const List<LineColoredData>& linesColored, size_t index, size_t count);
+    static void RenderTriangleData(const List<TriangleData>& triangles, bool_t filled, size_t index, size_t count);
+    static void RenderTriangleColoredData(const List<TriangleColoredData>& trianglesColored, bool_t filled, size_t index, size_t count);
+    static void RenderRectangleData(const List<RectangleData>& rectangles, bool_t filled, size_t index, size_t count);
+
+    static void SetVertexAttribute(uint32_t index, int32_t size, int32_t stride, size_t offset, uint32_t divisor = 0);
     
     friend class Renderer;
     friend class RenderTarget;
@@ -336,6 +472,6 @@ private:
 
 END_MOUNTAIN
 
-ENUM_FLAGS(Mountain::DrawTextureFlipping, std::underlying_type_t<Mountain::DrawTextureFlipping>)
+ENUM_FLAGS(Mountain::DrawTextureFlipping)
 
 #include "Mountain/rendering/draw.inl"

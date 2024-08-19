@@ -12,7 +12,7 @@ using namespace Mountain;
 void Draw::Clear(const Color& color)
 {
     glClearColor(color.r, color.g, color.b, color.a);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT);
 }
 
 void Draw::Points(const Vector2* positions, const uint32_t count, const Color& color)
@@ -20,16 +20,7 @@ void Draw::Points(const Vector2* positions, const uint32_t count, const Color& c
     glBindVertexArray(m_Vao);
     glBindBuffer(GL_ARRAY_BUFFER, m_Vbo);
     
-    const size_t dataSize = count * sizeof(Vector2);
-    Vector2* data = static_cast<Vector2*>(_malloca(dataSize));
-    std::memcpy(data, positions, dataSize);
-
-    for (uint32_t i = 0; i < count; i++)
-        *data = m_CameraMatrix * *data;
-    
-    glBufferData(GL_ARRAY_BUFFER, static_cast<int64_t>(sizeof(Vector2)) * count, data, GL_STREAM_DRAW);
-
-    _freea(data);
+    glBufferData(GL_ARRAY_BUFFER, static_cast<int64_t>(sizeof(Vector2)) * count, positions, GL_STREAM_DRAW);
 
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(Vector2), nullptr);
     glEnableVertexAttribArray(0);
@@ -82,63 +73,20 @@ void Draw::Points(const Vector2* positions, const Color* colors, const uint32_t 
 
 void Draw::Line(const Vector2 point1, const Vector2 point2, const Color& color)
 {
-    glBindVertexArray(m_Vao);
-    glBindBuffer(GL_ARRAY_BUFFER, m_Vbo);
-    
-    std::array p = { point1, point2 };
-    
-    for (Vector2& v : p)
-        v = m_CameraMatrix * v;
-    
-    glBufferData(GL_ARRAY_BUFFER, sizeof(p), &p, GL_STREAM_DRAW);
-
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_TRUE, sizeof(Vector2), nullptr);
-    glEnableVertexAttribArray(0);
-
-    m_PrimitiveShader->Use();
-    m_PrimitiveShader->SetUniform("color", color);
-
-    glDrawArrays(GL_LINES, 0, 2);
-
-    m_PrimitiveShader->Unuse();
-
-    glBindVertexArray(0);
+    m_DrawList.line.Emplace(point1, point2, color);
+    m_DrawList.order.Add(DrawDataType::Line);
 }
 
 void Draw::Line(const Vector2 point1, const Vector2 point2, const Color& color1, const Color& color2)
 {
-    glBindVertexArray(m_Vao);
-    glBindBuffer(GL_ARRAY_BUFFER, m_Vbo);
-    
-    const Vector2 p1 = m_CameraMatrix * point1;
-    const Vector2 p2 = m_CameraMatrix * point2;
-    
-    const std::array p = {
-        p1.x, p1.y,
-        color1.r, color1.g, color1.b, color1.a,
-        p2.x, p2.y,
-        color2.r, color2.g, color2.b, color2.a
-    };
-    
-    glBufferData(GL_ARRAY_BUFFER, sizeof(p), &p, GL_STREAM_DRAW);
-
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(Vector2) + sizeof(Color), nullptr);
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vector2) + sizeof(Color), Utils::IntToPointer<void>(sizeof(Vector2)));
-    glEnableVertexAttribArray(1);
-    
-    m_PrimitiveColoredShader->Use();
-
-    glDrawArrays(GL_LINES, 0, 2);
-
-    m_PrimitiveColoredShader->Unuse();
-
-    glBindVertexArray(0);
+    m_DrawList.lineColored.Emplace(point1, point2, color1, color2);
+    m_DrawList.order.Add(DrawDataType::LineColored);
 }
 
 void Draw::Triangle(const Vector2 point1, const Vector2 point2, const Vector2 point3, const Color& color)
 {
-    TriangleInternal(point1, point2, point3, color, false);
+    m_DrawList.triangle.Emplace(point1, point2, point3, color);
+    m_DrawList.order.Add(DrawDataType::Triangle);
 }
 
 void Draw::Triangle(
@@ -150,12 +98,14 @@ void Draw::Triangle(
     const Color& color3
 )
 {
-    TriangleInternal(point1, point2, point3, color1, color2, color3, false);
+    m_DrawList.triangleColored.Emplace(point1, point2, point3, color1, color2, color3);
+    m_DrawList.order.Add(DrawDataType::TriangleColored);
 }
 
 void Draw::TriangleFilled(const Vector2 point1, const Vector2 point2, const Vector2 point3, const Color& color)
 {
-    TriangleInternal(point1, point2, point3, color, true);
+    m_DrawList.triangleFilled.Emplace(point1, point2, point3, color);
+    m_DrawList.order.Add(DrawDataType::TriangleFilled);
 }
 
 void Draw::TriangleFilled(
@@ -167,100 +117,38 @@ void Draw::TriangleFilled(
     const Color& color3
 )
 {
-    TriangleInternal(point1, point2, point3, color1, color2, color3, true);
+    m_DrawList.triangleColoredFilled.Emplace(point1, point2, point3, color1, color2, color3);
+    m_DrawList.order.Add(DrawDataType::TriangleColoredFilled);
 }
 
-void Draw::Rectangle(const Vector2 position, const Vector2 size, const Color& color)
-{
-    RectangleInternal({ position, size }, color, false);
-}
+void Draw::Rectangle(const Vector2 position, const Vector2 size, const Color& color) { Rectangle({ position, size }, color); }
 
 void Draw::Rectangle(const Mountain::Rectangle& rectangle, const Color& color)
 {
-    RectangleInternal(rectangle, color, false);
+    m_DrawList.rectangle.Emplace(
+        Matrix::Translation(static_cast<Vector3>(rectangle.position)) * Matrix::Scaling({ rectangle.size.x, rectangle.size.y, 1.f }),
+        color
+    );
+    m_DrawList.order.Add(DrawDataType::Rectangle);
 }
 
-void Draw::Rectangle(const Vector2 point1, const Vector2 point2, const Vector2 point3, const Vector2 point4, const Color& color)
-{
-    RectangleInternal(point1, point2, point3, point4, color, false);
-}
-
-void Draw::Rectangle(
-    const Vector2 position,
-    const Vector2 size,
-    const Color& color1,
-    const Color& color2,
-    const Color& color3,
-    const Color& color4
-)
-{
-    RectangleInternal({ position, size }, color1, color2, color3, color4, false);
-}
-
-void Draw::Rectangle(
-    const Mountain::Rectangle& rectangle,
-    const Color& color1,
-    const Color& color2,
-    const Color& color3,
-    const Color& color4
-)
-{
-    RectangleInternal(rectangle, color1, color2, color3, color4, false);
-}
-
-void Draw::Rectangle(
-    const Vector2 point1,
-    const Vector2 point2,
-    const Vector2 point3,
-    const Vector2 point4,
-    const Color& color1,
-    const Color& color2,
-    const Color& color3,
-    const Color& color4
-)
-{
-    RectangleInternal(point1, point2, point3, point4, color1, color2, color3, color4, false);
-}
-
-void Draw::RectangleFilled(const Vector2 position, const Vector2 size, const Color& color)
-{
-    RectangleInternal({ position, size }, color, true);
-}
+void Draw::RectangleFilled(const Vector2 position, const Vector2 size, const Color& color) { RectangleFilled({ position, size }, color); }
 
 void Draw::RectangleFilled(const Mountain::Rectangle& rectangle, const Color& color)
 {
-    RectangleInternal(rectangle, color, true);
+    m_DrawList.rectangleFilled.Emplace(
+        Matrix::Translation(static_cast<Vector3>(rectangle.position)) * Matrix::Scaling({ rectangle.size.x, rectangle.size.y, 1.f }),
+        color
+    );
+    m_DrawList.order.Add(DrawDataType::RectangleFilled);
 }
 
-void Draw::RectangleFilled(const Vector2 point1, const Vector2 point2, const Vector2 point3, const Vector2 point4, const Color& color)
+void Draw::Quad(const Vector2 point1, const Vector2 point2, const Vector2 point3, const Vector2 point4, const Color& color)
 {
-    RectangleInternal(point1, point2, point3, point4, color, false);
+    QuadInternal(point1, point2, point3, point4, color, false);
 }
 
-void Draw::RectangleFilled(
-    const Vector2 position,
-    const Vector2 size,
-    const Color& color1,
-    const Color& color2,
-    const Color& color3,
-    const Color& color4
-)
-{
-    RectangleInternal({ position, size }, color1, color2, color3, color4, true);
-}
-
-void Draw::RectangleFilled(
-    const Mountain::Rectangle& rectangle,
-    const Color& color1,
-    const Color& color2,
-    const Color& color3,
-    const Color& color4
-)
-{
-    RectangleInternal(rectangle, color1, color2, color3, color4, true);
-}
-
-void Draw::RectangleFilled(
+void Draw::Quad(
     const Vector2 point1,
     const Vector2 point2,
     const Vector2 point3,
@@ -271,7 +159,26 @@ void Draw::RectangleFilled(
     const Color& color4
 )
 {
-    RectangleInternal(point1, point2, point3, point4, color1, color2, color3, color4, false);
+    QuadInternal(point1, point2, point3, point4, color1, color2, color3, color4, false);
+}
+
+void Draw::QuadFilled(const Vector2 point1, const Vector2 point2, const Vector2 point3, const Vector2 point4, const Color& color)
+{
+    QuadInternal(point1, point2, point3, point4, color, false);
+}
+
+void Draw::QuadFilled(
+    const Vector2 point1,
+    const Vector2 point2,
+    const Vector2 point3,
+    const Vector2 point4,
+    const Color& color1,
+    const Color& color2,
+    const Color& color3,
+    const Color& color4
+)
+{
+    QuadInternal(point1, point2, point3, point4, color1, color2, color3, color4, false);
 }
 
 void Draw::Circle(const Vector2 center, const float_t radius, const Color& color, const uint32_t segments)
@@ -309,7 +216,6 @@ void Draw::CircleFilled(const Vector2 center, const float_t radius, const Color&
     m_CircleShader->SetUniform("position", m_CameraMatrix * center);
     m_CircleShader->SetUniform("radius", radius);
     m_CircleShader->SetUniform("color", color);
-    m_CircleShader->SetUniform("cameraScale", m_CameraScale);
 
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 
@@ -326,7 +232,7 @@ void Draw::Texture(
     const Vector2 uv0,
     const Vector2 uv1,
     const Color& color,
-    const uint8_t flipFlags
+    const Meta::UnderlyingEnumType<DrawTextureFlipping> flipFlags
 )
 {
     if (uv0.x > uv1.x || uv0.y > uv1.y)
@@ -366,7 +272,7 @@ void Draw::Texture(
     
     m_TextureShader->Use();
     
-    m_TextureShader->SetUniform("projection", m_Projection * m_CameraMatrix);
+    m_TextureShader->SetUniform("projection", m_ProjectionMatrix * m_CameraMatrix);
     
     m_TextureShader->SetUniform("halfImagePixelSize", texture.GetSize() * uvDiff * 0.5f);
     m_TextureShader->SetUniform("position", position);
@@ -379,16 +285,16 @@ void Draw::Texture(
     Matrix2 diagonalFlip = Matrix2::Identity();
     if (flipFlags & DrawTextureFlipping::Diagonal)
     {
-        constexpr Matrix2 m(1.f, 1.f, -1.f, 1.f);
-        diagonalFlip = m * Matrix2::Scaling({ 1.f, -1.f }) * m.Inverted();
+        static constexpr Matrix2 M(1.f, 1.f, -1.f, 1.f);
+        diagonalFlip = M * Matrix2::Scaling({ 1.f, -1.f }) * M.Inverted();
     }
     m_TextureShader->SetUniform("diagonalFlip", diagonalFlip);
 
     Matrix2 antiDiagonalFlip = Matrix2::Identity();
     if (flipFlags & DrawTextureFlipping::AntiDiagonal)
     {
-        constexpr Matrix2 m(-1.f, 1.f, 1.f, 1.f);
-        antiDiagonalFlip = m * Matrix2::Scaling({ 1.f, -1.f }) * m.Inverted();
+        static constexpr Matrix2 M(-1.f, 1.f, 1.f, 1.f);
+        antiDiagonalFlip = M * Matrix2::Scaling({ 1.f, -1.f }) * M.Inverted();
     }
     m_TextureShader->SetUniform("antiDiagonalFlip", antiDiagonalFlip);
     
@@ -415,7 +321,6 @@ void Draw::Text(const Font& font, const std::string_view text, const Vector2 pos
 
     Vector2 offset = position + Vector2::UnitY() * font.CalcTextSize(text).y * scale;
 
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RectangleEbo);
     for (const char_t c : text)
     {
         const Font::Character& character = font.m_Characters.at(c);
@@ -428,24 +333,16 @@ void Draw::Text(const Font& font, const std::string_view text, const Vector2 pos
         );
         const Vector2 size = Calc::Round(character.size * scale);
 
-        std::array vertices = {
+        const std::array vertices = {
             pos.x,          pos.y,           0.f, 0.f,
             pos.x + size.x, pos.y,           1.f, 0.f,
             pos.x + size.x, pos.y + size.y,  1.f, 1.f,
             pos.x,          pos.y + size.y,  0.f, 1.f
         };
 
-        for (size_t i = 0; i < 4; i++)
-        {
-            Vector2& v = reinterpret_cast<Vector2&>(vertices[i * 4]);
-            v = m_CameraMatrix * v;
-        }
-
         glBindTexture(GL_TEXTURE_2D, character.textureId);
         
-        glBindBuffer(GL_ARRAY_BUFFER, m_TextVbo);
-        glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices.data());
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glNamedBufferSubData(m_TextVbo, 0, sizeof(vertices), vertices.data());
         
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
         
@@ -467,7 +364,7 @@ void Draw::RenderTarget(
     const Vector2 uv0,
     const Vector2 uv1,
     const Color& color,
-    const uint8_t flipFlags
+    const Meta::UnderlyingEnumType<DrawTextureFlipping> flipFlags
 )
 {
     if (uv0.x > uv1.x || uv0.y > uv1.y)
@@ -500,14 +397,14 @@ void Draw::RenderTarget(
         -1.f,  1.f,     lowerUv.x,  higherUv.y
     };
     
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), &vertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), &vertices, GL_STREAM_DRAW);
 
     glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(Vector4), nullptr);
     glEnableVertexAttribArray(0);
     
     m_PostProcessingShader->Use();
     
-    m_PostProcessingShader->SetUniform("projection", m_Projection * m_CameraMatrix);
+    m_PostProcessingShader->SetUniform("projection", m_ProjectionMatrix * m_CameraMatrix);
     
     m_PostProcessingShader->SetUniform("halfImagePixelSize", renderTarget.GetSize() * uvDiff * 0.5f);
     m_PostProcessingShader->SetUniform("position", position);
@@ -520,16 +417,16 @@ void Draw::RenderTarget(
     Matrix2 diagonalFlip = Matrix2::Identity();
     if (flipFlags & DrawTextureFlipping::Diagonal)
     {
-        constexpr Matrix2 m(1.f, 1.f, -1.f, 1.f);
-        diagonalFlip = m * Matrix2::Scaling({ 1.f, -1.f }) * m.Inverted();
+        static constexpr Matrix2 M(1.f, 1.f, -1.f, 1.f);
+        diagonalFlip = M * Matrix2::Scaling({ 1.f, -1.f }) * M.Inverted();
     }
     m_PostProcessingShader->SetUniform("diagonalFlip", diagonalFlip);
 
     Matrix2 antiDiagonalFlip = Matrix2::Identity();
     if (flipFlags & DrawTextureFlipping::AntiDiagonal)
     {
-        constexpr Matrix2 m(-1.f, 1.f, 1.f, 1.f);
-        antiDiagonalFlip = m * Matrix2::Scaling({ 1.f, -1.f }) * m.Inverted();
+        static constexpr Matrix2 M(-1.f, 1.f, 1.f, 1.f);
+        antiDiagonalFlip = M * Matrix2::Scaling({ 1.f, -1.f }) * M.Inverted();
     }
     m_PostProcessingShader->SetUniform("antiDiagonalFlip", antiDiagonalFlip);
     
@@ -562,32 +459,52 @@ void Draw::RenderTarget(
     glBindVertexArray(0);
 }
 
+void Draw::DrawList::Clear()
+{
+    points.Clear();
+    pointsColored.Clear();
+    line.Clear();
+    lineColored.Clear();
+    triangle.Clear();
+    triangleColoredFilled.Clear();
+    triangleFilled.Clear();
+    triangleColored.Clear();
+    rectangle.Clear();
+    rectangleFilled.Clear();
+    quad.Clear();
+    quadColored.Clear();
+    quadFilled.Clear();
+    quadColoredFilled.Clear();
+    circle.Clear();
+    circleFilled.Clear();
+    texture.Clear();
+    text.Clear();
+    renderTarget.Clear();
+
+    order.Clear();
+}
+
 void Draw::Initialize()
 {
-    glGenBuffers(4, &m_RectangleEbo);
-    glGenVertexArrays(3, &m_Vao);
+    glCreateBuffers(5, &m_RectangleEbo);
+    glCreateVertexArrays(8, &m_Vao);
 
-    // Rectangle EBO
-    constexpr std::array<uint32_t, 6> indexData = {
-        0, 1, 2,
-        2, 3, 0
-    };
+    InitializeLineBuffers();
+    InitializeLineColoredBuffers();
+    InitializeTriangleBuffers();
+    InitializeTriangleColoredBuffers();
+    InitializeRectangleBuffers();
+    InitializeTextBuffers();
+}
 
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RectangleEbo);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indexData), indexData.data(), GL_STATIC_DRAW);
-
-    // Text VBO/VAO
-    glBindVertexArray(m_TextVao);
-    glBindBuffer(GL_ARRAY_BUFFER, m_TextVbo);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RectangleEbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(Vector4) * 6, nullptr, GL_DYNAMIC_DRAW);
-
-    glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(Vector4), nullptr);
-    glEnableVertexAttribArray(0);
+void Draw::LoadResources()
+{
+    m_LineShader = ResourceManager::Get<Shader>("line");
+    m_LineColoredShader = ResourceManager::Get<Shader>("line_colored");
+    m_TriangleShader = ResourceManager::Get<Shader>("triangle");
+    m_TriangleColoredShader = ResourceManager::Get<Shader>("triangle_colored");
+    m_RectangleShader = ResourceManager::Get<Shader>("rectangle");
     
-    glBindVertexArray(0);
-    
-
     m_PrimitiveShader = ResourceManager::Get<Shader>("primitive");
     m_PrimitiveColoredShader = ResourceManager::Get<Shader>("primitive_colored");
     m_CircleShader = ResourceManager::Get<Shader>("circle");
@@ -599,18 +516,263 @@ void Draw::Initialize()
 
 void Draw::Shutdown()
 {
-    glDeleteBuffers(4, &m_RectangleEbo);
-    glDeleteVertexArrays(3, &m_Vao);
+    glDeleteBuffers(5, &m_RectangleEbo);
+    glDeleteVertexArrays(8, &m_Vao);
 }
 
-void Draw::SetProjectionMatrix(const Matrix& projection)
+void Draw::InitializeLineBuffers()
 {
-    m_PrimitiveShader->SetUniform("projection", projection);
-    m_PrimitiveColoredShader->SetUniform("projection", projection);
-    m_CircleShader->SetUniform("projection", projection);
-    m_TextShader->SetUniform("projection", projection);
+    glBindVertexArray(m_LineVao);
     
-    m_Projection = projection;
+    glBindBuffer(GL_ARRAY_BUFFER, m_Vbo);
+    uint32_t index = 0;
+    size_t offset = 0;
+    // Points
+    SetVertexAttribute(index, 2, sizeof(LineData), offset, 1);
+    SetVertexAttribute(++index, 2, sizeof(LineData), offset += sizeof(Vector2), 1);
+    // Color
+    SetVertexAttribute(++index, 4, sizeof(LineData), offset += sizeof(Vector2), 1);
+    
+    glBindVertexArray(0);
+}
+
+void Draw::InitializeLineColoredBuffers()
+{
+    glBindVertexArray(m_LineColoredVao);
+    
+    glBindBuffer(GL_ARRAY_BUFFER, m_Vbo);
+    uint32_t index = 0;
+    size_t offset = 0;
+    // Points
+    SetVertexAttribute(index, 2, sizeof(LineColoredData), offset, 1);
+    SetVertexAttribute(++index, 2, sizeof(LineColoredData), offset += sizeof(Vector2), 1);
+    // Colors
+    SetVertexAttribute(++index, 4, sizeof(LineColoredData), offset += sizeof(Vector2), 1);
+    SetVertexAttribute(++index, 4, sizeof(LineColoredData), offset += sizeof(Color), 1);
+    
+    glBindVertexArray(0);
+}
+
+void Draw::InitializeTriangleBuffers()
+{
+    glBindVertexArray(m_TriangleVao);
+    
+    glBindBuffer(GL_ARRAY_BUFFER, m_Vbo);
+    uint32_t index = 0;
+    size_t offset = 0;
+    // Points
+    SetVertexAttribute(index, 2, sizeof(TriangleData), offset, 1);
+    SetVertexAttribute(++index, 2, sizeof(TriangleData), offset += sizeof(Vector2), 1);
+    SetVertexAttribute(++index, 2, sizeof(TriangleData), offset += sizeof(Vector2), 1);
+    // Color
+    SetVertexAttribute(++index, 4, sizeof(TriangleData), offset += sizeof(Vector2), 1);
+    
+    glBindVertexArray(0);
+}
+
+void Draw::InitializeTriangleColoredBuffers()
+{
+    glBindVertexArray(m_TriangleColoredVao);
+    
+    glBindBuffer(GL_ARRAY_BUFFER, m_Vbo);
+    uint32_t index = 0;
+    size_t offset = 0;
+    // Points
+    SetVertexAttribute(index, 2, sizeof(TriangleColoredData), offset, 1);
+    SetVertexAttribute(++index, 2, sizeof(TriangleColoredData), offset += sizeof(Vector2), 1);
+    SetVertexAttribute(++index, 2, sizeof(TriangleColoredData), offset += sizeof(Vector2), 1);
+    // Colors
+    SetVertexAttribute(++index, 4, sizeof(TriangleColoredData), offset += sizeof(Vector2), 1);
+    SetVertexAttribute(++index, 4, sizeof(TriangleColoredData), offset += sizeof(Color), 1);
+    SetVertexAttribute(++index, 4, sizeof(TriangleColoredData), offset += sizeof(Color), 1);
+    
+    glBindVertexArray(0);
+}
+
+void Draw::InitializeRectangleBuffers()
+{
+    constexpr std::array vertexData = {
+        0.f, 0.f,
+        1.f, 0.f,
+        1.f, 1.f,
+        0.f, 1.f
+    };
+    
+    constexpr std::array<uint32_t, 6> indexData = {
+        0, 1, 2,
+        2, 3, 0
+    };
+    
+    glBindVertexArray(m_RectangleVao);
+
+    // VBO
+    glBindBuffer(GL_ARRAY_BUFFER, m_RectangleVbo);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData.data(), GL_STATIC_DRAW);
+
+    // EBO
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RectangleEbo);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indexData), indexData.data(), GL_STATIC_DRAW);
+
+    // VAO
+    uint32_t index = 0;
+    // Vertex position
+    SetVertexAttribute(index, 2, sizeof(Vector2), 0, 0);
+    
+    glBindBuffer(GL_ARRAY_BUFFER, m_Vbo);
+    size_t offset = 0;
+    // Transformation Matrix
+    SetVertexAttribute(++index, 4, sizeof(RectangleData), offset, 1);
+    SetVertexAttribute(++index, 4, sizeof(RectangleData), offset += sizeof(Vector4), 1);
+    SetVertexAttribute(++index, 4, sizeof(RectangleData), offset += sizeof(Vector4), 1);
+    SetVertexAttribute(++index, 4, sizeof(RectangleData), offset += sizeof(Vector4), 1);
+    // Color
+    SetVertexAttribute(++index, 4, sizeof(RectangleData), offset += sizeof(Vector4), 1);
+    
+    glBindVertexArray(0);
+}
+
+void Draw::InitializeTextBuffers()
+{
+    glBindVertexArray(m_TextVao);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RectangleEbo);
+    glBindBuffer(GL_ARRAY_BUFFER, m_TextVbo);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(Vector4) * 4, nullptr, GL_DYNAMIC_DRAW);
+
+    SetVertexAttribute(0, 4, sizeof(Vector4), 0);
+    
+    glBindVertexArray(0);
+}
+
+void Draw::Render()
+{
+    size_t lineIndex = 0, lineColoredIndex = 0;
+    size_t triangleIndex = 0, triangleColoredIndex = 0, triangleFilledIndex = 0, triangleColoredFilledIndex = 0;
+    size_t rectangleIndex = 0, rectangleFilledIndex = 0;
+    
+    const List<DrawDataType>& order = m_DrawList.order;
+    const size_t orderSize = order.GetSize();
+    size_t count;
+    for (size_t i = 0; i < orderSize; i += count)
+    {
+        count = 1;
+        
+        const DrawDataType type = order[i];
+
+        // Count the identical consecutive draw types
+        while (i + count < orderSize && type == order[i + count])
+            count++;
+
+        switch (type)
+        {
+            case DrawDataType::Points:
+                break;
+                
+            case DrawDataType::PointsColored:
+                break;
+                
+            case DrawDataType::Line:
+                RenderLineData(m_DrawList.line, lineIndex, count);
+                lineIndex += count;
+                break;
+                
+            case DrawDataType::LineColored:
+                RenderLineColoredData(m_DrawList.lineColored, lineColoredIndex, count);
+                lineColoredIndex += count;
+                break;
+                
+            case DrawDataType::Triangle:
+                RenderTriangleData(m_DrawList.triangle, false, triangleIndex, count);
+                triangleIndex += count;
+                break;
+                
+            case DrawDataType::TriangleColored:
+                RenderTriangleColoredData(m_DrawList.triangleColored, false, triangleColoredIndex, count);
+                triangleColoredIndex += count;
+                break;
+            
+            case DrawDataType::TriangleFilled:
+                RenderTriangleData(m_DrawList.triangleFilled, true, triangleFilledIndex, count);
+                triangleFilledIndex += count;
+                break;
+            
+            case DrawDataType::TriangleColoredFilled:
+                RenderTriangleColoredData(m_DrawList.triangleColoredFilled, true, triangleColoredFilledIndex, count);
+                triangleColoredFilledIndex += count;
+                break;
+                
+            case DrawDataType::Rectangle:
+                RenderRectangleData(m_DrawList.rectangle, false, rectangleIndex, count);
+                rectangleIndex += count;
+                break;
+            
+            case DrawDataType::RectangleFilled:
+                RenderRectangleData(m_DrawList.rectangleFilled, true, rectangleFilledIndex, count);
+                rectangleFilledIndex += count;
+                break;
+                
+            case DrawDataType::Quad:
+                break;
+                
+            case DrawDataType::QuadColored:
+                break;
+            
+            case DrawDataType::QuadFilled:
+                break;
+            
+            case DrawDataType::QuadColoredFilled:
+                break;
+                
+            case DrawDataType::Circle:
+                break;
+                
+            case DrawDataType::CircleFilled:
+                break;
+                
+            case DrawDataType::Texture:
+                break;
+                
+            case DrawDataType::Text:
+                break;
+                
+            case DrawDataType::RenderTarget:
+                break;
+        }
+    }
+    
+    m_DrawList.Clear();
+}
+
+void Draw::SetProjectionMatrix(const Matrix& newProjectionMatrix)
+{
+    m_ProjectionMatrix = newProjectionMatrix;
+    
+    UpdateShaderMatrices();
+}
+
+void Draw::SetCamera(const Matrix& newCameraMatrix, const Vector2 newCameraScale)
+{
+    m_CircleShader->SetUniform("cameraScale", newCameraScale);
+    
+    m_CameraMatrix = newCameraMatrix;
+    m_CameraScale = newCameraScale;
+    
+    UpdateShaderMatrices();
+}
+
+void Draw::UpdateShaderMatrices()
+{
+    const Matrix proj = m_ProjectionMatrix * m_CameraMatrix;
+    
+    m_LineShader->SetUniform("projection", proj);
+    m_LineColoredShader->SetUniform("projection", proj);
+    m_TriangleShader->SetUniform("projection", proj);
+    m_TriangleColoredShader->SetUniform("projection", proj);
+    m_RectangleShader->SetUniform("projection", proj);
+    
+    m_PrimitiveShader->SetUniform("projection", proj);
+    m_PrimitiveColoredShader->SetUniform("projection", proj);
+    m_CircleShader->SetUniform("projection", proj);
+    m_TextShader->SetUniform("projection", proj);
 }
 
 void Draw::TriangleInternal(
@@ -770,7 +932,7 @@ void Draw::RectangleInternal(
     glBindVertexArray(0);
 }
 
-void Draw::RectangleInternal(
+void Draw::QuadInternal(
     const Vector2 point1,
     const Vector2 point2,
     const Vector2 point3,
@@ -807,7 +969,7 @@ void Draw::RectangleInternal(
     glBindVertexArray(0);
 }
 
-void Draw::RectangleInternal(
+void Draw::QuadInternal(
     const Vector2 point1,
     const Vector2 point2,
     const Vector2 point3,
@@ -893,4 +1055,95 @@ void Draw::CircleInternal(const Vector2 center, const float_t radius, const Colo
     m_PrimitiveShader->Unuse();
 
     glBindVertexArray(0);
+}
+
+void Draw::RenderLineData(const List<LineData>& lines, const size_t index, const size_t count)
+{
+    if (lines.Empty())
+        return;
+
+    glNamedBufferData(m_Vbo, static_cast<GLsizeiptr>(sizeof(LineData) * count), &lines[index], GL_STREAM_DRAW);
+    
+    glBindVertexArray(m_LineVao);
+    m_LineShader->Use();
+
+    glDrawArraysInstanced(GL_LINES, 0, 2, static_cast<GLsizei>(count));
+
+    m_LineShader->Unuse();
+    glBindVertexArray(0);
+}
+
+void Draw::RenderLineColoredData(const List<LineColoredData>& linesColored, const size_t index, const size_t count)
+{
+    if (linesColored.Empty())
+        return;
+
+    glNamedBufferData(m_Vbo, static_cast<GLsizeiptr>(sizeof(LineColoredData) * count), &linesColored[index], GL_STREAM_DRAW);
+    
+    glBindVertexArray(m_LineColoredVao);
+    m_LineColoredShader->Use();
+
+    glDrawArraysInstanced(GL_LINES, 0, 2, static_cast<GLsizei>(count));
+
+    m_LineColoredShader->Unuse();
+    glBindVertexArray(0);
+}
+
+void Draw::RenderTriangleData(const List<TriangleData>& triangles, const bool_t filled, const size_t index, const size_t count)
+{
+    if (triangles.Empty())
+        return;
+
+    glNamedBufferData(m_Vbo, static_cast<GLsizeiptr>(sizeof(TriangleData) * count), &triangles[index], GL_STREAM_DRAW);
+    
+    glBindVertexArray(m_TriangleVao);
+    m_TriangleShader->Use();
+
+    glDrawArraysInstanced(filled ? GL_TRIANGLES : GL_LINE_LOOP, 0, 3, static_cast<GLsizei>(count));
+
+    m_TriangleShader->Unuse();
+    glBindVertexArray(0);
+}
+
+void Draw::RenderTriangleColoredData(const List<TriangleColoredData>& trianglesColored, const bool_t filled, const size_t index, const size_t count)
+{
+    if (trianglesColored.Empty())
+        return;
+
+    glNamedBufferData(m_Vbo, static_cast<GLsizeiptr>(sizeof(TriangleColoredData) * count), &trianglesColored[index], GL_STREAM_DRAW);
+    
+    glBindVertexArray(m_TriangleColoredVao);
+    m_TriangleColoredShader->Use();
+
+    glDrawArraysInstanced(filled ? GL_TRIANGLES : GL_LINE_LOOP, 0, 3, static_cast<GLsizei>(count));
+
+    m_TriangleColoredShader->Unuse();
+    glBindVertexArray(0);
+}
+
+void Draw::RenderRectangleData(const List<RectangleData>& rectangles, const bool_t filled, const size_t index, const size_t count)
+{
+    if (rectangles.Empty())
+        return;
+
+    glNamedBufferData(m_Vbo, static_cast<GLsizeiptr>(sizeof(RectangleData) * count), &rectangles[index], GL_STREAM_DRAW);
+    
+    glBindVertexArray(m_RectangleVao);
+    m_RectangleShader->Use();
+
+    if (filled)
+        glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr, static_cast<GLsizei>(count));
+    else
+        glDrawArraysInstanced(GL_LINE_LOOP, 0, 4, static_cast<GLsizei>(count));
+
+    m_RectangleShader->Unuse();
+    glBindVertexArray(0);
+}
+
+void Draw::SetVertexAttribute(const uint32_t index, const int32_t size, const int32_t stride, const size_t offset, const uint32_t divisor)
+{
+    glVertexAttribPointer(index, size, GL_FLOAT, GL_FALSE, stride, Utils::IntToPointer<void>(offset));
+    glEnableVertexAttribArray(index);
+    if (divisor != 0)
+        glVertexBindingDivisor(index, divisor);
 }
