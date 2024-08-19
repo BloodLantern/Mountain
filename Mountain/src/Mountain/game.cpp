@@ -77,7 +77,8 @@ void Game::MainLoop()
             
         if (Time::freezeTimer <= 0.f)
             Update();
-        Render();
+        if (!Window::GetMinimized())
+            Render();
 
         Renderer::PostFrame();
         Window::SwapBuffers();

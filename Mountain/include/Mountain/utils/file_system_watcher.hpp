@@ -94,4 +94,4 @@ private:
 
 END_MOUNTAIN
 
-ENUM_FLAGS(Mountain::FswNotifyFilters, std::underlying_type_t<Mountain::FswNotifyFilters>)
+ENUM_FLAGS(Mountain::FswNotifyFilters)

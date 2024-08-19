@@ -46,31 +46,31 @@ void Window::SetVisible(const bool_t newVisible)
     m_Visible = newVisible;
 }
 
-void Window::SetIcon(const Pointer<Texture>& icon)
+void Window::SetIcon(const Pointer<Texture>& newIcon)
 {
-    if (!icon)
+    if (!newIcon)
     {
         glfwSetWindowIcon(m_Window, 1, nullptr);
         return;
     }
     
-    const Vector2i size = icon->GetSize();
+    const Vector2i size = newIcon->GetSize();
 
     const GLFWimage image
     {
         .width = size.x,
         .height = size.y,
-        .pixels = Pointer(icon)->GetData<uint8_t>()
+        .pixels = Pointer(newIcon)->GetData<uint8_t>()
     };
     
     glfwSetWindowIcon(m_Window, 1, &image);
 }
 
-void Window::SetCursorHidden(const bool_t value) { glfwSetInputMode(m_Window, GLFW_CURSOR, value ? GLFW_CURSOR_HIDDEN : GLFW_CURSOR_NORMAL); }
+void Window::SetCursorHidden(const bool_t newCursorHidden) { glfwSetInputMode(m_Window, GLFW_CURSOR, newCursorHidden ? GLFW_CURSOR_HIDDEN : GLFW_CURSOR_NORMAL); }
 
 void Window::SetCursorPosition(const Vector2 newPosition) { glfwSetCursorPos(m_Window, newPosition.x, newPosition.y); }
 
-void Window::SetVSync(const bool_t vsync) { glfwSwapInterval(vsync); }
+void Window::SetVSync(const bool_t newVsync) { glfwSwapInterval(newVsync); }
 
 bool_t Window::GetFullscreen() { return m_Fullscreen; }
 
@@ -111,7 +111,12 @@ uint32_t Window::GetCurrentScreen() { return m_CurrentScreen; }
 
 std::string_view Window::GetTitle() { return glfwGetWindowTitle(m_Window); }
 
-void Window::SetTitle(const std::string_view title) { glfwSetWindowTitle(m_Window, title.data()); }
+void Window::SetTitle(const std::string_view newTitle) { glfwSetWindowTitle(m_Window, newTitle.data()); }
+
+bool_t Window::GetMinimized()
+{
+    return m_Minimized;
+}
 
 void Window::Initialize(const std::string_view windowTitle, const Vector2i windowSize, const bool_t vsync, const OpenGlVersion& glVersion)
 {
@@ -148,6 +153,8 @@ void Window::Initialize(const std::string_view windowTitle, const Vector2i windo
 
     // Set vsync
     glfwSwapInterval(vsync);
+
+    glfwSetWindowIconifyCallback(m_Window, WindowMinimizeCallback);
 
     UpdateFields();
 
@@ -217,3 +224,12 @@ void Window::UpdateCurrentScreen()
 }
 
 void Window::SwapBuffers() { glfwSwapBuffers(m_Window); }
+
+// ReSharper disable once CppParameterMayBeConstPtrOrRef
+void Window::WindowMinimizeCallback(GLFWwindow* const window, const int minimized)
+{
+    if (window != m_Window)
+        return;
+
+    m_Minimized = minimized;
+}
