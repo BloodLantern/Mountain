@@ -121,73 +121,12 @@ public:
     /// @param color The color of the rectangle
     MOUNTAIN_API static void RectangleFilled(const Mountain::Rectangle& rectangle, const Color& color = Color::White());
     
-    /// @brief Draw a hollow rectangle
-    /// @param point1 The position of the first point
-    /// @param point2 The position of the second point
-    /// @param point3 The position of the third point
-    /// @param point4 The position of the fourth point
-    /// @param color The color of the rectangle
-    MOUNTAIN_API static void Quad(Vector2 point1, Vector2 point2, Vector2 point3, Vector2 point4, const Color& color = Color::White());
-    /// @brief Draw a hollow rectangle
-    /// @param point1 The position of the first point
-    /// @param point2 The position of the second point
-    /// @param point3 The position of the third point
-    /// @param point4 The position of the fourth point
-    /// @param color1 The color of the first point
-    /// @param color2 The color of the second point
-    /// @param color3 The color of the third point
-    /// @param color4 The color of the fourth point
-    MOUNTAIN_API static void Quad(
-        Vector2 point1,
-        Vector2 point2,
-        Vector2 point3,
-        Vector2 point4,
-        const Color& color1,
-        const Color& color2,
-        const Color& color3,
-        const Color& color4
-    );
-    /// @brief Draw a filled rectangle
-    /// @param point1 The position of the first point
-    /// @param point2 The position of the second point
-    /// @param point3 The position of the third point
-    /// @param point4 The position of the fourth point
-    /// @param color The color of the rectangle
-    MOUNTAIN_API static void QuadFilled(Vector2 point1, Vector2 point2, Vector2 point3, Vector2 point4, const Color& color = Color::White());
-    /// @brief Draw a filled rectangle
-    /// @param point1 The position of the first point
-    /// @param point2 The position of the second point
-    /// @param point3 The position of the third point
-    /// @param point4 The position of the fourth point
-    /// @param color1 The color of the first point
-    /// @param color2 The color of the second point
-    /// @param color3 The color of the third point
-    /// @param color4 The color of the fourth point
-    MOUNTAIN_API static void QuadFilled(
-        Vector2 point1,
-        Vector2 point2,
-        Vector2 point3,
-        Vector2 point4,
-        const Color& color1,
-        const Color& color2,
-        const Color& color3,
-        const Color& color4
-    );
-
     /// @brief Draw a hollow circle
     /// @param center The center position of the circle
     /// @param radius The radius of the circle
     /// @param color The color of the circle
-    /// @param segments The circle is drawn using multiple segment lines. The higher this number is, the more accurate the circle
-    ///        will be but the more computations it will take
-    MOUNTAIN_API static void Circle(Vector2 center, float_t radius, const Color& color = Color::White(), uint32_t segments = 20);
-    /// @brief Draw a dotted hollow circle
-    /// @param center The center position of the circle
-    /// @param radius The radius of the circle
-    /// @param color The color of the circle
-    /// @param segments The circle is drawn using multiple segment lines. The higher this number is, the more accurate the circle
-    ///        will be but the more computations it will take. This value represents how many dotted lines will be drawn
-    MOUNTAIN_API static void CircleDotted(Vector2 center, float_t radius, const Color& color = Color::White(), uint32_t segments = 10);
+    MOUNTAIN_API static void Circle(Vector2 center, float_t radius, const Color& color = Color::White());
+
     /// @brief Draw a filled circle
     /// @param center The center position of the circle
     /// @param radius The radius of the circle
@@ -285,31 +224,13 @@ private:
         Color color;
     };
     
-    struct QuadData
-    {
-        Vector2 p1, p2, p3, p4;
-        Color color;
-    };
-
-    struct QuadColoredData
-    {
-        Vector2 p1, p2, p3, p4;
-        Color c1, c2, c3, c4;
-    };
-    
     struct CircleData
     {
-        Vector2 center;
-        float_t radius;
-        uint32_t segments;
-        Color color;
-    };
-    
-    struct CircleFilledData
-    {
+        Matrix transformation;
         Vector2 center;
         float_t radius;
         Color color;
+        int32_t filled; // 32-bit boolean for GLSL
     };
     
     struct TextureData
@@ -355,12 +276,7 @@ private:
         TriangleColoredFilled,
         Rectangle,
         RectangleFilled,
-        Quad,
-        QuadColored,
-        QuadFilled,
-        QuadColoredFilled,
         Circle,
-        CircleFilled,
         Texture,
         Text,
         RenderTarget
@@ -379,12 +295,7 @@ private:
         List<TriangleColoredData> triangleColoredFilled;
         List<RectangleData> rectangle;
         List<RectangleData> rectangleFilled;
-        List<QuadData> quad;
-        List<QuadColoredData> quadColored;
-        List<QuadData> quadFilled;
-        List<QuadColoredData> quadColoredFilled;
         List<CircleData> circle;
-        List<CircleFilledData> circleFilled;
         List<TextureData> texture;
         List<TextData> text;
         List<RenderTargetData> renderTarget;
@@ -399,13 +310,14 @@ private:
     static inline Pointer<Shader> m_TriangleShader;
     static inline Pointer<Shader> m_TriangleColoredShader;
     static inline Pointer<Shader> m_RectangleShader;
+    static inline Pointer<Shader> m_CircleShader;
     
     static inline Pointer<Shader> m_PrimitiveShader;
     static inline Pointer<Shader> m_PrimitiveColoredShader;
-    static inline Pointer<Shader> m_CircleShader, m_TextureShader, m_TextShader, m_PostProcessingShader;
+    static inline Pointer<Shader> m_TextureShader, m_TextShader, m_PostProcessingShader;
 
     static inline uint32_t m_RectangleEbo, m_Vbo, m_RectangleVbo, m_ImageVbo, m_TextVbo;
-    static inline uint32_t m_Vao, m_LineVao, m_LineColoredVao, m_TriangleVao, m_TriangleColoredVao, m_RectangleVao, m_ImageVao, m_TextVao;
+    static inline uint32_t m_Vao, m_LineVao, m_LineColoredVao, m_TriangleVao, m_TriangleColoredVao, m_RectangleVao, m_CircleVao, m_ImageVao, m_TextVao;
 
     static inline Matrix m_ProjectionMatrix;
 
@@ -423,6 +335,7 @@ private:
     static void InitializeTriangleBuffers();
     static void InitializeTriangleColoredBuffers();
     static void InitializeRectangleBuffers();
+    static void InitializeCircleBuffers();
     static void InitializeTextBuffers();
 
     static void Render();
@@ -431,40 +344,17 @@ private:
     static void SetCamera(const Matrix& newCameraMatrix, Vector2 newCameraScale);
     static void UpdateShaderMatrices();
 
-    static void TriangleInternal(Vector2 point1, Vector2 point2, Vector2 point3, const Color& color, bool_t filled);
-    static void TriangleInternal(Vector2 point1, Vector2 point2, Vector2 point3, const Color& color1, const Color& color2, const Color& color3, bool_t filled);
-    
-    static void RectangleInternal(const Mountain::Rectangle& rectangle, const Color& color, bool_t filled);
-    static void RectangleInternal(
-        const Mountain::Rectangle& rectangle,
-        const Color& color1,
-        const Color& color2,
-        const Color& color3,
-        const Color& color4,
-        bool_t filled
-    );
-    static void QuadInternal(Vector2 point1, Vector2 point2, Vector2 point3, Vector2 point4, const Color& color, bool_t filled);
-    static void QuadInternal(
-        Vector2 point1,
-        Vector2 point2,
-        Vector2 point3,
-        Vector2 point4,
-        const Color& color1,
-        const Color& color2,
-        const Color& color3,
-        const Color& color4,
-        bool_t filled
-    );
-
-    static void CircleInternal(Vector2 center, float_t radius, const Color& color, uint32_t segments, bool_t dotted);
+    static void CircleInternal(Vector2 center, float_t radius, bool_t filled, const Color& color);
 
     static void RenderLineData(const List<LineData>& lines, size_t index, size_t count);
     static void RenderLineColoredData(const List<LineColoredData>& linesColored, size_t index, size_t count);
     static void RenderTriangleData(const List<TriangleData>& triangles, bool_t filled, size_t index, size_t count);
     static void RenderTriangleColoredData(const List<TriangleColoredData>& trianglesColored, bool_t filled, size_t index, size_t count);
     static void RenderRectangleData(const List<RectangleData>& rectangles, bool_t filled, size_t index, size_t count);
+    static void RenderCircleData(const List<CircleData>& circles, size_t index, size_t count);
 
     static void SetVertexAttribute(uint32_t index, int32_t size, int32_t stride, size_t offset, uint32_t divisor = 0);
+    static void SetVertexAttributeInt(uint32_t index, int32_t size, int32_t stride, size_t offset, uint32_t divisor = 0);
     
     friend class Renderer;
     friend class RenderTarget;

@@ -72,7 +72,6 @@ void GameExample::Update()
 
 bool_t showInputs = false;
 bool_t debugRender = true;
-int32_t circleSegments = 20;
 
 void GameExample::Render()
 {
@@ -115,17 +114,16 @@ void GameExample::Render()
     
     Draw::TriangleFilled(TrianglePoints[0] * 2.f, TrianglePoints[1] * 2.f, TrianglePoints[2] * 2.f, Color::Brown());
 
+    Draw::RectangleFilled(Vector2(23.f), Vector2(54.f, 34.f), Color::Azure());
+    Draw::RectangleFilled(Vector2(27.f), Vector2(46.f, 26.f), Color::Cornsilk());
+
     Draw::Rectangle(Vector2(20.f), Vector2(60.f, 40.f), Color::Goldenrod());
-    Draw::RectangleFilled(Vector2(23.f), Vector2(57.f, 37.f), Color::Azure());
+    Draw::Rectangle(Vector2(25.f), Vector2(50.f, 30.f), Color::Lavender());
 
-    Draw::Rectangle(Vector2(25.f), Vector2(55.f, 35.f), Color::Lavender());
-    Draw::RectangleFilled(Vector2(27.f), Vector2(54.f, 34.f), Color::Cornsilk());
-
-    /*Draw::Circle(Vector2(130.f), 15.f * std::min(resolutionFactor.x, resolutionFactor.y), Color::Salmon(), circleSegments);
-
-    Draw::CircleDotted(Vector2(160.f, 130.f), 15.f * std::min(resolutionFactor.x, resolutionFactor.y), Color::Firebrick(), circleSegments / 2);
-
-    Draw::CircleFilled(Vector2(100.f, 130.f), 15.f * std::min(resolutionFactor.x, resolutionFactor.y), Color::Khaki());*/
+    Draw::CircleFilled(Vector2(130.f), 15.f * std::min(resolutionFactor.x, resolutionFactor.y), Color::Khaki());
+    Draw::Circle(Vector2(130.f), 15.f * std::min(resolutionFactor.x, resolutionFactor.y), Color::Salmon());
+    
+    Draw::Circle(Vector2(100.f, 130.f), 35.f * std::min(resolutionFactor.x, resolutionFactor.y), Color::Salmon());
     
     Draw::TriangleFilled(Vector2(160.f, 70.f), Vector2(140.f, 110.f), Vector2(180.f, 110.f), Color::Red(), Color::Green(), Color::Blue());
 
@@ -209,7 +207,6 @@ void GameExample::Render()
         ImGui::Checkbox("Show inputs window", &showInputs);
         ImGui::SliderFloat("Time scale", &Time::timeScale, 0.f, 2.f);
         ImGui::Checkbox("Debug render", &debugRender);
-        ImGui::DragInt("Circle segments", &circleSegments);
     }
     
     if (ImGui::CollapsingHeader("Player"))
