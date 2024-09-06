@@ -167,7 +167,7 @@ void Shader::CheckCompilationError(const uint32_t id, const ShaderType type)
     if (!success)
     {
         glGetShaderInfoLog(id, infoLogSize, nullptr, infoLog.data());
-        Logger::LogError("Error while compiling shader '{}': {}", m_Files[static_cast<size_t>(type)]->GetName(), infoLog.data());
+        Logger::LogError("Error while compiling shader '{}' of type '{}': {}", m_Name, magic_enum::enum_name(type), infoLog.data());
     }
 }
 
