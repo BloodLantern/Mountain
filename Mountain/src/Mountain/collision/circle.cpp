@@ -20,7 +20,7 @@ Circle::Circle(const Vector2& position, const float_t radius)  // NOLINT(clang-d
 
 void Circle::DebugRender(const Color& color) const
 {
-    Draw::Circle(position, radius, color);
+    Draw::Circle(position, radius, false, color);
 }
 
 bool Circle::CheckCollision(const Vector2& point) const

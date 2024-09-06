@@ -137,92 +137,17 @@ void Draw::RectangleFilled(const Vector2 position, const Vector2 size, const Col
 void Draw::RectangleFilled(const Mountain::Rectangle& rectangle, const Color& color)
 {
     m_DrawList.rectangleFilled.Emplace(
-        Matrix::Translation(static_cast<Vector3>(rectangle.position)) * Matrix::Scaling({ rectangle.size.x, rectangle.size.y, 1.f }),
+        Matrix::Translation(static_cast<Vector3>(rectangle.position)) * Matrix::Scaling(
+            { rectangle.size.x, rectangle.size.y, 1.f }
+        ),
         color
     );
     m_DrawList.order.Add(DrawDataType::RectangleFilled);
 }
 
-void Draw::Quad(const Vector2 point1, const Vector2 point2, const Vector2 point3, const Vector2 point4, const Color& color)
-{
-    QuadInternal(point1, point2, point3, point4, color, false);
-}
+void Draw::Circle(const Vector2 center, const float_t radius, const Color& color) { CircleInternal(center, radius, false, color); }
 
-void Draw::Quad(
-    const Vector2 point1,
-    const Vector2 point2,
-    const Vector2 point3,
-    const Vector2 point4,
-    const Color& color1,
-    const Color& color2,
-    const Color& color3,
-    const Color& color4
-)
-{
-    QuadInternal(point1, point2, point3, point4, color1, color2, color3, color4, false);
-}
-
-void Draw::QuadFilled(const Vector2 point1, const Vector2 point2, const Vector2 point3, const Vector2 point4, const Color& color)
-{
-    QuadInternal(point1, point2, point3, point4, color, false);
-}
-
-void Draw::QuadFilled(
-    const Vector2 point1,
-    const Vector2 point2,
-    const Vector2 point3,
-    const Vector2 point4,
-    const Color& color1,
-    const Color& color2,
-    const Color& color3,
-    const Color& color4
-)
-{
-    QuadInternal(point1, point2, point3, point4, color1, color2, color3, color4, false);
-}
-
-void Draw::Circle(const Vector2 center, const float_t radius, const Color& color, const uint32_t segments)
-{
-    CircleInternal(center, radius, color, segments, false);
-}
-
-void Draw::CircleDotted(const Vector2 center, const float_t radius, const Color& color, const uint32_t segments)
-{
-    CircleInternal(center, radius, color, segments, true);
-}
-
-void Draw::CircleFilled(const Vector2 center, const float_t radius, const Color& color)
-{
-    glBindVertexArray(m_Vao);
-    glBindBuffer(GL_ARRAY_BUFFER, m_Vbo);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RectangleEbo);
-    
-    std::array p = {
-        center - Vector2::One() * radius,
-        center + Vector2(1.f, -1.f) * radius,
-        center + Vector2::One() * radius,
-        center + Vector2(-1.f, 1.f) * radius
-    };
-    
-    for (Vector2& v : p)
-        v = m_CameraMatrix * v;
-    
-    glBufferData(GL_ARRAY_BUFFER, sizeof(p), p.data(), GL_STREAM_DRAW);
-
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(Vector2), nullptr);
-    glEnableVertexAttribArray(0);
-    
-    m_CircleShader->Use();
-    m_CircleShader->SetUniform("position", m_CameraMatrix * center);
-    m_CircleShader->SetUniform("radius", radius);
-    m_CircleShader->SetUniform("color", color);
-
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
-
-    m_CircleShader->Unuse();
-
-    glBindVertexArray(0);
-}
+void Draw::CircleFilled(const Vector2 center, const float_t radius, const Color& color) { CircleInternal(center, radius, true, color); }
 
 void Draw::Texture(
     const Mountain::Texture& texture,
@@ -471,12 +396,7 @@ void Draw::DrawList::Clear()
     triangleColored.Clear();
     rectangle.Clear();
     rectangleFilled.Clear();
-    quad.Clear();
-    quadColored.Clear();
-    quadFilled.Clear();
-    quadColoredFilled.Clear();
     circle.Clear();
-    circleFilled.Clear();
     texture.Clear();
     text.Clear();
     renderTarget.Clear();
@@ -487,13 +407,14 @@ void Draw::DrawList::Clear()
 void Draw::Initialize()
 {
     glCreateBuffers(5, &m_RectangleEbo);
-    glCreateVertexArrays(8, &m_Vao);
+    glCreateVertexArrays(9, &m_Vao);
 
     InitializeLineBuffers();
     InitializeLineColoredBuffers();
     InitializeTriangleBuffers();
     InitializeTriangleColoredBuffers();
     InitializeRectangleBuffers();
+    InitializeCircleBuffers();
     InitializeTextBuffers();
 }
 
@@ -504,10 +425,10 @@ void Draw::LoadResources()
     m_TriangleShader = ResourceManager::Get<Shader>("triangle");
     m_TriangleColoredShader = ResourceManager::Get<Shader>("triangle_colored");
     m_RectangleShader = ResourceManager::Get<Shader>("rectangle");
+    m_CircleShader = ResourceManager::Get<Shader>("circle");
     
     m_PrimitiveShader = ResourceManager::Get<Shader>("primitive");
     m_PrimitiveColoredShader = ResourceManager::Get<Shader>("primitive_colored");
-    m_CircleShader = ResourceManager::Get<Shader>("circle");
     m_TextureShader = ResourceManager::Get<Shader>("texture");
     m_TextShader = ResourceManager::Get<Shader>("text");
 
@@ -517,7 +438,7 @@ void Draw::LoadResources()
 void Draw::Shutdown()
 {
     glDeleteBuffers(5, &m_RectangleEbo);
-    glDeleteVertexArrays(8, &m_Vao);
+    glDeleteVertexArrays(9, &m_Vao);
 }
 
 void Draw::InitializeLineBuffers()
@@ -631,6 +552,39 @@ void Draw::InitializeRectangleBuffers()
     glBindVertexArray(0);
 }
 
+void Draw::InitializeCircleBuffers()
+{
+    glBindVertexArray(m_CircleVao);
+
+    // VBO
+    glBindBuffer(GL_ARRAY_BUFFER, m_RectangleVbo);
+    // EBO
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RectangleEbo);
+
+    // VAO
+    uint32_t index = 0;
+    // Vertex position
+    SetVertexAttribute(index, 2, sizeof(Vector2), 0, 0);
+    
+    glBindBuffer(GL_ARRAY_BUFFER, m_Vbo);
+    size_t offset = 0;
+    // Transformation Matrix
+    SetVertexAttribute(++index, 4, sizeof(CircleData), offset, 1);
+    SetVertexAttribute(++index, 4, sizeof(CircleData), offset += sizeof(Vector4), 1);
+    SetVertexAttribute(++index, 4, sizeof(CircleData), offset += sizeof(Vector4), 1);
+    SetVertexAttribute(++index, 4, sizeof(CircleData), offset += sizeof(Vector4), 1);
+    // Center
+    SetVertexAttribute(++index, 2, sizeof(CircleData), offset += sizeof(Vector4), 1);
+    // Radius
+    SetVertexAttribute(++index, 1, sizeof(CircleData), offset += sizeof(Vector2), 1);
+    // Color
+    SetVertexAttribute(++index, 4, sizeof(CircleData), offset += sizeof(float_t), 1);
+    // Filled
+    SetVertexAttributeInt(++index, 1, sizeof(CircleData), offset += sizeof(Color), 1);
+    
+    glBindVertexArray(0);
+}
+
 void Draw::InitializeTextBuffers()
 {
     glBindVertexArray(m_TextVao);
@@ -648,6 +602,7 @@ void Draw::Render()
     size_t lineIndex = 0, lineColoredIndex = 0;
     size_t triangleIndex = 0, triangleColoredIndex = 0, triangleFilledIndex = 0, triangleColoredFilledIndex = 0;
     size_t rectangleIndex = 0, rectangleFilledIndex = 0;
+    size_t circleIndex = 0;
     
     const List<DrawDataType>& order = m_DrawList.order;
     const size_t orderSize = order.GetSize();
@@ -710,22 +665,9 @@ void Draw::Render()
                 rectangleFilledIndex += count;
                 break;
                 
-            case DrawDataType::Quad:
-                break;
-                
-            case DrawDataType::QuadColored:
-                break;
-            
-            case DrawDataType::QuadFilled:
-                break;
-            
-            case DrawDataType::QuadColoredFilled:
-                break;
-                
             case DrawDataType::Circle:
-                break;
-                
-            case DrawDataType::CircleFilled:
+                RenderCircleData(m_DrawList.circle, circleIndex, count);
+                circleIndex += count;
                 break;
                 
             case DrawDataType::Texture:
@@ -751,8 +693,6 @@ void Draw::SetProjectionMatrix(const Matrix& newProjectionMatrix)
 
 void Draw::SetCamera(const Matrix& newCameraMatrix, const Vector2 newCameraScale)
 {
-    m_CircleShader->SetUniform("cameraScale", newCameraScale);
-    
     m_CameraMatrix = newCameraMatrix;
     m_CameraScale = newCameraScale;
     
@@ -768,293 +708,28 @@ void Draw::UpdateShaderMatrices()
     m_TriangleShader->SetUniform("projection", proj);
     m_TriangleColoredShader->SetUniform("projection", proj);
     m_RectangleShader->SetUniform("projection", proj);
+    m_CircleShader->SetUniform("projection", proj);
     
     m_PrimitiveShader->SetUniform("projection", proj);
     m_PrimitiveColoredShader->SetUniform("projection", proj);
-    m_CircleShader->SetUniform("projection", proj);
     m_TextShader->SetUniform("projection", proj);
+    
+    m_CircleShader->SetUniform("camera", m_CameraMatrix);
+    m_CircleShader->SetUniform("cameraScale", m_CameraScale);
 }
 
-void Draw::TriangleInternal(
-    const Vector2 point1,
-    const Vector2 point2,
-    const Vector2 point3,
-    const Color& color,
-    const bool_t filled
-)
+void Draw::CircleInternal(const Vector2 center, const float_t radius, const bool_t filled, const Color& color)
 {
-    glBindVertexArray(m_Vao);
-    glBindBuffer(GL_ARRAY_BUFFER, m_Vbo);
-    
-    std::array p = { point1, point2, point3 };
-    
-    for (Vector2& v : p)
-        v = m_CameraMatrix * v;
-    
-    glBufferData(GL_ARRAY_BUFFER, sizeof(p), &p, GL_STREAM_DRAW);
-
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(Vector2), nullptr);
-    glEnableVertexAttribArray(0);
-
-    m_PrimitiveShader->Use();
-    m_PrimitiveShader->SetUniform("color", color);
-
-    glDrawArrays(filled ? GL_TRIANGLES : GL_LINE_LOOP, 0, 3);
-
-    m_PrimitiveShader->Unuse();
-
-    glBindVertexArray(0);
-}
-
-void Draw::TriangleInternal(
-    const Vector2 point1,
-    const Vector2 point2,
-    const Vector2 point3,
-    const Color& color1,
-    const Color& color2,
-    const Color& color3,
-    const bool_t filled
-)
-{
-    glBindVertexArray(m_Vao);
-    glBindBuffer(GL_ARRAY_BUFFER, m_Vbo);
-    
-    const Vector2 p1 = m_CameraMatrix * point1;
-    const Vector2 p2 = m_CameraMatrix * point2;
-    const Vector2 p3 = m_CameraMatrix * point3;
-    
-    const std::array p = {
-        p1.x, p1.y,
-        color1.r, color1.g, color1.b, color1.a,
-        p2.x, p2.y,
-        color2.r, color2.g, color2.b, color2.a,
-        p3.x, p3.y,
-        color3.r, color3.g, color3.b, color3.a
-    };
-    
-    glBufferData(GL_ARRAY_BUFFER, sizeof(p), &p, GL_STREAM_DRAW);
-
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(Vector2) + sizeof(Color), nullptr);
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vector2) + sizeof(Color), Utils::IntToPointer<void>(sizeof(Vector2)));
-    glEnableVertexAttribArray(1);
-    
-    m_PrimitiveColoredShader->Use();
-
-    glDrawArrays(filled ? GL_TRIANGLES : GL_LINE_LOOP, 0, 3);
-
-    m_PrimitiveColoredShader->Unuse();
-
-    glBindVertexArray(0);
-}
-
-void Draw::RectangleInternal(const Mountain::Rectangle& rectangle, const Color& color, const bool_t filled)
-{
-    glBindVertexArray(m_Vao);
-    glBindBuffer(GL_ARRAY_BUFFER, m_Vbo);
-    if (filled)
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RectangleEbo);
-    
-    std::array p = {
-        rectangle.position,
-        rectangle.position + Vector2::UnitX() * rectangle.Width(),
-        rectangle.position + rectangle.size,
-        rectangle.position + Vector2::UnitY() * rectangle.Height()
-    };
-    
-    for (Vector2& v : p)
-        v = m_CameraMatrix * v;
-    
-    glBufferData(GL_ARRAY_BUFFER, sizeof(p), &p, GL_STREAM_DRAW);
-
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(Vector2), nullptr);
-    glEnableVertexAttribArray(0);
-
-    m_PrimitiveShader->Use();
-    m_PrimitiveShader->SetUniform("color", color);
-
-    if (filled)
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
-    else
-        glDrawArrays(GL_LINE_LOOP, 0, 4);
-
-    m_PrimitiveShader->Unuse();
-
-    glBindVertexArray(0);
-}
-
-void Draw::RectangleInternal(
-    const Mountain::Rectangle& rectangle,
-    const Color& color1,
-    const Color& color2,
-    const Color& color3,
-    const Color& color4,
-    const bool_t filled
-)
-{
-    glBindVertexArray(m_Vao);
-    glBindBuffer(GL_ARRAY_BUFFER, m_Vbo);
-    if (filled)
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RectangleEbo);
-    
-    const Vector2 p1 = m_CameraMatrix * Vector2(rectangle.Left(), rectangle.Bottom());
-    const Vector2 p2 = m_CameraMatrix * Vector2(rectangle.Right(), rectangle.Bottom());
-    const Vector2 p3 = m_CameraMatrix * Vector2(rectangle.Right(), rectangle.Top());
-    const Vector2 p4 = m_CameraMatrix * Vector2(rectangle.Left(), rectangle.Top());
-    
-    const std::array p = {
-        p1.x, p1.y,
-        color1.r, color1.g, color1.b, color1.a,
-        p2.x, p2.y,
-        color2.r, color2.g, color2.b, color2.a,
-        p3.x, p3.y,
-        color3.r, color3.g, color3.b, color3.a,
-        p4.x, p4.y,
-        color4.r, color4.g, color4.b, color4.a
-    };
-    
-    glBufferData(GL_ARRAY_BUFFER, sizeof(p), &p, GL_STREAM_DRAW);
-
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(Vector2) + sizeof(Color), nullptr);
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vector2) + sizeof(Color), Utils::IntToPointer<void>(sizeof(Vector2)));
-    glEnableVertexAttribArray(1);
-    
-    m_PrimitiveColoredShader->Use();
-
-    if (filled)
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
-    else
-        glDrawArrays(GL_LINE_LOOP, 0, 4);
-
-    m_PrimitiveColoredShader->Unuse();
-
-    glBindVertexArray(0);
-}
-
-void Draw::QuadInternal(
-    const Vector2 point1,
-    const Vector2 point2,
-    const Vector2 point3,
-    const Vector2 point4,
-    const Color& color,
-    const bool_t filled
-)
-{
-    glBindVertexArray(m_Vao);
-    glBindBuffer(GL_ARRAY_BUFFER, m_Vbo);
-    if (filled)
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RectangleEbo);
-    
-    std::array p = { point1, point2, point3, point4 };
-    
-    for (Vector2& v : p)
-        v = m_CameraMatrix * v;
-    
-    glBufferData(GL_ARRAY_BUFFER, sizeof(p), &p, GL_STREAM_DRAW);
-
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(Vector2), nullptr);
-    glEnableVertexAttribArray(0);
-
-    m_PrimitiveShader->Use();
-    m_PrimitiveShader->SetUniform("color", color);
-
-    if (filled)
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
-    else
-        glDrawArrays(GL_LINE_LOOP, 0, 4);
-
-    m_PrimitiveShader->Unuse();
-
-    glBindVertexArray(0);
-}
-
-void Draw::QuadInternal(
-    const Vector2 point1,
-    const Vector2 point2,
-    const Vector2 point3,
-    const Vector2 point4,
-    const Color& color1,
-    const Color& color2,
-    const Color& color3,
-    const Color& color4,
-    const bool_t filled
-)
-{
-    glBindVertexArray(m_Vao);
-    glBindBuffer(GL_ARRAY_BUFFER, m_Vbo);
-    if (filled)
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RectangleEbo);
-    
-    const Vector2 p1 = m_CameraMatrix * point1;
-    const Vector2 p2 = m_CameraMatrix * point2;
-    const Vector2 p3 = m_CameraMatrix * point3;
-    const Vector2 p4 = m_CameraMatrix * point4;
-    
-    const std::array p = {
-        p1.x, p1.y,
-        color1.r, color1.g, color1.b, color1.a,
-        p2.x, p2.y,
-        color2.r, color2.g, color2.b, color2.a,
-        p3.x, p3.y,
-        color3.r, color3.g, color3.b, color3.a,
-        p4.x, p4.y,
-        color4.r, color4.g, color4.b, color4.a
-    };
-    
-    glBufferData(GL_ARRAY_BUFFER, sizeof(p), &p, GL_STREAM_DRAW);
-
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(Vector2) + sizeof(Color), nullptr);
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vector2) + sizeof(Color), Utils::IntToPointer<void>(sizeof(Vector2)));
-    glEnableVertexAttribArray(1);
-
-    m_PrimitiveColoredShader->Use();
-
-    if (filled)
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
-    else
-        glDrawArrays(GL_LINE_LOOP, 0, 4);
-
-    m_PrimitiveColoredShader->Unuse();
-
-    glBindVertexArray(0);
-}
-
-void Draw::CircleInternal(const Vector2 center, const float_t radius, const Color& color, uint32_t segments, const bool_t dotted)
-{
-    if (segments <= 2)
-        throw std::invalid_argument("Cannot draw a circle with less than 3 segments");
-
-    if (dotted)
-        segments *= 2;
-    
-    glBindVertexArray(m_Vao);
-    glBindBuffer(GL_ARRAY_BUFFER, m_Vbo);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RectangleEbo);
-    
-    std::vector<Vector2> p(segments);
-    const float_t angle = Calc::TwoPi / static_cast<float_t>(segments);
-
-    for (uint32_t i = 0; i < segments; i++)
-    {
-        const float_t fi = static_cast<float_t>(i);
-        p[i] = m_CameraMatrix * Vector2(center.x + std::cos(angle * fi) * radius, center.y + std::sin(angle * fi) * radius);
-    }
-
-    glBufferData(GL_ARRAY_BUFFER, static_cast<int64_t>(p.size() * sizeof(decltype(p)::value_type)), p.data(), GL_STREAM_DRAW);
-
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(Vector2), nullptr);
-    glEnableVertexAttribArray(0);
-    
-    m_PrimitiveShader->Use();
-    m_PrimitiveShader->SetUniform("color", color);
-
-    glDrawArrays(dotted ? GL_LINES : GL_LINE_LOOP, 0, static_cast<int32_t>(segments));
-
-    m_PrimitiveShader->Unuse();
-
-    glBindVertexArray(0);
+    m_DrawList.circle.Emplace(
+        Matrix::Translation(static_cast<Vector3>(center - Vector2::One() * radius)) * Matrix::Scaling(
+            { radius * 2.f, radius * 2.f, 1.f }
+        ),
+        center,
+        radius,
+        color,
+        filled
+    );
+    m_DrawList.order.Add(DrawDataType::Circle);
 }
 
 void Draw::RenderLineData(const List<LineData>& lines, const size_t index, const size_t count)
@@ -1140,9 +815,33 @@ void Draw::RenderRectangleData(const List<RectangleData>& rectangles, const bool
     glBindVertexArray(0);
 }
 
+void Draw::RenderCircleData(const List<CircleData>& circles, const size_t index, const size_t count)
+{
+    if (circles.Empty())
+        return;
+
+    glNamedBufferData(m_Vbo, static_cast<GLsizeiptr>(sizeof(CircleData) * count), &circles[index], GL_STREAM_DRAW);
+    
+    glBindVertexArray(m_CircleVao);
+    m_CircleShader->Use();
+
+    glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr, static_cast<GLsizei>(count));
+
+    m_CircleShader->Unuse();
+    glBindVertexArray(0);
+}
+
 void Draw::SetVertexAttribute(const uint32_t index, const int32_t size, const int32_t stride, const size_t offset, const uint32_t divisor)
 {
     glVertexAttribPointer(index, size, GL_FLOAT, GL_FALSE, stride, Utils::IntToPointer<void>(offset));
+    glEnableVertexAttribArray(index);
+    if (divisor != 0)
+        glVertexBindingDivisor(index, divisor);
+}
+
+void Draw::SetVertexAttributeInt(const uint32_t index, const int32_t size, const int32_t stride, const size_t offset, const uint32_t divisor)
+{
+    glVertexAttribIPointer(index, size, GL_INT, stride, Utils::IntToPointer<void>(offset));
     glEnableVertexAttribArray(index);
     if (divisor != 0)
         glVertexBindingDivisor(index, divisor);
