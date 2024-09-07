@@ -26,6 +26,7 @@ void main()
 	// In case of a hollow circle, we also need to remove the inside
     if (filled == 0)
     {
+		// TODO - Take the camera rotation into account
 		// Under topmost fragment check
 		float centerToTopFragmentY = (gl_FragCoord.y - center.y - 1.f) * cameraScaleInverse.y;
         if (centerToTopFragmentY * centerToTopFragmentY + centerToFragmentSquared.x < radiusSquared)

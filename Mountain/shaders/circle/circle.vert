@@ -1,6 +1,6 @@
 #version 460 core
 
-layout (location = 0) in vec2 basePosition;
+layout (location = 0) in vec2 vertexPosition;
 layout (location = 1) in mat4 transformation;
 layout (location = 5) in vec2 instanceCenter;
 layout (location = 6) in float instanceRadius;
@@ -22,5 +22,5 @@ void main()
     color = instanceColor;
     filled = instanceFilled;
 
-    gl_Position = projection * transformation * vec4(basePosition, 0.f, 1.f);
+    gl_Position = projection * transformation * vec4(vertexPosition, 0.f, 1.f);
 }
