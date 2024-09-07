@@ -1,9 +1,9 @@
 #version 460 core
 
 in vec2 textureCoordinates;
+in vec4 color;
 
 uniform sampler2D image;
-uniform vec4 color;
 
 out vec4 fragmentColor;
 
