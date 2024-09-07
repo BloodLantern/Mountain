@@ -235,13 +235,8 @@ private:
     
     struct TextureData
     {
-        Pointer<Mountain::Texture> texture;
-        Vector2 position;
-        float_t rotation;
-        Vector2 scale;
-        Vector2 uv0, uv1;
+        Matrix transformation, uvProjection;
         Color color;
-        Meta::UnderlyingEnumType<DrawTextureFlipping> flipFlags;
     };
     
     struct TextData
@@ -282,6 +277,12 @@ private:
         RenderTarget
     };
 
+    struct CommandData
+    {
+        DrawDataType type;
+        size_t count;
+    };
+
     class DrawList
     {
     public:
@@ -297,11 +298,13 @@ private:
         List<RectangleData> rectangleFilled;
         List<CircleData> circle;
         List<TextureData> texture;
+        List<uint32_t> textureId;
         List<TextData> text;
         List<RenderTargetData> renderTarget;
 
-        List<DrawDataType> order;
+        List<CommandData> commands;
 
+        void AddCommand(DrawDataType type);
         void Clear();
     };
     
@@ -316,8 +319,8 @@ private:
     static inline Pointer<Shader> m_PrimitiveColoredShader;
     static inline Pointer<Shader> m_TextureShader, m_TextShader, m_PostProcessingShader;
 
-    static inline uint32_t m_RectangleEbo, m_Vbo, m_RectangleVbo, m_ImageVbo, m_TextVbo;
-    static inline uint32_t m_Vao, m_LineVao, m_LineColoredVao, m_TriangleVao, m_TriangleColoredVao, m_RectangleVao, m_CircleVao, m_ImageVao, m_TextVao;
+    static inline uint32_t m_RectangleEbo, m_Vbo, m_RectangleVbo, m_TextureVbo, m_TextVbo, m_RenderTargetVbo;
+    static inline uint32_t m_Vao, m_LineVao, m_LineColoredVao, m_TriangleVao, m_TriangleColoredVao, m_RectangleVao, m_CircleVao, m_TextureVao, m_TextVao, m_RenderTargetVao;
 
     static inline Matrix m_ProjectionMatrix;
 
@@ -336,6 +339,7 @@ private:
     static void InitializeTriangleColoredBuffers();
     static void InitializeRectangleBuffers();
     static void InitializeCircleBuffers();
+    static void InitializeTextureBuffers();
     static void InitializeTextBuffers();
 
     static void Render();
@@ -352,6 +356,7 @@ private:
     static void RenderTriangleColoredData(const List<TriangleColoredData>& trianglesColored, bool_t filled, size_t index, size_t count);
     static void RenderRectangleData(const List<RectangleData>& rectangles, bool_t filled, size_t index, size_t count);
     static void RenderCircleData(const List<CircleData>& circles, size_t index, size_t count);
+    static void RenderTextureData(const List<TextureData>& textures, uint32_t textureId, size_t index, size_t count);
 
     static void SetVertexAttribute(uint32_t index, int32_t size, int32_t stride, size_t offset, uint32_t divisor = 0);
     static void SetVertexAttributeInt(uint32_t index, int32_t size, int32_t stride, size_t offset, uint32_t divisor = 0);

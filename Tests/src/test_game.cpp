@@ -127,11 +127,19 @@ void GameExample::Render()
     
     Draw::TriangleFilled(Vector2(160.f, 70.f), Vector2(140.f, 110.f), Vector2(180.f, 110.f), Color::Red(), Color::Green(), Color::Blue());
 
-    /*Draw::Texture(*ResourceManager::Get<Texture>("assets/oldlady/idle00.png"), { 10.f, 80.f });
+    Draw::Texture(*ResourceManager::Get<Texture>("assets/oldlady/idle00.png"), { 10.f, 80.f });
+    Draw::Texture(*ResourceManager::Get<Texture>("assets/oldlady/idle00.png"), { 10.f, 90.f });
+    Draw::Texture(*ResourceManager::Get<Texture>("assets/oldlady/idle00.png"), { 10.f, 100.f });
+    Draw::Texture(*ResourceManager::Get<Texture>("assets/oldlady/idle00.png"), { 10.f, 110.f });
+    Draw::Texture(*ResourceManager::Get<Texture>("assets/oldlady/idle00.png"), { 10.f, 120.f });
+    Draw::Texture(*ResourceManager::Get<Texture>("assets/oldlady/idle00.png"), { 10.f, 130.f });
+    Draw::Texture(*ResourceManager::Get<Texture>("assets/oldlady/idle00.png"), { 10.f, 140.f });
+    Draw::Texture(*ResourceManager::Get<Texture>("assets/oldlady/idle00.png"), { 10.f, 150.f });
+    Draw::Texture(*ResourceManager::Get<Texture>("assets/oldlady/idle00.png"), { 10.f, 160.f });
 
     player->Render();
 
-    if (debugRender)
+    /*if (debugRender)
     {
         for (Entity* const entity : entities)
             entity->DebugRender();

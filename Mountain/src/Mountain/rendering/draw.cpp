@@ -74,19 +74,19 @@ void Draw::Points(const Vector2* positions, const Color* colors, const uint32_t 
 void Draw::Line(const Vector2 point1, const Vector2 point2, const Color& color)
 {
     m_DrawList.line.Emplace(point1, point2, color);
-    m_DrawList.order.Add(DrawDataType::Line);
+    m_DrawList.AddCommand(DrawDataType::Line);
 }
 
 void Draw::Line(const Vector2 point1, const Vector2 point2, const Color& color1, const Color& color2)
 {
     m_DrawList.lineColored.Emplace(point1, point2, color1, color2);
-    m_DrawList.order.Add(DrawDataType::LineColored);
+    m_DrawList.AddCommand(DrawDataType::LineColored);
 }
 
 void Draw::Triangle(const Vector2 point1, const Vector2 point2, const Vector2 point3, const Color& color)
 {
     m_DrawList.triangle.Emplace(point1, point2, point3, color);
-    m_DrawList.order.Add(DrawDataType::Triangle);
+    m_DrawList.AddCommand(DrawDataType::Triangle);
 }
 
 void Draw::Triangle(
@@ -99,13 +99,13 @@ void Draw::Triangle(
 )
 {
     m_DrawList.triangleColored.Emplace(point1, point2, point3, color1, color2, color3);
-    m_DrawList.order.Add(DrawDataType::TriangleColored);
+    m_DrawList.AddCommand(DrawDataType::TriangleColored);
 }
 
 void Draw::TriangleFilled(const Vector2 point1, const Vector2 point2, const Vector2 point3, const Color& color)
 {
     m_DrawList.triangleFilled.Emplace(point1, point2, point3, color);
-    m_DrawList.order.Add(DrawDataType::TriangleFilled);
+    m_DrawList.AddCommand(DrawDataType::TriangleFilled);
 }
 
 void Draw::TriangleFilled(
@@ -118,7 +118,7 @@ void Draw::TriangleFilled(
 )
 {
     m_DrawList.triangleColoredFilled.Emplace(point1, point2, point3, color1, color2, color3);
-    m_DrawList.order.Add(DrawDataType::TriangleColoredFilled);
+    m_DrawList.AddCommand(DrawDataType::TriangleColoredFilled);
 }
 
 void Draw::Rectangle(const Vector2 position, const Vector2 size, const Color& color) { Rectangle({ position, size }, color); }
@@ -129,7 +129,7 @@ void Draw::Rectangle(const Mountain::Rectangle& rectangle, const Color& color)
         Matrix::Translation(static_cast<Vector3>(rectangle.position)) * Matrix::Scaling({ rectangle.size.x, rectangle.size.y, 1.f }),
         color
     );
-    m_DrawList.order.Add(DrawDataType::Rectangle);
+    m_DrawList.AddCommand(DrawDataType::Rectangle);
 }
 
 void Draw::RectangleFilled(const Vector2 position, const Vector2 size, const Color& color) { RectangleFilled({ position, size }, color); }
@@ -142,7 +142,7 @@ void Draw::RectangleFilled(const Mountain::Rectangle& rectangle, const Color& co
         ),
         color
     );
-    m_DrawList.order.Add(DrawDataType::RectangleFilled);
+    m_DrawList.AddCommand(DrawDataType::RectangleFilled);
 }
 
 void Draw::Circle(const Vector2 center, const float_t radius, const Color& color) { CircleInternal(center, radius, false, color); }
@@ -162,10 +162,6 @@ void Draw::Texture(
 {
     if (uv0.x > uv1.x || uv0.y > uv1.y)
         throw std::invalid_argument("UV0 cannot be greater than UV1");
-    
-    glBindVertexArray(m_ImageVao);
-    glBindBuffer(GL_ARRAY_BUFFER, m_ImageVbo);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RectangleEbo);
 
     const Vector2 uvDiff = uv1 - uv0;
     Vector2 lowerUv = uv0, higherUv = uv1;
@@ -182,38 +178,12 @@ void Draw::Texture(
         lowerUv.y += uvDiff.y;
     }
 
-    const std::array vertices = {
-        // pos          // UVs
-        -1.f, -1.f,     lowerUv.x,  lowerUv.y,
-         1.f, -1.f,     higherUv.x, lowerUv.y,
-         1.f,  1.f,     higherUv.x, higherUv.y,
-        -1.f,  1.f,     lowerUv.x,  higherUv.y
-    };
-    
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), &vertices, GL_STATIC_DRAW);
-
-    glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(Vector4), nullptr);
-    glEnableVertexAttribArray(0);
-    
-    m_TextureShader->Use();
-    
-    m_TextureShader->SetUniform("projection", m_ProjectionMatrix * m_CameraMatrix);
-    
-    m_TextureShader->SetUniform("halfImagePixelSize", texture.GetSize() * uvDiff * 0.5f);
-    m_TextureShader->SetUniform("position", position);
-    m_TextureShader->SetUniform("scale", scale);
-    m_TextureShader->SetUniform("rotation", rotation);
-
-    m_TextureShader->SetUniform("horizontalFlip", flipFlags & DrawTextureFlipping::Horizontal);
-    m_TextureShader->SetUniform("verticalFlip", flipFlags & DrawTextureFlipping::Vertical);
-
     Matrix2 diagonalFlip = Matrix2::Identity();
     if (flipFlags & DrawTextureFlipping::Diagonal)
     {
         static constexpr Matrix2 M(1.f, 1.f, -1.f, 1.f);
         diagonalFlip = M * Matrix2::Scaling({ 1.f, -1.f }) * M.Inverted();
     }
-    m_TextureShader->SetUniform("diagonalFlip", diagonalFlip);
 
     Matrix2 antiDiagonalFlip = Matrix2::Identity();
     if (flipFlags & DrawTextureFlipping::AntiDiagonal)
@@ -221,20 +191,25 @@ void Draw::Texture(
         static constexpr Matrix2 M(-1.f, 1.f, 1.f, 1.f);
         antiDiagonalFlip = M * Matrix2::Scaling({ 1.f, -1.f }) * M.Inverted();
     }
-    m_TextureShader->SetUniform("antiDiagonalFlip", antiDiagonalFlip);
-    
-    m_TextureShader->SetUniform("color", color);
-    
-    glBindTexture(GL_TEXTURE_2D, texture.GetId());
 
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RectangleEbo);
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+    Matrix transformation = Matrix::Translation(static_cast<Vector3>(position))
+        * Matrix::RotationZ(rotation)
+        * static_cast<Matrix>(antiDiagonalFlip)
+        * static_cast<Matrix>(diagonalFlip)
+        * Matrix::Scaling({ texture.GetSize().x * scale.x, texture.GetSize().y * scale.y, 1.f });
 
-    glBindTexture(GL_TEXTURE_2D, 0);
+    Matrix uvProjection = Matrix::Orthographic(lowerUv.x, higherUv.x, lowerUv.y, higherUv.y, -1.f, 1.f);
+
+    m_DrawList.texture.Emplace(transformation, uvProjection, color);
+
+    if (!m_DrawList.textureId.Empty() && m_DrawList.textureId.Back() == texture.GetId())
+    {
+        m_DrawList.commands.Back().count++;
+        return;
+    }
     
-    m_TextureShader->Unuse();
-
-    glBindVertexArray(0);
+    m_DrawList.textureId.Add(texture.GetId());
+    m_DrawList.commands.Emplace(DrawDataType::Texture, 1ull);
 }
 
 void Draw::Text(const Font& font, const std::string_view text, const Vector2 position, const float_t scale, const Color& color)
@@ -295,8 +270,8 @@ void Draw::RenderTarget(
     if (uv0.x > uv1.x || uv0.y > uv1.y)
         throw std::invalid_argument("UV0 cannot be greater than UV1");
     
-    glBindVertexArray(m_ImageVao);
-    glBindBuffer(GL_ARRAY_BUFFER, m_ImageVbo);
+    glBindVertexArray(m_RenderTargetVao);
+    glBindBuffer(GL_ARRAY_BUFFER, m_RenderTargetVbo);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RectangleEbo);
 
     const Vector2 uvDiff = uv1 - uv0;
@@ -374,7 +349,6 @@ void Draw::RenderTarget(
     
     glBindTexture(GL_TEXTURE_2D, renderTarget.GetTextureId());
 
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RectangleEbo);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 
     glBindTexture(GL_TEXTURE_2D, 0);
@@ -382,6 +356,21 @@ void Draw::RenderTarget(
     m_PostProcessingShader->Unuse();
 
     glBindVertexArray(0);
+}
+
+void Draw::DrawList::AddCommand(DrawDataType type)
+{
+    if (!commands.Empty())
+    {
+        CommandData& lastCommand = commands.Back();
+        if (lastCommand.type == type)
+        {
+            lastCommand.count++;
+            return;
+        }
+    }
+
+    commands.Emplace(type, 1ull);
 }
 
 void Draw::DrawList::Clear()
@@ -401,13 +390,13 @@ void Draw::DrawList::Clear()
     text.Clear();
     renderTarget.Clear();
 
-    order.Clear();
+    commands.Clear();
 }
 
 void Draw::Initialize()
 {
-    glCreateBuffers(5, &m_RectangleEbo);
-    glCreateVertexArrays(9, &m_Vao);
+    glCreateBuffers(6, &m_RectangleEbo);
+    glCreateVertexArrays(10, &m_Vao);
 
     InitializeLineBuffers();
     InitializeLineColoredBuffers();
@@ -415,6 +404,7 @@ void Draw::Initialize()
     InitializeTriangleColoredBuffers();
     InitializeRectangleBuffers();
     InitializeCircleBuffers();
+    InitializeTextureBuffers();
     InitializeTextBuffers();
 }
 
@@ -437,8 +427,8 @@ void Draw::LoadResources()
 
 void Draw::Shutdown()
 {
-    glDeleteBuffers(5, &m_RectangleEbo);
-    glDeleteVertexArrays(9, &m_Vao);
+    glDeleteBuffers(6, &m_RectangleEbo);
+    glDeleteVertexArrays(10, &m_Vao);
 }
 
 void Draw::InitializeLineBuffers()
@@ -585,6 +575,47 @@ void Draw::InitializeCircleBuffers()
     glBindVertexArray(0);
 }
 
+void Draw::InitializeTextureBuffers()
+{
+    constexpr std::array vertexData = {
+        0.f, 0.f,
+        1.f, 0.f,
+        1.f, 1.f,
+        0.f, 1.f
+    };
+    
+    glBindVertexArray(m_TextureVao);
+
+    // VBO
+    glBindBuffer(GL_ARRAY_BUFFER, m_TextureVbo);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData.data(), GL_STATIC_DRAW);
+
+    // EBO
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RectangleEbo);
+
+    // VAO
+    uint32_t index = 0;
+    // Vertex position
+    SetVertexAttribute(index, 2, sizeof(Vector2), 0, 0);
+    
+    glBindBuffer(GL_ARRAY_BUFFER, m_Vbo);
+    size_t offset = 0;
+    // Transformation Matrix
+    SetVertexAttribute(++index, 4, sizeof(TextureData), offset, 1);
+    SetVertexAttribute(++index, 4, sizeof(TextureData), offset += sizeof(Vector4), 1);
+    SetVertexAttribute(++index, 4, sizeof(TextureData), offset += sizeof(Vector4), 1);
+    SetVertexAttribute(++index, 4, sizeof(TextureData), offset += sizeof(Vector4), 1);
+    // UV projection Matrix
+    SetVertexAttribute(++index, 4, sizeof(TextureData), offset += sizeof(Vector4), 1);
+    SetVertexAttribute(++index, 4, sizeof(TextureData), offset += sizeof(Vector4), 1);
+    SetVertexAttribute(++index, 4, sizeof(TextureData), offset += sizeof(Vector4), 1);
+    SetVertexAttribute(++index, 4, sizeof(TextureData), offset += sizeof(Vector4), 1);
+    // Color
+    SetVertexAttribute(++index, 4, sizeof(TextureData), offset += sizeof(Vector4), 1);
+    
+    glBindVertexArray(0);
+}
+
 void Draw::InitializeTextBuffers()
 {
     glBindVertexArray(m_TextVao);
@@ -603,21 +634,15 @@ void Draw::Render()
     size_t triangleIndex = 0, triangleColoredIndex = 0, triangleFilledIndex = 0, triangleColoredFilledIndex = 0;
     size_t rectangleIndex = 0, rectangleFilledIndex = 0;
     size_t circleIndex = 0;
+    size_t textureIndex = 0, textureIdIndex = 0;
     
-    const List<DrawDataType>& order = m_DrawList.order;
-    const size_t orderSize = order.GetSize();
-    size_t count;
-    for (size_t i = 0; i < orderSize; i += count)
+    const List<CommandData>& commands = m_DrawList.commands;
+    for (size_t i = 0; i < commands.GetSize(); i++)
     {
-        count = 1;
-        
-        const DrawDataType type = order[i];
+        const CommandData& command = commands[i];
+        const size_t count = command.count;
 
-        // Count the identical consecutive draw types
-        while (i + count < orderSize && type == order[i + count])
-            count++;
-
-        switch (type)
+        switch (command.type)
         {
             case DrawDataType::Points:
                 break;
@@ -671,6 +696,9 @@ void Draw::Render()
                 break;
                 
             case DrawDataType::Texture:
+                RenderTextureData(m_DrawList.texture, m_DrawList.textureId[textureIdIndex], textureIndex, count);
+                textureIndex += count;
+                textureIdIndex++;
                 break;
                 
             case DrawDataType::Text:
@@ -709,6 +737,7 @@ void Draw::UpdateShaderMatrices()
     m_TriangleColoredShader->SetUniform("projection", proj);
     m_RectangleShader->SetUniform("projection", proj);
     m_CircleShader->SetUniform("projection", proj);
+    m_TextureShader->SetUniform("projection", proj);
     
     m_PrimitiveShader->SetUniform("projection", proj);
     m_PrimitiveColoredShader->SetUniform("projection", proj);
@@ -729,7 +758,7 @@ void Draw::CircleInternal(const Vector2 center, const float_t radius, const bool
         color,
         filled
     );
-    m_DrawList.order.Add(DrawDataType::Circle);
+    m_DrawList.AddCommand(DrawDataType::Circle);
 }
 
 void Draw::RenderLineData(const List<LineData>& lines, const size_t index, const size_t count)
@@ -828,6 +857,24 @@ void Draw::RenderCircleData(const List<CircleData>& circles, const size_t index,
     glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr, static_cast<GLsizei>(count));
 
     m_CircleShader->Unuse();
+    glBindVertexArray(0);
+}
+
+void Draw::RenderTextureData(const List<TextureData>& textures, const uint32_t textureId, const size_t index, const size_t count)
+{
+    if (textures.Empty())
+        return;
+
+    glNamedBufferData(m_Vbo, static_cast<GLsizeiptr>(sizeof(TextureData) * count), &textures[index], GL_STREAM_DRAW);
+    
+    glBindVertexArray(m_TextureVao);
+    glBindTexture(GL_TEXTURE_2D, textureId);
+    m_TextureShader->Use();
+
+    glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr, static_cast<GLsizei>(count));
+
+    m_TextureShader->Unuse();
+    glBindTexture(GL_TEXTURE_2D, 0);
     glBindVertexArray(0);
 }
 

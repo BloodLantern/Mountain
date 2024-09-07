@@ -26,5 +26,5 @@ void SpinComponent::Update()
 
 void SpinComponent::DebugRender()
 {
-    Mountain::Draw::Circle(m_Entity->position, 5.f, false, Mountain::Color::Fuchsia());
+    Mountain::Draw::Circle(m_Entity->position, 5.f, Mountain::Color::Fuchsia());
 }
