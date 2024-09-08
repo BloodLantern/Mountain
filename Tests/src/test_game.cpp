@@ -127,19 +127,20 @@ void GameExample::Render()
     
     Draw::TriangleFilled(Vector2(160.f, 70.f), Vector2(140.f, 110.f), Vector2(180.f, 110.f), Color::Red(), Color::Green(), Color::Blue());
 
-    Draw::Texture(*ResourceManager::Get<Texture>("assets/oldlady/idle00.png"), { 10.f, 80.f });
-    Draw::Texture(*ResourceManager::Get<Texture>("assets/oldlady/idle00.png"), { 10.f, 90.f });
-    Draw::Texture(*ResourceManager::Get<Texture>("assets/oldlady/idle00.png"), { 10.f, 100.f });
-    Draw::Texture(*ResourceManager::Get<Texture>("assets/oldlady/idle00.png"), { 10.f, 110.f });
-    Draw::Texture(*ResourceManager::Get<Texture>("assets/oldlady/idle00.png"), { 10.f, 120.f });
-    Draw::Texture(*ResourceManager::Get<Texture>("assets/oldlady/idle00.png"), { 10.f, 130.f });
-    Draw::Texture(*ResourceManager::Get<Texture>("assets/oldlady/idle00.png"), { 10.f, 140.f });
-    Draw::Texture(*ResourceManager::Get<Texture>("assets/oldlady/idle00.png"), { 10.f, 150.f });
-    Draw::Texture(*ResourceManager::Get<Texture>("assets/oldlady/idle00.png"), { 10.f, 160.f });
+    Pointer<Texture> oldLady = ResourceManager::Get<Texture>("assets/oldlady/idle00.png");
+    Draw::Texture(*oldLady, { 10.f, 80.f });
+    Draw::Texture(*oldLady, { 10.f, 90.f });
+    Draw::Texture(*oldLady, { 10.f, 100.f });
+    Draw::Texture(*oldLady, { 10.f, 110.f });
+    Draw::Texture(*oldLady, { 10.f, 120.f });
+    Draw::Texture(*oldLady, { 10.f, 130.f });
+    Draw::Texture(*oldLady, { 10.f, 140.f });
+    Draw::Texture(*oldLady, { 10.f, 150.f });
+    Draw::Texture(*oldLady, { 10.f, 160.f });
 
     player->Render();
 
-    /*if (debugRender)
+    if (debugRender)
     {
         for (Entity* const entity : entities)
             entity->DebugRender();
@@ -147,15 +148,15 @@ void GameExample::Render()
         player->DebugRender();
     }
 
-    Draw::Text(*font, "Hello, tiny World!", { 90.f, 30.f });*/
+    Draw::Text(*font, "Hello, tiny World!", { 90.f, 30.f });
 
     Renderer::PopRenderTarget();
 
     Draw::RenderTarget(renderTarget, Vector2::Zero(), Window::GetSize() / renderTarget.GetSize());
 
-    /*Draw::Texture(*ResourceManager::Get<Texture>("assets/oldlady/idle00.png"), { 10.f, 80.f });
+    Draw::Texture(*oldLady, { 10.f, 80.f });
 
-    Draw::Text(*font, "Hello, big World!", { 10.f, 160.f });*/
+    Draw::Text(*font, "Hello, big World!", { 10.f, 160.f });
 
     ImGui::Begin("Debug");
     
