@@ -192,11 +192,12 @@ void Draw::Texture(
         antiDiagonalFlip = M * Matrix2::Scaling({ 1.f, -1.f }) * M.Inverted();
     }
 
+    const Vector2i textureSize = texture.GetSize();
     Matrix transformation = Matrix::Translation(static_cast<Vector3>(position))
         * Matrix::RotationZ(rotation)
         * static_cast<Matrix>(antiDiagonalFlip)
         * static_cast<Matrix>(diagonalFlip)
-        * Matrix::Scaling({ texture.GetSize().x * scale.x, texture.GetSize().y * scale.y, 1.f });
+        * Matrix::Scaling({ static_cast<float_t>(textureSize.x) * scale.x, static_cast<float_t>(textureSize.y) * scale.y, 1.f });
 
     Matrix uvProjection = Matrix::Orthographic(lowerUv.x, higherUv.x, lowerUv.y, higherUv.y, -1.f, 1.f);
 
@@ -212,48 +213,10 @@ void Draw::Texture(
     m_DrawList.commands.Emplace(DrawDataType::Texture, 1ull);
 }
 
-void Draw::Text(const Font& font, const std::string_view text, const Vector2 position, const float_t scale, const Color& color)
+void Draw::Text(const Font& font, const std::string& text, const Vector2 position, const float_t scale, const Color& color)
 {
-    glBindVertexArray(m_TextVao);
-
-    m_TextShader->Use();
-    m_TextShader->SetUniform("color", color);
-
-    Vector2 offset = position + Vector2::UnitY() * font.CalcTextSize(text).y * scale;
-
-    for (const char_t c : text)
-    {
-        const Font::Character& character = font.m_Characters.at(c);
-
-        const Vector2 pos = Calc::Round(
-            {
-                offset.x + static_cast<float_t>(character.bearing.x) * scale,
-                offset.y - static_cast<float_t>(character.bearing.y) * scale
-            }
-        );
-        const Vector2 size = Calc::Round(character.size * scale);
-
-        const std::array vertices = {
-            pos.x,          pos.y,           0.f, 0.f,
-            pos.x + size.x, pos.y,           1.f, 0.f,
-            pos.x + size.x, pos.y + size.y,  1.f, 1.f,
-            pos.x,          pos.y + size.y,  0.f, 1.f
-        };
-
-        glBindTexture(GL_TEXTURE_2D, character.textureId);
-        
-        glNamedBufferSubData(m_TextVbo, 0, sizeof(vertices), vertices.data());
-        
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
-        
-        // Now advance cursors for next glyph (note that advance is number of 1/64 pixels)
-        offset.x += static_cast<float_t>(character.advance >> 6) * scale; // bitshift by 6 to get value in pixels (2^6 = 64)
-    }
-    glBindTexture(GL_TEXTURE_2D, 0);
-    
-    m_TextShader->Unuse();
-    
-    glBindVertexArray(0);
+    m_DrawList.text.Emplace(&font, text, position, scale, color);
+    m_DrawList.AddCommand(DrawDataType::Text);
 }
 
 void Draw::RenderTarget(
@@ -387,6 +350,7 @@ void Draw::DrawList::Clear()
     rectangleFilled.Clear();
     circle.Clear();
     texture.Clear();
+    textureId.Clear();
     text.Clear();
     renderTarget.Clear();
 
@@ -635,6 +599,7 @@ void Draw::Render()
     size_t rectangleIndex = 0, rectangleFilledIndex = 0;
     size_t circleIndex = 0;
     size_t textureIndex = 0, textureIdIndex = 0;
+    size_t textIndex = 0;
     
     const List<CommandData>& commands = m_DrawList.commands;
     for (size_t i = 0; i < commands.GetSize(); i++)
@@ -702,6 +667,8 @@ void Draw::Render()
                 break;
                 
             case DrawDataType::Text:
+                RenderTextData(m_DrawList.text, textIndex, count);
+                textIndex += count;
                 break;
                 
             case DrawDataType::RenderTarget:
@@ -875,6 +842,54 @@ void Draw::RenderTextureData(const List<TextureData>& textures, const uint32_t t
 
     m_TextureShader->Unuse();
     glBindTexture(GL_TEXTURE_2D, 0);
+    glBindVertexArray(0);
+}
+
+void Draw::RenderTextData(const List<TextData>& texts, const size_t index, const size_t count)
+{
+    glBindVertexArray(m_TextVao);
+    m_TextShader->Use();
+
+    for (size_t i = 0; i < count; i++)
+    {
+        const TextData& data = texts[index + i];
+        
+        m_TextShader->SetUniform("color", data.color);
+
+        Vector2 offset = data.position + Vector2::UnitY() * data.font->CalcTextSize(data.text).y * data.scale;
+
+        for (const char_t c : data.text)
+        {
+            const Font::Character& character = data.font->m_Characters.at(c);
+
+            const Vector2 pos = Calc::Round(
+                {
+                    offset.x + static_cast<float_t>(character.bearing.x) * data.scale,
+                    offset.y - static_cast<float_t>(character.bearing.y) * data.scale
+                }
+            );
+            const Vector2 size = Calc::Round(character.size * data.scale);
+
+            const std::array vertices = {
+                pos.x,          pos.y,           0.f, 0.f,
+                pos.x + size.x, pos.y,           1.f, 0.f,
+                pos.x + size.x, pos.y + size.y,  1.f, 1.f,
+                pos.x,          pos.y + size.y,  0.f, 1.f
+            };
+
+            glBindTexture(GL_TEXTURE_2D, character.textureId);
+            
+            glNamedBufferSubData(m_TextVbo, 0, sizeof(vertices), vertices.data());
+            
+            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+            
+            // Now advance cursors for next glyph (note that advance is number of 1/64 pixels)
+            offset.x += static_cast<float_t>(character.advance >> 6) * data.scale; // bitshift by 6 to get value in pixels (2^6 = 64)
+        }
+        glBindTexture(GL_TEXTURE_2D, 0);
+    }
+    
+    m_TextShader->Unuse();
     glBindVertexArray(0);
 }
 
