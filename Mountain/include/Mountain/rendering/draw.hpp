@@ -159,7 +159,7 @@ public:
     /// @param position The top-left position of the text
     /// @param scale The scale to apply to the text
     /// @param color The color of the text
-    MOUNTAIN_API static void Text(const Font& font, std::string_view text, Vector2 position, float_t scale = 1.f, const Color& color = Color::White());
+    MOUNTAIN_API static void Text(const Font& font, const std::string& text, Vector2 position, float_t scale = 1.f, const Color& color = Color::White());
 
     /// @brief Draw a RenderTarget
     /// @param renderTarget The RenderTarget to draw
@@ -241,10 +241,10 @@ private:
     
     struct TextData
     {
-        Pointer<Font> font;
+        const Font* font;
         std::string text;
         Vector2 position;
-        Vector2 scale;
+        float_t scale;
         Color color;
     };
     
@@ -357,6 +357,7 @@ private:
     static void RenderRectangleData(const List<RectangleData>& rectangles, bool_t filled, size_t index, size_t count);
     static void RenderCircleData(const List<CircleData>& circles, size_t index, size_t count);
     static void RenderTextureData(const List<TextureData>& textures, uint32_t textureId, size_t index, size_t count);
+    static void RenderTextData(const List<TextData>& texts, size_t index, size_t count);
 
     static void SetVertexAttribute(uint32_t index, int32_t size, int32_t stride, size_t offset, uint32_t divisor = 0);
     static void SetVertexAttributeInt(uint32_t index, int32_t size, int32_t stride, size_t offset, uint32_t divisor = 0);
