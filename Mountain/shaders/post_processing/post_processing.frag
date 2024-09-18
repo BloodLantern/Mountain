@@ -29,7 +29,7 @@ out vec4 fragmentColor;
 // TODO - Add bloom
 // TODO - Add screen shake
 
-float attenuationFunction(float x)
+float attenuate(float x)
 {
     float x2 = x * x;
     float inter = 1.f - 2.f * x2 + x2 * x2;
@@ -52,7 +52,7 @@ void main()
         if (lightToFragmentDistanceSquared > lightSourceRadiusSquared)
             continue;
         
-        float attenuation = attenuationFunction(lightToFragmentDistanceSquared / lightSourceRadiusSquared);
+        float attenuation = attenuate(lightToFragmentDistanceSquared / lightSourceRadiusSquared);
         
         lightColor += lightSource.color * lightSource.intensity * attenuation;
     }
