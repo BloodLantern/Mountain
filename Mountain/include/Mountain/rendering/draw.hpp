@@ -142,6 +142,7 @@ public:
     /// @param uv1 The second texture UV position
     /// @param color The tint color of the texture. Use white for default colors
     /// @param flipFlags Flip flags from the @c DrawTextureFlipping enum
+    /// @throws std::invalid_argument If @p uv0 is greater than @p uv1
     MOUNTAIN_API static void Texture(
         const Texture& texture,
         Vector2 position,
@@ -170,6 +171,7 @@ public:
     /// @param uv1 The second texture UV position
     /// @param color The color of the RenderTarget
     /// @param flipFlags Flip flags from the @c DrawTextureFlipping enum
+    /// @throws std::invalid_argument If @p uv0 is greater than @p uv1
     MOUNTAIN_API static void RenderTarget(
         const RenderTarget& renderTarget,
         Vector2 position = Vector2::Zero(),
@@ -251,12 +253,9 @@ private:
     struct RenderTargetData
     {
         const Mountain::RenderTarget* renderTarget;
-        Vector2 position;
-        float_t rotation;
+        Matrix transformation, uvProjection;
         Vector2 scale;
-        Vector2 uv0, uv1;
         Color color;
-        Meta::UnderlyingEnumType<DrawTextureFlipping> flipFlags;
     };
 
     enum class DrawDataType : uint8_t
@@ -341,6 +340,7 @@ private:
     static void InitializeCircleBuffers();
     static void InitializeTextureBuffers();
     static void InitializeTextBuffers();
+    static void InitializeRenderTargetBuffers();
 
     static void Render();
 
@@ -358,6 +358,7 @@ private:
     static void RenderCircleData(const List<CircleData>& circles, size_t index, size_t count);
     static void RenderTextureData(const List<TextureData>& textures, uint32_t textureId, size_t index, size_t count);
     static void RenderTextData(const List<TextData>& texts, size_t index, size_t count);
+    static void RenderRenderTargetData(const List<RenderTargetData>& renderTargets, size_t index, size_t count);
 
     static void SetVertexAttribute(uint32_t index, int32_t size, int32_t stride, size_t offset, uint32_t divisor = 0);
     static void SetVertexAttributeInt(uint32_t index, int32_t size, int32_t stride, size_t offset, uint32_t divisor = 0);

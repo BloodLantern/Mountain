@@ -10,7 +10,7 @@
 
 BEGIN_MOUNTAIN
 
-enum class MagnificationFilter
+enum class MagnificationFilter : uint8_t
 {
     Linear,
     Nearest,
