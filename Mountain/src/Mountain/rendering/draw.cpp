@@ -232,10 +232,6 @@ void Draw::RenderTarget(
 {
     if (uv0.x > uv1.x || uv0.y > uv1.y)
         throw std::invalid_argument("UV0 cannot be greater than UV1");
-    
-    glBindVertexArray(m_RenderTargetVao);
-    glBindBuffer(GL_ARRAY_BUFFER, m_RenderTargetVbo);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RectangleEbo);
 
     const Vector2 uvDiff = uv1 - uv0;
     Vector2 lowerUv = uv0, higherUv = uv1;
@@ -252,38 +248,12 @@ void Draw::RenderTarget(
         lowerUv.y += uvDiff.y;
     }
 
-    const std::array vertices = {
-        // pos          // UVs
-        -1.f, -1.f,     lowerUv.x,  lowerUv.y,
-         1.f, -1.f,     higherUv.x, lowerUv.y,
-         1.f,  1.f,     higherUv.x, higherUv.y,
-        -1.f,  1.f,     lowerUv.x,  higherUv.y
-    };
-    
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), &vertices, GL_STREAM_DRAW);
-
-    glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(Vector4), nullptr);
-    glEnableVertexAttribArray(0);
-    
-    m_PostProcessingShader->Use();
-    
-    m_PostProcessingShader->SetUniform("projection", m_ProjectionMatrix * m_CameraMatrix);
-    
-    m_PostProcessingShader->SetUniform("halfImagePixelSize", renderTarget.GetSize() * uvDiff * 0.5f);
-    m_PostProcessingShader->SetUniform("position", position);
-    m_PostProcessingShader->SetUniform("scale", scale);
-    m_PostProcessingShader->SetUniform("rotation", rotation);
-
-    m_PostProcessingShader->SetUniform("horizontalFlip", flipFlags & DrawTextureFlipping::Horizontal);
-    m_PostProcessingShader->SetUniform("verticalFlip", flipFlags & DrawTextureFlipping::Vertical);
-
     Matrix2 diagonalFlip = Matrix2::Identity();
     if (flipFlags & DrawTextureFlipping::Diagonal)
     {
         static constexpr Matrix2 M(1.f, 1.f, -1.f, 1.f);
         diagonalFlip = M * Matrix2::Scaling({ 1.f, -1.f }) * M.Inverted();
     }
-    m_PostProcessingShader->SetUniform("diagonalFlip", diagonalFlip);
 
     Matrix2 antiDiagonalFlip = Matrix2::Identity();
     if (flipFlags & DrawTextureFlipping::AntiDiagonal)
@@ -291,34 +261,18 @@ void Draw::RenderTarget(
         static constexpr Matrix2 M(-1.f, 1.f, 1.f, 1.f);
         antiDiagonalFlip = M * Matrix2::Scaling({ 1.f, -1.f }) * M.Inverted();
     }
-    m_PostProcessingShader->SetUniform("antiDiagonalFlip", antiDiagonalFlip);
-    
-    m_PostProcessingShader->SetUniform("actualScale", scale * renderTarget.GetCameraScale());
-    m_PostProcessingShader->SetUniform("color", color);
-    m_PostProcessingShader->SetUniform("ambientColor", renderTarget.ambientLight);
-    const auto& lightSources = renderTarget.GetLightSources();
-    m_PostProcessingShader->SetUniform("lightSourceCount", static_cast<int32_t>(lightSources.size()));
-    for (size_t i = 0; i < lightSources.size(); ++i)
-    {
-        const LightSource* lightSource = lightSources[i];
-        std::string name = std::format("lightSources[{}].", i);
-        m_PostProcessingShader->SetUniform(name + "color", lightSource->color);
-        m_PostProcessingShader->SetUniform(name + "intensity", lightSource->intensity);
-        m_PostProcessingShader->SetUniform(name + "radius", lightSource->radius);
-        m_PostProcessingShader->SetUniform(name + "angleMin", lightSource->angleMin);
-        m_PostProcessingShader->SetUniform(name + "angleMax", lightSource->angleMax);
-        m_PostProcessingShader->SetUniform(name + "position", renderTarget.GetCameraMatrix() * lightSource->GetPosition() * scale);
-    }
-    
-    glBindTexture(GL_TEXTURE_2D, renderTarget.GetTextureId());
 
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+    const Vector2i textureSize = renderTarget.GetSize();
+    Matrix transformation = Matrix::Translation(static_cast<Vector3>(position))
+        * Matrix::RotationZ(rotation)
+        * static_cast<Matrix>(antiDiagonalFlip)
+        * static_cast<Matrix>(diagonalFlip)
+        * Matrix::Scaling({ static_cast<float_t>(textureSize.x) * scale.x, static_cast<float_t>(textureSize.y) * scale.y, 1.f });
 
-    glBindTexture(GL_TEXTURE_2D, 0);
-    
-    m_PostProcessingShader->Unuse();
+    Matrix uvProjection = Matrix::Orthographic(lowerUv.x, higherUv.x, lowerUv.y, higherUv.y, -1.f, 1.f);
 
-    glBindVertexArray(0);
+    m_DrawList.renderTarget.Emplace(&renderTarget, transformation, uvProjection, scale, color);
+    m_DrawList.AddCommand(DrawDataType::RenderTarget);
 }
 
 void Draw::DrawList::AddCommand(DrawDataType type)
@@ -370,6 +324,7 @@ void Draw::Initialize()
     InitializeCircleBuffers();
     InitializeTextureBuffers();
     InitializeTextBuffers();
+    InitializeRenderTargetBuffers();
 }
 
 void Draw::LoadResources()
@@ -592,6 +547,31 @@ void Draw::InitializeTextBuffers()
     glBindVertexArray(0);
 }
 
+void Draw::InitializeRenderTargetBuffers()
+{
+    constexpr std::array vertexData = {
+        0.f, 0.f,
+        1.f, 0.f,
+        1.f, 1.f,
+        0.f, 1.f
+    };
+    
+    glBindVertexArray(m_RenderTargetVao);
+
+    // VBO
+    glBindBuffer(GL_ARRAY_BUFFER, m_RenderTargetVbo);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData.data(), GL_STATIC_DRAW);
+
+    // EBO
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RectangleEbo);
+
+    // VAO
+    // Vertex position
+    SetVertexAttribute(0, 2, sizeof(Vector2), 0, 0);
+    
+    glBindVertexArray(0);
+}
+
 void Draw::Render()
 {
     size_t lineIndex = 0, lineColoredIndex = 0;
@@ -600,6 +580,7 @@ void Draw::Render()
     size_t circleIndex = 0;
     size_t textureIndex = 0, textureIdIndex = 0;
     size_t textIndex = 0;
+    size_t renderTargetIndex = 0;
     
     const List<CommandData>& commands = m_DrawList.commands;
     for (size_t i = 0; i < commands.GetSize(); i++)
@@ -672,6 +653,8 @@ void Draw::Render()
                 break;
                 
             case DrawDataType::RenderTarget:
+                RenderRenderTargetData(m_DrawList.renderTarget, renderTargetIndex, count);
+                renderTargetIndex += count;
                 break;
         }
     }
@@ -890,6 +873,48 @@ void Draw::RenderTextData(const List<TextData>& texts, const size_t index, const
     }
     
     m_TextShader->Unuse();
+    glBindVertexArray(0);
+}
+
+void Draw::RenderRenderTargetData(const List<RenderTargetData>& renderTargets, const size_t index, const size_t count)
+{
+    glBindVertexArray(m_RenderTargetVao);
+    glBindBuffer(GL_ARRAY_BUFFER, m_RenderTargetVbo);
+    m_PostProcessingShader->Use();
+    
+    for (size_t i = 0; i < count; i++)
+    {
+        const RenderTargetData& data = renderTargets[index + i];
+        
+        m_PostProcessingShader->SetUniform("projection", m_ProjectionMatrix * m_CameraMatrix);
+        
+        m_PostProcessingShader->SetUniform("transformation", data.transformation);
+        m_PostProcessingShader->SetUniform("uvProjection", data.uvProjection);
+        
+        m_PostProcessingShader->SetUniform("actualScale", data.scale * data.renderTarget->GetCameraScale());
+        m_PostProcessingShader->SetUniform("color", data.color);
+        m_PostProcessingShader->SetUniform("ambientColor", data.renderTarget->ambientLight);
+        const auto& lightSources = data.renderTarget->GetLightSources();
+        m_PostProcessingShader->SetUniform("lightSourceCount", static_cast<int32_t>(lightSources.size()));
+        for (size_t j = 0; j < lightSources.size(); ++j)
+        {
+            const LightSource* lightSource = lightSources[j];
+            std::string name = std::format("lightSources[{}].", j);
+            m_PostProcessingShader->SetUniform(name + "color", lightSource->color);
+            m_PostProcessingShader->SetUniform(name + "intensity", lightSource->intensity);
+            m_PostProcessingShader->SetUniform(name + "radius", lightSource->radius);
+            m_PostProcessingShader->SetUniform(name + "angleMin", lightSource->angleMin);
+            m_PostProcessingShader->SetUniform(name + "angleMax", lightSource->angleMax);
+            m_PostProcessingShader->SetUniform(name + "position", data.renderTarget->GetCameraMatrix() * lightSource->GetPosition() * data.scale);
+        }
+        
+        glBindTexture(GL_TEXTURE_2D, data.renderTarget->GetTextureId());
+
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+    }
+    
+    glBindTexture(GL_TEXTURE_2D, 0);
+    m_PostProcessingShader->Unuse();
     glBindVertexArray(0);
 }
 
