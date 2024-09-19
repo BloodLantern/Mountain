@@ -17,7 +17,9 @@ void main()
     textureCoordinates = ((uvProjection * position).xy + vec2(1.f)) * 0.5f;
     textureCoordinates.y = 1.f - textureCoordinates.y;
 
-    fragmentPosition = vertexPosition;
+    vec4 transformedPosition = transformation * position;
     
-    gl_Position = projection * (transformation * position);
+    fragmentPosition = transformedPosition.xy;
+    
+    gl_Position = projection * transformedPosition;
 }
