@@ -15,62 +15,6 @@ void Draw::Clear(const Color& color)
     glClear(GL_COLOR_BUFFER_BIT);
 }
 
-void Draw::Points(const Vector2* positions, const uint32_t count, const Color& color)
-{
-    glBindVertexArray(m_Vao);
-    glBindBuffer(GL_ARRAY_BUFFER, m_Vbo);
-    
-    glBufferData(GL_ARRAY_BUFFER, static_cast<int64_t>(sizeof(Vector2)) * count, positions, GL_STREAM_DRAW);
-
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(Vector2), nullptr);
-    glEnableVertexAttribArray(0);
-
-    m_PrimitiveShader->Use();
-    m_PrimitiveShader->SetUniform("color", color);
-
-    glDrawArrays(GL_POINTS, 0, static_cast<int32_t>(count));
-
-    m_PrimitiveShader->Unuse();
-
-    glBindVertexArray(0);
-}
-
-void Draw::Points(const Vector2* positions, const Color* colors, const uint32_t count)
-{
-    glBindVertexArray(m_Vao);
-    glBindBuffer(GL_ARRAY_BUFFER, m_Vbo);
-
-    float_t* data = static_cast<float_t*>(_malloca(count * sizeof(Vector2) / sizeof(float_t) + count * sizeof(Color) / sizeof(float_t) * sizeof(float_t)));
-    for (uint32_t i = 0; i < count; i++)
-    {
-        const Vector2 position = m_CameraMatrix * positions[i];
-        data[i * 6 + 0] = position.x;
-        data[i * 6 + 1] = position.y;
-
-        data[i * 6 + 2] = colors[i].r;
-        data[i * 6 + 3] = colors[i].g;
-        data[i * 6 + 4] = colors[i].b;
-        data[i * 6 + 5] = colors[i].a;
-    }
-
-    glBufferData(GL_ARRAY_BUFFER, static_cast<int64_t>(sizeof(Vector2)) * count + static_cast<int64_t>(sizeof(Color)) * count, data, GL_STREAM_DRAW);
-
-    _freea(data);
-
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(Vector2) + sizeof(Color), nullptr);
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vector2) + sizeof(Color), Utils::IntToPointer<void>(sizeof(Vector2)));
-    glEnableVertexAttribArray(1);
-
-    m_PrimitiveColoredShader->Use();
-
-    glDrawArrays(GL_POINTS, 0, static_cast<int32_t>(count));
-
-    m_PrimitiveColoredShader->Unuse();
-
-    glBindVertexArray(0);
-}
-
 void Draw::Line(const Vector2 point1, const Vector2 point2, const Color& color)
 {
     m_DrawList.line.Emplace(point1, point2, color);
@@ -292,8 +236,6 @@ void Draw::DrawList::AddCommand(DrawDataType type)
 
 void Draw::DrawList::Clear()
 {
-    points.Clear();
-    pointsColored.Clear();
     line.Clear();
     lineColored.Clear();
     triangle.Clear();
