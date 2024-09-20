@@ -38,29 +38,6 @@ public:
     /// @param color The new color of all the pixels
     MOUNTAIN_API static void Clear(const Color& color);
 
-    /// @brief Draw points (pixels)
-    /// @param positions An array of points
-    /// @param count The length of the @p positions array
-    /// @param color The color of the points
-    MOUNTAIN_API static void Points(const Vector2* positions, uint32_t count, const Color& color = Color::White());
-    /// @brief Draw points (pixels)
-    /// @tparam Size The size of the @p positions array
-    /// @param positions An array of points
-    /// @param color The color of the points
-    template <size_t Size>
-    static void Points(const std::array<Vector2, Size>& positions, const Color& color = Color::White());
-    /// @brief Draw points (pixels) with the given @p colors
-    /// @param positions An array of points
-    /// @param colors An array of colors, one for each point
-    /// @param count The length of the @p positions and @p colors arrays
-    MOUNTAIN_API static void Points(const Vector2* positions, const Color* colors, uint32_t count);
-    /// @brief Draw points (pixels) with the given @p colors
-    /// @tparam Size The size of the @p positions array
-    /// @param positions An array of points
-    /// @param colors An array of colors, one for each point
-    template <size_t Size>
-    static void Points(const std::array<Vector2, Size>& positions, const std::array<Color, Size>& colors);
-
     /// @brief Draw a line
     /// @param point1 The first point of the line
     /// @param point2 The second point of the line
@@ -184,18 +161,6 @@ public:
     );
 
 private:
-    struct PointsData
-    {
-        List<Vector2> positions;
-        Color color;
-    };
-
-    struct PointsColoredData
-    {
-        List<Vector2> positions;
-        List<Color> colors;
-    };
-    
     struct LineData
     {
         Vector2 p1, p2;
@@ -285,8 +250,6 @@ private:
     class DrawList
     {
     public:
-        List<PointsData> points;
-        List<PointsColoredData> pointsColored;
         List<LineData> line;
         List<LineColoredData> lineColored;
         List<TriangleData> triangle;
@@ -370,5 +333,3 @@ private:
 END_MOUNTAIN
 
 ENUM_FLAGS(Mountain::DrawTextureFlipping)
-
-#include "Mountain/rendering/draw.inl"

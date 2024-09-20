@@ -201,7 +201,6 @@
     <ClInclude Include="inline\Mountain\collision\hitbox.inl" />
     <ClInclude Include="inline\Mountain\file\file.inl" />
     <ClInclude Include="inline\Mountain\file\file_manager.inl" />
-    <ClInclude Include="inline\Mountain\rendering\draw.inl" />
     <ClInclude Include="inline\Mountain\resource\audio_track.inl" />
     <ClInclude Include="inline\Mountain\resource\resource_manager.inl" />
     <ClInclude Include="inline\Mountain\resource\texture.inl" />
