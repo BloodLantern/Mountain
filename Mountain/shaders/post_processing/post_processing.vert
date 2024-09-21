@@ -14,7 +14,7 @@ void main()
 {
     vec4 position = vec4(vertexPosition, 0.f, 1.f);
     
-    textureCoordinates = ((uvProjection * position).xy + vec2(1.f)) * 0.5f;
+    textureCoordinates = (uvProjection * position).xy;
     textureCoordinates.y = 1.f - textureCoordinates.y;
 
     vec4 transformedPosition = transformation * position;
