@@ -225,8 +225,6 @@ private:
 
     enum class DrawDataType : uint8_t
     {
-        Points,
-        PointsColored,
         Line,
         LineColored,
         Triangle,

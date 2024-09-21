@@ -107,19 +107,19 @@ void Draw::Texture(
     if (uv0.x > uv1.x || uv0.y > uv1.y)
         throw std::invalid_argument("UV0 cannot be greater than UV1");
 
-    const Vector2 uvDiff = uv1 - uv0;
-    Vector2 lowerUv = uv0, higherUv = uv1;
+    Vector2 uvDiff = uv1 - uv0;
+    Vector2 lowerUv = uv0;
 
     if (flipFlags & DrawTextureFlipping::Horizontal)
     {
-        higherUv.x = lowerUv.x;
         lowerUv.x += uvDiff.x;
+        uvDiff.x = -uvDiff.x;
     }
 
     if (flipFlags & DrawTextureFlipping::Vertical)
     {
-        higherUv.y = lowerUv.y;
         lowerUv.y += uvDiff.y;
+        uvDiff.y = -uvDiff.y;
     }
 
     Matrix2 diagonalFlip = Matrix2::Identity();
@@ -141,9 +141,9 @@ void Draw::Texture(
         * Matrix::RotationZ(rotation)
         * static_cast<Matrix>(antiDiagonalFlip)
         * static_cast<Matrix>(diagonalFlip)
-        * Matrix::Scaling({ static_cast<float_t>(textureSize.x) * scale.x, static_cast<float_t>(textureSize.y) * scale.y, 1.f });
+        * Matrix::Scaling({ static_cast<float_t>(textureSize.x) * uvDiff.x * scale.x, static_cast<float_t>(textureSize.y) * uvDiff.y * scale.y, 1.f });
 
-    Matrix uvProjection = Matrix::Orthographic(lowerUv.x, higherUv.x, lowerUv.y, higherUv.y, -1.f, 1.f);
+    Matrix uvProjection = Matrix::Translation(static_cast<Vector3>(lowerUv)) * Matrix::Scaling(static_cast<Vector3>(uvDiff));
 
     m_DrawList.texture.Emplace(transformation, uvProjection, color);
 
@@ -211,9 +211,9 @@ void Draw::RenderTarget(
         * Matrix::RotationZ(rotation)
         * static_cast<Matrix>(antiDiagonalFlip)
         * static_cast<Matrix>(diagonalFlip)
-        * Matrix::Scaling({ static_cast<float_t>(textureSize.x) * scale.x, static_cast<float_t>(textureSize.y) * scale.y, 1.f });
+        * Matrix::Scaling({ static_cast<float_t>(textureSize.x) * uvDiff.x * scale.x, static_cast<float_t>(textureSize.y) * uvDiff.y * scale.y, 1.f });
 
-    Matrix uvProjection = Matrix::Orthographic(lowerUv.x, higherUv.x, lowerUv.y, higherUv.y, -1.f, 1.f);
+    Matrix uvProjection = Matrix::Translation(static_cast<Vector3>(lowerUv)) * Matrix::Scaling(static_cast<Vector3>(uvDiff));
 
     m_DrawList.renderTarget.Emplace(&renderTarget, transformation, uvProjection, scale, color);
     m_DrawList.AddCommand(DrawDataType::RenderTarget);
@@ -532,12 +532,6 @@ void Draw::Render()
 
         switch (command.type)
         {
-            case DrawDataType::Points:
-                break;
-                
-            case DrawDataType::PointsColored:
-                break;
-                
             case DrawDataType::Line:
                 RenderLineData(m_DrawList.line, lineIndex, count);
                 lineIndex += count;
