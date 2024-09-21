@@ -110,6 +110,8 @@ void OpenGlDebugCallback(const GLenum source, const GLenum type, GLuint, const G
 
 void Mountain::Renderer::PushRenderTarget(RenderTarget& renderTarget)
 {
+    Draw::Render();
+    
     renderTarget.Use();
     m_RenderTargets.push(&renderTarget);
 }
@@ -219,6 +221,9 @@ void Mountain::Renderer::PreFrame()
 void Mountain::Renderer::PostFrame()
 {
     PopRenderTarget();
+    
+    if (!m_RenderTargets.empty())
+        throw std::logic_error("RenderTarget push/pop mismatch, e.g. a RenderTarget that was pushed hasn't been popped");
 
     Draw::RenderTarget(*m_RenderTarget);
     Draw::Render();

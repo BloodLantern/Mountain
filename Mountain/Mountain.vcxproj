@@ -122,9 +122,7 @@
     <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_10097982125490285052.hpp" />
     <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_10560615441756428011.hpp" />
     <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_1074902542281558043.hpp" />
-    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_12540647052611605547.hpp" />
     <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_13130013495108453755.hpp" />
-    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_16475344919504352316.hpp" />
     <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_16982112266611754363.hpp" />
     <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_17139022876316836076.hpp" />
     <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_2544377574110585068.hpp" />
@@ -136,10 +134,8 @@
     <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_8397852258098769587.hpp" />
     <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_8414638717441225796.hpp" />
     <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_8915932256763674668.hpp" />
-    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_918666155165273692.hpp" />
     <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_9273770047666001763.hpp" />
     <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_9467723258334487283.hpp" />
-    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_9650581743241132555.hpp" />
     <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_9914516617300152348.hpp" />
     <ClInclude Include="include\Mountain\binary_resources\resource.hpp" />
     <ClInclude Include="include\Mountain\binary_resources\resource_holder.hpp" />
@@ -287,10 +283,6 @@
     <Content Include="shaders\post_processing\post_processing.vert" />
     <Content Include="shaders\line\line.frag" />
     <Content Include="shaders\line\line.vert" />
-    <Content Include="shaders\primitive\primitive.frag" />
-    <Content Include="shaders\primitive\primitive.vert" />
-    <Content Include="shaders\primitive_colored\primitive_colored.frag" />
-    <Content Include="shaders\primitive_colored\primitive_colored.vert" />
     <Content Include="shaders\rectangle\rectangle.frag" />
     <Content Include="shaders\rectangle\rectangle.vert" />
     <Content Include="shaders\texture\texture.frag" />
