@@ -177,19 +177,19 @@ void Draw::RenderTarget(
     if (uv0.x > uv1.x || uv0.y > uv1.y)
         throw std::invalid_argument("UV0 cannot be greater than UV1");
 
-    const Vector2 uvDiff = uv1 - uv0;
-    Vector2 lowerUv = uv0, higherUv = uv1;
+    Vector2 uvDiff = uv1 - uv0;
+    Vector2 lowerUv = uv0;
 
     if (flipFlags & DrawTextureFlipping::Horizontal)
     {
-        higherUv.x = lowerUv.x;
         lowerUv.x += uvDiff.x;
+        uvDiff.x = -uvDiff.x;
     }
 
     if (flipFlags & DrawTextureFlipping::Vertical)
     {
-        higherUv.y = lowerUv.y;
         lowerUv.y += uvDiff.y;
+        uvDiff.y = -uvDiff.y;
     }
 
     Matrix2 diagonalFlip = Matrix2::Identity();
@@ -278,8 +278,6 @@ void Draw::LoadResources()
     m_RectangleShader = ResourceManager::Get<Shader>("rectangle");
     m_CircleShader = ResourceManager::Get<Shader>("circle");
     
-    m_PrimitiveShader = ResourceManager::Get<Shader>("primitive");
-    m_PrimitiveColoredShader = ResourceManager::Get<Shader>("primitive_colored");
     m_TextureShader = ResourceManager::Get<Shader>("texture");
     m_TextShader = ResourceManager::Get<Shader>("text");
 
@@ -625,8 +623,6 @@ void Draw::UpdateShaderMatrices()
     m_CircleShader->SetUniform("projection", proj);
     m_TextureShader->SetUniform("projection", proj);
     
-    m_PrimitiveShader->SetUniform("projection", proj);
-    m_PrimitiveColoredShader->SetUniform("projection", proj);
     m_TextShader->SetUniform("projection", proj);
     
     m_CircleShader->SetUniform("camera", m_CameraMatrix);
