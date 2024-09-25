@@ -11,7 +11,7 @@ BEGIN_MOUNTAIN
 
 class File;
 
-/// @brief Interface for resources, which encapsulates most objects used in the engine that come from a file
+/// @brief Interface for resources, which encapsulates most objects used in the framework that come from a file
 ///
 /// A Resource is loaded in two steps:
 /// - @code SetSourceData(const Pointer<File>&)@endcode or @code SetSourceData(const uint8_t*, int64_t)@endcode
