@@ -96,10 +96,12 @@
     <ClInclude Include="externals\include\magic_enum\magic_enum_switch.hpp" />
     <ClInclude Include="externals\include\magic_enum\magic_enum_utility.hpp" />
     <ClInclude Include="externals\include\Maths\calc.hpp" />
+    <ClInclude Include="externals\include\Maths\core.hpp" />
     <ClInclude Include="externals\include\Maths\definitions.hpp" />
     <ClInclude Include="externals\include\Maths\easing.hpp" />
     <ClInclude Include="externals\include\Maths\math.hpp" />
     <ClInclude Include="externals\include\Maths\matrix.hpp" />
+    <ClInclude Include="externals\include\Maths\matrix2.hpp" />
     <ClInclude Include="externals\include\Maths\matrix3.hpp" />
     <ClInclude Include="externals\include\Maths\quaternion.hpp" />
     <ClInclude Include="externals\include\Maths\vector2.hpp" />
@@ -170,6 +172,7 @@
     <ClInclude Include="include\Mountain\scene\component\audio_source.hpp" />
     <ClInclude Include="include\Mountain\scene\component\component.hpp" />
     <ClInclude Include="include\Mountain\scene\component\light_source.hpp" />
+    <ClInclude Include="include\Mountain\scene\component\sprite.hpp" />
     <ClInclude Include="include\Mountain\scene\component\state_machine.hpp" />
     <ClInclude Include="include\Mountain\scene\entity.hpp" />
     <ClInclude Include="include\Mountain\screen.hpp" />
@@ -258,6 +261,7 @@
     <ClCompile Include="src\Mountain\scene\component\audio_source.cpp" />
     <ClCompile Include="src\Mountain\scene\component\component.cpp" />
     <ClCompile Include="src\Mountain\scene\component\light_source.cpp" />
+    <ClCompile Include="src\Mountain\scene\component\sprite.cpp" />
     <ClCompile Include="src\Mountain\scene\component\state_machine.cpp" />
     <ClCompile Include="src\Mountain\scene\entity.cpp" />
     <ClCompile Include="src\Mountain\screen.cpp" />
