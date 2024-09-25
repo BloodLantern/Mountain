@@ -246,7 +246,7 @@ Pointer<T> ResourceManager::LoadNoCheck(Pointer<File> file, const bool_t loadInR
 
     resource->SetSourceData(file);
 
-    file->m_Resource = std::move(Pointer<Resource>(resource, false));
+    file->m_Resource = Pointer<Resource>(resource, false);
 
     if (loadInRhi)
         resource->Load();
