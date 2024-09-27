@@ -49,6 +49,9 @@ void GameExample::LoadResources()
     entities.Add(entity);
     entity->AddComponent<SpinComponent>();
 
+    character = new AnimatedCharacter({ 30.f, 80.f });
+    entities.Add(character);
+
     player->LoadResources();
 
     font = ResourceManager::LoadFont("assets/font.ttf", 30);
