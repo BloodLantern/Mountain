@@ -100,6 +100,10 @@ public:
     [[nodiscard]]
     MOUNTAIN_API const Guid& GetGuid() const;
 
+    /// @brief Returns the File from which this Resource was loaded.
+    [[nodiscard]]
+    MOUNTAIN_API const Pointer<File>& GetFile() const;
+
     MOUNTAIN_API void SetFile(const Pointer<File>& file);
 
 protected:

@@ -1,54 +1,72 @@
 ﻿#include "Mountain/scene/component/sprite.hpp"
 
+#include "Mountain/input/time.hpp"
 #include "Mountain/resource/resource_manager.hpp"
+#include "Mountain/scene/entity.hpp"
 
 using namespace Mountain;
 
 Sprite::Sprite(std::string spriteName)
-    : m_SpriteName(std::move(spriteName))
+    : m_Name(std::move(spriteName))
 {
-    SetupSprites();
+    SetupTextures();
 }
 
 Sprite::Sprite(std::string spriteName, const float_t frameDuration)
-    : m_SpriteName(std::move(spriteName))
+    : m_Name(std::move(spriteName))
     , m_FrameDuration(frameDuration)
 {
-    SetupSprites();
+    SetupTextures();
 }
 
-const std::string& Sprite::GetSpriteName() const { return m_SpriteName; }
-
-void Sprite::SetSpriteName(const std::string& spriteName)
+void Sprite::Update()
 {
-    m_SpriteName = spriteName;
-    SetupSprites();
+    m_UpdateTimer -= Time::GetDeltaTime();
+
+    if (m_UpdateTimer < 0.f)
+    {
+        m_UpdateTimer = m_FrameDuration;
+        m_CurrentIndex++;
+    }
 }
+
+void Sprite::SetupTextures()
+{
+    // Find all Textures whose name is: m_Name + any number
+    ResourceManager::FindAll<Texture>(
+        [this](const Pointer<Texture>& t) -> bool_t
+        {
+            const File& f = *t->GetFile();
+            const std::string& name = f.GetNameNoExtension();
+            if (!name.starts_with(m_Name))
+                return false;
+
+            std::string&& index = name.substr(m_Name.size());
+            if (std::ranges::find_if(index, [](auto c) -> bool_t { return !std::isdigit(c); }) != index.end())
+                return false;
+
+            return true;
+        },
+        &m_Textures
+    );
+
+    std::ranges::sort(m_Textures);
+
+    m_UpdateTimer = m_FrameDuration;
+}
+
+const Pointer<Texture>& Sprite::Get() { return m_Textures[m_CurrentIndex]; }
+
+const std::string& Sprite::GetName() const { return m_Name; }
+
+void Sprite::SetName(const std::string& name) { m_Name = name; }
 
 float_t Sprite::GetFrameDuration() const { return m_FrameDuration; }
 
 void Sprite::SetFrameDuration(const float_t frameDuration) { m_FrameDuration = frameDuration; }
 
-const std::vector<Pointer<Texture>>& Sprite::GetSprites() const { return m_Sprites; }
+const std::vector<Pointer<Texture>>& Sprite::GetTextures() const { return m_Textures; }
 
-size_t Sprite::GetCurrentSprite() const { return m_CurrentSprite; }
+size_t Sprite::GetCurrentIndex() const { return m_CurrentIndex; }
 
 float_t Sprite::GetUpdateTimer() const { return m_UpdateTimer; }
-
-void Sprite::SetupSprites()
-{
-    m_Sprites.clear();
-    ResourceManager::FindAll<Texture>(
-        [this](const Pointer<Texture>& t) -> bool_t
-        {
-            const std::string& name = t->GetName();
-            if (!name.starts_with(m_SpriteName))
-                return false;
-
-            if (std::filesystem::path{name}.stem())
-
-            return true;
-        },
-        &m_Sprites
-    );
-}
