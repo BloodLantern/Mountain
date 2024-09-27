@@ -4,8 +4,6 @@
 #include "Mountain/scene/entity.hpp"
 #include "Mountain/utils/pointer.hpp"
 
-// TODO - Add a way to handle sprite animations
-
 class Player : public Mountain::Entity
 {
 public:

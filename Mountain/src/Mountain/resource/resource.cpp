@@ -74,11 +74,13 @@ void Resource::SetName(const std::string& newName)
 {
     ResourceManager::Rename(m_Name, newName);
     
-    m_Name = std::move(newName);
+    m_Name = newName;
 }
 
 void Resource::SetGuid(const Guid& guid) { m_Guid = guid; }
 
 const Guid& Resource::GetGuid() const { return m_Guid; }
+
+const Pointer<File>& Resource::GetFile() const { return m_File; }
 
 void Resource::SetFile(const Pointer<File>& file) { m_File = file; }

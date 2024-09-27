@@ -14,16 +14,25 @@ public:
     Sprite() = default;
     explicit Sprite(std::string spriteName);
     Sprite(std::string spriteName, float_t frameDuration);
+
+    void Update() override;
+
+    /// @brief Initialize the Texture vector
+    /// @warning This is a heavy operation and is already called in the constructor.
+    /// Consider using this only when necessary, e.g. after using either SetName() or SetFrameDuration()
+    void SetupTextures();
+
+    const Pointer<Texture>& Get();
     
     [[nodiscard]]
-    const std::string& GetSpriteName() const;
-    void SetSpriteName(const std::string& spriteName);
+    const std::string& GetName() const;
+    void SetName(const std::string& name);
     
     [[nodiscard]]
-    const std::vector<Pointer<Texture>>& GetSprites() const;
+    const std::vector<Pointer<Texture>>& GetTextures() const;
     
     [[nodiscard]]
-    size_t GetCurrentSprite() const;
+    size_t GetCurrentIndex() const;
     
     [[nodiscard]]
     float_t GetFrameDuration() const;
@@ -33,15 +42,13 @@ public:
     float_t GetUpdateTimer() const;
 
 private:
-    std::string m_SpriteName;
+    std::string m_Name;
 
-    std::vector<Pointer<Texture>> m_Sprites;
-    size_t m_CurrentSprite = 0;
+    std::vector<Pointer<Texture>> m_Textures;
+    size_t m_CurrentIndex = 0;
 
     float_t m_FrameDuration = 0.1f;
     float_t m_UpdateTimer = 0.f;
-
-    void SetupSprites();
 };
 
 END_MOUNTAIN
