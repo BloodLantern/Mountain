@@ -73,7 +73,7 @@ template <Concepts::EntryT T>
 std::vector<Pointer<T>> FileManager::FindAll(std::function<bool_t(Pointer<T>)>&& predicate)
 {
     std::vector<Pointer<T>> result;
-    FindAll<T>(FORWARD(predicate), &result);
+    FindAll<T>(std::forward<std::function<bool_t(Pointer<T>)>>(predicate), &result);
     return result;
 }
 

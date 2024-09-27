@@ -1,5 +1,6 @@
 #pragma once
 
+#include "animated_character.hpp"
 #include "Mountain/game.hpp"
 #include "Mountain/collision/grid.hpp"
 #include "Mountain/rendering/render_target.hpp"
@@ -17,6 +18,7 @@ class GameExample : public Mountain::Game
 public:
     Mountain::List<Mountain::Entity*> entities;
 	Player* player = nullptr;
+	AnimatedCharacter* character = nullptr;
 	
 	int32_t ballCount = 0;
 	float_t ballTimer = 0;
