@@ -5,46 +5,48 @@
 #include "Mountain/core.hpp"
 #include "Mountain/resource/texture.hpp"
 #include "Mountain/scene/component/component.hpp"
+#include "Mountain/utils/list.hpp"
 
 BEGIN_MOUNTAIN
 
 class Sprite : public Component
 {
 public:
-    Sprite() = default;
-    explicit Sprite(std::string spriteName);
-    Sprite(std::string spriteName, float_t frameDuration);
-
-    void Update() override;
+    MOUNTAIN_API Sprite() = default;
+    MOUNTAIN_API explicit Sprite(std::string spriteName);
+    MOUNTAIN_API Sprite(std::string spriteName, float_t frameDuration);
 
     /// @brief Initialize the Texture vector
-    /// @warning This is a heavy operation and is already called in the constructor.
-    /// Consider using this only when necessary, e.g. after using either SetName() or SetFrameDuration()
-    void SetupTextures();
+    /// @warning This is a quite heavy operation as it loops over all loaded textures to find the right ones
+    /// and is already called in the constructor. Consider using this only when necessary, e.g. after using SetName()
+    MOUNTAIN_API void SetupTextures();
 
-    const Pointer<Texture>& Get();
+    MOUNTAIN_API const Pointer<Texture>& Get();
     
     [[nodiscard]]
-    const std::string& GetName() const;
-    void SetName(const std::string& name);
+    MOUNTAIN_API const std::string& GetName() const;
+    MOUNTAIN_API void SetName(const std::string& name);
     
     [[nodiscard]]
-    const std::vector<Pointer<Texture>>& GetTextures() const;
+    MOUNTAIN_API const List<Pointer<Texture>>& GetTextures() const;
     
     [[nodiscard]]
-    size_t GetCurrentIndex() const;
+    MOUNTAIN_API size_t GetCurrentIndex() const;
     
     [[nodiscard]]
-    float_t GetFrameDuration() const;
-    void SetFrameDuration(float_t frameDuration);
+    MOUNTAIN_API float_t GetFrameDuration() const;
+    MOUNTAIN_API void SetFrameDuration(float_t frameDuration);
     
     [[nodiscard]]
-    float_t GetUpdateTimer() const;
+    MOUNTAIN_API float_t GetUpdateTimer() const;
+
+protected:
+    void Update() override;
 
 private:
     std::string m_Name;
 
-    std::vector<Pointer<Texture>> m_Textures;
+    List<Pointer<Texture>> m_Textures;
     size_t m_CurrentIndex = 0;
 
     float_t m_FrameDuration = 0.1f;

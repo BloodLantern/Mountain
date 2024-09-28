@@ -54,7 +54,8 @@ void AudioSource::Update()
     alSourcefv(m_Handle, AL_POSITION, Vector3(position.x, position.y, positionZ * Audio::GetDistanceFactor()).Data());
     AudioContext::CheckError();
 
-    const Vector2 velocity = (position - m_LastPosition) / Time::GetDeltaTime();
+    const float_t deltaTime = Time::GetDeltaTime();
+    const Vector2 velocity = deltaTime == 0.f ? Vector2::Zero() : (position - m_LastPosition) / deltaTime;
     std::array direction = { Vector3::UnitZ(), Vector3::UnitY() };
     
     // Velocity

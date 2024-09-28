@@ -26,7 +26,7 @@ void Sprite::Update()
     if (m_UpdateTimer < 0.f)
     {
         m_UpdateTimer = m_FrameDuration;
-        m_CurrentIndex++;
+        m_CurrentIndex = (m_CurrentIndex + 1) % m_Textures.GetSize();
     }
 }
 
@@ -37,7 +37,7 @@ void Sprite::SetupTextures()
         [this](const Pointer<Texture>& t) -> bool_t
         {
             const File& f = *t->GetFile();
-            const std::string& name = f.GetNameNoExtension();
+            const std::string& name = f.GetPathNoExtension();
             if (!name.starts_with(m_Name))
                 return false;
 
@@ -50,7 +50,7 @@ void Sprite::SetupTextures()
         &m_Textures
     );
 
-    std::ranges::sort(m_Textures);
+    std::ranges::sort(m_Textures, [](auto&& a, auto&& b) -> bool_t { return a->GetName() < b->GetName(); });
 
     m_UpdateTimer = m_FrameDuration;
 }
@@ -65,7 +65,7 @@ float_t Sprite::GetFrameDuration() const { return m_FrameDuration; }
 
 void Sprite::SetFrameDuration(const float_t frameDuration) { m_FrameDuration = frameDuration; }
 
-const std::vector<Pointer<Texture>>& Sprite::GetTextures() const { return m_Textures; }
+const List<Pointer<Texture>>& Sprite::GetTextures() const { return m_Textures; }
 
 size_t Sprite::GetCurrentIndex() const { return m_CurrentIndex; }
 
