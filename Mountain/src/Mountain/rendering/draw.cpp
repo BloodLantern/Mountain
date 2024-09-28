@@ -149,8 +149,12 @@ void Draw::Texture(
 
     if (!m_DrawList.textureId.Empty() && m_DrawList.textureId.Back() == texture.GetId())
     {
-        m_DrawList.commands.Back().count++;
-        return;
+        auto& lastCommand = m_DrawList.commands.Back();
+        if (lastCommand.type == DrawDataType::Texture)
+        {
+            lastCommand.count++;
+            return;
+        }
     }
     
     m_DrawList.textureId.Add(texture.GetId());

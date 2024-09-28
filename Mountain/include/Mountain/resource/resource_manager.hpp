@@ -4,6 +4,7 @@
 
 #include "Mountain/file/file.hpp"
 #include "Mountain/resource/resource.hpp"
+#include "Mountain/utils/list.hpp"
 #include "Mountain/utils/logger.hpp"
 #include "Mountain/utils/pointer.hpp"
 
@@ -104,11 +105,11 @@ public:
     /// @return All stored Resource of type @p T.
     template <Concepts::ResourceT T>
     [[nodiscard]]
-    static std::vector<Pointer<T>> FindAll();
+    static List<Pointer<T>> FindAll();
     
     /// @see ResourceManager::FindAll()
     template <Concepts::ResourceT T>
-    static void FindAll(std::vector<Pointer<T>>* result);
+    static void FindAll(List<Pointer<T>>* result);
 
     /// @brief Finds a specific Resource based on a predicate.
     /// @tparam T The type of Resource to find.
@@ -128,11 +129,11 @@ public:
     /// returned @c false, instead return a null @ref Pointer.
     template <Concepts::ResourceT T = Resource>
     [[nodiscard]]
-    static std::vector<Pointer<T>> FindAll(std::function<bool_t(Pointer<T>)>&& predicate);
+    static List<Pointer<T>> FindAll(std::function<bool_t(Pointer<T>)>&& predicate);
 
     /// @see @ref FileManager::FindAll(std::function<bool_t(Pointer<T>)>&&)
     template <Concepts::ResourceT T>
-    static void FindAll(std::function<bool_t(Pointer<T>)>&& predicate, std::vector<Pointer<T>>* result);
+    static void FindAll(std::function<bool_t(Pointer<T>)>&& predicate, List<Pointer<T>>* result);
 
     /// @brief Checks whether the given @p name corresponds to a Resource of type @p T.
     template <Concepts::ResourceT T>
