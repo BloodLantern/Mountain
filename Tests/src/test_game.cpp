@@ -219,6 +219,12 @@ void GameExample::Render()
         ImGui::Checkbox("Show inputs window", &showInputs);
         ImGui::SliderFloat("Time scale", &Time::timeScale, 0.f, 2.f);
         ImGui::Checkbox("Debug render", &debugRender);
+        Sprite* s = character->GetComponent<Sprite>();
+        float_t f = s->GetFrameDuration();
+        const float_t oldF = f;
+        ImGui::DragFloat("Old lady animation speed", &f, 0.01f);
+        if (oldF != f)
+            s->SetFrameDuration(f);
     }
     
     if (ImGui::CollapsingHeader("Player"))

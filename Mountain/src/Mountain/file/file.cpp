@@ -126,8 +126,8 @@ void File::UpdateUtilityValues()
     std::filesystem::path path = m_Path;
 
     m_NameNoExtension = m_Path.stem().generic_string();
-    m_Extension = m_Path.extension().string();
-    m_PathNoExtension = path.replace_extension().string();
+    m_Extension = m_Path.extension().generic_string();
+    m_PathNoExtension = path.replace_extension().generic_string();
 
     // Update file type from extension
     if (Utils::StringArrayContains(AudioTrack::FileExtensions, m_Extension))

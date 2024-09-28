@@ -116,24 +116,24 @@ Pointer<T> ResourceManager::Get(const Guid& guid)
 }
 
 template <Concepts::ResourceT T>
-std::vector<Pointer<T>> ResourceManager::FindAll()
+List<Pointer<T>> ResourceManager::FindAll()
 {
-    std::vector<Pointer<T>> result;
+    List<Pointer<T>> result;
     FindAll<T>(&result);
     return result;
 }
 
 template <Concepts::ResourceT T>
-void ResourceManager::FindAll(std::vector<Pointer<T>>* result)
+void ResourceManager::FindAll(List<Pointer<T>>* result)
 {
-    result->clear();
+    result->Clear();
     
     for (auto& val : m_Resources | std::views::values)
     {
         Pointer<T> entry = Utils::DynamicPointerCast<T>(val);
         
         if (entry)
-            result->push_back(std::move(entry));
+            result->Add(std::move(entry));
     }
 }
 
@@ -153,23 +153,23 @@ Pointer<T> ResourceManager::Find(std::function<bool_t(Pointer<T>)>&& predicate)
 }
 
 template <Concepts::ResourceT T>
-std::vector<Pointer<T>> ResourceManager::FindAll(std::function<bool_t(Pointer<T>)>&& predicate)
+List<Pointer<T>> ResourceManager::FindAll(std::function<bool_t(Pointer<T>)>&& predicate)
 {
-    std::vector<Pointer<T>> result;
+    List<Pointer<T>> result;
     FindAll<T>(FORWARD(predicate), &result);
     return result;
 }
 
 template <Concepts::ResourceT T>
-void ResourceManager::FindAll(std::function<bool_t(Pointer<T>)>&& predicate, std::vector<Pointer<T>>* result)
+void ResourceManager::FindAll(std::function<bool_t(Pointer<T>)>&& predicate, List<Pointer<T>>* result)
 {
-    result->clear();
+    result->Clear();
 
     for (const Pointer<Resource>& val : m_Resources | std::views::values)
     {
         Pointer<T> r = Utils::DynamicPointerCast<T>(val);
         if (r && predicate(r))
-            result->push_back(r);
+            result->Add(r);
     }
 }
  
