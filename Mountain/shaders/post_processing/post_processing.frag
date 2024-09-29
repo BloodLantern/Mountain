@@ -57,5 +57,8 @@ void main()
         lightColor += lightSource.color * lightSource.intensity * attenuation;
     }
     
+    // Clamp the light color components between 0 and 1
+    lightColor = clamp(lightColor, vec4(0.f), vec4(1.f));
+    
     fragmentColor = lightColor * baseColor;
 }

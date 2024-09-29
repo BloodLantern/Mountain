@@ -240,6 +240,16 @@ namespace Calc
 	[[nodiscard]]
 	MATH_TOOLBOX constexpr bool_t OnInterval(float_t value, float_t lastValue, float_t interval);
 
+	/// @brief Clamps the given @p value between @p min and @p max and remaps the result between @p newMin and @p newMax
+	[[nodiscard]]
+	MATH_TOOLBOX constexpr float_t ClampedMap(
+		float_t value,
+		float_t min,
+		float_t max,
+		float_t newMin = 0.f,
+		float_t newMax = 1.f
+	);
+
     /// @brief Checks if a value is less than what is considered to be zero, e.g. if its absolute value is smaller than <see cref="Calc::Zero"/>.
     /// 
     /// @param value The value to check.
@@ -440,7 +450,15 @@ constexpr void Calc::Approach(float_t &value, const float_t target, const float_
 
 constexpr float_t Calc::YoYo(const float_t value) noexcept { return value <= 0.5f ? value * 2.f : 1.f - (value - 0.5f) * 2.f; }
 
-constexpr bool_t Calc::OnInterval(const float_t value, const float_t lastValue, const float_t interval) { return Calc::IsZero(interval) || (int) (lastValue / interval) != (int) (value / interval); }
+constexpr bool_t Calc::OnInterval(const float_t value, const float_t lastValue, const float_t interval)
+{
+	return IsZero(interval) || static_cast<int32_t>(lastValue / interval) != static_cast<int32_t>(value / interval);
+}
+
+constexpr float_t Calc::ClampedMap(const float_t value, const float_t min, const float_t max, const float_t newMin, const float_t newMax)
+{
+	return Clamp((value - min) / (max - min), 0.f, 1.f) * (newMax - newMin) + newMin;
+}
 
 constexpr bool_t Calc::IsZero(const float_t value) noexcept { return IsZero(value, Zero); }
 
