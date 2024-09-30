@@ -15,6 +15,8 @@ public:
     float_t radius = 0.f;
     float_t angleMin = 0.f;
     float_t angleMax = Calc::TwoPi;
+    
+    Vector2 offset;
 
     MOUNTAIN_API void Update() override;
 
