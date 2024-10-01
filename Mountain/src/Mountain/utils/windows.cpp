@@ -1,7 +1,5 @@
 ﻿#include "Mountain/utils/windows.hpp"
 
-#include <ShlObj_core.h>
-
 #include "Mountain/utils/logger.hpp"
 
 using namespace Mountain;
