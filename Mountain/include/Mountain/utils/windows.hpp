@@ -11,6 +11,8 @@
 // ReSharper disable once CppInconsistentNaming
 #define XMLDocument XMLDocument_dont_care
 #include <Windows.h>
+
+#include <ShlObj_core.h>
 #undef XMLDocument
 
 #undef near
