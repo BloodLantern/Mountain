@@ -1,5 +1,7 @@
 ﻿#include "Mountain/utils/windows.hpp"
 
+#include <ShlObj_core.h>
+
 #include "Mountain/utils/logger.hpp"
 
 using namespace Mountain;
@@ -31,3 +33,19 @@ bool_t Windows::CheckError()
 }
 
 void Windows::SilenceError() { (void) GetLastError(); }
+
+std::string Windows::GetAppdataLocalPath()
+{
+    CHAR result[MAX_PATH]{};
+    (void) SHGetFolderPathA(nullptr, CSIDL_LOCAL_APPDATA, nullptr, 0, result);
+    CheckError();
+    return result;
+}
+
+std::string Windows::GetAppdataRoamingPath()
+{
+    CHAR result[MAX_PATH]{};
+    (void) SHGetFolderPathA(nullptr, CSIDL_APPDATA, nullptr, 0, result);
+    CheckError();
+    return result;
+}
