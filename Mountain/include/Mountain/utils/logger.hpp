@@ -206,7 +206,7 @@ public:
 
     /// @brief Starts the logger.
     ///
-    /// This function is called automatically when the Application is constructed.
+    /// This function is called automatically when the Game is constructed.
     /// After a call to this function, you can use the Log functions.
     ///
     /// This function doesn't do anything if the logger has already been started.
@@ -214,7 +214,7 @@ public:
 
     /// @brief Synchronizes the threads and stops the logger.
     ///
-    /// This function is called automatically when the Application is destroyed.
+    /// This function is called automatically when the Game is destroyed.
     /// After a call to this function, logger function calls won't do anything.
     ///
     /// This function doesn't do anything if the logger has already been stopped.

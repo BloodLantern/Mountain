@@ -1,9 +1,11 @@
 #pragma once
 
+#include <string>
+
 #include "Mountain/core.hpp"
 
 /// @file windows.hpp
-/// @brief A way to include the @c <Windows.h> header without some of its problematic macros.
+/// @brief A way to include the @c <Windows.h> header without some of its conflicting macros.
 
 #undef APIENTRY
 // ReSharper disable once CppInconsistentNaming
@@ -24,6 +26,10 @@ namespace Windows
     MOUNTAIN_API bool_t CheckError();
 
     MOUNTAIN_API void SilenceError();
+
+    MOUNTAIN_API std::string GetAppdataLocalPath();
+
+    MOUNTAIN_API std::string GetAppdataRoamingPath();
 }
 
 END_MOUNTAIN

@@ -16,6 +16,9 @@
 /// @file utils.hpp
 /// @brief Defines general utility functions.
 
+#define TO_STRING(x) #x
+#define STRINGIFY(x) TO_STRING(x)
+
 BEGIN_MOUNTAIN
 
 /// @namespace Utils

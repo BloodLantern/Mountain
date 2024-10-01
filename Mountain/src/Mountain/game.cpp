@@ -8,6 +8,20 @@
 #include "Mountain/resource/resource_manager.hpp"
 #include "Mountain/utils/coroutine.hpp"
 #include "Mountain/utils/logger.hpp"
+#include "Mountain/utils/message_box.hpp"
+
+#define EXECUTE_SAFE(function)                                                                                                                              \
+    try                                                                                                                                                     \
+    {                                                                                                                                                       \
+        function();                                                                                                                                         \
+    }                                                                                                                                                       \
+    catch (const std::exception& e)                                                                                                                         \
+    {                                                                                                                                                       \
+        Logger::LogFatal("Uncaught exception in Game::" STRINGIFY(function) "(): {}", e);                                                                   \
+        Logger::Stop();                                                                                                                                     \
+        MessageBox::Show("Unhandled exception in Game::" STRINGIFY(function) "()", std::format("{}", e), MessageBox::Type::Ok, MessageBox::Icon::Error);    \
+        std::exit(-1);                                                                                                                                      \
+    }
 
 using namespace Mountain;
 
@@ -43,10 +57,10 @@ Game::~Game()
 
 void Game::Play()
 {
-    Initialize();
-    LoadResources();
-    MainLoop();
-    Shutdown();
+    EXECUTE_SAFE(Initialize)
+    EXECUTE_SAFE(LoadResources)
+    EXECUTE_SAFE(MainLoop)
+    EXECUTE_SAFE(Shutdown)
 }
 
 void Game::Initialize()
