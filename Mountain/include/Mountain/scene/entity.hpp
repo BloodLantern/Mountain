@@ -15,6 +15,8 @@ class Entity
 public:
     Vector2 position;
 
+    MOUNTAIN_API Entity() = default;
+
     MOUNTAIN_API explicit Entity(const Vector2& position);
 
     MOUNTAIN_API virtual ~Entity();
