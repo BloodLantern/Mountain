@@ -20,7 +20,7 @@
         Logger::LogFatal("Uncaught exception in Game::" STRINGIFY(function) "(): {}", e);                                                                   \
         Logger::Stop();                                                                                                                                     \
         MessageBox::Show("Unhandled exception in Game::" STRINGIFY(function) "()", std::format("{}", e), MessageBox::Type::Ok, MessageBox::Icon::Error);    \
-        std::exit(-1);                                                                                                                                      \
+        std::abort();                                                                                                                                       \
     }
 
 using namespace Mountain;
