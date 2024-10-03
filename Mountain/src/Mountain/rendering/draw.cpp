@@ -780,27 +780,32 @@ void Draw::RenderTextData(const List<TextData>& texts, const size_t index, const
         for (const char_t c : data.text)
         {
             const Font::Character& character = data.font->m_Characters.at(c);
-
-            const Vector2 pos = Calc::Round(
-                {
-                    offset.x + static_cast<float_t>(character.bearing.x) * data.scale,
-                    offset.y - static_cast<float_t>(character.bearing.y) * data.scale
-                }
-            );
-            const Vector2 size = Calc::Round(character.size * data.scale);
-
-            const std::array vertices = {
-                pos.x,          pos.y,           0.f, 0.f,
-                pos.x + size.x, pos.y,           1.f, 0.f,
-                pos.x + size.x, pos.y + size.y,  1.f, 1.f,
-                pos.x,          pos.y + size.y,  0.f, 1.f
-            };
-
-            glBindTexture(GL_TEXTURE_2D, character.textureId);
             
-            glNamedBufferSubData(m_TextVbo, 0, sizeof(vertices), vertices.data());
-            
-            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+            if (c != ' ') // Do not draw spaces
+            {
+                const Vector2 pos = Calc::Round(
+                    {
+                        offset.x + static_cast<float_t>(character.bearing.x) * data.scale,
+                        offset.y - static_cast<float_t>(character.bearing.y) * data.scale
+                    }
+                );
+
+                const Vector2 size = Calc::Round(character.size * data.scale);
+
+                const std::array vertices = {
+                    pos.x,          pos.y,           0.f, 0.f,
+                    pos.x + size.x, pos.y,           1.f, 0.f,
+                    pos.x + size.x, pos.y + size.y,  1.f, 1.f,
+                    pos.x,          pos.y + size.y,  0.f, 1.f
+                };
+
+                    
+                glBindTexture(GL_TEXTURE_2D, character.textureId);
+                
+                glNamedBufferSubData(m_TextVbo, 0, sizeof(vertices), vertices.data());
+                
+                glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+            }
             
             // Now advance cursors for next glyph (note that advance is number of 1/64 pixels)
             offset.x += static_cast<float_t>(character.advance >> 6) * data.scale; // bitshift by 6 to get value in pixels (2^6 = 64)
