@@ -10,6 +10,7 @@
 #include "Mountain/utils/logger.hpp"
 #include "Mountain/utils/message_box.hpp"
 
+#ifdef _DEBUG
 #define EXECUTE_SAFE(function)                                                                                                                              \
     try                                                                                                                                                     \
     {                                                                                                                                                       \
@@ -20,8 +21,22 @@
         Logger::LogFatal("Uncaught exception in Game::" STRINGIFY(function) "(): {}", e);                                                                   \
         Logger::Stop();                                                                                                                                     \
         MessageBox::Show("Unhandled exception in Game::" STRINGIFY(function) "()", std::format("{}", e), MessageBox::Type::Ok, MessageBox::Icon::Error);    \
-        std::abort();                                                                                                                                       \
+        std::terminate();                                                                                                                                   \
     }
+#else
+#define EXECUTE_SAFE(function)                                                                                                                              \
+    try                                                                                                                                                     \
+    {                                                                                                                                                       \
+        function();                                                                                                                                         \
+    }                                                                                                                                                       \
+    catch (const std::exception& e)                                                                                                                         \
+    {                                                                                                                                                       \
+        Logger::LogFatal("Uncaught exception in Game::" STRINGIFY(function) "(): {}", e);                                                                   \
+        Logger::Stop();                                                                                                                                     \
+        MessageBox::Show("Unhandled exception in Game::" STRINGIFY(function) "()", std::format("{}", e), MessageBox::Type::Ok, MessageBox::Icon::Error);    \
+        std::exit(-1);                                                                                                                                      \
+    }
+#endif
 
 using namespace Mountain;
 
