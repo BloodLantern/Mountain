@@ -27,7 +27,7 @@ public:
 
     MOUNTAIN_API virtual void Render();
 
-    MOUNTAIN_API virtual void DebugRender();
+    MOUNTAIN_API virtual void RenderDebug();
 
     MOUNTAIN_API void AddComponent(Component* component);
 
