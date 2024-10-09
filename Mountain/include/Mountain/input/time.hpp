@@ -39,7 +39,7 @@ public:
     /// @brief Gets the last total unscaled elapsed time
     MOUNTAIN_API static float_t GetLastTotalTimeUnscaled();
     
-    /// @brief Gets the delta time
+    /// @brief Gets the time elapsed since last frame
     MOUNTAIN_API static float_t GetDeltaTime();
     
     /// @brief Gets the unscaled delta time
