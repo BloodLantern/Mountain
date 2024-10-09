@@ -27,7 +27,7 @@ void Entity::Render()
         component->Render();
 }
 
-void Entity::DebugRender()
+void Entity::RenderDebug()
 {
     for (Component* component : m_Components)
         component->DebugRender();
