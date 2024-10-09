@@ -207,6 +207,7 @@
     <ClInclude Include="inline\Mountain\scene\entity.inl" />
     <ClInclude Include="inline\Mountain\utils\color.inl" />
     <ClInclude Include="inline\Mountain\utils\event.inl" />
+    <ClInclude Include="inline\Mountain\utils\imgui_utils.inl" />
     <ClInclude Include="inline\Mountain\utils\list.inl" />
     <ClInclude Include="inline\Mountain\utils\logger.inl" />
     <ClInclude Include="inline\Mountain\utils\pointer.inl" />

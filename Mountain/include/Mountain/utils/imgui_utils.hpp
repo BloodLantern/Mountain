@@ -23,6 +23,7 @@ namespace ImGuiUtils
 
 END_MOUNTAIN
 
+// ReSharper disable CppInconsistentNaming
 namespace ImGui
 {
     MOUNTAIN_API bool DragAngle(
@@ -34,4 +35,10 @@ namespace ImGui
         const char* format = "%.3f", 
         ImGuiSliderFlags flags = 0
     );
+
+    template <Mountain::Concepts::EnumT T>
+    bool ComboEnum(const char* label, T* v, ImGuiComboFlags flags = ImGuiComboFlags_None);
 }
+// ReSharper restore CppInconsistentNaming
+
+#include "Mountain/utils/imgui_utils.inl"
