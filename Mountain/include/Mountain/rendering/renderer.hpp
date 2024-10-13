@@ -45,7 +45,7 @@ private:
     static void PostFrame();
     static void Shutdown();
     
-    friend class Draw;
+    friend class Draw; // TODO - Change these to friend functions instead
     friend class Font;
     friend class Game;
 };

@@ -81,7 +81,8 @@ void Game::MainLoop()
     Time::Initialize();
     
     Window::SetVisible(true);
-    
+
+    // TODO - Add a debug field for the time a full frame took
     while (!Window::GetShouldClose())
     {
         Window::PollEvents();

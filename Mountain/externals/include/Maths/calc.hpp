@@ -46,7 +46,7 @@ namespace Calc
 	/// @brief Shorthand for writing <c>Calc::Pi / 2.f</c>.
 	constexpr float_t PiOver2 = Pi / 2.f;
 	
-	/// @brief Shorthand for writing <c>Calc::Pi / 2.f</c>.
+	/// @brief Shorthand for writing <c>Calc::Pi / 4.f</c>.
 	constexpr float_t PiOver4 = Pi / 4.f;
 	
 	/// @brief Value used to convert from degrees to radians.
