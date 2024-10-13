@@ -29,14 +29,14 @@
 
 using namespace Mountain;
 
-Game::Game(const std::string_view windowTitle, const Vector2i windowSize, const bool_t vsync)
+Game::Game(const std::string_view windowTitle, const Vector2i windowSize)
 {
     Logger::Start();
     Logger::OpenDefaultFile();
     
     Logger::LogInfo("Initializing Mountain Framework");
     
-    if (!Renderer::Initialize(windowTitle, windowSize, vsync))
+    if (!Renderer::Initialize(windowTitle, windowSize))
     {
         Logger::LogFatal("Failed to initialize renderer, shutting down");
         throw std::runtime_error("Failed to initialize renderer");
@@ -82,7 +82,6 @@ void Game::MainLoop()
     
     Window::SetVisible(true);
 
-    // TODO - Add a debug field for the time a full frame took
     while (!Window::GetShouldClose())
     {
         Window::PollEvents();
@@ -100,9 +99,9 @@ void Game::MainLoop()
             Render();
 
         Renderer::PostFrame();
-        Window::SwapBuffers();
         
 		Input::Reset();
+        Time::WaitForNextFrame();
     }
 
 	Coroutine::StopAll();

@@ -141,13 +141,13 @@ Mountain::RenderTarget& Mountain::Renderer::GetCurrentRenderTarget()
 
 Mountain::OpenGlVersion& Mountain::Renderer::GetOpenGlVersion() { return m_GlVersion; }
 
-bool Mountain::Renderer::Initialize(const std::string_view windowTitle, const Vector2i windowSize, const bool_t vsync, const OpenGlVersion &glVersion)
+bool Mountain::Renderer::Initialize(const std::string_view windowTitle, const Vector2i windowSize, const OpenGlVersion &glVersion)
 {
     Logger::LogDebug("Initializing renderer");
 
     m_GlVersion = glVersion;
 
-    Window::Initialize(windowTitle, windowSize, vsync, glVersion);
+    Window::Initialize(windowTitle, windowSize, glVersion);
 
     // Setup GLAD: load all OpenGL function pointers
     if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress)))  // NOLINT(clang-diagnostic-cast-function-type-strict)
