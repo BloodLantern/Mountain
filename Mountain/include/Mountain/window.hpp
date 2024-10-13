@@ -112,7 +112,7 @@ private:
     static inline bool_t m_Minimized = false;
 
     /// @brief Initializes the window
-    static void Initialize(std::string_view windowTitle, Vector2i windowSize, bool_t vsync, const OpenGlVersion &glVersion);
+    static void Initialize(std::string_view windowTitle, Vector2i windowSize, const OpenGlVersion &glVersion);
 
     /// @brief Terminates the window
     static void Shutdown();
@@ -127,6 +127,7 @@ private:
 
     friend class Renderer;
     friend class Game;
+    friend class Time;
 };
     
 END_MOUNTAIN

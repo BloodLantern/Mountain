@@ -18,8 +18,6 @@ BEGIN_MOUNTAIN
 class MOUNTAIN_API Screen
 {
     STATIC_CLASS(Screen)
-
-    friend class Window;
     
 public:
     /// @brief Gets the position of the screen
@@ -49,6 +47,8 @@ private:
     static void Initialize();
 
     static void Shutdown();
+
+    friend class Window;
 };
 
 END_MOUNTAIN

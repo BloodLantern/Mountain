@@ -118,7 +118,7 @@ bool_t Window::GetMinimized()
     return m_Minimized;
 }
 
-void Window::Initialize(const std::string_view windowTitle, const Vector2i windowSize, const bool_t vsync, const OpenGlVersion& glVersion)
+void Window::Initialize(const std::string_view windowTitle, const Vector2i windowSize, const OpenGlVersion& glVersion)
 {
     glfwSetErrorCallback(
         [](int error, const char* description)
@@ -152,7 +152,7 @@ void Window::Initialize(const std::string_view windowTitle, const Vector2i windo
     MakeContextCurrent();
 
     // Set vsync
-    glfwSwapInterval(vsync);
+    glfwSwapInterval(1);
 
     glfwSetWindowIconifyCallback(m_Window, WindowMinimizeCallback);
 
