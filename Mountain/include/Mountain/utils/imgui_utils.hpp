@@ -18,6 +18,14 @@ namespace ImGuiUtils
 
     MOUNTAIN_API void DirectionVector(std::string_view label, Vector2* value, Vector2 expected);
 
+    template <typename T>
+    bool_t Optional(
+        std::optional<T>* value,
+        const std::type_identity_t<T>& defaultValue,
+        std::type_identity_t<T> nullValue,
+        const std::type_identity_t<std::function<bool_t(T& value)>>& displayFunction
+    );
+
     MOUNTAIN_API void ShowInputsWindow();
 }
 
