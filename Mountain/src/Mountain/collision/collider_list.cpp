@@ -30,10 +30,10 @@ void ColliderList::DebugRender(const Color& color) const
     
     for (const Collider* const c : list)
     {
-        topLeft.x = std::min(topLeft.x, c->Left());
-        topLeft.y = std::min(topLeft.y, c->Top());
-        bottomRight.x = std::min(bottomRight.x, c->Right());
-        bottomRight.y = std::min(bottomRight.y, c->Bottom());
+        topLeft.x = std::min(topLeft.x, c->AbsoluteLeft());
+        topLeft.y = std::min(topLeft.y, c->AbsoluteTop());
+        bottomRight.x = std::min(bottomRight.x, c->AbsoluteRight());
+        bottomRight.y = std::min(bottomRight.y, c->AbsoluteBottom());
         
         c->DebugRender(color);
     }
@@ -41,44 +41,29 @@ void ColliderList::DebugRender(const Color& color) const
     Draw::Rectangle(topLeft, bottomRight - topLeft, color);
 }
 
-bool_t ColliderList::CheckCollision(const Vector2& point) const
+bool_t ColliderList::CheckCollision(const Vector2 point) const
 {
-    return std::ranges::any_of(list, [&] (const Collider* const c) -> bool_t { return c->CheckCollision(point - position); });
+    return std::ranges::any_of(list, [&] (const Collider* const c) -> bool_t { return c->CheckCollision(point - GetActualPosition()); });
 }
 
 bool_t ColliderList::CheckCollision(const Hitbox& hitbox) const
 {
-    Hitbox h = hitbox;
-    h.position -= position;
-    return std::ranges::any_of(list, [&] (const Collider* const c) -> bool_t { return c->CheckCollision(h); });
+    return std::ranges::any_of(list, [&] (const Collider* const c) -> bool_t { return c->CheckCollision(hitbox); });
 }
 
 bool_t ColliderList::CheckCollision(const Circle& circle) const
 {
-    Circle ci = circle;
-    ci.position -= position;
-    return std::ranges::any_of(list, [&] (const Collider* const c) -> bool_t { return c->CheckCollision(ci); });
+    return std::ranges::any_of(list, [&] (const Collider* const c) -> bool_t { return c->CheckCollision(circle); });
 }
 
 bool_t ColliderList::CheckCollision(const Grid& grid) const
 {
-    Grid g = grid;
-    g.position -= position;
-    return std::ranges::any_of(list, [&] (const Collider* const c) -> bool_t { return c->CheckCollision(g); });
+    return std::ranges::any_of(list, [&] (const Collider* const c) -> bool_t { return c->CheckCollision(grid); });
 }
 
 bool_t ColliderList::CheckCollision(const ColliderList& otherList) const
 {
-    for (decltype(list)::ConstIterator it = list.CBegin(); it != list.CEnd(); it++)
-    {
-		(*it)->position += position;
-		const bool_t collision = (*it)->CheckCollision(otherList);
-        (*it)->position -= position;
-
-        if (collision)
-            return true;
-    }
-    return false;
+    return std::ranges::any_of(list, [&] (const Collider* const c) -> bool_t { return c->CheckCollision(otherList); });
 }
 
 float_t ColliderList::Left() const
@@ -113,10 +98,42 @@ float_t ColliderList::Bottom() const
     return bottom;
 }
 
-Vector2 ColliderList::Center() const
+float_t ColliderList::AbsoluteLeft() const
+{
+    float_t left = std::numeric_limits<float_t>::max();
+    for (const Collider* const c : list)
+        left = std::min(left, c->AbsoluteLeft());
+    return left;
+}
+
+float_t ColliderList::AbsoluteRight() const
+{
+    float_t right = std::numeric_limits<float_t>::min();
+    for (const Collider* const c : list)
+        right = std::max(right, c->AbsoluteRight());
+    return right;
+}
+
+float_t ColliderList::AbsoluteTop() const
+{
+    float_t top = std::numeric_limits<float_t>::min();
+    for (const Collider* const c : list)
+        top = std::max(top, c->AbsoluteTop());
+    return top;
+}
+
+float_t ColliderList::AbsoluteBottom() const
+{
+    float_t bottom = std::numeric_limits<float_t>::max();
+    for (const Collider* const c : list)
+        bottom = std::min(bottom, c->AbsoluteBottom());
+    return bottom;
+}
+
+Vector2 ColliderList::AbsoluteCenter() const
 {
     Vector2 center;
     for (const Collider* const c : list)
-        center += c->Center();
+        center += c->AbsoluteCenter();
     return center / static_cast<float_t>(list.GetSize());
 }

@@ -12,12 +12,12 @@ public:
     float_t radius = 0.f;
 
     Circle();
-    Circle(const Vector2& position, float_t radius);
+    Circle(Vector2 position, float_t radius);
 
     void DebugRender(const Color& color) const override;
 
     [[nodiscard]]
-    bool CheckCollision(const Vector2& point) const override;
+    bool CheckCollision(Vector2 point) const override;
     [[nodiscard]]
     bool CheckCollision(const Hitbox& hitbox) const override;
     [[nodiscard]]
@@ -28,18 +28,46 @@ public:
     bool CheckCollision(const ColliderList& list) const override;
 
     [[nodiscard]]
-    bool Intersect(const Vector2& p1, const Vector2& p2) const;
+    bool Intersect(Vector2 p1, Vector2 p2) const;
 
     [[nodiscard]]
-    float Left() const override;
+    float_t Left() const override;
     [[nodiscard]]
-    float Right() const override;
+    float_t Right() const override;
     [[nodiscard]]
-    float Top() const override;
+    float_t Top() const override;
     [[nodiscard]]
-    float Bottom() const override;
+    float_t Bottom() const override;
     [[nodiscard]]
     Vector2 Center() const override;
+    [[nodiscard]]
+    Vector2 TopLeft() const override;
+    [[nodiscard]]
+    Vector2 TopRight() const override;
+    [[nodiscard]]
+    Vector2 BottomLeft() const override;
+    [[nodiscard]]
+    Vector2 BottomRight() const override;
+    
+    [[nodiscard]]
+    float AbsoluteLeft() const override;
+    [[nodiscard]]
+    float AbsoluteRight() const override;
+    [[nodiscard]]
+    float AbsoluteTop() const override;
+    [[nodiscard]]
+    float AbsoluteBottom() const override;
+    [[nodiscard]]
+    Vector2 AbsoluteCenter() const override;
+    [[nodiscard]]
+    Vector2 AbsoluteTopLeft() const override;
+    [[nodiscard]]
+    Vector2 AbsoluteTopRight() const override;
+    [[nodiscard]]
+    Vector2 AbsoluteBottomLeft() const override;
+    [[nodiscard]]
+    Vector2 AbsoluteBottomRight() const override;
+    
     [[nodiscard]]
     float Width() const override;
     [[nodiscard]]

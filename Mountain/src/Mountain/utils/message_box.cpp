@@ -6,9 +6,9 @@
 
 using namespace Mountain;
 
-MessageBox::Result MessageBox::Show(const std::string& title, const std::string& text, const Type type, const Icon icon, const DefaultButton defaultButton)
+MessageBox::Result MessageBox::Show(const std::string_view title, const std::string_view text, const Type type, const Icon icon, const DefaultButton defaultButton)
 {
-    return Call(text.c_str(), title.c_str(), type, icon, defaultButton);
+    return Call(text.data(), title.data(), type, icon, defaultButton);
 }
 
 uint32_t MessageBox::TypeToWindows(const Type type)

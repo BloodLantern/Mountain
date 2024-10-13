@@ -54,9 +54,3 @@ void Entity::RemoveComponent(Component* component)
 const Collider* Entity::GetCollider() const { return m_Collider; }
 
 Collider* Entity::GetCollider() { return m_Collider; }
-
-void Entity::SetCollider(Collider* newCollider)
-{
-    m_Collider = newCollider;
-    m_Collider->m_Entity = this;
-}

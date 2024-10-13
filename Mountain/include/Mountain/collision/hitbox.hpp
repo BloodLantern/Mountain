@@ -12,7 +12,7 @@ public:
 
     Hitbox();
 
-    Hitbox(const Vector2& position, const Vector2& size);
+    Hitbox(Vector2 off, Vector2 size);
 
     void DebugRender(const Color& color) const override;
 
@@ -23,7 +23,7 @@ public:
     bool Intersects(const Hitbox& other) const;
 
     [[nodiscard]]
-    bool CheckCollision(const Vector2& point) const override;
+    bool CheckCollision(Vector2 point) const override;
     [[nodiscard]]
     bool CheckCollision(const Hitbox& hitbox) const override;
     [[nodiscard]]
@@ -34,15 +34,23 @@ public:
     bool CheckCollision(const ColliderList& list) const override;
 
     [[nodiscard]]
-    float Left() const override;
+    float_t Left() const override;
     [[nodiscard]]
-    float Right() const override;
+    float_t Right() const override;
     [[nodiscard]]
-    float Top() const override;
+    float_t Top() const override;
     [[nodiscard]]
-    float Bottom() const override;
+    float_t Bottom() const override;
+    
     [[nodiscard]]
-    Vector2 Center() const override;
+    float AbsoluteLeft() const override;
+    [[nodiscard]]
+    float AbsoluteRight() const override;
+    [[nodiscard]]
+    float AbsoluteTop() const override;
+    [[nodiscard]]
+    float AbsoluteBottom() const override;
+    
     [[nodiscard]]
     float Width() const override;
     [[nodiscard]]
