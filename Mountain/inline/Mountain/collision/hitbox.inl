@@ -2,6 +2,6 @@
 
 BEGIN_MOUNTAIN
 
-constexpr Rectangle Hitbox::ToRectangle() const { return { position, size }; }
+constexpr Rectangle Hitbox::ToRectangle() const { return { GetActualPosition(), size }; }
 
 END_MOUNTAIN

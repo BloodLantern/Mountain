@@ -12,7 +12,7 @@ Circle::Circle()
 {
 }
 
-Circle::Circle(const Vector2& position, const float_t radius)  // NOLINT(clang-diagnostic-shadow-field)
+Circle::Circle(const Vector2 position, const float_t radius)  // NOLINT(clang-diagnostic-shadow-field)
     : Collider(ColliderType::Circle, position)
     , radius(radius)
 {
@@ -20,12 +20,12 @@ Circle::Circle(const Vector2& position, const float_t radius)  // NOLINT(clang-d
 
 void Circle::DebugRender(const Color& color) const
 {
-    Draw::Circle(position, radius, color);
+    Draw::Circle(GetActualPosition(), radius, color);
 }
 
-bool Circle::CheckCollision(const Vector2& point) const
+bool Circle::CheckCollision(const Vector2 point) const
 {
-    return (point - position).SquaredLength() <= SQ(radius);
+    return (point - GetActualPosition()).SquaredLength() <= SQ(radius);
 }
 
 bool Circle::CheckCollision(const Hitbox& hitbox) const
@@ -36,7 +36,7 @@ bool Circle::CheckCollision(const Hitbox& hitbox) const
 
 bool Circle::CheckCollision(const Circle& circle) const
 {
-    return (circle.position - position).SquaredLength() < SQ(radius + circle.radius);
+    return (circle.GetActualPosition() - GetActualPosition()).SquaredLength() < SQ(radius + circle.radius);
 }
 
 bool Circle::CheckCollision(const Grid &grid) const
@@ -51,8 +51,9 @@ bool Circle::CheckCollision(const ColliderList& list) const
     return list.CheckCollision(*this);
 }
 
-bool Circle::Intersect(const Vector2& p1, const Vector2& p2) const
+bool Circle::Intersect(const Vector2 p1, const Vector2 p2) const
 {
+    const Vector2 position = GetActualPosition();
     // Code from: https://stackoverflow.com/questions/67116296/is-this-code-for-determining-if-a-circle-and-line-segment-intersects-correct
 
     const float xLinear = p2.x - p1.x;
@@ -70,18 +71,44 @@ bool Circle::Intersect(const Vector2& p1, const Vector2& p2) const
     );
 }
 
-float Circle::Left() const { return position.x; }
+float_t Circle::Left() const { return offset.x - radius; }
 
-float Circle::Right() const { return position.x + radius; }
+float_t Circle::Right() const { return offset.x + radius; }
 
-float Circle::Top() const { return position.y; }
+float_t Circle::Top() const { return offset.y - radius; }
 
-float Circle::Bottom() const { return position.y + radius; }
+float_t Circle::Bottom() const { return offset.y + radius; }
 
-Vector2 Circle::Center() const { return position; }
+Vector2 Circle::Center() const { return offset; }
 
-float Circle::Width() const { return radius * 2; }
+Vector2 Circle::TopLeft() const { return Center() + Vector2{ std::cos(3.f * Calc::PiOver4) * radius, std::sin(3.f * Calc::PiOver4) * radius }; }
 
-float Circle::Height() const { return radius * 2; }
+Vector2 Circle::TopRight() const { return Center() + Vector2{ std::cos(Calc::PiOver4) * radius, std::sin(Calc::PiOver4) * radius }; }
 
-Vector2 Circle::Size() const { return Vector2(radius * 2); }
+Vector2 Circle::BottomLeft() const { return Center() + Vector2{ std::cos(-3.f * Calc::PiOver4) * radius, std::sin(-3.f * Calc::PiOver4) * radius }; }
+
+Vector2 Circle::BottomRight() const { return Center() + Vector2{ std::cos(-Calc::PiOver4) * radius, std::sin(-Calc::PiOver4) * radius }; }
+
+float Circle::AbsoluteLeft() const { return GetActualPosition().x - radius; }
+
+float Circle::AbsoluteRight() const { return GetActualPosition().x + radius; }
+
+float Circle::AbsoluteTop() const { return GetActualPosition().y - radius; }
+
+float Circle::AbsoluteBottom() const { return GetActualPosition().y + radius; }
+
+Vector2 Circle::AbsoluteCenter() const { return GetActualPosition(); }
+
+Vector2 Circle::AbsoluteTopLeft() const { return AbsoluteCenter() + Vector2{ std::cos(3.f * Calc::PiOver4) * radius, std::sin(3.f * Calc::PiOver4) * radius }; }
+
+Vector2 Circle::AbsoluteTopRight() const { return AbsoluteCenter() + Vector2{ std::cos(Calc::PiOver4) * radius, std::sin(Calc::PiOver4) * radius }; }
+
+Vector2 Circle::AbsoluteBottomLeft() const { return AbsoluteCenter() + Vector2{ std::cos(-3.f * Calc::PiOver4) * radius, std::sin(-3.f * Calc::PiOver4) * radius }; }
+
+Vector2 Circle::AbsoluteBottomRight() const { return AbsoluteCenter() + Vector2{ std::cos(-Calc::PiOver4) * radius, std::sin(-Calc::PiOver4) * radius }; }
+
+float Circle::Width() const { return radius * 2.f; }
+
+float Circle::Height() const { return radius * 2.f; }
+
+Vector2 Circle::Size() const { return Vector2{ radius * 2.f }; }

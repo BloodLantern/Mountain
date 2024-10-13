@@ -22,12 +22,12 @@ public:
 
     MOUNTAIN_API Grid();
     MOUNTAIN_API Grid(Vector2i size, Vector2 tileSize);
-    MOUNTAIN_API Grid(Vector2i size, Vector2 tileSize, Vector2 position);
+    MOUNTAIN_API Grid(Vector2i size, Vector2 tileSize, Vector2 off);
 
     // Inherited via Collider
     MOUNTAIN_API void DebugRender(const Color& color) const override;
     [[nodiscard]]
-    MOUNTAIN_API bool_t CheckCollision(const Vector2& point) const override;
+    MOUNTAIN_API bool_t CheckCollision(Vector2 point) const override;
     [[nodiscard]]
     MOUNTAIN_API bool_t CheckCollision(const Hitbox& hitbox) const override;
     [[nodiscard]]
@@ -38,15 +38,23 @@ public:
     MOUNTAIN_API bool_t CheckCollision(const ColliderList& list) const override;
 
     [[nodiscard]]
-    MOUNTAIN_API float Left() const override;
+    MOUNTAIN_API float_t Left() const override;
     [[nodiscard]]
-    MOUNTAIN_API float Right() const override;
+    MOUNTAIN_API float_t Right() const override;
     [[nodiscard]]
-    MOUNTAIN_API float Top() const override;
+    MOUNTAIN_API float_t Top() const override;
     [[nodiscard]]
-    MOUNTAIN_API float Bottom() const override;
+    MOUNTAIN_API float_t Bottom() const override;
+    
     [[nodiscard]]
-    MOUNTAIN_API Vector2 Center() const override;
+    MOUNTAIN_API float AbsoluteLeft() const override;
+    [[nodiscard]]
+    MOUNTAIN_API float AbsoluteRight() const override;
+    [[nodiscard]]
+    MOUNTAIN_API float AbsoluteTop() const override;
+    [[nodiscard]]
+    MOUNTAIN_API float AbsoluteBottom() const override;
+    
     [[nodiscard]]
     MOUNTAIN_API float Width() const override;
     [[nodiscard]]
