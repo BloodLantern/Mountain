@@ -53,8 +53,6 @@ public:
 
     MOUNTAIN_API Collider* GetCollider();
 
-    MOUNTAIN_API void SetCollider(Collider* newCollider);
-
 protected:
     Collider* m_Collider = nullptr;
 

@@ -12,33 +12,30 @@ Hitbox::Hitbox()
 {
 }
 
-Hitbox::Hitbox(const Vector2& position, const Vector2& size)  // NOLINT(clang-diagnostic-shadow-field)
-    : Collider(ColliderType::Hitbox, position)
+Hitbox::Hitbox(const Vector2 off, const Vector2 size)
+    : Collider(ColliderType::Hitbox, off)
     , size(size)
 {
 }
 
 void Hitbox::DebugRender(const Color& color) const
 {
-    Draw::Rectangle(position, size, color);
+    Draw::Rectangle(GetActualPosition(), size, color);
 }
 
 bool Hitbox::Intersects(const Hitbox &other) const
 {
-    const Vector2 otherPosition = other.position;
-    const Vector2 otherSize = other.size;
-
     // Check for a collision with any of the hitbox's corners
-    return CheckCollision(otherPosition) // Top left
-        || CheckCollision(Vector2(otherPosition.x + otherSize.x, otherPosition.y)) // Top right
-        || CheckCollision(Vector2(otherPosition.x, otherPosition.y + otherSize.y)) // Bottom left
-        || CheckCollision(Vector2(otherPosition.x + otherSize.x, otherPosition.y + otherSize.y)); // Bottom right
+    return CheckCollision({ other.AbsoluteLeft(), other.AbsoluteTop() })      // Top left
+        || CheckCollision({ other.AbsoluteRight(), other.AbsoluteTop() })     // Top right
+        || CheckCollision({ other.AbsoluteLeft(), other.AbsoluteBottom() })   // Bottom left
+        || CheckCollision({ other.AbsoluteRight(), other.AbsoluteBottom() }); // Bottom right
 }
 
-bool Hitbox::CheckCollision(const Vector2& point) const
+bool Hitbox::CheckCollision(const Vector2 point) const
 {
-    return point.x < Right() && point.x > Left()
-        && point.y < Bottom() && point.y > Top();
+    return point.x < AbsoluteRight() && point.x > AbsoluteLeft()
+        && point.y < AbsoluteBottom() && point.y > AbsoluteTop();
 }
 
 bool Hitbox::CheckCollision(const Hitbox& hitbox) const
@@ -47,19 +44,19 @@ bool Hitbox::CheckCollision(const Hitbox& hitbox) const
         return true;
 
     // Check if one of the edges is inside this hitbox
-    return hitbox.Left() < Right() && hitbox.Right() > Left()
-        && hitbox.Top() < Bottom() && hitbox.Bottom() > Top();
+    return hitbox.AbsoluteLeft() < AbsoluteRight() && hitbox.AbsoluteRight() > AbsoluteLeft()
+        && hitbox.AbsoluteTop() < AbsoluteBottom() && hitbox.AbsoluteBottom() > AbsoluteTop();
 }
 
 bool Hitbox::CheckCollision(const Circle& circle) const
 {
-    if (CheckCollision(circle.position))
+    if (CheckCollision(circle.GetActualPosition()))
         return true;
 
-    const Vector2& topLeft = position;
-    const Vector2 topRight(position.x + size.x, position.y),
-        bottomLeft(position.x, position.y + size.y),
-        bottomRight(position.x + size.x, position.y + size.y);
+    const Vector2 topLeft{ AbsoluteLeft(), AbsoluteTop() };
+    const Vector2 topRight{ AbsoluteRight(), AbsoluteTop() };
+    const Vector2 bottomLeft{ AbsoluteLeft(), AbsoluteBottom() };
+    const Vector2 bottomRight{ AbsoluteRight(), AbsoluteBottom() };
             
     return circle.Intersect(topLeft, topRight)
         || circle.Intersect(topRight, bottomRight)
@@ -79,18 +76,24 @@ bool Hitbox::CheckCollision(const ColliderList& list) const
     return list.CheckCollision(*this);
 }
 
-float Hitbox::Left() const { return ToRectangle().Left(); }
+float_t Hitbox::Left() const { return offset.x; }
 
-float Hitbox::Right() const { return ToRectangle().Right(); }
+float_t Hitbox::Right() const { return offset.x + size.x; }
 
-float Hitbox::Top() const { return ToRectangle().Top(); }
+float_t Hitbox::Top() const { return offset.y; }
 
-float Hitbox::Bottom() const { return ToRectangle().Bottom(); }
+float_t Hitbox::Bottom() const { return offset.y + size.y; }
 
-Vector2 Hitbox::Center() const { return ToRectangle().Center(); }
+float_t Hitbox::AbsoluteLeft() const { return GetActualPosition().x; }
 
-float Hitbox::Width() const { return ToRectangle().Width(); }
+float_t Hitbox::AbsoluteRight() const { return GetActualPosition().x + size.x; }
 
-float Hitbox::Height() const { return ToRectangle().Height(); }
+float_t Hitbox::AbsoluteTop() const { return GetActualPosition().y; }
+
+float_t Hitbox::AbsoluteBottom() const { return GetActualPosition().y + size.y; }
+
+float_t Hitbox::Width() const { return size.x; }
+
+float_t Hitbox::Height() const { return size.y; }
 
 Vector2 Hitbox::Size() const { return size; }

@@ -19,8 +19,8 @@ Grid::Grid(const Vector2i size, const Vector2 tileSize)
     ResizeGrid();
 }
 
-Grid::Grid(const Vector2i size, const Vector2 tileSize, const Vector2 position)  // NOLINT(clang-diagnostic-shadow-field)
-    : Collider(ColliderType::Grid, position)
+Grid::Grid(const Vector2i size, const Vector2 tileSize, const Vector2 off)
+    : Collider(ColliderType::Grid, off)
     , gridSize(size)
     , tileSize(tileSize)
 {
@@ -29,95 +29,92 @@ Grid::Grid(const Vector2i size, const Vector2 tileSize, const Vector2 position) 
 
 void Grid::DebugRender(const Color& color) const
 {
+    const Vector2 position = GetActualPosition();
     for (int32_t y = 0; y < gridSize.y; y++)
     {
         for (int32_t x = 0; x < gridSize.x; x++)
         {
-            if (tiles[y][x])
+            if (!tiles[y][x])
+                continue;
+            
+            if (y > 0 && !tiles[y - 1][x])
             {
-                if (y > 0)
-                {
-                    if (!tiles[y - 1][x])
-                        Draw::Line(
-                            position + Vector2(
-                                static_cast<float_t>(x) * tileSize.x,
-                                static_cast<float_t>(y) * tileSize.y
-                            ),
-                            position + Vector2(
-                                static_cast<float_t>(x + 1) * tileSize.x,
-                                static_cast<float_t>(y) * tileSize.y
-                            ),
-                            color
-                        );
-                }
-                if (x > 0)
-                {
-                    if (!tiles[y][x - 1])
-                        Draw::Line(
-                            position + Vector2(
-                                static_cast<float_t>(x) * tileSize.x,
-                                static_cast<float_t>(y) * tileSize.y
-                            ),
-                            position + Vector2(
-                                static_cast<float_t>(x) * tileSize.x,
-                                static_cast<float_t>(y + 1) * tileSize.y
-                            ),
-                            color
-                        );
-                }
-                if (y < gridSize.y - 1)
-                {
-                    if (!tiles[y + 1][x])
-                        Draw::Line(
-                            position + Vector2(
-                                static_cast<float_t>(x) * tileSize.x,
-                                static_cast<float_t>(y + 1) * tileSize.y
-                            ),
-                            position + Vector2(
-                                static_cast<float_t>(x + 1) * tileSize.x,
-                                static_cast<float_t>(y + 1) * tileSize.y
-                            ),
-                            color
-                        );
-                }
-                if (x < gridSize.x - 1)
-                {
-                    if (!tiles[y][x + 1])
-                        Draw::Line(
-                            position + Vector2(
-                                static_cast<float_t>(x + 1) * tileSize.x,
-                                static_cast<float_t>(y) * tileSize.y
-                            ),
-                            position + Vector2(
-                                static_cast<float_t>(x + 1) * tileSize.x,
-                                static_cast<float_t>(y + 1) * tileSize.y
-                            ),
-                            color
-                        );
-                }
+                Draw::Line(
+                    position + Vector2(
+                        static_cast<float_t>(x) * tileSize.x,
+                        static_cast<float_t>(y) * tileSize.y
+                    ),
+                    position + Vector2(
+                        static_cast<float_t>(x + 1) * tileSize.x,
+                        static_cast<float_t>(y) * tileSize.y
+                    ),
+                    color
+                );
+            }
+            if (x > 0 && !tiles[y][x - 1])
+            {
+                Draw::Line(
+                    position + Vector2(
+                        static_cast<float_t>(x) * tileSize.x,
+                        static_cast<float_t>(y) * tileSize.y
+                    ),
+                    position + Vector2(
+                        static_cast<float_t>(x) * tileSize.x,
+                        static_cast<float_t>(y + 1) * tileSize.y
+                    ),
+                    color
+                );
+            }
+            if (y < gridSize.y - 1 && !tiles[y + 1][x])
+            {
+                Draw::Line(
+                    position + Vector2(
+                        static_cast<float_t>(x) * tileSize.x,
+                        static_cast<float_t>(y + 1) * tileSize.y
+                    ),
+                    position + Vector2(
+                        static_cast<float_t>(x + 1) * tileSize.x,
+                        static_cast<float_t>(y + 1) * tileSize.y
+                    ),
+                    color
+                );
+            }
+            if (x < gridSize.x - 1 && !tiles[y][x + 1])
+            {
+                Draw::Line(
+                    position + Vector2(
+                        static_cast<float_t>(x + 1) * tileSize.x,
+                        static_cast<float_t>(y) * tileSize.y
+                    ),
+                    position + Vector2(
+                        static_cast<float_t>(x + 1) * tileSize.x,
+                        static_cast<float_t>(y + 1) * tileSize.y
+                    ),
+                    color
+                );
             }
         }
     }
 }
 
-bool_t Grid::CheckCollision(const Vector2& point) const
+bool_t Grid::CheckCollision(const Vector2 point) const
 {
-    return point.x >= Left()
-        && point.y >= Top()
-        && point.x < Right()
-        && point.y < Bottom()
-        && tiles[static_cast<uint32_t>((point.y - Top()) / tileSize.y)][static_cast<uint32_t>((point.x - Left()) / tileSize.x)];
+    return point.x >= AbsoluteLeft()
+        && point.y >= AbsoluteTop()
+        && point.x < AbsoluteRight()
+        && point.y < AbsoluteBottom()
+        && tiles[static_cast<uint32_t>((point.y - AbsoluteTop()) / tileSize.y)][static_cast<uint32_t>((point.x - AbsoluteLeft()) / tileSize.x)];
 }
 
 bool_t Grid::CheckCollision(const Hitbox& hitbox) const
 {
-    if (!Hitbox(position, gridSize * tileSize).Intersects(hitbox))
+    if (!Hitbox(GetActualPosition(), gridSize * tileSize).Intersects(hitbox))
         return false;
 
-    int32_t x = static_cast<int32_t>((hitbox.Left() - Left()) / tileSize.x);
-    int32_t y = static_cast<int32_t>((hitbox.Top() - Top()) / tileSize.y);
-    int32_t width = static_cast<int32_t>((hitbox.Right() - Left() - 0.5f) / tileSize.x) - x + 1;
-    int32_t height = static_cast<int32_t>((hitbox.Bottom() - Top() - 0.5f) / tileSize.y) - y + 1;
+    int32_t x = static_cast<int32_t>((hitbox.AbsoluteLeft() - AbsoluteLeft()) / tileSize.x);
+    int32_t y = static_cast<int32_t>((hitbox.AbsoluteTop() - AbsoluteTop()) / tileSize.y);
+    int32_t width = static_cast<int32_t>((hitbox.AbsoluteRight() - AbsoluteLeft() - 0.5f) / tileSize.x) - x + 1;
+    int32_t height = static_cast<int32_t>((hitbox.AbsoluteBottom() - AbsoluteTop() - 0.5f) / tileSize.y) - y + 1;
 
     if (x < 0)
     {
@@ -159,15 +156,21 @@ bool_t Grid::CheckCollision(const Grid&) const
 
 bool_t Grid::CheckCollision(const ColliderList& list) const { return list.CheckCollision(*this); }
 
-float_t Grid::Left() const { return position.x; }
+float_t Grid::Left() const { return offset.x; }
 
-float_t Grid::Right() const { return position.x + Width(); }
+float_t Grid::Right() const { return offset.x + Width(); }
 
-float_t Grid::Top() const { return position.y; }
+float_t Grid::Top() const { return offset.y; }
 
-float_t Grid::Bottom() const { return position.y + Height(); }
+float_t Grid::Bottom() const { return offset.y + Height(); }
 
-Vector2 Grid::Center() const { return position + Size() * 0.5f; }
+float_t Grid::AbsoluteLeft() const { return GetActualPosition().x; }
+
+float_t Grid::AbsoluteRight() const { return GetActualPosition().x + Width(); }
+
+float_t Grid::AbsoluteTop() const { return GetActualPosition().y; }
+
+float_t Grid::AbsoluteBottom() const { return GetActualPosition().y + Height(); }
 
 float_t Grid::Width() const { return static_cast<float_t>(gridSize.x) * tileSize.x; }
 
