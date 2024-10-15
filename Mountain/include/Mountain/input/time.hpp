@@ -56,6 +56,9 @@ public:
     /// @brief Get how much time the last frame took. If this is equal to the delta time, then the game is lagging.
     MOUNTAIN_API static float_t GetLastFrameDuration();
 
+    /// @brief Sleep as long as possible without exceeding the specified period
+    MOUNTAIN_API static void SleepForNoMoreThan(double_t milliseconds);
+
 private:
     MOUNTAIN_API static inline float_t m_TotalTime = 0.f;
     MOUNTAIN_API static inline float_t m_LastTotalTime = 0.f;
@@ -68,13 +71,16 @@ private:
     
     MOUNTAIN_API static inline float_t m_LastFrameDuration = 0.f;
     
-    static void Initialize();
+    MOUNTAIN_API static inline double_t m_LowestSleepThreshold = 0.0;
     
+    static void Initialize();
+
     /// @brief Updates the time variables using GLFW.
     ///        This function should be called exactly once each frame.
     static void Update();
-
     static void WaitForNextFrame();
+    
+    static double_t GetCurrentTimerResolution();
 };
 
 END_MOUNTAIN

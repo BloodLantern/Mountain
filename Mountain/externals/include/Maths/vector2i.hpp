@@ -215,7 +215,15 @@ constexpr Vector2 operator*(const float_t factor, const Vector2i v) noexcept { r
 
 /// @brief Divides a Vector2i by another one.
 [[nodiscard]]
-constexpr Vector2 operator/(const Vector2i a, const Vector2i b) noexcept { return Vector2(static_cast<float_t>(a.x) / static_cast<float_t>(b.x), static_cast<float_t>(a.y) / static_cast<float_t>(b.y)); }
+constexpr Vector2i operator/(const Vector2i a, const Vector2i b) noexcept { return Vector2i(a.x / b.x, a.y / b.y); }
+
+/// @brief Divides a Vector2i by a @p factor.
+[[nodiscard]]
+constexpr Vector2i operator/(const Vector2i v, const int32_t factor) noexcept { return Vector2i(v.x / factor, v.y / factor); }
+
+/// @brief Divides a Vector2i by another one.
+[[nodiscard]]
+constexpr Vector2 operator/(const Vector2i a, const Vector2 b) noexcept { return Vector2(static_cast<float_t>(a.x) / static_cast<float_t>(b.x), static_cast<float_t>(a.y) / static_cast<float_t>(b.y)); }
 
 /// @brief Divides a Vector2i by a @p factor.
 [[nodiscard]]

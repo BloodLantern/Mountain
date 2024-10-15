@@ -3,6 +3,16 @@
 #include <GLFW/glfw3.h>
 
 #include "Mountain/window.hpp"
+#include "Mountain/utils/windows.hpp"
+
+// ReSharper disable CppInconsistentNaming
+using NtQueryTimerResolutionFunc = DWORD (NTAPI *)(OUT PULONG MinimumResolution, OUT PULONG MaximumResolution, OUT PULONG ActualResolution);
+// ReSharper restore CppInconsistentNaming
+/// Hidden Windows API function from ntdll.dll
+NtQueryTimerResolutionFunc NtQueryTimerResolution = reinterpret_cast<NtQueryTimerResolutionFunc>(GetProcAddress(  // NOLINT(clang-diagnostic-cast-function-type-strict)
+    GetModuleHandle(L"ntdll.dll"),
+    "NtQueryTimerResolution"
+));
 
 using namespace Mountain;
 
@@ -35,6 +45,10 @@ void Time::Initialize()
 {
     // Initialize the total time to avoid a huge delta time on the first frame
     m_TotalTimeUnscaled = static_cast<decltype(m_TotalTimeUnscaled)>(glfwGetTime());
+    
+    ULONG min, max, current;
+    (void) NtQueryTimerResolution(&min, &max, &current);
+    m_LowestSleepThreshold = 1.0 + max / 10000.0;
 }
 
 void Time::Update()
@@ -54,22 +68,52 @@ void Time::Update()
     m_TotalFrameCount++;
 }
 
+void Time::SleepForNoMoreThan(const double_t milliseconds)
+{
+    // Assumption is that std::this_thread::sleep_for(t) will sleep for at least (t), and at most (t + timerResolution)
+
+    if (milliseconds < m_LowestSleepThreshold)
+        return;
+
+    const uint32_t sleepTime = static_cast<uint32_t>(milliseconds - GetCurrentTimerResolution());
+    if (sleepTime > 1.0)
+        std::this_thread::sleep_for(std::chrono::milliseconds(sleepTime));
+}
+
 void Time::WaitForNextFrame()
 {
-    static std::chrono::time_point<std::chrono::system_clock> frameStart;
+    using namespace std::chrono;
+    static time_point<steady_clock> frameStart;
 
-    const auto duration = std::chrono::system_clock::now() - frameStart;
-    m_LastFrameDuration = std::chrono::duration_cast<std::chrono::duration<float_t>>(duration).count();
+    m_LastFrameDuration = duration_cast<duration<float_t>>(steady_clock::now() - frameStart).count();
 
+    // FIXME - Wait is not accurate (around 10% error margin)
     if (m_TargetFps.has_value())
     {
-        // FIXME - Wait is not accurate
-        const auto start = std::chrono::high_resolution_clock::now();
-        const std::chrono::duration<double_t> wait{ 1.0 / static_cast<double_t>(m_TargetFps.value()) };
-        while (std::chrono::high_resolution_clock::now() - start < wait) (void) 0;
+        const double_t wait = 1.0 / (static_cast<double_t>(m_TargetFps.value()) - m_LastFrameDuration);
+        
+        duration<double_t> accumulatedElapsedTime{ 0.0 };
+        time_point<steady_clock> previousTime = steady_clock::now();
+        const duration<double_t> targetElapsedTime{ wait };
+        while (accumulatedElapsedTime < targetElapsedTime)
+        {
+            time_point<steady_clock> now = steady_clock::now();
+            accumulatedElapsedTime += now - previousTime;
+            previousTime = now;
+            
+            const double_t sleepTime = (targetElapsedTime - accumulatedElapsedTime).count();
+            SleepForNoMoreThan(sleepTime);
+        }
     }
     
     Window::SwapBuffers();
 
-    frameStart = std::chrono::system_clock::now();
+    frameStart = steady_clock::now();
+}
+
+double_t Time::GetCurrentTimerResolution()
+{
+    ULONG min, max, current;
+    (void) NtQueryTimerResolution(&min, &max, &current);
+    return current / 10000.0;
 }
