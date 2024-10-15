@@ -349,7 +349,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>externals/libs/static/$(Configuration)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>toolbox.lib;glfw3.lib;freetype.lib;OpenAL32.lib;soft_oal.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>toolbox.lib;glfw3.lib;freetype.lib;OpenAL32.lib;soft_oal.lib;ntdll.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/WHOLEARCHIVE:toolbox.lib</AdditionalOptions>
     </Link>
     <Lib>
@@ -380,7 +380,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>toolbox.lib;glfw3.lib;freetype.lib;OpenAL32.lib;soft_oal.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>toolbox.lib;glfw3.lib;freetype.lib;OpenAL32.lib;soft_oal.lib;ntdll.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>externals/libs/static/$(Configuration)</AdditionalLibraryDirectories>
       <AdditionalOptions>/WHOLEARCHIVE:toolbox.lib</AdditionalOptions>
     </Link>
