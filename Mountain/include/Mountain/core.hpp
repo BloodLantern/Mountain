@@ -168,7 +168,7 @@ using stdstring = std::string;
 #define ENUM_COUNT(enumName) constexpr size_t enumName##Count = static_cast<size_t>(enumName::Count);
 
 /// @brief Defines global definitions that make OpenGL use the dedicated GPU instead of the integrated one
-/// Source: https://www.reddit.com/r/opengl/comments/unc3fy/how_to_programatically_set_the_gpu_to_my_opengl/?onetap_auto=true&one_tap=true 
+/// Source: https://www.reddit.com/r/opengl/comments/unc3fy/comment/i8728y3/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
 #define USE_DEDICATED_GPU                                                       \
     extern "C"                                                                  \
     {                                                                           \
