@@ -40,9 +40,6 @@ bool Hitbox::CheckCollision(const Vector2 point) const
 
 bool Hitbox::CheckCollision(const Hitbox& hitbox) const
 {
-    if (Intersects(hitbox))
-        return true;
-
     // Check if one of the edges is inside this hitbox
     return hitbox.AbsoluteLeft() < AbsoluteRight() && hitbox.AbsoluteRight() > AbsoluteLeft()
         && hitbox.AbsoluteTop() < AbsoluteBottom() && hitbox.AbsoluteBottom() > AbsoluteTop();
