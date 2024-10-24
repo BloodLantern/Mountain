@@ -21,7 +21,7 @@ public:
 
     MOUNTAIN_API virtual ~Entity();
 
-    DELETE_COPY_MOVE_OPERATIONS(Entity)
+    DEFAULT_COPY_MOVE_OPERATIONS(Entity)
 
     MOUNTAIN_API virtual void Update();
 

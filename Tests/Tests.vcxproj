@@ -63,7 +63,7 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <EnableModules>true</EnableModules>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>include;externals\include;$(MountainDir)include;$(MountainDir)inline;$(MountainDir)externals\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include;$(MountainDir)include;$(MountainDir)inline;$(MountainDir)externals\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -84,7 +84,7 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <EnableModules>true</EnableModules>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>include;externals\include;$(MountainDir)include;$(MountainDir)inline;$(MountainDir)externals\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include;$(MountainDir)include;$(MountainDir)inline;$(MountainDir)externals\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
