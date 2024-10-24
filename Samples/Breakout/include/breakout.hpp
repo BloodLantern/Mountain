@@ -2,18 +2,24 @@
 
 #include <Mountain/game.hpp>
 
+#include "ball.hpp"
+#include "block.hpp"
+#include "player.hpp"
+
 class Breakout : public Mountain::Game
 {
 public:
-    Breakout(const std::string_view& windowTitle, const Vector2i& windowSize, bool_t vsync)
-        : Game(windowTitle, windowSize, vsync)
-    {
-    }
+    Breakout();
 
 private:
+    Player m_Player;
+    Ball m_Ball;
+    Mountain::List<Block*> m_Blocks;
+    bool_t m_ShowHitboxes = false;
+    
     void Initialize() override;
-    void LoadResources() override;
     void Shutdown() override;
     void Update() override;
     void Render() override;
+    void RenderImGui();
 };

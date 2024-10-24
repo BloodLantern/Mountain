@@ -32,7 +32,7 @@ void Sprite::Update()
 
 void Sprite::SetupTextures()
 {
-    // Find all Textures whose name is: m_Name + any number
+    // Find all Textures with a name as follows: m_Name + any number
     ResourceManager::FindAll<Texture>(
         [this](const Pointer<Texture>& t) -> bool_t
         {

@@ -27,7 +27,7 @@ Grid::Grid(const Vector2i size, const Vector2 tileSize, const Vector2 off)
     ResizeGrid();
 }
 
-void Grid::DebugRender(const Color& color) const
+void Grid::RenderDebug(const Color& color) const
 {
     const Vector2 position = GetActualPosition();
     for (int32_t y = 0; y < gridSize.y; y++)

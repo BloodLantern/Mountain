@@ -25,7 +25,7 @@ public:
     MOUNTAIN_API Grid(Vector2i size, Vector2 tileSize, Vector2 off);
 
     // Inherited via Collider
-    MOUNTAIN_API void DebugRender(const Color& color) const override;
+    MOUNTAIN_API void RenderDebug(const Color& color) const override;
     [[nodiscard]]
     MOUNTAIN_API bool_t CheckCollision(Vector2 point) const override;
     [[nodiscard]]

@@ -52,8 +52,9 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);MATH_TOOLBOX_DLL_IMPORT</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>include;externals\include;$(MountainDir)include;$(MountainDir)inline</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include;$(MountainDir)include;$(MountainDir)inline;$(MountainDir)externals\include</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -68,7 +69,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);MATH_TOOLBOX_DLL_IMPORT</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>include;externals\include;$(MountainDir)include;$(MountainDir)inline</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include;$(MountainDir)include;$(MountainDir)inline;$(MountainDir)externals\include</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
@@ -86,11 +87,17 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\ball.hpp" />
+    <ClInclude Include="include\block.hpp" />
     <ClInclude Include="include\breakout.hpp" />
+    <ClInclude Include="include\player.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\ball.cpp" />
+    <ClCompile Include="src\block.cpp" />
     <ClCompile Include="src\breakout.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\player.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

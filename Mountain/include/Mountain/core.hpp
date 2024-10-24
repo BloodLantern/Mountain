@@ -57,7 +57,7 @@ namespace Mountain {}
 ///
 /// ### Usage
 /// This macro should be used for any type that defines at least one of:
-/// - A non-default destructor (this includes default implementations),
+/// - A non-default destructor (this includes @code = default @endcode implementations),
 /// - A non-default copy constructor
 /// - A non-default move constructor
 /// - A non-default copy operator
@@ -69,9 +69,8 @@ namespace Mountain {}
 /// {
 /// public:
 ///     A();
-///     
 ///     A(int);
-///
+///     
 ///     DEFAULT_COPY_MOVE_OPERATIONS(A)
 /// };
 /// @endcode
@@ -81,11 +80,9 @@ namespace Mountain {}
 /// {
 /// public:
 ///     A();
-///     
 ///     A(int);
-///
 ///     ~A();
-///
+///     
 ///     DEFAULT_COPY_MOVE_OPERATIONS(A)
 /// };
 /// @endcode
