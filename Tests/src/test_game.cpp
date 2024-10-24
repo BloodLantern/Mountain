@@ -146,9 +146,9 @@ void GameExample::Render()
     if (debugRender)
     {
         for (Entity* const entity : entities)
-            entity->DebugRender();
+            entity->RenderDebug();
 
-        player->DebugRender();
+        player->RenderDebug();
     }
 
     Draw::Text(*font, "Hello, tiny World!", { 90.f, 30.f });
