@@ -12,9 +12,9 @@ public:
     float_t radius = 0.f;
 
     Circle();
-    Circle(Vector2 position, float_t radius);
+    Circle(Vector2 off, float_t radius);
 
-    void DebugRender(const Color& color) const override;
+    void RenderDebug(const Color& color) const override;
 
     [[nodiscard]]
     bool CheckCollision(Vector2 point) const override;

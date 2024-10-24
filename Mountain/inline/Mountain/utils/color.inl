@@ -3,9 +3,9 @@
 
 BEGIN_MOUNTAIN
 
-static constexpr float_t HueCircle = 1.f; // A circle is 360 degrees, normalized as 1 here
-static constexpr float_t HueCircleOver3 = HueCircle / 3.f;
-static constexpr float_t HueCircleOver6 = HueCircle / 6.f;
+constexpr float_t HueCircle = 1.f; // A circle is 360 degrees, normalized as 1 here
+constexpr float_t HueCircleOver3 = HueCircle / 3.f;
+constexpr float_t HueCircleOver6 = HueCircle / 6.f;
 
 constexpr Color Color::Transparent() { return Color(0.f, 0.f, 0.f, 0.f); }
 constexpr Color Color::AliceBlue() { return Color(0xf0 / 255.f, 0xf8 / 255.f, 0xff / 255.f); }

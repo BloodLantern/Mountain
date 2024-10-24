@@ -82,9 +82,9 @@ bool_t List<T>::Empty() const
 }
 
 template <typename T>
-void List<T>::Add()
+T& List<T>::Add()
 {
-    m_Vector.emplace_back();
+    return m_Vector.emplace_back();
 }
 
 template <typename T>

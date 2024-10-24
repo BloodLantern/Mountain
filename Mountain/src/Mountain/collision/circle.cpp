@@ -12,13 +12,13 @@ Circle::Circle()
 {
 }
 
-Circle::Circle(const Vector2 position, const float_t radius)  // NOLINT(clang-diagnostic-shadow-field)
-    : Collider(ColliderType::Circle, position)
+Circle::Circle(const Vector2 off, const float_t radius)
+    : Collider(ColliderType::Circle, off)
     , radius(radius)
 {
 }
 
-void Circle::DebugRender(const Color& color) const
+void Circle::RenderDebug(const Color& color) const
 {
     Draw::Circle(GetActualPosition(), radius, color);
 }
