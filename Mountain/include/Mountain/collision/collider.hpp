@@ -43,7 +43,7 @@ public:
 
     DEFAULT_COPY_MOVE_OPERATIONS(Collider)
 
-    virtual void DebugRender(const Color& color) const = 0;
+    virtual void RenderDebug(const Color& color) const = 0;
 
     [[nodiscard]]
     virtual Vector2 GetActualPosition() const;

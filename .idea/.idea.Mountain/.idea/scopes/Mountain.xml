@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="Mountain" pattern="file:Mountain/include//*||file:Mountain/inline//*||file:Mountain/shaders//*||file:Mountain/src//*||file:Tests/include//*||file:Tests/src//*" />
+</component>

@@ -95,7 +95,7 @@ public:
     bool_t Empty() const;
 
     /// @brief Adds a default element to the end of the list (calls the default constructor of T)
-    void Add();
+    T& Add();
 
     /// @brief Adds a specified element to the end of the list
     /// 

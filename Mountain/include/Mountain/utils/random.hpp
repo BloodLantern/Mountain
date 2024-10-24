@@ -3,6 +3,7 @@
 #include "Mountain/core.hpp"
 
 #include <limits>
+#include <random>
 
 #include <Maths/vector2.hpp>
 
@@ -27,7 +28,7 @@ public:
     MOUNTAIN_API static double_t Double(double_t min = std::numeric_limits<double_t>::min(), double_t max = std::numeric_limits<double_t>::max());
 
     MOUNTAIN_API static Color Color(Color minValues = Color::Black(), Color maxValues = Color::White());
-    MOUNTAIN_API static ColorHsva ColorHsva(ColorHsva minValues, ColorHsva maxValues);
+    MOUNTAIN_API static ColorHsva ColorHsva(ColorHsva minValues = { 0.f, 0.f, 0.f, 0.f }, ColorHsva maxValues = { 1.f, 1.f, 1.f, 1.f });
 
     /// @brief Returns true if the given probability have been met.
     /// @param probability The probability to check in the range [0, 1].
@@ -36,6 +37,12 @@ public:
 
     MOUNTAIN_API static Vector2 PointInCircle(const Vector2& center = Vector2::Zero(), float_t radius = 1);
     MOUNTAIN_API static Vector2 PointInRectangle(const Vector2& position = Vector2::Zero(), const Vector2& size = Vector2::One());
+
+    MOUNTAIN_API static Vector2 Direction();
+
+private:
+    static inline std::random_device m_Device;
+    static inline std::mt19937 m_Engine = std::mt19937(m_Device());
 };
 
 END_MOUNTAIN

@@ -24,7 +24,7 @@ ColliderList::ColliderList(const Vector2& position, const std::initializer_list<
 {
 }
 
-void ColliderList::DebugRender(const Color& color) const
+void ColliderList::RenderDebug(const Color& color) const
 {
     Vector2 topLeft = Vector2::One() * std::numeric_limits<float_t>::max(), bottomRight = Vector2::One() * std::numeric_limits<float_t>::min();
     
@@ -35,7 +35,7 @@ void ColliderList::DebugRender(const Color& color) const
         bottomRight.x = std::min(bottomRight.x, c->AbsoluteRight());
         bottomRight.y = std::min(bottomRight.y, c->AbsoluteBottom());
         
-        c->DebugRender(color);
+        c->RenderDebug(color);
     }
 
     Draw::Rectangle(topLeft, bottomRight - topLeft, color);

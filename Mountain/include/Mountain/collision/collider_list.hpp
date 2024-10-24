@@ -15,7 +15,7 @@ public:
 	MOUNTAIN_API ColliderList(std::initializer_list<Collider*> elements);
 	MOUNTAIN_API ColliderList(const Vector2& position, std::initializer_list<Collider*> elements);
 
-	MOUNTAIN_API void DebugRender(const Color& color) const override;
+	MOUNTAIN_API void RenderDebug(const Color& color) const override;
 
 	[[nodiscard]]
 	MOUNTAIN_API bool CheckCollision(Vector2 point) const override;

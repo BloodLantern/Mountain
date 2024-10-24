@@ -18,7 +18,7 @@ Hitbox::Hitbox(const Vector2 off, const Vector2 size)
 {
 }
 
-void Hitbox::DebugRender(const Color& color) const
+void Hitbox::RenderDebug(const Color& color) const
 {
     Draw::Rectangle(GetActualPosition(), size, color);
 }

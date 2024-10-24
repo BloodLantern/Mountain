@@ -14,7 +14,7 @@ public:
 
     Hitbox(Vector2 off, Vector2 size);
 
-    void DebugRender(const Color& color) const override;
+    void RenderDebug(const Color& color) const override;
 
     [[nodiscard]]
     constexpr Rectangle ToRectangle() const;

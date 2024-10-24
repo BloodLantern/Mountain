@@ -6,6 +6,10 @@ A C++ Framework for making 2D games.
 
 This project is compiled using C++23 features (`/std:c++latest`), on MSVC, for the `x64` architecture.
 
+## Samples
+
+Sample projects are available in the [Samples](https://github.com/BloodLantern/Mountain/tree/samples/Samples) directory.
+
 ## Documentation
 
 The Doxygen documentation can be found [online](https://codedocs.xyz/BloodLantern/Mountain/index.html) or manually generated using the `Doxyfile`.
