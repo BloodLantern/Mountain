@@ -7,7 +7,7 @@
 #include <ImGui/imgui.h>
 
 Player::Player(Ball& ball)
-    : ball(&ball)
+    : m_Ball(&ball)
 {
     m_Collider = new Mountain::Hitbox{ -PlayerSize * 0.5f, PlayerSize };
     m_Collider->basePosition = &position;
@@ -48,4 +48,13 @@ void Player::RenderDebug()
 void Player::RenderImGui()
 {
     ImGui::DragFloat2("Position", position.Data());
+}
+
+void Player::CheckBallCollisions() const
+{
+    const Mountain::Collider& ballCollider = *m_Ball->GetCollider();
+    if (!m_Collider->CheckCollision(ballCollider))
+        return;
+
+    // TODO - Reflect ball velocity on player collision
 }
