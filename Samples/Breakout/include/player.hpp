@@ -21,5 +21,7 @@ public:
     void RenderImGui();
 
 private:
-    Ball* ball = nullptr;
+    Ball* m_Ball = nullptr;
+
+    void CheckBallCollisions() const;
 };
