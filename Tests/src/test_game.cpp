@@ -36,7 +36,7 @@ void GameExample::Initialize()
 {
     ballCount = 0;
 
-    player = new Player({ 10.f, 100.f });
+    player = new Paddle({ 10.f, 100.f });
     renderTarget.AddLightSource(player->GetComponent<LightSource>());
 }
 

@@ -4,12 +4,12 @@
 #include "Mountain/scene/entity.hpp"
 #include "Mountain/utils/pointer.hpp"
 
-class Player : public Mountain::Entity
+class Paddle : public Mountain::Entity
 {
 public:
     float_t movementSpeed = 150.f;
     
-    explicit Player(const Vector2& pos);
+    explicit Paddle(const Vector2& pos);
 
     void LoadResources();
     void Update() override;

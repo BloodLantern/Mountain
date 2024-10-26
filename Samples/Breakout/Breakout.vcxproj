@@ -90,14 +90,14 @@
     <ClInclude Include="include\ball.hpp" />
     <ClInclude Include="include\block.hpp" />
     <ClInclude Include="include\breakout.hpp" />
-    <ClInclude Include="include\player.hpp" />
+    <ClInclude Include="include\paddle.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\ball.cpp" />
     <ClCompile Include="src\block.cpp" />
     <ClCompile Include="src\breakout.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\player.cpp" />
+    <ClCompile Include="src\paddle.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
