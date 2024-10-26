@@ -9,7 +9,7 @@
 
 Ball::Ball()
 {
-    m_Collider = new Mountain::Circle{ Vector2::Zero(), BallSize };
+    m_Collider = new Mountain::Circle{ Vector2::Zero(), BallRadius };
     m_Collider->basePosition = &position;
 
     position = Mountain::Window::GetSize() * 0.5f;
@@ -30,17 +30,33 @@ void Ball::Update()
 
     // Collide with the window bounds
     const Vector2 windowSize = Mountain::Window::GetSize();
-    if (m_Collider->AbsoluteTop() < 0.f || m_Collider->AbsoluteBottom() > windowSize.y)
+    if (m_Collider->AbsoluteBottom() > windowSize.y)
+    {
+        velocity = Vector2::Zero(); // TODO - Lose/Spawn another ball
+    }
+    else if (m_Collider->AbsoluteTop() < 0.f)
+    {
         velocity.y *= -1.f;
-    if (m_Collider->AbsoluteLeft() < 0.f || m_Collider->AbsoluteRight() > windowSize.x)
+        position.y = BallRadius;
+    }
+    
+    if (m_Collider->AbsoluteLeft() < 0.f)
+    {
         velocity.x *= -1.f;
+        position.x = BallRadius;
+    }
+    else if (m_Collider->AbsoluteRight() > windowSize.x)
+    {
+        velocity.x *= -1.f;
+        position.x = windowSize.x - BallRadius;
+    }
 }
 
 void Ball::Render()
 {
     Entity::Render();
 
-    Mountain::Draw::CircleFilled(position, BallSize);
+    Mountain::Draw::CircleFilled(position, BallRadius);
 }
 
 void Ball::RenderDebug()

@@ -99,7 +99,7 @@
   <ItemGroup>
     <ClCompile Include="src\animated_character.cpp" />
     <ClCompile Include="src\camera.cpp" />
-    <ClCompile Include="src\player.cpp" />
+    <ClCompile Include="src\Paddle.cpp" />
     <ClCompile Include="src\spin_component.cpp" />
     <ClCompile Include="src\test_game.cpp" />
     <ClCompile Include="src\main.cpp" />
@@ -107,7 +107,7 @@
   <ItemGroup>
     <ClInclude Include="include\animated_character.hpp" />
     <ClInclude Include="include\camera.hpp" />
-    <ClInclude Include="include\player.hpp" />
+    <ClInclude Include="include\Paddle.hpp" />
     <ClInclude Include="include\spin_component.hpp" />
     <ClInclude Include="include\test_entity.hpp" />
     <ClInclude Include="include\test_game.hpp" />

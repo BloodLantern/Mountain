@@ -8,7 +8,7 @@
 
 Breakout::Breakout()
     : Game("Mountain sample project - Breakout", { 1280, 720 })
-    , m_Player(m_Ball)
+    , m_Paddle(m_Ball)
 {
 }
 
@@ -38,7 +38,7 @@ void Breakout::Update()
     for (Block* const block : m_Blocks)
         block->Update();
     
-    m_Player.Update();
+    m_Paddle.Update();
 }
 
 void Breakout::Render()
@@ -50,7 +50,7 @@ void Breakout::Render()
     for (Block* const block : m_Blocks)
         block->Render();
 
-    m_Player.Render();
+    m_Paddle.Render();
 
     if (m_ShowHitboxes)
     {
@@ -59,7 +59,7 @@ void Breakout::Render()
         for (Block* const block : m_Blocks)
             block->RenderDebug();
         
-        m_Player.RenderDebug();
+        m_Paddle.RenderDebug();
     }
 
     RenderImGui();
@@ -68,7 +68,7 @@ void Breakout::Render()
 void Breakout::RenderImGui()
 {
     ImGui::Begin("Player");
-    m_Player.RenderImGui();
+    m_Paddle.RenderImGui();
     ImGui::End();
 
     ImGui::Begin("Debug");

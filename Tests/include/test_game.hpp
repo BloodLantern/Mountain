@@ -9,7 +9,7 @@
 #include "Mountain/utils/list.hpp"
 
 #include "camera.hpp"
-#include "player.hpp"
+#include "Paddle.hpp"
 
 constexpr Vector2i BaseResolution = { 320, 180 };
 
@@ -17,7 +17,7 @@ class GameExample : public Mountain::Game
 {
 public:
     Mountain::List<Mountain::Entity*> entities;
-	Player* player = nullptr;
+	Paddle* player = nullptr;
 	AnimatedCharacter* character = nullptr;
 	
 	int32_t ballCount = 0;
