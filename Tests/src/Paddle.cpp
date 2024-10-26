@@ -1,4 +1,4 @@
-﻿#include "player.hpp"
+﻿#include "Paddle.hpp"
 
 #include "Mountain/input/input.hpp"
 #include "Mountain/input/time.hpp"
@@ -7,7 +7,7 @@
 #include "Mountain/scene/component/audio_listener.hpp"
 #include "Mountain/scene/component/light_source.hpp"
 
-Player::Player(const Vector2& pos)
+Paddle::Paddle(const Vector2& pos)
     : Entity(pos)
 {
     const auto listener = AddComponent<Mountain::AudioListener>();
@@ -18,12 +18,12 @@ Player::Player(const Vector2& pos)
     light->radius = 50.f;
 }
 
-void Player::LoadResources()
+void Paddle::LoadResources()
 {
     m_Texture = Mountain::ResourceManager::Get<Mountain::Texture>("assets/strawberry/normal00.png");
 }
 
-void Player::Update()
+void Paddle::Update()
 {
     Entity::Update();
     
@@ -40,7 +40,7 @@ void Player::Update()
     position += movement.Normalized() * movementSpeed * Mountain::Time::GetDeltaTime();
 }
 
-void Player::Render()
+void Paddle::Render()
 {
     Entity::Render();
 

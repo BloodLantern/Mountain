@@ -7,13 +7,13 @@
 constexpr Vector2 PlayerSize{ 100.f, 20.f };
 constexpr float_t PlayerMovementSpeed = 50.f;
 
-class Player : public Mountain::Entity
+class Paddle : public Mountain::Entity
 {
 public:
-    explicit Player(Ball& ball);
-    ~Player() override;
+    explicit Paddle(Ball& ball);
+    ~Paddle() override;
 
-    DEFAULT_COPY_MOVE_OPERATIONS(Player)
+    DEFAULT_COPY_MOVE_OPERATIONS(Paddle)
     
     void Update() override;
     void Render() override;
