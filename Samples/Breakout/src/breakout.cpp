@@ -73,5 +73,9 @@ void Breakout::RenderImGui()
 
     ImGui::Begin("Debug");
     ImGui::Checkbox("Show hitboxes", &m_ShowHitboxes);
+    if (ImGui::Button("Reset"))
+    {
+        m_Ball = {};
+    }
     ImGui::End();
 }
