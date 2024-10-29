@@ -14,7 +14,10 @@ public:
     Ball();
     ~Ball() override;
 
-    DEFAULT_COPY_MOVE_OPERATIONS(Ball)
+    Ball(const Ball& other) noexcept = default;
+    Ball(Ball&& other) noexcept;
+    Ball& operator=(const Ball& other) noexcept = default;
+    Ball& operator=(Ball&& other) noexcept;
     
     void Update() override;
     void Render() override;
