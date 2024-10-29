@@ -22,6 +22,21 @@ Ball::~Ball()
     delete m_Collider;
 }
 
+Ball::Ball(Ball&& other) noexcept
+{
+    m_Collider = other.m_Collider;
+    // Avoid collider deletion from other destructor
+    other.m_Collider = nullptr;
+}
+
+Ball& Ball::operator=(Ball&& other) noexcept
+{
+    m_Collider = other.m_Collider;
+    // Avoid collider deletion from other destructor
+    other.m_Collider = nullptr;
+    return *this;
+}
+
 void Ball::Update()
 {
     Entity::Update();
