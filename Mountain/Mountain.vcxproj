@@ -388,6 +388,7 @@
       <AdditionalLibraryDirectories>externals/libs/static/$(Configuration)</AdditionalLibraryDirectories>
       <AdditionalOptions>/WHOLEARCHIVE:toolbox.lib</AdditionalOptions>
       <CreateHotPatchableImage>Enabled</CreateHotPatchableImage>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>externals/libs/static/$(Configuration);externals/libs/static/Common</AdditionalLibraryDirectories>
