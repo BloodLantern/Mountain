@@ -40,22 +40,20 @@ void RenderTarget::Initialize(const Vector2i size, const MagnificationFilter fil
     
     // Color Texture
     
-    glGenTextures(1, &m_Texture);
-    glBindTexture(GL_TEXTURE_2D, m_Texture);
+    glCreateTextures(GL_TEXTURE_2D, 1, &m_Texture);
 
     const int32_t magFilter = ToOpenGl(filter);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, magFilter);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, magFilter);
+    glTextureParameteri(m_Texture, GL_TEXTURE_MIN_FILTER, magFilter);
+    glTextureParameteri(m_Texture, GL_TEXTURE_MAG_FILTER, magFilter);
     
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTextureParameteri(m_Texture, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTextureParameteri(m_Texture, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, size.x, size.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
-    glBindTexture(GL_TEXTURE_2D, 0);
+    glTextureStorage2D(m_Texture, 1, GL_RGBA8, size.x, size.y);
 
     // Framebuffer
     
-    glGenFramebuffers(1, &m_Framebuffer);
+    glCreateFramebuffers(1, &m_Framebuffer);
     glBindFramebuffer(GL_FRAMEBUFFER, m_Framebuffer);
     
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_Texture, 0);
@@ -63,7 +61,7 @@ void RenderTarget::Initialize(const Vector2i size, const MagnificationFilter fil
     // Draw buffers
 
     glCreateBuffers(1, &m_Vbo);
-    glGenVertexArrays(1, &m_Vao);
+    glCreateVertexArrays(1, &m_Vao);
     
     glBindVertexArray(m_Vao);
 
@@ -127,6 +125,16 @@ void RenderTarget::AddLightSource(const LightSource* lightSource)
 void RenderTarget::RemoveLightSource(const LightSource* lightSource) { std::erase(m_LightSources, lightSource); }
 
 const std::vector<const LightSource*>& RenderTarget::GetLightSources() const { return m_LightSources; }
+
+void RenderTarget::SetDebugName(const std::string_view name) const
+{
+#ifdef _DEBUG
+    glObjectLabel(GL_TEXTURE, m_Texture, static_cast<GLsizei>(name.length()), name.data());
+    glObjectLabel(GL_FRAMEBUFFER, m_Framebuffer, static_cast<GLsizei>(name.length()), name.data());
+    glObjectLabel(GL_BUFFER, m_Vbo, static_cast<GLsizei>(name.length()), name.data());
+    glObjectLabel(GL_VERTEX_ARRAY, m_Vao, static_cast<GLsizei>(name.length()), name.data());
+#endif
+}
 
 uint32_t RenderTarget::GetTextureId() const { return m_Texture; }
 
