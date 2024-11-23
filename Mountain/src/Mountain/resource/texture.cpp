@@ -28,17 +28,19 @@ bool_t Texture::SetSourceData(const uint8_t* const buffer, const int64_t length)
 
 void Texture::Load()
 {
-    glGenTextures(1, &m_Id);
-    glBindTexture(GL_TEXTURE_2D, m_Id);
-    
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glCreateTextures(GL_TEXTURE_2D, 1, &m_Id);
+#ifdef _DEBUG
+    glObjectLabel(GL_TEXTURE, m_Id, static_cast<GLsizei>(m_Name.length()), m_Name.c_str());
+#endif
 
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, m_Size.x, m_Size.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, m_Data);
-    glBindTexture(GL_TEXTURE_2D, 0);
+    glTextureParameteri(m_Id, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTextureParameteri(m_Id, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    
+    glTextureParameteri(m_Id, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTextureParameteri(m_Id, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+    glTextureStorage2D(m_Id, 1, GL_RGBA8, m_Size.x, m_Size.y);
+    glTextureSubImage2D(m_Id, 0, 0, 0, m_Size.x, m_Size.y, GL_RGBA, GL_UNSIGNED_BYTE, m_Data);
     
     m_Loaded = true;
 }

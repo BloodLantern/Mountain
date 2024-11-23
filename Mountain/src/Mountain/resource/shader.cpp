@@ -48,6 +48,9 @@ bool_t Shader::Load(const char_t* const buffer, const int64_t length, const Shad
 void Shader::Load()
 {
     m_Id = glCreateProgram();
+#ifdef _DEBUG
+    glObjectLabel(GL_PROGRAM, m_Id, static_cast<GLsizei>(m_Name.length()), m_Name.c_str());
+#endif
 
     std::array<uint32_t, ShaderTypeCount> shaderIds;
     for (size_t i = 0; i < ShaderTypeCount; i++)
@@ -58,6 +61,11 @@ void Shader::Load()
 
         uint32_t& id = shaderIds[i];
         id = glCreateShader(ShaderTypeToOpenGl(code.type));
+#ifdef _DEBUG
+        const Pointer file = m_Files[i];
+        const std::string& fileName = file ? file->GetName() : m_Name + ' ' + magic_enum::enum_name(code.type).data();
+        glObjectLabel(GL_SHADER, id, static_cast<GLsizei>(fileName.length()), fileName.c_str());
+#endif
         
         const char_t* data = code.code.c_str();
         int32_t dataLength = static_cast<int32_t>(code.code.size());
@@ -95,42 +103,42 @@ void Shader::ResetSourceData()
     m_Code.fill({});
 }
 
-void Shader::SetUniform(const std::string_view& keyName, const int32_t value) const { glProgramUniform1i(m_Id, GetUniformLocation(keyName.data()), value); }
+void Shader::SetUniform(const std::string_view keyName, const int32_t value) const { glProgramUniform1i(m_Id, GetUniformLocation(keyName), value); }
 
-void Shader::SetUniform(const std::string_view& keyName, const bool_t value) const { SetUniform(keyName, static_cast<int32_t>(value)); }
+void Shader::SetUniform(const std::string_view keyName, const bool_t value) const { SetUniform(keyName, static_cast<int32_t>(value)); }
 
-void Shader::SetUniform(const std::string_view& keyName, const float_t value) const { glProgramUniform1f(m_Id, GetUniformLocation(keyName.data()), value); }
+void Shader::SetUniform(const std::string_view keyName, const float_t value) const { glProgramUniform1f(m_Id, GetUniformLocation(keyName), value); }
 
-void Shader::SetUniform(const std::string_view& keyName, const Vector2& value) const
+void Shader::SetUniform(const std::string_view keyName, const Vector2& value) const
 {
-    glProgramUniform2fv(m_Id, GetUniformLocation(keyName.data()), 1, value.Data());
+    glProgramUniform2fv(m_Id, GetUniformLocation(keyName), 1, value.Data());
 }
 
-void Shader::SetUniform(const std::string_view& keyName, const Vector3& value) const
+void Shader::SetUniform(const std::string_view keyName, const Vector3& value) const
 {
-    glProgramUniform3fv(m_Id, GetUniformLocation(keyName.data()), 1, value.Data());
+    glProgramUniform3fv(m_Id, GetUniformLocation(keyName), 1, value.Data());
 }
 
-void Shader::SetUniform(const std::string_view& keyName, const Vector4& value) const
+void Shader::SetUniform(const std::string_view keyName, const Vector4& value) const
 {
-    glProgramUniform4fv(m_Id, GetUniformLocation(keyName.data()), 1, value.Data());
+    glProgramUniform4fv(m_Id, GetUniformLocation(keyName), 1, value.Data());
 }
 
-void Shader::SetUniform(const std::string_view& keyName, const Color& value) const { SetUniform(keyName, static_cast<Vector4>(value)); }
+void Shader::SetUniform(const std::string_view keyName, const Color& value) const { SetUniform(keyName, static_cast<Vector4>(value)); }
 
-void Shader::SetUniform(const std::string_view& keyName, const Matrix2& value) const
+void Shader::SetUniform(const std::string_view keyName, const Matrix2& value) const
 {
-    glProgramUniformMatrix2fv(m_Id, GetUniformLocation(keyName.data()), 1, GL_FALSE, value.Data());
+    glProgramUniformMatrix2fv(m_Id, GetUniformLocation(keyName), 1, GL_FALSE, value.Data());
 }
 
-void Shader::SetUniform(const std::string_view& keyName, const Matrix3& value) const
+void Shader::SetUniform(const std::string_view keyName, const Matrix3& value) const
 {
-    glProgramUniformMatrix3fv(m_Id, GetUniformLocation(keyName.data()), 1, GL_FALSE, value.Data());
+    glProgramUniformMatrix3fv(m_Id, GetUniformLocation(keyName), 1, GL_FALSE, value.Data());
 }
 
-void Shader::SetUniform(const std::string_view& keyName, const Matrix& value) const
+void Shader::SetUniform(const std::string_view keyName, const Matrix& value) const
 {
-    glProgramUniformMatrix4fv(m_Id, GetUniformLocation(keyName.data()), 1, GL_FALSE, value.Data());
+    glProgramUniformMatrix4fv(m_Id, GetUniformLocation(keyName), 1, GL_FALSE, value.Data());
 }
 
 uint32_t Shader::GetId() const { return m_Id; }
@@ -185,4 +193,4 @@ void Shader::CheckLinkError()
     }
 }
 
-int32_t Shader::GetUniformLocation(const std::string_view& keyName) const { return glGetUniformLocation(m_Id, keyName.data()); }
+int32_t Shader::GetUniformLocation(const std::string_view keyName) const { return glGetUniformLocation(m_Id, keyName.data()); }
