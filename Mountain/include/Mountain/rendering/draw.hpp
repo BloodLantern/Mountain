@@ -115,6 +115,7 @@ public:
     /// @param position The position of the texture
     /// @param scale The scale to apply to the texture
     /// @param rotation The rotation in radians to apply to the texture
+    /// @param origin The rotation origin. Value in the range @code [{ 0, 0 }, { 1, 1 }] @endcode
     /// @param uv0 The first texture UV position
     /// @param uv1 The second texture UV position
     /// @param color The tint color of the texture. Use white for default colors
@@ -125,6 +126,7 @@ public:
         Vector2 position,
         Vector2 scale = Vector2::One(),
         float_t rotation = 0.f,
+        Vector2 origin = Vector2::Zero(),
         Vector2 uv0 = Vector2::Zero(),
         Vector2 uv1 = Vector2::One(),
         const Color& color = Color::White(),
