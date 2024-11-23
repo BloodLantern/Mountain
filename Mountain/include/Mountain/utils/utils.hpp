@@ -168,7 +168,11 @@ namespace Utils
 
     /// @brief Checks if two strings are equal, case-insensitive.
     [[nodiscard]]
-    MOUNTAIN_API bool_t StringEqualsIgnoreCase(const std::string& a, const std::string& b);
+    MOUNTAIN_API bool_t StringEqualsIgnoreCase(std::string_view a, std::string_view b);
+
+    /// @brief Checks if a string contains another one, case-insensitive.
+    [[nodiscard]]
+    MOUNTAIN_API bool_t StringContainsIgnoreCase(std::string_view a, std::string_view b);
 
     /// @brief Gets the address of a function
     /// @tparam Ret Function return type
@@ -187,6 +191,16 @@ namespace Utils
 
     template <typename R, typename... Args>
     R CallSafe(const std::function<R(Args...)>& function, Args&&... args);
+
+    MOUNTAIN_API std::wstring StringNarrowToWide(std::string_view str);
+
+    MOUNTAIN_API std::string StringWideToNarrow(std::wstring_view str);
+
+    MOUNTAIN_API std::string StringToLower(std::string_view str);
+
+    MOUNTAIN_API std::string StringToUpper(std::string_view str);
+
+    MOUNTAIN_API std::pair<int32_t, std::string_view> ByteSizeUnit(int64_t size);
 }
 
 END_MOUNTAIN

@@ -86,7 +86,7 @@ public:
 
     /// @brief Returns the name of this Resource.
     [[nodiscard]]
-    MOUNTAIN_API std::string GetName() const;
+    MOUNTAIN_API const std::string& GetName() const;
 
     /// @brief Sets the name of this Resource.
     ///
@@ -102,7 +102,7 @@ public:
 
     /// @brief Returns the File from which this Resource was loaded.
     [[nodiscard]]
-    MOUNTAIN_API const Pointer<File>& GetFile() const;
+    MOUNTAIN_API Pointer<File> GetFile() const;
 
     MOUNTAIN_API void SetFile(const Pointer<File>& file);
 

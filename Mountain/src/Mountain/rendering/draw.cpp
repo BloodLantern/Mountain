@@ -2,6 +2,7 @@
 
 #include <glad/glad.h>
 
+#include "ImGui/imgui_stdlib.h"
 #include "Mountain/rendering/renderer.hpp"
 #include "Mountain/resource/resource_manager.hpp"
 #include "Mountain/resource/shader.hpp"
@@ -96,8 +97,9 @@ void Draw::CircleFilled(const Vector2 center, const float_t radius, const Color&
 void Draw::Texture(
     const Mountain::Texture& texture,
     const Vector2 position,
-    const Vector2 scale,
+    Vector2 scale,
     const float_t rotation,
+    const Vector2 origin,
     const Vector2 uv0,
     const Vector2 uv1,
     const Color& color,
@@ -105,22 +107,19 @@ void Draw::Texture(
 )
 {
     if (uv0.x > uv1.x || uv0.y > uv1.y)
-        throw std::invalid_argument("UV0 cannot be greater than UV1");
+        throw std::invalid_argument{ "UV0 cannot be greater than UV1" };
+
+    if (origin.x < 0.f || origin.x > 1.f || origin.y < 0.f || origin.y > 1.f)
+        throw std::invalid_argument{ "Origin must be in the range [{ 0, 0 }, { 1, 1 }]" };
 
     Vector2 uvDiff = uv1 - uv0;
     Vector2 lowerUv = uv0;
 
     if (flipFlags & DrawTextureFlipping::Horizontal)
-    {
-        lowerUv.x += uvDiff.x;
-        uvDiff.x = -uvDiff.x;
-    }
+        scale.x *= -1.f;
 
     if (flipFlags & DrawTextureFlipping::Vertical)
-    {
-        lowerUv.y += uvDiff.y;
-        uvDiff.y = -uvDiff.y;
-    }
+        scale.y *= -1.f;
 
     Matrix2 diagonalFlip = Matrix2::Identity();
     if (flipFlags & DrawTextureFlipping::Diagonal)
@@ -139,9 +138,10 @@ void Draw::Texture(
     const Vector2i textureSize = texture.GetSize();
     Matrix transformation = Matrix::Translation(static_cast<Vector3>(position))
         * Matrix::RotationZ(rotation)
+        * Matrix::Translation(static_cast<Vector3>(-textureSize * origin * scale))
         * static_cast<Matrix>(antiDiagonalFlip)
         * static_cast<Matrix>(diagonalFlip)
-        * Matrix::Scaling({ static_cast<float_t>(textureSize.x) * uvDiff.x * scale.x, static_cast<float_t>(textureSize.y) * uvDiff.y * scale.y, 1.f });
+        * Matrix::Scaling({ static_cast<float_t>(textureSize.x) * Calc::Abs(uvDiff.x) * scale.x, static_cast<float_t>(textureSize.y) * Calc::Abs(uvDiff.y) * scale.y, 1.f });
 
     Matrix uvProjection = Matrix::Translation(static_cast<Vector3>(lowerUv)) * Matrix::Scaling(static_cast<Vector3>(uvDiff));
 
