@@ -24,7 +24,7 @@ class RenderTarget
 public:
     /// @brief The ambient light color applied to the entirety of the RenderTarget
     Color ambientLight = Color::White();
-    
+
     /// @brief Create an uninitialized RenderTarget
     MOUNTAIN_API RenderTarget() = default;
     /// @brief Create a RenderTarget and initialize it with the given values
@@ -45,6 +45,10 @@ public:
     MOUNTAIN_API void AddLightSource(const LightSource* lightSource);
     MOUNTAIN_API void RemoveLightSource(const LightSource* lightSource);
     MOUNTAIN_API const std::vector<const LightSource*>& GetLightSources() const;
+
+    /// @brief Adds a friendly debug name for this RenderTarget. This is used when debugging graphics in external applications.
+    /// @param name The name of this RenderTarget
+    MOUNTAIN_API void SetDebugName(std::string_view name) const;
     
     [[nodiscard]]
     MOUNTAIN_API uint32_t GetTextureId() const;
