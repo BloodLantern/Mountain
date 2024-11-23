@@ -260,7 +260,26 @@ void Draw::DrawList::Clear()
 void Draw::Initialize()
 {
     glCreateBuffers(6, &m_RectangleEbo);
-    glCreateVertexArrays(10, &m_Vao);
+    glCreateVertexArrays(9, &m_LineVao);
+
+#ifdef _DEBUG
+    glObjectLabel(GL_BUFFER, m_RectangleEbo, -1, "Rectangle EBO");
+    glObjectLabel(GL_BUFFER, m_Vbo, -1, "Global VBO");
+    glObjectLabel(GL_BUFFER, m_RectangleVbo, -1, "Rectangle VBO");
+    glObjectLabel(GL_BUFFER, m_TextureVbo, -1, "Texture VBO");
+    glObjectLabel(GL_BUFFER, m_TextVbo, -1, "Text VBO");
+    glObjectLabel(GL_BUFFER, m_RenderTargetVbo, -1, "RenderTarget VBO");
+
+    glObjectLabel(GL_VERTEX_ARRAY, m_LineVao, -1, "Line VAO");
+    glObjectLabel(GL_VERTEX_ARRAY, m_LineColoredVao, -1, "Line Colored VAO");
+    glObjectLabel(GL_VERTEX_ARRAY, m_TriangleVao, -1, "Triangle VAO");
+    glObjectLabel(GL_VERTEX_ARRAY, m_TriangleColoredVao, -1, "Triangle Colored VAO");
+    glObjectLabel(GL_VERTEX_ARRAY, m_RectangleVao, -1, "Rectangle VAO");
+    glObjectLabel(GL_VERTEX_ARRAY, m_CircleVao, -1, "Circle VAO");
+    glObjectLabel(GL_VERTEX_ARRAY, m_TextureVao, -1, "Texture VAO");
+    glObjectLabel(GL_VERTEX_ARRAY, m_TextVao, -1, "Text VAO");
+    glObjectLabel(GL_VERTEX_ARRAY, m_RenderTargetVao, -1, "RenderTarget VAO");
+#endif
 
     InitializeLineBuffers();
     InitializeLineColoredBuffers();
@@ -291,13 +310,13 @@ void Draw::LoadResources()
 void Draw::Shutdown()
 {
     glDeleteBuffers(6, &m_RectangleEbo);
-    glDeleteVertexArrays(10, &m_Vao);
+    glDeleteVertexArrays(9, &m_LineVao);
 }
 
 void Draw::InitializeLineBuffers()
 {
     glBindVertexArray(m_LineVao);
-    
+
     glBindBuffer(GL_ARRAY_BUFFER, m_Vbo);
     uint32_t index = 0;
     size_t offset = 0;
@@ -313,7 +332,7 @@ void Draw::InitializeLineBuffers()
 void Draw::InitializeLineColoredBuffers()
 {
     glBindVertexArray(m_LineColoredVao);
-    
+
     glBindBuffer(GL_ARRAY_BUFFER, m_Vbo);
     uint32_t index = 0;
     size_t offset = 0;
@@ -330,7 +349,7 @@ void Draw::InitializeLineColoredBuffers()
 void Draw::InitializeTriangleBuffers()
 {
     glBindVertexArray(m_TriangleVao);
-    
+
     glBindBuffer(GL_ARRAY_BUFFER, m_Vbo);
     uint32_t index = 0;
     size_t offset = 0;
@@ -347,7 +366,7 @@ void Draw::InitializeTriangleBuffers()
 void Draw::InitializeTriangleColoredBuffers()
 {
     glBindVertexArray(m_TriangleColoredVao);
-    
+
     glBindBuffer(GL_ARRAY_BUFFER, m_Vbo);
     uint32_t index = 0;
     size_t offset = 0;
