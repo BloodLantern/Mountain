@@ -27,6 +27,10 @@ namespace ImGuiUtils
     );
 
     MOUNTAIN_API void ShowInputsWindow();
+
+    MOUNTAIN_API void ShowFileManager();
+
+    MOUNTAIN_API void ShowResourceManager();
 }
 
 END_MOUNTAIN
