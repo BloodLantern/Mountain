@@ -1,5 +1,7 @@
 #include "Mountain/resource/font.hpp"
 
+#include <ranges>
+
 #include <glad/glad.h>
 
 #include <ft2build.h>

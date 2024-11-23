@@ -2,13 +2,18 @@
 
 #include <magic_enum/magic_enum.hpp>
 
+#include <ImGui/imgui_stdlib.h>
+
+#include "Mountain/file/file_manager.hpp"
 #include "Mountain/input/input.hpp"
+#include "Mountain/resource/audio_track.hpp"
+#include "Mountain/resource/resource_manager.hpp"
 
 using namespace Mountain;
 
 void ImGuiUtils::GridPlotting(const std::string_view label, Vector2* const value, const float_t min, const float_t max)
 {
-    ImGui::Text("%s", label.data());
+    ImGui::Text("%.*s", static_cast<int32_t>(label.length()), label.data());
     ImDrawList* drawList = ImGui::GetWindowDrawList();
 
     constexpr Vector2 size(100.f, 100.f);
@@ -62,7 +67,7 @@ void ImGuiUtils::GridPlotting(const std::string_view label, Vector2* const value
 
 void ImGuiUtils::DirectionVector(const std::string_view label, Vector2* const value)
 {
-    ImGui::Text("%s", label.data());
+    ImGui::Text("%.*s", static_cast<int32_t>(label.length()), label.data());
     ImDrawList* drawList = ImGui::GetWindowDrawList();
 
     constexpr Vector2 size(100.f, 100.f);
@@ -117,7 +122,7 @@ void ImGuiUtils::DirectionVector(const std::string_view label, Vector2* const va
 
 void ImGuiUtils::DirectionVector(const std::string_view label, Vector2* const value, const Vector2 expected)
 {
-    ImGui::Text("%s", label.data());
+    ImGui::Text("%.*s", static_cast<int32_t>(label.length()), label.data());
     ImDrawList* drawList = ImGui::GetWindowDrawList();
 
     constexpr Vector2 size = Vector2::One() * 100.f;
@@ -191,8 +196,8 @@ void ImGuiUtils::ShowInputsWindow()
         ImGui::Text("Button release right: %d", Input::GetMouseButton(MouseButton::Right, MouseButtonStatus::Release));
         for (uint32_t i = 0; i < MouseButtonCount; i++)
         {
-            ImGui::Text("Button down %d: %d", i + 1, Input::GetMouseButton(static_cast<MouseButton>(i)));
-            ImGui::Text("Button release %d: %d", i + 1, Input::GetMouseButton(static_cast<MouseButton>(i), MouseButtonStatus::Release));
+            ImGui::Text("Button down %u: %d", i + 1, Input::GetMouseButton(static_cast<MouseButton>(i)));
+            ImGui::Text("Button release %u: %d", i + 1, Input::GetMouseButton(static_cast<MouseButton>(i), MouseButtonStatus::Release));
         }
         ImGui::Text("Wheel: %f, %f", Input::GetMouseWheel().x, Input::GetMouseWheel().y);
         ImGui::TreePop();
@@ -228,7 +233,8 @@ void ImGuiUtils::ShowInputsWindow()
             for (uint32_t j = 0; j < GamepadButtonCount; j++)
             {
                 const GamepadButton button = static_cast<GamepadButton>(j);
-                ImGui::Text("Button %d - %s: %d", j, magic_enum::enum_name(button).data(), gamepad.GetButton(button));
+                const std::string_view name = magic_enum::enum_name(button);
+                ImGui::Text("Button %u - %.*s: %d", j, static_cast<int32_t>(name.length()), name.data(), gamepad.GetButton(button));
             }
 
             Vector2 dpad = static_cast<Vector2>(gamepad.GetDirectionalPad());
@@ -240,14 +246,123 @@ void ImGuiUtils::ShowInputsWindow()
     ImGui::End();
 }
 
+void ImGuiUtils::ShowFileManager()
+{
+    ImGui::Begin("File Manager");
+
+    static std::string filter;
+    ImGui::InputText("Filter", &filter);
+
+    ImGui::Separator();
+
+    for (Pointer file : FileManager::FindAll<File>([&] (Pointer<File> f) -> bool_t { return f->GetPathString().contains(filter); }))
+    {
+        if (!ImGui::TreeNode(file->GetPathString().c_str()))
+            continue;
+
+        const std::string_view format = magic_enum::enum_name(file->GetType());
+        ImGui::Text("Format: %.*s", static_cast<int32_t>(format.length()), format.data());
+        ImGui::BeginDisabled();
+        const auto byteSize = Utils::ByteSizeUnit(file->GetSize());
+        ImGui::Text("Size: %d %.*s", byteSize.first, static_cast<int32_t>(byteSize.second.length()), byteSize.second.data());
+        ImGui::EndDisabled();
+
+        if (ImGui::Button("Reload from disk"))
+            file->Reload();
+        if (ImGui::Button("Open with default editor"))
+            file->OpenFile();
+        if (ImGui::Button("Open in file explorer"))
+            file->OpenInExplorer();
+
+        ImGui::TreePop();
+    }
+
+    ImGui::End();
+}
+
+template <Concepts::ResourceT T>
+static void DisplayResourceType(
+    const std::string_view typeName,
+    const std::string_view resourceNameFilter,
+    const std::function<void(Pointer<T> resource)>& additionalAction = std::identity{}
+)
+{
+    const List<Pointer<T>> resources = ResourceManager::FindAll<T>([&] (Pointer<T> f) -> bool_t { return Utils::StringContainsIgnoreCase(f->GetName(), resourceNameFilter); });
+    if (ImGui::TreeNode(std::format("{} ({})", typeName, resources.GetSize()).c_str()))
+    {
+        for (Pointer resource : resources)
+        {
+            if (!ImGui::TreeNode(resource->GetName().c_str()))
+                continue;
+
+            if (ImGui::Button("Reload from cached file"))
+                resource->Reload();
+            if (ImGui::Button("Reload from disk"))
+            {
+                resource->GetFile()->Reload();
+                resource->Reload();
+            }
+
+            additionalAction(resource);
+
+            ImGui::TreePop();
+        }
+
+        ImGui::TreePop();
+    }
+}
+
+void ImGuiUtils::ShowResourceManager()
+{
+    ImGui::Begin("Resource Manager");
+
+    static std::string filter;
+    ImGui::InputText("Filter", &filter);
+
+    ImGui::Separator();
+
+    DisplayResourceType<AudioTrack>(
+        "AudioTrack",
+        filter,
+        [](const auto& audioTrack)
+        {
+            const std::string_view format = magic_enum::enum_name(audioTrack->GetFormat());
+            ImGui::Text("Format: %.*s", static_cast<int32_t>(format.length()), format.data());
+        }
+    );
+    DisplayResourceType<Font>("Font", filter);
+
+    const List<Pointer<Shader>> resources = ResourceManager::FindAll<Shader>([&] (Pointer<Shader> f) -> bool_t { return Utils::StringContainsIgnoreCase(f->GetName(), filter); });
+    if (ImGui::TreeNode(std::format("Shader ({} precompiled)", resources.GetSize()).c_str()))
+    {
+        for (Pointer resource : resources)
+            ImGui::Text("%s", resource->GetName().c_str());
+
+        ImGui::TreePop();
+    }
+
+    DisplayResourceType<Texture>(
+        "Texture",
+        filter,
+        [](const auto& texture)
+        {
+            const Vector2i size = texture->GetSize();
+            ImGui::Text("Size: %dx%d", size.x, size.y);
+        }
+    );
+
+    ImGui::End();
+}
+
+// ReSharper disable CppInconsistentNaming
 bool ImGui::DragAngle(
     const char* label,
     float* v,
-    float v_speed,
-    float v_min,
-    float v_max,
+    const float v_speed,
+    const float v_min,
+    const float v_max,
     const char* format,
-    ImGuiSliderFlags flags
+    const ImGuiSliderFlags flags
 )
 {
     float_t degreeAngle = *v * Calc::Rad2Deg;
@@ -255,3 +370,4 @@ bool ImGui::DragAngle(
     *v = degreeAngle * Calc::Deg2Rad;
     return result;
 }
+// ReSharper restore CppInconsistentNaming

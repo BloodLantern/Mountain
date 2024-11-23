@@ -56,38 +56,38 @@ std::vector<Pointer<T>> FileManager::FindAll()
 }
 
 template <Concepts::EntryT T>
-void FileManager::FindAll(std::vector<Pointer<T>>* result)
+void FileManager::FindAll(List<Pointer<T>>* result)
 {
-    result->clear();
+    result->Clear();
     
     for (auto& entry : m_Entries | std::views::values)
     {
         Pointer<T> t = Utils::DynamicPointerCast<T>(entry);
         
         if (t)
-            result->push_back(std::move(t));
+            result->Add(std::move(t));
     }
 }
 
 template <Concepts::EntryT T>
-std::vector<Pointer<T>> FileManager::FindAll(std::function<bool_t(Pointer<T>)>&& predicate)
+List<Pointer<T>> FileManager::FindAll(std::function<bool_t(Pointer<T>)>&& predicate)
 {
-    std::vector<Pointer<T>> result;
+    List<Pointer<T>> result;
     FindAll<T>(std::forward<std::function<bool_t(Pointer<T>)>>(predicate), &result);
     return result;
 }
 
 template <Concepts::EntryT T>
-void FileManager::FindAll(std::function<bool_t(Pointer<T>)>&& predicate, std::vector<Pointer<T>>* result)
+void FileManager::FindAll(std::function<bool_t(Pointer<T>)>&& predicate, List<Pointer<T>>* result)
 {
-    result->clear();
+    result->Clear();
     
     for (auto&& value : m_Entries | std::views::values)
     {
         auto&& t = Utils::DynamicPointerCast<T>(value);
         
         if (t && predicate(t))
-            result->push_back(t);
+            result->Add(t);
     }
 }
 

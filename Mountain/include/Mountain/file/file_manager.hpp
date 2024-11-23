@@ -6,6 +6,7 @@
 #include "Mountain/core.hpp"
 #include "Mountain/file/directory.hpp"
 #include "Mountain/file/file.hpp"
+#include "Mountain/utils/list.hpp"
 #include "Mountain/utils/logger.hpp"
 #include "Mountain/utils/pointer.hpp"
 
@@ -87,7 +88,7 @@ public:
     
     /// @see FileManager::FindAll()
     template <Concepts::EntryT T = File>
-    static void FindAll(std::vector<Pointer<T>>* result);
+    static void FindAll(List<Pointer<T>>* result);
     
     /// @brief Finds a list of Entry "Entries" based on a predicate.
     /// @tparam T The type of Entry to find.
@@ -97,11 +98,11 @@ public:
     /// returned @c false, instead return a null Pointer.
     template <Concepts::EntryT T = File>
     [[nodiscard]]
-    static std::vector<Pointer<T>> FindAll(std::function<bool_t(Pointer<T>)>&& predicate);
+    static List<Pointer<T>> FindAll(std::function<bool_t(Pointer<T>)>&& predicate);
 
     /// @see FileManager::FindAll(std::function<bool(Pointer<T>)>&&)
     template <Concepts::EntryT T = File>
-    static void FindAll(std::function<bool_t(Pointer<T>)>&& predicate, std::vector<Pointer<T>>* result);
+    static void FindAll(std::function<bool_t(Pointer<T>)>&& predicate, List<Pointer<T>>* result);
 
     /// @brief Unloads the Entry corresponding to the given path.
     MOUNTAIN_API static void Unload(const std::filesystem::path& path);

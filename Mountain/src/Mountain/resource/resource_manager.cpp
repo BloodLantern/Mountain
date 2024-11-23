@@ -62,7 +62,7 @@ void ResourceManager::LoadAll()
 
     auto&& start = std::chrono::system_clock::now();
 
-    std::vector<Pointer<File>> files;
+    List<Pointer<File>> files;
     FileManager::FindAll<File>([](Pointer<File> file) { return file->GetResource() == nullptr; }, &files);
 
     const size_t oldResourceCount = m_Resources.size();
@@ -119,7 +119,7 @@ void ResourceManager::LoadAll()
 
     Logger::LogDebug(
         "Successfully loaded {} files in {} resources. Took {}",
-        files.size(),
+        files.GetSize(),
         m_Resources.size() - oldResourceCount,
         std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - start)
     );
@@ -217,7 +217,7 @@ void ResourceManager::Rename(const std::string& name, const std::string& newName
 
 void ResourceManager::Rename(const Pointer<Resource>& resource, const std::string& newName)
 {
-    std::string&& oldName = resource->GetName();
+    const std::string& oldName = resource->GetName();
 
     Logger::LogInfo("Renaming resource {} to {}", oldName, newName);
 
