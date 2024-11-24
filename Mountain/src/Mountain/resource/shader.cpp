@@ -63,7 +63,7 @@ void Shader::Load()
         id = glCreateShader(ShaderTypeToOpenGl(code.type));
 #ifdef _DEBUG
         const Pointer file = m_Files[i];
-        const std::string& fileName = file ? file->GetName() : m_Name + ' ' + magic_enum::enum_name(code.type).data();
+        const std::string& fileName = file ? file->GetName() : m_Name + '/' + magic_enum::enum_name(code.type).data();
         glObjectLabel(GL_SHADER, id, static_cast<GLsizei>(fileName.length()), fileName.c_str());
 #endif
         
