@@ -68,7 +68,7 @@ bool_t Resource::IsSourceDataSet() const { return m_SourceDataSet; }
 
 bool_t Resource::IsLoaded() const { return m_Loaded; }
 
-std::string Resource::GetName() const { return m_Name; }
+const std::string& Resource::GetName() const { return m_Name; }
 
 void Resource::SetName(const std::string& newName)
 {
@@ -81,6 +81,6 @@ void Resource::SetGuid(const Guid& guid) { m_Guid = guid; }
 
 const Guid& Resource::GetGuid() const { return m_Guid; }
 
-const Pointer<File>& Resource::GetFile() const { return m_File; }
+Pointer<File> Resource::GetFile() const { return m_File; }
 
 void Resource::SetFile(const Pointer<File>& file) { m_File = file; }

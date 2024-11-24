@@ -48,10 +48,10 @@ public:
     /// @return Mouse position
     MOUNTAIN_API static Vector2 GetMousePosition();
 
-    /// @brief Get the mouse position delta
+    /// @brief Get how much the mouse moved last frame
     MOUNTAIN_API static Vector2 GetMouseDelta();
 
-    /// @brief Get the mouse wheel delta
+    /// @brief Get how much the mouse wheel moved last frame
     MOUNTAIN_API static Vector2 GetMouseWheel();
 
 private:

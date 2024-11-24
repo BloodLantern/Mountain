@@ -8,11 +8,12 @@
 #include "Mountain/resource/resource_manager.hpp"
 #include "Mountain/utils/coroutine.hpp"
 #include "Mountain/utils/logger.hpp"
-#include "Mountain/utils/message_box.hpp"
 
 #ifdef _DEBUG
 #define EXECUTE_SAFE(function) function();
 #else
+#include "Mountain/utils/message_box.hpp"
+
 #define EXECUTE_SAFE(function)                                                                                                                              \
     try                                                                                                                                                     \
     {                                                                                                                                                       \
@@ -62,13 +63,18 @@ Game::~Game()
 void Game::Play()
 {
     EXECUTE_SAFE(Initialize)
-    EXECUTE_SAFE(LoadResources)
     EXECUTE_SAFE(MainLoop)
     EXECUTE_SAFE(Shutdown)
 }
 
 void Game::Initialize()
 {
+    LoadResources();
+
+    // Start the time now
+    Time::Initialize();
+
+    Window::SetVisible(true);
 }
 
 void Game::LoadResources()
@@ -77,36 +83,34 @@ void Game::LoadResources()
 
 void Game::MainLoop()
 {
-    // Start the time now
-    Time::Initialize();
-    
-    Window::SetVisible(true);
+    while (NextFrame()) {}
+}
 
-    while (!Window::GetShouldClose())
-    {
-        Window::PollEvents();
-        
-        Time::Update();
-        Input::Update();
-        Audio::Update();
-        Coroutine::UpdateAll();
-        
-        Renderer::PreFrame();
-            
-        if (Time::freezeTimer <= 0.f)
-            Update();
-        if (!Window::GetMinimized())
-            Render();
+bool_t Game::NextFrame()
+{
+    Window::PollEvents();
 
-        Renderer::PostFrame();
-        
-		Input::Reset();
-        Time::WaitForNextFrame();
-    }
+    Time::Update();
+    Input::Update();
+    Audio::Update();
+    Coroutine::UpdateAll();
 
-	Coroutine::StopAll();
+    Renderer::PreFrame();
+
+    if (Time::freezeTimer <= 0.f)
+        Update();
+    if (!Window::GetMinimized())
+        Render();
+
+    Renderer::PostFrame();
+
+    Input::Reset();
+    Time::WaitForNextFrame();
+
+    return !Window::GetShouldClose();
 }
 
 void Game::Shutdown()
 {
+	Coroutine::StopAll();
 }

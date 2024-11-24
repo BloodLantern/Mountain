@@ -156,7 +156,7 @@ template <Concepts::ResourceT T>
 List<Pointer<T>> ResourceManager::FindAll(std::function<bool_t(Pointer<T>)>&& predicate)
 {
     List<Pointer<T>> result;
-    FindAll<T>(FORWARD(predicate), &result);
+    FindAll<T>(std::move(predicate), &result);
     return result;
 }
 
