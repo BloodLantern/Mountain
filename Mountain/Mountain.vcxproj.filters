@@ -15,60 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\rendering\renderer.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\rendering\draw.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\game.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="binary_resources\embedded_resources\resource_10560615441756428011.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="binary_resources\embedded_resources\resource_12540647052611605547.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="binary_resources\embedded_resources\resource_13130013495108453755.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="binary_resources\embedded_resources\resource_16475344919504352316.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="binary_resources\embedded_resources\resource_17139022876316836076.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="binary_resources\embedded_resources\resource_5290845577426867131.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="binary_resources\embedded_resources\resource_7344767717205508100.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="binary_resources\embedded_resources\resource_8397852258098769587.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="binary_resources\embedded_resources\resource_8915932256763674668.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="binary_resources\embedded_resources\resource_918666155165273692.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="binary_resources\embedded_resources\resource_9650581743241132555.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="binary_resources\embedded_resources\resource_9914516617300152348.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="binary_resources\resource.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="binary_resources\resource_holder.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="binary_resources\span.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="externals\include\AL\al.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -381,227 +327,308 @@
     <ClInclude Include="externals\include\stb_vorbis.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\audio\audio.hpp">
+    <ClInclude Include="externals\include\Maths\core.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\audio\audio_buffer.hpp">
+    <ClInclude Include="externals\include\Maths\matrix2.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\audio\audio_context.hpp">
+    <ClInclude Include="include\Mountain\audio\audio.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\audio\audio_device.hpp">
+    <ClInclude Include="include\Mountain\audio\audio_buffer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\audio\component\audio_listener.hpp">
+    <ClInclude Include="include\Mountain\audio\audio_context.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\audio\component\audio_source.hpp">
+    <ClInclude Include="include\Mountain\audio\audio_device.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\collision\circle.hpp">
+    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_10097982125490285052.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\collision\collide.hpp">
+    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_10560615441756428011.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\collision\collider.hpp">
+    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_1074902542281558043.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\collision\collider_list.hpp">
+    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_13130013495108453755.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\collision\grid.hpp">
+    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_16982112266611754363.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\collision\hitbox.hpp">
+    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_17139022876316836076.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\core.hpp">
+    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_2544377574110585068.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\file\directory.hpp">
+    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_2626201325449173172.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\file\entry.hpp">
+    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_3518102179013777611.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\file\file.hpp">
+    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_5083911923489940364.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\file\file_manager.hpp">
+    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_5290845577426867131.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\input\gamepad_input.hpp">
+    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_7344767717205508100.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\input\input.hpp">
+    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_8397852258098769587.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\input\keyboard_input.hpp">
+    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_8414638717441225796.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\input\mouse_input.hpp">
+    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_8915932256763674668.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\input\time.hpp">
+    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_9273770047666001763.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\rendering\render_target.hpp">
+    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_9467723258334487283.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\resource\audio_track.hpp">
+    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_9914516617300152348.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\resource\font.hpp">
+    <ClInclude Include="include\Mountain\binary_resources\resource.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\resource\resource.hpp">
+    <ClInclude Include="include\Mountain\binary_resources\resource_holder.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\resource\resource_manager.hpp">
+    <ClInclude Include="include\Mountain\binary_resources\span.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\resource\shader.hpp">
+    <ClInclude Include="include\Mountain\collision\circle.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\resource\texture.hpp">
+    <ClInclude Include="include\Mountain\collision\collide.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\scene\component.hpp">
+    <ClInclude Include="include\Mountain\collision\collider.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\scene\entity.hpp">
+    <ClInclude Include="include\Mountain\collision\collider_list.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\screen.hpp">
+    <ClInclude Include="include\Mountain\collision\grid.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\utils\color.hpp">
+    <ClInclude Include="include\Mountain\collision\hitbox.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\utils\concepts.hpp">
+    <ClInclude Include="include\Mountain\core.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\utils\coroutine.hpp">
+    <ClInclude Include="include\Mountain\file\directory.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\utils\event.hpp">
+    <ClInclude Include="include\Mountain\file\entry.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\utils\file_system_watcher.hpp">
+    <ClInclude Include="include\Mountain\file\file.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\utils\formatter.hpp">
+    <ClInclude Include="include\Mountain\file\file_manager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\utils\guid.hpp">
+    <ClInclude Include="include\Mountain\game.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\utils\imgui_utils.hpp">
+    <ClInclude Include="include\Mountain\input\gamepad_input.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\utils\list.hpp">
+    <ClInclude Include="include\Mountain\input\input.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\utils\logger.hpp">
+    <ClInclude Include="include\Mountain\input\keyboard_input.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\utils\message_box.hpp">
+    <ClInclude Include="include\Mountain\input\mouse_input.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\utils\meta_programming.hpp">
+    <ClInclude Include="include\Mountain\input\time.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\utils\pointer.hpp">
+    <ClInclude Include="include\Mountain\rendering\draw.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\utils\random.hpp">
+    <ClInclude Include="include\Mountain\rendering\renderer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\utils\rectangle.hpp">
+    <ClInclude Include="include\Mountain\rendering\render_target.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\utils\reference_counter.hpp">
+    <ClInclude Include="include\Mountain\resource\audio_track.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\utils\run_length_encoding.hpp">
+    <ClInclude Include="include\Mountain\resource\font.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\utils\ts_queue.hpp">
+    <ClInclude Include="include\Mountain\resource\resource.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\utils\utils.hpp">
+    <ClInclude Include="include\Mountain\resource\resource_manager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\utils\windows.hpp">
+    <ClInclude Include="include\Mountain\resource\shader.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\window.hpp">
+    <ClInclude Include="include\Mountain\resource\texture.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inline\collision\hitbox.inl">
+    <ClInclude Include="include\Mountain\scene\component\audio_listener.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inline\file\file.inl">
+    <ClInclude Include="include\Mountain\scene\component\audio_source.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inline\file\file_manager.inl">
+    <ClInclude Include="include\Mountain\scene\component\component.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inline\rendering\draw.inl">
+    <ClInclude Include="include\Mountain\scene\component\light_source.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inline\resource\audio_track.inl">
+    <ClInclude Include="include\Mountain\scene\component\sprite.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inline\resource\resource_manager.inl">
+    <ClInclude Include="include\Mountain\scene\component\state_machine.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inline\resource\texture.inl">
+    <ClInclude Include="include\Mountain\scene\entity.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inline\scene\entity.inl">
+    <ClInclude Include="include\Mountain\screen.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inline\utils\color.inl">
+    <ClInclude Include="include\Mountain\utils\color.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inline\utils\event.inl">
+    <ClInclude Include="include\Mountain\utils\concepts.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inline\utils\list.inl">
+    <ClInclude Include="include\Mountain\utils\coroutine.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inline\utils\logger.inl">
+    <ClInclude Include="include\Mountain\utils\event.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inline\utils\pointer.inl">
+    <ClInclude Include="include\Mountain\utils\file_system_watcher.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inline\utils\rectangle.inl">
+    <ClInclude Include="include\Mountain\utils\formatter.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inline\utils\reference_counter.inl">
+    <ClInclude Include="include\Mountain\utils\guid.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inline\utils\ts_queue.inl">
+    <ClInclude Include="include\Mountain\utils\imgui_utils.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inline\utils\utils.inl">
+    <ClInclude Include="include\Mountain\utils\list.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Mountain\utils\logger.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Mountain\utils\message_box.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Mountain\utils\meta_programming.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Mountain\utils\pointer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Mountain\utils\random.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Mountain\utils\rectangle.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Mountain\utils\reference_counter.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Mountain\utils\run_length_encoding.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Mountain\utils\ts_queue.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Mountain\utils\utils.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Mountain\utils\windows.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Mountain\window.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inline\Mountain\collision\hitbox.inl">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inline\Mountain\file\file.inl">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inline\Mountain\file\file_manager.inl">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inline\Mountain\resource\audio_track.inl">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inline\Mountain\resource\resource_manager.inl">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inline\Mountain\resource\texture.inl">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inline\Mountain\scene\component\state_machine.inl">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inline\Mountain\scene\entity.inl">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inline\Mountain\utils\color.inl">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inline\Mountain\utils\event.inl">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inline\Mountain\utils\imgui_utils.inl">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inline\Mountain\utils\list.inl">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inline\Mountain\utils\logger.inl">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inline\Mountain\utils\pointer.inl">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inline\Mountain\utils\rectangle.inl">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inline\Mountain\utils\reference_counter.inl">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inline\Mountain\utils\ts_queue.inl">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inline\Mountain\utils\utils.inl">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\rendering\renderer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\rendering\draw.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\game.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="externals\src\glad.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -641,131 +668,152 @@
     <ClCompile Include="externals\src\stb_vorbis.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\audio\audio.cpp">
+    <ClCompile Include="src\Mountain\audio\audio.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\audio\audio_buffer.cpp">
+    <ClCompile Include="src\Mountain\audio\audio_buffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\audio\audio_context.cpp">
+    <ClCompile Include="src\Mountain\audio\audio_context.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\audio\audio_device.cpp">
+    <ClCompile Include="src\Mountain\audio\audio_device.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\audio\component\audio_listener.cpp">
+    <ClCompile Include="src\Mountain\binary_resources\resource_holder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\audio\component\audio_source.cpp">
+    <ClCompile Include="src\Mountain\collision\circle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\collision\circle.cpp">
+    <ClCompile Include="src\Mountain\collision\collide.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\collision\collide.cpp">
+    <ClCompile Include="src\Mountain\collision\collider.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\collision\collider.cpp">
+    <ClCompile Include="src\Mountain\collision\collider_list.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\collision\collider_list.cpp">
+    <ClCompile Include="src\Mountain\collision\grid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\collision\grid.cpp">
+    <ClCompile Include="src\Mountain\collision\hitbox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\collision\hitbox.cpp">
+    <ClCompile Include="src\Mountain\file\directory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\file\directory.cpp">
+    <ClCompile Include="src\Mountain\file\entry.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\file\entry.cpp">
+    <ClCompile Include="src\Mountain\file\file.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\file\file.cpp">
+    <ClCompile Include="src\Mountain\file\file_manager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\file\file_manager.cpp">
+    <ClCompile Include="src\Mountain\game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\input\gamepad_input.cpp">
+    <ClCompile Include="src\Mountain\input\gamepad_input.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\input\input.cpp">
+    <ClCompile Include="src\Mountain\input\input.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\input\time.cpp">
+    <ClCompile Include="src\Mountain\input\time.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\rendering\render_target.cpp">
+    <ClCompile Include="src\Mountain\rendering\draw.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\resource\audio_track.cpp">
+    <ClCompile Include="src\Mountain\rendering\renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\resource\font.cpp">
+    <ClCompile Include="src\Mountain\rendering\render_target.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\resource\resource.cpp">
+    <ClCompile Include="src\Mountain\resource\audio_track.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\resource\resource_manager.cpp">
+    <ClCompile Include="src\Mountain\resource\font.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\resource\shader.cpp">
+    <ClCompile Include="src\Mountain\resource\resource.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\resource\texture.cpp">
+    <ClCompile Include="src\Mountain\resource\resource_manager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\scene\component.cpp">
+    <ClCompile Include="src\Mountain\resource\shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\scene\entity.cpp">
+    <ClCompile Include="src\Mountain\resource\texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\screen.cpp">
+    <ClCompile Include="src\Mountain\scene\component\audio_listener.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\utils\color.cpp">
+    <ClCompile Include="src\Mountain\scene\component\audio_source.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\utils\coroutine.cpp">
+    <ClCompile Include="src\Mountain\scene\component\component.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\utils\file_system_watcher.cpp">
+    <ClCompile Include="src\Mountain\scene\component\light_source.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\utils\guid.cpp">
+    <ClCompile Include="src\Mountain\scene\component\sprite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\utils\imgui_utils.cpp">
+    <ClCompile Include="src\Mountain\scene\component\state_machine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\utils\logger.cpp">
+    <ClCompile Include="src\Mountain\scene\entity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\utils\message_box.cpp">
+    <ClCompile Include="src\Mountain\screen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\utils\random.cpp">
+    <ClCompile Include="src\Mountain\utils\color.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\utils\run_length_encoding.cpp">
+    <ClCompile Include="src\Mountain\utils\coroutine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\utils\utils.cpp">
+    <ClCompile Include="src\Mountain\utils\file_system_watcher.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\utils\windows.cpp">
+    <ClCompile Include="src\Mountain\utils\guid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\window.cpp">
+    <ClCompile Include="src\Mountain\utils\imgui_utils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mountain\utils\logger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mountain\utils\message_box.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mountain\utils\random.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mountain\utils\run_length_encoding.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mountain\utils\utils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mountain\utils\windows.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mountain\window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Natvis Include="NatvisFile.natvis" />
+    <Natvis Include="Mountain.natvis" />
   </ItemGroup>
 </Project>
