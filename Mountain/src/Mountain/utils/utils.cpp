@@ -48,7 +48,7 @@ std::string Utils::HumanizeString(const std::string& str)
         // Get results for capture groups 1 and 2
         for (int i = 1; i < 3; i++)
         {
-            std::ssub_match subMatch = match[i];
+            const std::ssub_match& subMatch = match[i];
             if (subMatch.matched)
             {
                 result.replace(subMatch.first - sBegin + rBegin, subMatch.second - sBegin + rBegin, ' ' + subMatch.str());
@@ -141,7 +141,7 @@ void Utils::OpenInExplorer(const std::filesystem::path& path, const bool_t isFil
 
 void Utils::OpenFile(const std::filesystem::path& filepath) { TerminalCommand("explorer " + ('"' + absolute(filepath).string() + '"')); }
 
-bool_t Utils::StringEqualsIgnoreCase(const std::string& a, const std::string& b)
+bool_t Utils::StringEqualsIgnoreCase(const std::string_view a, const std::string_view b)
 {
     return std::ranges::equal(
         a, b,
@@ -150,6 +150,12 @@ bool_t Utils::StringEqualsIgnoreCase(const std::string& a, const std::string& b)
             return std::tolower(aa) == std::tolower(bb);
         }
     );
+}
+
+bool_t Utils::StringContainsIgnoreCase(const std::string_view a, const std::string_view b)
+{
+    const std::string left = StringToLower(a), right = StringToLower(b);
+    return left.contains(right);
 }
 
 int32_t Utils::TerminalCommand(const std::string& command, const bool_t asynchronous)
@@ -169,4 +175,62 @@ void Utils::SetThreadName([[maybe_unused]] std::thread& thread, [[maybe_unused]]
     (void) SetThreadDescription(thread.native_handle(), name.c_str());
     Windows::SilenceError();
 #endif
+}
+
+std::wstring Utils::StringNarrowToWide(const std::string_view str)
+{
+    std::wstring result;
+    result.resize(str.size());
+    MultiByteToWideChar(CP_ACP, MB_COMPOSITE, str.data(), static_cast<int32_t>(str.size()), result.data(), static_cast<int32_t>(result.size()));
+    return result;
+}
+
+std::string Utils::StringWideToNarrow(const std::wstring_view str)
+{
+    std::string result;
+    result.resize(str.size());
+    WideCharToMultiByte(CP_ACP, WC_COMPOSITECHECK, str.data(), static_cast<int32_t>(str.size()), result.data(), static_cast<int32_t>(result.size()), nullptr, nullptr);
+    return result;
+}
+
+std::string Utils::StringToLower(const std::string_view str)
+{
+    std::string result;
+    result.resize(str.size());
+    for (size_t i = 0; i < str.size(); i++)
+        result[i] = static_cast<char_t>(std::tolower(str[i]));
+    return result;
+}
+
+std::string Utils::StringToUpper(const std::string_view str)
+{
+    std::string result;
+    result.resize(str.size());
+    for (size_t i = 0; i < str.size(); i++)
+        result[i] = static_cast<char_t>(std::toupper(str[i]));
+    return result;
+}
+
+std::pair<int32_t, std::string_view> Utils::ByteSizeUnit(int64_t size)
+{
+    if (size < 1000)
+        return { static_cast<int32_t>(size), "B" };
+
+    size /= 1000;
+    if (size < 1000)
+        return { static_cast<int32_t>(size), "KB" };
+
+    size /= 1000;
+    if (size < 1000)
+        return { static_cast<int32_t>(size), "MB" };
+
+    size /= 1000;
+    if (size < 1000)
+        return { static_cast<int32_t>(size), "GB" };
+
+    size /= 1000;
+    if (size < 1000)
+        return { static_cast<int32_t>(size), "TB" };
+
+    return { static_cast<int32_t>(size), "?" };
 }
