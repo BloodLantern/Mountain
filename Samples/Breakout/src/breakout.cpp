@@ -14,12 +14,14 @@ Breakout::Breakout()
 
 void Breakout::Initialize()
 {
+    Game::Initialize();
+
     const Vector2 windowSize = Mountain::Window::GetSize();
 
     static constexpr int32_t BlockCount = 10;
     for (int32_t i = 0; i < BlockCount; ++i)
     {
-        Block* block = new Block;
+        Block* block = new Block(m_Ball);
         m_Blocks.Add(block);
         block->position = { windowSize.x * 0.5f + static_cast<float_t>(i - BlockCount / 2) * BlockSize, windowSize.y * 0.1f };  // NOLINT(bugprone-integer-division)
     }
@@ -29,6 +31,8 @@ void Breakout::Shutdown()
 {
     for (const Block* const block : m_Blocks)
         delete block;
+
+    Game::Shutdown();
 }
 
 void Breakout::Update()
