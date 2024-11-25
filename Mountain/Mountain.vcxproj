@@ -164,6 +164,7 @@
     <ClInclude Include="include\Mountain\input\mouse_input.hpp" />
     <ClInclude Include="include\Mountain\input\time.hpp" />
     <ClInclude Include="include\Mountain\rendering\draw.hpp" />
+    <ClInclude Include="include\Mountain\rendering\particle_system.hpp" />
     <ClInclude Include="include\Mountain\rendering\renderer.hpp" />
     <ClInclude Include="include\Mountain\rendering\render_target.hpp" />
     <ClInclude Include="include\Mountain\resource\audio_track.hpp" />
@@ -254,6 +255,7 @@
     <ClCompile Include="src\Mountain\input\input.cpp" />
     <ClCompile Include="src\Mountain\input\time.cpp" />
     <ClCompile Include="src\Mountain\rendering\draw.cpp" />
+    <ClCompile Include="src\Mountain\rendering\particle_system.cpp" />
     <ClCompile Include="src\Mountain\rendering\renderer.cpp" />
     <ClCompile Include="src\Mountain\rendering\render_target.cpp" />
     <ClCompile Include="src\Mountain\resource\audio_track.cpp" />
@@ -288,6 +290,8 @@
     <Content Include="shaders\circle\circle.vert" />
     <Content Include="shaders\line_colored\line_colored.frag" />
     <Content Include="shaders\line_colored\line_colored.vert" />
+    <Content Include="shaders\point\point.frag" />
+    <Content Include="shaders\point\point.vert" />
     <Content Include="shaders\post_processing\post_processing.frag" />
     <Content Include="shaders\post_processing\post_processing.vert" />
     <Content Include="shaders\line\line.frag" />
@@ -357,6 +361,8 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <AdditionalIncludeDirectories>include;inline;binary_resources;externals\include</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <AdditionalOptions>/Gw %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -389,6 +395,8 @@
       <AdditionalIncludeDirectories>include;inline;binary_resources;externals\include</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <AssemblerOutput>AssemblyAndSourceCode</AssemblerOutput>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <AdditionalOptions>/Gw %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -422,6 +430,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <EnableModules>false</EnableModules>
       <AdditionalIncludeDirectories>include;inline;binary_resources;externals\include</AdditionalIncludeDirectories>
+      <AdditionalOptions>/Gw %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

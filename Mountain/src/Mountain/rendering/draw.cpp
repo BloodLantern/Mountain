@@ -16,6 +16,12 @@ void Draw::Clear(const Color& color)
     glClear(GL_COLOR_BUFFER_BIT);
 }
 
+void Draw::Point(Vector2 position, const Color& color)
+{
+    m_DrawList.point.Emplace(position, color);
+    m_DrawList.AddCommand(DrawDataType::Point);
+}
+
 void Draw::Line(const Vector2 point1, const Vector2 point2, const Color& color)
 {
     m_DrawList.line.Emplace(point1, point2, color);
@@ -240,6 +246,7 @@ void Draw::DrawList::AddCommand(DrawDataType type)
 
 void Draw::DrawList::Clear()
 {
+    point.Clear();
     line.Clear();
     lineColored.Clear();
     triangle.Clear();
@@ -260,7 +267,7 @@ void Draw::DrawList::Clear()
 void Draw::Initialize()
 {
     glCreateBuffers(6, &m_RectangleEbo);
-    glCreateVertexArrays(9, &m_LineVao);
+    glCreateVertexArrays(10, &m_PointVao);
 
 #ifdef _DEBUG
     glObjectLabel(GL_BUFFER, m_RectangleEbo, -1, "Rectangle EBO");
@@ -281,6 +288,7 @@ void Draw::Initialize()
     glObjectLabel(GL_VERTEX_ARRAY, m_RenderTargetVao, -1, "RenderTarget VAO");
 #endif
 
+    InitializePointBuffers();
     InitializeLineBuffers();
     InitializeLineColoredBuffers();
     InitializeTriangleBuffers();
@@ -294,6 +302,7 @@ void Draw::Initialize()
 
 void Draw::LoadResources()
 {
+    m_PointShader = ResourceManager::Get<Shader>("point");
     m_LineShader = ResourceManager::Get<Shader>("line");
     m_LineColoredShader = ResourceManager::Get<Shader>("line_colored");
     m_TriangleShader = ResourceManager::Get<Shader>("triangle");
@@ -310,7 +319,22 @@ void Draw::LoadResources()
 void Draw::Shutdown()
 {
     glDeleteBuffers(6, &m_RectangleEbo);
-    glDeleteVertexArrays(9, &m_LineVao);
+    glDeleteVertexArrays(10, &m_PointVao);
+}
+
+void Draw::InitializePointBuffers()
+{
+    glBindVertexArray(m_PointVao);
+
+    glBindBuffer(GL_ARRAY_BUFFER, m_Vbo);
+    uint32_t index = 0;
+    size_t offset = 0;
+    // Position
+    SetVertexAttribute(index, 2, sizeof(PointData), offset, 1);
+    // Color
+    SetVertexAttribute(++index, 4, sizeof(PointData), offset += sizeof(Vector2), 1);
+
+    glBindVertexArray(0);
 }
 
 void Draw::InitializeLineBuffers()
@@ -537,6 +561,7 @@ void Draw::InitializeRenderTargetBuffers()
 
 void Draw::Render()
 {
+    size_t pointIndex = 0;
     size_t lineIndex = 0, lineColoredIndex = 0;
     size_t triangleIndex = 0, triangleColoredIndex = 0, triangleFilledIndex = 0, triangleColoredFilledIndex = 0;
     size_t rectangleIndex = 0, rectangleFilledIndex = 0;
@@ -553,11 +578,16 @@ void Draw::Render()
 
         switch (command.type)
         {
+            case DrawDataType::Point:
+                RenderPointData(m_DrawList.point, pointIndex, count);
+                pointIndex += count;
+                break;
+
             case DrawDataType::Line:
                 RenderLineData(m_DrawList.line, lineIndex, count);
                 lineIndex += count;
                 break;
-                
+
             case DrawDataType::LineColored:
                 RenderLineColoredData(m_DrawList.lineColored, lineColoredIndex, count);
                 lineColoredIndex += count;
@@ -638,6 +668,7 @@ void Draw::UpdateShaderMatrices()
 {
     const Matrix proj = m_ProjectionMatrix * m_CameraMatrix;
     
+    m_PointShader->SetUniform("projection", proj);
     m_LineShader->SetUniform("projection", proj);
     m_LineColoredShader->SetUniform("projection", proj);
     m_TriangleShader->SetUniform("projection", proj);
@@ -664,6 +695,22 @@ void Draw::CircleInternal(const Vector2 center, const float_t radius, const bool
         filled
     );
     m_DrawList.AddCommand(DrawDataType::Circle);
+}
+
+void Draw::RenderPointData(const List<PointData>& points, const size_t index, const size_t count)
+{
+    if (points.Empty())
+        return;
+
+    glNamedBufferData(m_Vbo, static_cast<GLsizeiptr>(sizeof(PointData) * count), &points[index], GL_STREAM_DRAW);
+
+    glBindVertexArray(m_PointVao);
+    m_PointShader->Use();
+
+    glDrawArraysInstanced(GL_POINTS, 0, 1, static_cast<GLsizei>(count));
+
+    m_PointShader->Unuse();
+    glBindVertexArray(0);
 }
 
 void Draw::RenderLineData(const List<LineData>& lines, const size_t index, const size_t count)
