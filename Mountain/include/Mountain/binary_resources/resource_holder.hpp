@@ -4,44 +4,48 @@
 #include "embedded_resources/resource_13130013495108453755.hpp"
 #include "embedded_resources/resource_17139022876316836076.hpp"
 #include "embedded_resources/resource_3518102179013777611.hpp"
-#include "embedded_resources/resource_9467723258334487283.hpp"
 #include "embedded_resources/resource_10097982125490285052.hpp"
-#include "embedded_resources/resource_10560615441756428011.hpp"
+#include "embedded_resources/resource_9467723258334487283.hpp"
 #include "embedded_resources/resource_8414638717441225796.hpp"
-#include "embedded_resources/resource_16982112266611754363.hpp"
+#include "embedded_resources/resource_12877864912023894619.hpp"
+#include "embedded_resources/resource_6050031692327083212.hpp"
+#include "embedded_resources/resource_10560615441756428011.hpp"
 #include "embedded_resources/resource_9914516617300152348.hpp"
-#include "embedded_resources/resource_7344767717205508100.hpp"
-#include "embedded_resources/resource_1074902542281558043.hpp"
-#include "embedded_resources/resource_5290845577426867131.hpp"
-#include "embedded_resources/resource_9273770047666001763.hpp"
+#include "embedded_resources/resource_16982112266611754363.hpp"
 #include "embedded_resources/resource_8397852258098769587.hpp"
-#include "embedded_resources/resource_2544377574110585068.hpp"
-#include "embedded_resources/resource_5083911923489940364.hpp"
+#include "embedded_resources/resource_7344767717205508100.hpp"
+#include "embedded_resources/resource_5290845577426867131.hpp"
 #include "embedded_resources/resource_8915932256763674668.hpp"
+#include "embedded_resources/resource_1074902542281558043.hpp"
+#include "embedded_resources/resource_5083911923489940364.hpp"
+#include "embedded_resources/resource_9273770047666001763.hpp"
 #include "embedded_resources/resource_2626201325449173172.hpp"
+#include "embedded_resources/resource_2544377574110585068.hpp"
 
 namespace {
 class ResourceHolder {
 private:
-	std::array<Resource, 18> resources {
+	std::array<Resource, 20> resources {
 		Resource(resource_13130013495108453755,	resource_13130013495108453755_path),
 		Resource(resource_17139022876316836076,	resource_17139022876316836076_path),
 		Resource(resource_3518102179013777611,	resource_3518102179013777611_path),
-		Resource(resource_9467723258334487283,	resource_9467723258334487283_path),
 		Resource(resource_10097982125490285052,	resource_10097982125490285052_path),
-		Resource(resource_10560615441756428011,	resource_10560615441756428011_path),
+		Resource(resource_9467723258334487283,	resource_9467723258334487283_path),
 		Resource(resource_8414638717441225796,	resource_8414638717441225796_path),
-		Resource(resource_16982112266611754363,	resource_16982112266611754363_path),
+		Resource(resource_12877864912023894619,	resource_12877864912023894619_path),
+		Resource(resource_6050031692327083212,	resource_6050031692327083212_path),
+		Resource(resource_10560615441756428011,	resource_10560615441756428011_path),
 		Resource(resource_9914516617300152348,	resource_9914516617300152348_path),
-		Resource(resource_7344767717205508100,	resource_7344767717205508100_path),
-		Resource(resource_1074902542281558043,	resource_1074902542281558043_path),
-		Resource(resource_5290845577426867131,	resource_5290845577426867131_path),
-		Resource(resource_9273770047666001763,	resource_9273770047666001763_path),
+		Resource(resource_16982112266611754363,	resource_16982112266611754363_path),
 		Resource(resource_8397852258098769587,	resource_8397852258098769587_path),
-		Resource(resource_2544377574110585068,	resource_2544377574110585068_path),
-		Resource(resource_5083911923489940364,	resource_5083911923489940364_path),
+		Resource(resource_7344767717205508100,	resource_7344767717205508100_path),
+		Resource(resource_5290845577426867131,	resource_5290845577426867131_path),
 		Resource(resource_8915932256763674668,	resource_8915932256763674668_path),
+		Resource(resource_1074902542281558043,	resource_1074902542281558043_path),
+		Resource(resource_5083911923489940364,	resource_5083911923489940364_path),
+		Resource(resource_9273770047666001763,	resource_9273770047666001763_path),
 		Resource(resource_2626201325449173172,	resource_2626201325449173172_path),
+		Resource(resource_2544377574110585068,	resource_2544377574110585068_path),
 	};
 
 public:

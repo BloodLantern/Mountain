@@ -539,3 +539,5 @@ imgui.ini
 !Tests/Tests.vcxproj.user
 
 !*.gitkeep
+
+!LivePP/**
