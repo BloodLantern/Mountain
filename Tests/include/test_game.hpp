@@ -10,6 +10,7 @@
 
 #include "camera.hpp"
 #include "player.hpp"
+#include "Mountain/rendering/particle_system.hpp"
 
 constexpr Vector2i BaseResolution = { 320, 180 };
 
@@ -19,6 +20,7 @@ public:
     Mountain::List<Mountain::Entity*> entities;
 	Player* player = nullptr;
 	AnimatedCharacter* character = nullptr;
+	Mountain::ParticleSystem particleSystem{ 50 };
 	
 	int32_t ballCount = 0;
 	float_t ballTimer = 0;
@@ -32,7 +34,6 @@ public:
 
     explicit GameExample(const char_t* windowTitle);
 
-private:
 	// Inherited from Game
 	void Initialize() override;
 	void LoadResources() override;

@@ -46,9 +46,10 @@ void Player::Render()
 
     Mountain::Draw::Texture(
         *m_Texture,
-        position - m_Texture->GetSize() * 0.5f,
+        position,
         Vector2::One(),
         0.f,
+        Vector2::One() * 0.5f,
         Vector2::Zero(),
         Vector2::One(),
         Mountain::Color::White()
