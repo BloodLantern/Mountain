@@ -21,7 +21,8 @@ BEGIN_MOUNTAIN
 
 enum class DrawTextureFlipping : uint8_t
 {
-    None,
+    None = 0,
+
     Horizontal      = 1 << 0,
     Vertical        = 1 << 1,
     Diagonal        = 1 << 2,
@@ -37,6 +38,8 @@ public:
     /// @brief Clear the current RenderTarget
     /// @param color The new color of all the pixels
     MOUNTAIN_API static void Clear(const Color& color);
+
+    MOUNTAIN_API static void Point(Vector2 position, const Color& color = Color::White());
 
     /// @brief Draw a line
     /// @param point1 The first point of the line
@@ -163,6 +166,12 @@ public:
     );
 
 private:
+    struct PointData
+    {
+        Vector2 position;
+        Color color;
+    };
+
     struct LineData
     {
         Vector2 p1, p2;
@@ -227,6 +236,7 @@ private:
 
     enum class DrawDataType : uint8_t
     {
+        Point,
         Line,
         LineColored,
         Triangle,
@@ -250,6 +260,7 @@ private:
     class DrawList
     {
     public:
+        List<PointData> point;
         List<LineData> line;
         List<LineColoredData> lineColored;
         List<TriangleData> triangle;
@@ -270,6 +281,7 @@ private:
         void Clear();
     };
     
+    static inline Pointer<Shader> m_PointShader;
     static inline Pointer<Shader> m_LineShader;
     static inline Pointer<Shader> m_LineColoredShader;
     static inline Pointer<Shader> m_TriangleShader;
@@ -280,7 +292,7 @@ private:
     static inline Pointer<Shader> m_TextureShader, m_TextShader, m_PostProcessingShader;
 
     static inline uint32_t m_RectangleEbo, m_Vbo, m_RectangleVbo, m_TextureVbo, m_TextVbo, m_RenderTargetVbo;
-    static inline uint32_t m_LineVao, m_LineColoredVao, m_TriangleVao, m_TriangleColoredVao, m_RectangleVao, m_CircleVao, m_TextureVao, m_TextVao, m_RenderTargetVao;
+    static inline uint32_t m_PointVao, m_LineVao, m_LineColoredVao, m_TriangleVao, m_TriangleColoredVao, m_RectangleVao, m_CircleVao, m_TextureVao, m_TextVao, m_RenderTargetVao;
 
     static inline Matrix m_ProjectionMatrix;
 
@@ -293,6 +305,7 @@ private:
     static void LoadResources();
     static void Shutdown();
 
+    static void InitializePointBuffers();
     static void InitializeLineBuffers();
     static void InitializeLineColoredBuffers();
     static void InitializeTriangleBuffers();
@@ -311,6 +324,7 @@ private:
 
     static void CircleInternal(Vector2 center, float_t radius, bool_t filled, const Color& color);
 
+    static void RenderPointData(const List<PointData>& points, size_t index, size_t count);
     static void RenderLineData(const List<LineData>& lines, size_t index, size_t count);
     static void RenderLineColoredData(const List<LineColoredData>& linesColored, size_t index, size_t count);
     static void RenderTriangleData(const List<TriangleData>& triangles, bool_t filled, size_t index, size_t count);

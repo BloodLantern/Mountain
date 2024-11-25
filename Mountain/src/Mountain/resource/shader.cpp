@@ -4,6 +4,7 @@
 
 #include <magic_enum/magic_enum.hpp>
 
+#include "Mountain/resource/resource_manager.hpp"
 #include "Mountain/utils/logger.hpp"
 
 using namespace Mountain;
@@ -49,7 +50,8 @@ void Shader::Load()
 {
     m_Id = glCreateProgram();
 #ifdef _DEBUG
-    glObjectLabel(GL_PROGRAM, m_Id, static_cast<GLsizei>(m_Name.length()), m_Name.c_str());
+    const std::string name = m_Name.substr(ResourceManager::ReservedShaderPrefix.length());
+    glObjectLabel(GL_PROGRAM, m_Id, static_cast<GLsizei>(name.length()), name.c_str());
 #endif
 
     std::array<uint32_t, ShaderTypeCount> shaderIds;
@@ -63,7 +65,7 @@ void Shader::Load()
         id = glCreateShader(ShaderTypeToOpenGl(code.type));
 #ifdef _DEBUG
         const Pointer file = m_Files[i];
-        const std::string& fileName = file ? file->GetName() : m_Name + '/' + magic_enum::enum_name(code.type).data();
+        const std::string& fileName = file ? file->GetName() : name + '/' + magic_enum::enum_name(code.type).data();
         glObjectLabel(GL_SHADER, id, static_cast<GLsizei>(fileName.length()), fileName.c_str());
 #endif
         

@@ -7,8 +7,6 @@
 #include <magic_enum/magic_enum.hpp>
 
 #include "Mountain/screen.hpp"
-#include "Mountain/audio/audio.hpp"
-#include "Mountain/collision/collide.hpp"
 #include "Mountain/file/file_manager.hpp"
 #include "Mountain/input/input.hpp"
 #include "Mountain/input/time.hpp"
@@ -19,7 +17,6 @@
 #include "Mountain/scene/component/audio_listener.hpp"
 #include "Mountain/utils/imgui_utils.hpp"
 #include "Mountain/utils/logger.hpp"
-#include "Mountain/utils/random.hpp"
 
 #include "spin_component.hpp"
 
@@ -38,6 +35,10 @@ void GameExample::Initialize()
 
     player = new Player({ 10.f, 100.f });
     renderTarget.AddLightSource(player->GetComponent<LightSource>());
+
+    particleSystem.position = { 250.f, 100.f };
+
+    Game::Initialize();
 }
 
 void GameExample::LoadResources()
@@ -63,6 +64,8 @@ void GameExample::Shutdown()
         delete entity;
 
     delete player;
+
+    Game::Shutdown();
 }
 
 void GameExample::Update()
@@ -71,10 +74,15 @@ void GameExample::Update()
         entity->Update();
 
     player->Update();
+
+    particleSystem.Update();
 }
 
-bool_t showInputs = false;
-bool_t debugRender = true;
+namespace
+{
+    bool_t showInputs = false;
+    bool_t debugRender = true;
+}
 
 void GameExample::Render()
 {
@@ -143,12 +151,14 @@ void GameExample::Render()
 
     player->Render();
 
+    particleSystem.Render();
+
     if (debugRender)
     {
         for (Entity* const entity : entities)
-            entity->DebugRender();
+            entity->RenderDebug();
 
-        player->DebugRender();
+        player->RenderDebug();
     }
 
     Draw::Text(*font, "Hello, tiny World!", { 90.f, 30.f });
@@ -236,6 +246,11 @@ void GameExample::Render()
         float_t volume = listener->GetVolume();
         ImGui::SliderFloat("Audio volume", &volume, 0.f, 1.f);
         listener->SetVolume(volume);
+    }
+
+    if (ImGui::CollapsingHeader("Particle system"))
+    {
+        particleSystem.RenderImGui();
     }
     
     ImGui::End();
