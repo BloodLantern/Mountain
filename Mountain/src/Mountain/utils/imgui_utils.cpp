@@ -185,6 +185,60 @@ void ImGuiUtils::DirectionVector(const std::string_view label, Vector2* const va
     ImGui::PopClipRect();
 }
 
+bool ImGuiUtils::ComboEaser(const std::string_view label, Easing::Easer* v, const ImGuiComboFlags flags)
+{
+    static constexpr std::array Functions{
+        std::make_pair("Linear", Utils::Identity<float_t>),
+        std::make_pair("SineIn", Easing::SineIn),
+        std::make_pair("SineOut", Easing::SineOut),
+        std::make_pair("SineInOut", Easing::SineInOut),
+        std::make_pair("QuadIn", Easing::QuadIn),
+        std::make_pair("QuadOut", Easing::QuadOut),
+        std::make_pair("QuadInOut", Easing::QuadInOut),
+        std::make_pair("CubicIn", Easing::CubicIn),
+        std::make_pair("CubicOut", Easing::CubicOut),
+        std::make_pair("CubicInOut", Easing::CubicInOut),
+        std::make_pair("QuartIn", Easing::QuartIn),
+        std::make_pair("QuartOut", Easing::QuartOut),
+        std::make_pair("QuartInOut", Easing::QuartInOut),
+        std::make_pair("QuintIn", Easing::QuintIn),
+        std::make_pair("QuintOut", Easing::QuintOut),
+        std::make_pair("QuintInOut", Easing::QuintInOut),
+        std::make_pair("ExpoIn", Easing::ExpoIn),
+        std::make_pair("ExpoOut", Easing::ExpoOut),
+        std::make_pair("ExpoInOut", Easing::ExpoInOut),
+        std::make_pair("CircIn", Easing::CircIn),
+        std::make_pair("CircOut", Easing::CircOut),
+        std::make_pair("CircInOut", Easing::CircInOut),
+        std::make_pair("BackIn", Easing::BackIn),
+        std::make_pair("BackOut", Easing::BackOut),
+        std::make_pair("BackInOut", Easing::BackInOut),
+        std::make_pair("ElasticIn", Easing::ElasticIn),
+        std::make_pair("ElasticOut", Easing::ElasticOut),
+        std::make_pair("ElasticInOut", Easing::ElasticInOut),
+        std::make_pair("BounceIn", Easing::BounceIn),
+        std::make_pair("BounceOut", Easing::BounceOut),
+        std::make_pair("BounceInOut", Easing::BounceInOut),
+    };
+
+    const auto current = std::ranges::find_if(Functions, [&](auto element) { return element.second == *v; });
+
+    bool_t result = false;
+    if (ImGui::BeginCombo(label.data(), current->first, flags))
+    {
+        for (const auto& pair : Functions)
+        {
+            if (ImGui::Selectable(pair.first))
+            {
+                *v = pair.second;
+                result = true;
+            }
+        }
+        ImGui::EndCombo();
+    }
+    return result;
+}
+
 void ImGuiUtils::ShowInputsWindow()
 {
     ImGui::Begin("Mountain Inputs");

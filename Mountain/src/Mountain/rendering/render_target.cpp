@@ -126,7 +126,7 @@ void RenderTarget::RemoveLightSource(const LightSource* lightSource) { std::eras
 
 const std::vector<const LightSource*>& RenderTarget::GetLightSources() const { return m_LightSources; }
 
-void RenderTarget::SetDebugName(const std::string_view name) const
+void RenderTarget::SetDebugName([[maybe_unused]] const std::string_view name) const
 {
 #ifdef _DEBUG
     glObjectLabel(GL_TEXTURE, m_Texture, static_cast<GLsizei>(name.length()), name.data());
