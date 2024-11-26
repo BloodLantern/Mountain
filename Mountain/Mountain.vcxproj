@@ -128,6 +128,7 @@
     <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_10097982125490285052.hpp" />
     <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_10560615441756428011.hpp" />
     <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_1074902542281558043.hpp" />
+    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_12877864912023894619.hpp" />
     <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_13130013495108453755.hpp" />
     <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_16982112266611754363.hpp" />
     <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_17139022876316836076.hpp" />
@@ -136,6 +137,7 @@
     <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_3518102179013777611.hpp" />
     <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_5083911923489940364.hpp" />
     <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_5290845577426867131.hpp" />
+    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_6050031692327083212.hpp" />
     <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_7344767717205508100.hpp" />
     <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_8397852258098769587.hpp" />
     <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_8414638717441225796.hpp" />
@@ -165,6 +167,7 @@
     <ClInclude Include="include\Mountain\input\time.hpp" />
     <ClInclude Include="include\Mountain\rendering\draw.hpp" />
     <ClInclude Include="include\Mountain\rendering\particle_system.hpp" />
+    <ClInclude Include="include\Mountain\rendering\particle_system_settings.hpp" />
     <ClInclude Include="include\Mountain\rendering\renderer.hpp" />
     <ClInclude Include="include\Mountain\rendering\render_target.hpp" />
     <ClInclude Include="include\Mountain\resource\audio_track.hpp" />
@@ -256,6 +259,7 @@
     <ClCompile Include="src\Mountain\input\time.cpp" />
     <ClCompile Include="src\Mountain\rendering\draw.cpp" />
     <ClCompile Include="src\Mountain\rendering\particle_system.cpp" />
+    <ClCompile Include="src\Mountain\rendering\particle_system_settings.cpp" />
     <ClCompile Include="src\Mountain\rendering\renderer.cpp" />
     <ClCompile Include="src\Mountain\rendering\render_target.cpp" />
     <ClCompile Include="src\Mountain\resource\audio_track.cpp" />

@@ -37,6 +37,12 @@ void GameExample::Initialize()
     renderTarget.AddLightSource(player->GetComponent<LightSource>());
 
     particleSystem.position = { 250.f, 100.f };
+    particleSystem.particleSettings.AddRange(
+        {
+            std::make_shared<ParticleSystemSettings::ColorOverLifetime>(),
+            std::make_shared<ParticleSystemSettings::Acceleration>(),
+        }
+    );
 
     Game::Initialize();
 }
@@ -235,6 +241,11 @@ void GameExample::Render()
         ImGui::DragFloat("Old lady animation speed", &f, 0.01f);
         if (oldF != f)
             s->SetFrameDuration(f);
+
+        static bool_t showDemoWindow = false;
+        ImGui::Checkbox("Show ImGui demo window", &showDemoWindow);
+        if (showDemoWindow)
+            ImGui::ShowDemoWindow();
     }
     
     if (ImGui::CollapsingHeader("Player"))
