@@ -36,6 +36,8 @@ void GameExample::Initialize()
     player = new Player({ 10.f, 100.f });
     renderTarget.AddLightSource(player->GetComponent<LightSource>());
 
+    renderTarget.SetDebugName("Game RenderTarget");
+
     particleSystem.position = { 250.f, 100.f };
     particleSystem.particleSettings.AddRange(
         {
