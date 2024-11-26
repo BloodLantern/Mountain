@@ -26,6 +26,8 @@ namespace ImGuiUtils
         const std::type_identity_t<std::function<bool_t(T& value)>>& displayFunction
     );
 
+    MOUNTAIN_API bool ComboEaser(std::string_view label, Easing::Easer* v, ImGuiComboFlags flags = ImGuiComboFlags_None);
+
     MOUNTAIN_API void ShowInputsWindow();
 
     MOUNTAIN_API void ShowFileManager();

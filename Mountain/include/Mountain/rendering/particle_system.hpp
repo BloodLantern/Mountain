@@ -3,6 +3,7 @@
 #include <Maths/vector2.hpp>
 
 #include "Mountain/core.hpp"
+#include "Mountain/rendering/particle_system_settings.hpp"
 #include "Mountain/utils/color.hpp"
 #include "Mountain/utils/list.hpp"
 
@@ -24,14 +25,19 @@ public:
     // Particle system settings
 
     Vector2 position;
-    float_t spawnDelay = 0.1f;
+    /// @brief The amount of particles spawned per second
+    size_t spawnRate = 10;
+    bool_t useUnscaledDeltaTime = false;
+    float_t duration = 5.f;
+    bool_t looping = true;
 
     // Particle settings
 
     float_t particleLifetime = 1.f;
-    Color particleColorStart = Color::White();
-    Color particleColorEnd = Color::Transparent();
 
+    List<std::shared_ptr<ParticleSystemSettings::Base>> particleSettings;
+
+    MOUNTAIN_API ParticleSystem() = default;
     MOUNTAIN_API explicit ParticleSystem(size_t maxParticles);
 
     MOUNTAIN_API void Update();
@@ -43,11 +49,11 @@ public:
     MOUNTAIN_API void SetMaxParticles(size_t newMaxParticles);
 
 private:
-    size_t m_MaxParticles;
+    size_t m_MaxParticles = 0;
 
-    List<Particle> m_Particles;
+    List<Particle> m_Particles{};
 
-    float_t m_SpawnTimer = 0.f;
+    double_t m_SpawnTimer = 0.0;
 };
 
 END_MOUNTAIN
