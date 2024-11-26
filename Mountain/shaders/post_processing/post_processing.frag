@@ -10,8 +10,6 @@ struct LightSourceData
     vec2 position;
 };
 
-const uint MaxLightSources = 50;
-
 in vec2 textureCoordinates;
 in vec2 fragmentPosition;
 
@@ -21,8 +19,11 @@ uniform sampler2D framebuffer;
 uniform vec4 color;
 uniform vec4 ambientColor;
 
-uniform int lightSourceCount;
-uniform LightSourceData lightSources[MaxLightSources];
+layout(std430, binding = 1) buffer lights
+{
+    uniform int lightSourceCount;
+    uniform LightSourceData lightSources[];
+};
 
 out vec4 fragmentColor;
 

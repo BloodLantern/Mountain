@@ -266,7 +266,7 @@ void Draw::DrawList::Clear()
 
 void Draw::Initialize()
 {
-    glCreateBuffers(6, &m_RectangleEbo);
+    glCreateBuffers(7, &m_RectangleEbo);
     glCreateVertexArrays(10, &m_PointVao);
 
 #ifdef _DEBUG
@@ -318,7 +318,7 @@ void Draw::LoadResources()
 
 void Draw::Shutdown()
 {
-    glDeleteBuffers(6, &m_RectangleEbo);
+    glDeleteBuffers(7, &m_RectangleEbo);
     glDeleteVertexArrays(10, &m_PointVao);
 }
 
@@ -555,7 +555,10 @@ void Draw::InitializeRenderTargetBuffers()
     // VAO
     // Vertex position
     SetVertexAttribute(0, 2, sizeof(Vector2), 0, 0);
-    
+
+    glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_RenderTargetSsbo);
+    glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 1, m_RenderTargetSsbo);
+
     glBindVertexArray(0);
 }
 
@@ -886,15 +889,14 @@ void Draw::RenderTextData(const List<TextData>& texts, const size_t index, const
 void Draw::RenderRenderTargetData(const List<RenderTargetData>& renderTargets, const size_t index, const size_t count)
 {
     glBindVertexArray(m_RenderTargetVao);
-    glBindBuffer(GL_ARRAY_BUFFER, m_RenderTargetVbo);
     m_PostProcessingShader->Use();
-    
+
+    m_PostProcessingShader->SetUniform("projection", m_ProjectionMatrix * m_CameraMatrix);
+
     for (size_t i = 0; i < count; i++)
     {
         const RenderTargetData& data = renderTargets[index + i];
-        
-        m_PostProcessingShader->SetUniform("projection", m_ProjectionMatrix * m_CameraMatrix);
-        
+
         m_PostProcessingShader->SetUniform("transformation", data.transformation);
         m_PostProcessingShader->SetUniform("uvProjection", data.uvProjection);
         
