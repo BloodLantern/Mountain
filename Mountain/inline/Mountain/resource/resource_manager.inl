@@ -3,6 +3,7 @@
 #include <ranges>
 
 #include "Mountain/file/file_manager.hpp"
+#include "Mountain/resource/compute_shader.hpp"
 #include "Mountain/resource/shader.hpp"
 #include "Mountain/utils/formatter.hpp"
 
@@ -40,6 +41,22 @@ inline Pointer<Shader> ResourceManager::Add<Shader>(const std::string& name)
     }
 
     return AddNoCheck<Shader>(n);
+}
+
+template <>
+inline Pointer<ComputeShader> ResourceManager::Add<ComputeShader>(const std::string& name)
+{
+    const std::string&& n = name.starts_with(ReservedComputeShaderPrefix) ? name : ReservedComputeShaderPrefix.data() + name;
+
+    Logger::LogDebug("Adding compute shader {}", n);
+
+    if (Contains(n))
+    {
+        Logger::LogWarning("The compute shader {} has already been added, consider using ResourceManager::Get instead", n);
+        return GetNoCheck<ComputeShader>(n);
+    }
+
+    return AddNoCheck<ComputeShader>(n);
 }
 
 template <Concepts::LoadableResourceT T>
@@ -96,6 +113,21 @@ inline Pointer<Shader> ResourceManager::Get<Shader>(const std::string& name)
     }
 
     return GetNoCheck<Shader>(name);
+}
+
+template <>
+inline Pointer<ComputeShader> ResourceManager::Get<ComputeShader>(const std::string& name)
+{
+    if (!Contains(name))
+    {
+        if (Contains(ReservedComputeShaderPrefix.data() + name))
+            return GetNoCheck<ComputeShader>(ReservedComputeShaderPrefix.data() + name);
+
+        Logger::LogError("Attempt to get an unknown compute shader: {}", name);
+        return nullptr;
+    }
+
+    return GetNoCheck<ComputeShader>(name);
 }
 
 template <Concepts::ResourceT T>

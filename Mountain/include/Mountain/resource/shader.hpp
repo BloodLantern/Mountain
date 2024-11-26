@@ -159,6 +159,7 @@ private:
 
 	void CheckLinkError();
 
+	[[nodiscard]]
 	int32_t GetUniformLocation(std::string_view keyName) const;
 };
 

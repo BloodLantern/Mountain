@@ -13,7 +13,10 @@
 
 namespace rh
 {
-    ResourceHolder embed;
+    namespace
+    {
+        ResourceHolder embed;
+    }
 }
 
 using namespace Mountain;
@@ -84,12 +87,13 @@ void ResourceManager::LoadAll()
     );
 
     std::vector<Pointer<Shader>> loadedShaders;
+    std::vector<Pointer<ComputeShader>> loadedComputeShaders;
 
     // Do interface stuff synchronously (OpenGL/OpenAL)
     for (Pointer<File>& file : files)
     {
         std::string&& extension = file->GetExtension();
-            
+
         if (std::ranges::contains(Shader::VertexFileExtensions, extension) || std::ranges::contains(Shader::FragmentFileExtensions, extension))
         {
             Pointer<Shader> shader;
@@ -104,6 +108,20 @@ void ResourceManager::LoadAll()
             shader->SetSourceData(file);
             loadedShaders.push_back(shader);
         }
+        else if (std::ranges::contains(ComputeShader::FileExtensions, extension))
+        {
+            Pointer<ComputeShader> shader;
+
+            // We use an underscore before the name to make sure it isn't used elsewhere
+            const std::string&& filenameNoExtension = ReservedComputeShaderPrefix.data() + file->GetNameNoExtension();
+            if (Contains(filenameNoExtension))
+                shader = Get<ComputeShader>(filenameNoExtension);
+            else
+                shader = Add<ComputeShader>(filenameNoExtension);
+
+            shader->SetSourceData(file);
+            loadedComputeShaders.push_back(shader);
+        }
         else if (!std::ranges::contains(Font::FileExtensions, extension))
         {
             if (Contains(file))
@@ -115,6 +133,12 @@ void ResourceManager::LoadAll()
     {
         if (!shader->IsLoaded())
             shader->Load();
+    }
+
+    for (Pointer<ComputeShader>& computeShader : loadedComputeShaders)
+    {
+        if (!computeShader->IsLoaded())
+            computeShader->Load();
     }
 
     Logger::LogDebug(
@@ -135,14 +159,14 @@ void ResourceManager::LoadAllBinaries()
     const size_t oldResourceCount = m_Resources.size();
 
     std::vector<Pointer<Shader>> loadedShaders;
+    std::vector<Pointer<ComputeShader>> loadedComputeShaders;
     
     for (auto&& file : files)
     {
         std::filesystem::path&& path = file;
         std::string&& extension = path.extension().generic_string();
         
-        if (std::ranges::find(Shader::VertexFileExtensions, extension) != Shader::VertexFileExtensions.end() ||
-            std::ranges::find(Shader::FragmentFileExtensions, extension) != Shader::FragmentFileExtensions.end())
+        if (std::ranges::contains(Shader::VertexFileExtensions, extension) || std::ranges::contains(Shader::FragmentFileExtensions, extension))
         {
             Pointer<Shader> shader;
 
@@ -157,6 +181,21 @@ void ResourceManager::LoadAllBinaries()
             shader->Load(reinterpret_cast<const char_t*>(data.data()), data.size(), Shader::FileExtensionToType(extension));
             loadedShaders.push_back(shader);
         }
+        else if (std::ranges::contains(ComputeShader::FileExtensions, extension))
+        {
+            Pointer<ComputeShader> shader;
+
+            // We use an underscore before the name to make sure it isn't used elsewhere
+            const std::string&& filenameNoExtension = ReservedComputeShaderPrefix.data() + path.stem().string();
+            if (Contains(filenameNoExtension))
+                shader = Get<ComputeShader>(filenameNoExtension);
+            else
+                shader = Add<ComputeShader>(filenameNoExtension);
+
+            auto&& data = rh::embed(file);
+            shader->Load(reinterpret_cast<const char_t*>(data.data()), data.size());
+            loadedComputeShaders.push_back(shader);
+        }
         else
         {
             Logger::LogWarning("Unhandled binary resource type for file {}", file);
@@ -167,6 +206,12 @@ void ResourceManager::LoadAllBinaries()
     {
         if (!shader->IsLoaded())
             shader->Load();
+    }
+
+    for (Pointer<ComputeShader>& computeShader : loadedComputeShaders)
+    {
+        if (!computeShader->IsLoaded())
+            computeShader->Load();
     }
 
     Logger::LogDebug(
