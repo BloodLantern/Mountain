@@ -24,8 +24,13 @@ class ResourceManager final
 public:
     /// @brief Special prefix used to store added @ref Shader "Shaders"
     ///
-    /// This is mainly used in LoadAll
+    /// This is mainly used in @c LoadAll() and @c LoadAllBinaries()
     static constexpr std::string_view ReservedShaderPrefix = "_shaders/";
+
+    /// @brief Special prefix used to store added @ref ComputeShader "Compute Shaders"
+    ///
+    /// This is mainly used in @c LoadAll() and @c LoadAllBinaries()
+    static constexpr std::string_view ReservedComputeShaderPrefix = "_compute_shaders/";
     
     /// @brief Special prefix used to store added @ref Font "Fonts"
     ///
