@@ -25,6 +25,12 @@ BEGIN_MOUNTAIN
 /// @brief Namespace containing utility functions that don't belong anywhere else
 namespace Utils
 {
+    template <typename T>
+    using ProjectionFunc = T(*)(T);
+
+    template <typename T>
+    constexpr ProjectionFunc<T> Identity = [](T t) { return t; };
+
     /// @brief Converts a integral number to a valid pointer without illegal size operations
     /// @tparam PtrT Type of the pointer
     /// @tparam IntT Type of the number, must be integral
