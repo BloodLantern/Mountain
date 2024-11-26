@@ -171,6 +171,7 @@
     <ClInclude Include="include\Mountain\rendering\renderer.hpp" />
     <ClInclude Include="include\Mountain\rendering\render_target.hpp" />
     <ClInclude Include="include\Mountain\resource\audio_track.hpp" />
+    <ClInclude Include="include\Mountain\resource\compute_shader.hpp" />
     <ClInclude Include="include\Mountain\resource\font.hpp" />
     <ClInclude Include="include\Mountain\resource\resource.hpp" />
     <ClInclude Include="include\Mountain\resource\resource_manager.hpp" />
@@ -263,6 +264,7 @@
     <ClCompile Include="src\Mountain\rendering\renderer.cpp" />
     <ClCompile Include="src\Mountain\rendering\render_target.cpp" />
     <ClCompile Include="src\Mountain\resource\audio_track.cpp" />
+    <ClCompile Include="src\Mountain\resource\compute_shader.cpp" />
     <ClCompile Include="src\Mountain\resource\font.cpp" />
     <ClCompile Include="src\Mountain\resource\resource.cpp" />
     <ClCompile Include="src\Mountain\resource\resource_manager.cpp" />
@@ -294,6 +296,7 @@
     <Content Include="shaders\circle\circle.vert" />
     <Content Include="shaders\line_colored\line_colored.frag" />
     <Content Include="shaders\line_colored\line_colored.vert" />
+    <Content Include="shaders\particle\particle.comp" />
     <Content Include="shaders\point\point.frag" />
     <Content Include="shaders\point\point.vert" />
     <Content Include="shaders\post_processing\post_processing.frag" />
