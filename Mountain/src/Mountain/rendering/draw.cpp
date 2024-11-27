@@ -556,8 +556,9 @@ void Draw::InitializeRenderTargetBuffers()
     // Vertex position
     SetVertexAttribute(0, 2, sizeof(Vector2), 0, 0);
 
+    // SSBO
     glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_RenderTargetSsbo);
-    glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 1, m_RenderTargetSsbo);
+    glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, m_RenderTargetSsbo);
 
     glBindVertexArray(0);
 }
@@ -903,21 +904,20 @@ void Draw::RenderRenderTargetData(const List<RenderTargetData>& renderTargets, c
         m_PostProcessingShader->SetUniform("actualScale", data.scale * data.renderTarget->GetCameraScale());
         m_PostProcessingShader->SetUniform("color", data.color);
         m_PostProcessingShader->SetUniform("ambientColor", data.renderTarget->ambientLight);
+
         const auto& lightSources = data.renderTarget->GetLightSources();
-        m_PostProcessingShader->SetUniform("lightSourceCount", static_cast<int32_t>(lightSources.size()));
-        for (size_t j = 0; j < lightSources.size(); ++j)
-        {
-            const LightSource* lightSource = lightSources[j];
-            std::string name = std::format("lightSources[{}].", j);
-            m_PostProcessingShader->SetUniform(name + "color", lightSource->color);
-            m_PostProcessingShader->SetUniform(name + "intensity", lightSource->intensity);
-            m_PostProcessingShader->SetUniform(name + "radius", lightSource->radius);
-            m_PostProcessingShader->SetUniform(name + "angleMin", lightSource->angleMin);
-            m_PostProcessingShader->SetUniform(name + "angleMax", lightSource->angleMax);
-            m_PostProcessingShader->SetUniform(name + "position", data.renderTarget->GetCameraMatrix() * lightSource->GetPosition() * data.scale);
-        }
+        m_PostProcessingShader->SetUniform("lightSourceCount", static_cast<int32_t>(lightSources.GetSize()));
+
+        glNamedBufferData(
+            m_RenderTargetSsbo,
+            static_cast<GLsizeiptr>(sizeof(LightSource) * lightSources.GetSize()),
+            static_cast<const void*>(lightSources.GetData()),
+            GL_STREAM_DRAW
+        );
         
         glBindTexture(GL_TEXTURE_2D, data.renderTarget->GetTextureId());
+
+        glMemoryBarrier(GL_SHADER_STORAGE_BARRIER_BIT);
 
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
     }
