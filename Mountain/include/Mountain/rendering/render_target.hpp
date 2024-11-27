@@ -7,10 +7,10 @@
 
 #include "Mountain/scene/component/light_source.hpp"
 #include "Mountain/utils/color.hpp"
+#include "Mountain/utils/list.hpp"
 
 BEGIN_MOUNTAIN
-
-enum class MagnificationFilter : uint8_t
+    enum class MagnificationFilter : uint8_t
 {
     Linear,
     Nearest,
@@ -42,9 +42,9 @@ public:
     /// @brief Reset the RenderTarget and initialize it again with the given values
     MOUNTAIN_API void Reset(Vector2i newSize, MagnificationFilter newFilter);
 
-    MOUNTAIN_API void AddLightSource(const LightSource* lightSource);
-    MOUNTAIN_API void RemoveLightSource(const LightSource* lightSource);
-    MOUNTAIN_API const std::vector<const LightSource*>& GetLightSources() const;
+    MOUNTAIN_API void AddLightSource(const LightSource& lightSource);
+    MOUNTAIN_API void ClearLightSources();
+    MOUNTAIN_API const List<LightSource>& GetLightSources() const;
 
     /// @brief Adds a friendly debug name for this RenderTarget. This is used when debugging graphics in external applications.
     /// @param name The name of this RenderTarget
@@ -83,7 +83,7 @@ private:
 
     Matrix m_Projection;
 
-    std::vector<const LightSource*> m_LightSources;
+    List<LightSource> m_LightSources;
 
     Matrix m_CameraMatrix = Matrix::Identity();
     Vector2 m_CameraScale = Vector2::One();

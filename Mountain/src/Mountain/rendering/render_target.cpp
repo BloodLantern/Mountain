@@ -114,17 +114,14 @@ void RenderTarget::Reset(const Vector2i newSize, const MagnificationFilter newFi
     Initialize(newSize, newFilter);
 }
 
-void RenderTarget::AddLightSource(const LightSource* lightSource)
+void RenderTarget::AddLightSource(const LightSource& lightSource)
 {
-    if (std::ranges::contains(m_LightSources, lightSource))
-        return;
-
-    m_LightSources.push_back(lightSource);
+    m_LightSources.Add(lightSource);
 }
 
-void RenderTarget::RemoveLightSource(const LightSource* lightSource) { std::erase(m_LightSources, lightSource); }
+void RenderTarget::ClearLightSources() { m_LightSources.Clear(); }
 
-const std::vector<const LightSource*>& RenderTarget::GetLightSources() const { return m_LightSources; }
+const List<LightSource>& RenderTarget::GetLightSources() const { return m_LightSources; }
 
 void RenderTarget::SetDebugName([[maybe_unused]] const std::string_view name) const
 {

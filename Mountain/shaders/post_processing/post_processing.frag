@@ -19,10 +19,11 @@ uniform sampler2D framebuffer;
 uniform vec4 color;
 uniform vec4 ambientColor;
 
-layout(std430, binding = 1) buffer lights
+uniform uint lightSourceCount;
+
+layout(std430, binding = 0) readonly buffer Lights
 {
-    uniform int lightSourceCount;
-    uniform LightSourceData lightSources[];
+    LightSourceData lightSources[];
 };
 
 out vec4 fragmentColor;
