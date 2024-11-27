@@ -34,7 +34,6 @@ void GameExample::Initialize()
     ballCount = 0;
 
     player = new Player({ 10.f, 100.f });
-    renderTarget.AddLightSource(player->GetComponent<LightSource>());
 
     renderTarget.SetDebugName("Game RenderTarget");
 
@@ -97,6 +96,8 @@ void GameExample::Render()
     Draw::Clear(Color::Transparent());
 
     renderTarget.SetCameraMatrix(camera.matrix);
+    renderTarget.ClearLightSources();
+    renderTarget.AddLightSource(player->light);
     Renderer::PushRenderTarget(renderTarget);
     Draw::Clear(Color::Black());
     
@@ -120,8 +121,6 @@ void GameExample::Render()
     // Screen origin
     Draw::Line(Vector2::One() * -15.f, Vector2::One() * 15.f, Color::Red(), Color::Green());
     Draw::Line(Vector2(15.f, -15.f), Vector2(-15.f, 15.f), Color::Blue(), Color::White());
-
-    //Draw::Points(Points);
 
     static constexpr std::array TrianglePoints {
         Vector2(100.f, 40.f),
@@ -220,13 +219,13 @@ void GameExample::Render()
 
         ImGui::SeparatorText("Lighting");
         ImGui::ColorEdit4("Ambient color", renderTarget.ambientLight.Data());
-        LightSource* lightSource = player->GetComponent<LightSource>();
-        ImGui::ColorEdit4("Source color", lightSource->color.Data());
-        ImGui::DragFloat("Source intensity", &lightSource->intensity, 0.1f);
-        ImGui::DragFloat("Source radius", &lightSource->radius, 0.1f);
-        ImGui::DragAngle("Source angle min", &lightSource->angleMin, 0.1f);
-        ImGui::DragAngle("Source angle max", &lightSource->angleMax, 0.1f);
-        ImGui::Text("Source position: %.2f, %.2f", lightSource->GetPosition().x, lightSource->GetPosition().y);
+        LightSource& lightSource = player->light;
+        ImGui::ColorEdit4("Source color", lightSource.color.Data());
+        ImGui::DragFloat("Source intensity", &lightSource.intensity, 0.1f);
+        ImGui::DragFloat("Source radius", &lightSource.radius, 0.1f);
+        ImGui::DragAngle("Source angle min", &lightSource.angleMin, 0.1f);
+        ImGui::DragAngle("Source angle max", &lightSource.angleMax, 0.1f);
+        ImGui::Text("Source position: %.2f, %.2f", lightSource.position.x, lightSource.position.y);
         
         ImGui::PopID();
     }

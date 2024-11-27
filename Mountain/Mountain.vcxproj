@@ -273,7 +273,6 @@
     <ClCompile Include="src\Mountain\scene\component\audio_listener.cpp" />
     <ClCompile Include="src\Mountain\scene\component\audio_source.cpp" />
     <ClCompile Include="src\Mountain\scene\component\component.cpp" />
-    <ClCompile Include="src\Mountain\scene\component\light_source.cpp" />
     <ClCompile Include="src\Mountain\scene\component\sprite.cpp" />
     <ClCompile Include="src\Mountain\scene\component\state_machine.cpp" />
     <ClCompile Include="src\Mountain\scene\entity.cpp" />
