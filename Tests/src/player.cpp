@@ -13,9 +13,8 @@ Player::Player(const Vector2& pos)
     const auto listener = AddComponent<Mountain::AudioListener>();
     listener->SetVolume(0.f);
     
-    const auto light = AddComponent<Mountain::LightSource>();
-    light->intensity = 1.f;
-    light->radius = 50.f;
+    light.intensity = 1.f;
+    light.radius = 50.f;
 }
 
 void Player::LoadResources()
@@ -38,6 +37,7 @@ void Player::Update()
         movement.y =  1.f;
 
     position += movement.Normalized() * movementSpeed * Mountain::Time::GetDeltaTime();
+    light.position = position;
 }
 
 void Player::Render()
