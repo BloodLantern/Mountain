@@ -222,9 +222,10 @@ bool ImGuiUtils::ComboEaser(const std::string_view label, Easing::Easer* v, cons
     };
 
     const auto current = std::ranges::find_if(Functions, [&](auto element) { return element.second == *v; });
+    const auto value = current == Functions.end() ? "Linear" : current->first;
 
     bool_t result = false;
-    if (ImGui::BeginCombo(label.data(), current->first, flags))
+    if (ImGui::BeginCombo(label.data(), value, flags))
     {
         for (const auto& pair : Functions)
         {
