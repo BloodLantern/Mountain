@@ -48,8 +48,10 @@ void RenderTarget::Initialize(const Vector2i size, const MagnificationFilter fil
     
     glTextureParameteri(m_Texture, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTextureParameteri(m_Texture, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    
-    glTextureStorage2D(m_Texture, 1, GL_RGBA8, size.x, size.y);
+
+    glBindTexture(GL_TEXTURE_2D, m_Texture);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, size.x, size.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
+    glBindTexture(GL_TEXTURE_2D, 0);
 
     // Framebuffer
     
@@ -114,9 +116,22 @@ void RenderTarget::Reset(const Vector2i newSize, const MagnificationFilter newFi
     Initialize(newSize, newFilter);
 }
 
-void RenderTarget::AddLightSource(const LightSource& lightSource)
+LightSource& RenderTarget::NewLightSource()
 {
-    m_LightSources.Add(lightSource);
+    m_LightSources.Emplace();
+    return m_LightSources.Back();
+}
+
+void RenderTarget::DeleteLightSource(const LightSource& lightSource)
+{
+    for (size_t i = 0; i < m_LightSources.GetSize(); ++i)
+    {
+        if (&m_LightSources[i] == &lightSource)
+        {
+            m_LightSources.RemoveAt(i);
+            return;
+        }
+    }
 }
 
 void RenderTarget::ClearLightSources() { m_LightSources.Clear(); }
@@ -143,11 +158,11 @@ void RenderTarget::SetSize(const Vector2i newSize)
 {
     if (!m_Initialized)
         throw std::logic_error("Cannot set the size of an uninitialized RenderTarget");
-    
+
     glBindTexture(GL_TEXTURE_2D, m_Texture);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, newSize.x, newSize.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
     glBindTexture(GL_TEXTURE_2D, 0);
-    
+
     glBindFramebuffer(GL_FRAMEBUFFER, m_Framebuffer);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_Texture, 0);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
