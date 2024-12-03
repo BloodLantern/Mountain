@@ -10,7 +10,8 @@
 #include "Mountain/utils/list.hpp"
 
 BEGIN_MOUNTAIN
-    enum class MagnificationFilter : uint8_t
+
+enum class MagnificationFilter : uint8_t
 {
     Linear,
     Nearest,
@@ -42,7 +43,8 @@ public:
     /// @brief Reset the RenderTarget and initialize it again with the given values
     MOUNTAIN_API void Reset(Vector2i newSize, MagnificationFilter newFilter);
 
-    MOUNTAIN_API void AddLightSource(const LightSource& lightSource);
+    MOUNTAIN_API LightSource& NewLightSource();
+    MOUNTAIN_API void DeleteLightSource(const LightSource& lightSource);
     MOUNTAIN_API void ClearLightSources();
     MOUNTAIN_API const List<LightSource>& GetLightSources() const;
 

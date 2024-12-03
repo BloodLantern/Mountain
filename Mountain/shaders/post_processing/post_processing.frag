@@ -13,7 +13,9 @@ struct LightSourceData
 in vec2 textureCoordinates;
 in vec2 fragmentPosition;
 
-uniform vec2 actualScale; // Camera scale * RenderTarget scale
+uniform mat4 camera;
+uniform vec2 scale; // RenderTarget scale
+uniform vec2 actualScale; // RenderTarget scale * Camera scale
 
 uniform sampler2D framebuffer;
 uniform vec4 color;
@@ -31,7 +33,7 @@ out vec4 fragmentColor;
 // TODO - Add bloom
 // TODO - Add screen shake
 
-float attenuate(float x)
+float LightAttenuation(float x)
 {
     float x2 = x * x;
     float inter = 1.f - 2.f * x2 + x2 * x2;
@@ -47,14 +49,15 @@ void main()
     for (int i = 0; i < lightSourceCount; i++)
     {
         LightSourceData lightSource = lightSources[i];
+        vec2 lightSourcePosition = (camera * vec4(lightSource.position, 0.f, 1.f)).xy * scale;
         
-        vec2 lightToFragment = (lightSource.position - fragmentPosition) / actualScale;
+        vec2 lightToFragment = (lightSourcePosition - fragmentPosition) / actualScale;
         float lightToFragmentDistanceSquared = lightToFragment.x * lightToFragment.x + lightToFragment.y * lightToFragment.y;
         float lightSourceRadiusSquared = lightSource.radius * lightSource.radius;
         if (lightToFragmentDistanceSquared > lightSourceRadiusSquared)
             continue;
         
-        float attenuation = attenuate(lightToFragmentDistanceSquared / lightSourceRadiusSquared);
+        float attenuation = LightAttenuation(lightToFragmentDistanceSquared / lightSourceRadiusSquared);
         
         lightColor += lightSource.color * lightSource.intensity * attenuation;
     }

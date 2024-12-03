@@ -7,19 +7,20 @@
 #include "Mountain/scene/component/audio_listener.hpp"
 #include "Mountain/scene/component/light_source.hpp"
 
-Player::Player(const Vector2& pos)
+Player::Player(const Vector2& pos, Mountain::LightSource& lightSource)
     : Entity(pos)
+    , light(&lightSource)
 {
     const auto listener = AddComponent<Mountain::AudioListener>();
     listener->SetVolume(0.f);
     
-    light.intensity = 1.f;
-    light.radius = 50.f;
+    lightSource.intensity = 1.f;
+    lightSource.radius = 50.f;
 }
 
 void Player::LoadResources()
 {
-    m_Texture = Mountain::ResourceManager::Get<Mountain::Texture>("assets/strawberry/normal00.png");
+    sprite = AddComponent<Mountain::Sprite>("assets/strawberry/normal");
 }
 
 void Player::Update()
@@ -37,7 +38,7 @@ void Player::Update()
         movement.y =  1.f;
 
     position += movement.Normalized() * movementSpeed * Mountain::Time::GetDeltaTime();
-    light.position = position;
+    light->position = position;
 }
 
 void Player::Render()
@@ -45,7 +46,7 @@ void Player::Render()
     Entity::Render();
 
     Mountain::Draw::Texture(
-        *m_Texture,
+        *sprite->Get(),
         position,
         Vector2::One(),
         0.f,

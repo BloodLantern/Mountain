@@ -33,7 +33,7 @@ void GameExample::Initialize()
 {
     ballCount = 0;
 
-    player = new Player({ 10.f, 100.f });
+    player = new Player({ 10.f, 100.f }, renderTarget.NewLightSource());
 
     renderTarget.SetDebugName("Game RenderTarget");
 
@@ -96,8 +96,6 @@ void GameExample::Render()
     Draw::Clear(Color::Transparent());
 
     renderTarget.SetCameraMatrix(camera.matrix);
-    renderTarget.ClearLightSources();
-    renderTarget.AddLightSource(player->light);
     Renderer::PushRenderTarget(renderTarget);
     Draw::Clear(Color::Black());
     
@@ -219,7 +217,7 @@ void GameExample::Render()
 
         ImGui::SeparatorText("Lighting");
         ImGui::ColorEdit4("Ambient color", renderTarget.ambientLight.Data());
-        LightSource& lightSource = player->light;
+        LightSource& lightSource = *player->light;
         ImGui::ColorEdit4("Source color", lightSource.color.Data());
         ImGui::DragFloat("Source intensity", &lightSource.intensity, 0.1f);
         ImGui::DragFloat("Source radius", &lightSource.radius, 0.1f);
@@ -247,6 +245,14 @@ void GameExample::Render()
         ImGui::Checkbox("Show ImGui demo window", &showDemoWindow);
         if (showDemoWindow)
             ImGui::ShowDemoWindow();
+
+        static bool_t showResourceManagerWindows = false;
+        ImGui::Checkbox("Show File/Resource Manager windows", &showResourceManagerWindows);
+        if (showResourceManagerWindows)
+        {
+            ImGuiUtils::ShowFileManager();
+            ImGuiUtils::ShowResourceManager();
+        }
     }
     
     if (ImGui::CollapsingHeader("Player"))

@@ -276,6 +276,7 @@ void Draw::Initialize()
     glObjectLabel(GL_BUFFER, m_TextureVbo, -1, "Texture VBO");
     glObjectLabel(GL_BUFFER, m_TextVbo, -1, "Text VBO");
     glObjectLabel(GL_BUFFER, m_RenderTargetVbo, -1, "RenderTarget VBO");
+    glObjectLabel(GL_BUFFER, m_RenderTargetSsbo, -1, "RenderTarget SSBO");
 
     glObjectLabel(GL_VERTEX_ARRAY, m_LineVao, -1, "Line VAO");
     glObjectLabel(GL_VERTEX_ARRAY, m_LineColoredVao, -1, "Line Colored VAO");
@@ -901,6 +902,8 @@ void Draw::RenderRenderTargetData(const List<RenderTargetData>& renderTargets, c
         m_PostProcessingShader->SetUniform("transformation", data.transformation);
         m_PostProcessingShader->SetUniform("uvProjection", data.uvProjection);
         
+        m_PostProcessingShader->SetUniform("camera", m_CameraMatrix);
+        m_PostProcessingShader->SetUniform("scale", data.scale);
         m_PostProcessingShader->SetUniform("actualScale", data.scale * data.renderTarget->GetCameraScale());
         m_PostProcessingShader->SetUniform("color", data.color);
         m_PostProcessingShader->SetUniform("ambientColor", data.renderTarget->ambientLight);
