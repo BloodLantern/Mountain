@@ -9,6 +9,9 @@
 #include <ImGui/imgui_impl_opengl3.h>
 
 #include <ft2build.h>
+
+#include "Mountain/globals.hpp"
+
 #include FT_FREETYPE_H
 
 #include "Mountain/screen.hpp"
@@ -18,94 +21,97 @@
 #include "Mountain/resource/resource_manager.hpp"
 #include "Mountain/utils/logger.hpp"
 
-void OpenGlDebugCallback(const GLenum source, const GLenum type, GLuint, const GLenum severity, const GLsizei length, const GLchar* message, const void*)
+namespace
 {
-    std::string_view src;
-    switch (source) {
-        case GL_DEBUG_SOURCE_API:
-            src = "API";
+    void OpenGlDebugCallback(const GLenum source, const GLenum type, GLuint, const GLenum severity, const GLsizei length, const GLchar* message, const void*)
+    {
+        std::string_view src;
+        switch (source) {
+            case GL_DEBUG_SOURCE_API:
+                src = "API";
             break;
 
-        case GL_DEBUG_SOURCE_WINDOW_SYSTEM:
-            src = "Window system";
+            case GL_DEBUG_SOURCE_WINDOW_SYSTEM:
+                src = "Window system";
             break;
 
-        case GL_DEBUG_SOURCE_SHADER_COMPILER:
-            src = "Shader compiler";
+            case GL_DEBUG_SOURCE_SHADER_COMPILER:
+                src = "Shader compiler";
             break;
 
-        case GL_DEBUG_SOURCE_THIRD_PARTY:
-            src = "Third party";
+            case GL_DEBUG_SOURCE_THIRD_PARTY:
+                src = "Third party";
             break;
 
-        case GL_DEBUG_SOURCE_APPLICATION:
-            src = "Application";
+            case GL_DEBUG_SOURCE_APPLICATION:
+                src = "Application";
             break;
 
-        case GL_DEBUG_SOURCE_OTHER:
-            src = "Other";
+            case GL_DEBUG_SOURCE_OTHER:
+                src = "Other";
             break;
-        
-        default:
-            src = "Unknown";
+
+            default:
+                src = "Unknown";
+        }
+
+        std::string_view t;
+        switch (type) {
+            case GL_DEBUG_TYPE_ERROR:
+                t = "Error";
+            break;
+
+            case GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR:
+                t = "Deprecated behavior";
+            break;
+
+            case GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR:
+                t = "Undefined behavior";
+            break;
+
+            case GL_DEBUG_TYPE_PORTABILITY:
+                t = "Portability";
+            break;
+
+            case GL_DEBUG_TYPE_PERFORMANCE:
+                t = "Performance";
+            break;
+
+            case GL_DEBUG_TYPE_OTHER:
+                t = "Other";
+            break;
+
+            case GL_DEBUG_TYPE_MARKER:
+                t = "Marker";
+            break;
+
+            default:
+                t = "Unknown";
+        }
+
+        Mountain::Logger::LogLevel level;
+        switch (severity) {
+            case GL_DEBUG_SEVERITY_HIGH:
+                level = Mountain::Logger::LogLevel::Error;
+            break;
+
+            case GL_DEBUG_SEVERITY_MEDIUM:
+                level = Mountain::Logger::LogLevel::Warning;
+            break;
+
+            case GL_DEBUG_SEVERITY_LOW:
+                level = Mountain::Logger::LogLevel::Info;
+            break;
+
+            case GL_DEBUG_SEVERITY_NOTIFICATION:
+                return; // Do not log notifications
+
+            default:
+                level = Mountain::Logger::LogLevel::Info;
+        }
+
+        Mountain::Logger::Log(level, "[OpenGL] {} raised from {}: {}", t, src, std::string_view(message, length));
     }
-
-    std::string_view t;
-    switch (type) {
-        case GL_DEBUG_TYPE_ERROR:
-            t = "Error";
-            break;
-
-        case GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR:
-            t = "Deprecated behavior";
-            break;
-
-        case GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR:
-            t = "Undefined behavior";
-            break;
-
-        case GL_DEBUG_TYPE_PORTABILITY:
-            t = "Portability";
-            break;
-
-        case GL_DEBUG_TYPE_PERFORMANCE:
-            t = "Performance";
-            break;
-
-        case GL_DEBUG_TYPE_OTHER:
-            t = "Other";
-            break;
-
-        case GL_DEBUG_TYPE_MARKER:
-            t = "Marker";
-            break;
-
-        default:
-            t = "Unknown";
-    }
-
-    Mountain::Logger::LogLevel level;
-    switch (severity) {
-        case GL_DEBUG_SEVERITY_HIGH:
-            level = Mountain::Logger::LogLevel::Error;
-            break;
-
-        case GL_DEBUG_SEVERITY_MEDIUM:
-            level = Mountain::Logger::LogLevel::Warning;
-            break;
-
-        case GL_DEBUG_SEVERITY_LOW:
-            level = Mountain::Logger::LogLevel::Info;
-            break;
-
-        case GL_DEBUG_SEVERITY_NOTIFICATION:
-            return; // Do not log notifications
-
-        default:
-            level = Mountain::Logger::LogLevel::Info;
-    }
-    
-    Mountain::Logger::Log(level, "[OpenGL] {} raised from {}: {}", t, src, std::string_view(message, length));
 }
 
 void Mountain::Renderer::PushRenderTarget(RenderTarget& renderTarget)
@@ -169,7 +175,21 @@ bool Mountain::Renderer::Initialize(const std::string_view windowTitle, const Ve
 
     m_RenderTarget = new RenderTarget(windowSize, MagnificationFilter::Linear);
 
-    ResourceManager::LoadAllBinaries();
+    if (NoBinaryResources)
+    {
+        if (BuiltinShadersPath.empty())
+        {
+            Logger::LogFatal("NoBinaryResources is true but BuiltinShadersPath hasn't been specified");
+            throw std::runtime_error("NoBinaryResources is true but BuiltinShadersPath hasn't been specified");
+        }
+
+        FileManager::LoadDirectory(BuiltinShadersPath);
+        ResourceManager::LoadAll();
+    }
+    else
+    {
+        ResourceManager::LoadAllBinaries();
+    }
 
     Draw::Initialize();
     Draw::LoadResources();

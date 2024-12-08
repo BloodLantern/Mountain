@@ -1,4 +1,5 @@
 #include "test_game.hpp"
+#include "Mountain/globals.hpp"
 #include "Mountain/utils/logger.hpp"
 
 USE_DEDICATED_GPU
@@ -28,6 +29,9 @@ int32_t main(int32_t, char_t**)
 
 	// enable Live++ for all loaded modules
 	lppAgent.EnableModule(lpp::LppGetCurrentModulePath(), lpp::LPP_MODULES_OPTION_ALL_IMPORT_MODULES, nullptr, &LppFilterModuleCallback);
+
+	Mountain::NoBinaryResources = true;
+	Mountain::BuiltinShadersPath = "Mountain/shaders";
 
 	GameExample* game = new GameExample("Mountain tests");
 	game->Initialize();

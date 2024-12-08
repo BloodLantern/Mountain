@@ -86,6 +86,10 @@ public:
 	/// @brief Unloads the shader
 	MOUNTAIN_API void ResetSourceData() override;
 
+	MOUNTAIN_API bool_t Reload(bool_t reloadInBackend = true) override;
+
+	MOUNTAIN_API bool_t Reload(const Pointer<File>& file, bool_t reloadInBackend = true) override;
+
 	/// @brief Sets an int (signed, 32 bits) variable in a shader
 	/// @param keyName Variable name
 	/// @param value Value
@@ -140,6 +144,18 @@ public:
 	/// @return Id
 	[[nodiscard]]
 	MOUNTAIN_API uint32_t GetId() const;
+
+	[[nodiscard]]
+	MOUNTAIN_API std::array<Pointer<File>, ShaderTypeCount>& GetFiles();
+
+	[[nodiscard]]
+	MOUNTAIN_API const std::array<Pointer<File>, ShaderTypeCount>& GetFiles() const;
+
+	[[nodiscard]]
+	MOUNTAIN_API std::array<ShaderCode, ShaderTypeCount>& GetCode();
+
+	[[nodiscard]]
+	MOUNTAIN_API const std::array<ShaderCode, ShaderTypeCount>& GetCode() const;
 
 	/// @brief Binds the shader for use
 	MOUNTAIN_API void Use() const;
