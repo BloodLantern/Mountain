@@ -44,7 +44,7 @@ private:
     static void PreFrame();
     static void PostFrame();
     static void Shutdown();
-    
+
     friend class Draw;
     friend class Font;
     friend class Game;

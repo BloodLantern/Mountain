@@ -56,21 +56,21 @@ public:
 
     /// @brief Unloads and then loads back this Resource.
     ///
-    /// This is effectively equivalent to calling PostUnload and then @ref Preload(const uint8_t* buffer, int64_t length) "Preload".
+    /// This is effectively equivalent to calling ResetSourceData and then @ref SetSourceData(const uint8_t* buffer, int64_t length) "SetSourceData".
     /// 
     /// @returns @c true if the loading succeeded, @c false otherwise.
     MOUNTAIN_API virtual bool_t Reload(const uint8_t* buffer, int64_t length, bool_t reloadInBackend = true);
 
     /// @brief Unloads and then loads back this Resource.
     ///
-    /// This is effectively equivalent to calling PostUnload and then @ref Preload(const Pointer<File>&) "Preload".
+    /// This is effectively equivalent to calling ResetSourceData and then @ref SetSourceData(const Pointer<File>&) "SetSourceData".
     /// 
     /// @returns @c true if the loading succeeded, @c false otherwise.
     MOUNTAIN_API virtual bool_t Reload(const Pointer<File>& file, bool_t reloadInBackend = true);
 
     /// @brief Unloads and then loads back this Resource.
     ///
-    /// This is effectively equivalent to calling PostUnload and then Preload(const Pointer<File>&)
+    /// This is effectively equivalent to calling ResetSourceData and then SetSourceData(const Pointer<File>&)
     /// using FileManager::Get(const std::filesystem::path&) as a parameter.
     /// 
     /// @returns @c true if the loading succeeded, @c false otherwise.

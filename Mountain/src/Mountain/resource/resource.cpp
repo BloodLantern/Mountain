@@ -5,7 +5,6 @@
 #include "Mountain/resource/resource_manager.hpp"
 // ReSharper disable once CppUnusedIncludeDirective
 #include "Mountain/utils/formatter.hpp"
-#include "Mountain/utils/logger.hpp"
 
 using namespace Mountain;
 

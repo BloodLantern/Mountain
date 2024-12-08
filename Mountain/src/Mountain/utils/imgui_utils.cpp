@@ -335,35 +335,97 @@ void ImGuiUtils::ShowFileManager()
     ImGui::End();
 }
 
-template <Concepts::ResourceT T>
-static void DisplayResourceType(
-    const std::string_view typeName,
-    const std::string_view resourceNameFilter,
-    const std::function<void(Pointer<T> resource)>& additionalAction = std::identity{}
-)
+namespace
 {
-    const List<Pointer<T>> resources = ResourceManager::FindAll<T>([&] (Pointer<T> f) -> bool_t { return Utils::StringContainsIgnoreCase(f->GetName(), resourceNameFilter); });
-    if (ImGui::TreeNode(std::format("{} ({})", typeName, resources.GetSize()).c_str()))
+    template <Concepts::ResourceT T>
+    void DisplayResourceType(
+        const std::string_view typeName,
+        const std::string_view resourceNameFilter,
+        const std::function<void(Pointer<T> resource)>& additionalAction = std::identity{}
+    )
     {
-        for (Pointer resource : resources)
+        const List<Pointer<T>> resources = ResourceManager::FindAll<T>([&] (Pointer<T> r) -> bool_t { return Utils::StringContainsIgnoreCase(r->GetName(), resourceNameFilter); });
+        const List<const Pointer<T>*> packagedResources = resources.FindAll([] (const Pointer<T>* r) -> bool_t { return (*r)->GetFile() == nullptr; });
+        if (ImGui::TreeNode(std::format("{} ({}, {} packaged in binary)", typeName, resources.GetSize(), packagedResources.GetSize()).c_str()))
         {
-            if (!ImGui::TreeNode(resource->GetName().c_str()))
-                continue;
-
-            if (ImGui::Button("Reload from cached file"))
-                resource->Reload();
-            if (ImGui::Button("Reload from disk"))
+            for (Pointer resource : resources)
             {
-                resource->GetFile()->Reload();
-                resource->Reload();
-            }
+                if (!ImGui::TreeNode(resource->GetName().c_str()))
+                    continue;
 
-            additionalAction(resource);
+                if (resource->GetFile() != nullptr)
+                {
+                    if (ImGui::Button("Reload from cached file"))
+                        resource->Reload();
+                    if (ImGui::Button("Reload from disk"))
+                    {
+                        resource->GetFile()->Reload();
+                        resource->Reload();
+                    }
+                }
+
+                additionalAction(resource);
+
+                ImGui::TreePop();
+            }
 
             ImGui::TreePop();
         }
+    }
 
-        ImGui::TreePop();
+    template <>
+    void DisplayResourceType(
+        const std::string_view typeName,
+        const std::string_view resourceNameFilter,
+        const std::function<void(Pointer<Shader> resource)>& additionalAction
+    )
+    {
+        const List<Pointer<Shader>> shaders = ResourceManager::FindAll<Shader>([&] (Pointer<Shader> r) -> bool_t { return Utils::StringContainsIgnoreCase(r->GetName(), resourceNameFilter); });
+        const List<const Pointer<Shader>*> packagedShaders = shaders.FindAll(
+            [](const Pointer<Shader>* r) -> bool_t
+            {
+                return std::ranges::find_if(
+                           (*r)->GetFiles(),
+                           [](const Pointer<File>& f) -> bool_t { return f != nullptr; }
+                       ) == (*r)->GetFiles().end();
+            }
+        );
+
+        if (ImGui::TreeNode(std::format("{} ({}, {} packaged in binary)", typeName, shaders.GetSize(), packagedShaders.GetSize()).c_str()))
+        {
+            for (Pointer shader : shaders)
+            {
+                if (!ImGui::TreeNode(shader->GetName().c_str()))
+                    continue;
+
+                for (size_t i = 0; i < shader->GetFiles().size(); i++)
+                {
+                    Pointer<File>& shaderFile = shader->GetFiles()[i];
+
+                    if (shaderFile != nullptr)
+                    {
+                        if (ImGui::TreeNode(magic_enum::enum_name(static_cast<ShaderType>(i)).data()))
+                        {
+                            if (ImGui::Button("Reload from cached file"))
+                                shader->Reload();
+                            if (ImGui::Button("Reload from disk"))
+                            {
+                                shaderFile->Reload();
+                                shader->Reload();
+                            }
+
+                            ImGui::TreePop();
+                        }
+                    }
+                }
+
+                additionalAction(shader);
+
+                ImGui::TreePop();
+            }
+
+            ImGui::TreePop();
+        }
     }
 }
 
@@ -385,16 +447,10 @@ void ImGuiUtils::ShowResourceManager()
             ImGui::Text("Format: %.*s", static_cast<int32_t>(format.length()), format.data());
         }
     );
+
     DisplayResourceType<Font>("Font", filter);
 
-    const List<Pointer<Shader>> resources = ResourceManager::FindAll<Shader>([&] (Pointer<Shader> f) -> bool_t { return Utils::StringContainsIgnoreCase(f->GetName(), filter); });
-    if (ImGui::TreeNode(std::format("Shader ({} precompiled)", resources.GetSize()).c_str()))
-    {
-        for (Pointer resource : resources)
-            ImGui::Text("%s", resource->GetName().c_str());
-
-        ImGui::TreePop();
-    }
+    DisplayResourceType<Shader>("Shader", filter);
 
     DisplayResourceType<Texture>(
         "Texture",
