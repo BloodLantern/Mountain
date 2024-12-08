@@ -9,29 +9,13 @@
 
 BEGIN_MOUNTAIN
 
-template <Concepts::LoadableResourceT T>
-Pointer<T> ResourceManager::Add(const std::string& name)
-{
-    Logger::LogDebug("Adding resource {}", name);
-
-    if (Contains(name))
-    {
-        Logger::LogWarning("The resource {} has already been added, consider using ResourceManager::Get instead", name);
-        return GetNoCheck<T>(name);
-    }
-
-    Pointer<T> result = AddNoCheck<T>(name);
-
-    Pointer<Resource>(result)->m_File = FileManager::Add(name);
-    
-    return result;
-}
+#pragma region Explicit template specializations
 
 template <>
 inline Pointer<Shader> ResourceManager::Add<Shader>(const std::string& name)
 {
     const std::string&& n = name.starts_with(ReservedShaderPrefix) ? name : ReservedShaderPrefix.data() + name;
-    
+
     Logger::LogDebug("Adding shader {}", n);
 
     if (Contains(n))
@@ -59,45 +43,110 @@ inline Pointer<ComputeShader> ResourceManager::Add<ComputeShader>(const std::str
     return AddNoCheck<ComputeShader>(n);
 }
 
-template <Concepts::LoadableResourceT T>
-Pointer<T> ResourceManager::Add(const Pointer<File>& file)
+template <>
+inline Pointer<Shader> ResourceManager::LoadNoCheck(Pointer<File> file, const bool_t loadInRhi)
 {
-    return Add<T>(file->GetPathString());
+    const std::string& name = file->GetPathString();
+    const std::string&& n = name.starts_with(ReservedComputeShaderPrefix) ? name : ReservedComputeShaderPrefix.data() + name;
+
+    Pointer<Shader> shader = Pointer<Shader>::New(n);
+
+    {
+        std::scoped_lock lock(m_ResourcesMutex);
+        m_Resources[shader->GetName()] = static_cast<Pointer<Resource>>(shader.CreateStrongReference());
+    }
+
+    // Make sure to return a weak reference
+    shader.ToWeakReference();
+
+    shader->SetSourceData(file);
+
+    file->m_Resource = Pointer<Resource>(shader, false);
+
+    if (loadInRhi)
+        shader->Load();
+
+    return shader;
 }
 
-template <Concepts::LoadableResourceT T>
-Pointer<T> ResourceManager::Load(const Pointer<File>& file, bool_t loadInInterface)
+template <>
+inline Pointer<ComputeShader> ResourceManager::LoadNoCheck(Pointer<File> file, const bool_t loadInRhi)
 {
-    Logger::LogDebug("Loading resource {}", file->GetPath());
+    const std::string& name = file->GetPathString();
+    const std::string&& n = name.starts_with(ReservedComputeShaderPrefix) ? name : ReservedComputeShaderPrefix.data() + name;
 
-    if (Contains(file->GetPathString()))
+    Pointer<ComputeShader> computeShader = Pointer<ComputeShader>::New(n);
+
     {
-        Pointer<T> resource = GetNoCheck<T>(file->GetPathString());
-        const bool_t loaded = resource->IsSourceDataSet();
+        std::scoped_lock lock(m_ResourcesMutex);
+        m_Resources[computeShader->GetName()] = static_cast<Pointer<Resource>>(computeShader.CreateStrongReference());
+    }
+
+    // Make sure to return a weak reference
+    computeShader.ToWeakReference();
+
+    computeShader->SetSourceData(file);
+
+    file->m_Resource = Pointer<Resource>(computeShader, false);
+
+    if (loadInRhi)
+        computeShader->Load();
+
+    return computeShader;
+}
+
+template <>
+inline Pointer<Shader> ResourceManager::Load(const Pointer<File>& file, const bool_t loadInInterface)
+{
+    const std::string& name = file->GetPathString();
+    const std::string&& n = name.starts_with(ReservedShaderPrefix) ? name : ReservedShaderPrefix.data() + name;
+
+    Logger::LogDebug("Loading shader {}", n);
+
+    if (Contains(n))
+    {
+        Pointer<Shader> shader = GetNoCheck<Shader>(n);
+        const bool_t loaded = shader->IsSourceDataSet();
         Logger::LogWarning(
-            "This resource has already been {}, consider using ResourceManager::Get instead{}",
+            "This shader has already been {}, consider using ResourceManager::Get instead{}",
             loaded ? "loaded" : "added but isn't loaded",
             loaded ? "" : ". Loading it"
         );
 
-        resource->SetSourceData(file);
+        if (loaded)
+            shader->SetSourceData(file);
 
-        return resource;
+        return shader;
     }
 
-    return LoadNoCheck<T>(file, loadInInterface);
+    return LoadNoCheck<Shader>(file, loadInInterface);
 }
 
-template <Concepts::ResourceT T>
-Pointer<T> ResourceManager::Get(const std::string& name)
+template <>
+inline Pointer<ComputeShader> ResourceManager::Load(const Pointer<File>& file, const bool_t loadInInterface)
 {
-    if (!Contains(name))
+    const std::string& name = file->GetPathString();
+    const std::string&& n = name.starts_with(ReservedComputeShaderPrefix) ? name : ReservedComputeShaderPrefix.data() + name;
+
+    Logger::LogDebug("Loading compute shader {}", n);
+
+    if (Contains(n))
     {
-        Logger::LogError("Attempt to get an unknown resource: {}", name);
-        return nullptr;
+        Pointer<ComputeShader> computeShader = GetNoCheck<ComputeShader>(n);
+        const bool_t loaded = computeShader->IsSourceDataSet();
+        Logger::LogWarning(
+            "This compute shader has already been {}, consider using ResourceManager::Get instead{}",
+            loaded ? "loaded" : "added but isn't loaded",
+            loaded ? "" : ". Loading it"
+        );
+
+        if (loaded)
+            computeShader->SetSourceData(file);
+
+        return computeShader;
     }
 
-    return GetNoCheck<T>(name);
+    return LoadNoCheck<ComputeShader>(file, loadInInterface);
 }
 
 template <>
@@ -107,7 +156,7 @@ inline Pointer<Shader> ResourceManager::Get<Shader>(const std::string& name)
     {
         if (Contains(ReservedShaderPrefix.data() + name))
             return GetNoCheck<Shader>(ReservedShaderPrefix.data() + name);
-        
+
         Logger::LogError("Attempt to get an unknown shader: {}", name);
         return nullptr;
     }
@@ -128,6 +177,68 @@ inline Pointer<ComputeShader> ResourceManager::Get<ComputeShader>(const std::str
     }
 
     return GetNoCheck<ComputeShader>(name);
+}
+
+#pragma endregion
+
+template <Concepts::LoadableResourceT T>
+Pointer<T> ResourceManager::Add(const std::string& name)
+{
+    Logger::LogDebug("Adding resource {}", name);
+
+    if (Contains(name))
+    {
+        Logger::LogWarning("The resource {} has already been added, consider using ResourceManager::Get instead", name);
+        return GetNoCheck<T>(name);
+    }
+
+    Pointer<T> result = AddNoCheck<T>(name);
+
+    Pointer<Resource>(result)->m_File = FileManager::Add(name);
+
+    return result;
+}
+
+template <Concepts::LoadableResourceT T>
+Pointer<T> ResourceManager::Add(const Pointer<File>& file)
+{
+    return Add<T>(file->GetPathString());
+}
+
+template <Concepts::LoadableResourceT T>
+Pointer<T> ResourceManager::Load(const Pointer<File>& file, const bool_t loadInInterface)
+{
+    Logger::LogDebug("Loading resource {}", file->GetPath());
+
+    if (Contains(file->GetPathString()))
+    {
+        Pointer<T> resource = GetNoCheck<T>(file->GetPathString());
+        const bool_t loaded = resource->IsSourceDataSet();
+        Logger::LogWarning(
+            "This resource has already been {}, consider using ResourceManager::Get instead{}",
+            loaded ? "loaded" : "added but isn't loaded",
+            loaded ? "" : ". Loading it"
+        );
+
+        if (loaded)
+            resource->SetSourceData(file);
+
+        return resource;
+    }
+
+    return LoadNoCheck<T>(file, loadInInterface);
+}
+
+template <Concepts::ResourceT T>
+Pointer<T> ResourceManager::Get(const std::string& name)
+{
+    if (!Contains(name))
+    {
+        Logger::LogError("Attempt to get an unknown resource: {}", name);
+        return nullptr;
+    }
+
+    return GetNoCheck<T>(name);
 }
 
 template <Concepts::ResourceT T>
@@ -159,18 +270,18 @@ template <Concepts::ResourceT T>
 void ResourceManager::FindAll(List<Pointer<T>>* result)
 {
     result->Clear();
-    
+
     for (auto& val : m_Resources | std::views::values)
     {
         Pointer<T> entry = Utils::DynamicPointerCast<T>(val);
-        
+
         if (entry)
             result->Add(std::move(entry));
     }
 }
 
 template <Concepts::ResourceT T>
-Pointer<T> ResourceManager::Find(std::function<bool_t(Pointer<T>)>&& predicate)
+Pointer<T> ResourceManager::Find(const std::function<bool_t(Pointer<T>)>& predicate)
 {
     for (const auto& val : m_Resources | std::views::values)
     {
@@ -185,15 +296,15 @@ Pointer<T> ResourceManager::Find(std::function<bool_t(Pointer<T>)>&& predicate)
 }
 
 template <Concepts::ResourceT T>
-List<Pointer<T>> ResourceManager::FindAll(std::function<bool_t(Pointer<T>)>&& predicate)
+List<Pointer<T>> ResourceManager::FindAll(const std::function<bool_t(Pointer<T>)>& predicate)
 {
     List<Pointer<T>> result;
-    FindAll<T>(std::move(predicate), &result);
+    FindAll<T>(predicate, &result);
     return result;
 }
 
 template <Concepts::ResourceT T>
-void ResourceManager::FindAll(std::function<bool_t(Pointer<T>)>&& predicate, List<Pointer<T>>* result)
+void ResourceManager::FindAll(const std::function<bool_t(Pointer<T>)>& predicate, List<Pointer<T>>* result)
 {
     result->Clear();
 
@@ -204,7 +315,7 @@ void ResourceManager::FindAll(std::function<bool_t(Pointer<T>)>&& predicate, Lis
             result->Add(r);
     }
 }
- 
+
 template <Concepts::ResourceT T>
 bool_t ResourceManager::IsResourceOfType(const std::string& name)
 {
@@ -220,9 +331,9 @@ template <Concepts::ResourceT T>
 void ResourceManager::Unload(const Pointer<T>& resource)
 {
     Logger::LogDebug("Unloading resource {}", resource);
-    
+
     const size_t oldSize = m_Resources.size();
-    
+
     for (decltype(m_Resources)::iterator it = m_Resources.begin(); it != m_Resources.end(); it++)
     {
         Pointer<Resource>& storedResource = it->second;
@@ -230,7 +341,7 @@ void ResourceManager::Unload(const Pointer<T>& resource)
         {
             if (storedResource->IsLoaded())
                 storedResource->Unload();
-            
+
             if (storedResource->IsSourceDataSet())
                 storedResource->ResetSourceData();
 
@@ -267,7 +378,7 @@ template <Concepts::ResourceT T>
 Pointer<T> ResourceManager::LoadNoCheck(Pointer<File> file, const bool_t loadInRhi)
 {
     Pointer<T> resource = Pointer<T>::New(file->GetPathString());
-    
+
     {
         std::scoped_lock lock(m_ResourcesMutex);
         m_Resources[resource->GetName()] = static_cast<Pointer<Resource>>(resource.CreateStrongReference());

@@ -3,6 +3,7 @@
 #include <glad/glad.h>
 
 #include "ImGui/imgui_stdlib.h"
+#include "Mountain/globals.hpp"
 #include "Mountain/rendering/renderer.hpp"
 #include "Mountain/resource/resource_manager.hpp"
 #include "Mountain/resource/shader.hpp"
@@ -303,18 +304,20 @@ void Draw::Initialize()
 
 void Draw::LoadResources()
 {
-    m_PointShader = ResourceManager::Get<Shader>("point");
-    m_LineShader = ResourceManager::Get<Shader>("line");
-    m_LineColoredShader = ResourceManager::Get<Shader>("line_colored");
-    m_TriangleShader = ResourceManager::Get<Shader>("triangle");
-    m_TriangleColoredShader = ResourceManager::Get<Shader>("triangle_colored");
-    m_RectangleShader = ResourceManager::Get<Shader>("rectangle");
-    m_CircleShader = ResourceManager::Get<Shader>("circle");
-    
-    m_TextureShader = ResourceManager::Get<Shader>("texture");
-    m_TextShader = ResourceManager::Get<Shader>("text");
+    const std::string basePath = BuiltinShadersPath.empty() ? "" : BuiltinShadersPath + '/';
 
-    m_PostProcessingShader = ResourceManager::Get<Shader>("post_processing");
+    m_PointShader = ResourceManager::Get<Shader>(basePath + "point");
+    m_LineShader = ResourceManager::Get<Shader>(basePath + "line");
+    m_LineColoredShader = ResourceManager::Get<Shader>(basePath + "line_colored");
+    m_TriangleShader = ResourceManager::Get<Shader>(basePath + "triangle");
+    m_TriangleColoredShader = ResourceManager::Get<Shader>(basePath + "triangle_colored");
+    m_RectangleShader = ResourceManager::Get<Shader>(basePath + "rectangle");
+    m_CircleShader = ResourceManager::Get<Shader>(basePath + "circle");
+    
+    m_TextureShader = ResourceManager::Get<Shader>(basePath + "texture");
+    m_TextShader = ResourceManager::Get<Shader>(basePath + "text");
+
+    m_PostProcessingShader = ResourceManager::Get<Shader>(basePath + "post_processing");
 }
 
 void Draw::Shutdown()

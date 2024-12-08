@@ -215,13 +215,31 @@ public:
     T* Find(const std::function<bool_t(const T*)>& lambda);
 
     /// @brief Tries to find an element that fulfills the requirements provided in a lambda
-    /// 
-    /// <p>The lambda returns bool_t, and has a pointer to the current element as a parameters</p>
-    /// 
+    ///
+    /// <p>The lambda returns bool_t, and has a pointer to the current element as a parameter</p>
+    ///
     /// @param lambda Function lambda
     /// @return Pointer to element
     [[nodiscard]]
     const T* Find(const std::function<bool_t(const T*)>& lambda) const;
+
+    /// @brief Tries to find all elements that fulfill the requirements provided in a lambda
+    ///
+    /// <p>The lambda returns bool_t, and has a pointer to the current element as a parameter</p>
+    ///
+    /// @param lambda Function lambda
+    /// @return Pointers to elements
+    [[nodiscard]]
+    List<T*> FindAll(const std::function<bool_t(const T*)>& lambda);
+
+    /// @brief Tries to find all elements that fulfill the requirements provided in a lambda
+    ///
+    /// <p>The lambda returns bool_t, and has a pointer to the current element as a parameter</p>
+    ///
+    /// @param lambda Function lambda
+    /// @return Pointers to elements
+    [[nodiscard]]
+    List<const T*> FindAll(const std::function<bool_t(const T*)>& lambda) const;
 
     /// @brief Tries to find an element that fulfills the requirements provided in a lambda
     /// 
@@ -271,12 +289,12 @@ public:
     /// @throw std::out_of_range If index >= list size
     [[nodiscard]]
     typename std::vector<T>::reference operator[](size_t index);
-    
+
     /// @brief Gets an element of the list at a specified index
-    /// 
+    ///
     /// @param index Index
     /// @return Element
-    /// 
+    ///
     /// @throw std::out_of_range If index >= list size
     [[nodiscard]]
     typename std::vector<T>::const_reference operator[](size_t index) const;

@@ -20,6 +20,8 @@ enum class MagnificationFilter : uint8_t
 
 ENUM_COUNT(MagnificationFilter)
 
+// TODO - Add a way to use a custom fragment shader
+
 class RenderTarget
 {
 public:

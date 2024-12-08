@@ -160,6 +160,7 @@
     <ClInclude Include="include\Mountain\file\file.hpp" />
     <ClInclude Include="include\Mountain\file\file_manager.hpp" />
     <ClInclude Include="include\Mountain\game.hpp" />
+    <ClInclude Include="include\Mountain\globals.hpp" />
     <ClInclude Include="include\Mountain\input\gamepad_input.hpp" />
     <ClInclude Include="include\Mountain\input\input.hpp" />
     <ClInclude Include="include\Mountain\input\keyboard_input.hpp" />

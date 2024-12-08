@@ -99,7 +99,7 @@ void ResourceManager::LoadAll()
             Pointer<Shader> shader;
 
             // We use an underscore before the name to make sure it isn't used elsewhere
-            const std::string&& filenameNoExtension = ReservedShaderPrefix.data() + file->GetNameNoExtension();
+            const std::string&& filenameNoExtension = ReservedShaderPrefix.data() + file->GetParent()->GetPathString();
             if (Contains(filenameNoExtension))
                 shader = Get<Shader>(filenameNoExtension);
             else
@@ -113,7 +113,7 @@ void ResourceManager::LoadAll()
             Pointer<ComputeShader> shader;
 
             // We use an underscore before the name to make sure it isn't used elsewhere
-            const std::string&& filenameNoExtension = ReservedComputeShaderPrefix.data() + file->GetNameNoExtension();
+            const std::string&& filenameNoExtension = ReservedComputeShaderPrefix.data() + file->GetParent()->GetPathString();
             if (Contains(filenameNoExtension))
                 shader = Get<ComputeShader>(filenameNoExtension);
             else
@@ -171,7 +171,7 @@ void ResourceManager::LoadAllBinaries()
             Pointer<Shader> shader;
 
             // We use an underscore before the name to make sure it isn't used elsewhere
-            const std::string&& filenameNoExtension = ReservedShaderPrefix.data() + path.stem().string();
+            const std::string&& filenameNoExtension = ReservedShaderPrefix.data() + path.parent_path().generic_string();
             if (Contains(filenameNoExtension))
                 shader = Get<Shader>(filenameNoExtension);
             else
@@ -186,7 +186,7 @@ void ResourceManager::LoadAllBinaries()
             Pointer<ComputeShader> shader;
 
             // We use an underscore before the name to make sure it isn't used elsewhere
-            const std::string&& filenameNoExtension = ReservedComputeShaderPrefix.data() + path.stem().string();
+            const std::string&& filenameNoExtension = ReservedComputeShaderPrefix.data() + path.parent_path().generic_string();
             if (Contains(filenameNoExtension))
                 shader = Get<ComputeShader>(filenameNoExtension);
             else

@@ -111,7 +111,7 @@ void List<T>::AddRange(const std::initializer_list<T>& values)
 {
     const size_t size = values.size();
     const T* const begin = values.begin();
-    
+
     for (size_t i = 0; i < size; i++)
         m_Vector.emplace_back(begin[i]);
 }
@@ -236,6 +236,34 @@ const T* List<T>::Find(const std::function<bool_t(const T*)>& lambda) const
     }
 
     return nullptr;
+}
+
+template <typename T>
+List<T*> List<T>::FindAll(const std::function<bool_t(const T*)>& lambda)
+{
+    List<T*> result;
+
+    for (size_t i = 0; i < m_Vector.size(); i++)
+    {
+        if (lambda(&m_Vector[i]))
+            result.Add(&m_Vector[i]);
+    }
+
+    return result;
+}
+
+template <typename T>
+List<const T*> List<T>::FindAll(const std::function<bool_t(const T*)>& lambda) const
+{
+    List<const T*> result;
+
+    for (size_t i = 0; i < m_Vector.size(); i++)
+    {
+        if (lambda(&m_Vector[i]))
+            result.Add(&m_Vector[i]);
+    }
+
+    return result;
 }
 
 template <typename T>
