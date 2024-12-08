@@ -221,8 +221,8 @@ void GameExample::Render()
         ImGui::ColorEdit4("Source color", lightSource.color.Data());
         ImGui::DragFloat("Source intensity", &lightSource.intensity, 0.1f);
         ImGui::DragFloat("Source radius", &lightSource.radius, 0.1f);
-        ImGui::DragAngle("Source angle min", &lightSource.angleMin, 0.1f);
-        ImGui::DragAngle("Source angle max", &lightSource.angleMax, 0.1f);
+        ImGui::DragAngle("Source angle min", &lightSource.angleMin);
+        ImGui::DragAngle("Source angle max", &lightSource.angleMax);
         ImGui::Text("Source position: %.2f, %.2f", lightSource.position.x, lightSource.position.y);
         
         ImGui::PopID();

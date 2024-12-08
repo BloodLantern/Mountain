@@ -105,6 +105,21 @@ void Shader::ResetSourceData()
     m_Code.fill({});
 }
 
+bool_t Shader::Reload(const bool_t reloadInBackend)
+{
+    if (reloadInBackend)
+        Unload();
+
+    const bool_t result = SetSourceData(m_Files[0]) && SetSourceData(m_Files[1]);
+
+    if (reloadInBackend)
+        Load();
+
+    return result;
+}
+
+bool_t Shader::Reload(const Pointer<File>& file, const bool_t reloadInBackend) { return Resource::Reload(file, reloadInBackend); }
+
 void Shader::SetUniform(const std::string_view keyName, const int32_t value) const { glProgramUniform1i(m_Id, GetUniformLocation(keyName), value); }
 
 void Shader::SetUniform(const std::string_view keyName, const bool_t value) const { SetUniform(keyName, static_cast<int32_t>(value)); }
@@ -144,6 +159,14 @@ void Shader::SetUniform(const std::string_view keyName, const Matrix& value) con
 }
 
 uint32_t Shader::GetId() const { return m_Id; }
+
+std::array<Pointer<File>, ShaderTypeCount>& Shader::GetFiles() { return m_Files; }
+
+const std::array<Pointer<File>, ShaderTypeCount>& Shader::GetFiles() const { return m_Files; }
+
+std::array<ShaderCode, ShaderTypeCount>& Shader::GetCode() { return m_Code; }
+
+const std::array<ShaderCode, ShaderTypeCount>& Shader::GetCode() const { return m_Code; }
 
 void Shader::Use() const { glUseProgram(m_Id); }
 

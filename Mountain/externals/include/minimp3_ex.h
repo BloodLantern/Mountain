@@ -2,6 +2,7 @@
 #define MINIMP3_EXT_H
 
 #pragma warning(push, 1)
+#pragma warning(disable: 4706)
 
 /*
     https://github.com/lieff/minimp3

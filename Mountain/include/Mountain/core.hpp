@@ -175,3 +175,9 @@ using stdstring = std::string;
         _declspec(dllexport) uint32_t NvOptimusEnablement = 1;                  \
         _declspec(dllexport) int32_t AmdPowerXpressRequestHighPerformance = 1;  \
     }
+
+#ifdef MOUNTAIN_EXPORT
+#define PUBLIC_GLOBAL(varType, varName, defaultValue) MOUNTAIN_API inline varType varName = defaultValue;
+#else
+#define PUBLIC_GLOBAL(varType, varName, defaultValue) MOUNTAIN_API varType varName;
+#endif

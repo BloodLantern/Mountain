@@ -124,7 +124,7 @@ public:
     /// returned @c false, instead return a null @ref Pointer.
     template <Concepts::ResourceT T = Resource>
     [[nodiscard]]
-    static Pointer<T> Find(std::function<bool_t(Pointer<T>)>&& predicate);
+    static Pointer<T> Find(const std::function<bool_t(Pointer<T>)>& predicate);
     
     /// @brief Finds a list of Resource based on a predicate.
     /// @tparam T The type of Resource to find.
@@ -134,11 +134,11 @@ public:
     /// returned @c false, instead return a null @ref Pointer.
     template <Concepts::ResourceT T = Resource>
     [[nodiscard]]
-    static List<Pointer<T>> FindAll(std::function<bool_t(Pointer<T>)>&& predicate);
+    static List<Pointer<T>> FindAll(const std::function<bool_t(Pointer<T>)>& predicate);
 
     /// @see @ref FileManager::FindAll(std::function<bool_t(Pointer<T>)>&&)
     template <Concepts::ResourceT T>
-    static void FindAll(std::function<bool_t(Pointer<T>)>&& predicate, List<Pointer<T>>* result);
+    static void FindAll(const std::function<bool_t(Pointer<T>)>& predicate, List<Pointer<T>>* result);
 
     /// @brief Checks whether the given @p name corresponds to a Resource of type @p T.
     template <Concepts::ResourceT T>
