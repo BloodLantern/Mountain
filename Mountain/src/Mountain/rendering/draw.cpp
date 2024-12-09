@@ -911,8 +911,13 @@ void Draw::RenderRenderTargetData(const List<RenderTargetData>& renderTargets, c
         m_PostProcessingShader->SetUniform("color", data.color);
         m_PostProcessingShader->SetUniform("ambientColor", data.renderTarget->ambientLight);
 
-        const auto& lightSources = data.renderTarget->GetLightSources();
+        auto lightSources = data.renderTarget->GetLightSources();
         m_PostProcessingShader->SetUniform("lightSourceCount", static_cast<int32_t>(lightSources.GetSize()));
+
+        for (auto& lightSource : lightSources)
+        {
+            lightSource.position = m_CameraMatrix * lightSource.position;
+        }
 
         glNamedBufferData(
             m_RenderTargetSsbo,
