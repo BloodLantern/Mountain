@@ -227,7 +227,9 @@ void GameExample::Render()
         
         ImGui::PopID();
     }
-    
+
+    static bool_t showDemoWindow = false;
+    static bool_t showResourceManagerWindows = false;
     if (ImGui::CollapsingHeader("Tests"))
     {
         ImGui::Text("Delta time: %.3f, Unscaled: %.3f, FPS: %.1f", Time::GetDeltaTime(), Time::GetDeltaTimeUnscaled(), 1.f / Time::GetDeltaTimeUnscaled());
@@ -241,20 +243,19 @@ void GameExample::Render()
         if (oldF != f)
             s->SetFrameDuration(f);
 
-        static bool_t showDemoWindow = false;
         ImGui::Checkbox("Show ImGui demo window", &showDemoWindow);
-        if (showDemoWindow)
-            ImGui::ShowDemoWindow();
 
-        static bool_t showResourceManagerWindows = false;
         ImGui::Checkbox("Show File/Resource Manager windows", &showResourceManagerWindows);
-        if (showResourceManagerWindows)
-        {
-            ImGuiUtils::ShowFileManager();
-            ImGuiUtils::ShowResourceManager();
-        }
     }
-    
+
+    if (showDemoWindow)
+        ImGui::ShowDemoWindow();
+    if (showResourceManagerWindows)
+    {
+        ImGuiUtils::ShowFileManager();
+        ImGuiUtils::ShowResourceManager();
+    }
+
     if (ImGui::CollapsingHeader("Player"))
     {
         ImGui::DragFloat2("Position", player->position.Data());
