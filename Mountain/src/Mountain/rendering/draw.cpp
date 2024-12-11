@@ -317,7 +317,7 @@ void Draw::LoadResources()
     m_TextureShader = ResourceManager::Get<Shader>(basePath + "texture");
     m_TextShader = ResourceManager::Get<Shader>(basePath + "text");
 
-    m_PostProcessingShader = ResourceManager::Get<Shader>(basePath + "post_processing");
+    m_RenderTargetShader = ResourceManager::Get<Shader>(basePath + "render_target");
 }
 
 void Draw::Shutdown()
@@ -894,25 +894,25 @@ void Draw::RenderTextData(const List<TextData>& texts, const size_t index, const
 void Draw::RenderRenderTargetData(const List<RenderTargetData>& renderTargets, const size_t index, const size_t count)
 {
     glBindVertexArray(m_RenderTargetVao);
-    m_PostProcessingShader->Use();
+    m_RenderTargetShader->Use();
 
-    m_PostProcessingShader->SetUniform("projection", m_ProjectionMatrix * m_CameraMatrix);
+    m_RenderTargetShader->SetUniform("projection", m_ProjectionMatrix * m_CameraMatrix);
 
     for (size_t i = 0; i < count; i++)
     {
         const RenderTargetData& data = renderTargets[index + i];
 
-        m_PostProcessingShader->SetUniform("transformation", data.transformation);
-        m_PostProcessingShader->SetUniform("uvProjection", data.uvProjection);
+        m_RenderTargetShader->SetUniform("transformation", data.transformation);
+        m_RenderTargetShader->SetUniform("uvProjection", data.uvProjection);
         
-        m_PostProcessingShader->SetUniform("camera", m_CameraMatrix);
-        m_PostProcessingShader->SetUniform("scale", data.scale);
-        m_PostProcessingShader->SetUniform("actualScale", data.scale * data.renderTarget->GetCameraScale());
-        m_PostProcessingShader->SetUniform("color", data.color);
-        m_PostProcessingShader->SetUniform("ambientColor", data.renderTarget->ambientLight);
+        m_RenderTargetShader->SetUniform("camera", m_CameraMatrix);
+        m_RenderTargetShader->SetUniform("scale", data.scale);
+        m_RenderTargetShader->SetUniform("actualScale", data.scale * data.renderTarget->GetCameraScale());
+        m_RenderTargetShader->SetUniform("color", data.color);
+        m_RenderTargetShader->SetUniform("ambientColor", data.renderTarget->ambientLight);
 
         auto lightSources = data.renderTarget->GetLightSources();
-        m_PostProcessingShader->SetUniform("lightSourceCount", static_cast<int32_t>(lightSources.GetSize()));
+        m_RenderTargetShader->SetUniform("lightSourceCount", static_cast<int32_t>(lightSources.GetSize()));
 
         for (auto& lightSource : lightSources)
         {
@@ -934,7 +934,7 @@ void Draw::RenderRenderTargetData(const List<RenderTargetData>& renderTargets, c
     }
     
     glBindTexture(GL_TEXTURE_2D, 0);
-    m_PostProcessingShader->Unuse();
+    m_RenderTargetShader->Unuse();
     glBindVertexArray(0);
 }
 
