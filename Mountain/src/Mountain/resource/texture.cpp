@@ -39,8 +39,9 @@ void Texture::Load()
     glTextureParameteri(m_Id, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTextureParameteri(m_Id, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
-    glTextureStorage2D(m_Id, 1, GL_RGBA8, m_Size.x, m_Size.y);
-    glTextureSubImage2D(m_Id, 0, 0, 0, m_Size.x, m_Size.y, GL_RGBA, GL_UNSIGNED_BYTE, m_Data);
+    glTextureStorage2D(m_Id, 1, GL_RGBA32F, m_Size.x, m_Size.y);
+    if (m_Data)
+        glTextureSubImage2D(m_Id, 0, 0, 0, m_Size.x, m_Size.y, GL_RGBA, GL_UNSIGNED_BYTE, m_Data);
     
     m_Loaded = true;
 }
@@ -65,6 +66,13 @@ Vector2i Texture::GetSize() const
     return m_Size;
 }
 
+void Texture::SetSize(const Vector2i newSize)
+{
+    if (m_Loaded)
+        throw std::logic_error{ "Texture::SetSize cannot be called once it has been loaded" };
+    m_Size = newSize;
+}
+
 void Texture::Use() const
 {
     glBindTexture(GL_TEXTURE_2D, m_Id);
@@ -79,4 +87,9 @@ void Texture::Unuse() const
 uint32_t Texture::GetId() const
 {
     return m_Id;
+}
+
+void Texture::BindImage() const
+{
+    glBindImageTexture(0, m_Id, 0, GL_FALSE, 0, GL_READ_WRITE, GL_RGBA32F);
 }
