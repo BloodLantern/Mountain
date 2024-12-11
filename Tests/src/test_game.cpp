@@ -29,7 +29,7 @@ GameExample::GameExample(const char_t* const windowTitle)
     renderTarget.ambientLight = Color(0.1f);
 }
 
-Pointer<Texture> t;
+Pointer<Texture> TestTexture;
 
 void GameExample::Initialize()
 {
@@ -66,15 +66,15 @@ void GameExample::LoadResources()
 
     font = ResourceManager::LoadFont("assets/font.ttf", 30);
 
-    t = ResourceManager::Add<Texture>("compute_shader_test_texture");
-    t->SetSize({ 64, 64 });
-    t->Load();
+    TestTexture = ResourceManager::Add<Texture>("compute_shader_test_texture");
+    TestTexture->SetSize({ 64, 64 });
+    TestTexture->Load();
 }
 
 void UpdateTexture()
 {
     Pointer computeShader = ResourceManager::Get<ComputeShader>("Mountain/shaders/effect");
-    t->BindImage();
+    TestTexture->BindImage();
     computeShader->Dispatch(64, 64, 1);
     computeShader->SynchronizeImageData();
 }
@@ -168,7 +168,7 @@ void GameExample::Render()
     Draw::Texture(*oldLady, { 10.f, 150.f });
     Draw::Texture(*oldLady, { 10.f, 160.f });
 
-    Draw::Texture(*t, { 40.f, 80.f });
+    Draw::Texture(*TestTexture, { 40.f, 80.f });
 
     player->Render();
 
