@@ -469,6 +469,8 @@ void ImGuiUtils::ShowResourceManager()
 
     DisplayResourceType<Shader>("Shader", filter);
 
+    DisplayResourceType<ComputeShader>("ComputeShader", filter);
+
     DisplayResourceType<Texture>(
         "Texture",
         filter,

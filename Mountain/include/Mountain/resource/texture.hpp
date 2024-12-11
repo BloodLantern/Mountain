@@ -61,6 +61,8 @@ public:
     [[nodiscard]]
     MOUNTAIN_API Vector2i GetSize() const;
 
+    MOUNTAIN_API void SetSize(Vector2i newSize);
+
     /// @brief Binds the texture
     MOUNTAIN_API void Use() const;
     
@@ -71,6 +73,8 @@ public:
     /// @return Texture id
     [[nodiscard]]
     MOUNTAIN_API uint32_t GetId() const;
+
+    MOUNTAIN_API void BindImage() const;
     
 private:
     uint8_t* m_Data = nullptr;
