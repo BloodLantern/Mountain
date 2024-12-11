@@ -8,6 +8,7 @@
 #include "Mountain/input/input.hpp"
 #include "Mountain/resource/audio_track.hpp"
 #include "Mountain/resource/resource_manager.hpp"
+#include "Mountain/utils/file_system_watcher.hpp"
 
 using namespace Mountain;
 
@@ -337,6 +338,35 @@ void ImGuiUtils::ShowFileManager()
 
 namespace
 {
+    //std::unordered_map<Resource*, std::shared_ptr<FileSystemWatcher>> fileSystemWatchers;
+
+    void DisplayReloadOptions(Resource& resource, File& file)
+    {
+        if (ImGui::Button("Reload from cached file"))
+            resource.Reload();
+        if (ImGui::Button("Reload from disk"))
+        {
+            file.Reload();
+            resource.Reload();
+        }
+
+        // TODO - Reload the resource from the main thread somehow
+        /*bool_t fswEnabled = fileSystemWatchers.contains(&resource);
+        if (ImGui::Checkbox("Automatically reload on file change", &fswEnabled))
+        {
+            if (fswEnabled)
+            {
+                std::shared_ptr watcher = std::make_shared<FileSystemWatcher>(file.GetPathString());
+                watcher->onModified += [&] (const auto&) { file.Reload(); resource.Reload(); }; // WRONG THREAD
+                fileSystemWatchers.emplace(&resource, std::move(watcher));
+            }
+            else
+            {
+                fileSystemWatchers.erase(&resource);
+            }
+        }*/
+    }
+
     template <Concepts::ResourceT T>
     void DisplayResourceType(
         const std::string_view typeName,
@@ -353,16 +383,9 @@ namespace
                 if (!ImGui::TreeNode(resource->GetName().c_str()))
                     continue;
 
-                if (resource->GetFile() != nullptr)
-                {
-                    if (ImGui::Button("Reload from cached file"))
-                        resource->Reload();
-                    if (ImGui::Button("Reload from disk"))
-                    {
-                        resource->GetFile()->Reload();
-                        resource->Reload();
-                    }
-                }
+                Pointer file = resource->GetFile();
+                if (file != nullptr)
+                    DisplayReloadOptions(*resource, *file);
 
                 additionalAction(resource);
 
@@ -406,13 +429,7 @@ namespace
                     {
                         if (ImGui::TreeNode(magic_enum::enum_name(static_cast<ShaderType>(i)).data()))
                         {
-                            if (ImGui::Button("Reload from cached file"))
-                                shader->Reload();
-                            if (ImGui::Button("Reload from disk"))
-                            {
-                                shaderFile->Reload();
-                                shader->Reload();
-                            }
+                            DisplayReloadOptions(*shader, *shaderFile);
 
                             ImGui::TreePop();
                         }

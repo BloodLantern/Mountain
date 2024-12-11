@@ -233,6 +233,24 @@ void GameExample::Render()
     if (ImGui::CollapsingHeader("Tests"))
     {
         ImGui::Text("Delta time: %.3f, Unscaled: %.3f, FPS: %.1f", Time::GetDeltaTime(), Time::GetDeltaTimeUnscaled(), 1.f / Time::GetDeltaTimeUnscaled());
+
+        auto targetFps = Time::GetTargetFps();
+        const uint16_t refreshRate = static_cast<uint16_t>(Screen::GetRefreshRate());
+        constexpr uint16_t zero = 0;
+        if (ImGuiUtils::Optional(
+            &targetFps,
+            refreshRate,
+            refreshRate,
+            [&](uint16_t& value) -> bool_t
+            {
+                return ImGui::DragScalar("Target FPS", ImGuiDataType_U16, &value, 1.f, &zero);
+            }
+        ))
+        {
+            Time::SetTargetFps(targetFps);
+        }
+
+        ImGui::Text("Frame time (without wait between frames): %f", Time::GetLastFrameDuration());
         ImGui::Checkbox("Show inputs window", &showInputs);
         ImGui::SliderFloat("Time scale", &Time::timeScale, 0.f, 2.f);
         ImGui::Checkbox("Debug render", &debugRender);

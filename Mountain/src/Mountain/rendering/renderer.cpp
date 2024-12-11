@@ -29,27 +29,27 @@ namespace
         switch (source) {
             case GL_DEBUG_SOURCE_API:
                 src = "API";
-            break;
+                break;
 
             case GL_DEBUG_SOURCE_WINDOW_SYSTEM:
                 src = "Window system";
-            break;
+                break;
 
             case GL_DEBUG_SOURCE_SHADER_COMPILER:
                 src = "Shader compiler";
-            break;
+                break;
 
             case GL_DEBUG_SOURCE_THIRD_PARTY:
                 src = "Third party";
-            break;
+                break;
 
             case GL_DEBUG_SOURCE_APPLICATION:
                 src = "Application";
-            break;
+                break;
 
             case GL_DEBUG_SOURCE_OTHER:
                 src = "Other";
-            break;
+                break;
 
             default:
                 src = "Unknown";
@@ -59,31 +59,31 @@ namespace
         switch (type) {
             case GL_DEBUG_TYPE_ERROR:
                 t = "Error";
-            break;
+                break;
 
             case GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR:
                 t = "Deprecated behavior";
-            break;
+                break;
 
             case GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR:
                 t = "Undefined behavior";
-            break;
+                break;
 
             case GL_DEBUG_TYPE_PORTABILITY:
                 t = "Portability";
-            break;
+                break;
 
             case GL_DEBUG_TYPE_PERFORMANCE:
                 t = "Performance";
-            break;
+                break;
 
             case GL_DEBUG_TYPE_OTHER:
                 t = "Other";
-            break;
+                break;
 
             case GL_DEBUG_TYPE_MARKER:
                 t = "Marker";
-            break;
+                break;
 
             default:
                 t = "Unknown";
@@ -93,15 +93,15 @@ namespace
         switch (severity) {
             case GL_DEBUG_SEVERITY_HIGH:
                 level = Mountain::Logger::LogLevel::Error;
-            break;
+                break;
 
             case GL_DEBUG_SEVERITY_MEDIUM:
                 level = Mountain::Logger::LogLevel::Warning;
-            break;
+                break;
 
             case GL_DEBUG_SEVERITY_LOW:
                 level = Mountain::Logger::LogLevel::Info;
-            break;
+                break;
 
             case GL_DEBUG_SEVERITY_NOTIFICATION:
                 return; // Do not log notifications
