@@ -61,7 +61,7 @@ bool_t Resource::Reload(const Pointer<File>& file, const bool_t reloadInBackend)
     return result;
 }
 
-bool_t Resource::Reload(const bool_t reloadInBackend) { return Reload(FileManager::Get(m_Name), reloadInBackend); }
+bool_t Resource::Reload(const bool_t reloadInBackend) { return Reload(m_File, reloadInBackend); }
 
 bool_t Resource::IsSourceDataSet() const { return m_SourceDataSet; }
 

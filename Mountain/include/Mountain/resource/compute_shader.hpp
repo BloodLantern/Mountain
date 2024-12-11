@@ -96,11 +96,9 @@ public:
 	[[nodiscard]]
 	MOUNTAIN_API uint32_t GetId() const;
 
-	/// @brief Binds the compute shader for use
-	MOUNTAIN_API void Use() const;
+	MOUNTAIN_API void Dispatch(uint32_t groupsX, uint32_t groupsY, uint32_t groupsZ) const;
 
-	/// @brief Unbinds the compute shader
-	MOUNTAIN_API void Unuse() const;
+	MOUNTAIN_API void SynchronizeImageData() const;
 
 private:
 	uint32_t m_Id = 0;
