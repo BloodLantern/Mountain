@@ -83,7 +83,10 @@ void Shader::Load()
     for (const uint32_t shaderId : shaderIds)
     {
         if (glIsShader(shaderId))
+        {
+            glDetachShader(m_Id, shaderId);
             glDeleteShader(shaderId);
+        }
     }
 
     CheckLinkError();
@@ -193,12 +196,13 @@ uint32_t Shader::ShaderTypeToOpenGl(const ShaderType shaderType)
 void Shader::CheckCompilationError(const uint32_t id, const ShaderType type)
 {
     int success = 0;
-    constexpr uint32_t infoLogSize = 1024;
-    std::vector<char_t> infoLog(infoLogSize);
     
     glGetShaderiv(id, GL_COMPILE_STATUS, &success);
     if (!success)
     {
+        GLint infoLogSize = 0;
+        glGetShaderiv(id, GL_INFO_LOG_LENGTH, &infoLogSize);
+        std::vector<char_t> infoLog(static_cast<size_t>(infoLogSize));
         glGetShaderInfoLog(id, infoLogSize, nullptr, infoLog.data());
         Logger::LogError("Error while compiling shader '{}' of type '{}': {}", m_Name, magic_enum::enum_name(type), infoLog.data());
     }
@@ -207,13 +211,14 @@ void Shader::CheckCompilationError(const uint32_t id, const ShaderType type)
 void Shader::CheckLinkError()
 {
     int success = 0;
-    constexpr uint32_t infoLogSize = 1024;
-    std::vector<char_t> infoLog(infoLogSize);
-    
+
     glGetProgramiv(m_Id, GL_LINK_STATUS, &success);
     if (!success)
     {
-        glGetProgramInfoLog(m_Id, infoLogSize, nullptr, infoLog.data());
+        GLint infoLogSize = 0;
+        glGetShaderiv(m_Id, GL_INFO_LOG_LENGTH, &infoLogSize);
+        std::vector<char_t> infoLog(static_cast<size_t>(infoLogSize));
+        glGetShaderInfoLog(m_Id, infoLogSize, nullptr, infoLog.data());
         Logger::LogError("Error while linking shader program '{}': {}", m_Name, infoLog.data());
     }
 }

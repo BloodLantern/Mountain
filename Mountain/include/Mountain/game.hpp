@@ -9,7 +9,7 @@ BEGIN_MOUNTAIN
 class MOUNTAIN_API Game
 {
 public:
-    explicit Game(std::string_view windowTitle, Vector2i windowSize = Vector2i(1280, 720));
+    explicit Game(std::string_view windowTitle, Vector2i windowSize = { 1280, 720 });
     virtual ~Game();
 
     DEFAULT_COPY_MOVE_OPERATIONS(Game)
