@@ -287,7 +287,7 @@ private:
     static inline Pointer<Shader> m_RectangleShader;
     static inline Pointer<Shader> m_CircleShader;
     
-    static inline Pointer<Shader> m_TextureShader, m_TextShader, m_PostProcessingShader;
+    static inline Pointer<Shader> m_TextureShader, m_TextShader, m_RenderTargetShader;
 
     static inline uint32_t m_RectangleEbo, m_Vbo, m_RectangleVbo, m_TextureVbo, m_TextVbo, m_RenderTargetVbo, m_RenderTargetSsbo;
     static inline uint32_t m_PointVao, m_LineVao, m_LineColoredVao, m_TriangleVao, m_TriangleColoredVao, m_RectangleVao, m_CircleVao, m_TextureVao, m_TextVao, m_RenderTargetVao;
