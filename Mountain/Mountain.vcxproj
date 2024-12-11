@@ -299,8 +299,8 @@
     <Content Include="shaders\particle\particle.comp" />
     <Content Include="shaders\point\point.frag" />
     <Content Include="shaders\point\point.vert" />
-    <Content Include="shaders\post_processing\post_processing.frag" />
-    <Content Include="shaders\post_processing\post_processing.vert" />
+    <Content Include="shaders\render_target\render_target.frag" />
+    <Content Include="shaders\render_target\render_target.vert" />
     <Content Include="shaders\line\line.frag" />
     <Content Include="shaders\line\line.vert" />
     <Content Include="shaders\rectangle\rectangle.frag" />
