@@ -194,8 +194,6 @@ Pointer<T> ResourceManager::Add(const std::string& name)
 
     Pointer<T> result = AddNoCheck<T>(name);
 
-    Pointer<Resource>(result)->m_File = FileManager::Add(name);
-
     return result;
 }
 
