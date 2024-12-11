@@ -52,7 +52,10 @@ void ComputeShader::Load()
     glLinkProgram(m_Id);
 
     if (glIsShader(id))
+    {
+        glDetachShader(m_Id, id);
         glDeleteShader(id);
+    }
 
     CheckLinkError();
 
@@ -112,36 +115,46 @@ void ComputeShader::SetUniform(const std::string_view keyName, const Matrix& val
 
 uint32_t ComputeShader::GetId() const { return m_Id; }
 
-void ComputeShader::Use() const { glUseProgram(m_Id); }
+void ComputeShader::Dispatch(const uint32_t groupsX, const uint32_t groupsY, const uint32_t groupsZ) const
+{
+    if (groupsX == 0 || groupsY == 0 || groupsZ == 0)
+        throw std::invalid_argument{ "ComputeShader::Dispatch needs all dimension arguments to be at least 1" };
+
+    glUseProgram(m_Id);
+    glDispatchCompute(groupsX, groupsY, groupsZ);
+    glUseProgram(0);
+}
 
 // ReSharper disable once CppMemberFunctionMayBeStatic
-void ComputeShader::Unuse() const { glUseProgram(0); }
+void ComputeShader::SynchronizeImageData() const { glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT); }
 
 void ComputeShader::CheckCompilationError(const uint32_t id)
 {
     int success = 0;
-    constexpr uint32_t infoLogSize = 1024;
-    std::vector<char_t> infoLog(infoLogSize);
 
     glGetShaderiv(id, GL_COMPILE_STATUS, &success);
     if (!success)
     {
+        GLint infoLogSize = 0;
+        glGetShaderiv(id, GL_INFO_LOG_LENGTH, &infoLogSize);
+        std::vector<char_t> infoLog(static_cast<size_t>(infoLogSize));
         glGetShaderInfoLog(id, infoLogSize, nullptr, infoLog.data());
-        Logger::LogError("Error while compiling shader '{}' of type 'Compute': {}", m_Name, infoLog.data());
+        Logger::LogError("Error while compiling compute shader '{}': {}", m_Name, infoLog.data());
     }
 }
 
 void ComputeShader::CheckLinkError()
 {
     int success = 0;
-    constexpr uint32_t infoLogSize = 1024;
-    std::vector<char_t> infoLog(infoLogSize);
 
     glGetProgramiv(m_Id, GL_LINK_STATUS, &success);
     if (!success)
     {
-        glGetProgramInfoLog(m_Id, infoLogSize, nullptr, infoLog.data());
-        Logger::LogError("Error while linking shader program '{}': {}", m_Name, infoLog.data());
+        GLint infoLogSize = 0;
+        glGetShaderiv(m_Id, GL_INFO_LOG_LENGTH, &infoLogSize);
+        std::vector<char_t> infoLog(static_cast<size_t>(infoLogSize));
+        glGetShaderInfoLog(m_Id, infoLogSize, nullptr, infoLog.data());
+        Logger::LogError("Error while linking compute shader program '{}': {}", m_Name, infoLog.data());
     }
 }
 

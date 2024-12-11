@@ -29,6 +29,8 @@ GameExample::GameExample(const char_t* const windowTitle)
     renderTarget.ambientLight = Color(0.1f);
 }
 
+Pointer<Texture> t;
+
 void GameExample::Initialize()
 {
     ballCount = 0;
@@ -63,6 +65,18 @@ void GameExample::LoadResources()
     player->LoadResources();
 
     font = ResourceManager::LoadFont("assets/font.ttf", 30);
+
+    t = ResourceManager::Add<Texture>("compute_shader_test_texture");
+    t->SetSize({ 64, 64 });
+    t->Load();
+}
+
+void UpdateTexture()
+{
+    Pointer computeShader = ResourceManager::Get<ComputeShader>("Mountain/shaders/effect");
+    t->BindImage();
+    computeShader->Dispatch(64, 64, 1);
+    computeShader->SynchronizeImageData();
 }
 
 void GameExample::Shutdown()
@@ -153,6 +167,8 @@ void GameExample::Render()
     Draw::Texture(*oldLady, { 10.f, 140.f });
     Draw::Texture(*oldLady, { 10.f, 150.f });
     Draw::Texture(*oldLady, { 10.f, 160.f });
+
+    Draw::Texture(*t, { 40.f, 80.f });
 
     player->Render();
 
@@ -264,6 +280,9 @@ void GameExample::Render()
         ImGui::Checkbox("Show ImGui demo window", &showDemoWindow);
 
         ImGui::Checkbox("Show File/Resource Manager windows", &showResourceManagerWindows);
+
+        if (ImGui::Button("Dispatch effect compute shader"))
+            UpdateTexture();
     }
 
     if (showDemoWindow)
