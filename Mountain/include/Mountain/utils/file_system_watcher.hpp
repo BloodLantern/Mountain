@@ -15,7 +15,7 @@ typedef unsigned long DWORD; // Windows type forward declaration  // NOLINT(mode
 BEGIN_MOUNTAIN
 
 /// @private
-enum class FswNotifyFilters
+enum class FswNotifyFilters : uint8_t
 {
     FileName        = 1 << 0,
     DirectoryName   = 1 << 1,
@@ -31,7 +31,6 @@ enum class FswNotifyFilters
     All             = FileName | DirectoryName | Attributes | Size | LastWrite | LastAccess | Creation | Security
 };
 
-/// @private
 class FileSystemWatcher
 {
 public:

@@ -7,7 +7,11 @@
 
 using namespace Mountain;
 
-FileSystemWatcher::FileSystemWatcher(const std::string& path) { SetPath(path); }
+FileSystemWatcher::FileSystemWatcher(const std::string& path)
+{
+    SetPath(path);
+    Start();
+}
 
 FileSystemWatcher::~FileSystemWatcher() { Stop(); }
 
@@ -96,9 +100,9 @@ void FileSystemWatcher::Run()
             m_PathChanged = false;
         }
         
-        constexpr size_t bufferSize = 0x2000;
-        std::array<uint8_t, bufferSize> buffer{};
-        ReadDirectoryChangesW(file, buffer.data(), bufferSize, m_IsDirectory && checkContents, NotifyFiltersToWindows(notifyFilters), nullptr, &overlapped, nullptr);
+        static constexpr size_t BufferSize = 0x2000;
+        std::array<uint8_t, BufferSize> buffer;
+        ReadDirectoryChangesW(file, buffer.data(), BufferSize, m_IsDirectory && checkContents, NotifyFiltersToWindows(notifyFilters), nullptr, &overlapped, nullptr);
         Windows::SilenceError(); // Windows would return an error because the 0ms timeout of WaitForSingleObject expired
         
         m_CondVar.wait_for(lock, updateRate);
@@ -120,14 +124,22 @@ void FileSystemWatcher::Run()
             {
                 const std::filesystem::path path = watchedPath / std::wstring_view(information->FileName, information->FileNameLength / sizeof(WCHAR));
 
-                bool_t validFile = path.string().starts_with(pathAbs);
+                bool_t validFile;
+                if (m_IsDirectory)
+                {
+                    validFile = path.string().starts_with(pathAbs);
 
-                // If we don't check recursively, make sure it is a file and is within the watched directory
-                if (!recursive)
-                    validFile &= !is_directory(path) && equivalent(path.parent_path(), watchedPath);
+                    // If we don't check recursively, make sure it is a file and is within the watched directory
+                    if (!recursive)
+                        validFile &= !is_directory(path) && equivalent(path.parent_path(), watchedPath);
 
-                if (!fileExtensions.Empty())
-                    validFile &= Utils::StringArrayContains(fileExtensions, path.extension().string());
+                    if (!fileExtensions.Empty())
+                        validFile &= Utils::StringArrayContains(fileExtensions, path.extension().string());
+                }
+                else
+                {
+                    validFile = exists(path) && equivalent(path, m_Path);
+                }
 
                 // Because we watch the parent directory, we need to check if the changed entry is the correct one
                 if (validFile)
