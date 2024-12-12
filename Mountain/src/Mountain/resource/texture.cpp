@@ -8,6 +8,11 @@
 
 using namespace Mountain;
 
+void Texture::BindImage(const uint32_t textureId, const uint32_t shaderBinding, const ImageShaderAccess access)
+{
+    glBindImageTexture(shaderBinding, textureId, 0, GL_FALSE, 0, GL_READ_ONLY + static_cast<int32_t>(access), GL_RGBA32F);
+}
+
 Texture::~Texture()
 {
     if (m_Loaded)
@@ -87,9 +92,4 @@ void Texture::Unuse() const
 uint32_t Texture::GetId() const
 {
     return m_Id;
-}
-
-void Texture::BindImage() const
-{
-    glBindImageTexture(0, m_Id, 0, GL_FALSE, 0, GL_READ_WRITE, GL_RGBA32F);
 }
