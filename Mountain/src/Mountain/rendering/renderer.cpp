@@ -116,16 +116,16 @@ namespace
 
 void Mountain::Renderer::PushRenderTarget(RenderTarget& renderTarget)
 {
-    Draw::Render();
-    
+    Draw::Flush();
+
     renderTarget.Use();
     m_RenderTargets.push(&renderTarget);
 }
 
 Mountain::RenderTarget& Mountain::Renderer::PopRenderTarget()
 {
-    Draw::Render();
-    
+    Draw::Flush();
+
     RenderTarget* renderTarget = m_RenderTargets.top();
     m_RenderTargets.pop();
 
@@ -141,7 +141,7 @@ Mountain::RenderTarget& Mountain::Renderer::GetCurrentRenderTarget()
 {
     if (m_RenderTargets.empty())
         throw std::logic_error("Cannot get the current RenderTarget outside of the Game::Render() function");
-    
+
     return *m_RenderTargets.top();
 }
 
@@ -164,7 +164,7 @@ bool Mountain::Renderer::Initialize(const std::string_view windowTitle, const Ve
 
     glEnable(GL_DEBUG_OUTPUT);
     glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
-    
+
     glDebugMessageCallback(OpenGlDebugCallback, nullptr);
 
     glViewport(0, 0, windowSize.x, windowSize.y);
@@ -201,11 +201,11 @@ bool Mountain::Renderer::Initialize(const std::string_view windowTitle, const Ve
         Window::Shutdown();
         return false;
     }
-    
+
     // Setup Dear ImGui context
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
-    
+
     ImGuiIO& io = ImGui::GetIO();
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
     io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
@@ -213,7 +213,7 @@ bool Mountain::Renderer::Initialize(const std::string_view windowTitle, const Ve
     io.ConfigViewportsNoTaskBarIcon = true;
 
     ImGui::StyleColorsDark();
-    
+
     ImGui_ImplGlfw_InitForOpenGL(Window::GetHandle(), true);
     ImGui_ImplOpenGL3_Init(glVersion.glsl);
 
@@ -241,12 +241,12 @@ void Mountain::Renderer::PreFrame()
 void Mountain::Renderer::PostFrame()
 {
     PopRenderTarget();
-    
+
     if (!m_RenderTargets.empty())
         throw std::logic_error("RenderTarget push/pop mismatch, e.g. a RenderTarget that was pushed hasn't been popped");
 
     Draw::RenderTarget(*m_RenderTarget);
-    Draw::Render();
+    Draw::Flush();
     
     // End ImGui frame
     ImGui::Render();

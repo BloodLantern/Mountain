@@ -2,15 +2,21 @@
 
 layout (local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 
-layout (rgba32f, binding = 0) uniform image2D outputImage;
+layout (rgba32f, binding = 0) uniform image2D image;
 
 void main()
 {
-    ivec2 texelCoordinates = ivec2(gl_GlobalInvocationID.xy);
+    ivec2 texel = ivec2(gl_GlobalInvocationID.xy);
+    ivec2 size = ivec2(gl_NumWorkGroups.xy);
+    vec2 sizef = vec2(size);
 
-    vec4 color = vec4(0.f, 0.f, 1.f, 1.f);
-    color.x = float(texelCoordinates.x) / gl_NumWorkGroups.x;
-    color.y = float(texelCoordinates.y) / gl_NumWorkGroups.y;
+    vec4 originalColor = imageLoad(image, texel);
 
-    imageStore(outputImage, texelCoordinates, color);
+    vec2 center = sizef * 0.5f;
+    vec2 centerDistance = (center - vec2(texel)) / sizef;
+    float alpha = 1.f - length(centerDistance) - 0.5f;
+
+    vec4 factor = vec4(alpha, alpha, alpha, 1.f);
+
+    imageStore(image, texel, factor * originalColor);
 }
