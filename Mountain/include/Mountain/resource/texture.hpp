@@ -12,8 +12,15 @@
 
 BEGIN_MOUNTAIN
 
+enum class ImageShaderAccess : uint8_t
+{
+    ReadOnly,
+    WriteOnly,
+    ReadWrite
+};
+
 /// @brief Represents an image in memory.
-class Texture final : public Resource
+class Texture : public Resource
 {
 public:
     /// @brief Allowed extensions for texture files
@@ -23,6 +30,8 @@ public:
         ".jpeg",
         ".png"
     };
+
+    MOUNTAIN_API static void BindImage(uint32_t textureId, uint32_t shaderBinding, ImageShaderAccess access);
     
     // Same constructor from base class
     using Resource::Resource;
@@ -74,8 +83,6 @@ public:
     [[nodiscard]]
     MOUNTAIN_API uint32_t GetId() const;
 
-    MOUNTAIN_API void BindImage() const;
-    
 private:
     uint8_t* m_Data = nullptr;
     Vector2i m_Size;

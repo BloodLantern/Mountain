@@ -37,7 +37,7 @@ public:
 	// Inherited from Game
 	void Initialize() override;
 	void LoadResources() override;
-	void Shutdown() override;
+    void Shutdown() override;
 	void Update() override;
 	void Render() override;
 };

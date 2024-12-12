@@ -163,6 +163,11 @@ public:
         Meta::UnderlyingEnumType<DrawTextureFlipping> flipFlags = static_cast<Meta::UnderlyingEnumType<DrawTextureFlipping>>(DrawTextureFlipping::None)
     );
 
+    /// @brief Flushes the cached draw data onto the current RenderTarget
+    ///
+    /// This effectively renders everything that was scheduled since the last RenderTarget push/pop or Flush()
+    MOUNTAIN_API static void Flush();
+
 private:
     struct PointData
     {
@@ -313,8 +318,6 @@ private:
     static void InitializeTextureBuffers();
     static void InitializeTextBuffers();
     static void InitializeRenderTargetBuffers();
-
-    static void Render();
 
     static void SetProjectionMatrix(const Matrix& newProjectionMatrix);
     static void SetCamera(const Matrix& newCameraMatrix, Vector2 newCameraScale);
