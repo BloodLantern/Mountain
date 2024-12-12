@@ -230,6 +230,96 @@ void Draw::RenderTarget(
     m_DrawList.AddCommand(DrawDataType::RenderTarget);
 }
 
+void Draw::Flush()
+{
+    size_t pointIndex = 0;
+    size_t lineIndex = 0, lineColoredIndex = 0;
+    size_t triangleIndex = 0, triangleColoredIndex = 0, triangleFilledIndex = 0, triangleColoredFilledIndex = 0;
+    size_t rectangleIndex = 0, rectangleFilledIndex = 0;
+    size_t circleIndex = 0;
+    size_t textureIndex = 0, textureIdIndex = 0;
+    size_t textIndex = 0;
+    size_t renderTargetIndex = 0;
+
+    const List<CommandData>& commands = m_DrawList.commands;
+    for (size_t i = 0; i < commands.GetSize(); i++)
+    {
+        const CommandData& command = commands[i];
+        const size_t count = command.count;
+
+        switch (command.type)
+        {
+            case DrawDataType::Point:
+                RenderPointData(m_DrawList.point, pointIndex, count);
+                pointIndex += count;
+                break;
+
+            case DrawDataType::Line:
+                RenderLineData(m_DrawList.line, lineIndex, count);
+                lineIndex += count;
+                break;
+
+            case DrawDataType::LineColored:
+                RenderLineColoredData(m_DrawList.lineColored, lineColoredIndex, count);
+                lineColoredIndex += count;
+                break;
+
+            case DrawDataType::Triangle:
+                RenderTriangleData(m_DrawList.triangle, false, triangleIndex, count);
+                triangleIndex += count;
+                break;
+
+            case DrawDataType::TriangleColored:
+                RenderTriangleColoredData(m_DrawList.triangleColored, false, triangleColoredIndex, count);
+                triangleColoredIndex += count;
+                break;
+
+            case DrawDataType::TriangleFilled:
+                RenderTriangleData(m_DrawList.triangleFilled, true, triangleFilledIndex, count);
+                triangleFilledIndex += count;
+                break;
+
+            case DrawDataType::TriangleColoredFilled:
+                RenderTriangleColoredData(m_DrawList.triangleColoredFilled, true, triangleColoredFilledIndex, count);
+                triangleColoredFilledIndex += count;
+                break;
+
+            case DrawDataType::Rectangle:
+                RenderRectangleData(m_DrawList.rectangle, false, rectangleIndex, count);
+                rectangleIndex += count;
+                break;
+
+            case DrawDataType::RectangleFilled:
+                RenderRectangleData(m_DrawList.rectangleFilled, true, rectangleFilledIndex, count);
+                rectangleFilledIndex += count;
+                break;
+
+            case DrawDataType::Circle:
+                RenderCircleData(m_DrawList.circle, circleIndex, count);
+                circleIndex += count;
+                break;
+
+            case DrawDataType::Texture:
+                RenderTextureData(m_DrawList.texture, m_DrawList.textureId[textureIdIndex], textureIndex, count);
+                textureIndex += count;
+                textureIdIndex++;
+                break;
+
+            case DrawDataType::Text:
+                RenderTextData(m_DrawList.text, textIndex, count);
+                textIndex += count;
+                break;
+
+            case DrawDataType::RenderTarget:
+                RenderRenderTargetData(m_DrawList.renderTarget, renderTargetIndex, count);
+                renderTargetIndex += count;
+                break;
+        }
+    }
+
+    m_DrawList.Clear();
+}
+
 void Draw::DrawList::AddCommand(DrawDataType type)
 {
     if (!commands.Empty())
@@ -565,96 +655,6 @@ void Draw::InitializeRenderTargetBuffers()
     glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, m_RenderTargetSsbo);
 
     glBindVertexArray(0);
-}
-
-void Draw::Render()
-{
-    size_t pointIndex = 0;
-    size_t lineIndex = 0, lineColoredIndex = 0;
-    size_t triangleIndex = 0, triangleColoredIndex = 0, triangleFilledIndex = 0, triangleColoredFilledIndex = 0;
-    size_t rectangleIndex = 0, rectangleFilledIndex = 0;
-    size_t circleIndex = 0;
-    size_t textureIndex = 0, textureIdIndex = 0;
-    size_t textIndex = 0;
-    size_t renderTargetIndex = 0;
-    
-    const List<CommandData>& commands = m_DrawList.commands;
-    for (size_t i = 0; i < commands.GetSize(); i++)
-    {
-        const CommandData& command = commands[i];
-        const size_t count = command.count;
-
-        switch (command.type)
-        {
-            case DrawDataType::Point:
-                RenderPointData(m_DrawList.point, pointIndex, count);
-                pointIndex += count;
-                break;
-
-            case DrawDataType::Line:
-                RenderLineData(m_DrawList.line, lineIndex, count);
-                lineIndex += count;
-                break;
-
-            case DrawDataType::LineColored:
-                RenderLineColoredData(m_DrawList.lineColored, lineColoredIndex, count);
-                lineColoredIndex += count;
-                break;
-                
-            case DrawDataType::Triangle:
-                RenderTriangleData(m_DrawList.triangle, false, triangleIndex, count);
-                triangleIndex += count;
-                break;
-                
-            case DrawDataType::TriangleColored:
-                RenderTriangleColoredData(m_DrawList.triangleColored, false, triangleColoredIndex, count);
-                triangleColoredIndex += count;
-                break;
-            
-            case DrawDataType::TriangleFilled:
-                RenderTriangleData(m_DrawList.triangleFilled, true, triangleFilledIndex, count);
-                triangleFilledIndex += count;
-                break;
-            
-            case DrawDataType::TriangleColoredFilled:
-                RenderTriangleColoredData(m_DrawList.triangleColoredFilled, true, triangleColoredFilledIndex, count);
-                triangleColoredFilledIndex += count;
-                break;
-                
-            case DrawDataType::Rectangle:
-                RenderRectangleData(m_DrawList.rectangle, false, rectangleIndex, count);
-                rectangleIndex += count;
-                break;
-            
-            case DrawDataType::RectangleFilled:
-                RenderRectangleData(m_DrawList.rectangleFilled, true, rectangleFilledIndex, count);
-                rectangleFilledIndex += count;
-                break;
-                
-            case DrawDataType::Circle:
-                RenderCircleData(m_DrawList.circle, circleIndex, count);
-                circleIndex += count;
-                break;
-                
-            case DrawDataType::Texture:
-                RenderTextureData(m_DrawList.texture, m_DrawList.textureId[textureIdIndex], textureIndex, count);
-                textureIndex += count;
-                textureIdIndex++;
-                break;
-                
-            case DrawDataType::Text:
-                RenderTextData(m_DrawList.text, textIndex, count);
-                textIndex += count;
-                break;
-                
-            case DrawDataType::RenderTarget:
-                RenderRenderTargetData(m_DrawList.renderTarget, renderTargetIndex, count);
-                renderTargetIndex += count;
-                break;
-        }
-    }
-    
-    m_DrawList.Clear();
 }
 
 void Draw::SetProjectionMatrix(const Matrix& newProjectionMatrix)

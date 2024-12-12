@@ -216,9 +216,9 @@ void Shader::CheckLinkError()
     if (!success)
     {
         GLint infoLogSize = 0;
-        glGetShaderiv(m_Id, GL_INFO_LOG_LENGTH, &infoLogSize);
+        glGetProgramiv(m_Id, GL_INFO_LOG_LENGTH, &infoLogSize);
         std::vector<char_t> infoLog(static_cast<size_t>(infoLogSize));
-        glGetShaderInfoLog(m_Id, infoLogSize, nullptr, infoLog.data());
+        glGetProgramInfoLog(m_Id, infoLogSize, nullptr, infoLog.data());
         Logger::LogError("Error while linking shader program '{}': {}", m_Name, infoLog.data());
     }
 }

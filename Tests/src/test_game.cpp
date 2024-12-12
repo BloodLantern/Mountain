@@ -29,8 +29,6 @@ GameExample::GameExample(const char_t* const windowTitle)
     renderTarget.ambientLight = Color(0.1f);
 }
 
-Pointer<Texture> TestTexture;
-
 void GameExample::Initialize()
 {
     ballCount = 0;
@@ -65,17 +63,14 @@ void GameExample::LoadResources()
     player->LoadResources();
 
     font = ResourceManager::LoadFont("assets/font.ttf", 30);
-
-    TestTexture = ResourceManager::Add<Texture>("compute_shader_test_texture");
-    TestTexture->SetSize({ 64, 64 });
-    TestTexture->Load();
 }
 
-void UpdateTexture()
+void PostProcess(const RenderTarget& target)
 {
+    Draw::Flush();
     Pointer computeShader = ResourceManager::Get<ComputeShader>("Mountain/shaders/effect");
-    TestTexture->BindImage();
-    computeShader->Dispatch(64, 64, 1);
+    Texture::BindImage(target.GetTextureId(), 0, ImageShaderAccess::ReadWrite);
+    computeShader->Dispatch(target.GetSize().x, target.GetSize().y, 1);
     computeShader->SynchronizeImageData();
 }
 
@@ -168,8 +163,6 @@ void GameExample::Render()
     Draw::Texture(*oldLady, { 10.f, 150.f });
     Draw::Texture(*oldLady, { 10.f, 160.f });
 
-    Draw::Texture(*TestTexture, { 40.f, 80.f });
-
     player->Render();
 
     particleSystem.Render();
@@ -187,6 +180,8 @@ void GameExample::Render()
     Renderer::PopRenderTarget();
 
     Draw::RenderTarget(renderTarget, Vector2::Zero(), Window::GetSize() / renderTarget.GetSize());
+
+    PostProcess(Renderer::GetCurrentRenderTarget());
 
     Draw::Texture(*oldLady, { 10.f, 80.f });
 
@@ -280,9 +275,6 @@ void GameExample::Render()
         ImGui::Checkbox("Show ImGui demo window", &showDemoWindow);
 
         ImGui::Checkbox("Show File/Resource Manager windows", &showResourceManagerWindows);
-
-        if (ImGui::Button("Dispatch effect compute shader"))
-            UpdateTexture();
     }
 
     if (showDemoWindow)
