@@ -177,6 +177,7 @@
     <ClInclude Include="include\Mountain\resource\resource.hpp" />
     <ClInclude Include="include\Mountain\resource\resource_manager.hpp" />
     <ClInclude Include="include\Mountain\resource\shader.hpp" />
+    <ClInclude Include="include\Mountain\resource\shader_base.hpp" />
     <ClInclude Include="include\Mountain\resource\texture.hpp" />
     <ClInclude Include="include\Mountain\scene\component\audio_listener.hpp" />
     <ClInclude Include="include\Mountain\scene\component\audio_source.hpp" />
@@ -270,6 +271,7 @@
     <ClCompile Include="src\Mountain\resource\resource.cpp" />
     <ClCompile Include="src\Mountain\resource\resource_manager.cpp" />
     <ClCompile Include="src\Mountain\resource\shader.cpp" />
+    <ClCompile Include="src\Mountain\resource\shader_base.cpp" />
     <ClCompile Include="src\Mountain\resource\texture.cpp" />
     <ClCompile Include="src\Mountain\scene\component\audio_listener.cpp" />
     <ClCompile Include="src\Mountain\scene\component\audio_source.cpp" />
