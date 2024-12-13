@@ -31,13 +31,14 @@ void ComputeShader::Load()
 {
     m_Id = glCreateProgram();
 #ifdef _DEBUG
-    const std::string name = m_Name.substr(ResourceManager::ReservedComputeShaderPrefix.length());
+    std::string name = m_Name.substr(ResourceManager::ReservedComputeShaderPrefix.length());
+    name = name.substr(0, name.find_last_of('.')); // Remove file extension
     glObjectLabel(GL_PROGRAM, m_Id, static_cast<GLsizei>(name.length()), name.c_str());
 #endif
 
     const uint32_t id = glCreateShader(GL_COMPUTE_SHADER);
 #ifdef _DEBUG
-    const std::string& fileName = m_File ? m_File->GetName() : name + "/Compute";
+    const std::string& fileName = m_File ? m_File->GetName() : name;
     glObjectLabel(GL_SHADER, id, static_cast<GLsizei>(fileName.length()), fileName.c_str());
 #endif
 

@@ -68,7 +68,7 @@ void GameExample::LoadResources()
 void PostProcess(const RenderTarget& target)
 {
     Draw::Flush();
-    Pointer computeShader = ResourceManager::Get<ComputeShader>("Mountain/shaders/effect");
+    Pointer computeShader = ResourceManager::Get<ComputeShader>("Mountain/shaders/post_processing/vignette.comp");
     Texture::BindImage(target.GetTextureId(), 0, ImageShaderAccess::ReadWrite);
     computeShader->Dispatch(target.GetSize().x, target.GetSize().y, 1);
     computeShader->SynchronizeImageData();
