@@ -123,46 +123,6 @@ bool_t Shader::Reload(const bool_t reloadInBackend)
 
 bool_t Shader::Reload(const Pointer<File>& file, const bool_t reloadInBackend) { return Resource::Reload(file, reloadInBackend); }
 
-void Shader::SetUniform(const std::string_view keyName, const int32_t value) const { glProgramUniform1i(m_Id, GetUniformLocation(keyName), value); }
-
-void Shader::SetUniform(const std::string_view keyName, const bool_t value) const { SetUniform(keyName, static_cast<int32_t>(value)); }
-
-void Shader::SetUniform(const std::string_view keyName, const float_t value) const { glProgramUniform1f(m_Id, GetUniformLocation(keyName), value); }
-
-void Shader::SetUniform(const std::string_view keyName, const Vector2& value) const
-{
-    glProgramUniform2fv(m_Id, GetUniformLocation(keyName), 1, value.Data());
-}
-
-void Shader::SetUniform(const std::string_view keyName, const Vector3& value) const
-{
-    glProgramUniform3fv(m_Id, GetUniformLocation(keyName), 1, value.Data());
-}
-
-void Shader::SetUniform(const std::string_view keyName, const Vector4& value) const
-{
-    glProgramUniform4fv(m_Id, GetUniformLocation(keyName), 1, value.Data());
-}
-
-void Shader::SetUniform(const std::string_view keyName, const Color& value) const { SetUniform(keyName, static_cast<Vector4>(value)); }
-
-void Shader::SetUniform(const std::string_view keyName, const Matrix2& value) const
-{
-    glProgramUniformMatrix2fv(m_Id, GetUniformLocation(keyName), 1, GL_FALSE, value.Data());
-}
-
-void Shader::SetUniform(const std::string_view keyName, const Matrix3& value) const
-{
-    glProgramUniformMatrix3fv(m_Id, GetUniformLocation(keyName), 1, GL_FALSE, value.Data());
-}
-
-void Shader::SetUniform(const std::string_view keyName, const Matrix& value) const
-{
-    glProgramUniformMatrix4fv(m_Id, GetUniformLocation(keyName), 1, GL_FALSE, value.Data());
-}
-
-uint32_t Shader::GetId() const { return m_Id; }
-
 std::array<Pointer<File>, ShaderTypeCount>& Shader::GetFiles() { return m_Files; }
 
 const std::array<Pointer<File>, ShaderTypeCount>& Shader::GetFiles() const { return m_Files; }
@@ -207,20 +167,3 @@ void Shader::CheckCompilationError(const uint32_t id, const ShaderType type)
         Logger::LogError("Error while compiling shader '{}' of type '{}': {}", m_Name, magic_enum::enum_name(type), infoLog.data());
     }
 }
-
-void Shader::CheckLinkError()
-{
-    int success = 0;
-
-    glGetProgramiv(m_Id, GL_LINK_STATUS, &success);
-    if (!success)
-    {
-        GLint infoLogSize = 0;
-        glGetProgramiv(m_Id, GL_INFO_LOG_LENGTH, &infoLogSize);
-        std::vector<char_t> infoLog(static_cast<size_t>(infoLogSize));
-        glGetProgramInfoLog(m_Id, infoLogSize, nullptr, infoLog.data());
-        Logger::LogError("Error while linking shader program '{}': {}", m_Name, infoLog.data());
-    }
-}
-
-int32_t Shader::GetUniformLocation(const std::string_view keyName) const { return glGetUniformLocation(m_Id, keyName.data()); }
