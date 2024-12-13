@@ -294,12 +294,12 @@
   <ItemGroup>
     <Content Include="shaders\circle\circle.frag" />
     <Content Include="shaders\circle\circle.vert" />
-    <Content Include="shaders\effect\effect.comp" />
     <Content Include="shaders\line_colored\line_colored.frag" />
     <Content Include="shaders\line_colored\line_colored.vert" />
     <Content Include="shaders\particle\particle.comp" />
     <Content Include="shaders\point\point.frag" />
     <Content Include="shaders\point\point.vert" />
+    <Content Include="shaders\post_processing\vignette.comp" />
     <Content Include="shaders\render_target\render_target.frag" />
     <Content Include="shaders\render_target\render_target.vert" />
     <Content Include="shaders\line\line.frag" />

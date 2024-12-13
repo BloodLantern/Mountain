@@ -113,7 +113,7 @@ void ResourceManager::LoadAll()
             Pointer<ComputeShader> shader;
 
             // We use an underscore before the name to make sure it isn't used elsewhere
-            const std::string&& filenameNoExtension = ReservedComputeShaderPrefix.data() + file->GetParent()->GetPathString();
+            const std::string&& filenameNoExtension = ReservedComputeShaderPrefix.data() + file->GetPathString();
             if (Contains(filenameNoExtension))
                 shader = Get<ComputeShader>(filenameNoExtension);
             else
