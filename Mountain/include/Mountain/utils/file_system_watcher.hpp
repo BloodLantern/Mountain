@@ -12,85 +12,84 @@
 // ReSharper disable once CppEnforceTypeAliasCodeStyle
 typedef unsigned long DWORD; // Windows type forward declaration  // NOLINT(modernize-use-using)
 
-BEGIN_MOUNTAIN
-
-/// @private
-enum class FswNotifyFilters : uint8_t
+namespace Mountain
 {
-    FileName        = 1 << 0,
-    DirectoryName   = 1 << 1,
-    Attributes      = 1 << 2,
-    Size            = 1 << 3,
-    LastWrite       = 1 << 4,
-    LastAccess      = 1 << 5,
-    Creation        = 1 << 6,
-    Security        = 1 << 7,
+    /// @private
+    enum class FswNotifyFilters : uint8_t
+    {
+        FileName        = 1 << 0,
+        DirectoryName   = 1 << 1,
+        Attributes      = 1 << 2,
+        Size            = 1 << 3,
+        LastWrite       = 1 << 4,
+        LastAccess      = 1 << 5,
+        Creation        = 1 << 6,
+        Security        = 1 << 7,
 
-    Default         = Creation | FileName | DirectoryName | LastWrite,
+        Default         = Creation | FileName | DirectoryName | LastWrite,
 
-    All             = FileName | DirectoryName | Attributes | Size | LastWrite | LastAccess | Creation | Security
-};
+        All             = FileName | DirectoryName | Attributes | Size | LastWrite | LastAccess | Creation | Security
+    };
 
-class FileSystemWatcher
-{
-public:
-    Event<const std::filesystem::path&> onModified;
-    Event<const std::filesystem::path&> onCreated;
-    Event<const std::filesystem::path&> onDeleted;
-    Event<const std::filesystem::path&, const std::filesystem::path&> onRenamed;
+    class FileSystemWatcher
+    {
+    public:
+        Event<const std::filesystem::path&> onModified;
+        Event<const std::filesystem::path&> onCreated;
+        Event<const std::filesystem::path&> onDeleted;
+        Event<const std::filesystem::path&, const std::filesystem::path&> onRenamed;
 
-    /// @brief Time between each update.
-    std::chrono::milliseconds updateRate{750};
+        /// @brief Time between each update.
+        std::chrono::milliseconds updateRate{750};
 
-    /// @brief Whether to check the directory contents. Doesn't do anything if the watched path points to a file.
-    bool_t checkContents = true;
+        /// @brief Whether to check the directory contents. Doesn't do anything if the watched path points to a file.
+        bool_t checkContents = true;
 
-    /// @brief Whether to check subdirectories. Doesn't do anything if the watched path points to a file or if @c checkContents is @c false
-    bool_t recursive = false;
+        /// @brief Whether to check subdirectories. Doesn't do anything if the watched path points to a file or if @c checkContents is @c false
+        bool_t recursive = false;
 
-    /// @brief File extensions including the dot '.'
-    List<std::string> fileExtensions;
+        /// @brief File extensions including the dot '.'
+        List<std::string> fileExtensions;
 
-    FswNotifyFilters notifyFilters = FswNotifyFilters::Default;
-    
-    MOUNTAIN_API FileSystemWatcher() = default;
-    
-    MOUNTAIN_API explicit FileSystemWatcher(const std::string& path);
+        FswNotifyFilters notifyFilters = FswNotifyFilters::Default;
 
-    MOUNTAIN_API ~FileSystemWatcher();
+        MOUNTAIN_API FileSystemWatcher() = default;
 
-    DELETE_COPY_MOVE_OPERATIONS(FileSystemWatcher)
+        MOUNTAIN_API explicit FileSystemWatcher(const std::string& path);
 
-    MOUNTAIN_API void Start();
+        MOUNTAIN_API ~FileSystemWatcher();
 
-    MOUNTAIN_API void Stop();
+        DELETE_COPY_MOVE_OPERATIONS(FileSystemWatcher)
 
-    /// @brief Forces the watcher thread wake up and update now.
-    MOUNTAIN_API void Update();
+        MOUNTAIN_API void Start();
 
-    MOUNTAIN_API std::filesystem::path GetPath() const;
+        MOUNTAIN_API void Stop();
 
-    MOUNTAIN_API void SetPath(const std::filesystem::path& newPath);
+        /// @brief Forces the watcher thread wake up and update now.
+        MOUNTAIN_API void Update();
 
-    MOUNTAIN_API bool_t GetRunning() const;
+        MOUNTAIN_API std::filesystem::path GetPath() const;
 
-private:
-    std::thread m_Thread;
-    std::condition_variable m_CondVar;
-    std::mutex m_Mutex;
-    
-    std::filesystem::path m_Path;
-    bool_t m_IsDirectory = false;
+        MOUNTAIN_API void SetPath(const std::filesystem::path& newPath);
 
-    bool_t m_Running = false;
+        MOUNTAIN_API bool_t GetRunning() const;
 
-    bool_t m_PathChanged = false;
+    private:
+        std::thread m_Thread;
+        std::condition_variable m_CondVar;
+        std::mutex m_Mutex;
 
-    void Run();
+        std::filesystem::path m_Path;
+        bool_t m_IsDirectory = false;
 
-    static DWORD NotifyFiltersToWindows(FswNotifyFilters filters);
-};
+        bool_t m_Running = false;
 
-END_MOUNTAIN
+        bool_t m_PathChanged = false;
+
+        void Run();
+
+        static DWORD NotifyFiltersToWindows(FswNotifyFilters filters);
+    };
+}
 
 ENUM_FLAGS(Mountain::FswNotifyFilters)

@@ -21,9 +21,7 @@
 #undef max
 #undef MessageBox
 
-BEGIN_MOUNTAIN
-
-namespace Windows
+namespace Mountain::Windows
 {
     MOUNTAIN_API bool_t CheckError();
 
@@ -33,5 +31,3 @@ namespace Windows
 
     MOUNTAIN_API std::string GetAppdataRoamingPath();
 }
-
-END_MOUNTAIN

@@ -6,7 +6,8 @@
 
 #include "Mountain/utils/color.hpp"
 
-BEGIN_MOUNTAIN
+namespace Mountain
+{
 
 enum class ColliderType
 {
@@ -18,7 +19,7 @@ enum class ColliderType
     Count
 };
 
-ENUM_COUNT(ColliderType)
+ENUM_COUNT(ColliderType);
 
 class Hitbox;
 class Circle;
@@ -109,4 +110,4 @@ public:
     virtual Vector2 Size() const;
 };
 
-END_MOUNTAIN
+}

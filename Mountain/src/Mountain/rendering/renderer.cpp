@@ -145,6 +145,8 @@ Mountain::RenderTarget& Mountain::Renderer::GetCurrentRenderTarget()
     return *m_RenderTargets.top();
 }
 
+Mountain::RenderTarget& Mountain::Renderer::GetDefaultRenderTarget() { return *m_RenderTarget; }
+
 Mountain::OpenGlVersion& Mountain::Renderer::GetOpenGlVersion() { return m_GlVersion; }
 
 bool Mountain::Renderer::Initialize(const std::string_view windowTitle, const Vector2i windowSize, const OpenGlVersion &glVersion)
@@ -157,10 +159,7 @@ bool Mountain::Renderer::Initialize(const std::string_view windowTitle, const Ve
 
     // Setup GLAD: load all OpenGL function pointers
     if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress)))  // NOLINT(clang-diagnostic-cast-function-type-strict)
-    {
-        Logger::LogFatal("Failed to initialize GLAD");
         throw std::runtime_error("Failed to initialize GLAD");
-    }
 
     glEnable(GL_DEBUG_OUTPUT);
     glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
@@ -173,15 +172,12 @@ bool Mountain::Renderer::Initialize(const std::string_view windowTitle, const Ve
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    m_RenderTarget = new RenderTarget(windowSize, MagnificationFilter::Linear);
+    m_RenderTarget = new RenderTarget(windowSize, Graphics::MagnificationFilter::Linear);
 
     if (NoBinaryResources)
     {
         if (BuiltinShadersPath.empty())
-        {
-            Logger::LogFatal("NoBinaryResources is true but BuiltinShadersPath hasn't been specified");
             throw std::runtime_error("NoBinaryResources is true but BuiltinShadersPath hasn't been specified");
-        }
 
         FileManager::LoadDirectory(BuiltinShadersPath);
         ResourceManager::LoadAll();

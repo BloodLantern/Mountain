@@ -427,7 +427,7 @@ namespace
 
                     if (shaderFile != nullptr)
                     {
-                        if (ImGui::TreeNode(magic_enum::enum_name(static_cast<ShaderType>(i)).data()))
+                        if (ImGui::TreeNode(magic_enum::enum_name(static_cast<Graphics::ShaderType>(i)).data()))
                         {
                             DisplayReloadOptions(*shader, *shaderFile);
 

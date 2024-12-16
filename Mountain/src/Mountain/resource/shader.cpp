@@ -9,13 +9,13 @@
 
 using namespace Mountain;
 
-ShaderType Shader::FileExtensionToType(const std::string& extension)
+Graphics::ShaderType Shader::FileExtensionToType(const std::string& extension)
 {
     if (std::ranges::find(VertexFileExtensions, extension) != VertexFileExtensions.end())
-        return ShaderType::Vertex;
+        return Graphics::ShaderType::Vertex;
 
     if (std::ranges::find(FragmentFileExtensions, extension) != FragmentFileExtensions.end())
-        return ShaderType::Fragment;
+        return Graphics::ShaderType::Fragment;
 
     Logger::LogError("Invalid file extension for shader : {}", extension);
     throw std::invalid_argument("Invalid file extension for shader");
@@ -23,26 +23,26 @@ ShaderType Shader::FileExtensionToType(const std::string& extension)
 
 bool_t Shader::SetSourceData(const Pointer<File>& shader)
 {
-    const ShaderType type = FileExtensionToType(shader->GetExtension());
+    const Graphics::ShaderType type = FileExtensionToType(shader->GetExtension());
 
     if (!Load(shader->GetData(), shader->GetSize(), type))
         return false;
 
     m_Files[static_cast<size_t>(type)] = shader;
-    
+
     m_SourceDataSet = true;
-    
+
     return true;
 }
 
-bool_t Shader::Load(const char_t* const buffer, const int64_t length, const ShaderType type)
+bool_t Shader::Load(const char_t* const buffer, const int64_t length, const Graphics::ShaderType type)
 {
     ShaderCode& code = m_Code[static_cast<size_t>(type)];
     code.code = std::string(buffer, length);
     code.type = type;
-    
+
     m_SourceDataSet = true;
-    
+
     return true;
 }
 
@@ -54,8 +54,8 @@ void Shader::Load()
     glObjectLabel(GL_PROGRAM, m_Id, static_cast<GLsizei>(name.length()), name.c_str());
 #endif
 
-    std::array<uint32_t, ShaderTypeCount> shaderIds;
-    for (size_t i = 0; i < ShaderTypeCount; i++)
+    std::array<uint32_t, Graphics::ShaderTypeCount> shaderIds;
+    for (size_t i = 0; i < Graphics::ShaderTypeCount; i++)
     {
         const ShaderCode& code = m_Code[i];
         if (code.code.empty())
@@ -68,14 +68,14 @@ void Shader::Load()
         const std::string& fileName = file ? file->GetName() : name + '/' + magic_enum::enum_name(code.type).data();
         glObjectLabel(GL_SHADER, id, static_cast<GLsizei>(fileName.length()), fileName.c_str());
 #endif
-        
+
         const char_t* data = code.code.c_str();
         int32_t dataLength = static_cast<int32_t>(code.code.size());
         glShaderSource(id, 1, &data, &dataLength);
-        
+
         glCompileShader(id);
 		CheckCompilationError(shaderIds[i], code.type);
-        
+
 		glAttachShader(m_Id, id);
     }
     glLinkProgram(m_Id);
@@ -90,14 +90,14 @@ void Shader::Load()
     }
 
     CheckLinkError();
-    
+
     m_Loaded = true;
 }
 
 void Shader::Unload()
 {
 	glDeleteProgram(m_Id);
-    
+
     m_Id = 0;
     m_Loaded = false;
 }
@@ -123,37 +123,20 @@ bool_t Shader::Reload(const bool_t reloadInBackend)
 
 bool_t Shader::Reload(const Pointer<File>& file, const bool_t reloadInBackend) { return Resource::Reload(file, reloadInBackend); }
 
-std::array<Pointer<File>, ShaderTypeCount>& Shader::GetFiles() { return m_Files; }
+std::array<Pointer<File>, Graphics::ShaderTypeCount>& Shader::GetFiles() { return m_Files; }
 
-const std::array<Pointer<File>, ShaderTypeCount>& Shader::GetFiles() const { return m_Files; }
+const std::array<Pointer<File>, Graphics::ShaderTypeCount>& Shader::GetFiles() const { return m_Files; }
 
-std::array<ShaderCode, ShaderTypeCount>& Shader::GetCode() { return m_Code; }
+std::array<ShaderCode, Graphics::ShaderTypeCount>& Shader::GetCode() { return m_Code; }
 
-const std::array<ShaderCode, ShaderTypeCount>& Shader::GetCode() const { return m_Code; }
+const std::array<ShaderCode, Graphics::ShaderTypeCount>& Shader::GetCode() const { return m_Code; }
 
 void Shader::Use() const { glUseProgram(m_Id); }
 
 // ReSharper disable once CppMemberFunctionMayBeStatic
 void Shader::Unuse() const { glUseProgram(0); }
 
-uint32_t Shader::ShaderTypeToOpenGl(const ShaderType shaderType)
-{
-    switch (shaderType)
-    {
-        case ShaderType::Vertex:
-            return GL_VERTEX_SHADER;
-			
-        case ShaderType::Fragment:
-            return GL_FRAGMENT_SHADER;
-
-        case ShaderType::Count:
-            break;
-    }
-    
-    throw std::invalid_argument("Invalid shader type");
-}
-
-void Shader::CheckCompilationError(const uint32_t id, const ShaderType type)
+void Shader::CheckCompilationError(const uint32_t id, const Graphics::ShaderType type)
 {
     int success = 0;
     
