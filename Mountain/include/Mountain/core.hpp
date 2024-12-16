@@ -43,12 +43,6 @@ using Action = std::function<void()>;
 #define MOUNTAIN_API __declspec(dllimport)
 #endif
 
-/// @brief Starts the @ref Mountain namespace.
-#define BEGIN_MOUNTAIN namespace Mountain {
-
-/// @brief Ends the @ref Mountain namespace.
-#define END_MOUNTAIN }
-
 /// @namespace Mountain
 /// @brief Contains all declarations of the Mountain Framework.
 namespace Mountain {}
@@ -165,7 +159,7 @@ using stdstring = std::string;
         static constexpr bool is_flags = true;                                                                                                                                                                              \
     };
 
-#define ENUM_COUNT(enumName) constexpr size_t enumName##Count = static_cast<size_t>(enumName::Count);
+#define ENUM_COUNT(enumName) constexpr size_t enumName##Count = static_cast<size_t>(enumName::Count)
 
 /// @brief Defines global definitions that make OpenGL use the dedicated GPU instead of the integrated one
 /// Source: https://www.reddit.com/r/opengl/comments/unc3fy/comment/i8728y3/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button

@@ -11,6 +11,7 @@
 #include "Mountain/input/input.hpp"
 #include "Mountain/input/time.hpp"
 #include "Mountain/rendering/draw.hpp"
+#include "Mountain/rendering/graphics.hpp"
 #include "Mountain/rendering/renderer.hpp"
 #include "Mountain/resource/resource_manager.hpp"
 #include "Mountain/scene/entity.hpp"
@@ -19,14 +20,47 @@
 #include "Mountain/utils/logger.hpp"
 
 #include "spin_component.hpp"
+#include "Mountain/rendering/effect.hpp"
 
 using namespace Mountain;
 
 GameExample::GameExample(const char_t* const windowTitle)
     : Game(windowTitle)
-    , renderTarget(BaseResolution, MagnificationFilter::Nearest)
+    , renderTarget(BaseResolution, Graphics::MagnificationFilter::Nearest)
 {
     renderTarget.ambientLight = Color(0.1f);
+}
+
+template <Concepts::EffectT T>
+struct PostProcessingEffect
+{
+    bool_t enabled;
+    T effect;
+};
+
+namespace
+{
+    bool_t showInputs = false;
+    bool_t debugRender = true;
+
+    PostProcessingEffect<Vignette> vignette;
+
+    template <Concepts::EffectT T>
+    void ShowEffect(
+        const std::string& name,
+        PostProcessingEffect<T>& effect,
+        const std::type_identity_t<std::function<void(T& effect)>>& additionalAction = std::identity{}
+    )
+    {
+        const static std::string CheckboxLabel = "##" + name + "Enabled";
+        ImGui::Checkbox(CheckboxLabel.c_str(), &effect.enabled);
+        ImGui::SameLine();
+        if (ImGui::TreeNode(name.c_str()))
+        {
+            additionalAction(effect.effect);
+            ImGui::TreePop();
+        }
+    }
 }
 
 void GameExample::Initialize()
@@ -44,6 +78,8 @@ void GameExample::Initialize()
             std::make_shared<ParticleSystemSettings::Acceleration>(),
         }
     );
+
+    vignette.effect.imageBindings.Emplace(Renderer::GetDefaultRenderTarget().GetTextureId(), 0, Graphics::ImageShaderAccess::WriteOnly);
 
     Game::Initialize();
 }
@@ -63,15 +99,8 @@ void GameExample::LoadResources()
     player->LoadResources();
 
     font = ResourceManager::LoadFont("assets/font.ttf", 30);
-}
 
-void PostProcess(const RenderTarget& target)
-{
-    Draw::Flush();
-    Pointer computeShader = ResourceManager::Get<ComputeShader>("Mountain/shaders/post_processing/vignette.comp");
-    Texture::BindImage(target.GetTextureId(), 0, ImageShaderAccess::ReadWrite);
-    computeShader->Dispatch(target.GetSize().x, target.GetSize().y, 1);
-    computeShader->SynchronizeImageData();
+    vignette.effect.LoadResources();
 }
 
 void GameExample::Shutdown()
@@ -94,12 +123,6 @@ void GameExample::Update()
     particleSystem.Update();
 }
 
-namespace
-{
-    bool_t showInputs = false;
-    bool_t debugRender = true;
-}
-
 void GameExample::Render()
 {
     Draw::Clear(Color::Transparent());
@@ -114,10 +137,10 @@ void GameExample::Render()
     const Vector2 resolutionFactor = renderTarget.GetSize() / BaseResolution;
 
     static constexpr std::array Points {
-        Vector2(1.f, 0.f),
-        Vector2(320.f, 0.f),
-        Vector2(320.f, 179.f),
-        Vector2(1.f, 179.f)
+        Vector2{ 1.f, 0.f },
+        Vector2{ static_cast<float_t>(BaseResolution.x), 0.f },
+        Vector2{ static_cast<float_t>(BaseResolution.x), static_cast<float_t>(BaseResolution.y) - 1.f },
+        Vector2{ 1.f, static_cast<float_t>(BaseResolution.y) - 1.f }
     };
 
     Draw::Line(Points[0], Points[1], Color::Red());
@@ -181,7 +204,8 @@ void GameExample::Render()
 
     Draw::RenderTarget(renderTarget, Vector2::Zero(), Window::GetSize() / renderTarget.GetSize());
 
-    PostProcess(Renderer::GetCurrentRenderTarget());
+    if (vignette.enabled)
+        vignette.effect.Apply(Renderer::GetCurrentRenderTarget().GetSize(), false);
 
     Draw::Texture(*oldLady, { 10.f, 80.f });
 
@@ -235,7 +259,15 @@ void GameExample::Render()
         ImGui::DragAngle("Source angle min", &lightSource.angleMin);
         ImGui::DragAngle("Source angle max", &lightSource.angleMax);
         ImGui::Text("Source position: %.2f, %.2f", lightSource.position.x, lightSource.position.y);
-        
+
+        ImGui::SeparatorText("Post processing effects");
+        ShowEffect("Vignette", vignette, [](auto& e)
+        {
+            static float_t strength = 1.f;
+            ImGui::DragFloat("strength", &strength, 0.01f, 0.f, 10.f);
+            e.SetStrength(strength);
+        });
+
         ImGui::PopID();
     }
 

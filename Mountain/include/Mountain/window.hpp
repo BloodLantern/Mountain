@@ -13,121 +13,120 @@
 // ReSharper disable once CppInconsistentNaming
 struct GLFWwindow;
 
-BEGIN_MOUNTAIN
-
-/// @brief A wrapper for the main window
-class Window
+namespace Mountain
 {
-    STATIC_CLASS(Window)
-    
-public:
-    /// @brief Event called when the window position changed. The parameter is the new position.
-    MOUNTAIN_API static inline Event<Vector2i> onPositionChanged;
-    /// @brief Event called when the window size changed. The parameter is the new size.
-    MOUNTAIN_API static inline Event<Vector2i> onSizeChanged;
-    
-    /// @brief Gets the screen position in pixels of the window
-    /// @return Position
-    [[nodiscard]]
-    MOUNTAIN_API static Vector2i GetPosition();
+    /// @brief A wrapper for the main window
+    class Window
+    {
+        STATIC_CLASS(Window)
 
-    MOUNTAIN_API static void SetPosition(Vector2i newPosition);
+    public:
+        /// @brief Event called when the window position changed. The parameter is the new position.
+        MOUNTAIN_API static inline Event<Vector2i> onPositionChanged;
+        /// @brief Event called when the window size changed. The parameter is the new size.
+        MOUNTAIN_API static inline Event<Vector2i> onSizeChanged;
 
-    /// @brief Gets the size in pixels of the window
-    /// @return Size
-    [[nodiscard]]
-    MOUNTAIN_API static Vector2i GetSize();
+        /// @brief Gets the screen position in pixels of the window
+        /// @return Position
+        [[nodiscard]]
+        MOUNTAIN_API static Vector2i GetPosition();
 
-    MOUNTAIN_API static void SetSize(Vector2i newSize);
+        MOUNTAIN_API static void SetPosition(Vector2i newPosition);
 
-    /// @brief Gets whether the window should close
-    [[nodiscard]]
-    MOUNTAIN_API static bool_t GetShouldClose();
+        /// @brief Gets the size in pixels of the window
+        /// @return Size
+        [[nodiscard]]
+        MOUNTAIN_API static Vector2i GetSize();
 
-    /// @brief Sets whether the window should close
-    MOUNTAIN_API static void SetShouldClose(bool_t newShouldClose);
+        MOUNTAIN_API static void SetSize(Vector2i newSize);
 
-    /// @brief Polls the events of the window
-    MOUNTAIN_API static void PollEvents();
+        /// @brief Gets whether the window should close
+        [[nodiscard]]
+        MOUNTAIN_API static bool_t GetShouldClose();
 
-    /// @brief Sets the window to be the current context
-    MOUNTAIN_API static void MakeContextCurrent();
-    
-    /// @brief Gets the native handle of the window
-    /// @return Native handle
-    [[nodiscard]]
-    MOUNTAIN_API static GLFWwindow* GetHandle();
+        /// @brief Sets whether the window should close
+        MOUNTAIN_API static void SetShouldClose(bool_t newShouldClose);
 
-    /// @brief Gets whether the window is visible or hidden.
-    [[nodiscard]]
-    MOUNTAIN_API static bool_t GetVisible();
+        /// @brief Polls the events of the window
+        MOUNTAIN_API static void PollEvents();
 
-    /// @brief Sets whether the window should be visible or hidden.
-    MOUNTAIN_API static void SetVisible(bool_t newVisible);
+        /// @brief Sets the window to be the current context
+        MOUNTAIN_API static void MakeContextCurrent();
 
-    /// @brief Sets the icon for the window
-    /// @param newIcon Icon
-    MOUNTAIN_API static void SetIcon(const Pointer<Texture>& newIcon);
+        /// @brief Gets the native handle of the window
+        /// @return Native handle
+        [[nodiscard]]
+        MOUNTAIN_API static GLFWwindow* GetHandle();
 
-    /// @brief Handles hiding or displaying the cursor
-    /// @param newCursorHidden @c true hides, @c false displays
-    MOUNTAIN_API static void SetCursorHidden(bool_t newCursorHidden);
+        /// @brief Gets whether the window is visible or hidden.
+        [[nodiscard]]
+        MOUNTAIN_API static bool_t GetVisible();
 
-    /// @brief Sets the mouse cursor position in screen space.
-    MOUNTAIN_API static void SetCursorPosition(Vector2 newPosition);
-    
-    MOUNTAIN_API static void SetVSync(bool_t newVsync);
+        /// @brief Sets whether the window should be visible or hidden.
+        MOUNTAIN_API static void SetVisible(bool_t newVisible);
 
-    /// @brief Gets whether the window is in fullscreen mode
-    [[nodiscard]]
-    MOUNTAIN_API static bool_t GetFullscreen();
+        /// @brief Sets the icon for the window
+        /// @param newIcon Icon
+        MOUNTAIN_API static void SetIcon(const Pointer<Texture>& newIcon);
 
-    /// @brief Sets whether the window is in fullscreen mode
-    MOUNTAIN_API static void SetFullscreen(bool_t newFullscreen);
+        /// @brief Handles hiding or displaying the cursor
+        /// @param newCursorHidden @c true hides, @c false displays
+        MOUNTAIN_API static void SetCursorHidden(bool_t newCursorHidden);
 
-    /// @brief Gets the index of the screen on which this window currently is
-    [[nodiscard]]
-    MOUNTAIN_API static uint32_t GetCurrentScreen();
+        /// @brief Sets the mouse cursor position in screen space.
+        MOUNTAIN_API static void SetCursorPosition(Vector2 newPosition);
 
-    [[nodiscard]]
-    MOUNTAIN_API static std::string_view GetTitle();
+        MOUNTAIN_API static void SetVSync(bool_t newVsync);
 
-    MOUNTAIN_API static void SetTitle(std::string_view newTitle);
+        /// @brief Gets whether the window is in fullscreen mode
+        [[nodiscard]]
+        MOUNTAIN_API static bool_t GetFullscreen();
 
-    [[nodiscard]]
-    MOUNTAIN_API static bool_t GetMinimized();
+        /// @brief Sets whether the window is in fullscreen mode
+        MOUNTAIN_API static void SetFullscreen(bool_t newFullscreen);
 
-private:
-    /// @brief Native window handle
-    static inline GLFWwindow* m_Window = nullptr;
+        /// @brief Gets the index of the screen on which this window currently is
+        [[nodiscard]]
+        MOUNTAIN_API static uint32_t GetCurrentScreen();
 
-    static inline bool_t m_Fullscreen = false;
+        [[nodiscard]]
+        MOUNTAIN_API static std::string_view GetTitle();
 
-    static inline uint32_t m_CurrentScreen;
+        MOUNTAIN_API static void SetTitle(std::string_view newTitle);
 
-    static inline Vector2i m_Position;
-    static inline Vector2i m_Size;
+        [[nodiscard]]
+        MOUNTAIN_API static bool_t GetMinimized();
 
-    static inline bool_t m_Visible;
-    static inline bool_t m_Minimized = false;
+    private:
+        /// @brief Native window handle
+        static inline GLFWwindow* m_Window = nullptr;
 
-    /// @brief Initializes the window
-    static void Initialize(std::string_view windowTitle, Vector2i windowSize, const OpenGlVersion &glVersion);
+        static inline bool_t m_Fullscreen = false;
 
-    /// @brief Terminates the window
-    static void Shutdown();
+        static inline uint32_t m_CurrentScreen;
 
-    static void UpdateFields();
+        static inline Vector2i m_Position;
+        static inline Vector2i m_Size;
 
-    static void UpdateCurrentScreen();
+        static inline bool_t m_Visible;
+        static inline bool_t m_Minimized = false;
 
-    static void SwapBuffers();
+        /// @brief Initializes the window
+        static void Initialize(std::string_view windowTitle, Vector2i windowSize, const OpenGlVersion &glVersion);
 
-    static void WindowMinimizeCallback(GLFWwindow* window, int minimized);
+        /// @brief Terminates the window
+        static void Shutdown();
 
-    friend class Renderer;
-    friend class Game;
-    friend class Time;
-};
-    
-END_MOUNTAIN
+        static void UpdateFields();
+
+        static void UpdateCurrentScreen();
+
+        static void SwapBuffers();
+
+        static void WindowMinimizeCallback(GLFWwindow* window, int minimized);
+
+        friend class Renderer;
+        friend class Game;
+        friend class Time;
+    };
+}
