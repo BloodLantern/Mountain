@@ -8,11 +8,6 @@
 
 using namespace Mountain;
 
-void Texture::BindImage(const uint32_t textureId, const uint32_t shaderBinding, const ImageShaderAccess access)
-{
-    glBindImageTexture(shaderBinding, textureId, 0, GL_FALSE, 0, GL_READ_ONLY + static_cast<int32_t>(access), GL_RGBA32F);
-}
-
 Texture::~Texture()
 {
     if (m_Loaded)
@@ -38,8 +33,9 @@ void Texture::Load()
     glObjectLabel(GL_TEXTURE, m_Id, static_cast<GLsizei>(m_Name.length()), m_Name.c_str());
 #endif
 
-    glTextureParameteri(m_Id, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTextureParameteri(m_Id, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    const int32_t magFilter = ToOpenGl(m_Filter);
+    glTextureParameteri(m_Id, GL_TEXTURE_MIN_FILTER, magFilter);
+    glTextureParameteri(m_Id, GL_TEXTURE_MAG_FILTER, magFilter);
     
     glTextureParameteri(m_Id, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTextureParameteri(m_Id, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
@@ -74,8 +70,28 @@ Vector2i Texture::GetSize() const
 void Texture::SetSize(const Vector2i newSize)
 {
     if (m_Loaded)
-        throw std::logic_error{ "Texture::SetSize cannot be called once it has been loaded" };
+        throw std::logic_error{ "Texture::SetSize cannot be called once the Texture has been loaded" };
     m_Size = newSize;
+}
+
+Graphics::MagnificationFilter Texture::GetFilter() const
+{
+    return m_Filter;
+}
+
+void Texture::SetFilter(const Graphics::MagnificationFilter newFilter)
+{
+    if (m_Loaded)
+    {
+        const int32_t magFilter = ToOpenGl(newFilter);
+        glTextureParameteri(m_Id, GL_TEXTURE_MIN_FILTER, magFilter);
+        glTextureParameteri(m_Id, GL_TEXTURE_MAG_FILTER, magFilter);
+
+        glTextureParameteri(m_Id, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        glTextureParameteri(m_Id, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    }
+
+    m_Filter = newFilter;
 }
 
 void Texture::Use() const

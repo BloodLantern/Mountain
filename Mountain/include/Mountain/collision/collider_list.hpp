@@ -4,7 +4,8 @@
 
 #include "Mountain/utils/list.hpp"
 
-BEGIN_MOUNTAIN
+namespace Mountain
+{
 
 class ColliderList : public Collider
 {
@@ -49,4 +50,4 @@ public:
 	MOUNTAIN_API Vector2 AbsoluteCenter() const override;
 };
 
-END_MOUNTAIN
+}

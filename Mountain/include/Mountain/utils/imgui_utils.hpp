@@ -8,9 +8,7 @@
 
 #include "Mountain/utils/utils.hpp"
 
-BEGIN_MOUNTAIN
-
-namespace ImGuiUtils
+namespace Mountain::ImGuiUtils
 {
     MOUNTAIN_API void GridPlotting(std::string_view label, Vector2* value, float_t min = -1.f, float_t max = 1.f);
 
@@ -34,8 +32,6 @@ namespace ImGuiUtils
 
     MOUNTAIN_API void ShowResourceManager();
 }
-
-END_MOUNTAIN
 
 // ReSharper disable CppInconsistentNaming
 namespace ImGui

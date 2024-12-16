@@ -4,11 +4,13 @@
 #include "Mountain/utils/color.hpp"
 #include "Mountain/utils/utils.hpp"
 
-BEGIN_MOUNTAIN
+namespace Mountain
+{
     struct Particle;
-class ParticleSystem;
+    class ParticleSystem;
+}
 
-namespace ParticleSystemSettings
+namespace Mountain::ParticleSystemSettings
 {
     class Base
     {
@@ -49,5 +51,3 @@ namespace ParticleSystemSettings
         MOUNTAIN_API void RenderImGui(ParticleSystem& system) override;
     };
 }
-
-END_MOUNTAIN
