@@ -11,8 +11,7 @@
 
 using namespace Mountain;
 
-// ReSharper disable once CppPossiblyUninitializedMember
-RenderTarget::RenderTarget(const Vector2i size, const MagnificationFilter filter) { Initialize(size, filter); }
+RenderTarget::RenderTarget(const Vector2i size, const Graphics::MagnificationFilter filter) { Initialize(size, filter); }
 
 RenderTarget::~RenderTarget() { Reset(); }
 
@@ -30,7 +29,7 @@ void RenderTarget::Use() const
 
 void RenderTarget::UpdateDrawCamera() const { Draw::SetCamera(m_CameraMatrix, m_CameraScale); }
 
-void RenderTarget::Initialize(const Vector2i size, const MagnificationFilter filter)
+void RenderTarget::Initialize(const Vector2i size, const Graphics::MagnificationFilter filter)
 {
     if (m_Initialized)
         return;
@@ -110,7 +109,7 @@ void RenderTarget::Reset()
     m_Initialized = false;
 }
 
-void RenderTarget::Reset(const Vector2i newSize, const MagnificationFilter newFilter)
+void RenderTarget::Reset(const Vector2i newSize, const Graphics::MagnificationFilter newFilter)
 {
     Reset();
     Initialize(newSize, newFilter);
@@ -171,27 +170,23 @@ void RenderTarget::SetSize(const Vector2i newSize)
     m_Projection = ComputeProjection(newSize);
 }
 
-MagnificationFilter RenderTarget::GetFilter() const
+Graphics::MagnificationFilter RenderTarget::GetFilter() const
 {
     return m_Filter;
 }
 
-void RenderTarget::SetFilter(const MagnificationFilter newFilter)
+void RenderTarget::SetFilter(const Graphics::MagnificationFilter newFilter)
 {
     if (!m_Initialized)
-        throw std::logic_error("Cannot set the filter of an uninitialized RenderTarget");
-    
-    glBindTexture(GL_TEXTURE_2D, m_Texture);
+        throw std::logic_error("Cannot set the magnification filter of an uninitialized RenderTarget");
 
     const int32_t magFilter = ToOpenGl(newFilter);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, magFilter);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, magFilter);
-    
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    
-    glBindTexture(GL_TEXTURE_2D, 0);
-    
+    glTextureParameteri(m_Texture, GL_TEXTURE_MIN_FILTER, magFilter);
+    glTextureParameteri(m_Texture, GL_TEXTURE_MAG_FILTER, magFilter);
+
+    glTextureParameteri(m_Texture, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTextureParameteri(m_Texture, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
     m_Filter = newFilter;
 }
 
@@ -215,23 +210,6 @@ void RenderTarget::SetCameraMatrix(const Matrix& newCameraMatrix)
 }
 
 const Vector2& RenderTarget::GetCameraScale() const { return m_CameraScale; }
-
-int32_t RenderTarget::ToOpenGl(const MagnificationFilter filter)
-{
-    switch (filter)
-    {
-        case MagnificationFilter::Linear:
-            return GL_LINEAR;
-        
-        case MagnificationFilter::Nearest:
-            return GL_NEAREST;
-        
-        case MagnificationFilter::Count:
-            throw std::invalid_argument("Invalid magnification filter");
-    }
-    
-    throw std::invalid_argument("Invalid magnification filter");
-}
 
 Matrix RenderTarget::ComputeProjection(const Vector2i size)
 {

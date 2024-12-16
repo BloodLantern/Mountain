@@ -12,43 +12,42 @@ struct GLFWmonitor;
 // ReSharper disable once CppInconsistentNaming
 struct GLFWvidmode;
 
-BEGIN_MOUNTAIN
-
-/// @brief Represents a screen/monitor
-class MOUNTAIN_API Screen
+namespace Mountain
 {
-    STATIC_CLASS(Screen)
-    
-public:
-    /// @brief Gets the position of the screen
-    /// @return Screen position
-    static Vector2i GetPosition(int32_t screenIndex = 0);
-    
-    /// @brief Gets the size of the screen
-    /// @return Screen size
-    static Vector2i GetSize(int32_t screenIndex = 0);
+    /// @brief Represents a screen/monitor
+    class MOUNTAIN_API Screen
+    {
+        STATIC_CLASS(Screen)
 
-    /// @brief Gets the refresh rate of the screen
-    /// @return Refresh rate
-    static int32_t GetRefreshRate(int32_t screenIndex = 0);
+    public:
+        /// @brief Gets the position of the screen
+        /// @return Screen position
+        static Vector2i GetPosition(int32_t screenIndex = 0);
 
-    static uint32_t GetScreenCount();
+        /// @brief Gets the size of the screen
+        /// @return Screen size
+        static Vector2i GetSize(int32_t screenIndex = 0);
 
-private:
-    /// @brief Native handle for the monitors
-    static inline GLFWmonitor** m_Monitors = nullptr;
-    
-    /// @brief Native handle for the monitors
-    static inline const GLFWvidmode** m_VideoModes = nullptr;
+        /// @brief Gets the refresh rate of the screen
+        /// @return Refresh rate
+        static int32_t GetRefreshRate(int32_t screenIndex = 0);
 
-    static inline uint32_t m_MonitorCount = 0;
+        static uint32_t GetScreenCount();
 
-    /// @brief Initializes the screen data
-    static void Initialize();
+    private:
+        /// @brief Native handle for the monitors
+        static inline GLFWmonitor** m_Monitors = nullptr;
 
-    static void Shutdown();
+        /// @brief Native handle for the monitors
+        static inline const GLFWvidmode** m_VideoModes = nullptr;
 
-    friend class Window;
-};
+        static inline uint32_t m_MonitorCount = 0;
 
-END_MOUNTAIN
+        /// @brief Initializes the screen data
+        static void Initialize();
+
+        static void Shutdown();
+
+        friend class Window;
+    };
+}

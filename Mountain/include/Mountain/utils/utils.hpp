@@ -19,11 +19,9 @@
 #define TO_STRING(x) #x
 #define STRINGIFY(x) TO_STRING(x)
 
-BEGIN_MOUNTAIN
-
 /// @namespace Utils
 /// @brief Namespace containing utility functions that don't belong anywhere else
-namespace Utils
+namespace Mountain::Utils
 {
     template <typename T>
     using ProjectionFunc = T(*)(T);
@@ -71,7 +69,7 @@ namespace Utils
     MOUNTAIN_API std::string HumanizeString(const std::string& str);
 
     /// @brief Humanizes the provided variable name
-    /// 
+    ///
     /// The process converts a m_PascalCase styled word to a humanized version that puts spaces between each word and adds an uppercase at the very beginning, it also removes the m_ prefix
     ///
     /// e.g. m_ShouldChange will become Should Change
@@ -83,7 +81,7 @@ namespace Utils
     /// @brief Removes the namespaces indicators from the provided string
     ///
     /// e.g. Mountain::MyClass will become MyClass
-    /// 
+    ///
     /// @param str String to modify
     /// @return Result
     [[nodiscard]]
@@ -93,7 +91,7 @@ namespace Utils
     /// @brief Removes the namespaces indicators from the provided string
     ///
     /// e.g. Mountain::MyClass will become MyClass
-    /// 
+    ///
     /// @param str String to modify
     /// @return Result
     [[nodiscard]]
@@ -140,7 +138,7 @@ namespace Utils
     /// This function first checks if the given Pointer is @c nullptr, and returns @c nullptr if so.
     /// It then checks if one type is derived from the other, and returns the cast result if so. This actually performs a @c reinterpret_cast under the hood.
     /// If all other conditions failed, the function returns @c nullptr.
-    /// 
+    ///
     /// @tparam T The type to dynamically cast to.
     /// @tparam U The type to dynamically cast from.
     /// @param value The Pointer to cast from.
@@ -207,8 +205,8 @@ namespace Utils
     MOUNTAIN_API std::string StringToUpper(std::string_view str);
 
     MOUNTAIN_API std::pair<int32_t, std::string_view> ByteSizeUnit(int64_t size);
-}
 
-END_MOUNTAIN
+    MOUNTAIN_API std::string GetBuiltinShadersPath();
+}
 
 #include "Mountain/utils/utils.inl"

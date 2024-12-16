@@ -3,8 +3,11 @@
 #include <numbers>
 #include <random>
 
-std::random_device device;
-std::mt19937 engine = std::mt19937(device());
+namespace
+{
+    std::random_device device;
+    std::mt19937 engine = std::mt19937(device());
+}
 
 using namespace Mountain;
 

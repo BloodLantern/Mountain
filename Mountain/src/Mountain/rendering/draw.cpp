@@ -394,7 +394,7 @@ void Draw::Initialize()
 
 void Draw::LoadResources()
 {
-    const std::string basePath = BuiltinShadersPath.empty() ? "" : BuiltinShadersPath + '/';
+    const std::string basePath = Utils::GetBuiltinShadersPath();
 
     m_PointShader = ResourceManager::Get<Shader>(basePath + "point");
     m_LineShader = ResourceManager::Get<Shader>(basePath + "line");

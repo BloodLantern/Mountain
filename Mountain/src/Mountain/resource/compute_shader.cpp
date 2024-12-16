@@ -86,9 +86,6 @@ void ComputeShader::Dispatch(const uint32_t groupsX, const uint32_t groupsY, con
     glUseProgram(0);
 }
 
-// ReSharper disable once CppMemberFunctionMayBeStatic
-void ComputeShader::SynchronizeImageData() const { glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT); }
-
 void ComputeShader::CheckCompilationError(const uint32_t id)
 {
     int success = 0;
