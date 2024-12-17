@@ -46,4 +46,12 @@ namespace Mountain
 
         MOUNTAIN_API void SetStrength(float_t newStrength) const;
     };
+
+    class FilmGrain : public Effect
+    {
+    public:
+        MOUNTAIN_API void LoadResources() override;
+
+        MOUNTAIN_API void SetIntensity(float_t newIntensity) const;
+    };
 }

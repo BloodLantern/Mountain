@@ -29,6 +29,18 @@ void Effect::Apply(const Vector2i textureSize, const bool_t synchronizeImageData
         SynchronizeGpuData(Graphics::GpuDataSynchronizationType::ShaderImageAccess);
 }
 
-void Vignette::LoadResources() { m_ComputeShader = ResourceManager::Get<ComputeShader>(Utils::GetBuiltinShadersPath() + "effects/vignette.comp"); }
+void Vignette::LoadResources()
+{
+    m_ComputeShader = ResourceManager::Get<ComputeShader>(Utils::GetBuiltinShadersPath() + "effects/vignette.comp");
+    SetStrength(1.f);
+}
 
 void Vignette::SetStrength(const float_t newStrength) const { m_ComputeShader->SetUniform("strength", newStrength); }
+
+void FilmGrain::LoadResources()
+{
+    m_ComputeShader = ResourceManager::Get<ComputeShader>(Utils::GetBuiltinShadersPath() + "effects/film_grain.comp");
+    SetIntensity(1.f);
+}
+
+void FilmGrain::SetIntensity(const float_t newIntensity) const { m_ComputeShader->SetUniform("intensity", newIntensity); }

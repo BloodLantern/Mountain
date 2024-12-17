@@ -239,7 +239,7 @@ void Mountain::Renderer::PostFrame()
     PopRenderTarget();
 
     if (!m_RenderTargets.empty())
-        throw std::logic_error("RenderTarget push/pop mismatch, e.g. a RenderTarget that was pushed hasn't been popped");
+        throw std::logic_error{ "RenderTarget push/pop mismatch, e.g. a RenderTarget that was pushed hasn't been popped" };
 
     Draw::RenderTarget(*m_RenderTarget);
     Draw::Flush();

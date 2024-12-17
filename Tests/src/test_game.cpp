@@ -44,6 +44,7 @@ namespace
     bool_t debugRender = true;
 
     PostProcessingEffect<Vignette> vignette;
+    PostProcessingEffect<FilmGrain> filmGrain;
 
     template <Concepts::EffectT T>
     void ShowEffect(
@@ -79,8 +80,6 @@ void GameExample::Initialize()
         }
     );
 
-    vignette.effect.imageBindings.Emplace(Renderer::GetDefaultRenderTarget().GetTextureId(), 0, Graphics::ImageShaderAccess::WriteOnly);
-
     Game::Initialize();
 }
 
@@ -101,6 +100,7 @@ void GameExample::LoadResources()
     font = ResourceManager::LoadFont("assets/font.ttf", 30);
 
     vignette.effect.LoadResources();
+    filmGrain.effect.LoadResources();
 }
 
 void GameExample::Shutdown()
@@ -125,11 +125,12 @@ void GameExample::Update()
 
 void GameExample::Render()
 {
-    Draw::Clear(Color::Transparent());
+    Draw::Clear(Color::Black());
 
     renderTarget.SetCameraMatrix(camera.matrix);
     Renderer::PushRenderTarget(renderTarget);
-    Draw::Clear(Color::Black());
+    static Color clearColor = Color::Black();
+    Draw::Clear(clearColor);
     
     for (Entity* const entity : entities)
         entity->Render();
@@ -204,8 +205,14 @@ void GameExample::Render()
 
     Draw::RenderTarget(renderTarget, Vector2::Zero(), Window::GetSize() / renderTarget.GetSize());
 
+    vignette.effect.imageBindings.Emplace(Renderer::GetCurrentRenderTarget().GetTextureId(), 0, Graphics::ImageShaderAccess::WriteOnly);
+    filmGrain.effect.imageBindings.Emplace(Renderer::GetCurrentRenderTarget().GetTextureId(), 0, Graphics::ImageShaderAccess::WriteOnly);
     if (vignette.enabled)
         vignette.effect.Apply(Renderer::GetCurrentRenderTarget().GetSize(), false);
+    if (filmGrain.enabled)
+        filmGrain.effect.Apply(Renderer::GetCurrentRenderTarget().GetSize(), false);
+    vignette.effect.imageBindings.Clear();
+    filmGrain.effect.imageBindings.Clear();
 
     Draw::Texture(*oldLady, { 10.f, 80.f });
 
@@ -236,6 +243,7 @@ void GameExample::Render()
         ImGui::DragInt2("Game resolution", resolution.Data());
         if (resolution != renderTarget.GetSize())
             renderTarget.SetSize(resolution);
+        ImGui::ColorEdit4("Clear color", clearColor.Data());
         
         ImGui::SeparatorText("Camera");
         if (ImGui::Button("Reset"))
@@ -266,6 +274,12 @@ void GameExample::Render()
             static float_t strength = 1.f;
             ImGui::DragFloat("strength", &strength, 0.01f, 0.f, 10.f);
             e.SetStrength(strength);
+        });
+        ShowEffect("Film Grain", filmGrain, [](auto& e)
+        {
+            static float_t intensity = 1.f;
+            ImGui::DragFloat("intensity", &intensity, 0.01f, 0.f, 10.f);
+            e.SetIntensity(intensity);
         });
 
         ImGui::PopID();
