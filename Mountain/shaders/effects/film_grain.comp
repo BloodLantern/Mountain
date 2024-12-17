@@ -1,0 +1,25 @@
+﻿#version 460 core
+
+layout (local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
+
+layout (rgba32f, binding = 0) uniform image2D image;
+
+uniform float intensity;
+
+// Pseudo-random generator for any given position between 0 and 1
+float rand(vec2 position) { return fract(sin(dot(position.xy, vec2(12.9898f, 78.233f))) * 43758.5453f); }
+
+void main()
+{
+    vec2 texelf = vec2(gl_GlobalInvocationID.xy);
+    ivec2 texel = ivec2(texelf);
+    ivec2 size = ivec2(gl_NumWorkGroups.xy);
+    vec2 sizef = vec2(size);
+
+    vec4 originalColor = imageLoad(image, texel);
+
+    float hash = rand(texelf / sizef);
+    float noise = (hash * 2.f - 1.f) * intensity;
+
+    imageStore(image, texel, originalColor - originalColor * noise);
+}

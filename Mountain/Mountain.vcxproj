@@ -377,6 +377,7 @@
   <ItemGroup>
     <Content Include="shaders\circle\circle.frag" />
     <Content Include="shaders\circle\circle.vert" />
+    <Content Include="shaders\effects\film_grain.comp" />
     <Content Include="shaders\line_colored\line_colored.frag" />
     <Content Include="shaders\line_colored\line_colored.vert" />
     <Content Include="shaders\particle\particle.comp" />
