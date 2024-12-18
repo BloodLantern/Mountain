@@ -50,7 +50,7 @@ void Shader::Load()
 {
     m_Id = glCreateProgram();
 #ifdef _DEBUG
-    const std::string name = m_Name.substr(ResourceManager::ReservedShaderPrefix.length());
+    const std::string name = m_Name;
     glObjectLabel(GL_PROGRAM, m_Id, static_cast<GLsizei>(name.length()), name.c_str());
 #endif
 
