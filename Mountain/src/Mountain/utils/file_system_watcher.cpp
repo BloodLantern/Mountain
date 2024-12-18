@@ -82,7 +82,7 @@ void FileSystemWatcher::Run()
     
     HANDLE file = nullptr;
     OVERLAPPED overlapped;
-    
+
     while (m_Running)
     {
         if (m_PathChanged)
@@ -93,7 +93,7 @@ void FileSystemWatcher::Run()
             
             file = CreateFileW(watchedPath.c_str(), FILE_LIST_DIRECTORY, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS | FILE_FLAG_OVERLAPPED, nullptr);
             Windows::CheckError();
-            
+
             overlapped.hEvent = CreateEventW(nullptr, FALSE, 0, nullptr);
             Windows::CheckError();
 
@@ -104,7 +104,7 @@ void FileSystemWatcher::Run()
         std::array<uint8_t, BufferSize> buffer;
         ReadDirectoryChangesW(file, buffer.data(), BufferSize, m_IsDirectory && checkContents, NotifyFiltersToWindows(notifyFilters), nullptr, &overlapped, nullptr);
         Windows::SilenceError(); // Windows would return an error because the 0ms timeout of WaitForSingleObject expired
-        
+
         m_CondVar.wait_for(lock, updateRate);
 
         const DWORD waitResult = WaitForSingleObject(overlapped.hEvent, 0);
@@ -115,11 +115,11 @@ void FileSystemWatcher::Run()
             DWORD bytesTransferred = 0;
             GetOverlappedResult(file, &overlapped, &bytesTransferred, FALSE);
             Windows::CheckError();
-            
+
             const FILE_NOTIFY_INFORMATION* information = reinterpret_cast<FILE_NOTIFY_INFORMATION*>(buffer.data());
             // We need this to be defined outside the next loop because the renamed event is in two steps: old name and new name
             std::filesystem::path oldPath;
-            
+
             while (true)
             {
                 const std::filesystem::path path = watchedPath / std::wstring_view(information->FileName, information->FileNameLength / sizeof(WCHAR));

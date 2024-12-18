@@ -21,6 +21,7 @@
 
 #include "spin_component.hpp"
 #include "Mountain/rendering/effect.hpp"
+#include "Mountain/utils/file_system_watcher.hpp"
 
 using namespace Mountain;
 
@@ -40,6 +41,11 @@ struct PostProcessingEffect
 
 namespace
 {
+    FileSystemWatcher assetsWatcher{ "assets" };
+    FileSystemWatcher shadersWatcher;
+    List<Pointer<ShaderBase>> shadersToReload;
+    std::mutex shadersToReloadMutex;
+
     bool_t showInputs = false;
     bool_t debugRender = true;
 
@@ -66,7 +72,33 @@ namespace
 
 void GameExample::Initialize()
 {
-    ballCount = 0;
+    shadersWatcher.SetPath(Utils::GetBuiltinShadersPath());
+    shadersWatcher.recursive = true;
+    shadersWatcher.Start();
+    shadersWatcher.onModified += [&](const std::filesystem::path& path)
+    {
+        if (is_directory(path))
+            return;
+
+        std::string pathString = path.generic_string();
+        if (pathString.ends_with('~'))
+            pathString.pop_back();
+
+        std::filesystem::path p = pathString;
+
+        bool_t isComputeShader = Utils::StringArrayContains(ComputeShader::FileExtensions, p.extension().string());
+
+        std::string name = isComputeShader ? relative(p, Utils::GetBuiltinShadersPath()).generic_string() : p.stem().string();
+
+        auto s = ResourceManager::Get<ShaderBase>(Utils::GetBuiltinShadersPath() + name);
+        if (!s)
+            return;
+        s->GetFile()->Reload();
+
+        shadersToReloadMutex.lock();
+        shadersToReload.Add(s);
+        shadersToReloadMutex.unlock();
+    };
 
     player = new Player({ 10.f, 100.f }, renderTarget.NewLightSource());
 
@@ -87,6 +119,29 @@ void GameExample::LoadResources()
 {
     FileManager::LoadDirectory("assets");
     ResourceManager::LoadAll();
+
+    assetsWatcher.recursive = true;
+    assetsWatcher.onCreated += [](const auto& path)
+    {
+        if (is_directory(path))
+            return;
+
+        FileManager::Load(path);
+        ResourceManager::LoadAll();
+    };
+    assetsWatcher.onModified += [](const auto& path)
+    {
+        if (is_directory(path))
+            return;
+
+        auto f = FileManager::Get<File>(path);
+        if (!f)
+            return;
+        f->Reload();
+        auto r = f->GetResource();
+        if (r)
+            r->Reload();
+    };
 
     Entity* entity = new Entity(static_cast<Vector2>(BaseResolution) * 0.5f);
     entities.Add(entity);
@@ -115,6 +170,12 @@ void GameExample::Shutdown()
 
 void GameExample::Update()
 {
+    shadersToReloadMutex.lock();
+    for (auto shader : shadersToReload)
+        shader->Reload();
+    shadersToReload.Clear();
+    shadersToReloadMutex.unlock();
+
     for (Entity* const entity : entities)
         entity->Update();
 
