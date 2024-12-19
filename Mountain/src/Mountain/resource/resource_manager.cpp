@@ -25,7 +25,7 @@ Pointer<Font> ResourceManager::LoadFont(const Pointer<File>& file, const uint32_
 {
     Logger::LogDebug("Loading font {} with size {}", file->GetPath(), size);
 
-    std::string name = std::format("{}/{}", ReservedFontPrefix.data() + file->GetPathString(), size);
+    std::string name = std::format("{}/{}", file->GetPathString(), size);
 
     Pointer<Font> font;
     
@@ -99,7 +99,7 @@ void ResourceManager::LoadAll()
             Pointer<Shader> shader;
 
             // We use an underscore before the name to make sure it isn't used elsewhere
-            const std::string&& filenameNoExtension = ReservedShaderPrefix.data() + file->GetParent()->GetPathString();
+            const std::string&& filenameNoExtension = file->GetParent()->GetPathString();
             if (Contains(filenameNoExtension))
                 shader = Get<Shader>(filenameNoExtension);
             else
@@ -113,7 +113,7 @@ void ResourceManager::LoadAll()
             Pointer<ComputeShader> shader;
 
             // We use an underscore before the name to make sure it isn't used elsewhere
-            const std::string&& filenameNoExtension = ReservedComputeShaderPrefix.data() + file->GetPathString();
+            const std::string&& filenameNoExtension = file->GetPathString();
             if (Contains(filenameNoExtension))
                 shader = Get<ComputeShader>(filenameNoExtension);
             else
@@ -171,7 +171,7 @@ void ResourceManager::LoadAllBinaries()
             Pointer<Shader> shader;
 
             // We use an underscore before the name to make sure it isn't used elsewhere
-            const std::string&& filenameNoExtension = ReservedShaderPrefix.data() + path.parent_path().generic_string();
+            const std::string&& filenameNoExtension = path.parent_path().generic_string();
             if (Contains(filenameNoExtension))
                 shader = Get<Shader>(filenameNoExtension);
             else
@@ -186,7 +186,7 @@ void ResourceManager::LoadAllBinaries()
             Pointer<ComputeShader> shader;
 
             // We use an underscore before the name to make sure it isn't used elsewhere
-            const std::string&& filenameNoExtension = ReservedComputeShaderPrefix.data() + path.parent_path().generic_string();
+            const std::string&& filenameNoExtension = path.parent_path().generic_string();
             if (Contains(filenameNoExtension))
                 shader = Get<ComputeShader>(filenameNoExtension);
             else
@@ -236,7 +236,7 @@ bool ResourceManager::Contains(const Pointer<File>& file)
 
 Pointer<Font> ResourceManager::GetFont(const std::string& name, uint32_t size)
 {
-    std::string internalName = std::format("{}/{}", ReservedFontPrefix.data() + name, size);
+    std::string internalName = std::format("{}/{}", name, size);
     
     if (!Contains(internalName))
     {

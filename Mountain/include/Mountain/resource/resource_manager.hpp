@@ -22,21 +22,6 @@ namespace Mountain
         STATIC_CLASS(ResourceManager)
 
     public:
-        /// @brief Special prefix used to store added @ref Shader "Shaders"
-        ///
-        /// This is mainly used in @c LoadAll() and @c LoadAllBinaries()
-        static constexpr std::string_view ReservedShaderPrefix = "_shaders/";
-
-        /// @brief Special prefix used to store added @ref ComputeShader "Compute Shaders"
-        ///
-        /// This is mainly used in @c LoadAll() and @c LoadAllBinaries()
-        static constexpr std::string_view ReservedComputeShaderPrefix = "_compute_shaders/";
-
-        /// @brief Special prefix used to store added @ref Font "Fonts"
-        ///
-        /// This is used to differentiate fonts that use the same file but different sizes
-        static constexpr std::string_view ReservedFontPrefix = "_fonts/";
-
         /// @brief Creates the Resource corresponding to the given @p name without loading it.
         template <Concepts::LoadableResourceT T>
         static Pointer<T> Add(const std::string& name);
