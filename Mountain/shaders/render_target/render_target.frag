@@ -1,6 +1,6 @@
 #version 460 core
 
-struct LightSourceData
+struct LightSource
 {
     vec4 color;
     float intensity;
@@ -25,7 +25,7 @@ uniform int lightSourceCount;
 
 layout(std430, binding = 0) readonly buffer Lights
 {
-    LightSourceData lightSources[];
+    LightSource lightSources[];
 };
 
 out vec4 fragmentColor;
@@ -48,7 +48,7 @@ void main()
     vec4 lightColor = ambientColor;
     for (int i = 0; i < lightSourceCount; i++)
     {
-        LightSourceData lightSource = lightSources[i];
+        LightSource lightSource = lightSources[i];
         vec2 lightSourcePosition = (camera * vec4(lightSource.position, 0.f, 1.f)).xy * scale;
         
         vec2 lightToFragment = (lightSourcePosition - fragmentPosition) / actualScale;

@@ -3,9 +3,7 @@
 #include "Mountain/input/input.hpp"
 #include "Mountain/input/time.hpp"
 #include "Mountain/rendering/draw.hpp"
-#include "Mountain/resource/resource_manager.hpp"
 #include "Mountain/scene/component/audio_listener.hpp"
-#include "Mountain/scene/component/light_source.hpp"
 
 Player::Player(const Vector2& pos, Mountain::LightSource& lightSource)
     : Entity(pos)

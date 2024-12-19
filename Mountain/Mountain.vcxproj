@@ -169,6 +169,7 @@
     <ClInclude Include="include\Mountain\rendering\draw.hpp" />
     <ClInclude Include="include\Mountain\rendering\effect.hpp" />
     <ClInclude Include="include\Mountain\rendering\graphics.hpp" />
+    <ClInclude Include="include\Mountain\rendering\light_source.hpp" />
     <ClInclude Include="include\Mountain\rendering\particle_system.hpp" />
     <ClInclude Include="include\Mountain\rendering\particle_system_settings.hpp" />
     <ClInclude Include="include\Mountain\rendering\renderer.hpp" />
@@ -184,7 +185,6 @@
     <ClInclude Include="include\Mountain\scene\component\audio_listener.hpp" />
     <ClInclude Include="include\Mountain\scene\component\audio_source.hpp" />
     <ClInclude Include="include\Mountain\scene\component\component.hpp" />
-    <ClInclude Include="include\Mountain\scene\component\light_source.hpp" />
     <ClInclude Include="include\Mountain\scene\component\sprite.hpp" />
     <ClInclude Include="include\Mountain\scene\component\state_machine.hpp" />
     <ClInclude Include="include\Mountain\scene\entity.hpp" />
@@ -380,7 +380,7 @@
     <Content Include="shaders\effects\film_grain.comp" />
     <Content Include="shaders\line_colored\line_colored.frag" />
     <Content Include="shaders\line_colored\line_colored.vert" />
-    <Content Include="shaders\particle\particle.comp" />
+    <Content Include="shaders\particles\base_update.comp" />
     <Content Include="shaders\point\point.frag" />
     <Content Include="shaders\point\point.vert" />
     <Content Include="shaders\effects\vignette.comp" />

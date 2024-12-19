@@ -5,7 +5,7 @@
 #include "Mountain/input/time.hpp"
 #include "Mountain/rendering/particle_system.hpp"
 #include "Mountain/utils/imgui_utils.hpp"
-
+/*
 using namespace Mountain::ParticleSystemSettings;
 
 bool_t Base::RenderImGuiHeader(const std::string_view typeName)
@@ -65,3 +65,4 @@ void Acceleration::RenderImGui(ParticleSystem&)
 
     RenderImGuiFooter();
 }
+*/
