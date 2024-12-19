@@ -1,8 +1,7 @@
 ﻿#pragma once
 
-#include "Mountain/resource/texture.hpp"
+#include "Mountain/rendering/light_source.hpp"
 #include "Mountain/scene/entity.hpp"
-#include "Mountain/scene/component/light_source.hpp"
 #include "Mountain/scene/component/sprite.hpp"
 #include "Mountain/utils/pointer.hpp"
 

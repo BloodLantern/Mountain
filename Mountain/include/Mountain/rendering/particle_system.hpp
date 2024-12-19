@@ -9,16 +9,6 @@
 
 namespace Mountain
 {
-    struct Particle
-    {
-        float_t lifetime = 1.f;
-        bool_t alive = false;
-
-        Vector2 offset;
-        Vector2 velocity;
-        Color color;
-    };
-
     class ParticleSystem
     {
     public:
@@ -35,11 +25,15 @@ namespace Mountain
 
         float_t particleLifetime = 1.f;
 
-        List<std::shared_ptr<ParticleSystemSettings::Base>> particleSettings;
+        //List<std::shared_ptr<ParticleSystemSettings::Base>> particleSettings;
 
         MOUNTAIN_API ParticleSystem() = default;
         MOUNTAIN_API explicit ParticleSystem(size_t maxParticles);
+        MOUNTAIN_API virtual ~ParticleSystem();
 
+        DEFAULT_COPY_MOVE_OPERATIONS(ParticleSystem)
+
+        MOUNTAIN_API void LoadResources();
         MOUNTAIN_API void Update();
         MOUNTAIN_API void Render();
         MOUNTAIN_API void RenderImGui();
@@ -51,8 +45,11 @@ namespace Mountain
     private:
         size_t m_MaxParticles = 0;
 
-        List<Particle> m_Particles{};
+        //List<Particle> m_Particles{};
 
         double_t m_SpawnTimer = 0.0;
+
+        Pointer<ComputeShader> m_BaseUpdateComputeShader;
+        uint32_t m_Ssbo;
     };
 }

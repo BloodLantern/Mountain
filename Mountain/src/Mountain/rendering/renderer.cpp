@@ -25,6 +25,27 @@ namespace
 {
     void OpenGlDebugCallback(const GLenum source, const GLenum type, GLuint, const GLenum severity, const GLsizei length, const GLchar* message, const void*)
     {
+        Mountain::Logger::LogLevel level;
+        switch (severity) {
+            case GL_DEBUG_SEVERITY_HIGH:
+                level = Mountain::Logger::LogLevel::Error;
+            break;
+
+            case GL_DEBUG_SEVERITY_MEDIUM:
+                level = Mountain::Logger::LogLevel::Warning;
+            break;
+
+            case GL_DEBUG_SEVERITY_LOW:
+                level = Mountain::Logger::LogLevel::Info;
+            break;
+
+            case GL_DEBUG_SEVERITY_NOTIFICATION:
+                return; // No need to log notifications
+
+            default:
+                level = Mountain::Logger::LogLevel::Info;
+        }
+
         std::string_view src;
         switch (source) {
             case GL_DEBUG_SOURCE_API:
@@ -89,28 +110,7 @@ namespace
                 t = "Unknown";
         }
 
-        Mountain::Logger::LogLevel level;
-        switch (severity) {
-            case GL_DEBUG_SEVERITY_HIGH:
-                level = Mountain::Logger::LogLevel::Error;
-                break;
-
-            case GL_DEBUG_SEVERITY_MEDIUM:
-                level = Mountain::Logger::LogLevel::Warning;
-                break;
-
-            case GL_DEBUG_SEVERITY_LOW:
-                level = Mountain::Logger::LogLevel::Info;
-                break;
-
-            case GL_DEBUG_SEVERITY_NOTIFICATION:
-                return; // Do not log notifications
-
-            default:
-                level = Mountain::Logger::LogLevel::Info;
-        }
-
-        Mountain::Logger::Log(level, "[OpenGL] {} raised from {}: {}", t, src, std::string_view(message, length));
+        Mountain::Logger::Log(level, "[OpenGL] Log of type {} received from {}: {}", t, src, std::string_view(message, length));
     }
 }
 
@@ -173,6 +173,7 @@ bool Mountain::Renderer::Initialize(const std::string_view windowTitle, const Ve
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     m_RenderTarget = new RenderTarget(windowSize, Graphics::MagnificationFilter::Linear);
+    m_RenderTarget->SetDebugName("Viewport RenderTarget");
 
     if (NoBinaryResources)
     {
