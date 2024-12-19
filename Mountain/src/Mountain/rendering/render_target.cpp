@@ -6,7 +6,6 @@
 
 #include "Mountain/window.hpp"
 #include "Mountain/rendering/draw.hpp"
-#include "Mountain/scene/component/light_source.hpp"
 #include "Mountain/utils/logger.hpp"
 
 using namespace Mountain;

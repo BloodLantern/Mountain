@@ -2,7 +2,8 @@
 
 #include <glad/glad.h>
 
-#include "ImGui/imgui_stdlib.h"
+#include <ImGui/imgui_stdlib.h>
+
 #include "Mountain/globals.hpp"
 #include "Mountain/rendering/renderer.hpp"
 #include "Mountain/resource/resource_manager.hpp"
@@ -915,9 +916,7 @@ void Draw::RenderRenderTargetData(const List<RenderTargetData>& renderTargets, c
         m_RenderTargetShader->SetUniform("lightSourceCount", static_cast<int32_t>(lightSources.GetSize()));
 
         for (auto& lightSource : lightSources)
-        {
             lightSource.position = m_CameraMatrix * lightSource.position;
-        }
 
         glNamedBufferData(
             m_RenderTargetSsbo,

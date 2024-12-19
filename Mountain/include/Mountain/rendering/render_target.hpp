@@ -6,7 +6,7 @@
 #include <Maths/vector2i.hpp>
 
 #include "Mountain/rendering/graphics.hpp"
-#include "Mountain/scene/component/light_source.hpp"
+#include "Mountain/rendering/light_source.hpp"
 #include "Mountain/utils/color.hpp"
 #include "Mountain/utils/list.hpp"
 
@@ -40,7 +40,9 @@ namespace Mountain
         MOUNTAIN_API void ClearLightSources();
         MOUNTAIN_API const List<LightSource>& GetLightSources() const;
 
-        /// @brief Adds a friendly debug name for this RenderTarget. This is used when debugging graphics in external applications such as Nsight or RenderDoc.
+        /// @brief Adds a friendly debug name for this RenderTarget.
+        /// This is used when debugging graphics in external applications such as Nsight or RenderDoc.
+        /// This function does nothing if the application isn't compiled in Debug.
         /// @param name The name of this RenderTarget
         MOUNTAIN_API void SetDebugName(std::string_view name) const;
 

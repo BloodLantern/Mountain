@@ -3,7 +3,7 @@
 #include "Mountain/core.hpp"
 #include "Mountain/utils/color.hpp"
 #include "Mountain/utils/utils.hpp"
-
+/*
 namespace Mountain
 {
     struct Particle;
@@ -51,3 +51,4 @@ namespace Mountain::ParticleSystemSettings
         MOUNTAIN_API void RenderImGui(ParticleSystem& system) override;
     };
 }
+*/
