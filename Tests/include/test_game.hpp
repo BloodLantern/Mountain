@@ -22,10 +22,6 @@ public:
 	AnimatedCharacter* character = nullptr;
 	Mountain::ParticleSystem particleSystem{ 50 };
 	
-	int32_t ballCount = 0;
-	float_t ballTimer = 0;
-	Mountain::ColorHsva lastBallColor = Mountain::ColorHsva::Red();
-
 	Mountain::RenderTarget renderTarget;
 
 	Camera camera{};
