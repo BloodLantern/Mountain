@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "test_game.hpp"
 #include "Mountain/globals.hpp"
 #include "Mountain/utils/logger.hpp"
@@ -20,6 +22,8 @@ namespace
 
 int32_t main(int32_t, char_t**)
 {
+	std::cout << "Starting program, waiting for Live++ initialization...\n";
+
 	// create a synchronized agent, loading the Live++ agent from the given path, e.g. "ThirdParty/LivePP"
 	lpp::LppSynchronizedAgent lppAgent = lpp::LppCreateSynchronizedAgent(nullptr, L"LivePP");
 
