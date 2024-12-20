@@ -16,7 +16,7 @@ namespace Mountain
 
         Vector2 position;
         /// @brief The amount of particles spawned per second
-        size_t spawnRate = 10;
+        uint32_t spawnRate = 10;
         bool_t useUnscaledDeltaTime = false;
         float_t duration = 5.f;
         bool_t looping = true;
@@ -28,7 +28,7 @@ namespace Mountain
         //List<std::shared_ptr<ParticleSystemSettings::Base>> particleSettings;
 
         MOUNTAIN_API ParticleSystem() = default;
-        MOUNTAIN_API explicit ParticleSystem(size_t maxParticles);
+        MOUNTAIN_API explicit ParticleSystem(uint32_t maxParticles);
         MOUNTAIN_API virtual ~ParticleSystem();
 
         DEFAULT_COPY_MOVE_OPERATIONS(ParticleSystem)
@@ -39,17 +39,19 @@ namespace Mountain
         MOUNTAIN_API void RenderImGui();
 
         [[nodiscard]]
-        MOUNTAIN_API size_t GetMaxParticles() const;
-        MOUNTAIN_API void SetMaxParticles(size_t newMaxParticles);
+        MOUNTAIN_API uint32_t GetMaxParticles() const;
+        MOUNTAIN_API void SetMaxParticles(uint32_t newMaxParticles);
 
     private:
-        size_t m_MaxParticles = 0;
+        uint32_t m_MaxParticles = 0;
 
         //List<Particle> m_Particles{};
+        /// @brief Represents how many particles are currently alive
+        uint32_t m_CurrentParticles = 0;
 
         double_t m_SpawnTimer = 0.0;
 
         Pointer<ComputeShader> m_BaseUpdateComputeShader;
-        uint32_t m_Ssbo;
+        uint32_t m_UpdateSsbo, m_ParticleSsbo;
     };
 }

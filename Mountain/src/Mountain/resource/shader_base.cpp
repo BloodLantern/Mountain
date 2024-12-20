@@ -8,13 +8,32 @@
 
 using namespace Mountain;
 
-void ShaderBase::SetUniform(const std::string_view keyName, const int32_t value) const { glProgramUniform1i(m_Id, GetUniformLocation(keyName), value); }
+void ShaderBase::SetUniform(const std::string_view keyName, const int32_t value) const
+{
+    glProgramUniform1i(m_Id, GetUniformLocation(keyName), value);
+}
 
-void ShaderBase::SetUniform(const std::string_view keyName, const bool_t value) const { SetUniform(keyName, static_cast<int32_t>(value)); }
+void ShaderBase::SetUniform(const std::string_view keyName, const uint32_t value) const
+{
+    glProgramUniform1ui(m_Id, GetUniformLocation(keyName), value);
+}
 
-void ShaderBase::SetUniform(const std::string_view keyName, const float_t value) const { glProgramUniform1f(m_Id, GetUniformLocation(keyName), value); }
+void ShaderBase::SetUniform(const std::string_view keyName, const bool_t value) const
+{
+    SetUniform(keyName, static_cast<int32_t>(value));
+}
 
-void ShaderBase::SetUniform(const std::string_view keyName, const Vector2& value) const
+void ShaderBase::SetUniform(const std::string_view keyName, const float_t value) const
+{
+    glProgramUniform1f(m_Id, GetUniformLocation(keyName), value);
+}
+
+void ShaderBase::SetUniform(const std::string_view keyName, const Vector2i value) const
+{
+    glProgramUniform2iv(m_Id, GetUniformLocation(keyName), 1, value.Data());
+}
+
+void ShaderBase::SetUniform(const std::string_view keyName, const Vector2 value) const
 {
     glProgramUniform2fv(m_Id, GetUniformLocation(keyName), 1, value.Data());
 }
@@ -29,7 +48,10 @@ void ShaderBase::SetUniform(const std::string_view keyName, const Vector4& value
     glProgramUniform4fv(m_Id, GetUniformLocation(keyName), 1, value.Data());
 }
 
-void ShaderBase::SetUniform(const std::string_view keyName, const Color& value) const { SetUniform(keyName, static_cast<Vector4>(value)); }
+void ShaderBase::SetUniform(const std::string_view keyName, const Color& value) const
+{
+    SetUniform(keyName, static_cast<Vector4>(value));
+}
 
 void ShaderBase::SetUniform(const std::string_view keyName, const Matrix2& value) const
 {
@@ -63,4 +85,7 @@ void ShaderBase::CheckLinkError()
     }
 }
 
-int32_t ShaderBase::GetUniformLocation(const std::string_view keyName) const { return glGetUniformLocation(m_Id, keyName.data()); }
+int32_t ShaderBase::GetUniformLocation(const std::string_view keyName) const
+{
+    return glGetUniformLocation(m_Id, keyName.data());
+}
