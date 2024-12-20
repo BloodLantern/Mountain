@@ -14,22 +14,21 @@ namespace
     constexpr size_t ParticleStructSize = 48;
 }
 
-Mountain::ParticleSystem::ParticleSystem(const size_t maxParticles)
+// ReSharper disable CppObjectMemberMightNotBeInitialized
+Mountain::ParticleSystem::ParticleSystem(const uint32_t maxParticles)
 {
-    glCreateBuffers(1, &m_Ssbo);
+    glCreateBuffers(2, &m_UpdateSsbo);
 
-    glObjectLabel(GL_BUFFER, m_Ssbo, -1, "Particle System SSBO");
-
-    glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_Ssbo);
-    glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, m_Ssbo);
-    glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
+    glObjectLabel(GL_BUFFER, m_UpdateSsbo, -1, "Particle System Update SSBO");
+    glObjectLabel(GL_BUFFER, m_ParticleSsbo, -1, "Particle System Particle SSBO");
 
     SetMaxParticles(maxParticles);
 }
+// ReSharper enable CppObjectMemberMightNotBeInitialized
 
 Mountain::ParticleSystem::~ParticleSystem()
 {
-    glDeleteBuffers(1, &m_Ssbo);
+    glDeleteBuffers(2, &m_UpdateSsbo);
 }
 
 void Mountain::ParticleSystem::LoadResources()
@@ -41,13 +40,11 @@ void Mountain::ParticleSystem::Update()
 {
     const float_t deltaTime = useUnscaledDeltaTime ? Time::GetDeltaTimeUnscaled() : Time::GetDeltaTime();
 
-    m_BaseUpdateComputeShader->SetUniform("particleCount", static_cast<int32_t>(m_MaxParticles));
+    m_BaseUpdateComputeShader->SetUniform("deltaTime", deltaTime);
 
-    glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_Ssbo);
-    m_BaseUpdateComputeShader->Dispatch(static_cast<uint32_t>(m_MaxParticles));
-    glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
+    glBindBuffersBase(GL_SHADER_STORAGE_BUFFER, 0, 2, &m_UpdateSsbo);
+    m_BaseUpdateComputeShader->Dispatch(m_MaxParticles);
 
-/*
     // Spawn new particles if necessary
     if (m_SpawnTimer <= 0.0)
     {
@@ -74,7 +71,7 @@ void Mountain::ParticleSystem::Update()
 
         m_SpawnTimer += spawnDelay * static_cast<double_t>(count);
     }
-
+/*
     // Update all particles
     for (Particle& particle : m_Particles)
     {
@@ -98,8 +95,8 @@ void Mountain::ParticleSystem::Update()
 
         particle.lifetime -= deltaTime;
     }
-
-    m_SpawnTimer -= deltaTime;*/
+*/
+    m_SpawnTimer -= deltaTime;
 }
 
 void Mountain::ParticleSystem::Render()
@@ -119,14 +116,14 @@ void Mountain::ParticleSystem::RenderImGui()
     constexpr size_t zero = 0;
     ImGui::SeparatorText("System settings");
     ImGui::DragFloat2("Position", position.Data());
-    ImGui::DragScalar("Spawn rate", ImGuiDataType_U64, &spawnRate, 1, &zero, nullptr, nullptr, ImGuiSliderFlags_AlwaysClamp);
+    ImGui::DragScalar("Spawn rate", ImGuiDataType_U32, &spawnRate, 1, &zero, nullptr, nullptr, ImGuiSliderFlags_AlwaysClamp);
     ImGui::BeginDisabled();
     ImGui::DragScalar("Spawn timer", ImGuiDataType_Double, &m_SpawnTimer);
     /*size_t currentParticles = std::ranges::count_if(m_Particles, [](auto& p) { return p.alive; });
     ImGui::DragScalar("Current particles", ImGuiDataType_U64, &currentParticles);*/
     ImGui::EndDisabled();
-    size_t maxParticles = m_MaxParticles;
-    ImGui::DragScalar("Max particles", ImGuiDataType_U64, &maxParticles, 1, &zero, nullptr, nullptr, ImGuiSliderFlags_AlwaysClamp);
+    uint32_t maxParticles = m_MaxParticles;
+    ImGui::DragScalar("Max particles", ImGuiDataType_U32, &maxParticles, 1, &zero, nullptr, nullptr, ImGuiSliderFlags_AlwaysClamp);
     if (maxParticles != m_MaxParticles)
         SetMaxParticles(maxParticles);
 
@@ -138,13 +135,15 @@ void Mountain::ParticleSystem::RenderImGui()
     ImGui::PopID();
 }
 
-size_t Mountain::ParticleSystem::GetMaxParticles() const { return m_MaxParticles; }
+uint32_t Mountain::ParticleSystem::GetMaxParticles() const { return m_MaxParticles; }
 
-void Mountain::ParticleSystem::SetMaxParticles(const size_t newMaxParticles)
+void Mountain::ParticleSystem::SetMaxParticles(const uint32_t newMaxParticles)
 {
     m_MaxParticles = newMaxParticles;
 
-    glNamedBufferData(m_Ssbo, static_cast<GLsizeiptr>(ParticleStructSize * m_MaxParticles), nullptr, GL_DYNAMIC_COPY);
+    glNamedBufferData(m_UpdateSsbo, static_cast<GLsizeiptr>(sizeof(int32_t) * newMaxParticles), nullptr, GL_DYNAMIC_COPY);
+    glNamedBufferData(m_ParticleSsbo, static_cast<GLsizeiptr>(ParticleStructSize * newMaxParticles), nullptr, GL_DYNAMIC_COPY);
+    m_BaseUpdateComputeShader->SetUniform("particleCount", newMaxParticles);
     glMemoryBarrier(GL_SHADER_STORAGE_BARRIER_BIT);
     //m_Particles.Resize(newMaxParticles);
 }

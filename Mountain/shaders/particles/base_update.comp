@@ -5,22 +5,70 @@ layout (local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 struct Particle
 {
     float lifetime;
-    bool alive;
+    int padding0[3];
 
     vec2 offset;
     vec2 velocity;
     vec4 color;
 };
 
-uniform int particleCount;
+uniform uint particleCount;
 
-layout(std430, binding = 0) buffer Particles
+uniform float particleLifetime;
+
+uniform float deltaTime;
+
+layout(std430, binding = 0) buffer Updates
+{
+    bool updates[]; // true if the particle should be updated, e.g. if it is alive
+};
+
+layout(std430, binding = 1) buffer Particles
 {
     Particle particles[];
 };
 
+Particle NewParticle()
+{
+    return Particle(
+        particleLifetime,
+        { 0.f, 0.f, 0.f },
+        vec2(0.f, 0.f),
+        vec2(1.f, 0.f),
+        vec4(1.f, 0.f, 0.f, 1.f)
+    );
+}
+
 void main()
 {
     const uint id = gl_GlobalInvocationID.x;
-    particles[id].alive = 1;
+    Particle particle = particles[id];
+
+    if (!lifetimes[id])
+        return;
+
+    if (particle.lifetime <= 0.f)
+    {
+        float negativeInfinity = -1.f / 0.f;
+
+        if (particle.lifetime > negativeInfinity)
+        {
+            lifetimes[id] = false;
+            particle.lifetime = negativeInfinity; // Use negative infinity as a flag
+            return;
+        }
+        else
+        {
+            lifetimes[id] = true;
+            particle = NewParticle();
+        }
+    }
+
+    particle.offset += particle.velocity * deltaTime;
+
+    // Add optional operations here
+
+    particle.lifetime -= deltaTime;
+
+    particles[id] = particle;
 }
