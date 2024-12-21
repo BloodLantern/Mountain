@@ -2,6 +2,7 @@
 
 #include <GLFW/glfw3.h>
 
+#include "Mountain/screen.hpp"
 #include "Mountain/window.hpp"
 #include "Mountain/utils/windows.hpp"
 
@@ -9,10 +10,13 @@
 using NtQueryTimerResolutionFunc = DWORD (NTAPI *)(OUT PULONG MinimumResolution, OUT PULONG MaximumResolution, OUT PULONG ActualResolution);
 // ReSharper restore CppInconsistentNaming
 /// Hidden Windows API function from ntdll.dll
-NtQueryTimerResolutionFunc NtQueryTimerResolution = reinterpret_cast<NtQueryTimerResolutionFunc>(GetProcAddress(  // NOLINT(clang-diagnostic-cast-function-type-strict)
-    GetModuleHandle(L"ntdll.dll"),
-    "NtQueryTimerResolution"
-));
+namespace
+{
+    NtQueryTimerResolutionFunc NtQueryTimerResolution = reinterpret_cast<NtQueryTimerResolutionFunc>(GetProcAddress(  // NOLINT(clang-diagnostic-cast-function-type-strict)
+        GetModuleHandle(L"ntdll.dll"),
+        "NtQueryTimerResolution"
+    ));
+}
 
 using namespace Mountain;
 
@@ -38,6 +42,8 @@ void Time::SetTargetFps(const std::optional<uint16_t> newTargetFps)
 
     glfwSwapInterval(!newTargetFps.has_value());
 }
+
+float_t Time::GetTargetDeltaTime() { return 1.f / static_cast<float_t>(m_TargetFps.has_value() ? m_TargetFps.value() : Screen::GetRefreshRate()); }
 
 float_t Time::GetLastFrameDuration() { return m_LastFrameDuration; }
 

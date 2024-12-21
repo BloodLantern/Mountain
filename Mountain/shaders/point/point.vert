@@ -1,7 +1,7 @@
 #version 460 core
 
-layout (location = 0) in vec2 position;
-layout (location = 1) in vec4 instanceColor;
+layout(location = 0) in vec2 position;
+layout(location = 1) in vec4 instanceColor;
 
 uniform mat4 projection;
 
