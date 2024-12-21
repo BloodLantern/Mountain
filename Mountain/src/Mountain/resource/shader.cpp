@@ -25,7 +25,11 @@ bool_t Shader::SetSourceData(const Pointer<File>& shader)
 {
     const Graphics::ShaderType type = FileExtensionToType(shader->GetExtension());
 
-    if (!Load(shader->GetData(), shader->GetSize(), type))
+    m_File = shader;
+    const bool_t loadResult = Load(shader->GetData(), shader->GetSize(), type);
+    m_File = nullptr;
+
+    if (!loadResult)
         return false;
 
     m_Files[static_cast<size_t>(type)] = shader;
@@ -39,6 +43,7 @@ bool_t Shader::Load(const char_t* const buffer, const int64_t length, const Grap
 {
     ShaderCode& code = m_Code[static_cast<size_t>(type)];
     code.code = std::string(buffer, length);
+    ReplaceIncludes(code.code);
     code.type = type;
 
     m_SourceDataSet = true;

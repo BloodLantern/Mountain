@@ -381,6 +381,9 @@
     <Content Include="shaders\line_colored\line_colored.frag" />
     <Content Include="shaders\line_colored\line_colored.vert" />
     <Content Include="shaders\particles\base_update.comp" />
+    <Content Include="shaders\particles\common.glsl" />
+    <Content Include="shaders\particles\draw\draw.frag" />
+    <Content Include="shaders\particles\draw\draw.vert" />
     <Content Include="shaders\point\point.frag" />
     <Content Include="shaders\point\point.vert" />
     <Content Include="shaders\effects\vignette.comp" />
@@ -398,6 +401,7 @@
     <Content Include="shaders\triangle\triangle.vert" />
     <Content Include="shaders\triangle_colored\triangle_colored.frag" />
     <Content Include="shaders\triangle_colored\triangle_colored.vert" />
+    <Content Include="shaders\utils.glsl" />
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="Mountain.natvis" />

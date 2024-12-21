@@ -7,6 +7,10 @@
 #include "Mountain/utils/color.hpp"
 #include "Mountain/utils/list.hpp"
 
+// OpenGL type forward declaration
+// ReSharper disable once CppInconsistentNaming
+struct __GLsync;
+
 namespace Mountain
 {
     class ParticleSystem
@@ -33,25 +37,29 @@ namespace Mountain
 
         DEFAULT_COPY_MOVE_OPERATIONS(ParticleSystem)
 
-        MOUNTAIN_API void LoadResources();
         MOUNTAIN_API void Update();
         MOUNTAIN_API void Render();
         MOUNTAIN_API void RenderImGui();
 
         [[nodiscard]]
         MOUNTAIN_API uint32_t GetMaxParticles() const;
+        /// @brief Set the new maximum particle count
+        /// @warning This is a very heavy operation, avoid doing this each frame
         MOUNTAIN_API void SetMaxParticles(uint32_t newMaxParticles);
 
     private:
         uint32_t m_MaxParticles = 0;
-
-        //List<Particle> m_Particles{};
-        /// @brief Represents how many particles are currently alive
-        uint32_t m_CurrentParticles = 0;
+        int32_t* m_AliveParticles = nullptr;
+        __GLsync* m_SyncObject = nullptr;
 
         double_t m_SpawnTimer = 0.0;
 
         Pointer<ComputeShader> m_BaseUpdateComputeShader;
-        uint32_t m_UpdateSsbo, m_ParticleSsbo;
+        uint32_t m_AliveSsbo, m_ParticleSsbo;
+
+        /// @brief Wait for the GPU buffer to sync with the CPU. After that call, the CPU can read/write to that buffer.
+        static void WaitBufferSync(__GLsync* syncObject);
+        /// @brief Lock the buffer to GPU read/write only. After that call, the CPU cannot access that buffer anymore.
+        static void LockBuffer(__GLsync*& syncObject);
     };
 }

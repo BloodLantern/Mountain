@@ -8,10 +8,13 @@ using namespace Mountain;
 
 bool_t ComputeShader::SetSourceData(const Pointer<File>& shader)
 {
-    if (!Load(shader->GetData(), shader->GetSize()))
-        return false;
-
     m_File = shader;
+
+    if (!Load(shader->GetData(), shader->GetSize()))
+    {
+        m_File = nullptr;
+        return false;
+    }
 
     m_SourceDataSet = true;
 
@@ -21,6 +24,7 @@ bool_t ComputeShader::SetSourceData(const Pointer<File>& shader)
 bool_t ComputeShader::Load(const char_t* const buffer, const int64_t length)
 {
     m_Code = std::string{ buffer, static_cast<size_t>(length) };
+    ReplaceIncludes(m_Code);
 
     m_SourceDataSet = true;
 

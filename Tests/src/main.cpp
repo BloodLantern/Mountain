@@ -22,7 +22,7 @@ namespace
 
 int32_t main(int32_t, char_t**)
 {
-	std::cout << "Starting program, waiting for Live++ initialization...\n";
+	std::cout << "Starting program, waiting for Live++ initialization..." << std::endl;
 
 	// create a synchronized agent, loading the Live++ agent from the given path, e.g. "ThirdParty/LivePP"
 	lpp::LppSynchronizedAgent lppAgent = lpp::LppCreateSynchronizedAgent(nullptr, L"LivePP");

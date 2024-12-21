@@ -53,6 +53,13 @@ namespace Mountain
         /// @brief Set the target FPS. If the given value is empty, will use vertical synchronization instead.
         MOUNTAIN_API static void SetTargetFps(std::optional<uint16_t> newTargetFps);
 
+        /// @brief Get the target delta time.
+        ///
+        /// This is either @code 1.f / GetTargetFps()@endcode if @code GetTargetFps().has_value()@endcode is @c true or @code 1.f / Screen::GetRefreshRate()@endcode otherwise.
+        ///
+        /// @see GetDeltaTime()
+        MOUNTAIN_API static float_t GetTargetDeltaTime();
+
         /// @brief Get how much time the last frame took. If this is equal to the delta time, then the game is lagging.
         MOUNTAIN_API static float_t GetLastFrameDuration();
 

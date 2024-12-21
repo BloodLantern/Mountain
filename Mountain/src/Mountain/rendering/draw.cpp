@@ -391,6 +391,10 @@ void Draw::Initialize()
     InitializeTextureBuffers();
     InitializeTextBuffers();
     InitializeRenderTargetBuffers();
+
+    glBindVertexArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
 void Draw::LoadResources()
@@ -428,8 +432,6 @@ void Draw::InitializePointBuffers()
     SetVertexAttribute(index, 2, sizeof(PointData), offset, 1);
     // Color
     SetVertexAttribute(++index, 4, sizeof(PointData), offset += sizeof(Vector2), 1);
-
-    glBindVertexArray(0);
 }
 
 void Draw::InitializeLineBuffers()
@@ -444,8 +446,6 @@ void Draw::InitializeLineBuffers()
     SetVertexAttribute(++index, 2, sizeof(LineData), offset += sizeof(Vector2), 1);
     // Color
     SetVertexAttribute(++index, 4, sizeof(LineData), offset += sizeof(Vector2), 1);
-    
-    glBindVertexArray(0);
 }
 
 void Draw::InitializeLineColoredBuffers()
@@ -461,8 +461,6 @@ void Draw::InitializeLineColoredBuffers()
     // Colors
     SetVertexAttribute(++index, 4, sizeof(LineColoredData), offset += sizeof(Vector2), 1);
     SetVertexAttribute(++index, 4, sizeof(LineColoredData), offset += sizeof(Color), 1);
-    
-    glBindVertexArray(0);
 }
 
 void Draw::InitializeTriangleBuffers()
@@ -478,8 +476,6 @@ void Draw::InitializeTriangleBuffers()
     SetVertexAttribute(++index, 2, sizeof(TriangleData), offset += sizeof(Vector2), 1);
     // Color
     SetVertexAttribute(++index, 4, sizeof(TriangleData), offset += sizeof(Vector2), 1);
-    
-    glBindVertexArray(0);
 }
 
 void Draw::InitializeTriangleColoredBuffers()
@@ -497,8 +493,6 @@ void Draw::InitializeTriangleColoredBuffers()
     SetVertexAttribute(++index, 4, sizeof(TriangleColoredData), offset += sizeof(Vector2), 1);
     SetVertexAttribute(++index, 4, sizeof(TriangleColoredData), offset += sizeof(Color), 1);
     SetVertexAttribute(++index, 4, sizeof(TriangleColoredData), offset += sizeof(Color), 1);
-    
-    glBindVertexArray(0);
 }
 
 void Draw::InitializeRectangleBuffers()
@@ -539,8 +533,6 @@ void Draw::InitializeRectangleBuffers()
     SetVertexAttribute(++index, 4, sizeof(RectangleData), offset += sizeof(Vector4), 1);
     // Color
     SetVertexAttribute(++index, 4, sizeof(RectangleData), offset += sizeof(Vector4), 1);
-    
-    glBindVertexArray(0);
 }
 
 void Draw::InitializeCircleBuffers()
@@ -572,8 +564,6 @@ void Draw::InitializeCircleBuffers()
     SetVertexAttribute(++index, 4, sizeof(CircleData), offset += sizeof(float_t), 1);
     // Filled
     SetVertexAttributeInt(++index, 1, sizeof(CircleData), offset += sizeof(Color), 1);
-    
-    glBindVertexArray(0);
 }
 
 void Draw::InitializeTextureBuffers()
@@ -613,8 +603,6 @@ void Draw::InitializeTextureBuffers()
     SetVertexAttribute(++index, 4, sizeof(TextureData), offset += sizeof(Vector4), 1);
     // Color
     SetVertexAttribute(++index, 4, sizeof(TextureData), offset += sizeof(Vector4), 1);
-    
-    glBindVertexArray(0);
 }
 
 void Draw::InitializeTextBuffers()
@@ -625,8 +613,6 @@ void Draw::InitializeTextBuffers()
     glBufferData(GL_ARRAY_BUFFER, sizeof(Vector4) * 4, nullptr, GL_DYNAMIC_DRAW);
 
     SetVertexAttribute(0, 4, sizeof(Vector4), 0);
-    
-    glBindVertexArray(0);
 }
 
 void Draw::InitializeRenderTargetBuffers()
@@ -650,12 +636,6 @@ void Draw::InitializeRenderTargetBuffers()
     // VAO
     // Vertex position
     SetVertexAttribute(0, 2, sizeof(Vector2), 0, 0);
-
-    // SSBO
-    glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_RenderTargetSsbo);
-    glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, m_RenderTargetSsbo);
-
-    glBindVertexArray(0);
 }
 
 void Draw::SetProjectionMatrix(const Matrix& newProjectionMatrix)
@@ -929,9 +909,11 @@ void Draw::RenderRenderTargetData(const List<RenderTargetData>& renderTargets, c
 
         glMemoryBarrier(GL_SHADER_STORAGE_BARRIER_BIT);
 
+        glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, m_RenderTargetSsbo);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
     }
-    
+
+    glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, 0);
     glBindTexture(GL_TEXTURE_2D, 0);
     m_RenderTargetShader->Unuse();
     glBindVertexArray(0);
