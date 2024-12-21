@@ -58,5 +58,7 @@ namespace Mountain
 
 		[[nodiscard]]
 		int32_t GetUniformLocation(std::string_view keyName) const;
+
+		void ReplaceIncludes(std::string& code);
 	};
 }

@@ -1,6 +1,7 @@
 ﻿#include "Mountain/utils/utils.hpp"
 
 #include <fstream>
+#include <ranges>
 #include <regex>
 
 #include <ImGui/imgui.h>
@@ -237,3 +238,15 @@ std::pair<int32_t, std::string_view> Utils::ByteSizeUnit(int64_t size)
 }
 
 std::string Utils::GetBuiltinShadersPath() { return BuiltinShadersPath.empty() ? "" : BuiltinShadersPath + '/'; }
+
+std::string Utils::Trim(const std::string_view str, const TrimOptions options)
+{
+    std::string result{ str.data(), str.length() };
+
+    if (options & TrimOptions::Start)
+        result.erase(result.begin(), std::ranges::find_if(result, [](const uint8_t c) { return !std::isspace(c); }));
+    if (options & TrimOptions::End)
+        result.erase(std::ranges::find_if(std::ranges::reverse_view(result), [](const uint8_t c) { return !std::isspace(c); }).base(), result.end());
+
+    return result;
+}

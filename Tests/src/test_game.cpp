@@ -156,8 +156,6 @@ void GameExample::LoadResources()
 
     vignette.effect.LoadResources();
     filmGrain.effect.LoadResources();
-
-    particleSystem.LoadResources();
 }
 
 void GameExample::Shutdown()
@@ -371,8 +369,7 @@ void GameExample::Render()
         }
 
         ImGui::Text("Frame time (without wait between frames): %f", Time::GetLastFrameDuration());
-        const float_t targetDeltaTime = 1.f / static_cast<float_t>(targetFps.has_value() ? targetFps.value() : refreshRate);
-        ImGui::Text("Frame time left (if negative the game is lagging): %f", targetDeltaTime - Time::GetLastFrameDuration());
+        ImGui::Text("Frame time left (if negative the game is lagging): %f", Time::GetTargetDeltaTime() - Time::GetLastFrameDuration());
         ImGui::Checkbox("Show inputs window", &showInputs);
         ImGui::SliderFloat("Time scale", &Time::timeScale, 0.f, 2.f);
         ImGui::Checkbox("Debug render", &debugRender);

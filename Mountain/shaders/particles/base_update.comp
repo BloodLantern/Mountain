@@ -1,26 +1,20 @@
-﻿#version 460 core
+#version 460 core
+
+#include "../utils.glsl"
+#include "common.glsl"
 
 layout (local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
-
-struct Particle
-{
-    float lifetime;
-    int padding0[3];
-
-    vec2 offset;
-    vec2 velocity;
-    vec4 color;
-};
 
 uniform uint particleCount;
 
 uniform float particleLifetime;
 
 uniform float deltaTime;
+uniform float time;
 
-layout(std430, binding = 0) buffer Updates
+layout(std430, binding = 0) coherent buffer AliveParticles
 {
-    bool updates[]; // true if the particle should be updated, e.g. if it is alive
+    bool aliveParticles[]; // true if the particle is alive and should be updated
 };
 
 layout(std430, binding = 1) buffer Particles
@@ -30,21 +24,24 @@ layout(std430, binding = 1) buffer Particles
 
 Particle NewParticle()
 {
+    float r = Random(vec2(float(gl_GlobalInvocationID.x), time));
+    float r2 = Random(vec2(r, time));
+
     return Particle(
         particleLifetime,
-        { 0.f, 0.f, 0.f },
+        int[3](0.f, 0.f, 0.f),
         vec2(0.f, 0.f),
-        vec2(1.f, 0.f),
-        vec4(1.f, 0.f, 0.f, 1.f)
+        vec2(r, r2),
+        vec4(1.f)
     );
 }
 
 void main()
 {
     const uint id = gl_GlobalInvocationID.x;
-    Particle particle = particles[id];
+    Particle particle = particles[id]; // We take a copy of the current particle here so we need to remember to reinsert it in the buffer before exiting
 
-    if (!lifetimes[id])
+    if (!aliveParticles[id])
         return;
 
     if (particle.lifetime <= 0.f)
@@ -53,13 +50,14 @@ void main()
 
         if (particle.lifetime > negativeInfinity)
         {
-            lifetimes[id] = false;
+            aliveParticles[id] = false;
             particle.lifetime = negativeInfinity; // Use negative infinity as a flag
+            particles[id] = particle;
             return;
         }
         else
         {
-            lifetimes[id] = true;
+            aliveParticles[id] = true;
             particle = NewParticle();
         }
     }
