@@ -23,6 +23,14 @@
 /// @brief Namespace containing utility functions that don't belong anywhere else
 namespace Mountain::Utils
 {
+    enum class TrimOptions : uint8_t
+    {
+        None    = 0,
+        Start   = 1 << 0,
+        End     = 1 << 1,
+        Both    = Start | End
+    };
+
     template <typename T>
     using ProjectionFunc = T(*)(T);
 
@@ -207,6 +215,10 @@ namespace Mountain::Utils
     MOUNTAIN_API std::pair<int32_t, std::string_view> ByteSizeUnit(int64_t size);
 
     MOUNTAIN_API std::string GetBuiltinShadersPath();
+
+    MOUNTAIN_API std::string Trim(std::string_view str, TrimOptions options = TrimOptions::Both);
 }
+
+ENUM_FLAGS(Mountain::Utils::TrimOptions)
 
 #include "Mountain/utils/utils.inl"
