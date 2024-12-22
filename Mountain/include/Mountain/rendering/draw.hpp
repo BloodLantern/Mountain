@@ -341,6 +341,7 @@ namespace Mountain
 
         friend class Renderer;
         friend class RenderTarget;
+        friend class ParticleSystem;
     };
 }
 
