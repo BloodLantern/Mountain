@@ -8,3 +8,15 @@ struct Particle
     vec2 velocity;
     vec4 color;
 };
+
+layout(std430, binding = 0) coherent buffer AliveParticles
+{
+    bool aliveParticles[]; // true if the particle is alive and should be updated and drawn
+};
+
+layout(std430, binding = 1) buffer Particles
+{
+    Particle particles[];
+};
+
+uniform uint particleCount;

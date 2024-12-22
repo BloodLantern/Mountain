@@ -283,6 +283,8 @@ void GameExample::Render()
     
     if (ImGui::CollapsingHeader("Window"))
     {
+        ImGui::PushID("Window");
+
         Vector2i position = Window::GetPosition();
         ImGui::DragInt2("Position", position.Data());
         Window::SetPosition(position);
@@ -294,6 +296,8 @@ void GameExample::Render()
         static bool_t fullscreen = false;
         ImGui::Checkbox("Enable fullscreen", &fullscreen);
         Window::SetFullscreen(fullscreen);
+
+        ImGui::PopID();
     }
     
     if (ImGui::CollapsingHeader("Renderer"))
@@ -350,6 +354,8 @@ void GameExample::Render()
     static bool_t showResourceManagerWindows = false;
     if (ImGui::CollapsingHeader("Tests"))
     {
+        ImGui::PushID("Tests");
+
         ImGui::Text("Delta time: %.3f, Unscaled: %.3f, FPS: %.1f", Time::GetDeltaTime(), Time::GetDeltaTimeUnscaled(), 1.f / Time::GetDeltaTimeUnscaled());
 
         auto targetFps = Time::GetTargetFps();
@@ -383,6 +389,8 @@ void GameExample::Render()
         ImGui::Checkbox("Show ImGui demo window", &showDemoWindow);
 
         ImGui::Checkbox("Show File/Resource Manager windows", &showResourceManagerWindows);
+
+        ImGui::PopID();
     }
 
     if (showDemoWindow)
@@ -395,6 +403,8 @@ void GameExample::Render()
 
     if (ImGui::CollapsingHeader("Player"))
     {
+        ImGui::PushID("Player");
+
         ImGui::DragFloat2("Position", player->position.Data());
         ImGui::DragFloat("Movement speed", &player->movementSpeed);
         
@@ -402,6 +412,8 @@ void GameExample::Render()
         float_t volume = listener->GetVolume();
         ImGui::SliderFloat("Audio volume", &volume, 0.f, 1.f);
         listener->SetVolume(volume);
+
+        ImGui::PopID();
     }
 
     if (ImGui::CollapsingHeader("Particle system"))

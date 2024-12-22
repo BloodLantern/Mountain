@@ -4,6 +4,7 @@
 
 #include "Mountain/core.hpp"
 #include "Mountain/rendering/particle_system_settings.hpp"
+#include "Mountain/resource/shader.hpp"
 #include "Mountain/utils/color.hpp"
 #include "Mountain/utils/list.hpp"
 
@@ -55,7 +56,9 @@ namespace Mountain
         double_t m_SpawnTimer = 0.0;
 
         Pointer<ComputeShader> m_BaseUpdateComputeShader;
+        Pointer<Shader> m_DrawShader;
         uint32_t m_AliveSsbo, m_ParticleSsbo;
+        uint32_t m_DrawVao;
 
         /// @brief Wait for the GPU buffer to sync with the CPU. After that call, the CPU can read/write to that buffer.
         static void WaitBufferSync(__GLsync* syncObject);
