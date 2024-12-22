@@ -20,11 +20,14 @@ namespace
 ParticleSystem::ParticleSystem(const uint32_t maxParticles)
 {
     m_BaseUpdateComputeShader = ResourceManager::Get<ComputeShader>(Utils::GetBuiltinShadersPath() + "particles/base_update.comp");
+    m_DrawShader = ResourceManager::Get<Shader>(Utils::GetBuiltinShadersPath() + "particles/draw");
 
     glCreateBuffers(2, &m_AliveSsbo);
+    glCreateVertexArrays(1, &m_DrawVao);
 
     glObjectLabel(GL_BUFFER, m_AliveSsbo, -1, "Particle System Alive SSBO");
     glObjectLabel(GL_BUFFER, m_ParticleSsbo, -1, "Particle System Particle SSBO");
+    glObjectLabel(GL_VERTEX_ARRAY, m_DrawVao, -1, "Particle System Draw VAO");
 
     SetMaxParticles(maxParticles);
 }
@@ -33,6 +36,8 @@ ParticleSystem::ParticleSystem(const uint32_t maxParticles)
 ParticleSystem::~ParticleSystem()
 {
     glUnmapNamedBuffer(m_AliveSsbo);
+
+    glDeleteVertexArrays(1, &m_DrawVao);
     glDeleteBuffers(2, &m_AliveSsbo);
 }
 
@@ -84,25 +89,32 @@ void ParticleSystem::Update()
 
 void ParticleSystem::Render()
 {
-    /*for (const Particle& particle : m_Particles)
-    {
-        if (!particle.alive)
-            continue;
+    // TODO - Render using the Draw API as otherwise it would ignore the draw order for depth
+    m_DrawShader->SetUniform("projection", Draw::m_ProjectionMatrix * Draw::m_CameraMatrix);
 
-        Draw::Point(position + particle.offset, particle.color);
-    }*/
+    m_DrawShader->SetUniform("systemPosition", position);
+
+    glBindVertexArray(m_DrawVao);
+    m_DrawShader->Use();
+    glBindBuffersBase(GL_SHADER_STORAGE_BUFFER, 0, 2, &m_AliveSsbo);
+
+    glDrawArraysInstanced(GL_POINTS, 0, 1, static_cast<GLsizei>(m_MaxParticles));
+
+    glBindBuffersBase(GL_SHADER_STORAGE_BUFFER, 0, 2, nullptr);
+    m_DrawShader->Unuse();
+    glBindVertexArray(0);
 }
 
 void ParticleSystem::RenderImGui()
 {
     ImGui::PushID(this);
+
     constexpr size_t zero = 0;
     ImGui::SeparatorText("System settings");
     ImGui::DragFloat2("Position", position.Data());
     ImGui::DragScalar("Spawn rate", ImGuiDataType_U32, &spawnRate, 1, &zero, nullptr, nullptr, ImGuiSliderFlags_AlwaysClamp);
-    ImGui::BeginDisabled();
-    ImGui::DragScalar("Spawn timer", ImGuiDataType_Double, &m_SpawnTimer);
 
+    ImGui::BeginDisabled();
     WaitBufferSync(m_SyncObject);
 
     uint32_t currentParticles = 0;
@@ -113,9 +125,9 @@ void ParticleSystem::RenderImGui()
     }
 
     LockBuffer(m_SyncObject);
-
     ImGui::DragScalar("Current particles", ImGuiDataType_U32, &currentParticles);
     ImGui::EndDisabled();
+
     uint32_t maxParticles = m_MaxParticles;
     ImGui::DragScalar("Max particles", ImGuiDataType_U32, &maxParticles, 1, &zero, nullptr, nullptr, ImGuiSliderFlags_AlwaysClamp);
     if (maxParticles != m_MaxParticles)
@@ -126,6 +138,7 @@ void ParticleSystem::RenderImGui()
 
     /*for (const auto& setting : particleSettings)
         setting->RenderImGui(*this);*/
+
     ImGui::PopID();
 }
 
@@ -138,7 +151,9 @@ void ParticleSystem::SetMaxParticles(const uint32_t newMaxParticles)
 
     m_MaxParticles = newMaxParticles;
 
-    glNamedBufferData(m_ParticleSsbo, static_cast<GLsizeiptr>(ParticleStructSize * newMaxParticles), nullptr, GL_DYNAMIC_COPY);
+    List<uint8_t> emptyData(ParticleStructSize * newMaxParticles);
+    glNamedBufferData(m_ParticleSsbo, static_cast<GLsizeiptr>(ParticleStructSize * newMaxParticles), emptyData.GetData(), GL_DYNAMIC_COPY);
+    emptyData.Resize(0);
 
     if (m_AliveParticles)
     {
@@ -155,6 +170,7 @@ void ParticleSystem::SetMaxParticles(const uint32_t newMaxParticles)
     m_AliveParticles = static_cast<int32_t*>(glMapNamedBufferRange(m_AliveSsbo, 0, aliveSsboSize, GL_MAP_PERSISTENT_BIT | GL_MAP_READ_BIT | GL_MAP_WRITE_BIT | GL_MAP_COHERENT_BIT));
 
     m_BaseUpdateComputeShader->SetUniform("particleCount", newMaxParticles);
+    m_DrawShader->SetUniform("particleCount", newMaxParticles);
 
     glMemoryBarrier(GL_SHADER_STORAGE_BARRIER_BIT);
 }
