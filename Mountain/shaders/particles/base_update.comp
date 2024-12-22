@@ -1,26 +1,14 @@
 #version 460 core
 
-#include "../utils.glsl"
-#include "common.glsl"
-
 layout (local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 
-uniform uint particleCount;
+#include "../utils.glsl"
+#include "common.glsl"
 
 uniform float particleLifetime;
 
 uniform float deltaTime;
 uniform float time;
-
-layout(std430, binding = 0) coherent buffer AliveParticles
-{
-    bool aliveParticles[]; // true if the particle is alive and should be updated
-};
-
-layout(std430, binding = 1) buffer Particles
-{
-    Particle particles[];
-};
 
 Particle NewParticle()
 {
@@ -31,7 +19,7 @@ Particle NewParticle()
         particleLifetime,
         int[3](0.f, 0.f, 0.f),
         vec2(0.f, 0.f),
-        vec2(r, r2),
+        (normalize(vec2(r, r2) * 2.f - vec2(1.f))) * 50.f,
         vec4(1.f)
     );
 }
