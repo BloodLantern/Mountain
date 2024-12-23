@@ -171,7 +171,7 @@
     <ClInclude Include="include\Mountain\rendering\graphics.hpp" />
     <ClInclude Include="include\Mountain\rendering\light_source.hpp" />
     <ClInclude Include="include\Mountain\rendering\particle_system.hpp" />
-    <ClInclude Include="include\Mountain\rendering\particle_system_settings.hpp" />
+    <ClInclude Include="include\Mountain\rendering\particle_system_modules.hpp" />
     <ClInclude Include="include\Mountain\rendering\renderer.hpp" />
     <ClInclude Include="include\Mountain\rendering\render_target.hpp" />
     <ClInclude Include="include\Mountain\resource\audio_track.hpp" />
@@ -343,7 +343,7 @@
     </ClCompile>
     <ClCompile Include="src\Mountain\rendering\graphics.cpp" />
     <ClCompile Include="src\Mountain\rendering\particle_system.cpp" />
-    <ClCompile Include="src\Mountain\rendering\particle_system_settings.cpp" />
+    <ClCompile Include="src\Mountain\rendering\particle_system_modules.cpp" />
     <ClCompile Include="src\Mountain\rendering\renderer.cpp" />
     <ClCompile Include="src\Mountain\rendering\render_target.cpp" />
     <ClCompile Include="src\Mountain\resource\audio_track.cpp" />
@@ -377,10 +377,14 @@
   <ItemGroup>
     <Content Include="shaders\circle\circle.frag" />
     <Content Include="shaders\circle\circle.vert" />
+    <Content Include="shaders\easing.glsl" />
     <Content Include="shaders\effects\film_grain.comp" />
     <Content Include="shaders\line_colored\line_colored.frag" />
     <Content Include="shaders\line_colored\line_colored.vert" />
-    <Content Include="shaders\particles\base_update.comp" />
+    <Content Include="shaders\particles\color_over_lifetime.glsl" />
+    <Content Include="shaders\particles\force_over_lifetime.glsl" />
+    <Content Include="shaders\particles\module_types.glsl" />
+    <Content Include="shaders\particles\update.comp" />
     <Content Include="shaders\particles\common.glsl" />
     <Content Include="shaders\particles\draw\draw.frag" />
     <Content Include="shaders\particles\draw\draw.vert" />

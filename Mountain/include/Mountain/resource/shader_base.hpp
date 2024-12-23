@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+#include <unordered_set>
+
 #include "Mountain/core.hpp"
 #include "Mountain/resource/resource.hpp"
 #include "Mountain/utils/color.hpp"
@@ -9,43 +11,46 @@ namespace Mountain
 	class ShaderBase : public Resource
 	{
 	public:
+		/// @brief List of files that are included in this shader file
+		std::unordered_set<std::filesystem::path> dependentShaderFiles;
+
 		using Resource::Resource;
 
 		/// @brief Sets an int (signed, 32 bits) variable in a shader
-		MOUNTAIN_API void SetUniform(std::string_view keyName, int32_t value) const;
+		MOUNTAIN_API void SetUniform(const char_t* keyName, int32_t value) const;
 
 		/// @brief Sets an uint (unsigned, 32 bits) variable in a shader
-		MOUNTAIN_API void SetUniform(std::string_view keyName, uint32_t value) const;
+		MOUNTAIN_API void SetUniform(const char_t* keyName, uint32_t value) const;
 
 		/// @brief Sets a bool (signed, 32 bits) variable in a shader
-		MOUNTAIN_API void SetUniform(std::string_view keyName, bool_t value) const;
+		MOUNTAIN_API void SetUniform(const char_t* keyName, bool_t value) const;
 
 		/// @brief Sets a float (32 bits) variable in a shader
-		MOUNTAIN_API void SetUniform(std::string_view keyName, float_t value) const;
+		MOUNTAIN_API void SetUniform(const char_t* keyName, float_t value) const;
 
 		/// @brief Sets a Vector2 (2 floats, 64 bits) variable in a shader
-		MOUNTAIN_API void SetUniform(std::string_view keyName, Vector2i value) const;
+		MOUNTAIN_API void SetUniform(const char_t* keyName, Vector2i value) const;
 
 		/// @brief Sets a Vector2 (2 floats, 64 bits) variable in a shader
-		MOUNTAIN_API void SetUniform(std::string_view keyName, Vector2 value) const;
+		MOUNTAIN_API void SetUniform(const char_t* keyName, Vector2 value) const;
 
 		/// @brief Sets a Vector3 (3 floats, 96 bits) variable in a shader
-		MOUNTAIN_API void SetUniform(std::string_view keyName, const Vector3& value) const;
+		MOUNTAIN_API void SetUniform(const char_t* keyName, const Vector3& value) const;
 
 		/// @brief Sets a Vector4 (4 floats, 128 bits) variable in a shader
-		MOUNTAIN_API void SetUniform(std::string_view keyName, const Vector4& value) const;
+		MOUNTAIN_API void SetUniform(const char_t* keyName, const Vector4& value) const;
 
 		/// @brief Sets a Color (4 floats, 128 bits) variable in a shader
-		MOUNTAIN_API void SetUniform(std::string_view keyName, const Color& value) const;
+		MOUNTAIN_API void SetUniform(const char_t* keyName, const Color& value) const;
 
 		/// @brief Sets a Matrix2 (4 floats, 128 bits) variable in a shader
-		MOUNTAIN_API void SetUniform(std::string_view keyName, const Matrix2& value) const;
+		MOUNTAIN_API void SetUniform(const char_t* keyName, const Matrix2& value) const;
 
 		/// @brief Sets a Matrix3 (9 floats, 288 bits) variable in a shader
-		MOUNTAIN_API void SetUniform(std::string_view keyName, const Matrix3& value) const;
+		MOUNTAIN_API void SetUniform(const char_t* keyName, const Matrix3& value) const;
 
 		/// @brief Sets a Matrix (16 floats, 512 bits) variable in a shader
-		MOUNTAIN_API void SetUniform(std::string_view keyName, const Matrix& value) const;
+		MOUNTAIN_API void SetUniform(const char_t* keyName, const Matrix& value) const;
 
 		/// @brief Gets the internal id of the shader
 		[[nodiscard]]
@@ -57,8 +62,8 @@ namespace Mountain
 		void CheckLinkError();
 
 		[[nodiscard]]
-		int32_t GetUniformLocation(std::string_view keyName) const;
+		int32_t GetUniformLocation(const char_t* keyName) const;
 
-		void ReplaceIncludes(std::string& code);
+		static void ReplaceIncludes(std::string& code, const std::filesystem::path& path, std::unordered_set<std::filesystem::path>& replacedFiles);
 	};
 }

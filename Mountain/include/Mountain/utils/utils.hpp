@@ -219,6 +219,58 @@ namespace Mountain::Utils
     MOUNTAIN_API std::string Trim(std::string_view str, TrimOptions options = TrimOptions::Both);
 }
 
+namespace Easing
+{
+    enum class Type : uint8_t
+    {
+        Linear,
+
+        SineIn,
+        SineOut,
+        SineInOut,
+
+        QuadIn,
+        QuadOut,
+        QuadInOut,
+
+        CubicIn,
+        CubicOut,
+        CubicInOut,
+
+        QuartIn,
+        QuartOut,
+        QuartInOut,
+
+        QuintIn,
+        QuintOut,
+        QuintInOut,
+
+        ExpoIn,
+        ExpoOut,
+        ExpoInOut,
+
+        CircIn,
+        CircOut,
+        CircInOut,
+
+        BackIn,
+        BackOut,
+        BackInOut,
+
+        ElasticIn,
+        ElasticOut,
+        ElasticInOut,
+
+        BounceIn,
+        BounceOut,
+        BounceInOut,
+
+        Count
+    };
+
+    ENUM_COUNT(Type);
+}
+
 ENUM_FLAGS(Mountain::Utils::TrimOptions)
 
 #include "Mountain/utils/utils.inl"

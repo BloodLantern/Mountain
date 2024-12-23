@@ -24,7 +24,7 @@ bool_t ComputeShader::SetSourceData(const Pointer<File>& shader)
 bool_t ComputeShader::Load(const char_t* const buffer, const int64_t length)
 {
     m_Code = std::string{ buffer, static_cast<size_t>(length) };
-    ReplaceIncludes(m_Code);
+    ReplaceIncludes(m_Code, m_File->GetPath(), dependentShaderFiles);
 
     m_SourceDataSet = true;
 
@@ -71,6 +71,7 @@ void ComputeShader::Unload()
 {
 	glDeleteProgram(m_Id);
 
+    dependentShaderFiles.clear();
     m_Id = 0;
     m_Loaded = false;
 }
