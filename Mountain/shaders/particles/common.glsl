@@ -20,3 +20,6 @@ layout(std430, binding = 1) buffer Particles
 };
 
 uniform uint particleCount;
+uniform float deltaTime;
+
+uniform float particleLifetime;

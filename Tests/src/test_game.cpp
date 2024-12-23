@@ -29,7 +29,7 @@ GameExample::GameExample(const char_t* const windowTitle)
     : Game(windowTitle)
     , renderTarget(BaseResolution, Graphics::MagnificationFilter::Nearest)
 {
-    renderTarget.ambientLight = Color(0.1f);
+    //renderTarget.ambientLight = Color(0.1f);
 }
 
 template <Concepts::EffectT T>
@@ -68,6 +68,48 @@ namespace
             ImGui::TreePop();
         }
     }
+
+    void ReloadShader(const std::filesystem::path& path)
+    {
+        Logger::LogInfo("Reloading shader file {}", path);
+
+        const std::string extension = path.extension().string();
+
+        auto f = FileManager::Get(Utils::GetBuiltinShadersPath() + relative(path, Utils::GetBuiltinShadersPath()).generic_string());
+        if (!f)
+            return;
+        f->Reload();
+
+        for (auto& shaderBase : ResourceManager::FindAll<ShaderBase>())
+        {
+            std::filesystem::path shaderParentPath;
+            Pointer<Shader> shader = Utils::DynamicPointerCast<Shader>(shaderBase);
+            if (shader)
+            {
+                shaderParentPath = shader->GetFiles()[0]->GetParent()->GetPath();
+            }
+            else
+            {
+                Pointer<ComputeShader> computeShader = Utils::DynamicPointerCast<ComputeShader>(shaderBase);
+                if (computeShader)
+                    shaderParentPath = computeShader->GetFile()->GetParent()->GetPath();
+            }
+
+            if (shaderBase->dependentShaderFiles.contains(path))
+                shadersToReload.Add(shaderBase);
+        }
+
+        const bool_t isDrawShader = Utils::StringArrayContains(Shader::VertexFileExtensions, extension) ||
+                                    Utils::StringArrayContains(Shader::FragmentFileExtensions, extension);
+        const std::string name = isDrawShader ? path.stem().string() : path.generic_string();
+
+        if (!ResourceManager::Contains(name))
+            return;
+
+        const Pointer s = ResourceManager::Get<ShaderBase>(name);
+
+        shadersToReload.Add(s);
+    }
 }
 
 void GameExample::Initialize()
@@ -77,26 +119,27 @@ void GameExample::Initialize()
     shadersWatcher.Start();
     shadersWatcher.onModified += [&](const std::filesystem::path& path)
     {
+        shadersToReloadMutex.lock();
         if (is_directory(path))
+        {
+            for (const auto& p : std::filesystem::recursive_directory_iterator{
+                     FileManager::Get<Directory>(relative(path))->GetPath()
+                 })
+            {
+                if (p.is_directory())
+                    continue;
+
+                ReloadShader(p);
+            }
+            shadersToReloadMutex.unlock();
             return;
+        }
 
         std::string pathString = path.generic_string();
         if (pathString.ends_with('~'))
             pathString.pop_back();
 
-        std::filesystem::path p = pathString;
-
-        bool_t isComputeShader = Utils::StringArrayContains(ComputeShader::FileExtensions, p.extension().string());
-
-        std::string name = isComputeShader ? relative(p, Utils::GetBuiltinShadersPath()).generic_string() : p.stem().string();
-
-        auto s = ResourceManager::Get<ShaderBase>(Utils::GetBuiltinShadersPath() + name);
-        if (!s)
-            return;
-        s->GetFile()->Reload();
-
-        shadersToReloadMutex.lock();
-        shadersToReload.Add(s);
+        ReloadShader(relative(std::filesystem::path{ pathString }));
         shadersToReloadMutex.unlock();
     };
 
@@ -104,24 +147,24 @@ void GameExample::Initialize()
 
     renderTarget.SetDebugName("Game RenderTarget");
 
-    particleSystem.position = { 250.f, 100.f };
-    /*particleSystem.particleSettings.AddRange(
+    particleSystem.position = BaseResolution * 0.5f;//{ 250.f, 100.f };
+    particleSystem.modules.AddRange(
         {
-            std::make_shared<ParticleSystemSettings::ColorOverLifetime>(),
-            std::make_shared<ParticleSystemSettings::Acceleration>(),
+            std::make_shared<ParticleSystemModules::ColorOverLifetime>(),
+            std::make_shared<ParticleSystemModules::ForceOverLifetime>(),
         }
-    );*/
+    );
 
     Game::Initialize();
 }
 
 void GameExample::LoadResources()
 {
-    FileManager::LoadDirectory("assets");
-    ResourceManager::LoadAll();
+    /*FileManager::LoadDirectory("assets");
+    ResourceManager::LoadAll();*/
 
     assetsWatcher.recursive = true;
-    assetsWatcher.onCreated += [](const auto& path)
+    assetsWatcher.onCreated += [](const std::filesystem::path& path)
     {
         if (is_directory(path))
             return;
@@ -129,7 +172,7 @@ void GameExample::LoadResources()
         FileManager::Load(path);
         ResourceManager::LoadAll();
     };
-    assetsWatcher.onModified += [](const auto& path)
+    assetsWatcher.onModified += [](const std::filesystem::path& path)
     {
         if (is_directory(path))
             return;
@@ -143,7 +186,7 @@ void GameExample::LoadResources()
             r->Reload();
     };
 
-    Entity* entity = new Entity(static_cast<Vector2>(BaseResolution) * 0.5f);
+    /*Entity* entity = new Entity(static_cast<Vector2>(BaseResolution) * 0.5f);
     entities.Add(entity);
     entity->AddComponent<SpinComponent>();
 
@@ -152,7 +195,7 @@ void GameExample::LoadResources()
 
     player->LoadResources();
 
-    font = ResourceManager::LoadFont("assets/font.ttf", 30);
+    font = ResourceManager::LoadFont("assets/font.ttf", 30);*/
 
     vignette.effect.LoadResources();
     filmGrain.effect.LoadResources();
@@ -171,8 +214,17 @@ void GameExample::Shutdown()
 void GameExample::Update()
 {
     shadersToReloadMutex.lock();
+    List<Pointer<ShaderBase>> reloadedShaders;
     for (auto shader : shadersToReload)
+    {
+        if (reloadedShaders.Contains(shader))
+            continue;
+
+        Logger::LogInfo("Reloading shader resource {}", shader->GetName());
+
         shader->Reload();
+        reloadedShaders.Add(shader);
+    }
     shadersToReload.Clear();
     shadersToReloadMutex.unlock();
 
@@ -193,7 +245,7 @@ void GameExample::Render()
     static Color clearColor = Color::Black();
     Draw::Clear(clearColor);
     
-    for (Entity* const entity : entities)
+    /*for (Entity* const entity : entities)
         entity->Render();
 
     const Vector2 resolutionFactor = renderTarget.GetSize() / BaseResolution;
@@ -248,7 +300,7 @@ void GameExample::Render()
     Draw::Texture(*oldLady, { 10.f, 150.f });
     Draw::Texture(*oldLady, { 10.f, 160.f });
 
-    player->Render();
+    player->Render();*/
 
     particleSystem.Render();
 
@@ -260,7 +312,7 @@ void GameExample::Render()
         player->RenderDebug();
     }
 
-    Draw::Text(*font, "Hello, tiny World!", { 90.f, 30.f });
+    //Draw::Text(*font, "Hello, tiny World!", { 90.f, 30.f });
 
     Renderer::PopRenderTarget();
 
@@ -275,9 +327,9 @@ void GameExample::Render()
     vignette.effect.imageBindings.Clear();
     filmGrain.effect.imageBindings.Clear();
 
-    Draw::Texture(*oldLady, { 10.f, 80.f });
+    /*Draw::Texture(*oldLady, { 10.f, 80.f });
 
-    Draw::Text(*font, "Hello, big World!", { 10.f, 160.f });
+    Draw::Text(*font, "Hello, big World!", { 10.f, 160.f });*/
 
     ImGui::Begin("Debug");
     
@@ -378,13 +430,13 @@ void GameExample::Render()
         ImGui::Text("Frame time left (if negative the game is lagging): %f", Time::GetTargetDeltaTime() - Time::GetLastFrameDuration());
         ImGui::Checkbox("Show inputs window", &showInputs);
         ImGui::SliderFloat("Time scale", &Time::timeScale, 0.f, 2.f);
-        ImGui::Checkbox("Debug render", &debugRender);
+        /*ImGui::Checkbox("Debug render", &debugRender);
         Sprite* s = character->GetComponent<Sprite>();
         float_t f = s->GetFrameDuration();
         const float_t oldF = f;
         ImGui::DragFloat("Old lady animation speed", &f, 0.01f);
         if (oldF != f)
-            s->SetFrameDuration(f);
+            s->SetFrameDuration(f);*/
 
         ImGui::Checkbox("Show ImGui demo window", &showDemoWindow);
 

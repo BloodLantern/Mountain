@@ -7,6 +7,7 @@
 #include "Mountain/input/time.hpp"
 #include "Mountain/rendering/draw.hpp"
 #include "Mountain/resource/resource_manager.hpp"
+#include "Mountain/utils/imgui_utils.hpp"
 #include "Mountain/utils/random.hpp"
 
 using namespace Mountain;
@@ -19,7 +20,7 @@ namespace
 // ReSharper disable CppObjectMemberMightNotBeInitialized
 ParticleSystem::ParticleSystem(const uint32_t maxParticles)
 {
-    m_BaseUpdateComputeShader = ResourceManager::Get<ComputeShader>(Utils::GetBuiltinShadersPath() + "particles/base_update.comp");
+    m_UpdateComputeShader = ResourceManager::Get<ComputeShader>(Utils::GetBuiltinShadersPath() + "particles/update.comp");
     m_DrawShader = ResourceManager::Get<Shader>(Utils::GetBuiltinShadersPath() + "particles/draw");
 
     glCreateBuffers(2, &m_AliveSsbo);
@@ -43,16 +44,25 @@ ParticleSystem::~ParticleSystem()
 
 void ParticleSystem::Update()
 {
+    if (!m_Playing)
+        return;
+
     const float_t deltaTime = useUnscaledDeltaTime ? Time::GetDeltaTimeUnscaled() : Time::GetDeltaTime();
 
-    m_BaseUpdateComputeShader->SetUniform("deltaTime", deltaTime);
-    m_BaseUpdateComputeShader->SetUniform("time", Time::GetTotalTime());
-    m_BaseUpdateComputeShader->SetUniform("particleLifetime", particleLifetime);
+    m_UpdateComputeShader->SetUniform("deltaTime", deltaTime);
+    m_UpdateComputeShader->SetUniform("time", Time::GetTotalTime());
+
+    m_UpdateComputeShader->SetUniform("particleLifetime", particleLifetime);
+
+    m_UpdateComputeShader->SetUniform("enabledModules", static_cast<uint32_t>(enabledModules));
+
+    for (const auto& module : modules)
+        module->SetComputeShaderUniforms(*m_UpdateComputeShader, enabledModules);
 
     WaitBufferSync(m_SyncObject);
 
     // Spawn new particles if necessary
-    if (m_SpawnTimer <= 0.0)
+    if (m_SpawnTimer <= 0.0 && spawnRate > 0)
     {
         const double_t spawnDelay = 1.0 / static_cast<double_t>(spawnRate);
         const uint32_t count = static_cast<uint32_t>(std::abs(m_SpawnTimer) / spawnDelay) + 1;
@@ -81,7 +91,7 @@ void ParticleSystem::Update()
     LockBuffer(m_SyncObject);
 
     glBindBuffersBase(GL_SHADER_STORAGE_BUFFER, 0, 2, &m_AliveSsbo);
-    m_BaseUpdateComputeShader->Dispatch(m_MaxParticles);
+    m_UpdateComputeShader->Dispatch(m_MaxParticles);
     glBindBuffersBase(GL_SHADER_STORAGE_BUFFER, 0, 2, nullptr);
 
     m_SpawnTimer -= deltaTime;
@@ -108,6 +118,13 @@ void ParticleSystem::Render()
 void ParticleSystem::RenderImGui()
 {
     ImGui::PushID(this);
+
+    ImGui::SeparatorText("System controls");
+    if (ImGui::Button(m_Playing ? "Pause" : "Play"))
+        TogglePlay();
+    ImGui::SameLine();
+    if (ImGui::Button("Restart"))
+        Restart();
 
     constexpr size_t zero = 0;
     ImGui::SeparatorText("System settings");
@@ -136,10 +153,24 @@ void ParticleSystem::RenderImGui()
     ImGui::SeparatorText("Particles settings");
     ImGui::DragFloat("Lifetime", &particleLifetime, 0.01f, 0.f, std::numeric_limits<float_t>::max(), "%.2f", ImGuiSliderFlags_AlwaysClamp);
 
-    /*for (const auto& setting : particleSettings)
-        setting->RenderImGui(*this);*/
+    ImGui::SeparatorText("Modules settings");
+    uint32_t* enabledModulesInt = reinterpret_cast<uint32_t*>(&enabledModules);
+    ImGui::CheckboxFlags("Enable all modules", enabledModulesInt, static_cast<uint32_t>(ParticleSystemModules::Types::All));
+    for (const auto& module : modules)
+        module->RenderImGui(enabledModulesInt);
 
     ImGui::PopID();
+}
+
+void ParticleSystem::TogglePlay()
+{
+    m_Playing = !m_Playing;
+}
+
+void ParticleSystem::Restart()
+{
+    SetMaxParticles(m_MaxParticles);
+    m_Playing = true;
 }
 
 uint32_t ParticleSystem::GetMaxParticles() const { return m_MaxParticles; }
@@ -169,7 +200,7 @@ void ParticleSystem::SetMaxParticles(const uint32_t newMaxParticles)
 
     m_AliveParticles = static_cast<int32_t*>(glMapNamedBufferRange(m_AliveSsbo, 0, aliveSsboSize, GL_MAP_PERSISTENT_BIT | GL_MAP_READ_BIT | GL_MAP_WRITE_BIT | GL_MAP_COHERENT_BIT));
 
-    m_BaseUpdateComputeShader->SetUniform("particleCount", newMaxParticles);
+    m_UpdateComputeShader->SetUniform("particleCount", newMaxParticles);
     m_DrawShader->SetUniform("particleCount", newMaxParticles);
 
     glMemoryBarrier(GL_SHADER_STORAGE_BARRIER_BIT);
