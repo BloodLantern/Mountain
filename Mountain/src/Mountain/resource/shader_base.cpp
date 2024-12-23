@@ -9,62 +9,62 @@
 
 using namespace Mountain;
 
-void ShaderBase::SetUniform(const std::string_view keyName, const int32_t value) const
+void ShaderBase::SetUniform(const char_t* const keyName, const int32_t value) const
 {
     glProgramUniform1i(m_Id, GetUniformLocation(keyName), value);
 }
 
-void ShaderBase::SetUniform(const std::string_view keyName, const uint32_t value) const
+void ShaderBase::SetUniform(const char_t* const keyName, const uint32_t value) const
 {
     glProgramUniform1ui(m_Id, GetUniformLocation(keyName), value);
 }
 
-void ShaderBase::SetUniform(const std::string_view keyName, const bool_t value) const
+void ShaderBase::SetUniform(const char_t* const keyName, const bool_t value) const
 {
     SetUniform(keyName, static_cast<int32_t>(value));
 }
 
-void ShaderBase::SetUniform(const std::string_view keyName, const float_t value) const
+void ShaderBase::SetUniform(const char_t* const keyName, const float_t value) const
 {
     glProgramUniform1f(m_Id, GetUniformLocation(keyName), value);
 }
 
-void ShaderBase::SetUniform(const std::string_view keyName, const Vector2i value) const
+void ShaderBase::SetUniform(const char_t* const keyName, const Vector2i value) const
 {
     glProgramUniform2iv(m_Id, GetUniformLocation(keyName), 1, value.Data());
 }
 
-void ShaderBase::SetUniform(const std::string_view keyName, const Vector2 value) const
+void ShaderBase::SetUniform(const char_t* const keyName, const Vector2 value) const
 {
     glProgramUniform2fv(m_Id, GetUniformLocation(keyName), 1, value.Data());
 }
 
-void ShaderBase::SetUniform(const std::string_view keyName, const Vector3& value) const
+void ShaderBase::SetUniform(const char_t* const keyName, const Vector3& value) const
 {
     glProgramUniform3fv(m_Id, GetUniformLocation(keyName), 1, value.Data());
 }
 
-void ShaderBase::SetUniform(const std::string_view keyName, const Vector4& value) const
+void ShaderBase::SetUniform(const char_t* const keyName, const Vector4& value) const
 {
     glProgramUniform4fv(m_Id, GetUniformLocation(keyName), 1, value.Data());
 }
 
-void ShaderBase::SetUniform(const std::string_view keyName, const Color& value) const
+void ShaderBase::SetUniform(const char_t* const keyName, const Color& value) const
 {
     SetUniform(keyName, static_cast<Vector4>(value));
 }
 
-void ShaderBase::SetUniform(const std::string_view keyName, const Matrix2& value) const
+void ShaderBase::SetUniform(const char_t* const keyName, const Matrix2& value) const
 {
     glProgramUniformMatrix2fv(m_Id, GetUniformLocation(keyName), 1, GL_FALSE, value.Data());
 }
 
-void ShaderBase::SetUniform(const std::string_view keyName, const Matrix3& value) const
+void ShaderBase::SetUniform(const char_t* const keyName, const Matrix3& value) const
 {
     glProgramUniformMatrix3fv(m_Id, GetUniformLocation(keyName), 1, GL_FALSE, value.Data());
 }
 
-void ShaderBase::SetUniform(const std::string_view keyName, const Matrix& value) const
+void ShaderBase::SetUniform(const char_t* const keyName, const Matrix& value) const
 {
     glProgramUniformMatrix4fv(m_Id, GetUniformLocation(keyName), 1, GL_FALSE, value.Data());
 }
@@ -86,15 +86,17 @@ void ShaderBase::CheckLinkError()
     }
 }
 
-int32_t ShaderBase::GetUniformLocation(const std::string_view keyName) const
+int32_t ShaderBase::GetUniformLocation(const char_t* const keyName) const
 {
-    return glGetUniformLocation(m_Id, keyName.data());
+    return glGetUniformLocation(m_Id, keyName);
 }
 
-void ShaderBase::ReplaceIncludes(std::string& code)
+void ShaderBase::ReplaceIncludes(std::string& code, const std::filesystem::path& path, std::unordered_set<std::filesystem::path>& replacedFiles)
 {
     static constexpr std::string_view Prefix = "#include \"", Suffix = "\"";
+
     std::istringstream input{ code };
+
     size_t offset = 0, initialLineLength;
     for (std::string line; std::getline(input, line); offset += initialLineLength)
     {
@@ -105,18 +107,28 @@ void ShaderBase::ReplaceIncludes(std::string& code)
             continue;
 
         std::string filename = line.substr(Prefix.length(), line.find_last_of(Suffix) - Prefix.length());
-        std::filesystem::path filepath = (m_File->GetParent()->GetPath() / filename).lexically_normal();
+        std::filesystem::path filepath = (path.parent_path() / filename).lexically_normal();
         if (!FileManager::Contains(filepath))
         {
-            Logger::LogError("Shader file {} includes the file {} which is not in the FileManager", m_File, filepath);
+            Logger::LogError("Shader file {} includes the file {} which is not in the FileManager", path, filepath);
             return;
         }
 
         code.erase(offset, initialLineLength);
 
-        Pointer file = FileManager::Get(filepath);
-        code.insert(offset, std::string{ file->GetData(), static_cast<size_t>(file->GetSize()) });
+        // If the file has already been processed, ignore it as we already erased it
+        if (replacedFiles.contains(filepath))
+        {
+            initialLineLength = 0;
+            continue;
+        }
 
-        initialLineLength = file->GetSize();
+        Pointer file = FileManager::Get(filepath);
+        std::string fileContents{ file->GetData(), static_cast<size_t>(file->GetSize()) };
+        ReplaceIncludes(fileContents, filepath, replacedFiles);
+        code.insert(offset, fileContents);
+        replacedFiles.emplace(filepath);
+
+        initialLineLength = fileContents.length();
     }
 }
