@@ -3,14 +3,15 @@
 #include <Maths/vector2.hpp>
 
 #include "Mountain/core.hpp"
-#include "Mountain/rendering/particle_system_settings.hpp"
+#include "Mountain/rendering/particle_system_modules.hpp"
+#include "Mountain/resource/compute_shader.hpp"
 #include "Mountain/resource/shader.hpp"
 #include "Mountain/utils/color.hpp"
 #include "Mountain/utils/list.hpp"
 
 // OpenGL type forward declaration
 // ReSharper disable once CppInconsistentNaming
-struct __GLsync;
+struct __GLsync;  // NOLINT(clang-diagnostic-reserved-identifier, bugprone-reserved-identifier)
 
 namespace Mountain
 {
@@ -30,7 +31,8 @@ namespace Mountain
 
         float_t particleLifetime = 1.f;
 
-        //List<std::shared_ptr<ParticleSystemSettings::Base>> particleSettings;
+        List<std::shared_ptr<ParticleSystemModules::Base>> modules;
+        ParticleSystemModules::Types enabledModules = ParticleSystemModules::Types::None;
 
         MOUNTAIN_API ParticleSystem() = default;
         MOUNTAIN_API explicit ParticleSystem(uint32_t maxParticles);
@@ -41,6 +43,9 @@ namespace Mountain
         MOUNTAIN_API void Update();
         MOUNTAIN_API void Render();
         MOUNTAIN_API void RenderImGui();
+
+        MOUNTAIN_API void TogglePlay();
+        MOUNTAIN_API void Restart();
 
         [[nodiscard]]
         MOUNTAIN_API uint32_t GetMaxParticles() const;
@@ -54,8 +59,10 @@ namespace Mountain
         __GLsync* m_SyncObject = nullptr;
 
         double_t m_SpawnTimer = 0.0;
+        bool_t m_Playing = true;
 
-        Pointer<ComputeShader> m_BaseUpdateComputeShader;
+        Pointer<ComputeShader> m_UpdateComputeShader;
+
         Pointer<Shader> m_DrawShader;
         uint32_t m_AliveSsbo, m_ParticleSsbo;
         uint32_t m_DrawVao;

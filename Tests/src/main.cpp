@@ -6,6 +6,9 @@
 
 USE_DEDICATED_GPU
 
+//#define USE_LPP
+
+#ifdef USE_LPP
 // include the API for Windows, 64-bit, C++
 #include "LPP_API_x64_CPP.h"
 
@@ -19,10 +22,12 @@ namespace
 		return false;
 	}
 }
+#endif
 
 int32_t main(int32_t, char_t**)
 {
-	std::cout << "Starting program, waiting for Live++ initialization..." << std::endl;
+#ifdef USE_LPP
+	std::cout << "Starting program, waiting for Live++ initialization..." << std::endl;  // NOLINT(performance-avoid-endl)
 
 	// create a synchronized agent, loading the Live++ agent from the given path, e.g. "ThirdParty/LivePP"
 	lpp::LppSynchronizedAgent lppAgent = lpp::LppCreateSynchronizedAgent(nullptr, L"LivePP");
@@ -33,6 +38,7 @@ int32_t main(int32_t, char_t**)
 
 	// enable Live++ for all loaded modules
 	lppAgent.EnableModule(lpp::LppGetCurrentModulePath(), lpp::LPP_MODULES_OPTION_ALL_IMPORT_MODULES, nullptr, &LppFilterModuleCallback);
+#endif
 
 	Mountain::NoBinaryResources = true;
 	Mountain::BuiltinShadersPath = "Mountain/shaders";
@@ -40,6 +46,7 @@ int32_t main(int32_t, char_t**)
 	GameExample* game = new GameExample("Mountain tests");
 	game->Initialize();
 
+#ifdef USE_LPP
 	// run the main loop
 	while (game->NextFrame())
 	{
@@ -67,12 +74,17 @@ int32_t main(int32_t, char_t**)
 			break;
 		}
 	}
+#else
+	game->MainLoop();
+#endif
 
 	game->Shutdown();
 	delete game;
 
+#ifdef USE_LPP
 	// destroy the Live++ agent
 	LppDestroySynchronizedAgent(&lppAgent);
+#endif
 
     return 0;
 }

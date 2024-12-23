@@ -43,7 +43,7 @@ bool_t Shader::Load(const char_t* const buffer, const int64_t length, const Grap
 {
     ShaderCode& code = m_Code[static_cast<size_t>(type)];
     code.code = std::string(buffer, length);
-    ReplaceIncludes(code.code);
+    ReplaceIncludes(code.code, m_File->GetPath(), dependentShaderFiles);
     code.type = type;
 
     m_SourceDataSet = true;
@@ -103,6 +103,7 @@ void Shader::Unload()
 {
 	glDeleteProgram(m_Id);
 
+    dependentShaderFiles.clear();
     m_Id = 0;
     m_Loaded = false;
 }
