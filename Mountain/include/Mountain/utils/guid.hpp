@@ -11,68 +11,66 @@
 /// @file guid.hpp
 /// @brief Defines the Mountain::Guid class.
 
-BEGIN_MOUNTAIN
-
-/// @brief Stands for Global Unique Identifier, it represents a unique ID that's used to link pointers during serialization and deserialization
-class MOUNTAIN_API Guid final
+namespace Mountain
 {
-    static constexpr size_t Data4Size = 8;
-    
-public:
-    constexpr Guid() = default;
+    /// @brief Stands for Global Unique Identifier, it represents a unique ID that's used to link pointers during serialization and deserialization
+    class MOUNTAIN_API Guid final
+    {
+        static constexpr size_t Data4Size = 8;
 
-    /// @brief Empty guid
-    static constexpr Guid Empty() { return Guid(); }
-    
-    /// @brief Creates a new @ref Guid
-    /// @return New guid
-    static Guid New();
+    public:
+        constexpr Guid() = default;
 
-    /// @brief Parses a Guid from a string
-    /// @param str String
-    /// @returns Guid
-    static Guid FromString(const char_t* str);
-    
-    [[nodiscard]]
-    uint32_t GetData1() const;
-    
-    [[nodiscard]]
-    uint16_t GetData2() const;
-    
-    [[nodiscard]]
-    uint16_t GetData3() const;
-    
-    [[nodiscard]]
-    const std::array<uint8_t, Data4Size>& GetData4() const;
+        /// @brief Empty guid
+        static constexpr Guid Empty() { return Guid(); }
 
-    /// @brief Compares 2 @ref Guid
-    /// @param other Other guid
-    /// @return Whether the @ref Guid are equal
-    [[nodiscard]]
-    bool_t operator==(const Guid& other) const;
+        /// @brief Creates a new @ref Guid
+        /// @return New guid
+        static Guid New();
 
-    /// @brief Compares 2 @ref Guid
-    /// @param other Other guid
-    /// @return Whether the @ref Guid are different
-    [[nodiscard]]
-    bool_t operator!=(const Guid& other) const;
+        /// @brief Parses a Guid from a string
+        /// @param str String
+        /// @returns Guid
+        static Guid FromString(const char_t* str);
 
-    /// @brief Converts a @ref Guid to a string representation
-    explicit operator std::string() const;
+        [[nodiscard]]
+        uint32_t GetData1() const;
 
-private:
-    uint32_t m_Data1 = 0;
-    uint16_t m_Data2 = 0;
-    uint16_t m_Data3 = 0;
-    std::array<uint8_t, Data4Size> m_Data4 = {};
+        [[nodiscard]]
+        uint16_t GetData2() const;
 
-    friend struct std::hash<Guid>;
-};
+        [[nodiscard]]
+        uint16_t GetData3() const;
 
-END_MOUNTAIN
+        [[nodiscard]]
+        const std::array<uint8_t, Data4Size>& GetData4() const;
+
+        /// @brief Compares 2 @ref Guid
+        /// @param other Other guid
+        /// @return Whether the @ref Guid are equal
+        [[nodiscard]]
+        bool_t operator==(const Guid& other) const;
+
+        /// @brief Compares 2 @ref Guid
+        /// @param other Other guid
+        /// @return Whether the @ref Guid are different
+        [[nodiscard]]
+        bool_t operator!=(const Guid& other) const;
+
+        /// @brief Converts a @ref Guid to a string representation
+        explicit operator std::string() const;
+
+    private:
+        uint32_t m_Data1 = 0;
+        uint16_t m_Data2 = 0;
+        uint16_t m_Data3 = 0;
+        std::array<uint8_t, Data4Size> m_Data4 = {};
+
+        friend struct std::hash<Guid>;
+    };
+}
 
 /// @private
-#ifndef SWIG
 template <>
 struct std::hash<Mountain::Guid>
 {
@@ -124,4 +122,3 @@ struct std::formatter<Mountain::Guid>
         return std::ranges::copy(std::move(out).str(), ctx.out()).out;
     }
 };
-#endif

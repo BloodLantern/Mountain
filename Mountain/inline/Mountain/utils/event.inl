@@ -2,47 +2,46 @@
 
 #include "Mountain/utils/utils.hpp"
 
-BEGIN_MOUNTAIN
-
-template <typename... Args>
-void Event<Args...>::Invoke(Args... args) const
+namespace Mountain
 {
-    m_Functions.Iterate([&args...](const StdFunctionT* f) -> void
+    template <typename... Args>
+    void Event<Args...>::Invoke(Args... args) const
     {
-        (*f)(std::forward<Args>(args)...);
-    });
-}
-
-template <typename... Args>
-void Event<Args...>::operator()(Args... args) const { Invoke(args...); }
-
-template <typename... Args>
-void Event<Args...>::Clear()
-{
-    m_Functions.Clear();
-}
-
-template <typename... Args>
-Event<Args...>& Event<Args...>::operator+=(StdFunctionT func)
-{
-    m_Functions.Add(std::forward<StdFunctionT>(func));
-
-    return *this;
-}
-
-template <typename ... Args>
-Event<Args...>& Event<Args...>::operator-=(const StdFunctionT& func)
-{
-    for (size_t i = 0; i < m_Functions.GetSize(); i++)
-    {
-        if (Utils::FunctionAddress(m_Functions[i]) == Utils::FunctionAddress(func))
+        m_Functions.Iterate([&args...](const StdFunctionT* f) -> void
         {
-            m_Functions.RemoveAt(i);
-            break;
-        }
+            (*f)(std::forward<Args>(args)...);
+        });
     }
 
-    return *this;
-}
+    template <typename... Args>
+    void Event<Args...>::operator()(Args... args) const { Invoke(args...); }
 
-END_MOUNTAIN
+    template <typename... Args>
+    void Event<Args...>::Clear()
+    {
+        m_Functions.Clear();
+    }
+
+    template <typename... Args>
+    Event<Args...>& Event<Args...>::operator+=(StdFunctionT func)
+    {
+        m_Functions.Add(std::forward<StdFunctionT>(func));
+
+        return *this;
+    }
+
+    template <typename ... Args>
+    Event<Args...>& Event<Args...>::operator-=(const StdFunctionT& func)
+    {
+        for (size_t i = 0; i < m_Functions.GetSize(); i++)
+        {
+            if (Utils::FunctionAddress(m_Functions[i]) == Utils::FunctionAddress(func))
+            {
+                m_Functions.RemoveAt(i);
+                break;
+            }
+        }
+
+        return *this;
+    }
+}

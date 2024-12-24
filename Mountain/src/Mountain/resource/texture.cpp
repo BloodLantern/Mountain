@@ -33,14 +33,16 @@ void Texture::Load()
     glObjectLabel(GL_TEXTURE, m_Id, static_cast<GLsizei>(m_Name.length()), m_Name.c_str());
 #endif
 
-    glTextureParameteri(m_Id, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTextureParameteri(m_Id, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    const int32_t magFilter = ToOpenGl(m_Filter);
+    glTextureParameteri(m_Id, GL_TEXTURE_MIN_FILTER, magFilter);
+    glTextureParameteri(m_Id, GL_TEXTURE_MAG_FILTER, magFilter);
     
     glTextureParameteri(m_Id, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTextureParameteri(m_Id, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
-    glTextureStorage2D(m_Id, 1, GL_RGBA8, m_Size.x, m_Size.y);
-    glTextureSubImage2D(m_Id, 0, 0, 0, m_Size.x, m_Size.y, GL_RGBA, GL_UNSIGNED_BYTE, m_Data);
+    glTextureStorage2D(m_Id, 1, GL_RGBA32F, m_Size.x, m_Size.y);
+    if (m_Data)
+        glTextureSubImage2D(m_Id, 0, 0, 0, m_Size.x, m_Size.y, GL_RGBA, GL_UNSIGNED_BYTE, m_Data);
     
     m_Loaded = true;
 }
@@ -63,6 +65,33 @@ void Texture::ResetSourceData()
 Vector2i Texture::GetSize() const
 {
     return m_Size;
+}
+
+void Texture::SetSize(const Vector2i newSize)
+{
+    if (m_Loaded)
+        throw std::logic_error{ "Texture::SetSize cannot be called once the Texture has been loaded" };
+    m_Size = newSize;
+}
+
+Graphics::MagnificationFilter Texture::GetFilter() const
+{
+    return m_Filter;
+}
+
+void Texture::SetFilter(const Graphics::MagnificationFilter newFilter)
+{
+    if (m_Loaded)
+    {
+        const int32_t magFilter = ToOpenGl(newFilter);
+        glTextureParameteri(m_Id, GL_TEXTURE_MIN_FILTER, magFilter);
+        glTextureParameteri(m_Id, GL_TEXTURE_MAG_FILTER, magFilter);
+
+        glTextureParameteri(m_Id, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        glTextureParameteri(m_Id, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    }
+
+    m_Filter = newFilter;
 }
 
 void Texture::Use() const

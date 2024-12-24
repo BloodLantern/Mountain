@@ -10,9 +10,6 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <PropertyGroup>
-    <MountainDir>$(ProjectDir)..\Mountain\</MountainDir>
-  </PropertyGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -63,14 +60,20 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <EnableModules>true</EnableModules>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>include;$(MountainDir)include;$(MountainDir)inline;$(MountainDir)externals\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include;externals\include;..\Mountain\include;..\Mountain\inline;..\Mountain\externals\include;..\LivePP\API\x64</AdditionalIncludeDirectories>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <AdditionalOptions>/Gw %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
       <AdditionalOptions>/ignore:4098 /ignore:4099 /ignore:4217 /WHOLEARCHIVE:mountain.lib %(AdditionalOptions)</AdditionalOptions>
+      <CreateHotPatchableImage>Enabled</CreateHotPatchableImage>
+      <OptimizeReferences>false</OptimizeReferences>
+      <EnableCOMDATFolding>false</EnableCOMDATFolding>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -84,22 +87,25 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <EnableModules>true</EnableModules>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>include;$(MountainDir)include;$(MountainDir)inline;$(MountainDir)externals\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include;externals\include;..\Mountain\include;..\Mountain\inline;..\Mountain\externals\include;..\LivePP\API\x64</AdditionalIncludeDirectories>
+      <AdditionalOptions>/Gw %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <OptimizeReferences>true</OptimizeReferences>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>false</EnableCOMDATFolding>
+      <OptimizeReferences>false</OptimizeReferences>
+      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
       <AdditionalOptions>/ignore:4098 /ignore:4099 %(AdditionalOptions)</AdditionalOptions>
+      <CreateHotPatchableImage>Enabled</CreateHotPatchableImage>
+      <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\animated_character.cpp" />
     <ClCompile Include="src\camera.cpp" />
-    <ClCompile Include="src\Paddle.cpp" />
+    <ClCompile Include="src\player.cpp" />
     <ClCompile Include="src\spin_component.cpp" />
     <ClCompile Include="src\test_game.cpp" />
     <ClCompile Include="src\main.cpp" />
@@ -107,7 +113,7 @@
   <ItemGroup>
     <ClInclude Include="include\animated_character.hpp" />
     <ClInclude Include="include\camera.hpp" />
-    <ClInclude Include="include\Paddle.hpp" />
+    <ClInclude Include="include\player.hpp" />
     <ClInclude Include="include\spin_component.hpp" />
     <ClInclude Include="include\test_entity.hpp" />
     <ClInclude Include="include\test_game.hpp" />

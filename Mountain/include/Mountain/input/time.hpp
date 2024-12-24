@@ -8,79 +8,85 @@
 /// @file time.hpp
 /// @brief Defines the Mountain::Time static class.
 
-BEGIN_MOUNTAIN
-
-/// @brief Defines utility functions to access information regarding time
-class Time
+namespace Mountain
 {
-    STATIC_CLASS(Time)
+    /// @brief Defines utility functions to access information regarding time
+    class Time
+    {
+        STATIC_CLASS(Time)
 
-    friend class Game;
+        friend class Game;
 
-public:
-    MOUNTAIN_API static inline float_t timeScale = 1.f;
+    public:
+        MOUNTAIN_API static inline float_t timeScale = 1.f;
 
-    /// @brief The maximum delta time value. This is to prevent clipping during a lag spike
-    MOUNTAIN_API static inline float_t maxDeltaTime = 0.1f;
+        /// @brief The maximum delta time value. This is to prevent clipping during a lag spike
+        MOUNTAIN_API static inline float_t maxDeltaTime = 0.1f;
 
-    /// @brief If this is above 0, the game updates will be frozen for that amount of time
-    MOUNTAIN_API static inline float_t freezeTimer = 0.f;
+        /// @brief If this is above 0, the game updates will be frozen for that amount of time
+        MOUNTAIN_API static inline float_t freezeTimer = 0.f;
 
-    /// @brief Get the total elapsed time
-    MOUNTAIN_API static float_t GetTotalTime();
+        /// @brief Get the total elapsed time
+        MOUNTAIN_API static float_t GetTotalTime();
 
-    /// @brief Get the last total elapsed time
-    MOUNTAIN_API static float_t GetLastTotalTime();
-    
-    /// @brief Get the total unscaled elapsed time
-    MOUNTAIN_API static float_t GetTotalTimeUnscaled();
+        /// @brief Get the last total elapsed time
+        MOUNTAIN_API static float_t GetLastTotalTime();
 
-    /// @brief Get the last total unscaled elapsed time
-    MOUNTAIN_API static float_t GetLastTotalTimeUnscaled();
-    
-    /// @brief Get the time elapsed since last frame
-    MOUNTAIN_API static float_t GetDeltaTime();
-    
-    /// @brief Get the unscaled delta time
-    MOUNTAIN_API static float_t GetDeltaTimeUnscaled();
+        /// @brief Get the total unscaled elapsed time
+        MOUNTAIN_API static float_t GetTotalTimeUnscaled();
 
-    /// @brief Get the total frame count
-    MOUNTAIN_API static uint64_t GetTotalFrameCount();
+        /// @brief Get the last total unscaled elapsed time
+        MOUNTAIN_API static float_t GetLastTotalTimeUnscaled();
 
-    /// @brief Get the target FPS. If this isn't set, the game is using vertical synchronization.
-    MOUNTAIN_API static std::optional<uint16_t> GetTargetFps();
+        /// @brief Get the time elapsed since last frame
+        MOUNTAIN_API static float_t GetDeltaTime();
 
-    /// @brief Set the target FPS. If the given value is empty, will use vertical synchronization instead.
-    MOUNTAIN_API static void SetTargetFps(std::optional<uint16_t> newTargetFps);
-    
-    /// @brief Get how much time the last frame took. If this is equal to the delta time, then the game is lagging.
-    MOUNTAIN_API static float_t GetLastFrameDuration();
+        /// @brief Get the unscaled delta time
+        MOUNTAIN_API static float_t GetDeltaTimeUnscaled();
 
-    /// @brief Sleep as long as possible without exceeding the specified period
-    MOUNTAIN_API static void SleepForNoMoreThan(double_t milliseconds);
+        /// @brief Get the total frame count
+        MOUNTAIN_API static uint64_t GetTotalFrameCount();
 
-private:
-    MOUNTAIN_API static inline float_t m_TotalTime = 0.f;
-    MOUNTAIN_API static inline float_t m_LastTotalTime = 0.f;
-    MOUNTAIN_API static inline float_t m_TotalTimeUnscaled = 0.f;
-    MOUNTAIN_API static inline float_t m_LastTotalTimeUnscaled = 0.f;
-    MOUNTAIN_API static inline float_t m_DeltaTime = 0.f;
-    MOUNTAIN_API static inline float_t m_DeltaTimeUnscaled = 0.f;
-    MOUNTAIN_API static inline uint64_t m_TotalFrameCount = 0;
-    MOUNTAIN_API static inline std::optional<uint16_t> m_TargetFps;
-    
-    MOUNTAIN_API static inline float_t m_LastFrameDuration = 0.f;
-    
-    MOUNTAIN_API static inline double_t m_LowestSleepThreshold = 0.0;
-    
-    static void Initialize();
+        /// @brief Get the target FPS. If this isn't set, the game is using vertical synchronization.
+        MOUNTAIN_API static std::optional<uint16_t> GetTargetFps();
 
-    /// @brief Updates the time variables using GLFW.
-    ///        This function should be called exactly once each frame.
-    static void Update();
-    static void WaitForNextFrame();
-    
-    static double_t GetCurrentTimerResolution();
-};
+        /// @brief Set the target FPS. If the given value is empty, will use vertical synchronization instead.
+        MOUNTAIN_API static void SetTargetFps(std::optional<uint16_t> newTargetFps);
 
-END_MOUNTAIN
+        /// @brief Get the target delta time.
+        ///
+        /// This is either @code 1.f / GetTargetFps()@endcode if @code GetTargetFps().has_value()@endcode is @c true or @code 1.f / Screen::GetRefreshRate()@endcode otherwise.
+        ///
+        /// @see GetDeltaTime()
+        MOUNTAIN_API static float_t GetTargetDeltaTime();
+
+        /// @brief Get how much time the last frame took. If this is equal to the delta time, then the game is lagging.
+        MOUNTAIN_API static float_t GetLastFrameDuration();
+
+        /// @brief Sleep as long as possible without exceeding the specified period
+        MOUNTAIN_API static void SleepForNoMoreThan(double_t milliseconds);
+
+    private:
+        MOUNTAIN_API static inline float_t m_TotalTime = 0.f;
+        MOUNTAIN_API static inline float_t m_LastTotalTime = 0.f;
+        MOUNTAIN_API static inline float_t m_TotalTimeUnscaled = 0.f;
+        MOUNTAIN_API static inline float_t m_LastTotalTimeUnscaled = 0.f;
+        MOUNTAIN_API static inline float_t m_DeltaTime = 0.f;
+        MOUNTAIN_API static inline float_t m_DeltaTimeUnscaled = 0.f;
+        MOUNTAIN_API static inline uint64_t m_TotalFrameCount = 0;
+        MOUNTAIN_API static inline std::optional<uint16_t> m_TargetFps;
+
+        MOUNTAIN_API static inline float_t m_LastFrameDuration = 0.f;
+
+        MOUNTAIN_API static inline double_t m_LowestSleepThreshold = 0.0;
+
+        static void Initialize();
+
+        /// @brief Updates the time variables using GLFW.
+        ///        This function should be called exactly once each frame.
+        static void Update();
+        static void WaitForNextFrame();
+
+        static double_t GetCurrentTimerResolution();
+    };
+}

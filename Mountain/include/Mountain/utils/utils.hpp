@@ -19,12 +19,24 @@
 #define TO_STRING(x) #x
 #define STRINGIFY(x) TO_STRING(x)
 
-BEGIN_MOUNTAIN
-
 /// @namespace Utils
 /// @brief Namespace containing utility functions that don't belong anywhere else
-namespace Utils
+namespace Mountain::Utils
 {
+    enum class TrimOptions : uint8_t
+    {
+        None    = 0,
+        Start   = 1 << 0,
+        End     = 1 << 1,
+        Both    = Start | End
+    };
+
+    template <typename T>
+    using ProjectionFunc = T(*)(T);
+
+    template <typename T>
+    constexpr ProjectionFunc<T> Identity = [](T t) { return t; };
+
     /// @brief Converts a integral number to a valid pointer without illegal size operations
     /// @tparam PtrT Type of the pointer
     /// @tparam IntT Type of the number, must be integral
@@ -65,7 +77,7 @@ namespace Utils
     MOUNTAIN_API std::string HumanizeString(const std::string& str);
 
     /// @brief Humanizes the provided variable name
-    /// 
+    ///
     /// The process converts a m_PascalCase styled word to a humanized version that puts spaces between each word and adds an uppercase at the very beginning, it also removes the m_ prefix
     ///
     /// e.g. m_ShouldChange will become Should Change
@@ -77,7 +89,7 @@ namespace Utils
     /// @brief Removes the namespaces indicators from the provided string
     ///
     /// e.g. Mountain::MyClass will become MyClass
-    /// 
+    ///
     /// @param str String to modify
     /// @return Result
     [[nodiscard]]
@@ -87,7 +99,7 @@ namespace Utils
     /// @brief Removes the namespaces indicators from the provided string
     ///
     /// e.g. Mountain::MyClass will become MyClass
-    /// 
+    ///
     /// @param str String to modify
     /// @return Result
     [[nodiscard]]
@@ -134,7 +146,7 @@ namespace Utils
     /// This function first checks if the given Pointer is @c nullptr, and returns @c nullptr if so.
     /// It then checks if one type is derived from the other, and returns the cast result if so. This actually performs a @c reinterpret_cast under the hood.
     /// If all other conditions failed, the function returns @c nullptr.
-    /// 
+    ///
     /// @tparam T The type to dynamically cast to.
     /// @tparam U The type to dynamically cast from.
     /// @param value The Pointer to cast from.
@@ -192,17 +204,75 @@ namespace Utils
     template <typename R, typename... Args>
     R CallSafe(const std::function<R(Args...)>& function, Args&&... args);
 
-    MOUNTAIN_API std::wstring StringNarrowToWide(std::string_view str);
+    MOUNTAIN_API std::wstring NarrowToWide(std::string_view str);
 
-    MOUNTAIN_API std::string StringWideToNarrow(std::wstring_view str);
+    MOUNTAIN_API std::string WideToNarrow(std::wstring_view str);
 
-    MOUNTAIN_API std::string StringToLower(std::string_view str);
+    MOUNTAIN_API std::string ToLower(std::string_view str);
 
-    MOUNTAIN_API std::string StringToUpper(std::string_view str);
+    MOUNTAIN_API std::string ToUpper(std::string_view str);
 
     MOUNTAIN_API std::pair<int32_t, std::string_view> ByteSizeUnit(int64_t size);
+
+    MOUNTAIN_API std::string GetBuiltinShadersPath();
+
+    MOUNTAIN_API std::string Trim(std::string_view str, TrimOptions options = TrimOptions::Both);
+
+    MOUNTAIN_API std::string GetLine(const std::string& str, size_t lineIndex);
 }
 
-END_MOUNTAIN
+namespace Easing
+{
+    enum class Type : uint8_t
+    {
+        Linear,
+
+        SineIn,
+        SineOut,
+        SineInOut,
+
+        QuadIn,
+        QuadOut,
+        QuadInOut,
+
+        CubicIn,
+        CubicOut,
+        CubicInOut,
+
+        QuartIn,
+        QuartOut,
+        QuartInOut,
+
+        QuintIn,
+        QuintOut,
+        QuintInOut,
+
+        ExpoIn,
+        ExpoOut,
+        ExpoInOut,
+
+        CircIn,
+        CircOut,
+        CircInOut,
+
+        BackIn,
+        BackOut,
+        BackInOut,
+
+        ElasticIn,
+        ElasticOut,
+        ElasticInOut,
+
+        BounceIn,
+        BounceOut,
+        BounceInOut,
+
+        Count
+    };
+
+    ENUM_COUNT(Type);
+}
+
+ENUM_FLAGS(Mountain::Utils::TrimOptions)
 
 #include "Mountain/utils/utils.inl"

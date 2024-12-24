@@ -2,7 +2,9 @@
 
 #include <glad/glad.h>
 
-#include "ImGui/imgui_stdlib.h"
+#include <ImGui/imgui_stdlib.h>
+
+#include "Mountain/globals.hpp"
 #include "Mountain/rendering/renderer.hpp"
 #include "Mountain/resource/resource_manager.hpp"
 #include "Mountain/resource/shader.hpp"
@@ -14,6 +16,12 @@ void Draw::Clear(const Color& color)
 {
     glClearColor(color.r, color.g, color.b, color.a);
     glClear(GL_COLOR_BUFFER_BIT);
+}
+
+void Draw::Point(Vector2 position, const Color& color)
+{
+    m_DrawList.point.Emplace(position, color);
+    m_DrawList.AddCommand(DrawDataType::Point);
 }
 
 void Draw::Line(const Vector2 point1, const Vector2 point2, const Color& color)
@@ -223,6 +231,96 @@ void Draw::RenderTarget(
     m_DrawList.AddCommand(DrawDataType::RenderTarget);
 }
 
+void Draw::Flush()
+{
+    size_t pointIndex = 0;
+    size_t lineIndex = 0, lineColoredIndex = 0;
+    size_t triangleIndex = 0, triangleColoredIndex = 0, triangleFilledIndex = 0, triangleColoredFilledIndex = 0;
+    size_t rectangleIndex = 0, rectangleFilledIndex = 0;
+    size_t circleIndex = 0;
+    size_t textureIndex = 0, textureIdIndex = 0;
+    size_t textIndex = 0;
+    size_t renderTargetIndex = 0;
+
+    const List<CommandData>& commands = m_DrawList.commands;
+    for (size_t i = 0; i < commands.GetSize(); i++)
+    {
+        const CommandData& command = commands[i];
+        const size_t count = command.count;
+
+        switch (command.type)
+        {
+            case DrawDataType::Point:
+                RenderPointData(m_DrawList.point, pointIndex, count);
+                pointIndex += count;
+                break;
+
+            case DrawDataType::Line:
+                RenderLineData(m_DrawList.line, lineIndex, count);
+                lineIndex += count;
+                break;
+
+            case DrawDataType::LineColored:
+                RenderLineColoredData(m_DrawList.lineColored, lineColoredIndex, count);
+                lineColoredIndex += count;
+                break;
+
+            case DrawDataType::Triangle:
+                RenderTriangleData(m_DrawList.triangle, false, triangleIndex, count);
+                triangleIndex += count;
+                break;
+
+            case DrawDataType::TriangleColored:
+                RenderTriangleColoredData(m_DrawList.triangleColored, false, triangleColoredIndex, count);
+                triangleColoredIndex += count;
+                break;
+
+            case DrawDataType::TriangleFilled:
+                RenderTriangleData(m_DrawList.triangleFilled, true, triangleFilledIndex, count);
+                triangleFilledIndex += count;
+                break;
+
+            case DrawDataType::TriangleColoredFilled:
+                RenderTriangleColoredData(m_DrawList.triangleColoredFilled, true, triangleColoredFilledIndex, count);
+                triangleColoredFilledIndex += count;
+                break;
+
+            case DrawDataType::Rectangle:
+                RenderRectangleData(m_DrawList.rectangle, false, rectangleIndex, count);
+                rectangleIndex += count;
+                break;
+
+            case DrawDataType::RectangleFilled:
+                RenderRectangleData(m_DrawList.rectangleFilled, true, rectangleFilledIndex, count);
+                rectangleFilledIndex += count;
+                break;
+
+            case DrawDataType::Circle:
+                RenderCircleData(m_DrawList.circle, circleIndex, count);
+                circleIndex += count;
+                break;
+
+            case DrawDataType::Texture:
+                RenderTextureData(m_DrawList.texture, m_DrawList.textureId[textureIdIndex], textureIndex, count);
+                textureIndex += count;
+                textureIdIndex++;
+                break;
+
+            case DrawDataType::Text:
+                RenderTextData(m_DrawList.text, textIndex, count);
+                textIndex += count;
+                break;
+
+            case DrawDataType::RenderTarget:
+                RenderRenderTargetData(m_DrawList.renderTarget, renderTargetIndex, count);
+                renderTargetIndex += count;
+                break;
+        }
+    }
+
+    m_DrawList.Clear();
+}
+
 void Draw::DrawList::AddCommand(DrawDataType type)
 {
     if (!commands.Empty())
@@ -240,6 +338,7 @@ void Draw::DrawList::AddCommand(DrawDataType type)
 
 void Draw::DrawList::Clear()
 {
+    point.Clear();
     line.Clear();
     lineColored.Clear();
     triangle.Clear();
@@ -259,8 +358,8 @@ void Draw::DrawList::Clear()
 
 void Draw::Initialize()
 {
-    glCreateBuffers(6, &m_RectangleEbo);
-    glCreateVertexArrays(9, &m_LineVao);
+    glCreateBuffers(7, &m_RectangleEbo);
+    glCreateVertexArrays(10, &m_PointVao);
 
 #ifdef _DEBUG
     glObjectLabel(GL_BUFFER, m_RectangleEbo, -1, "Rectangle EBO");
@@ -269,6 +368,7 @@ void Draw::Initialize()
     glObjectLabel(GL_BUFFER, m_TextureVbo, -1, "Texture VBO");
     glObjectLabel(GL_BUFFER, m_TextVbo, -1, "Text VBO");
     glObjectLabel(GL_BUFFER, m_RenderTargetVbo, -1, "RenderTarget VBO");
+    glObjectLabel(GL_BUFFER, m_RenderTargetSsbo, -1, "RenderTarget SSBO");
 
     glObjectLabel(GL_VERTEX_ARRAY, m_LineVao, -1, "Line VAO");
     glObjectLabel(GL_VERTEX_ARRAY, m_LineColoredVao, -1, "Line Colored VAO");
@@ -281,6 +381,7 @@ void Draw::Initialize()
     glObjectLabel(GL_VERTEX_ARRAY, m_RenderTargetVao, -1, "RenderTarget VAO");
 #endif
 
+    InitializePointBuffers();
     InitializeLineBuffers();
     InitializeLineColoredBuffers();
     InitializeTriangleBuffers();
@@ -290,27 +391,47 @@ void Draw::Initialize()
     InitializeTextureBuffers();
     InitializeTextBuffers();
     InitializeRenderTargetBuffers();
+
+    glBindVertexArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
 void Draw::LoadResources()
 {
-    m_LineShader = ResourceManager::Get<Shader>("line");
-    m_LineColoredShader = ResourceManager::Get<Shader>("line_colored");
-    m_TriangleShader = ResourceManager::Get<Shader>("triangle");
-    m_TriangleColoredShader = ResourceManager::Get<Shader>("triangle_colored");
-    m_RectangleShader = ResourceManager::Get<Shader>("rectangle");
-    m_CircleShader = ResourceManager::Get<Shader>("circle");
-    
-    m_TextureShader = ResourceManager::Get<Shader>("texture");
-    m_TextShader = ResourceManager::Get<Shader>("text");
+    const std::string basePath = Utils::GetBuiltinShadersPath();
 
-    m_PostProcessingShader = ResourceManager::Get<Shader>("post_processing");
+    m_PointShader = ResourceManager::Get<Shader>(basePath + "point");
+    m_LineShader = ResourceManager::Get<Shader>(basePath + "line");
+    m_LineColoredShader = ResourceManager::Get<Shader>(basePath + "line_colored");
+    m_TriangleShader = ResourceManager::Get<Shader>(basePath + "triangle");
+    m_TriangleColoredShader = ResourceManager::Get<Shader>(basePath + "triangle_colored");
+    m_RectangleShader = ResourceManager::Get<Shader>(basePath + "rectangle");
+    m_CircleShader = ResourceManager::Get<Shader>(basePath + "circle");
+    
+    m_TextureShader = ResourceManager::Get<Shader>(basePath + "texture");
+    m_TextShader = ResourceManager::Get<Shader>(basePath + "text");
+
+    m_RenderTargetShader = ResourceManager::Get<Shader>(basePath + "render_target");
 }
 
 void Draw::Shutdown()
 {
-    glDeleteBuffers(6, &m_RectangleEbo);
-    glDeleteVertexArrays(9, &m_LineVao);
+    glDeleteBuffers(7, &m_RectangleEbo);
+    glDeleteVertexArrays(10, &m_PointVao);
+}
+
+void Draw::InitializePointBuffers()
+{
+    glBindVertexArray(m_PointVao);
+
+    glBindBuffer(GL_ARRAY_BUFFER, m_Vbo);
+    uint32_t index = 0;
+    size_t offset = 0;
+    // Position
+    SetVertexAttribute(index, 2, sizeof(PointData), offset, 1);
+    // Color
+    SetVertexAttribute(++index, 4, sizeof(PointData), offset += sizeof(Vector2), 1);
 }
 
 void Draw::InitializeLineBuffers()
@@ -325,8 +446,6 @@ void Draw::InitializeLineBuffers()
     SetVertexAttribute(++index, 2, sizeof(LineData), offset += sizeof(Vector2), 1);
     // Color
     SetVertexAttribute(++index, 4, sizeof(LineData), offset += sizeof(Vector2), 1);
-    
-    glBindVertexArray(0);
 }
 
 void Draw::InitializeLineColoredBuffers()
@@ -342,8 +461,6 @@ void Draw::InitializeLineColoredBuffers()
     // Colors
     SetVertexAttribute(++index, 4, sizeof(LineColoredData), offset += sizeof(Vector2), 1);
     SetVertexAttribute(++index, 4, sizeof(LineColoredData), offset += sizeof(Color), 1);
-    
-    glBindVertexArray(0);
 }
 
 void Draw::InitializeTriangleBuffers()
@@ -359,8 +476,6 @@ void Draw::InitializeTriangleBuffers()
     SetVertexAttribute(++index, 2, sizeof(TriangleData), offset += sizeof(Vector2), 1);
     // Color
     SetVertexAttribute(++index, 4, sizeof(TriangleData), offset += sizeof(Vector2), 1);
-    
-    glBindVertexArray(0);
 }
 
 void Draw::InitializeTriangleColoredBuffers()
@@ -378,8 +493,6 @@ void Draw::InitializeTriangleColoredBuffers()
     SetVertexAttribute(++index, 4, sizeof(TriangleColoredData), offset += sizeof(Vector2), 1);
     SetVertexAttribute(++index, 4, sizeof(TriangleColoredData), offset += sizeof(Color), 1);
     SetVertexAttribute(++index, 4, sizeof(TriangleColoredData), offset += sizeof(Color), 1);
-    
-    glBindVertexArray(0);
 }
 
 void Draw::InitializeRectangleBuffers()
@@ -420,8 +533,6 @@ void Draw::InitializeRectangleBuffers()
     SetVertexAttribute(++index, 4, sizeof(RectangleData), offset += sizeof(Vector4), 1);
     // Color
     SetVertexAttribute(++index, 4, sizeof(RectangleData), offset += sizeof(Vector4), 1);
-    
-    glBindVertexArray(0);
 }
 
 void Draw::InitializeCircleBuffers()
@@ -453,8 +564,6 @@ void Draw::InitializeCircleBuffers()
     SetVertexAttribute(++index, 4, sizeof(CircleData), offset += sizeof(float_t), 1);
     // Filled
     SetVertexAttributeInt(++index, 1, sizeof(CircleData), offset += sizeof(Color), 1);
-    
-    glBindVertexArray(0);
 }
 
 void Draw::InitializeTextureBuffers()
@@ -494,8 +603,6 @@ void Draw::InitializeTextureBuffers()
     SetVertexAttribute(++index, 4, sizeof(TextureData), offset += sizeof(Vector4), 1);
     // Color
     SetVertexAttribute(++index, 4, sizeof(TextureData), offset += sizeof(Vector4), 1);
-    
-    glBindVertexArray(0);
 }
 
 void Draw::InitializeTextBuffers()
@@ -506,8 +613,6 @@ void Draw::InitializeTextBuffers()
     glBufferData(GL_ARRAY_BUFFER, sizeof(Vector4) * 4, nullptr, GL_DYNAMIC_DRAW);
 
     SetVertexAttribute(0, 4, sizeof(Vector4), 0);
-    
-    glBindVertexArray(0);
 }
 
 void Draw::InitializeRenderTargetBuffers()
@@ -531,92 +636,6 @@ void Draw::InitializeRenderTargetBuffers()
     // VAO
     // Vertex position
     SetVertexAttribute(0, 2, sizeof(Vector2), 0, 0);
-    
-    glBindVertexArray(0);
-}
-
-void Draw::Render()
-{
-    size_t lineIndex = 0, lineColoredIndex = 0;
-    size_t triangleIndex = 0, triangleColoredIndex = 0, triangleFilledIndex = 0, triangleColoredFilledIndex = 0;
-    size_t rectangleIndex = 0, rectangleFilledIndex = 0;
-    size_t circleIndex = 0;
-    size_t textureIndex = 0, textureIdIndex = 0;
-    size_t textIndex = 0;
-    size_t renderTargetIndex = 0;
-    
-    const List<CommandData>& commands = m_DrawList.commands;
-    for (size_t i = 0; i < commands.GetSize(); i++)
-    {
-        const CommandData& command = commands[i];
-        const size_t count = command.count;
-
-        switch (command.type)
-        {
-            case DrawDataType::Line:
-                RenderLineData(m_DrawList.line, lineIndex, count);
-                lineIndex += count;
-                break;
-                
-            case DrawDataType::LineColored:
-                RenderLineColoredData(m_DrawList.lineColored, lineColoredIndex, count);
-                lineColoredIndex += count;
-                break;
-                
-            case DrawDataType::Triangle:
-                RenderTriangleData(m_DrawList.triangle, false, triangleIndex, count);
-                triangleIndex += count;
-                break;
-                
-            case DrawDataType::TriangleColored:
-                RenderTriangleColoredData(m_DrawList.triangleColored, false, triangleColoredIndex, count);
-                triangleColoredIndex += count;
-                break;
-            
-            case DrawDataType::TriangleFilled:
-                RenderTriangleData(m_DrawList.triangleFilled, true, triangleFilledIndex, count);
-                triangleFilledIndex += count;
-                break;
-            
-            case DrawDataType::TriangleColoredFilled:
-                RenderTriangleColoredData(m_DrawList.triangleColoredFilled, true, triangleColoredFilledIndex, count);
-                triangleColoredFilledIndex += count;
-                break;
-                
-            case DrawDataType::Rectangle:
-                RenderRectangleData(m_DrawList.rectangle, false, rectangleIndex, count);
-                rectangleIndex += count;
-                break;
-            
-            case DrawDataType::RectangleFilled:
-                RenderRectangleData(m_DrawList.rectangleFilled, true, rectangleFilledIndex, count);
-                rectangleFilledIndex += count;
-                break;
-                
-            case DrawDataType::Circle:
-                RenderCircleData(m_DrawList.circle, circleIndex, count);
-                circleIndex += count;
-                break;
-                
-            case DrawDataType::Texture:
-                RenderTextureData(m_DrawList.texture, m_DrawList.textureId[textureIdIndex], textureIndex, count);
-                textureIndex += count;
-                textureIdIndex++;
-                break;
-                
-            case DrawDataType::Text:
-                RenderTextData(m_DrawList.text, textIndex, count);
-                textIndex += count;
-                break;
-                
-            case DrawDataType::RenderTarget:
-                RenderRenderTargetData(m_DrawList.renderTarget, renderTargetIndex, count);
-                renderTargetIndex += count;
-                break;
-        }
-    }
-    
-    m_DrawList.Clear();
 }
 
 void Draw::SetProjectionMatrix(const Matrix& newProjectionMatrix)
@@ -638,6 +657,7 @@ void Draw::UpdateShaderMatrices()
 {
     const Matrix proj = m_ProjectionMatrix * m_CameraMatrix;
     
+    m_PointShader->SetUniform("projection", proj);
     m_LineShader->SetUniform("projection", proj);
     m_LineColoredShader->SetUniform("projection", proj);
     m_TriangleShader->SetUniform("projection", proj);
@@ -664,6 +684,22 @@ void Draw::CircleInternal(const Vector2 center, const float_t radius, const bool
         filled
     );
     m_DrawList.AddCommand(DrawDataType::Circle);
+}
+
+void Draw::RenderPointData(const List<PointData>& points, const size_t index, const size_t count)
+{
+    if (points.Empty())
+        return;
+
+    glNamedBufferData(m_Vbo, static_cast<GLsizeiptr>(sizeof(PointData) * count), &points[index], GL_STREAM_DRAW);
+
+    glBindVertexArray(m_PointVao);
+    m_PointShader->Use();
+
+    glDrawArraysInstanced(GL_POINTS, 0, 1, static_cast<GLsizei>(count));
+
+    m_PointShader->Unuse();
+    glBindVertexArray(0);
 }
 
 void Draw::RenderLineData(const List<LineData>& lines, const size_t index, const size_t count)
@@ -839,42 +875,47 @@ void Draw::RenderTextData(const List<TextData>& texts, const size_t index, const
 void Draw::RenderRenderTargetData(const List<RenderTargetData>& renderTargets, const size_t index, const size_t count)
 {
     glBindVertexArray(m_RenderTargetVao);
-    glBindBuffer(GL_ARRAY_BUFFER, m_RenderTargetVbo);
-    m_PostProcessingShader->Use();
-    
+    m_RenderTargetShader->Use();
+
+    m_RenderTargetShader->SetUniform("projection", m_ProjectionMatrix * m_CameraMatrix);
+
     for (size_t i = 0; i < count; i++)
     {
         const RenderTargetData& data = renderTargets[index + i];
+
+        m_RenderTargetShader->SetUniform("transformation", data.transformation);
+        m_RenderTargetShader->SetUniform("uvProjection", data.uvProjection);
         
-        m_PostProcessingShader->SetUniform("projection", m_ProjectionMatrix * m_CameraMatrix);
-        
-        m_PostProcessingShader->SetUniform("transformation", data.transformation);
-        m_PostProcessingShader->SetUniform("uvProjection", data.uvProjection);
-        
-        m_PostProcessingShader->SetUniform("actualScale", data.scale * data.renderTarget->GetCameraScale());
-        m_PostProcessingShader->SetUniform("color", data.color);
-        m_PostProcessingShader->SetUniform("ambientColor", data.renderTarget->ambientLight);
-        const auto& lightSources = data.renderTarget->GetLightSources();
-        m_PostProcessingShader->SetUniform("lightSourceCount", static_cast<int32_t>(lightSources.size()));
-        for (size_t j = 0; j < lightSources.size(); ++j)
-        {
-            const LightSource* lightSource = lightSources[j];
-            std::string name = std::format("lightSources[{}].", j);
-            m_PostProcessingShader->SetUniform(name + "color", lightSource->color);
-            m_PostProcessingShader->SetUniform(name + "intensity", lightSource->intensity);
-            m_PostProcessingShader->SetUniform(name + "radius", lightSource->radius);
-            m_PostProcessingShader->SetUniform(name + "angleMin", lightSource->angleMin);
-            m_PostProcessingShader->SetUniform(name + "angleMax", lightSource->angleMax);
-            m_PostProcessingShader->SetUniform(name + "position", data.renderTarget->GetCameraMatrix() * lightSource->GetPosition() * data.scale);
-        }
+        m_RenderTargetShader->SetUniform("camera", m_CameraMatrix);
+        m_RenderTargetShader->SetUniform("scale", data.scale);
+        m_RenderTargetShader->SetUniform("actualScale", data.scale * data.renderTarget->GetCameraScale());
+        m_RenderTargetShader->SetUniform("color", data.color);
+        m_RenderTargetShader->SetUniform("ambientColor", data.renderTarget->ambientLight);
+
+        auto lightSources = data.renderTarget->GetLightSources();
+        m_RenderTargetShader->SetUniform("lightSourceCount", static_cast<int32_t>(lightSources.GetSize()));
+
+        for (auto& lightSource : lightSources)
+            lightSource.position = m_CameraMatrix * lightSource.position;
+
+        glNamedBufferData(
+            m_RenderTargetSsbo,
+            static_cast<GLsizeiptr>(sizeof(LightSource) * lightSources.GetSize()),
+            static_cast<const void*>(lightSources.GetData()),
+            GL_STREAM_DRAW
+        );
         
         glBindTexture(GL_TEXTURE_2D, data.renderTarget->GetTextureId());
 
+        glMemoryBarrier(GL_SHADER_STORAGE_BARRIER_BIT);
+
+        glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, m_RenderTargetSsbo);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
     }
-    
+
+    glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, 0);
     glBindTexture(GL_TEXTURE_2D, 0);
-    m_PostProcessingShader->Unuse();
+    m_RenderTargetShader->Unuse();
     glBindVertexArray(0);
 }
 

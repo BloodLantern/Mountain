@@ -2,44 +2,47 @@
 
 #include "magic_enum/magic_enum.hpp"
 
-template <typename T>
-bool_t Mountain::ImGuiUtils::Optional(
-    std::optional<T>* value,
-    const std::type_identity_t<T>& defaultValue,
-    std::type_identity_t<T> nullValue,
-    const std::type_identity_t<std::function<bool_t(T& value)>>& displayFunction
-)
+namespace Mountain
 {
-    bool_t result = false;
-    if (value->has_value())
+    template <typename T>
+    bool_t ImGuiUtils::Optional(
+        std::optional<T>* value,
+        const std::type_identity_t<T>& defaultValue,
+        std::type_identity_t<T> nullValue,
+        const std::type_identity_t<std::function<bool_t(T& value)>>& displayFunction
+    )
     {
-        if (ImGui::Button("Unset value"))
+        bool_t result = false;
+        if (value->has_value())
         {
-            value->reset();
-            result = true;
+            if (ImGui::Button("Unset value"))
+            {
+                value->reset();
+                result = true;
+            }
         }
-    }
-    else
-    {
-        if (ImGui::Button("Set value"))
+        else
         {
-            *value = defaultValue;
-            result = true;
+            if (ImGui::Button("Set value"))
+            {
+                *value = defaultValue;
+                result = true;
+            }
         }
+
+        ImGui::SameLine();
+
+        // Need to check this again as this might have changed in the last if statement
+        if (!value->has_value())
+        {
+            ImGui::BeginDisabled();
+            displayFunction(nullValue);
+            ImGui::EndDisabled();
+            return result;
+        }
+
+        return result || displayFunction(value->value());
     }
-    
-    ImGui::SameLine();
-    
-    // Need to check this again as this might have changed in the last if statement
-    if (!value->has_value())
-    {
-        ImGui::BeginDisabled();
-        displayFunction(nullValue);
-        ImGui::EndDisabled();
-        return result;
-    }
-    
-    return result || displayFunction(value->value());
 }
 
 // ReSharper disable CppInconsistentNaming
