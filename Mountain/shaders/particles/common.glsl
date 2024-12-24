@@ -23,3 +23,5 @@ uniform uint particleCount;
 uniform float deltaTime;
 
 uniform float particleLifetime;
+uniform float particleSpeed;
+uniform vec4 particleStartColor;

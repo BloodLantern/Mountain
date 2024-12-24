@@ -22,8 +22,8 @@ Particle NewParticle()
         particleLifetime,
         int[3](0.f),
         vec2(0.f),
-        normalize(vec2(r, r2) * 2.f - vec2(1.f)) * 50.f,
-        vec4(1.f)
+        normalize(vec2(r, r2) * 2.f - vec2(1.f)) * particleSpeed,
+        particleStartColor
     );
 }
 
