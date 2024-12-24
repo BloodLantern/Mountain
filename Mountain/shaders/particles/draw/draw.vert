@@ -5,6 +5,7 @@
 uniform mat4 projection;
 
 uniform vec2 systemPosition;
+uniform float systemRotation;
 
 out flat int particleAlive;
 out vec4 particleColor;
@@ -18,6 +19,9 @@ void main()
 
     Particle particle = particles[gl_InstanceID];
     particleColor = particle.color;
-    
-    gl_Position = vec4((projection * vec4(systemPosition + particle.offset, 0.f, 1.f)).xy, 0.f, 1.f);
+
+    float c = cos(systemRotation), s = sin(systemRotation);
+    vec2 rotatedOffset = vec2(particle.offset.x * c - particle.offset.y * s, particle.offset.x * s + particle.offset.y * c);
+
+    gl_Position = vec4((projection * vec4(systemPosition + rotatedOffset, 0.f, 1.f)).xy, 0.f, 1.f);
 }

@@ -21,15 +21,18 @@ namespace Mountain
         // Particle system settings
 
         Vector2 position;
-        /// @brief The amount of particles spawned per second
-        uint32_t spawnRate = 10;
-        bool_t useUnscaledDeltaTime = false;
+        float_t rotation;
         float_t duration = 5.f;
         bool_t looping = true;
+        float_t startDelay;
+        uint32_t spawnRate = 10; // The amount of particles spawned per second
+        bool_t useUnscaledDeltaTime = false;
 
         // Particle settings
 
-        float_t particleLifetime = 1.f;
+        float_t particleLifetime = 5.f;
+        float_t particleSpeed = 5.f;
+        Color particleStartColor = Color::White();
 
         List<std::shared_ptr<ParticleSystemModules::Base>> modules;
         ParticleSystemModules::Types enabledModules = ParticleSystemModules::Types::None;
@@ -46,6 +49,12 @@ namespace Mountain
 
         MOUNTAIN_API void TogglePlay();
         MOUNTAIN_API void Restart();
+        MOUNTAIN_API void Stop();
+
+        /// @brief Get the current alive particle count.
+        /// This can vary a lot from frame to frame because we count the particles on the CPU from the GPU memory.
+        [[nodiscard]]
+        MOUNTAIN_API uint32_t GetCurrentParticles();
 
         [[nodiscard]]
         MOUNTAIN_API uint32_t GetMaxParticles() const;
@@ -61,6 +70,7 @@ namespace Mountain
         int32_t* m_AliveParticles = nullptr;
         __GLsync* m_SyncObject = nullptr;
 
+        float_t m_PlaybackTime = 0.f; // System lifetime
         double_t m_SpawnTimer = 0.0;
         bool_t m_Playing = true;
 
@@ -69,6 +79,9 @@ namespace Mountain
         Pointer<Shader> m_DrawShader;
         uint32_t m_AliveSsbo, m_ParticleSsbo;
         uint32_t m_DrawVao;
+
+        void SetComputeShaderUniforms(float_t deltaTime) const;
+        void SpawnNewParticles();
 
         /// @brief Wait for the GPU buffer to sync with the CPU. After that call, the CPU can read/write to that buffer.
         static void WaitBufferSync(__GLsync* syncObject);
