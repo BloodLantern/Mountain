@@ -3,12 +3,11 @@
 
 uniform struct ColorOverLifetime
 {
-    vec4 start, end;
-    uint easing; // From the Easing::Type enum, see utils.glsl
+    vec4 target;
 } colorOverLifetime;
 
 Particle ColorOverLifetimeUpdate(Particle particle)
 {
-    particle.color = mix(colorOverLifetime.start, colorOverLifetime.end, 1.f - (particle.lifetime / particleLifetime));
+    particle.color = mix(particleStartColor, colorOverLifetime.target, 1.f - (particle.lifetime / particleLifetime));
     return particle;
 }

@@ -82,29 +82,26 @@ void ShaderBase::CheckCompileError(uint32_t id, const std::string_view type, con
         glGetShaderiv(id, GL_INFO_LOG_LENGTH, &infoLogSize);
         std::string infoLog(static_cast<size_t>(infoLogSize), '\0');
         glGetShaderInfoLog(id, infoLogSize, nullptr, infoLog.data());
-        Logger::LogError("Error while compiling shader {} of type {}: {}", m_Name, type, infoLog.data());
+        Logger::LogError("Error while compiling shader '{}' of type '{}': {}", m_Name, type, Utils::Trim(infoLog).data());
 
         std::istringstream input{ infoLog };
         std::vector<std::pair<size_t, std::string>> relatedLines;
-        for (std::string line; std::getline(input, line); )
+        size_t pos = infoLog.find("0(");
+        while (pos != std::string::npos)
         {
-            const size_t pos = line.find("0(");
-            if (pos == std::string::npos)
-                continue;
+            const size_t endPos = infoLog.find(')', pos);
 
-            const size_t endPos = line.find(')', pos);
-            if (endPos == std::string::npos)
-                continue;
-
-            const size_t lineIndex = std::stoull(line.substr(pos + 2, endPos - pos));
+            const size_t lineIndex = std::stoull(infoLog.substr(pos + 2, endPos - pos));
             relatedLines.emplace_back(lineIndex, Utils::Trim(Utils::GetLine(code, lineIndex - 1)));
+
+            pos = infoLog.find("0(", endPos);
         }
 
         if (!relatedLines.empty())
         {
-            Logger::LogInfo("Found potentially related code lines:");
+            Logger::LogError("Found potentially related code lines:");
             for (const auto& line : relatedLines)
-                Logger::LogInfo("Line {}: {}", line.first, line.second);
+                Logger::LogError("Line {}: {}", line.first, line.second);
         }
     }
 }
@@ -118,9 +115,9 @@ void ShaderBase::CheckLinkError() const
     {
         GLint infoLogSize = 0;
         glGetProgramiv(m_Id, GL_INFO_LOG_LENGTH, &infoLogSize);
-        std::vector<char_t> infoLog(static_cast<size_t>(infoLogSize));
+        std::string infoLog(static_cast<size_t>(infoLogSize), '\0');
         glGetProgramInfoLog(m_Id, infoLogSize, nullptr, infoLog.data());
-        Logger::LogError("Error while linking shader program '{}': {}", m_Name, infoLog.data());
+        Logger::LogError("Error while linking shader program '{}': {}", m_Name, Utils::Trim(infoLog).data());
     }
 }
 

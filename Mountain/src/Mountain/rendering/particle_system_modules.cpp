@@ -33,8 +33,7 @@ void ColorOverLifetime::SetComputeShaderUniforms(const ComputeShader& computeSha
     if (!(enabledModules & Types::ColorOverLifetime))
         return;
 
-    computeShader.SetUniform("colorOverLifetime.start", start);
-    computeShader.SetUniform("colorOverLifetime.end", end);
+    computeShader.SetUniform("colorOverLifetime.target", target);
 }
 
 void ColorOverLifetime::RenderImGui(uint32_t* const enabledModulesInt)
@@ -42,8 +41,7 @@ void ColorOverLifetime::RenderImGui(uint32_t* const enabledModulesInt)
     if (!BeginImGui(enabledModulesInt, Types::ColorOverLifetime, "ColorOverLifetime"))
         return;
 
-    ImGui::ColorEdit4("Start", start.Data());
-    ImGui::ColorEdit4("End", end.Data());
+    ImGui::ColorEdit4("Target", target.Data());
 
     EndImGui();
 }

@@ -20,7 +20,7 @@ public:
     Mountain::List<Mountain::Entity*> entities;
 	Player* player = nullptr;
 	AnimatedCharacter* character = nullptr;
-	Mountain::ParticleSystem particleSystem{ 50 };
+	Mountain::ParticleSystem particleSystem{ 1000 };
 	
 	Mountain::RenderTarget renderTarget;
 
