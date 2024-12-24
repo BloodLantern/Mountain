@@ -79,7 +79,7 @@ void Shader::Load()
         glShaderSource(id, 1, &data, &dataLength);
 
         glCompileShader(id);
-		CheckCompilationError(shaderIds[i], code.type);
+		CheckCompileError(shaderIds[i], code.type);
 
 		glAttachShader(m_Id, id);
     }
@@ -142,17 +142,7 @@ void Shader::Use() const { glUseProgram(m_Id); }
 // ReSharper disable once CppMemberFunctionMayBeStatic
 void Shader::Unuse() const { glUseProgram(0); }
 
-void Shader::CheckCompilationError(const uint32_t id, const Graphics::ShaderType type)
+void Shader::CheckCompileError(const uint32_t id, const Graphics::ShaderType type) const
 {
-    int success = 0;
-    
-    glGetShaderiv(id, GL_COMPILE_STATUS, &success);
-    if (!success)
-    {
-        GLint infoLogSize = 0;
-        glGetShaderiv(id, GL_INFO_LOG_LENGTH, &infoLogSize);
-        std::vector<char_t> infoLog(static_cast<size_t>(infoLogSize));
-        glGetShaderInfoLog(id, infoLogSize, nullptr, infoLog.data());
-        Logger::LogError("Error while compiling shader '{}' of type '{}': {}", m_Name, magic_enum::enum_name(type), infoLog.data());
-    }
+    ShaderBase::CheckCompileError(id, magic_enum::enum_name(type), m_Code[static_cast<size_t>(type)].code);
 }

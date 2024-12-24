@@ -15,7 +15,7 @@ uniform uint enabledModules;
 
 Particle NewParticle()
 {
-    float r = Random(vec2(float(gl_GlobalInvocationID.x), time));
+    float r = Random(vec2(gl_GlobalInvocationID.x, time));
     float r2 = Random(vec2(r, time));
 
     return Particle(

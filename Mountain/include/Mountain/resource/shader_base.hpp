@@ -59,7 +59,8 @@ namespace Mountain
 	protected:
 		uint32_t m_Id = 0;
 
-		void CheckLinkError();
+		void CheckCompileError(uint32_t id, std::string_view type, const std::string& code) const;
+		void CheckLinkError() const;
 
 		[[nodiscard]]
 		int32_t GetUniformLocation(const char_t* keyName) const;

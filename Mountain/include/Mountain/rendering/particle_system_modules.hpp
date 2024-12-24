@@ -34,7 +34,6 @@ namespace Mountain::ParticleSystemModules
     {
         Color start = Color::White();
         Color end = Color::Transparent();
-        Easing::Type easing = Easing::Type::Linear;
 
         void SetComputeShaderUniforms(const ComputeShader& computeShader, Types enabledModules) const override;
         void RenderImGui(uint32_t* enabledModulesInt) override;
