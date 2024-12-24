@@ -5,62 +5,61 @@
 
 #include "Mountain/core.hpp"
 
-BEGIN_MOUNTAIN
-
-template <typename T>
-class Pointer;
-
-/// @private
-template <typename T>
-class ReferenceCounter
+namespace Mountain
 {
-public:
-    using Type = T;
-    
-    template <typename... Args>
-    explicit ReferenceCounter(Args&&... args);
+    template <typename T>
+    class Pointer;
 
-    ReferenceCounter(const ReferenceCounter& other) = delete;
+    /// @private
+    template <typename T>
+    class ReferenceCounter
+    {
+    public:
+        using Type = T;
 
-    ReferenceCounter(ReferenceCounter&& other) = delete;
+        template <typename... Args>
+        explicit ReferenceCounter(Args&&... args);
 
-    ReferenceCounter& operator=(const ReferenceCounter& other) = delete;
+        ReferenceCounter(const ReferenceCounter& other) = delete;
 
-    ReferenceCounter& operator=(ReferenceCounter&& other) = delete;
+        ReferenceCounter(ReferenceCounter&& other) = delete;
 
-    ~ReferenceCounter();
+        ReferenceCounter& operator=(const ReferenceCounter& other) = delete;
 
-    void IncStrong();
+        ReferenceCounter& operator=(ReferenceCounter&& other) = delete;
 
-    void IncWeak(Pointer<T>* weakReferenceOwner);
+        ~ReferenceCounter();
 
-    // Returns whether the strong ref count becomes 0
-    bool DecStrong();
+        void IncStrong();
 
-    void DecWeak(const Pointer<T>* weakReferenceOwner);
+        void IncWeak(Pointer<T>* weakReferenceOwner);
 
-    [[nodiscard]]
-    uint64_t GetStrong() const;
-    
-    [[nodiscard]]
-    uint64_t GetWeak() const;
+        // Returns whether the strong ref count becomes 0
+        bool DecStrong();
 
-    [[nodiscard]]
-    T* GetPointer();
+        void DecWeak(const Pointer<T>* weakReferenceOwner);
 
-    [[nodiscard]]
-    const T* GetPointer() const;
+        [[nodiscard]]
+        uint64_t GetStrong() const;
 
-private:
-    uint64_t m_Strong = 1;
+        [[nodiscard]]
+        uint64_t GetWeak() const;
 
-    T* m_Pointer = nullptr;
+        [[nodiscard]]
+        T* GetPointer();
 
-    std::vector<Pointer<T>*> m_WeakReferenceOwners;
+        [[nodiscard]]
+        const T* GetPointer() const;
 
-    std::mutex m_Mutex;
-};
+    private:
+        uint64_t m_Strong = 1;
 
-END_MOUNTAIN
+        T* m_Pointer = nullptr;
+
+        std::vector<Pointer<T>*> m_WeakReferenceOwners;
+
+        std::mutex m_Mutex;
+    };
+}
 
 #include "Mountain/utils/reference_counter.inl"

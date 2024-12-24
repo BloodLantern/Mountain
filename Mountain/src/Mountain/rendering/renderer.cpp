@@ -9,6 +9,9 @@
 #include <ImGui/imgui_impl_opengl3.h>
 
 #include <ft2build.h>
+
+#include "Mountain/globals.hpp"
+
 #include FT_FREETYPE_H
 
 #include "Mountain/screen.hpp"
@@ -18,108 +21,111 @@
 #include "Mountain/resource/resource_manager.hpp"
 #include "Mountain/utils/logger.hpp"
 
-void OpenGlDebugCallback(const GLenum source, const GLenum type, GLuint, const GLenum severity, const GLsizei length, const GLchar* message, const void*)
+namespace
 {
-    std::string_view src;
-    switch (source) {
-        case GL_DEBUG_SOURCE_API:
-            src = "API";
+    void OpenGlDebugCallback(const GLenum source, const GLenum type, GLuint, const GLenum severity, const GLsizei length, const GLchar* message, const void*)
+    {
+        Mountain::Logger::LogLevel level;
+        switch (severity) {
+            case GL_DEBUG_SEVERITY_HIGH:
+                level = Mountain::Logger::LogLevel::Error;
             break;
 
-        case GL_DEBUG_SOURCE_WINDOW_SYSTEM:
-            src = "Window system";
+            case GL_DEBUG_SEVERITY_MEDIUM:
+                level = Mountain::Logger::LogLevel::Warning;
             break;
 
-        case GL_DEBUG_SOURCE_SHADER_COMPILER:
-            src = "Shader compiler";
+            case GL_DEBUG_SEVERITY_LOW:
+                level = Mountain::Logger::LogLevel::Info;
             break;
 
-        case GL_DEBUG_SOURCE_THIRD_PARTY:
-            src = "Third party";
-            break;
+            case GL_DEBUG_SEVERITY_NOTIFICATION:
+                return; // No need to log notifications
 
-        case GL_DEBUG_SOURCE_APPLICATION:
-            src = "Application";
-            break;
+            default:
+                level = Mountain::Logger::LogLevel::Info;
+        }
 
-        case GL_DEBUG_SOURCE_OTHER:
-            src = "Other";
-            break;
-        
-        default:
-            src = "Unknown";
+        std::string_view src;
+        switch (source) {
+            case GL_DEBUG_SOURCE_API:
+                src = "API";
+                break;
+
+            case GL_DEBUG_SOURCE_WINDOW_SYSTEM:
+                src = "Window system";
+                break;
+
+            case GL_DEBUG_SOURCE_SHADER_COMPILER:
+                src = "Shader compiler";
+                break;
+
+            case GL_DEBUG_SOURCE_THIRD_PARTY:
+                src = "Third party";
+                break;
+
+            case GL_DEBUG_SOURCE_APPLICATION:
+                src = "Application";
+                break;
+
+            case GL_DEBUG_SOURCE_OTHER:
+                src = "Other";
+                break;
+
+            default:
+                src = "Unknown";
+        }
+
+        std::string_view t;
+        switch (type) {
+            case GL_DEBUG_TYPE_ERROR:
+                t = "Error";
+                break;
+
+            case GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR:
+                t = "Deprecated behavior";
+                break;
+
+            case GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR:
+                t = "Undefined behavior";
+                break;
+
+            case GL_DEBUG_TYPE_PORTABILITY:
+                t = "Portability";
+                break;
+
+            case GL_DEBUG_TYPE_PERFORMANCE:
+                t = "Performance";
+                break;
+
+            case GL_DEBUG_TYPE_OTHER:
+                t = "Other";
+                break;
+
+            case GL_DEBUG_TYPE_MARKER:
+                t = "Marker";
+                break;
+
+            default:
+                t = "Unknown";
+        }
+
+        Mountain::Logger::Log(level, "[OpenGL] Log of type {} received from {}: {}", t, src, std::string_view(message, length));
     }
-
-    std::string_view t;
-    switch (type) {
-        case GL_DEBUG_TYPE_ERROR:
-            t = "Error";
-            break;
-
-        case GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR:
-            t = "Deprecated behavior";
-            break;
-
-        case GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR:
-            t = "Undefined behavior";
-            break;
-
-        case GL_DEBUG_TYPE_PORTABILITY:
-            t = "Portability";
-            break;
-
-        case GL_DEBUG_TYPE_PERFORMANCE:
-            t = "Performance";
-            break;
-
-        case GL_DEBUG_TYPE_OTHER:
-            t = "Other";
-            break;
-
-        case GL_DEBUG_TYPE_MARKER:
-            t = "Marker";
-            break;
-
-        default:
-            t = "Unknown";
-    }
-
-    Mountain::Logger::LogLevel level;
-    switch (severity) {
-        case GL_DEBUG_SEVERITY_HIGH:
-            level = Mountain::Logger::LogLevel::Error;
-            break;
-
-        case GL_DEBUG_SEVERITY_MEDIUM:
-            level = Mountain::Logger::LogLevel::Warning;
-            break;
-
-        case GL_DEBUG_SEVERITY_LOW:
-            level = Mountain::Logger::LogLevel::Info;
-            break;
-
-        case GL_DEBUG_SEVERITY_NOTIFICATION:
-            return; // Do not log notifications
-
-        default:
-            level = Mountain::Logger::LogLevel::Info;
-    }
-    
-    Mountain::Logger::Log(level, "[OpenGL] {} raised from {}: {}", t, src, std::string_view(message, length));
 }
 
 void Mountain::Renderer::PushRenderTarget(RenderTarget& renderTarget)
 {
-    Draw::Render();
-    
+    Draw::Flush();
+
     renderTarget.Use();
     m_RenderTargets.push(&renderTarget);
 }
 
 Mountain::RenderTarget& Mountain::Renderer::PopRenderTarget()
 {
-    Draw::Render();
-    
+    Draw::Flush();
+
     RenderTarget* renderTarget = m_RenderTargets.top();
     m_RenderTargets.pop();
 
@@ -135,9 +141,11 @@ Mountain::RenderTarget& Mountain::Renderer::GetCurrentRenderTarget()
 {
     if (m_RenderTargets.empty())
         throw std::logic_error("Cannot get the current RenderTarget outside of the Game::Render() function");
-    
+
     return *m_RenderTargets.top();
 }
+
+Mountain::RenderTarget& Mountain::Renderer::GetDefaultRenderTarget() { return *m_RenderTarget; }
 
 Mountain::OpenGlVersion& Mountain::Renderer::GetOpenGlVersion() { return m_GlVersion; }
 
@@ -151,14 +159,11 @@ bool Mountain::Renderer::Initialize(const std::string_view windowTitle, const Ve
 
     // Setup GLAD: load all OpenGL function pointers
     if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress)))  // NOLINT(clang-diagnostic-cast-function-type-strict)
-    {
-        Logger::LogFatal("Failed to initialize GLAD");
         throw std::runtime_error("Failed to initialize GLAD");
-    }
 
     glEnable(GL_DEBUG_OUTPUT);
     glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
-    
+
     glDebugMessageCallback(OpenGlDebugCallback, nullptr);
 
     glViewport(0, 0, windowSize.x, windowSize.y);
@@ -167,9 +172,21 @@ bool Mountain::Renderer::Initialize(const std::string_view windowTitle, const Ve
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    m_RenderTarget = new RenderTarget(windowSize, MagnificationFilter::Linear);
+    m_RenderTarget = new RenderTarget(windowSize, Graphics::MagnificationFilter::Linear);
+    m_RenderTarget->SetDebugName("Viewport RenderTarget");
 
-    ResourceManager::LoadAllBinaries();
+    if (NoBinaryResources)
+    {
+        if (BuiltinShadersPath.empty())
+            throw std::runtime_error("NoBinaryResources is true but BuiltinShadersPath hasn't been specified");
+
+        FileManager::LoadDirectory(BuiltinShadersPath);
+        ResourceManager::LoadAll();
+    }
+    else
+    {
+        ResourceManager::LoadAllBinaries();
+    }
 
     Draw::Initialize();
     Draw::LoadResources();
@@ -181,11 +198,11 @@ bool Mountain::Renderer::Initialize(const std::string_view windowTitle, const Ve
         Window::Shutdown();
         return false;
     }
-    
+
     // Setup Dear ImGui context
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
-    
+
     ImGuiIO& io = ImGui::GetIO();
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
     io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
@@ -193,7 +210,7 @@ bool Mountain::Renderer::Initialize(const std::string_view windowTitle, const Ve
     io.ConfigViewportsNoTaskBarIcon = true;
 
     ImGui::StyleColorsDark();
-    
+
     ImGui_ImplGlfw_InitForOpenGL(Window::GetHandle(), true);
     ImGui_ImplOpenGL3_Init(glVersion.glsl);
 
@@ -221,12 +238,12 @@ void Mountain::Renderer::PreFrame()
 void Mountain::Renderer::PostFrame()
 {
     PopRenderTarget();
-    
+
     if (!m_RenderTargets.empty())
-        throw std::logic_error("RenderTarget push/pop mismatch, e.g. a RenderTarget that was pushed hasn't been popped");
+        throw std::logic_error{ "RenderTarget push/pop mismatch, e.g. a RenderTarget that was pushed hasn't been popped" };
 
     Draw::RenderTarget(*m_RenderTarget);
-    Draw::Render();
+    Draw::Flush();
     
     // End ImGui frame
     ImGui::Render();

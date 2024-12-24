@@ -1,0 +1,24 @@
+#version 460 core
+
+layout (local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
+
+#include "../utils.glsl"
+
+layout (rgba32f, binding = 0) uniform image2D image;
+
+uniform float intensity;
+
+void main()
+{
+    vec2 texelf = vec2(gl_GlobalInvocationID.xy);
+    ivec2 texel = ivec2(texelf);
+    ivec2 size = ivec2(gl_NumWorkGroups.xy);
+    vec2 sizef = vec2(size);
+
+    vec4 originalColor = imageLoad(image, texel);
+
+    float hash = Random(texelf / sizef);
+    float noise = (hash * 2.f - 1.f) * intensity * 10.f;
+
+    imageStore(image, texel, originalColor - originalColor * noise);
+}
