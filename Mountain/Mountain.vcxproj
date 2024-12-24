@@ -128,6 +128,7 @@
     <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_10097982125490285052.hpp" />
     <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_10560615441756428011.hpp" />
     <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_1074902542281558043.hpp" />
+    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_12877864912023894619.hpp" />
     <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_13130013495108453755.hpp" />
     <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_16982112266611754363.hpp" />
     <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_17139022876316836076.hpp" />
@@ -136,6 +137,7 @@
     <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_3518102179013777611.hpp" />
     <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_5083911923489940364.hpp" />
     <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_5290845577426867131.hpp" />
+    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_6050031692327083212.hpp" />
     <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_7344767717205508100.hpp" />
     <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_8397852258098769587.hpp" />
     <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_8414638717441225796.hpp" />
@@ -147,7 +149,7 @@
     <ClInclude Include="include\Mountain\binary_resources\resource_holder.hpp" />
     <ClInclude Include="include\Mountain\binary_resources\span.hpp" />
     <ClInclude Include="include\Mountain\collision\circle.hpp" />
-    <ClInclude Include="include\Mountain\collision\collide.hpp" />
+    <ClInclude Include="include\Mountain\collision\collision.hpp" />
     <ClInclude Include="include\Mountain\collision\collider.hpp" />
     <ClInclude Include="include\Mountain\collision\collider_list.hpp" />
     <ClInclude Include="include\Mountain\collision\grid.hpp" />
@@ -158,24 +160,31 @@
     <ClInclude Include="include\Mountain\file\file.hpp" />
     <ClInclude Include="include\Mountain\file\file_manager.hpp" />
     <ClInclude Include="include\Mountain\game.hpp" />
+    <ClInclude Include="include\Mountain\globals.hpp" />
     <ClInclude Include="include\Mountain\input\gamepad_input.hpp" />
     <ClInclude Include="include\Mountain\input\input.hpp" />
     <ClInclude Include="include\Mountain\input\keyboard_input.hpp" />
     <ClInclude Include="include\Mountain\input\mouse_input.hpp" />
     <ClInclude Include="include\Mountain\input\time.hpp" />
     <ClInclude Include="include\Mountain\rendering\draw.hpp" />
+    <ClInclude Include="include\Mountain\rendering\effect.hpp" />
+    <ClInclude Include="include\Mountain\rendering\graphics.hpp" />
+    <ClInclude Include="include\Mountain\rendering\light_source.hpp" />
+    <ClInclude Include="include\Mountain\rendering\particle_system.hpp" />
+    <ClInclude Include="include\Mountain\rendering\particle_system_modules.hpp" />
     <ClInclude Include="include\Mountain\rendering\renderer.hpp" />
     <ClInclude Include="include\Mountain\rendering\render_target.hpp" />
     <ClInclude Include="include\Mountain\resource\audio_track.hpp" />
+    <ClInclude Include="include\Mountain\resource\compute_shader.hpp" />
     <ClInclude Include="include\Mountain\resource\font.hpp" />
     <ClInclude Include="include\Mountain\resource\resource.hpp" />
     <ClInclude Include="include\Mountain\resource\resource_manager.hpp" />
     <ClInclude Include="include\Mountain\resource\shader.hpp" />
+    <ClInclude Include="include\Mountain\resource\shader_base.hpp" />
     <ClInclude Include="include\Mountain\resource\texture.hpp" />
     <ClInclude Include="include\Mountain\scene\component\audio_listener.hpp" />
     <ClInclude Include="include\Mountain\scene\component\audio_source.hpp" />
     <ClInclude Include="include\Mountain\scene\component\component.hpp" />
-    <ClInclude Include="include\Mountain\scene\component\light_source.hpp" />
     <ClInclude Include="include\Mountain\scene\component\sprite.hpp" />
     <ClInclude Include="include\Mountain\scene\component\state_machine.hpp" />
     <ClInclude Include="include\Mountain\scene\entity.hpp" />
@@ -240,7 +249,7 @@
     <ClCompile Include="src\Mountain\audio\audio_device.cpp" />
     <ClCompile Include="src\Mountain\binary_resources\resource_holder.cpp" />
     <ClCompile Include="src\Mountain\collision\circle.cpp" />
-    <ClCompile Include="src\Mountain\collision\collide.cpp" />
+    <ClCompile Include="src\Mountain\collision\collision.cpp" />
     <ClCompile Include="src\Mountain\collision\collider.cpp" />
     <ClCompile Include="src\Mountain\collision\collider_list.cpp" />
     <ClCompile Include="src\Mountain\collision\grid.cpp" />
@@ -254,18 +263,100 @@
     <ClCompile Include="src\Mountain\input\input.cpp" />
     <ClCompile Include="src\Mountain\input\time.cpp" />
     <ClCompile Include="src\Mountain\rendering\draw.cpp" />
+    <ClCompile Include="src\Mountain\rendering\effect.cpp">
+      <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <Optimization>Disabled</Optimization>
+      <SupportJustMyCode>true</SupportJustMyCode>
+      <AssemblerOutput>NoListing</AssemblerOutput>
+      <AssemblerListingLocation>x64\Debug\</AssemblerListingLocation>
+      <UndefineAllPreprocessorDefinitions>false</UndefineAllPreprocessorDefinitions>
+      <BrowseInformation>false</BrowseInformation>
+      <BrowseInformationFile>x64\Debug\</BrowseInformationFile>
+      <CompileAs>Default</CompileAs>
+      <ConformanceMode>true</ConformanceMode>
+      <DiagnosticsFormat>Column</DiagnosticsFormat>
+      <DisableLanguageExtensions>false</DisableLanguageExtensions>
+      <ErrorReporting>Prompt</ErrorReporting>
+      <ExpandAttributedSource>false</ExpandAttributedSource>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <EnableASAN>false</EnableASAN>
+      <EnableFuzzer>false</EnableFuzzer>
+      <EnableFiberSafeOptimizations>false</EnableFiberSafeOptimizations>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
+      <FloatingPointModel>Precise</FloatingPointModel>
+      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
+      <GenerateModuleDependencies>false</GenerateModuleDependencies>
+      <GenerateSourceDependencies>false</GenerateSourceDependencies>
+      <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <IgnoreStandardIncludePath>false</IgnoreStandardIncludePath>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard_C>Default</LanguageStandard_C>
+      <MinimalRebuild>false</MinimalRebuild>
+      <ModuleDependenciesFile>x64\Debug\</ModuleDependenciesFile>
+      <ModuleOutputFile>x64\Debug\</ModuleOutputFile>
+      <OmitDefaultLibName>false</OmitDefaultLibName>
+      <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <ObjectFileName>x64\Debug\</ObjectFileName>
+      <CallingConvention>Cdecl</CallingConvention>
+      <ProgramDataBaseFileName>x64\Debug\vc143.pdb</ProgramDataBaseFileName>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>x64\Debug\Mountain.pch</PrecompiledHeaderOutputFile>
+      <PreprocessToFile>false</PreprocessToFile>
+      <PreprocessKeepComments>false</PreprocessKeepComments>
+      <PreprocessSuppressLineNumbers>false</PreprocessSuppressLineNumbers>
+      <RemoveUnreferencedCodeData>true</RemoveUnreferencedCodeData>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+      <ShowIncludes>false</ShowIncludes>
+      <SourceDependenciesFile>x64\Debug\</SourceDependenciesFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <SmallerTypeCheck>false</SmallerTypeCheck>
+      <SpectreMitigation>false</SpectreMitigation>
+      <StructMemberAlignment>Default</StructMemberAlignment>
+      <TrackerLogDirectory>x64\Debug\Mountain.tlog\</TrackerLogDirectory>
+      <TranslateIncludes>false</TranslateIncludes>
+      <MinimalRebuildFromTracking>true</MinimalRebuildFromTracking>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <UseFullPaths>true</UseFullPaths>
+      <WarningLevel>Level4</WarningLevel>
+      <XMLDocumentationFileName>x64\Debug\</XMLDocumentationFileName>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <IntelJCCErratum>false</IntelJCCErratum>
+      <BuildStlModules>false</BuildStlModules>
+      <TreatAngleIncludeAsExternal>false</TreatAngleIncludeAsExternal>
+      <ExternalWarningLevel>InheritWarningLevel</ExternalWarningLevel>
+      <TreatExternalTemplatesAsInternal>true</TreatExternalTemplatesAsInternal>
+      <DisableAnalyzeExternal>false</DisableAnalyzeExternal>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;_WINDLL;_UNICODE;UNICODE;;MOUNTAIN_EXPORT;MATH_TOOLBOX_DLL_EXPORT;MATH_DEFINE_FORMATTER;IMGUI_EXPORT;RAPID_XML_EXPORT;AL_ALEXT_PROTOTYPES</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalIncludeDirectories>include;inline;binary_resources;externals\include</AdditionalIncludeDirectories>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <AdditionalOptions>/Gw </AdditionalOptions>
+      <LinkCompiled>true</LinkCompiled>
+    </ClCompile>
+    <ClCompile Include="src\Mountain\rendering\graphics.cpp" />
+    <ClCompile Include="src\Mountain\rendering\particle_system.cpp" />
+    <ClCompile Include="src\Mountain\rendering\particle_system_modules.cpp" />
     <ClCompile Include="src\Mountain\rendering\renderer.cpp" />
     <ClCompile Include="src\Mountain\rendering\render_target.cpp" />
     <ClCompile Include="src\Mountain\resource\audio_track.cpp" />
+    <ClCompile Include="src\Mountain\resource\compute_shader.cpp" />
     <ClCompile Include="src\Mountain\resource\font.cpp" />
     <ClCompile Include="src\Mountain\resource\resource.cpp" />
     <ClCompile Include="src\Mountain\resource\resource_manager.cpp" />
     <ClCompile Include="src\Mountain\resource\shader.cpp" />
+    <ClCompile Include="src\Mountain\resource\shader_base.cpp" />
     <ClCompile Include="src\Mountain\resource\texture.cpp" />
     <ClCompile Include="src\Mountain\scene\component\audio_listener.cpp" />
     <ClCompile Include="src\Mountain\scene\component\audio_source.cpp" />
     <ClCompile Include="src\Mountain\scene\component\component.cpp" />
-    <ClCompile Include="src\Mountain\scene\component\light_source.cpp" />
     <ClCompile Include="src\Mountain\scene\component\sprite.cpp" />
     <ClCompile Include="src\Mountain\scene\component\state_machine.cpp" />
     <ClCompile Include="src\Mountain\scene\entity.cpp" />
@@ -286,10 +377,22 @@
   <ItemGroup>
     <Content Include="shaders\circle\circle.frag" />
     <Content Include="shaders\circle\circle.vert" />
+    <Content Include="shaders\easing.glsl" />
+    <Content Include="shaders\effects\film_grain.comp" />
     <Content Include="shaders\line_colored\line_colored.frag" />
     <Content Include="shaders\line_colored\line_colored.vert" />
-    <Content Include="shaders\post_processing\post_processing.frag" />
-    <Content Include="shaders\post_processing\post_processing.vert" />
+    <Content Include="shaders\particles\color_over_lifetime.glsl" />
+    <Content Include="shaders\particles\force_over_lifetime.glsl" />
+    <Content Include="shaders\particles\module_types.glsl" />
+    <Content Include="shaders\particles\update.comp" />
+    <Content Include="shaders\particles\common.glsl" />
+    <Content Include="shaders\particles\draw\draw.frag" />
+    <Content Include="shaders\particles\draw\draw.vert" />
+    <Content Include="shaders\point\point.frag" />
+    <Content Include="shaders\point\point.vert" />
+    <Content Include="shaders\effects\vignette.comp" />
+    <Content Include="shaders\render_target\render_target.frag" />
+    <Content Include="shaders\render_target\render_target.vert" />
     <Content Include="shaders\line\line.frag" />
     <Content Include="shaders\line\line.vert" />
     <Content Include="shaders\rectangle\rectangle.frag" />
@@ -302,6 +405,7 @@
     <Content Include="shaders\triangle\triangle.vert" />
     <Content Include="shaders\triangle_colored\triangle_colored.frag" />
     <Content Include="shaders\triangle_colored\triangle_colored.vert" />
+    <Content Include="shaders\utils.glsl" />
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="Mountain.natvis" />
@@ -357,6 +461,8 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <AdditionalIncludeDirectories>include;inline;binary_resources;externals\include</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <AdditionalOptions>/Gw %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -389,6 +495,8 @@
       <AdditionalIncludeDirectories>include;inline;binary_resources;externals\include</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <AssemblerOutput>AssemblyAndSourceCode</AssemblerOutput>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <AdditionalOptions>/Gw %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -422,6 +530,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <EnableModules>false</EnableModules>
       <AdditionalIncludeDirectories>include;inline;binary_resources;externals\include</AdditionalIncludeDirectories>
+      <AdditionalOptions>/Gw %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

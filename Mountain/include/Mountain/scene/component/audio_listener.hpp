@@ -6,27 +6,26 @@
 
 #include "Mountain/scene/component/component.hpp"
 
-BEGIN_MOUNTAIN
-
-class MOUNTAIN_API AudioListener : public Component
+namespace Mountain
 {
-public:
-    bool_t dopplerEffect = false;
-    
-    void Update() override;
-    
-    /// @brief Get the volume in the range [0, inf].
-    [[nodiscard]]
-    float_t GetVolume() const;
-    
-    /// @brief Set the volume in the range [0, inf]. Default value is 1.
-    void SetVolume(float_t newVolume);
+    class MOUNTAIN_API AudioListener : public Component
+    {
+    public:
+        bool_t dopplerEffect = false;
 
-private:
-    /// @brief Volume in the range [0, inf]. Default value is 1.
-    float_t m_Volume = 1.f;
+        void Update() override;
 
-    Vector2 m_LastPosition;
-};
+        /// @brief Get the volume in the range [0, inf].
+        [[nodiscard]]
+        float_t GetVolume() const;
 
-END_MOUNTAIN
+        /// @brief Set the volume in the range [0, inf]. Default value is 1.
+        void SetVolume(float_t newVolume);
+
+    private:
+        /// @brief Volume in the range [0, inf]. Default value is 1.
+        float_t m_Volume = 1.f;
+
+        Vector2 m_LastPosition;
+    };
+}

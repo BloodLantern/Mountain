@@ -4,6 +4,12 @@
 
 using namespace Mountain;
 
+namespace
+{
+    std::random_device device;
+    std::mt19937 engine = std::mt19937(device());
+}
+
 int8_t Random::SByte(const int8_t min, const int8_t max)
 {
     return static_cast<int8_t>(Short(min, max));
@@ -17,49 +23,49 @@ uint8_t Random::Byte(const uint8_t min, const uint8_t max)
 int16_t Random::Short(const int16_t min, const int16_t max)
 {
     std::uniform_int_distribution dist(min, max);
-    return dist(m_Engine);
+    return dist(engine);
 }
 
 uint16_t Random::UShort(const uint16_t min, const uint16_t max)
 {
     std::uniform_int_distribution dist(min, max);
-    return dist(m_Engine);
+    return dist(engine);
 }
 
 int32_t Random::Int(const int32_t min, const int32_t max)
 {
     std::uniform_int_distribution dist(min, max);
-    return dist(m_Engine);
+    return dist(engine);
 }
 
 uint32_t Random::UInt(const uint32_t min, const uint32_t max)
 {
     std::uniform_int_distribution dist(min, max);
-    return dist(m_Engine);
+    return dist(engine);
 }
 
 int64_t Random::Long(const int64_t min, const int64_t max)
 {
     std::uniform_int_distribution dist(min, max);
-    return dist(m_Engine);
+    return dist(engine);
 }
 
 uint64_t Random::ULong(const uint64_t min, const uint64_t max)
 {
     std::uniform_int_distribution dist(min, max);
-    return dist(m_Engine);
+    return dist(engine);
 }
 
 float_t Random::Float(const float_t min, const float_t max)
 {
     std::uniform_real_distribution dist(min, max);
-    return dist(m_Engine);
+    return dist(engine);
 }
 
 double_t Random::Double(const double_t min, const double_t max)
 {
     std::uniform_real_distribution dist(min, max);
-    return dist(m_Engine);
+    return dist(engine);
 }
 
 Color Random::Color(const Mountain::Color minValues, const Mountain::Color maxValues)
@@ -85,7 +91,7 @@ ColorHsva Random::ColorHsva(const Mountain::ColorHsva minValues, const Mountain:
 bool_t Random::Chance(const float_t probability)
 {
     std::bernoulli_distribution dist(probability);
-    return dist(m_Engine);
+    return dist(engine);
 }
 
 Vector2 Random::PointInCircle(const Vector2& center, const float_t radius)

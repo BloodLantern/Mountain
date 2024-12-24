@@ -8,6 +8,7 @@
 #include "Mountain/input/input.hpp"
 #include "Mountain/resource/audio_track.hpp"
 #include "Mountain/resource/resource_manager.hpp"
+#include "Mountain/utils/file_system_watcher.hpp"
 
 using namespace Mountain;
 
@@ -185,6 +186,61 @@ void ImGuiUtils::DirectionVector(const std::string_view label, Vector2* const va
     ImGui::PopClipRect();
 }
 
+bool ImGuiUtils::ComboEaser(const std::string_view label, Easing::Easer* v, const ImGuiComboFlags flags)
+{
+    static constexpr std::array Functions{
+        std::make_pair("Linear", Utils::Identity<float_t>),
+        std::make_pair("SineIn", Easing::SineIn),
+        std::make_pair("SineOut", Easing::SineOut),
+        std::make_pair("SineInOut", Easing::SineInOut),
+        std::make_pair("QuadIn", Easing::QuadIn),
+        std::make_pair("QuadOut", Easing::QuadOut),
+        std::make_pair("QuadInOut", Easing::QuadInOut),
+        std::make_pair("CubicIn", Easing::CubicIn),
+        std::make_pair("CubicOut", Easing::CubicOut),
+        std::make_pair("CubicInOut", Easing::CubicInOut),
+        std::make_pair("QuartIn", Easing::QuartIn),
+        std::make_pair("QuartOut", Easing::QuartOut),
+        std::make_pair("QuartInOut", Easing::QuartInOut),
+        std::make_pair("QuintIn", Easing::QuintIn),
+        std::make_pair("QuintOut", Easing::QuintOut),
+        std::make_pair("QuintInOut", Easing::QuintInOut),
+        std::make_pair("ExpoIn", Easing::ExpoIn),
+        std::make_pair("ExpoOut", Easing::ExpoOut),
+        std::make_pair("ExpoInOut", Easing::ExpoInOut),
+        std::make_pair("CircIn", Easing::CircIn),
+        std::make_pair("CircOut", Easing::CircOut),
+        std::make_pair("CircInOut", Easing::CircInOut),
+        std::make_pair("BackIn", Easing::BackIn),
+        std::make_pair("BackOut", Easing::BackOut),
+        std::make_pair("BackInOut", Easing::BackInOut),
+        std::make_pair("ElasticIn", Easing::ElasticIn),
+        std::make_pair("ElasticOut", Easing::ElasticOut),
+        std::make_pair("ElasticInOut", Easing::ElasticInOut),
+        std::make_pair("BounceIn", Easing::BounceIn),
+        std::make_pair("BounceOut", Easing::BounceOut),
+        std::make_pair("BounceInOut", Easing::BounceInOut),
+    };
+
+    const auto current = std::ranges::find_if(Functions, [&](auto element) { return element.second == *v; });
+    const auto value = current == Functions.end() ? "Linear" : current->first;
+
+    bool_t result = false;
+    if (ImGui::BeginCombo(label.data(), value, flags))
+    {
+        for (const auto& pair : Functions)
+        {
+            if (ImGui::Selectable(pair.first))
+            {
+                *v = pair.second;
+                result = true;
+            }
+        }
+        ImGui::EndCombo();
+    }
+    return result;
+}
+
 void ImGuiUtils::ShowInputsWindow()
 {
     ImGui::Begin("Mountain Inputs");
@@ -280,35 +336,113 @@ void ImGuiUtils::ShowFileManager()
     ImGui::End();
 }
 
-template <Concepts::ResourceT T>
-static void DisplayResourceType(
-    const std::string_view typeName,
-    const std::string_view resourceNameFilter,
-    const std::function<void(Pointer<T> resource)>& additionalAction = std::identity{}
-)
+namespace
 {
-    const List<Pointer<T>> resources = ResourceManager::FindAll<T>([&] (Pointer<T> f) -> bool_t { return Utils::StringContainsIgnoreCase(f->GetName(), resourceNameFilter); });
-    if (ImGui::TreeNode(std::format("{} ({})", typeName, resources.GetSize()).c_str()))
+    //std::unordered_map<Resource*, std::shared_ptr<FileSystemWatcher>> fileSystemWatchers;
+
+    void DisplayReloadOptions(Resource& resource, File& file)
     {
-        for (Pointer resource : resources)
+        if (ImGui::Button("Reload from cached file"))
+            resource.Reload();
+        if (ImGui::Button("Reload from disk"))
         {
-            if (!ImGui::TreeNode(resource->GetName().c_str()))
-                continue;
+            file.Reload();
+            resource.Reload();
+        }
 
-            if (ImGui::Button("Reload from cached file"))
-                resource->Reload();
-            if (ImGui::Button("Reload from disk"))
+        // TODO - Reload the resource from the main thread somehow
+        /*bool_t fswEnabled = fileSystemWatchers.contains(&resource);
+        if (ImGui::Checkbox("Automatically reload on file change", &fswEnabled))
+        {
+            if (fswEnabled)
             {
-                resource->GetFile()->Reload();
-                resource->Reload();
+                std::shared_ptr watcher = std::make_shared<FileSystemWatcher>(file.GetPathString());
+                watcher->onModified += [&] (const auto&) { file.Reload(); resource.Reload(); }; // WRONG THREAD
+                fileSystemWatchers.emplace(&resource, std::move(watcher));
             }
+            else
+            {
+                fileSystemWatchers.erase(&resource);
+            }
+        }*/
+    }
 
-            additionalAction(resource);
+    template <Concepts::ResourceT T>
+    void DisplayResourceType(
+        const std::string_view typeName,
+        const std::string_view resourceNameFilter,
+        const std::function<void(Pointer<T> resource)>& additionalAction = std::identity{}
+    )
+    {
+        const List<Pointer<T>> resources = ResourceManager::FindAll<T>([&] (Pointer<T> r) -> bool_t { return Utils::StringContainsIgnoreCase(r->GetName(), resourceNameFilter); });
+        const List<const Pointer<T>*> packagedResources = resources.FindAll([] (const Pointer<T>* r) -> bool_t { return (*r)->GetFile() == nullptr; });
+        if (ImGui::TreeNode(std::format("{} ({}, {} packaged in binary)", typeName, resources.GetSize(), packagedResources.GetSize()).c_str()))
+        {
+            for (Pointer resource : resources)
+            {
+                if (!ImGui::TreeNode(resource->GetName().c_str()))
+                    continue;
+
+                Pointer file = resource->GetFile();
+                if (file != nullptr)
+                    DisplayReloadOptions(*resource, *file);
+
+                additionalAction(resource);
+
+                ImGui::TreePop();
+            }
 
             ImGui::TreePop();
         }
+    }
 
-        ImGui::TreePop();
+    template <>
+    void DisplayResourceType(
+        const std::string_view typeName,
+        const std::string_view resourceNameFilter,
+        const std::function<void(Pointer<Shader> resource)>& additionalAction
+    )
+    {
+        const List<Pointer<Shader>> shaders = ResourceManager::FindAll<Shader>([&] (Pointer<Shader> r) -> bool_t { return Utils::StringContainsIgnoreCase(r->GetName(), resourceNameFilter); });
+        const List<const Pointer<Shader>*> packagedShaders = shaders.FindAll(
+            [](const Pointer<Shader>* r) -> bool_t
+            {
+                return std::ranges::find_if(
+                           (*r)->GetFiles(),
+                           [](const Pointer<File>& f) -> bool_t { return f != nullptr; }
+                       ) == (*r)->GetFiles().end();
+            }
+        );
+
+        if (ImGui::TreeNode(std::format("{} ({}, {} packaged in binary)", typeName, shaders.GetSize(), packagedShaders.GetSize()).c_str()))
+        {
+            for (Pointer shader : shaders)
+            {
+                if (!ImGui::TreeNode(shader->GetName().c_str()))
+                    continue;
+
+                for (size_t i = 0; i < shader->GetFiles().size(); i++)
+                {
+                    Pointer<File>& shaderFile = shader->GetFiles()[i];
+
+                    if (shaderFile != nullptr)
+                    {
+                        if (ImGui::TreeNode(magic_enum::enum_name(static_cast<Graphics::ShaderType>(i)).data()))
+                        {
+                            DisplayReloadOptions(*shader, *shaderFile);
+
+                            ImGui::TreePop();
+                        }
+                    }
+                }
+
+                additionalAction(shader);
+
+                ImGui::TreePop();
+            }
+
+            ImGui::TreePop();
+        }
     }
 }
 
@@ -330,16 +464,12 @@ void ImGuiUtils::ShowResourceManager()
             ImGui::Text("Format: %.*s", static_cast<int32_t>(format.length()), format.data());
         }
     );
+
     DisplayResourceType<Font>("Font", filter);
 
-    const List<Pointer<Shader>> resources = ResourceManager::FindAll<Shader>([&] (Pointer<Shader> f) -> bool_t { return Utils::StringContainsIgnoreCase(f->GetName(), filter); });
-    if (ImGui::TreeNode(std::format("Shader ({} precompiled)", resources.GetSize()).c_str()))
-    {
-        for (Pointer resource : resources)
-            ImGui::Text("%s", resource->GetName().c_str());
+    DisplayResourceType<Shader>("Shader", filter);
 
-        ImGui::TreePop();
-    }
+    DisplayResourceType<ComputeShader>("ComputeShader", filter);
 
     DisplayResourceType<Texture>(
         "Texture",
@@ -348,6 +478,8 @@ void ImGuiUtils::ShowResourceManager()
         {
             const Vector2i size = texture->GetSize();
             ImGui::Text("Size: %dx%d", size.x, size.y);
+            ImGui::Text("Preview:");
+            ImGui::Image(Utils::IntToPointer<void>(texture->GetId()), static_cast<Vector2>(texture->GetSize()));
         }
     );
 
