@@ -1,10 +1,12 @@
 ﻿#include "Mountain/utils/utils.hpp"
 
 #include <fstream>
+#include <ranges>
 #include <regex>
 
 #include <ImGui/imgui.h>
 
+#include "Mountain/globals.hpp"
 #include "Mountain/utils/windows.hpp"
 
 using namespace Mountain;
@@ -154,7 +156,7 @@ bool_t Utils::StringEqualsIgnoreCase(const std::string_view a, const std::string
 
 bool_t Utils::StringContainsIgnoreCase(const std::string_view a, const std::string_view b)
 {
-    const std::string left = StringToLower(a), right = StringToLower(b);
+    const std::string left = ToLower(a), right = ToLower(b);
     return left.contains(right);
 }
 
@@ -177,7 +179,7 @@ void Utils::SetThreadName([[maybe_unused]] std::thread& thread, [[maybe_unused]]
 #endif
 }
 
-std::wstring Utils::StringNarrowToWide(const std::string_view str)
+std::wstring Utils::NarrowToWide(const std::string_view str)
 {
     std::wstring result;
     result.resize(str.size());
@@ -185,7 +187,7 @@ std::wstring Utils::StringNarrowToWide(const std::string_view str)
     return result;
 }
 
-std::string Utils::StringWideToNarrow(const std::wstring_view str)
+std::string Utils::WideToNarrow(const std::wstring_view str)
 {
     std::string result;
     result.resize(str.size());
@@ -193,7 +195,7 @@ std::string Utils::StringWideToNarrow(const std::wstring_view str)
     return result;
 }
 
-std::string Utils::StringToLower(const std::string_view str)
+std::string Utils::ToLower(const std::string_view str)
 {
     std::string result;
     result.resize(str.size());
@@ -202,7 +204,7 @@ std::string Utils::StringToLower(const std::string_view str)
     return result;
 }
 
-std::string Utils::StringToUpper(const std::string_view str)
+std::string Utils::ToUpper(const std::string_view str)
 {
     std::string result;
     result.resize(str.size());
@@ -233,4 +235,31 @@ std::pair<int32_t, std::string_view> Utils::ByteSizeUnit(int64_t size)
         return { static_cast<int32_t>(size), "TB" };
 
     return { static_cast<int32_t>(size), "?" };
+}
+
+std::string Utils::GetBuiltinShadersPath() { return BuiltinShadersPath.empty() ? "" : BuiltinShadersPath + '/'; }
+
+std::string Utils::Trim(const std::string_view str, const TrimOptions options)
+{
+    std::string result{ str.data(), str.length() };
+
+    if (options & TrimOptions::Start)
+        result.erase(result.begin(), std::ranges::find_if(result, [](const uint8_t c) { return !std::isspace(c); }));
+    if (options & TrimOptions::End)
+        result.erase(std::ranges::find_if(std::ranges::reverse_view(result), [](const uint8_t c) { return !std::isspace(c); }).base(), result.end());
+
+    return result;
+}
+
+std::string Utils::GetLine(const std::string& str, const size_t lineIndex)
+{
+    std::istringstream input{ str };
+    size_t currentIndex = 0;
+    for (std::string line; std::getline(input, line); currentIndex++)
+    {
+        if (currentIndex == lineIndex)
+            return line;
+    }
+
+    return "";
 }

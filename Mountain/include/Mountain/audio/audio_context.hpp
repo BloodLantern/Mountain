@@ -6,45 +6,44 @@
 // ReSharper disable once CppInconsistentNaming
 struct ALCcontext;
 
-BEGIN_MOUNTAIN
-
-class AudioDevice;
-
-enum class AudioSourceType
+namespace Mountain
 {
-    Mono,
-    Stereo
-};
+    class AudioDevice;
 
-class AudioContext
-{
-public:
-    [[nodiscard]]
-    MOUNTAIN_API explicit AudioContext(AudioDevice& device);
+    enum class AudioSourceType
+    {
+        Mono,
+        Stereo
+    };
 
-    MOUNTAIN_API ~AudioContext();
+    class AudioContext
+    {
+    public:
+        [[nodiscard]]
+        MOUNTAIN_API explicit AudioContext(AudioDevice& device);
 
-    DELETE_COPY_MOVE_OPERATIONS(AudioContext)
+        MOUNTAIN_API ~AudioContext();
 
-    MOUNTAIN_API void MakeCurrent() const;
+        DELETE_COPY_MOVE_OPERATIONS(AudioContext)
 
-    MOUNTAIN_API static bool_t CheckError();
+        MOUNTAIN_API void MakeCurrent() const;
 
-    [[nodiscard]]
-    MOUNTAIN_API int32_t GetMaxSourceCount(AudioSourceType sourceType) const;
+        MOUNTAIN_API static bool_t CheckError();
 
-    /// @brief Returns the next available source of the given type.
-    [[nodiscard]]
-    MOUNTAIN_API uint32_t GetSource(AudioSourceType type = AudioSourceType::Mono);
+        [[nodiscard]]
+        MOUNTAIN_API int32_t GetMaxSourceCount(AudioSourceType sourceType) const;
 
-private:
-    ALCcontext* m_Handle = nullptr;
-    AudioDevice* m_Device = nullptr;
+        /// @brief Returns the next available source of the given type.
+        [[nodiscard]]
+        MOUNTAIN_API uint32_t GetSource(AudioSourceType type = AudioSourceType::Mono);
 
-    List<int32_t> m_Attributes;
+    private:
+        ALCcontext* m_Handle = nullptr;
+        AudioDevice* m_Device = nullptr;
 
-    List<uint32_t> m_SourcesMono;
-    List<uint32_t> m_SourcesStereo;
-};
+        List<int32_t> m_Attributes;
 
-END_MOUNTAIN
+        List<uint32_t> m_SourcesMono;
+        List<uint32_t> m_SourcesStereo;
+    };
+}

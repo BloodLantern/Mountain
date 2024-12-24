@@ -2,6 +2,13 @@
 <project version="4">
   <component name="DiscordProjectSettings">
     <option name="show" value="PROJECT_FILES" />
-    <option name="description" value="" />
+    <option name="description" value="C++ 2D game framework" />
+    <option name="applicationTheme" value="default" />
+    <option name="iconsTheme" value="default" />
+    <option name="button1Title" value="Repository" />
+    <option name="button1Url" value="https://github.com/BloodLantern/Mountain" />
+    <option name="button2Title" value="" />
+    <option name="button2Url" value="" />
+    <option name="customApplicationId" value="" />
   </component>
 </project>

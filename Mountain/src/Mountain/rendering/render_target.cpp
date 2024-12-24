@@ -6,13 +6,11 @@
 
 #include "Mountain/window.hpp"
 #include "Mountain/rendering/draw.hpp"
-#include "Mountain/scene/component/light_source.hpp"
 #include "Mountain/utils/logger.hpp"
 
 using namespace Mountain;
 
-// ReSharper disable once CppPossiblyUninitializedMember
-RenderTarget::RenderTarget(const Vector2i size, const MagnificationFilter filter) { Initialize(size, filter); }
+RenderTarget::RenderTarget(const Vector2i size, const Graphics::MagnificationFilter filter) { Initialize(size, filter); }
 
 RenderTarget::~RenderTarget() { Reset(); }
 
@@ -30,7 +28,7 @@ void RenderTarget::Use() const
 
 void RenderTarget::UpdateDrawCamera() const { Draw::SetCamera(m_CameraMatrix, m_CameraScale); }
 
-void RenderTarget::Initialize(const Vector2i size, const MagnificationFilter filter)
+void RenderTarget::Initialize(const Vector2i size, const Graphics::MagnificationFilter filter)
 {
     if (m_Initialized)
         return;
@@ -48,8 +46,10 @@ void RenderTarget::Initialize(const Vector2i size, const MagnificationFilter fil
     
     glTextureParameteri(m_Texture, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTextureParameteri(m_Texture, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    
-    glTextureStorage2D(m_Texture, 1, GL_RGBA8, size.x, size.y);
+
+    glBindTexture(GL_TEXTURE_2D, m_Texture);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, size.x, size.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
+    glBindTexture(GL_TEXTURE_2D, 0);
 
     // Framebuffer
     
@@ -108,25 +108,35 @@ void RenderTarget::Reset()
     m_Initialized = false;
 }
 
-void RenderTarget::Reset(const Vector2i newSize, const MagnificationFilter newFilter)
+void RenderTarget::Reset(const Vector2i newSize, const Graphics::MagnificationFilter newFilter)
 {
     Reset();
     Initialize(newSize, newFilter);
 }
 
-void RenderTarget::AddLightSource(const LightSource* lightSource)
+LightSource& RenderTarget::NewLightSource()
 {
-    if (std::ranges::contains(m_LightSources, lightSource))
-        return;
-
-    m_LightSources.push_back(lightSource);
+    m_LightSources.Emplace();
+    return m_LightSources.Back();
 }
 
-void RenderTarget::RemoveLightSource(const LightSource* lightSource) { std::erase(m_LightSources, lightSource); }
+void RenderTarget::DeleteLightSource(const LightSource& lightSource)
+{
+    for (size_t i = 0; i < m_LightSources.GetSize(); ++i)
+    {
+        if (&m_LightSources[i] == &lightSource)
+        {
+            m_LightSources.RemoveAt(i);
+            return;
+        }
+    }
+}
 
-const std::vector<const LightSource*>& RenderTarget::GetLightSources() const { return m_LightSources; }
+void RenderTarget::ClearLightSources() { m_LightSources.Clear(); }
 
-void RenderTarget::SetDebugName(const std::string_view name) const
+const List<LightSource>& RenderTarget::GetLightSources() const { return m_LightSources; }
+
+void RenderTarget::SetDebugName([[maybe_unused]] const std::string_view name) const
 {
 #ifdef _DEBUG
     glObjectLabel(GL_TEXTURE, m_Texture, static_cast<GLsizei>(name.length()), name.data());
@@ -146,11 +156,11 @@ void RenderTarget::SetSize(const Vector2i newSize)
 {
     if (!m_Initialized)
         throw std::logic_error("Cannot set the size of an uninitialized RenderTarget");
-    
+
     glBindTexture(GL_TEXTURE_2D, m_Texture);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, newSize.x, newSize.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
     glBindTexture(GL_TEXTURE_2D, 0);
-    
+
     glBindFramebuffer(GL_FRAMEBUFFER, m_Framebuffer);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_Texture, 0);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -159,27 +169,23 @@ void RenderTarget::SetSize(const Vector2i newSize)
     m_Projection = ComputeProjection(newSize);
 }
 
-MagnificationFilter RenderTarget::GetFilter() const
+Graphics::MagnificationFilter RenderTarget::GetFilter() const
 {
     return m_Filter;
 }
 
-void RenderTarget::SetFilter(const MagnificationFilter newFilter)
+void RenderTarget::SetFilter(const Graphics::MagnificationFilter newFilter)
 {
     if (!m_Initialized)
-        throw std::logic_error("Cannot set the filter of an uninitialized RenderTarget");
-    
-    glBindTexture(GL_TEXTURE_2D, m_Texture);
+        throw std::logic_error("Cannot set the magnification filter of an uninitialized RenderTarget");
 
     const int32_t magFilter = ToOpenGl(newFilter);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, magFilter);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, magFilter);
-    
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    
-    glBindTexture(GL_TEXTURE_2D, 0);
-    
+    glTextureParameteri(m_Texture, GL_TEXTURE_MIN_FILTER, magFilter);
+    glTextureParameteri(m_Texture, GL_TEXTURE_MAG_FILTER, magFilter);
+
+    glTextureParameteri(m_Texture, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTextureParameteri(m_Texture, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
     m_Filter = newFilter;
 }
 
@@ -203,23 +209,6 @@ void RenderTarget::SetCameraMatrix(const Matrix& newCameraMatrix)
 }
 
 const Vector2& RenderTarget::GetCameraScale() const { return m_CameraScale; }
-
-int32_t RenderTarget::ToOpenGl(const MagnificationFilter filter)
-{
-    switch (filter)
-    {
-        case MagnificationFilter::Linear:
-            return GL_LINEAR;
-        
-        case MagnificationFilter::Nearest:
-            return GL_NEAREST;
-        
-        case MagnificationFilter::Count:
-            throw std::invalid_argument("Invalid magnification filter");
-    }
-    
-    throw std::invalid_argument("Invalid magnification filter");
-}
 
 Matrix RenderTarget::ComputeProjection(const Vector2i size)
 {

@@ -627,6 +627,9 @@
     <ClInclude Include="inline\Mountain\utils\utils.inl">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\Mountain\rendering\particle_system.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="externals\src\glad.c">
@@ -810,6 +813,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Mountain\window.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mountain\rendering\particle_system.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

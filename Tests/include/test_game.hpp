@@ -1,15 +1,16 @@
 #pragma once
 
-#include "animated_character.hpp"
 #include "Mountain/game.hpp"
 #include "Mountain/collision/grid.hpp"
+#include "Mountain/rendering/particle_system.hpp"
 #include "Mountain/rendering/render_target.hpp"
 #include "Mountain/resource/texture.hpp"
 #include "Mountain/utils/color.hpp"
 #include "Mountain/utils/list.hpp"
 
+#include "animated_character.hpp"
 #include "camera.hpp"
-#include "Paddle.hpp"
+#include "player.hpp"
 
 constexpr Vector2i BaseResolution = { 320, 180 };
 
@@ -17,12 +18,9 @@ class GameExample : public Mountain::Game
 {
 public:
     Mountain::List<Mountain::Entity*> entities;
-	Paddle* player = nullptr;
+	Player* player = nullptr;
 	AnimatedCharacter* character = nullptr;
-	
-	int32_t ballCount = 0;
-	float_t ballTimer = 0;
-	Mountain::ColorHsva lastBallColor = Mountain::ColorHsva::Red();
+	Mountain::ParticleSystem particleSystem{ 1000 };
 
 	Mountain::RenderTarget renderTarget;
 
@@ -32,11 +30,10 @@ public:
 
     explicit GameExample(const char_t* windowTitle);
 
-private:
 	// Inherited from Game
 	void Initialize() override;
 	void LoadResources() override;
-	void Shutdown() override;
+    void Shutdown() override;
 	void Update() override;
 	void Render() override;
 };

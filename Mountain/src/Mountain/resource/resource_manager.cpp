@@ -13,7 +13,10 @@
 
 namespace rh
 {
-    ResourceHolder embed;
+    namespace
+    {
+        ResourceHolder embed;
+    }
 }
 
 using namespace Mountain;
@@ -22,7 +25,7 @@ Pointer<Font> ResourceManager::LoadFont(const Pointer<File>& file, const uint32_
 {
     Logger::LogDebug("Loading font {} with size {}", file->GetPath(), size);
 
-    std::string name = std::format("{}/{}", ReservedFontPrefix.data() + file->GetPathString(), size);
+    std::string name = std::format("{}/{}", file->GetPathString(), size);
 
     Pointer<Font> font;
     
@@ -84,18 +87,19 @@ void ResourceManager::LoadAll()
     );
 
     std::vector<Pointer<Shader>> loadedShaders;
+    std::vector<Pointer<ComputeShader>> loadedComputeShaders;
 
     // Do interface stuff synchronously (OpenGL/OpenAL)
     for (Pointer<File>& file : files)
     {
         std::string&& extension = file->GetExtension();
-            
+
         if (std::ranges::contains(Shader::VertexFileExtensions, extension) || std::ranges::contains(Shader::FragmentFileExtensions, extension))
         {
             Pointer<Shader> shader;
 
             // We use an underscore before the name to make sure it isn't used elsewhere
-            const std::string&& filenameNoExtension = ReservedShaderPrefix.data() + file->GetNameNoExtension();
+            const std::string&& filenameNoExtension = file->GetParent()->GetPathString();
             if (Contains(filenameNoExtension))
                 shader = Get<Shader>(filenameNoExtension);
             else
@@ -103,6 +107,20 @@ void ResourceManager::LoadAll()
 
             shader->SetSourceData(file);
             loadedShaders.push_back(shader);
+        }
+        else if (std::ranges::contains(ComputeShader::FileExtensions, extension))
+        {
+            Pointer<ComputeShader> shader;
+
+            // We use an underscore before the name to make sure it isn't used elsewhere
+            const std::string&& filenameNoExtension = file->GetPathString();
+            if (Contains(filenameNoExtension))
+                shader = Get<ComputeShader>(filenameNoExtension);
+            else
+                shader = Add<ComputeShader>(filenameNoExtension);
+
+            shader->SetSourceData(file);
+            loadedComputeShaders.push_back(shader);
         }
         else if (!std::ranges::contains(Font::FileExtensions, extension))
         {
@@ -115,6 +133,12 @@ void ResourceManager::LoadAll()
     {
         if (!shader->IsLoaded())
             shader->Load();
+    }
+
+    for (Pointer<ComputeShader>& computeShader : loadedComputeShaders)
+    {
+        if (!computeShader->IsLoaded())
+            computeShader->Load();
     }
 
     Logger::LogDebug(
@@ -135,19 +159,19 @@ void ResourceManager::LoadAllBinaries()
     const size_t oldResourceCount = m_Resources.size();
 
     std::vector<Pointer<Shader>> loadedShaders;
+    std::vector<Pointer<ComputeShader>> loadedComputeShaders;
     
     for (auto&& file : files)
     {
         std::filesystem::path&& path = file;
         std::string&& extension = path.extension().generic_string();
         
-        if (std::ranges::find(Shader::VertexFileExtensions, extension) != Shader::VertexFileExtensions.end() ||
-            std::ranges::find(Shader::FragmentFileExtensions, extension) != Shader::FragmentFileExtensions.end())
+        if (std::ranges::contains(Shader::VertexFileExtensions, extension) || std::ranges::contains(Shader::FragmentFileExtensions, extension))
         {
             Pointer<Shader> shader;
 
             // We use an underscore before the name to make sure it isn't used elsewhere
-            const std::string&& filenameNoExtension = ReservedShaderPrefix.data() + path.stem().string();
+            const std::string&& filenameNoExtension = path.parent_path().generic_string();
             if (Contains(filenameNoExtension))
                 shader = Get<Shader>(filenameNoExtension);
             else
@@ -156,6 +180,21 @@ void ResourceManager::LoadAllBinaries()
             auto&& data = rh::embed(file);
             shader->Load(reinterpret_cast<const char_t*>(data.data()), data.size(), Shader::FileExtensionToType(extension));
             loadedShaders.push_back(shader);
+        }
+        else if (std::ranges::contains(ComputeShader::FileExtensions, extension))
+        {
+            Pointer<ComputeShader> shader;
+
+            // We use an underscore before the name to make sure it isn't used elsewhere
+            const std::string&& filenameNoExtension = path.parent_path().generic_string();
+            if (Contains(filenameNoExtension))
+                shader = Get<ComputeShader>(filenameNoExtension);
+            else
+                shader = Add<ComputeShader>(filenameNoExtension);
+
+            auto&& data = rh::embed(file);
+            shader->Load(reinterpret_cast<const char_t*>(data.data()), data.size());
+            loadedComputeShaders.push_back(shader);
         }
         else
         {
@@ -167,6 +206,12 @@ void ResourceManager::LoadAllBinaries()
     {
         if (!shader->IsLoaded())
             shader->Load();
+    }
+
+    for (Pointer<ComputeShader>& computeShader : loadedComputeShaders)
+    {
+        if (!computeShader->IsLoaded())
+            computeShader->Load();
     }
 
     Logger::LogDebug(
@@ -191,7 +236,7 @@ bool ResourceManager::Contains(const Pointer<File>& file)
 
 Pointer<Font> ResourceManager::GetFont(const std::string& name, uint32_t size)
 {
-    std::string internalName = std::format("{}/{}", ReservedFontPrefix.data() + name, size);
+    std::string internalName = std::format("{}/{}", name, size);
     
     if (!Contains(internalName))
     {
