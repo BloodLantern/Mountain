@@ -49,52 +49,30 @@ void ParticleSystem::Update()
 
     const float_t deltaTime = useUnscaledDeltaTime ? Time::GetDeltaTimeUnscaled() : Time::GetDeltaTime();
 
-    m_UpdateComputeShader->SetUniform("deltaTime", deltaTime);
-    m_UpdateComputeShader->SetUniform("time", Time::GetTotalTime());
-
-    m_UpdateComputeShader->SetUniform("particleLifetime", particleLifetime);
-
-    m_UpdateComputeShader->SetUniform("enabledModules", static_cast<uint32_t>(enabledModules));
-
-    for (const auto& module : modules)
-        module->SetComputeShaderUniforms(*m_UpdateComputeShader, enabledModules);
-
-    WaitBufferSync(m_SyncObject);
-
-    // Spawn new particles if necessary
-    if (m_SpawnTimer <= 0.0 && spawnRate > 0)
+    if (m_PlaybackTime >= startDelay)
     {
-        const double_t spawnDelay = 1.0 / static_cast<double_t>(spawnRate);
-        const uint32_t count = static_cast<uint32_t>(std::abs(m_SpawnTimer) / spawnDelay) + 1;
+        SetComputeShaderUniforms(deltaTime);
 
-        if (count > 0)
-        {
-            uint32_t remaining = count;
+        for (const auto& module : modules)
+            module->SetComputeShaderUniforms(*m_UpdateComputeShader, enabledModules);
 
-            for (uint32_t i = 0; i < m_MaxParticles; i++)
-            {
-                int32_t& particleAlive = m_AliveParticles[i];
+        const bool_t spawning = looping || m_PlaybackTime - startDelay < duration;
 
-                if (particleAlive)
-                    continue;
+        if (!spawning && GetCurrentParticles() == 0)
+            m_Playing = false;
 
-                particleAlive = true;
+        // Spawn new particles if necessary
+        if (m_SpawnTimer <= 0.0 && spawnRate > 0 && spawning)
+            SpawnNewParticles();
 
-                if (--remaining <= 0)
-                    break;
-            }
-        }
+        glBindBuffersBase(GL_SHADER_STORAGE_BUFFER, 0, 2, &m_AliveSsbo);
+        m_UpdateComputeShader->Dispatch(m_MaxParticles);
+        glBindBuffersBase(GL_SHADER_STORAGE_BUFFER, 0, 2, nullptr);
 
-        m_SpawnTimer += spawnDelay * static_cast<double_t>(count);
+        m_SpawnTimer -= deltaTime;
     }
 
-    LockBuffer(m_SyncObject);
-
-    glBindBuffersBase(GL_SHADER_STORAGE_BUFFER, 0, 2, &m_AliveSsbo);
-    m_UpdateComputeShader->Dispatch(m_MaxParticles);
-    glBindBuffersBase(GL_SHADER_STORAGE_BUFFER, 0, 2, nullptr);
-
-    m_SpawnTimer -= deltaTime;
+    m_PlaybackTime += deltaTime;
 }
 
 void ParticleSystem::Render()
@@ -103,6 +81,7 @@ void ParticleSystem::Render()
     m_DrawShader->SetUniform("projection", Draw::m_ProjectionMatrix * Draw::m_CameraMatrix);
 
     m_DrawShader->SetUniform("systemPosition", position);
+    m_DrawShader->SetUniform("systemRotation", rotation);
 
     glBindVertexArray(m_DrawVao);
     m_DrawShader->Use();
@@ -125,24 +104,24 @@ void ParticleSystem::RenderImGui()
     ImGui::SameLine();
     if (ImGui::Button("Restart"))
         Restart();
+    ImGui::SameLine();
+    if (ImGui::Button("Stop"))
+        Stop();
 
     constexpr size_t zero = 0;
     ImGui::SeparatorText("System settings");
     ImGui::DragFloat2("Position", position.Data());
+    ImGui::DragAngle("Rotation", &rotation);
+    ImGui::DragFloat("Duration", &duration);
+    ImGui::Checkbox("Looping", &looping);
+    ImGui::DragFloat("Start delay", &startDelay, 0.01f, 0.f, std::numeric_limits<float_t>::max(), "%.2f", ImGuiSliderFlags_AlwaysClamp);
     ImGui::DragScalar("Spawn rate", ImGuiDataType_U32, &spawnRate, 1, &zero, nullptr, nullptr, ImGuiSliderFlags_AlwaysClamp);
 
+    ImGui::SeparatorText("System info");
     ImGui::BeginDisabled();
-    WaitBufferSync(m_SyncObject);
-
-    uint32_t currentParticles = 0;
-    for (uint32_t i = 0; i < m_MaxParticles; i++)
-    {
-        if (m_AliveParticles[i])
-            currentParticles++;
-    }
-
-    LockBuffer(m_SyncObject);
+    uint32_t currentParticles = GetCurrentParticles();
     ImGui::DragScalar("Current particles", ImGuiDataType_U32, &currentParticles);
+    ImGui::DragFloat("Playback time", &m_PlaybackTime, 1, 0, 0, "%.2f");
     ImGui::EndDisabled();
 
     uint32_t maxParticles = m_MaxParticles;
@@ -152,6 +131,8 @@ void ParticleSystem::RenderImGui()
 
     ImGui::SeparatorText("Particles settings");
     ImGui::DragFloat("Lifetime", &particleLifetime, 0.01f, 0.f, std::numeric_limits<float_t>::max(), "%.2f", ImGuiSliderFlags_AlwaysClamp);
+    ImGui::DragFloat("Speed", &particleSpeed);
+    ImGui::ColorEdit4("Start color", particleStartColor.Data());
 
     ImGui::SeparatorText("Modules settings");
     uint32_t* enabledModulesInt = reinterpret_cast<uint32_t*>(&enabledModules);
@@ -169,8 +150,29 @@ void ParticleSystem::TogglePlay()
 
 void ParticleSystem::Restart()
 {
-    SetMaxParticles(m_MaxParticles);
+    Stop();
     m_Playing = true;
+}
+
+void ParticleSystem::Stop()
+{
+    SetMaxParticles(m_MaxParticles);
+    m_Playing = false;
+    m_PlaybackTime = 0.f;
+}
+
+uint32_t ParticleSystem::GetCurrentParticles()
+{
+    WaitBufferSync(m_SyncObject);
+    uint32_t currentParticles = 0;
+    for (uint32_t i = 0; i < m_MaxParticles; i++)
+    {
+        if (m_AliveParticles[i])
+            currentParticles++;
+    }
+    LockBuffer(m_SyncObject);
+
+    return currentParticles;
 }
 
 uint32_t ParticleSystem::GetMaxParticles() const { return m_MaxParticles; }
@@ -207,6 +209,48 @@ void ParticleSystem::SetMaxParticles(const uint32_t newMaxParticles)
 }
 
 bool_t ParticleSystem::IsPlaying() const { return m_Playing; }
+
+void ParticleSystem::SetComputeShaderUniforms(float_t deltaTime) const
+{
+    m_UpdateComputeShader->SetUniform("deltaTime", deltaTime);
+    m_UpdateComputeShader->SetUniform("time", Time::GetTotalTime());
+
+    m_UpdateComputeShader->SetUniform("particleLifetime", particleLifetime);
+    m_UpdateComputeShader->SetUniform("particleSpeed", particleSpeed);
+    m_UpdateComputeShader->SetUniform("particleStartColor", particleStartColor);
+
+    m_UpdateComputeShader->SetUniform("enabledModules", static_cast<uint32_t>(enabledModules));
+}
+
+void ParticleSystem::SpawnNewParticles()
+{
+    const double_t spawnDelay = 1.0 / static_cast<double_t>(spawnRate);
+    const uint32_t count = static_cast<uint32_t>(std::abs(m_SpawnTimer) / spawnDelay) + 1;
+
+    if (count > 0)
+    {
+        uint32_t remaining = count;
+
+        WaitBufferSync(m_SyncObject);
+
+        for (uint32_t i = 0; i < m_MaxParticles; i++)
+        {
+            int32_t& particleAlive = m_AliveParticles[i];
+
+            if (particleAlive)
+                continue;
+
+            particleAlive = true;
+
+            if (--remaining <= 0)
+                break;
+        }
+
+        LockBuffer(m_SyncObject);
+    }
+
+    m_SpawnTimer += spawnDelay * static_cast<double_t>(count);
+}
 
 void ParticleSystem::WaitBufferSync(const GLsync syncObject)
 {

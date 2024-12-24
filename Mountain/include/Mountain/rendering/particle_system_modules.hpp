@@ -10,8 +10,15 @@ namespace Mountain::ParticleSystemModules
     {
         None = 0,
 
-        ColorOverLifetime = 1 << 0,
-        ForceOverLifetime = 1 << 1,
+        Emission            = 1 << 0,
+        Shape               = 1 << 1,
+        ForceOverLifetime   = 1 << 2,
+        ColorOverLifetime   = 1 << 3,
+        ColorBySpeed        = 1 << 4,
+        Noise               = 1 << 5,
+        Collision           = 1 << 6,
+        Lights              = 1 << 7,
+        Trails              = 1 << 8,
 
         All = 0xFFFFFFFF
     };
@@ -32,8 +39,7 @@ namespace Mountain::ParticleSystemModules
 
     struct MOUNTAIN_API ColorOverLifetime : Base
     {
-        Color start = Color::White();
-        Color end = Color::Transparent();
+        Color target = Color::Transparent();
 
         void SetComputeShaderUniforms(const ComputeShader& computeShader, Types enabledModules) const override;
         void RenderImGui(uint32_t* enabledModulesInt) override;
