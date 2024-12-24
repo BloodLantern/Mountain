@@ -45,6 +45,6 @@ namespace Mountain
 	private:
 		std::string m_Code;
 
-		void CheckCompilationError(uint32_t id);
+		void CheckCompileError(uint32_t id) const;
 	};
 }

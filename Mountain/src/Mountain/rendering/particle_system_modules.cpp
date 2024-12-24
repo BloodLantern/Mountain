@@ -35,7 +35,6 @@ void ColorOverLifetime::SetComputeShaderUniforms(const ComputeShader& computeSha
 
     computeShader.SetUniform("colorOverLifetime.start", start);
     computeShader.SetUniform("colorOverLifetime.end", end);
-    computeShader.SetUniform("colorOverLifetime.easing", static_cast<uint32_t>(easing));
 }
 
 void ColorOverLifetime::RenderImGui(uint32_t* const enabledModulesInt)
@@ -45,7 +44,6 @@ void ColorOverLifetime::RenderImGui(uint32_t* const enabledModulesInt)
 
     ImGui::ColorEdit4("Start", start.Data());
     ImGui::ColorEdit4("End", end.Data());
-    ImGui::ComboEnum("Easing", &easing);
 
     EndImGui();
 }
