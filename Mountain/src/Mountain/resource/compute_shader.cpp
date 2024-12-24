@@ -51,7 +51,7 @@ void ComputeShader::Load()
     glShaderSource(id, 1, &data, &dataLength);
 
     glCompileShader(id);
-	CheckCompilationError(id);
+	CheckCompileError(id);
 
 	glAttachShader(m_Id, id);
     glLinkProgram(m_Id);
@@ -91,17 +91,7 @@ void ComputeShader::Dispatch(const uint32_t groupsX, const uint32_t groupsY, con
     glUseProgram(0);
 }
 
-void ComputeShader::CheckCompilationError(const uint32_t id)
+void ComputeShader::CheckCompileError(const uint32_t id) const
 {
-    int success = 0;
-
-    glGetShaderiv(id, GL_COMPILE_STATUS, &success);
-    if (!success)
-    {
-        GLint infoLogSize = 0;
-        glGetShaderiv(id, GL_INFO_LOG_LENGTH, &infoLogSize);
-        std::vector<char_t> infoLog(static_cast<size_t>(infoLogSize));
-        glGetShaderInfoLog(id, infoLogSize, nullptr, infoLog.data());
-        Logger::LogError("Error while compiling compute shader '{}': {}", m_Name, infoLog.data());
-    }
+    ShaderBase::CheckCompileError(id, "Compute", m_Code);
 }

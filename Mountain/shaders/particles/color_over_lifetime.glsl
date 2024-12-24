@@ -10,7 +10,5 @@ uniform struct ColorOverLifetime
 Particle ColorOverLifetimeUpdate(Particle particle)
 {
     particle.color = mix(colorOverLifetime.start, colorOverLifetime.end, 1.f - (particle.lifetime / particleLifetime));
-    // TODO - Easing
-
     return particle;
 }
