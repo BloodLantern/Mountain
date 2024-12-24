@@ -206,6 +206,8 @@ void ParticleSystem::SetMaxParticles(const uint32_t newMaxParticles)
     glMemoryBarrier(GL_SHADER_STORAGE_BARRIER_BIT);
 }
 
+bool_t ParticleSystem::IsPlaying() const { return m_Playing; }
+
 void ParticleSystem::WaitBufferSync(const GLsync syncObject)
 {
     if (!syncObject)

@@ -100,6 +100,6 @@ namespace Mountain
 		std::array<Pointer<File>, Graphics::ShaderTypeCount> m_Files;
 		std::array<ShaderCode, Graphics::ShaderTypeCount> m_Code;
 
-		void CheckCompilationError(uint32_t id, Graphics::ShaderType type);
+		void CheckCompileError(uint32_t id, Graphics::ShaderType type) const;
 	};
 }

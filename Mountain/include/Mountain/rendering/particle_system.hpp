@@ -53,6 +53,9 @@ namespace Mountain
         /// @warning This is a very heavy operation, avoid doing this each frame
         MOUNTAIN_API void SetMaxParticles(uint32_t newMaxParticles);
 
+        [[nodiscard]]
+        MOUNTAIN_API bool_t IsPlaying() const;
+
     private:
         uint32_t m_MaxParticles = 0;
         int32_t* m_AliveParticles = nullptr;

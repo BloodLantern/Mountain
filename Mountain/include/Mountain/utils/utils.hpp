@@ -204,19 +204,21 @@ namespace Mountain::Utils
     template <typename R, typename... Args>
     R CallSafe(const std::function<R(Args...)>& function, Args&&... args);
 
-    MOUNTAIN_API std::wstring StringNarrowToWide(std::string_view str);
+    MOUNTAIN_API std::wstring NarrowToWide(std::string_view str);
 
-    MOUNTAIN_API std::string StringWideToNarrow(std::wstring_view str);
+    MOUNTAIN_API std::string WideToNarrow(std::wstring_view str);
 
-    MOUNTAIN_API std::string StringToLower(std::string_view str);
+    MOUNTAIN_API std::string ToLower(std::string_view str);
 
-    MOUNTAIN_API std::string StringToUpper(std::string_view str);
+    MOUNTAIN_API std::string ToUpper(std::string_view str);
 
     MOUNTAIN_API std::pair<int32_t, std::string_view> ByteSizeUnit(int64_t size);
 
     MOUNTAIN_API std::string GetBuiltinShadersPath();
 
     MOUNTAIN_API std::string Trim(std::string_view str, TrimOptions options = TrimOptions::Both);
+
+    MOUNTAIN_API std::string GetLine(const std::string& str, size_t lineIndex);
 }
 
 namespace Easing
