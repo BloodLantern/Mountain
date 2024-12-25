@@ -61,6 +61,9 @@ void Entry::SetParent(Pointer<Directory>&& newParent)
     m_Parent = std::move(newParent);
     std::filesystem::path newPath = m_Parent->GetPathString() + static_cast<char_t>(std::filesystem::path::preferred_separator) + m_Name;
 
+    if (m_Path == newPath)
+        return;
+
     FileManager::Rename(m_Path, newPath);
 
     m_Path = std::move(newPath);
