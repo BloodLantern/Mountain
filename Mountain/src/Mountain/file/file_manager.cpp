@@ -90,7 +90,7 @@ Pointer<Directory> FileManager::AddDirectory(std::filesystem::path path)
     }
     catch (const std::invalid_argument& ex)
     {
-        Logger::LogError("Exception while creating directory with path {}: {}", directory->GetPath(), ex.what());
+        Logger::LogError("Exception while creating directory with path {}: {}", path, ex.what());
         // Return the already-constructed null Pointer
         return directory;
     }

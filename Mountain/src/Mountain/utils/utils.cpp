@@ -237,7 +237,7 @@ std::pair<int32_t, std::string_view> Utils::ByteSizeUnit(int64_t size)
     return { static_cast<int32_t>(size), "?" };
 }
 
-std::string Utils::GetBuiltinShadersPath() { return BuiltinShadersPath.empty() ? "" : BuiltinShadersPath + '/'; }
+std::string Utils::GetBuiltinShadersPath() { return BuiltinShadersPath.empty() ? "shaders/" : BuiltinShadersPath + '/'; }
 
 std::string Utils::Trim(const std::string_view str, const TrimOptions options)
 {

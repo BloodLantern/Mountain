@@ -8,11 +8,6 @@ using namespace Mountain;
 Directory::Directory(std::filesystem::path&& filepath)
     : Entry(std::move(filepath))
 {
-    if (!exists(m_Path))
-        create_directory(m_Path);
-    
-    if (!is_directory(m_Path))
-        throw std::invalid_argument("Path does not point to a directory");
 }
 
 bool_t Directory::Load()
