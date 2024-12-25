@@ -153,66 +153,81 @@ void ResourceManager::LoadAllBinaries()
 {
     Logger::LogInfo("Loading all embedded binary resources");
 
-    auto&& start = std::chrono::system_clock::now();
+    const auto start = std::chrono::system_clock::now();
 
-    auto&& files = rh::embed.ListFiles();
+    const auto files = rh::embed.ListFiles();
     const size_t oldResourceCount = m_Resources.size();
 
-    std::vector<Pointer<Shader>> loadedShaders;
-    std::vector<Pointer<ComputeShader>> loadedComputeShaders;
-    
-    for (auto&& file : files)
+    for (auto&& fileString : files)
     {
-        std::filesystem::path&& path = file;
-        std::string&& extension = path.extension().generic_string();
-        
+        auto data = rh::embed(fileString);
+
+        Pointer file = FileManager::Add(fileString);
+        file->Load(reinterpret_cast<const char_t*>(data.data()), data.size());
+        file->UpdateUtilityValues();
+
+        std::filesystem::path parentPath = file->GetPath().parent_path();
+        for (Pointer<Entry> entry = static_cast<Pointer<Entry>>(file); parentPath != ""; entry = entry->GetParent())
+        {
+            parentPath = entry->GetPath().parent_path();
+            if (FileManager::Contains(parentPath))
+                break;
+            entry->SetParent(FileManager::AddDirectory(entry->GetPath().parent_path()));
+        }
+    }
+
+    List<Pointer<Shader>> shadersToLoad;
+
+    for (auto&& fileString : files)
+    {
+        std::filesystem::path path = fileString;
+        std::string extension = path.extension().generic_string();
+
+        Pointer file = FileManager::Get(fileString);
+
+        std::filesystem::path parentPath = file->GetPath().parent_path();
+        for (Pointer<Entry> entry = static_cast<Pointer<Entry>>(file); parentPath != ""; entry = entry->GetParent())
+        {
+            parentPath = entry->GetPath().parent_path();
+            if (FileManager::Contains(parentPath))
+                break;
+            entry->SetParent(FileManager::AddDirectory(entry->GetPath().parent_path()));
+        }
+
         if (std::ranges::contains(Shader::VertexFileExtensions, extension) || std::ranges::contains(Shader::FragmentFileExtensions, extension))
         {
             Pointer<Shader> shader;
 
-            // We use an underscore before the name to make sure it isn't used elsewhere
             const std::string&& filenameNoExtension = path.parent_path().generic_string();
             if (Contains(filenameNoExtension))
                 shader = Get<Shader>(filenameNoExtension);
             else
                 shader = Add<Shader>(filenameNoExtension);
 
-            auto&& data = rh::embed(file);
-            shader->Load(reinterpret_cast<const char_t*>(data.data()), data.size(), Shader::FileExtensionToType(extension));
-            loadedShaders.push_back(shader);
+            shader->SetSourceData(file);
+            shadersToLoad.Add(shader);
         }
         else if (std::ranges::contains(ComputeShader::FileExtensions, extension))
         {
             Pointer<ComputeShader> shader;
 
-            // We use an underscore before the name to make sure it isn't used elsewhere
-            const std::string&& filenameNoExtension = path.parent_path().generic_string();
+            const std::string&& filenameNoExtension = path.generic_string();
             if (Contains(filenameNoExtension))
                 shader = Get<ComputeShader>(filenameNoExtension);
             else
                 shader = Add<ComputeShader>(filenameNoExtension);
 
-            auto&& data = rh::embed(file);
-            shader->Load(reinterpret_cast<const char_t*>(data.data()), data.size());
-            loadedComputeShaders.push_back(shader);
-        }
-        else
-        {
-            Logger::LogWarning("Unhandled binary resource type for file {}", file);
-        }
-    }
-
-    for (Pointer<Shader>& shader : loadedShaders)
-    {
-        if (!shader->IsLoaded())
+            shader->SetSourceData(file);
             shader->Load();
+        }
+        else if (extension != ".glsl")
+        {
+            Logger::LogWarning("Unhandled binary resource type (extension {}) for file {}", extension, fileString);
+        }
     }
 
-    for (Pointer<ComputeShader>& computeShader : loadedComputeShaders)
-    {
-        if (!computeShader->IsLoaded())
-            computeShader->Load();
-    }
+    for (Pointer shader : shadersToLoad)
+        shader->Load();
 
     Logger::LogDebug(
         "Successfully loaded {} files in {} resources. Took {}",

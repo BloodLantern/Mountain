@@ -50,6 +50,15 @@ bool_t File::Load()
     return true;
 }
 
+void File::Load(const char_t* data, const size_t size)
+{
+    m_Size = static_cast<int64_t>(size);
+    m_Data = new int8_t[m_Size];
+    std::memcpy(m_Data, data, m_Size);
+
+    m_Loaded = true;
+}
+
 void File::Unload()
 {
     delete[] m_Data;
@@ -142,4 +151,8 @@ void File::UpdateUtilityValues()
         m_Type = Type::VertexShader;
     else if (Utils::StringArrayContains(Shader::FragmentFileExtensions, m_Extension))
         m_Type = Type::FragmentShader;
+    else if (Utils::StringArrayContains(ComputeShader::FileExtensions, m_Extension))
+        m_Type = Type::ComputeShader;
+    else if (Utils::StringEqualsIgnoreCase(m_Extension, ".glsl"))
+        m_Type = Type::Glsl;
 }

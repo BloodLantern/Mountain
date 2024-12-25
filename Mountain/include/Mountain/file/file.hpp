@@ -19,7 +19,7 @@ namespace Mountain
     {
     public:
         /// @brief Type of file according to file extension.
-        enum class Type
+        enum class Type : uint8_t
         {
             Unknown,
             AudioTrack,
@@ -27,7 +27,9 @@ namespace Mountain
             Font,
             Xml,
             VertexShader,
-            FragmentShader
+            FragmentShader,
+            ComputeShader,
+            Glsl
         };
 
         /// @brief Constructs a File corresponding to the given @p path.
@@ -43,6 +45,10 @@ namespace Mountain
         ///
         /// @returns @c false if an error occured while loading.
         MOUNTAIN_API bool_t Load() override;
+
+        /// @brief Loads the given contents in this File.
+        /// Note: This doesn't have anything to do with the file system. This only loads the given data in this resource.
+        MOUNTAIN_API void Load(const char_t* data, size_t size);
 
         /// @brief Unloads the contents of this File.
         MOUNTAIN_API void Unload() override;
