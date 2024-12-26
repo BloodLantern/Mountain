@@ -39,7 +39,7 @@ namespace Mountain
     /// @brief %List of mouse button states
     enum class MouseButtonStatus : uint8_t
     {
-        /// @brief Pressed
+        /// @brief Pressed, e.g. @c true the first frame it is down
         Pressed,
         /// @brief Held down
         Down,
