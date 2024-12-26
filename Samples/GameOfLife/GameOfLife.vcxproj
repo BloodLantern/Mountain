@@ -83,11 +83,17 @@
   </ItemDefinitionGroup>
 
   <ItemGroup>
-    <ClInclude Include="include\gol.hpp" />
+    <ClInclude Include="include\block.hpp" />
+    <ClInclude Include="include\camera.hpp" />
+    <ClInclude Include="include\grid.hpp" />
+    <ClInclude Include="include\game_of_life.hpp" />
   </ItemGroup>
 
   <ItemGroup>
-    <ClCompile Include="src\gol.cpp" />
+    <ClCompile Include="src\block.cpp" />
+    <ClCompile Include="src\camera.cpp" />
+    <ClCompile Include="src\grid.cpp" />
+    <ClCompile Include="src\game_of_life.cpp" />
     <ClCompile Include="src\main.cpp"/>
   </ItemGroup>
 
