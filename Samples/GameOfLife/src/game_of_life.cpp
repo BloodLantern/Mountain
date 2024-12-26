@@ -2,6 +2,7 @@
 
 #include "ImGui/imgui.h"
 #include "Mountain/input/input.hpp"
+#include "Mountain/input/time.hpp"
 #include "Mountain/rendering/draw.hpp"
 #include "Mountain/rendering/renderer.hpp"
 
@@ -35,8 +36,14 @@ void GameOfLife::Update()
         if (Mountain::Input::GetKey(Mountain::Key::Escape))
             Mountain::Window::SetShouldClose(true);
     }
+
     m_Camera.UpdateMatrices();
 
+    if (m_ManualUpdate || (m_AutoUpdate && Calc::OnInterval(Mountain::Time::GetTotalTime(), Mountain::Time::GetLastTotalTime(), m_UpdateInterval)))
+    {
+        m_Grid.Update();
+        m_ManualUpdate = false;
+    }
 }
 
 void GameOfLife::Render()
@@ -59,6 +66,7 @@ void GameOfLife::Render()
     Mountain::Draw::RenderTarget(m_RenderTarget);
 
     ImGui::Begin("Debug");
+    ImGui::SeparatorText("Debug");
     ImGui::DragFloat2("Camera position", m_Camera.position.Data());
     if (ImGui::Button("-"))
         m_Camera.ZoomOut();
@@ -71,9 +79,15 @@ void GameOfLife::Render()
     if (ImGui::Button("Reset"))
         m_Camera.SetZoom(1.f);
 
-    Vector2 mousePos = Mountain::Input::GetMousePosition();
-    Vector2 mousePosWorld = m_Camera.ToWorld(mousePos);
+    const Vector2 mousePos = Mountain::Input::GetMousePosition();
+    const Vector2 mousePosWorld = m_Camera.ToWorld(mousePos);
     ImGui::Text("Mouse position: %.2f, %.2f - To world: %.2f, %.2f", mousePos.x, mousePos.y, mousePosWorld.x, mousePosWorld.y);
+
+    ImGui::SeparatorText("Game");
+    ImGui::Checkbox("Automatically update", &m_AutoUpdate);
+    if (ImGui::Button("Update"))
+        m_ManualUpdate = true;
+    ImGui::DragFloat("Update interval", &m_UpdateInterval, 0.01f, 0.f, std::numeric_limits<float_t>::max());
     ImGui::End();
 }
 
