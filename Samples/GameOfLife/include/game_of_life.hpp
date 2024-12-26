@@ -19,4 +19,8 @@ private:
     Grid m_Grid;
     Camera m_Camera;
     Mountain::RenderTarget m_RenderTarget;
+
+    bool_t m_AutoUpdate = false;
+    bool_t m_ManualUpdate = false;
+    float_t m_UpdateInterval = 0.25f;
 };
