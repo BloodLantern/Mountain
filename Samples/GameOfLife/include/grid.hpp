@@ -3,21 +3,6 @@
 #include "block.hpp"
 #include "Mountain/rendering/render_target.hpp"
 
-template <>
-struct std::hash<std::pair<uint64_t, uint64_t>>
-{
-    static constexpr size_t RandomValue = 0x923A59B9;
-
-    size_t operator()(const std::pair<uint64_t, uint64_t>& value) const noexcept
-    {
-        size_t result = 0;
-        result ^= std::hash<decltype(value.first)>()(value.first) + RandomValue;
-        result ^= std::hash<decltype(value.second)>()(value.second) + RandomValue + (result << 6) + (result >> 2);
-
-        return result;
-    }
-};
-
 constexpr float_t GridPreRenderGridFactor = 10.f;
 
 class Grid
