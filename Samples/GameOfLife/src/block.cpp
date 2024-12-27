@@ -15,7 +15,7 @@ Block::Block()
         line = 0;
 }
 
-void Block::Render(const Vector2 offset, const float_t cellSize) const
+void Block::Render(const Vector2 offset) const
 {
     for (uint8_t y = 0; y < BlockSize; y++)
     {
@@ -26,14 +26,11 @@ void Block::Render(const Vector2 offset, const float_t cellSize) const
                 continue;
 
             Mountain::Draw::RectangleFilled(
-                offset + Vector2{ static_cast<float_t>(x) * cellSize, static_cast<float_t>(y) * cellSize },
-                Vector2::One() * cellSize
+                offset + Vector2{ static_cast<float_t>(x), static_cast<float_t>(y) },
+                Vector2::One()
             );
         }
     }
-
-    if (cellSize > 1.f)
-        Mountain::Draw::Rectangle(offset, Vector2::One() * cellSize * BlockSize, Mountain::Color::DarkGray());
 }
 
 bool_t Block::GetCell(const uint8_t x, const uint8_t y) const
