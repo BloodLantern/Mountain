@@ -240,6 +240,8 @@ void Grid::SetSize(const uint64_t newWidth, const uint64_t newHeight)
     delete m_Blocks;
     m_Blocks = new Block[newHeight * newWidth];
 
+    std::memset(m_Blocks, 0, newWidth * newHeight);
+
     m_Width = newWidth;
     m_Height = newHeight;
 }
