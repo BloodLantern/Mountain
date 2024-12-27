@@ -109,10 +109,17 @@ void GameOfLife::Render()
     ImGui::Text("Mouse block empty (not updated): %s", m_Grid.GetBlock(blockX, blockY).GetEmpty() ? "true" : "false");
 
     ImGui::SeparatorText("Game");
+    ImGui::PushID("Game");
     ImGui::Checkbox("Automatically update", &m_AutoUpdate);
     if (ImGui::Button("Update"))
         m_ManualUpdate = true;
     ImGui::DragFloat("Update interval", &m_UpdateInterval, 0.01f, 0.f, std::numeric_limits<float_t>::max());
+    if (ImGui::Button("Reset"))
+    {
+        m_Grid.SetSize(m_Grid.GetWidth(), m_Grid.GetHeight());
+        m_Grid.PreRenderGrid();
+    }
+    ImGui::PopID();
     ImGui::End();
 }
 
