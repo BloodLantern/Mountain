@@ -19,17 +19,10 @@ void Grid::Update()
     gridCopy.SetSize(m_Width, m_Height);
     std::memcpy(gridCopy.m_Blocks, m_Blocks, m_Width * m_Height * sizeof(Block));
 
-    std::unordered_set<std::pair<uint64_t, uint64_t>> emptyBlocks;
-
-    for (uint64_t y = 0; y < m_Height * BlockSize; y++)
+    for (uint64_t blockY = 0; blockY < m_Height; blockY++)
     {
-        for (uint64_t x = 0; x < m_Width * BlockSize; x++)
+        for (uint64_t blockX = 0; blockX < m_Width; blockX++)
         {
-            const uint64_t blockX = x / BlockSize, blockY = y / BlockSize;
-
-            if (emptyBlocks.contains({ blockX, blockY }))
-                continue;
-
             Block& readBlock = gridCopy.GetBlock(blockX, blockY);
 
             // If the block is empty, check if the surrounding blocks are as well
@@ -72,87 +65,88 @@ void Grid::Update()
                 }
 
                 if (skipBlockUpdate)
-                {
-                    emptyBlocks.emplace(blockX, blockY);
                     continue;
-                }
             }
 
-            const uint8_t cellX = x % BlockSize, cellY = y % BlockSize;
-
-            const bool_t cell = gridCopy.GetCell(blockX, blockY, cellX, cellY);
-
-            uint8_t liveNeighborCells = 0;
-
-            for (int8_t offsetY = -1; offsetY <= 1; offsetY++)
+            for (uint8_t cellY = 0; cellY < BlockSize; cellY++)
             {
-                for (int8_t offsetX = -1; offsetX <= 1; offsetX++)
+                for (uint8_t cellX = 0; cellX < BlockSize; cellX++)
                 {
-                    if (offsetX == 0 && offsetY == 0)
-                        continue;
+                    const bool_t cell = gridCopy.GetCell(blockX, blockY, cellX, cellY);
 
-                    uint64_t offsetBlockX = blockX;
-                    uint8_t offsetCellX = static_cast<uint8_t>(cellX + offsetX);
-                    if (offsetCellX == 0xFF) // Underflow
-                    {
-                        if (blockX == 0)
-                            offsetBlockX = m_Width - 1;
-                        else
-                            offsetBlockX--;
-                        offsetCellX = BlockSize - 1;
-                    }
-                    else if (offsetCellX == BlockSize)
-                    {
-                        if (blockX == m_Width - 1)
-                            offsetBlockX = 0;
-                        else
-                            offsetBlockX++;
-                        offsetCellX = 0;
-                    }
+                    uint8_t liveNeighborCells = 0;
 
-                    uint64_t offsetBlockY = blockY;
-                    uint8_t offsetCellY = static_cast<uint8_t>(cellY + offsetY);
-                    if (offsetCellY == 0xFF) // Underflow
+                    for (int8_t offsetY = -1; offsetY <= 1; offsetY++)
                     {
-                        if (blockY == 0)
-                            offsetBlockY = m_Height - 1;
-                        else
-                            offsetBlockY--;
-                        offsetCellY = BlockSize - 1;
-                    }
-                    else if (offsetCellY == BlockSize)
-                    {
-                        if (blockY == m_Height - 1)
-                            offsetBlockY = 0;
-                        else
-                            offsetBlockY++;
-                        offsetCellY = 0;
-                    }
-
-                    if (gridCopy.GetCell(offsetBlockX, offsetBlockY, offsetCellX, offsetCellY))
-                    {
-                        liveNeighborCells++;
-
-                        if (cell && liveNeighborCells > 3)
+                        for (int8_t offsetX = -1; offsetX <= 1; offsetX++)
                         {
-                            goto out;
+                            if (offsetX == 0 && offsetY == 0)
+                                continue;
+
+                            uint64_t offsetBlockX = blockX;
+                            uint8_t offsetCellX = static_cast<uint8_t>(cellX + offsetX);
+                            if (offsetCellX == 0xFF) // Underflow
+                            {
+                                if (blockX == 0)
+                                    offsetBlockX = m_Width - 1;
+                                else
+                                    offsetBlockX--;
+                                offsetCellX = BlockSize - 1;
+                            }
+                            else if (offsetCellX == BlockSize)
+                            {
+                                if (blockX == m_Width - 1)
+                                    offsetBlockX = 0;
+                                else
+                                    offsetBlockX++;
+                                offsetCellX = 0;
+                            }
+
+                            uint64_t offsetBlockY = blockY;
+                            uint8_t offsetCellY = static_cast<uint8_t>(cellY + offsetY);
+                            if (offsetCellY == 0xFF) // Underflow
+                            {
+                                if (blockY == 0)
+                                    offsetBlockY = m_Height - 1;
+                                else
+                                    offsetBlockY--;
+                                offsetCellY = BlockSize - 1;
+                            }
+                            else if (offsetCellY == BlockSize)
+                            {
+                                if (blockY == m_Height - 1)
+                                    offsetBlockY = 0;
+                                else
+                                    offsetBlockY++;
+                                offsetCellY = 0;
+                            }
+
+                            if (gridCopy.GetCell(offsetBlockX, offsetBlockY, offsetCellX, offsetCellY))
+                            {
+                                liveNeighborCells++;
+
+                                if (cell && liveNeighborCells > 3)
+                                {
+                                    goto out;
+                                }
+                            }
                         }
                     }
+                    out:
+
+                    Block& writeBlock = GetBlock(blockX, blockY);
+
+                    if (cell)
+                    {
+                        if (liveNeighborCells < 2 || liveNeighborCells > 3)
+                            writeBlock.SetCell(cellX, cellY, false);
+                    }
+                    else
+                    {
+                        if (liveNeighborCells == 3)
+                            writeBlock.SetCell(cellX, cellY, true);
+                    }
                 }
-            }
-            out:
-
-            Block& writeBlock = GetBlock(blockX, blockY);
-
-            if (cell)
-            {
-                if (liveNeighborCells < 2 || liveNeighborCells > 3)
-                    writeBlock.SetCell(cellX, cellY, false);
-            }
-            else
-            {
-                if (liveNeighborCells == 3)
-                    writeBlock.SetCell(cellX, cellY, true);
             }
         }
     }
