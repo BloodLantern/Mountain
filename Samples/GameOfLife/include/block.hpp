@@ -12,7 +12,7 @@ class Block
 public:
     Block();
 
-    void Render(Vector2 offset, float_t cellSize) const;
+    void Render(Vector2 offset) const;
 
     [[nodiscard]]
     bool_t GetCell(uint8_t x, uint8_t y) const;

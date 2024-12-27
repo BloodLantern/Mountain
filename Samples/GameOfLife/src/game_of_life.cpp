@@ -17,6 +17,8 @@ void GameOfLife::Initialize()
 {
     Mountain::Window::onSizeChanged += [&](const Vector2i newSize) { m_RenderTarget.SetSize(newSize); };
 
+    m_Grid.PreRenderGrid();
+
     Game::Initialize();
 }
 
@@ -54,9 +56,9 @@ void GameOfLife::Render()
     Mountain::Renderer::PushRenderTarget(m_RenderTarget);
     Mountain::Draw::Clear(Mountain::Color::Black());
 
-    m_Grid.Render(1.f);
+    m_Grid.Render();
     Mountain::Draw::Rectangle(
-        Vector2::One() * -1.f,
+        Vector2::Zero(),
         { static_cast<float_t>(m_Grid.GetWidth() * BlockSize), static_cast<float_t>(m_Grid.GetHeight() * BlockSize) },
         Mountain::Color::Gray()
     );

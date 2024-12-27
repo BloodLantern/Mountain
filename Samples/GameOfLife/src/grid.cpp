@@ -3,6 +3,7 @@
 #include <stdexcept>
 
 #include "Mountain/rendering/draw.hpp"
+#include "Mountain/rendering/renderer.hpp"
 
 Grid::~Grid()
 {
@@ -103,7 +104,59 @@ void Grid::Update()
     }
 }
 
-void Grid::Render(const float_t cellSize)
+void Grid::PreRenderGrid()
+{
+    if (m_RenderTarget.GetInitialized())
+        m_RenderTarget.Reset();
+
+    m_RenderTarget.Initialize(
+        {
+            static_cast<int32_t>(m_Width * BlockSize * static_cast<int32_t>(GridPreRenderGridFactor)),
+            static_cast<int32_t>(m_Height * BlockSize * static_cast<int32_t>(GridPreRenderGridFactor))
+        },
+        Mountain::Graphics::MagnificationFilter::Nearest
+    );
+
+    Mountain::Renderer::PushRenderTarget(m_RenderTarget);
+
+    for (uint64_t y = 1; y < m_Height * BlockSize; y++)
+    {
+        Mountain::Draw::Line(
+            { 0.f, static_cast<float_t>(y) * GridPreRenderGridFactor },
+            { static_cast<float_t>(m_Width * BlockSize) * GridPreRenderGridFactor, static_cast<float_t>(y) * GridPreRenderGridFactor },
+            Mountain::Color{ 0.2f }
+        );
+    }
+    for (uint64_t x = 1; x < m_Width * BlockSize; x++)
+    {
+        Mountain::Draw::Line(
+            { static_cast<float_t>(x) * GridPreRenderGridFactor, 0.f },
+            { static_cast<float_t>(x) * GridPreRenderGridFactor, static_cast<float_t>(m_Height * BlockSize) * GridPreRenderGridFactor },
+            Mountain::Color{ 0.2f }
+        );
+    }
+
+    for (uint64_t y = 1; y < m_Height; y++)
+    {
+        Mountain::Draw::Line(
+            { 0.f, static_cast<float_t>(y * BlockSize) * GridPreRenderGridFactor },
+            { static_cast<float_t>(m_Width * BlockSize) * GridPreRenderGridFactor, static_cast<float_t>(y * BlockSize) * GridPreRenderGridFactor },
+            Mountain::Color{ 0.5f }
+        );
+    }
+    for (uint64_t x = 1; x < m_Width; x++)
+    {
+        Mountain::Draw::Line(
+            { static_cast<float_t>(x * BlockSize) * GridPreRenderGridFactor, 0.f },
+            { static_cast<float_t>(x * BlockSize) * GridPreRenderGridFactor, static_cast<float_t>(m_Height * BlockSize) * GridPreRenderGridFactor },
+            Mountain::Color{ 0.5f }
+        );
+    }
+
+    Mountain::Renderer::PopRenderTarget();
+}
+
+void Grid::Render()
 {
     constexpr float_t blockSize = BlockSize;
 
@@ -114,13 +167,14 @@ void Grid::Render(const float_t cellSize)
             Block& block = GetBlock(x, y);
             block.Render(
                 {
-                    static_cast<float_t>(x) * cellSize * blockSize,
-                    static_cast<float_t>(y) * cellSize * blockSize
-                },
-                cellSize
+                    static_cast<float_t>(x) * blockSize,
+                    static_cast<float_t>(y) * blockSize
+                }
             );
         }
     }
+
+    Mountain::Draw::RenderTarget(m_RenderTarget, Vector2::Zero(), Vector2::One() / GridPreRenderGridFactor);
 }
 
 uint64_t Grid::GetWidth() const
