@@ -1,6 +1,9 @@
 ﻿#pragma once
 
 #include "block.hpp"
+#include "Mountain/rendering/render_target.hpp"
+
+constexpr float_t GridPreRenderGridFactor = 10.f;
 
 class Grid
 {
@@ -11,7 +14,8 @@ public:
     DELETE_COPY_MOVE_OPERATIONS(Grid)
 
     void Update();
-    void Render(float_t cellSize);
+    void PreRenderGrid();
+    void Render();
 
     [[nodiscard]]
     uint64_t GetWidth() const;
@@ -32,4 +36,6 @@ private:
     uint64_t m_Width = 0, m_Height = 0;
 
     Block m_Empty;
+
+    Mountain::RenderTarget m_RenderTarget;
 };
