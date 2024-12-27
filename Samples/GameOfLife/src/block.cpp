@@ -45,15 +45,17 @@ void Block::SetCell(const uint8_t x, const uint8_t y, const bool_t value)
 {
     CHECK_RANGE(x, y);
 
-    if (value)
-        m_Empty = false;
-
     BlockType& line = m_Lines[y];
     const BlockType bit = 1ull << x;
     if (value)
         line |= bit;
     else
         line &= ~bit;
+
+    if (value)
+        m_Empty = false;
+    else
+        UpdateEmptyState();
 }
 
 void Block::ToggleCell(const uint8_t x, const uint8_t y)
@@ -63,10 +65,27 @@ void Block::ToggleCell(const uint8_t x, const uint8_t y)
     BlockType& line = m_Lines[y];
     const BlockType bit = 1ull << x;
 
-    if (!(line & bit))
-        m_Empty = false;
+    const bool_t oldValue = line & bit;
 
     line ^= bit;
+
+    if (!oldValue)
+        m_Empty = false;
+    else
+        UpdateEmptyState();
+}
+
+void Block::UpdateEmptyState()
+{
+    for (const BlockType line : m_Lines)
+    {
+        if (line)
+        {
+            m_Empty = false;
+            return;
+        }
+    }
+    m_Empty = true;
 }
 
 bool_t Block::GetEmpty() const
