@@ -19,6 +19,8 @@ public:
     void SetCell(uint8_t x, uint8_t y, bool_t value);
     void ToggleCell(uint8_t x, uint8_t y);
 
+    void UpdateEmptyState();
+
     [[nodiscard]]
     bool_t GetEmpty() const;
 

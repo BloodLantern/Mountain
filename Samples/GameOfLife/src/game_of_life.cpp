@@ -6,6 +6,11 @@
 #include "Mountain/rendering/draw.hpp"
 #include "Mountain/rendering/renderer.hpp"
 
+namespace
+{
+    bool_t clickValue = false;
+}
+
 GameOfLife::GameOfLife(const char_t* title)
     : Game(title)
     , m_RenderTarget(Mountain::Window::GetSize(), Mountain::Graphics::MagnificationFilter::Nearest)
@@ -28,16 +33,22 @@ void GameOfLife::Update()
     {
         m_Camera.HandleInputs();
 
-        if (Mountain::Input::GetMouseButton(Mountain::MouseButton::Left, Mountain::MouseButtonStatus::Pressed))
+        if (Mountain::Input::GetMouseButton(Mountain::MouseButton::Left))
         {
             const Vector2 pos = m_Camera.ToWorld(Mountain::Input::GetMousePosition());
             const uint64_t x = static_cast<uint64_t>(pos.x), y = static_cast<uint64_t>(pos.y);
-            m_Grid.ToggleCell(x / BlockSize, y / BlockSize, x % BlockSize, y % BlockSize);
-        }
+            const uint64_t blockX = x / BlockSize, blockY = y / BlockSize;
+            const uint8_t cellX = x % BlockSize, cellY = y % BlockSize;
 
-        if (Mountain::Input::GetKey(Mountain::Key::Escape))
-            Mountain::Window::SetShouldClose(true);
+            if (Mountain::Input::GetMouseButton(Mountain::MouseButton::Left, Mountain::MouseButtonStatus::Pressed))
+                clickValue = !m_Grid.GetCell(blockX, blockY, cellX, cellY);
+
+            m_Grid.SetCell(blockX, blockY, cellX, cellY, clickValue);
+        }
     }
+
+    if (Mountain::Input::GetKey(Mountain::Key::Escape))
+        Mountain::Window::SetShouldClose(true);
 
     m_Camera.UpdateMatrices();
 
@@ -75,6 +86,9 @@ void GameOfLife::Render()
         Mountain::Time::GetDeltaTime(),
         Mountain::Time::GetTargetDeltaTime() - Mountain::Time::GetLastFrameDuration()
     );
+    bool_t fullscreen = Mountain::Window::GetFullscreen();
+    ImGui::Checkbox("Fullscreen", &fullscreen);
+    Mountain::Window::SetFullscreen(fullscreen);
     ImGui::DragFloat2("Camera position", m_Camera.position.Data());
     if (ImGui::Button("-"))
         m_Camera.ZoomOut();
@@ -90,6 +104,9 @@ void GameOfLife::Render()
     const Vector2 mousePos = Mountain::Input::GetMousePosition();
     const Vector2 mousePosWorld = m_Camera.ToWorld(mousePos);
     ImGui::Text("Mouse position: %.2f, %.2f - To world: %.2f, %.2f", mousePos.x, mousePos.y, mousePosWorld.x, mousePosWorld.y);
+    const uint64_t x = static_cast<uint64_t>(mousePosWorld.x), y = static_cast<uint64_t>(mousePosWorld.y);
+    const uint64_t blockX = x / BlockSize, blockY = y / BlockSize;
+    ImGui::Text("Mouse block empty (not updated): %s", m_Grid.GetBlock(blockX, blockY).GetEmpty() ? "true" : "false");
 
     ImGui::SeparatorText("Game");
     ImGui::Checkbox("Automatically update", &m_AutoUpdate);
