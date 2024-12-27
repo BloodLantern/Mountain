@@ -69,6 +69,12 @@ void GameOfLife::Render()
 
     ImGui::Begin("Debug");
     ImGui::SeparatorText("Debug");
+    ImGui::Text(
+        "FPS: %.1f, DT: %.3f, RDT: %f",
+        1.f / Mountain::Time::GetDeltaTime(),
+        Mountain::Time::GetDeltaTime(),
+        Mountain::Time::GetTargetDeltaTime() - Mountain::Time::GetLastFrameDuration()
+    );
     ImGui::DragFloat2("Camera position", m_Camera.position.Data());
     if (ImGui::Button("-"))
         m_Camera.ZoomOut();

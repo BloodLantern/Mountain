@@ -1,7 +1,5 @@
 ﻿#include "grid.hpp"
 
-#include <stdexcept>
-
 #include "Mountain/rendering/draw.hpp"
 #include "Mountain/rendering/renderer.hpp"
 
@@ -16,19 +14,73 @@ void Grid::Update()
     if (!m_Empty.GetEmpty())
         m_Empty = Block{};
 
+    // Create a copy of the current grid to read from
+    Grid gridCopy;
+    gridCopy.SetSize(m_Width, m_Height);
+    std::memcpy(gridCopy.m_Blocks, m_Blocks, m_Width * m_Height * sizeof(Block));
+
+    std::unordered_set<std::pair<uint64_t, uint64_t>> emptyBlocks;
+
     for (uint64_t y = 0; y < m_Height * BlockSize; y++)
     {
         for (uint64_t x = 0; x < m_Width * BlockSize; x++)
         {
             const uint64_t blockX = x / BlockSize, blockY = y / BlockSize;
-            Block& block = GetBlock(blockX, blockY);
+
+            if (emptyBlocks.contains({ blockX, blockY }))
+                continue;
+
+            Block& readBlock = gridCopy.GetBlock(blockX, blockY);
+
+            // If the block is empty, check if the surrounding blocks are as well
+            // In this case, don't bother updating them
+            if (readBlock.GetEmpty())
+            {
+                bool_t skipBlockUpdate = true;
+
+                for (int64_t offsetX = -1; offsetX <= 1; offsetX += 2) // For -1 and 1
+                {
+                    uint64_t offsetBlockX = static_cast<uint64_t>(blockX + offsetX);
+                    if (offsetBlockX == std::numeric_limits<uint64_t>::max()) // Underflow
+                        offsetBlockX = m_Width - 1;
+                    else if (offsetBlockX == m_Width)
+                        offsetBlockX = 0;
+
+                    if (!gridCopy.GetBlock(offsetBlockX, blockY).GetEmpty())
+                    {
+                        skipBlockUpdate = false;
+                        break;
+                    }
+                }
+
+                if (skipBlockUpdate)
+                {
+                    for (int64_t offsetY = -1; offsetY <= 1; offsetY += 2) // For -1 and 1
+                    {
+                        uint64_t offsetBlockY = static_cast<uint64_t>(blockY + offsetY);
+                        if (offsetBlockY == std::numeric_limits<uint64_t>::max()) // Underflow
+                            offsetBlockY = m_Height - 1;
+                        else if (offsetBlockY == m_Height)
+                            offsetBlockY = 0;
+
+                        if (!gridCopy.GetBlock(blockX, offsetBlockY).GetEmpty())
+                        {
+                            skipBlockUpdate = false;
+                            break;
+                        }
+                    }
+                }
+
+                if (skipBlockUpdate)
+                {
+                    emptyBlocks.emplace(blockX, blockY);
+                    continue;
+                }
+            }
 
             const uint8_t cellX = x % BlockSize, cellY = y % BlockSize;
 
-            /*if (block.GetEmpty())
-                continue;*/
-
-            const bool_t cell = block.GetCell(cellX, cellY);
+            const bool_t cell = gridCopy.GetCell(blockX, blockY, cellX, cellY);
 
             uint8_t liveNeighborCells = 0;
 
@@ -77,7 +129,7 @@ void Grid::Update()
                         offsetCellY = 0;
                     }
 
-                    if (GetCell(offsetBlockX, offsetBlockY, offsetCellX, offsetCellY))
+                    if (gridCopy.GetCell(offsetBlockX, offsetBlockY, offsetCellX, offsetCellY))
                     {
                         liveNeighborCells++;
 
@@ -90,15 +142,17 @@ void Grid::Update()
             }
             out:
 
+            Block& writeBlock = GetBlock(blockX, blockY);
+
             if (cell)
             {
                 if (liveNeighborCells < 2 || liveNeighborCells > 3)
-                    block.SetCell(cellX, cellY, false);
+                    writeBlock.SetCell(cellX, cellY, false);
             }
             else
             {
                 if (liveNeighborCells == 3)
-                    block.SetCell(cellX, cellY, true);
+                    writeBlock.SetCell(cellX, cellY, true);
             }
         }
     }
