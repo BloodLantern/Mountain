@@ -28,6 +28,21 @@ void Base::EndImGui() const
     ImGui::PopID();
 }
 
+void Shape::SetComputeShaderUniforms(const ComputeShader& computeShader, Types enabledModules) const
+{
+    if (!(enabledModules & Types::Shape))
+        return;
+}
+
+void Shape::RenderImGui(uint32_t* enabledModulesInt)
+{
+    if (!BeginImGui(enabledModulesInt, Types::Shape, "Shape"))
+        return;
+
+
+    EndImGui();
+}
+
 void ColorOverLifetime::SetComputeShaderUniforms(const ComputeShader& computeShader, const Types enabledModules) const
 {
     if (!(enabledModules & Types::ColorOverLifetime))
