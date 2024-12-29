@@ -138,6 +138,12 @@ namespace Mountain
     }
 
     template <typename T>
+    void List<T>::Pop()
+    {
+        m_Vector.pop_back();
+    }
+
+    template <typename T>
     void List<T>::Insert(size_t index)
     {
         m_Vector.insert(m_Vector.begin() + index, T());

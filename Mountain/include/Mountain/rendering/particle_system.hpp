@@ -15,6 +15,20 @@ struct __GLsync;  // NOLINT(clang-diagnostic-reserved-identifier, bugprone-reser
 
 namespace Mountain
 {
+    struct ParticleSystemBurst
+    {
+        /// @brief The time at which the burst should occur
+        float_t time = 0.f;
+        /// @brief The number of particle to spawn in the burst
+        uint32_t count = 30;
+        /// @brief How many times the burst should repeat
+        uint32_t cycles = 1;
+        /// @brief The time interval between each burst cycle
+        float_t interval = 0.01f;
+        /// @brief The probability for the burst to happen
+        float_t probability = 1.f;
+    };
+
     class ParticleSystem
     {
     public:
@@ -25,8 +39,13 @@ namespace Mountain
         float_t duration = 5.f;
         bool_t looping = true;
         float_t startDelay;
-        uint32_t spawnRate = 10; // The amount of particles spawned per second
         bool_t useUnscaledDeltaTime = false;
+
+        // Emission settings
+
+        float_t emissionRateOverTime = 10.f;
+        float_t emissionRateOverDistance = 0.f;
+        List<ParticleSystemBurst> emissionBursts;
 
         // Particle settings
 
@@ -34,8 +53,10 @@ namespace Mountain
         float_t particleSpeed = 5.f;
         Color particleStartColor = Color::White();
 
+        // Modules
+
         List<std::shared_ptr<ParticleSystemModules::Base>> modules;
-        ParticleSystemModules::Types enabledModules = ParticleSystemModules::Types::None;
+        ParticleSystemModules::Types enabledModules = ParticleSystemModules::Types::Default;
 
         MOUNTAIN_API ParticleSystem() = default;
         MOUNTAIN_API explicit ParticleSystem(uint32_t maxParticles);
@@ -67,18 +88,22 @@ namespace Mountain
 
     private:
         uint32_t m_MaxParticles = 0;
-        int32_t* m_AliveParticles = nullptr;
+        int32_t* m_LiveParticles = nullptr;
         __GLsync* m_SyncObject = nullptr;
 
         float_t m_PlaybackTime = 0.f; // System lifetime
+        float_t m_LastPlaybackTime = 0.f;
         double_t m_SpawnTimer = 0.0;
         bool_t m_Playing = true;
+        Vector2 m_LastPosition;
 
         Pointer<ComputeShader> m_UpdateComputeShader;
 
         Pointer<Shader> m_DrawShader;
-        uint32_t m_AliveSsbo, m_ParticleSsbo;
+        uint32_t m_LiveSsbo, m_ParticleSsbo;
         uint32_t m_DrawVao;
+
+        bool_t m_ImGuiParticleBurstTimeHeld = false;
 
         void SetComputeShaderUniforms(float_t deltaTime) const;
         void SpawnNewParticles();
