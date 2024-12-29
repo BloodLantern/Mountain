@@ -333,10 +333,8 @@ void GameExample::Render()
 
     ImGui::Begin("Debug");
     
-    if (ImGui::CollapsingHeader("Window"))
+    if (ImGuiUtils::PushCollapsingHeader("Window"))
     {
-        ImGui::PushID("Window");
-
         Vector2i position = Window::GetPosition();
         ImGui::DragInt2("Position", position.Data());
         Window::SetPosition(position);
@@ -349,13 +347,11 @@ void GameExample::Render()
         ImGui::Checkbox("Enable fullscreen", &fullscreen);
         Window::SetFullscreen(fullscreen);
 
-        ImGui::PopID();
+        ImGuiUtils::PopCollapsingHeader();
     }
     
-    if (ImGui::CollapsingHeader("Renderer"))
+    if (ImGuiUtils::PushCollapsingHeader("Renderer"))
     {
-        ImGui::PushID("Renderer");
-        
         static Vector2i resolution = renderTarget.GetSize();
         ImGui::DragInt2("Game resolution", resolution.Data());
         if (resolution != renderTarget.GetSize())
@@ -399,15 +395,13 @@ void GameExample::Render()
             e.SetIntensity(intensity);
         });
 
-        ImGui::PopID();
+        ImGuiUtils::PopCollapsingHeader();
     }
 
     static bool_t showDemoWindow = false;
     static bool_t showResourceManagerWindows = false;
-    if (ImGui::CollapsingHeader("Tests"))
+    if (ImGuiUtils::PushCollapsingHeader("Tests"))
     {
-        ImGui::PushID("Tests");
-
         ImGui::Text("Delta time: %.3f, Unscaled: %.3f, FPS: %.1f", Time::GetDeltaTime(), Time::GetDeltaTimeUnscaled(), 1.f / Time::GetDeltaTimeUnscaled());
 
         auto targetFps = Time::GetTargetFps();
@@ -442,7 +436,7 @@ void GameExample::Render()
 
         ImGui::Checkbox("Show File/Resource Manager windows", &showResourceManagerWindows);
 
-        ImGui::PopID();
+        ImGuiUtils::PopCollapsingHeader();
     }
 
     if (showDemoWindow)
@@ -453,10 +447,8 @@ void GameExample::Render()
         ImGuiUtils::ShowResourceManager();
     }
 
-    if (ImGui::CollapsingHeader("Player"))
+    if (ImGuiUtils::PushCollapsingHeader("Player"))
     {
-        ImGui::PushID("Player");
-
         ImGui::DragFloat2("Position", player->position.Data());
         ImGui::DragFloat("Movement speed", &player->movementSpeed);
         
@@ -465,12 +457,14 @@ void GameExample::Render()
         ImGui::SliderFloat("Audio volume", &volume, 0.f, 1.f);
         listener->SetVolume(volume);
 
-        ImGui::PopID();
+        ImGuiUtils::PopCollapsingHeader();
     }
 
-    if (ImGui::CollapsingHeader("Particle system"))
+    if (ImGuiUtils::PushCollapsingHeader("Particle system"))
     {
         particleSystem.RenderImGui();
+
+        ImGuiUtils::PopCollapsingHeader();
     }
     
     ImGui::End();

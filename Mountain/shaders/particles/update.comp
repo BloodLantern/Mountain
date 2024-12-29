@@ -20,7 +20,6 @@ Particle NewParticle()
 
     return Particle(
         particleLifetime,
-        int[3](0.f),
         vec2(0.f),
         normalize(vec2(r, r2) * 2.f - vec2(1.f)) * particleSpeed,
         particleStartColor
@@ -32,23 +31,21 @@ void main()
     const uint id = gl_GlobalInvocationID.x;
     Particle particle = particles[id]; // We take a copy of the current particle here so we need to remember to reinsert it in the buffer before exiting
 
-    if (!aliveParticles[id])
+    if (!liveParticles[id])
         return;
 
     if (particle.lifetime <= 0.f)
     {
-        float negativeInfinity = -1.f / 0.f;
-
-        if (particle.lifetime > negativeInfinity)
+        if (particle.lifetime > NegativeInfinity)
         {
-            aliveParticles[id] = false;
-            particle.lifetime = negativeInfinity; // Use negative infinity as a flag
+            liveParticles[id] = false;
+            particle.lifetime = NegativeInfinity; // Use negative infinity as a flag
             particles[id] = particle;
             return;
         }
         else
         {
-            aliveParticles[id] = true;
+            liveParticles[id] = true;
             particle = NewParticle();
         }
     }

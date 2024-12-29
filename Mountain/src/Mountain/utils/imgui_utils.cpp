@@ -486,6 +486,37 @@ void ImGuiUtils::ShowResourceManager()
     ImGui::End();
 }
 
+void ImGuiUtils::PushSeparatorText(const char_t* label)
+{
+    ImGui::SeparatorText(label);
+    ImGui::PushID(label);
+}
+
+void ImGuiUtils::PopSeparatorText()
+{
+    ImGui::PopID();
+}
+
+bool_t ImGuiUtils::PushCollapsingHeader(const char_t* label, ImGuiTreeNodeFlags flags)
+{
+    if (ImGui::CollapsingHeader(label, flags))
+    {
+        ImGui::PushID(label);
+        return true;
+    }
+    return false;
+}
+
+void ImGuiUtils::PopCollapsingHeader()
+{
+    ImGui::PopID();
+}
+
+void ImGuiUtils::SetNextItemWidthAvail()
+{
+    ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x);
+}
+
 // ReSharper disable CppInconsistentNaming
 bool ImGui::DragAngle(
     const char* label,

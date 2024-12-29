@@ -4,6 +4,7 @@
 uniform struct ColorOverLifetime
 {
     vec4 target;
+    // TODO - Easing
 } colorOverLifetime;
 
 Particle ColorOverLifetimeUpdate(Particle particle)

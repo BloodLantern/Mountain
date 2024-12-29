@@ -10,21 +10,23 @@ namespace Mountain::ParticleSystemModules
     {
         None = 0,
 
-        Emission            = 1 << 0,
-        Shape               = 1 << 1,
-        ForceOverLifetime   = 1 << 2,
-        ColorOverLifetime   = 1 << 3,
-        ColorBySpeed        = 1 << 4,
-        Noise               = 1 << 5,
-        Collision           = 1 << 6,
-        Lights              = 1 << 7,
-        Trails              = 1 << 8,
+        Shape               = 1 << 0,
+        ForceOverLifetime   = 1 << 1,
+        ColorOverLifetime   = 1 << 2,
+        ColorBySpeed        = 1 << 3,
+        Noise               = 1 << 4,
+        Collision           = 1 << 5,
+        Lights              = 1 << 6,
+        Trails              = 1 << 7,
+
+        Default = Shape,
 
         All = 0xFFFFFFFF
     };
 
-    struct MOUNTAIN_API Base
+    class MOUNTAIN_API Base
     {
+    public:
         Base() = default;
         virtual ~Base() = default;
         DEFAULT_COPY_MOVE_OPERATIONS(Base)
@@ -37,16 +39,25 @@ namespace Mountain::ParticleSystemModules
         void EndImGui() const;
     };
 
-    struct MOUNTAIN_API ColorOverLifetime : Base
+    class MOUNTAIN_API Shape : public Base
     {
+    public:
+        void SetComputeShaderUniforms(const ComputeShader& computeShader, Types enabledModules) const override;
+        void RenderImGui(uint32_t* enabledModulesInt) override;
+    };
+
+    class MOUNTAIN_API ColorOverLifetime : public Base
+    {
+    public:
         Color target = Color::Transparent();
 
         void SetComputeShaderUniforms(const ComputeShader& computeShader, Types enabledModules) const override;
         void RenderImGui(uint32_t* enabledModulesInt) override;
     };
 
-    struct MOUNTAIN_API ForceOverLifetime : Base
+    class MOUNTAIN_API ForceOverLifetime : public Base
     {
+    public:
         Vector2 force;
 
         void SetComputeShaderUniforms(const ComputeShader& computeShader, Types enabledModules) const override;
