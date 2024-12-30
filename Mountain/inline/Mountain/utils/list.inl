@@ -138,7 +138,7 @@ namespace Mountain
     }
 
     template <typename T>
-    void List<T>::Pop()
+    void List<T>::PopBack()
     {
         m_Vector.pop_back();
     }

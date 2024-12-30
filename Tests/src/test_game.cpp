@@ -420,8 +420,8 @@ void GameExample::Render()
             Time::SetTargetFps(targetFps);
         }
 
-        ImGui::Text("Frame time (without wait between frames): %f", Time::GetLastFrameDuration());
-        ImGui::Text("Frame time left (if negative the game is lagging): %f", Time::GetTargetDeltaTime() - Time::GetLastFrameDuration());
+        ImGui::Text("Frame time (without wait between frames): %.1fms", Time::GetLastFrameDuration() * 1000.f);
+        ImGui::Text("Frame time left (if negative the game is lagging): %.1fms", (Time::GetTargetDeltaTime() - Time::GetLastFrameDuration()) * 1000.f);
         ImGui::Checkbox("Show inputs window", &showInputs);
         ImGui::SliderFloat("Time scale", &Time::timeScale, 0.f, 2.f);
         /*ImGui::Checkbox("Debug render", &debugRender);
