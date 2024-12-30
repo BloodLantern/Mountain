@@ -127,7 +127,7 @@ void ParticleSystem::RenderImGui()
     ImGuiUtils::PushSeparatorText("System settings");
     ImGui::DragFloat2("Position", position.Data());
     ImGui::DragAngle("Rotation", &rotation);
-    ImGui::DragFloat("Duration", &duration);
+    ImGui::DragFloat("Duration", &duration, 0.1f);
     ImGui::Checkbox("Looping", &looping);
     ImGui::DragFloat("Start delay", &startDelay, 0.01f, 0.f, std::numeric_limits<float_t>::max(), "%.2f", ImGuiSliderFlags_AlwaysClamp);
 
@@ -151,7 +151,7 @@ void ParticleSystem::RenderImGui()
     ImGui::Text("Bursts: %llu", emissionBursts.GetSize());
     ImGui::SameLine();
     if (ImGui::Button("-"))
-        emissionBursts.Pop();
+        emissionBursts.PopBack();
     ImGui::SameLine();
     if (ImGui::Button("+"))
         emissionBursts.Emplace();
@@ -272,7 +272,14 @@ void ParticleSystem::SetMaxParticles(const uint32_t newMaxParticles)
 
     m_MaxParticles = newMaxParticles;
 
+    // Set up the GPU particle buffer
+    // This is done in a very archaic way, but most of the time this won't matter anyway because this function should only be called once per system in a real application
     List<uint8_t> emptyData(GpuParticleStructSize * newMaxParticles);
+    for (size_t i = 0; i < emptyData.GetSize(); i += GpuParticleStructSize)
+    {
+        float_t& lifetime = *reinterpret_cast<float_t*>(&emptyData[i]);
+        lifetime = -std::numeric_limits<float_t>::infinity(); // Set the negative infinity flag for the GPU
+    }
     glNamedBufferData(m_ParticleSsbo, static_cast<GLsizeiptr>(GpuParticleStructSize * newMaxParticles), emptyData.GetData(), GL_DYNAMIC_COPY);
     emptyData.Resize(0);
 
@@ -340,6 +347,9 @@ void ParticleSystem::SpawnNewParticles()
             if (burst.time > m_PlaybackTime)
                 break; // Because the list is now sorted by time, instead of continuing we can just break out of the loop
 
+            if (burst.probability == 0.f)
+                continue;
+
             if (burst.cycles == 0 && burst.interval == 0.f)
                 throw std::logic_error{ "A ParticleSystemBurst cannot have both its cycles and interval at 0" };
 
@@ -350,8 +360,9 @@ void ParticleSystem::SpawnNewParticles()
             if (!timeCondition)
                 continue;
 
-            const float_t playbackTime = m_PlaybackTime - burst.time, lastPlaybackTime = m_LastPlaybackTime - burst.time;
-            const bool_t intervalCondition = lastPlaybackTime <= 0.f || burst.interval == 0.f || Calc::OnInterval(playbackTime, lastPlaybackTime, burst.interval); // FIXME - OnInterval
+            const float_t timeOffset = -burst.time + burst.interval;
+            const float_t playbackTime = m_PlaybackTime + timeOffset, lastPlaybackTime = m_LastPlaybackTime + timeOffset;
+            const bool_t intervalCondition = m_PlaybackTime <= 0.f || burst.interval == 0.f || Calc::OnInterval(playbackTime, lastPlaybackTime, burst.interval);
             if (!intervalCondition)
                 continue;
 
@@ -363,7 +374,7 @@ void ParticleSystem::SpawnNewParticles()
 
             for (int32_t i = 0; i < spawnCount; i++)
             {
-                if (Random::Chance(burst.probability))
+                if (burst.probability == 1.f || Random::Chance(burst.probability))
                     burstCount += burst.count;
             }
         }
