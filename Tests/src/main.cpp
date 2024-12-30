@@ -6,7 +6,7 @@
 
 USE_DEDICATED_GPU
 
-//#define USE_LPP
+#define USE_LPP
 
 #ifdef USE_LPP
 // include the API for Windows, 64-bit, C++
@@ -56,6 +56,7 @@ int32_t main(int32_t, char_t**)
 			// client code can do whatever it wants here, e.g. synchronize across several threads, the network, etc.
 			// ...
 
+			Mountain::Logger::LogInfo("Loading hot reload changes");
 			// Not necessary, but we might as well synchronize the console logs
 			Mountain::Logger::Synchronize();
 
@@ -66,6 +67,8 @@ int32_t main(int32_t, char_t**)
 		{
 			// client code can do whatever it wants here, e.g. finish logging, abandon threads, etc.
 			// ...
+
+			Mountain::Logger::LogInfo("Hot restarting application");
 
 			game->Shutdown();
 			delete game;
