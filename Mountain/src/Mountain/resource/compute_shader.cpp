@@ -33,15 +33,9 @@ bool_t ComputeShader::Load(const char_t* const buffer, const int64_t length)
 
 void ComputeShader::Load()
 {
-    m_Id = glCreateProgram();
-#ifdef _DEBUG
-    std::string name = m_Name;
-    name = name.substr(0, name.find_last_of('.')); // Remove file extension
-    glObjectLabel(GL_PROGRAM, m_Id, static_cast<GLsizei>(name.length()), name.c_str());
-#endif
-
     const uint32_t id = glCreateShader(GL_COMPUTE_SHADER);
 #ifdef _DEBUG
+    std::string name = m_Name;
     const std::string& fileName = m_File ? m_File->GetName() : name;
     glObjectLabel(GL_SHADER, id, static_cast<GLsizei>(fileName.length()), fileName.c_str());
 #endif
@@ -51,7 +45,20 @@ void ComputeShader::Load()
     glShaderSource(id, 1, &data, &dataLength);
 
     glCompileShader(id);
-	CheckCompileError(id);
+    if (CheckCompileError(id))
+    {
+        Logger::LogWarning("Compute shader load canceled because of compilation errors");
+        return;
+    }
+
+    if (glIsProgram(m_Id))
+        glDeleteProgram(m_Id);
+
+    m_Id = glCreateProgram();
+#ifdef _DEBUG
+    name = name.substr(0, name.find_last_of('.')); // Remove file extension
+    glObjectLabel(GL_PROGRAM, m_Id, static_cast<GLsizei>(name.length()), name.c_str());
+#endif
 
 	glAttachShader(m_Id, id);
     glLinkProgram(m_Id);
@@ -81,6 +88,18 @@ void ComputeShader::ResetSourceData()
     m_Code.clear();
 }
 
+bool_t ComputeShader::Reload(const bool_t reloadInBackend)
+{
+    dependentShaderFiles.clear();
+
+    const bool_t result = SetSourceData(m_File);
+
+    if (reloadInBackend)
+        Load();
+
+    return result;
+}
+
 void ComputeShader::Dispatch(const uint32_t groupsX, const uint32_t groupsY, const uint32_t groupsZ) const
 {
     if (groupsX == 0 || groupsY == 0 || groupsZ == 0)
@@ -91,7 +110,7 @@ void ComputeShader::Dispatch(const uint32_t groupsX, const uint32_t groupsY, con
     glUseProgram(0);
 }
 
-void ComputeShader::CheckCompileError(const uint32_t id) const
+bool_t ComputeShader::CheckCompileError(const uint32_t id) const
 {
-    ShaderBase::CheckCompileError(id, "Compute", m_Code);
+    return ShaderBase::CheckCompileError(id, "Compute", m_Code);
 }

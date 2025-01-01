@@ -1,4 +1,4 @@
-#version 460 core
+#version 460
 
 layout (location = 0) in vec2 p1;
 layout (location = 1) in vec2 p2;

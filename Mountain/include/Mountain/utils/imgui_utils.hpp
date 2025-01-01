@@ -54,7 +54,7 @@ namespace ImGui
         float v_speed = 1, 
         float v_min = 0, 
         float v_max = 0, 
-        const char* format = "%.3f", 
+        const char* format = "%.3f",
         ImGuiSliderFlags flags = 0
     );
 
