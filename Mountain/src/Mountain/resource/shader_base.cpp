@@ -71,7 +71,7 @@ void ShaderBase::SetUniform(const char_t* const keyName, const Matrix& value) co
 
 uint32_t ShaderBase::GetId() const { return m_Id; }
 
-void ShaderBase::CheckCompileError(uint32_t id, const std::string_view type, const std::string& code) const
+bool_t ShaderBase::CheckCompileError(const uint32_t id, const std::string_view type, const std::string& code) const
 {
     int success = 0;
 
@@ -103,10 +103,14 @@ void ShaderBase::CheckCompileError(uint32_t id, const std::string_view type, con
             for (const auto& line : relatedLines)
                 Logger::LogError("Line {}: {}", line.first, line.second);
         }
+
+        return true;
     }
+
+    return false;
 }
 
-void ShaderBase::CheckLinkError() const
+bool_t ShaderBase::CheckLinkError() const
 {
     int success = 0;
 
@@ -118,7 +122,11 @@ void ShaderBase::CheckLinkError() const
         std::string infoLog(static_cast<size_t>(infoLogSize), '\0');
         glGetProgramInfoLog(m_Id, infoLogSize, nullptr, infoLog.data());
         Logger::LogError("Error while linking shader program '{}': {}", m_Name, Utils::Trim(infoLog).data());
+
+        return true;
     }
+
+    return false;
 }
 
 int32_t ShaderBase::GetUniformLocation(const char_t* const keyName) const
@@ -161,6 +169,7 @@ void ShaderBase::ReplaceIncludes(std::string& code, const std::filesystem::path&
         Pointer file = FileManager::Get(filepath);
         std::string fileContents{ file->GetData(), static_cast<size_t>(file->GetSize()) };
         ReplaceIncludes(fileContents, filepath, replacedFiles);
+        fileContents = std::format("// Include file '{0}'\n{1}\n// End of include file '{0}'\n", filename, fileContents);
         code.insert(offset, fileContents);
         replacedFiles.emplace(filepath);
 

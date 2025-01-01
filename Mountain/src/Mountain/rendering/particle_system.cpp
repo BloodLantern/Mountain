@@ -6,6 +6,7 @@
 
 #include "Mountain/input/time.hpp"
 #include "Mountain/rendering/draw.hpp"
+#include "Mountain/rendering/renderer.hpp"
 #include "Mountain/resource/resource_manager.hpp"
 #include "Mountain/utils/imgui_utils.hpp"
 #include "Mountain/utils/random.hpp"
@@ -101,6 +102,8 @@ void ParticleSystem::Render()
     glBindBuffersBase(GL_SHADER_STORAGE_BUFFER, 0, 2, nullptr);
     m_DrawShader->Unuse();
     glBindVertexArray(0);
+
+    m_RenderTargetSize = Renderer::GetCurrentRenderTarget().GetSize();
 }
 
 void ParticleSystem::RenderImGui()
@@ -155,61 +158,64 @@ void ParticleSystem::RenderImGui()
     ImGui::SameLine();
     if (ImGui::Button("+"))
         emissionBursts.Emplace();
-    if (ImGui::BeginTable("burstsTable", 7, ImGuiTableFlags_RowBg | ImGuiTableFlags_Borders | ImGuiTableFlags_SizingStretchSame))
+    if (emissionBursts.GetSize() > 0)
     {
-        ImGui::TableSetupColumn("Index");
-        ImGui::TableSetupColumn("Time");
-        ImGui::TableSetupColumn("Count");
-        ImGui::TableSetupColumn("Cycles");
-        ImGui::TableSetupColumn("Interval");
-        ImGui::TableSetupColumn("Probability");
-        ImGui::TableSetupColumn("Remove");
-
-        ImGui::TableHeadersRow();
-
-        m_ImGuiParticleBurstTimeHeld = false;
-        for (size_t i = 0; i < emissionBursts.GetSize(); i++)
+        if (ImGui::BeginTable("burstsTable", 7, ImGuiTableFlags_RowBg | ImGuiTableFlags_Borders | ImGuiTableFlags_SizingStretchSame))
         {
-            ParticleSystemBurst& burst = emissionBursts[i];
+            ImGui::TableSetupColumn("Index");
+            ImGui::TableSetupColumn("Time");
+            ImGui::TableSetupColumn("Count");
+            ImGui::TableSetupColumn("Cycles");
+            ImGui::TableSetupColumn("Interval");
+            ImGui::TableSetupColumn("Probability");
+            ImGui::TableSetupColumn("Remove");
 
-            ImGui::PushID(&burst);
+            ImGui::TableHeadersRow();
 
-            ImGui::TableNextRow();
+            m_GuiParticleBurstTimeHeld = false;
+            for (size_t i = 0; i < emissionBursts.GetSize(); i++)
+            {
+                ParticleSystemBurst& burst = emissionBursts[i];
 
-            ImGui::TableSetColumnIndex(0);
-            ImGui::Text("%llu", i);
+                ImGui::PushID(&burst);
 
-            ImGui::TableSetColumnIndex(1);
-            ImGuiUtils::SetNextItemWidthAvail();
-            ImGui::DragFloat("##time", &burst.time, 0.01f, 0.f, std::numeric_limits<float_t>::max(), "%.3f", ImGuiSliderFlags_AlwaysClamp);
-            if (ImGui::IsItemActive())
-                m_ImGuiParticleBurstTimeHeld = true;
+                ImGui::TableNextRow();
 
-            ImGui::TableSetColumnIndex(2);
-            ImGuiUtils::SetNextItemWidthAvail();
-            ImGui::DragScalar("##count", ImGuiDataType_U32, &burst.count, 1, &zero, nullptr, nullptr, ImGuiSliderFlags_AlwaysClamp);
+                ImGui::TableSetColumnIndex(0);
+                ImGui::Text("%llu", i);
 
-            ImGui::TableSetColumnIndex(3);
-            ImGuiUtils::SetNextItemWidthAvail();
-            ImGui::DragScalar("##cycles", ImGuiDataType_U32, &burst.cycles, 1, &zero, nullptr, nullptr, ImGuiSliderFlags_AlwaysClamp);
-            ImGui::SetItemTooltip("If set to 0, this will be infinite");
+                ImGui::TableSetColumnIndex(1);
+                ImGuiUtils::SetNextItemWidthAvail();
+                ImGui::DragFloat("##time", &burst.time, 0.01f, 0.f, std::numeric_limits<float_t>::max(), "%.3f", ImGuiSliderFlags_AlwaysClamp);
+                if (ImGui::IsItemActive())
+                    m_GuiParticleBurstTimeHeld = true;
 
-            ImGui::TableSetColumnIndex(4);
-            ImGuiUtils::SetNextItemWidthAvail();
-            ImGui::DragFloat("##interval", &burst.interval, 0.01f, 0.f, std::numeric_limits<float_t>::max(), "%.3f", ImGuiSliderFlags_AlwaysClamp);
+                ImGui::TableSetColumnIndex(2);
+                ImGuiUtils::SetNextItemWidthAvail();
+                ImGui::DragScalar("##count", ImGuiDataType_U32, &burst.count, 1, &zero, nullptr, nullptr, ImGuiSliderFlags_AlwaysClamp);
 
-            ImGui::TableSetColumnIndex(5);
-            ImGuiUtils::SetNextItemWidthAvail();
-            ImGui::DragFloat("##probability", &burst.probability, 0.01f, 0.f, 1.f, "%.2f", ImGuiSliderFlags_AlwaysClamp);
+                ImGui::TableSetColumnIndex(3);
+                ImGuiUtils::SetNextItemWidthAvail();
+                ImGui::DragScalar("##cycles", ImGuiDataType_U32, &burst.cycles, 1, &zero, nullptr, nullptr, ImGuiSliderFlags_AlwaysClamp);
+                ImGui::SetItemTooltip("If set to 0, this will be infinite");
 
-            ImGui::TableSetColumnIndex(6);
-            if (ImGui::Button("-", ImVec2{ ImGui::GetContentRegionAvail().x, 0.f }))
-                emissionBursts.RemoveAt(i--);
+                ImGui::TableSetColumnIndex(4);
+                ImGuiUtils::SetNextItemWidthAvail();
+                ImGui::DragFloat("##interval", &burst.interval, 0.01f, 0.f, std::numeric_limits<float_t>::max(), "%.3f", ImGuiSliderFlags_AlwaysClamp);
 
-            ImGui::PopID();
+                ImGui::TableSetColumnIndex(5);
+                ImGuiUtils::SetNextItemWidthAvail();
+                ImGui::DragFloat("##probability", &burst.probability, 0.01f, 0.f, 1.f, "%.2f", ImGuiSliderFlags_AlwaysClamp);
+
+                ImGui::TableSetColumnIndex(6);
+                if (ImGui::Button("-", ImVec2{ ImGui::GetContentRegionAvail().x, 0.f }))
+                    emissionBursts.RemoveAt(i--);
+
+                ImGui::PopID();
+            }
+
+            ImGui::EndTable();
         }
-
-        ImGui::EndTable();
     }
     ImGuiUtils::PopSeparatorText();
 
@@ -227,6 +233,13 @@ void ParticleSystem::RenderImGui()
     ImGuiUtils::PopSeparatorText();
 
     ImGui::PopID();
+}
+
+void ParticleSystem::RenderDebug()
+{
+    const Vector2 renderTargetSizeDiff = Renderer::GetCurrentRenderTarget().GetSize() / m_RenderTargetSize;
+    for (const auto& module : modules)
+        module->RenderDebug(*this, renderTargetSizeDiff);
 }
 
 void ParticleSystem::TogglePlay()
@@ -333,7 +346,7 @@ void ParticleSystem::SpawnNewParticles()
         overDistanceCount = static_cast<uint32_t>(Calc::Round(lastFrameDistance * emissionRateOverDistance));
     }
 
-    if (!emissionBursts.Empty() && !m_ImGuiParticleBurstTimeHeld)
+    if (!emissionBursts.Empty() && !m_GuiParticleBurstTimeHeld)
     {
         emissionBursts.Sort(
             [](const ParticleSystemBurst& left, const ParticleSystemBurst& right) -> bool_t

@@ -98,9 +98,33 @@ void Draw::RectangleFilled(const Mountain::Rectangle& rectangle, const Color& co
     m_DrawList.AddCommand(DrawDataType::RectangleFilled);
 }
 
-void Draw::Circle(const Vector2 center, const float_t radius, const Color& color) { CircleInternal(center, radius, false, color); }
+void Draw::Circle(const Vector2 center, const float_t radius, const Vector2 scale, const Color& color) { CircleInternal(center, radius, false, scale, color); }
 
-void Draw::CircleFilled(const Vector2 center, const float_t radius, const Color& color) { CircleInternal(center, radius, true, color); }
+void Draw::CircleFilled(const Vector2 center, const float_t radius, const Vector2 scale, const Color& color) { CircleInternal(center, radius, true, scale, color); }
+
+void Draw::Arc(
+    const Vector2 center,
+    const float_t radius,
+    const float_t startingAngle,
+    const float_t deltaAngle,
+    const Vector2 scale,
+    const Color& color
+)
+{
+    ArcInternal(center, radius, startingAngle, deltaAngle, false, scale, color);
+}
+
+void Draw::ArcFilled(
+    const Vector2 center,
+    const float_t radius,
+    const float_t startingAngle,
+    const float_t deltaAngle,
+    const Vector2 scale,
+    const Color& color
+)
+{
+    ArcInternal(center, radius, startingAngle, deltaAngle, true, scale, color);
+}
 
 void Draw::Texture(
     const Mountain::Texture& texture,
@@ -238,6 +262,7 @@ void Draw::Flush()
     size_t triangleIndex = 0, triangleColoredIndex = 0, triangleFilledIndex = 0, triangleColoredFilledIndex = 0;
     size_t rectangleIndex = 0, rectangleFilledIndex = 0;
     size_t circleIndex = 0;
+    size_t arcIndex = 0;
     size_t textureIndex = 0, textureIdIndex = 0;
     size_t textIndex = 0;
     size_t renderTargetIndex = 0;
@@ -300,6 +325,11 @@ void Draw::Flush()
                 circleIndex += count;
                 break;
 
+            case DrawDataType::Arc:
+                RenderArcData(m_DrawList.arc, arcIndex, count);
+                arcIndex += count;
+                break;
+
             case DrawDataType::Texture:
                 RenderTextureData(m_DrawList.texture, m_DrawList.textureId[textureIdIndex], textureIndex, count);
                 textureIndex += count;
@@ -348,6 +378,7 @@ void Draw::DrawList::Clear()
     rectangle.Clear();
     rectangleFilled.Clear();
     circle.Clear();
+    arc.Clear();
     texture.Clear();
     textureId.Clear();
     text.Clear();
@@ -359,7 +390,7 @@ void Draw::DrawList::Clear()
 void Draw::Initialize()
 {
     glCreateBuffers(7, &m_RectangleEbo);
-    glCreateVertexArrays(10, &m_PointVao);
+    glCreateVertexArrays(11, &m_PointVao);
 
 #ifdef _DEBUG
     glObjectLabel(GL_BUFFER, m_RectangleEbo, -1, "Rectangle EBO");
@@ -376,6 +407,7 @@ void Draw::Initialize()
     glObjectLabel(GL_VERTEX_ARRAY, m_TriangleColoredVao, -1, "Triangle Colored VAO");
     glObjectLabel(GL_VERTEX_ARRAY, m_RectangleVao, -1, "Rectangle VAO");
     glObjectLabel(GL_VERTEX_ARRAY, m_CircleVao, -1, "Circle VAO");
+    glObjectLabel(GL_VERTEX_ARRAY, m_ArcVao, -1, "Arc VAO");
     glObjectLabel(GL_VERTEX_ARRAY, m_TextureVao, -1, "Texture VAO");
     glObjectLabel(GL_VERTEX_ARRAY, m_TextVao, -1, "Text VAO");
     glObjectLabel(GL_VERTEX_ARRAY, m_RenderTargetVao, -1, "RenderTarget VAO");
@@ -388,6 +420,7 @@ void Draw::Initialize()
     InitializeTriangleColoredBuffers();
     InitializeRectangleBuffers();
     InitializeCircleBuffers();
+    InitializeArcBuffers();
     InitializeTextureBuffers();
     InitializeTextBuffers();
     InitializeRenderTargetBuffers();
@@ -408,6 +441,7 @@ void Draw::LoadResources()
     m_TriangleColoredShader = ResourceManager::Get<Shader>(basePath + "triangle_colored");
     m_RectangleShader = ResourceManager::Get<Shader>(basePath + "rectangle");
     m_CircleShader = ResourceManager::Get<Shader>(basePath + "circle");
+    m_ArcShader = ResourceManager::Get<Shader>(basePath + "arc");
     
     m_TextureShader = ResourceManager::Get<Shader>(basePath + "texture");
     m_TextShader = ResourceManager::Get<Shader>(basePath + "text");
@@ -418,7 +452,7 @@ void Draw::LoadResources()
 void Draw::Shutdown()
 {
     glDeleteBuffers(7, &m_RectangleEbo);
-    glDeleteVertexArrays(10, &m_PointVao);
+    glDeleteVertexArrays(11, &m_PointVao);
 }
 
 void Draw::InitializePointBuffers()
@@ -560,10 +594,49 @@ void Draw::InitializeCircleBuffers()
     SetVertexAttribute(++index, 2, sizeof(CircleData), offset += sizeof(Vector4), 1);
     // Radius
     SetVertexAttribute(++index, 1, sizeof(CircleData), offset += sizeof(Vector2), 1);
+    // Scale
+    SetVertexAttribute(++index, 2, sizeof(CircleData), offset += sizeof(float_t), 1);
     // Color
-    SetVertexAttribute(++index, 4, sizeof(CircleData), offset += sizeof(float_t), 1);
+    SetVertexAttribute(++index, 4, sizeof(CircleData), offset += sizeof(Vector2), 1);
     // Filled
     SetVertexAttributeInt(++index, 1, sizeof(CircleData), offset += sizeof(Color), 1);
+}
+
+void Draw::InitializeArcBuffers()
+{
+    glBindVertexArray(m_ArcVao);
+
+    // VBO
+    glBindBuffer(GL_ARRAY_BUFFER, m_RectangleVbo);
+    // EBO
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RectangleEbo);
+
+    // VAO
+    uint32_t index = 0;
+    // Vertex position
+    SetVertexAttribute(index, 2, sizeof(Vector2), 0, 0);
+
+    glBindBuffer(GL_ARRAY_BUFFER, m_Vbo);
+    size_t offset = 0;
+    // Transformation Matrix
+    SetVertexAttribute(++index, 4, sizeof(ArcData), offset, 1);
+    SetVertexAttribute(++index, 4, sizeof(ArcData), offset += sizeof(Vector4), 1);
+    SetVertexAttribute(++index, 4, sizeof(ArcData), offset += sizeof(Vector4), 1);
+    SetVertexAttribute(++index, 4, sizeof(ArcData), offset += sizeof(Vector4), 1);
+    // Center
+    SetVertexAttribute(++index, 2, sizeof(ArcData), offset += sizeof(Vector4), 1);
+    // Radius
+    SetVertexAttribute(++index, 1, sizeof(ArcData), offset += sizeof(Vector2), 1);
+    // Starting angle
+    SetVertexAttribute(++index, 1, sizeof(ArcData), offset += sizeof(float_t), 1);
+    // Delta angle
+    SetVertexAttribute(++index, 1, sizeof(ArcData), offset += sizeof(float_t), 1);
+    // Scale
+    SetVertexAttribute(++index, 2, sizeof(ArcData), offset += sizeof(float_t), 1);
+    // Color
+    SetVertexAttribute(++index, 4, sizeof(ArcData), offset += sizeof(Vector2), 1);
+    // Filled
+    SetVertexAttributeInt(++index, 1, sizeof(ArcData), offset += sizeof(Color), 1);
 }
 
 void Draw::InitializeTextureBuffers()
@@ -664,26 +737,55 @@ void Draw::UpdateShaderMatrices()
     m_TriangleColoredShader->SetUniform("projection", proj);
     m_RectangleShader->SetUniform("projection", proj);
     m_CircleShader->SetUniform("projection", proj);
+    m_ArcShader->SetUniform("projection", proj);
     m_TextureShader->SetUniform("projection", proj);
     
     m_TextShader->SetUniform("projection", proj);
     
     m_CircleShader->SetUniform("camera", m_CameraMatrix);
     m_CircleShader->SetUniform("cameraScale", m_CameraScale);
+    m_ArcShader->SetUniform("camera", m_CameraMatrix);
+    m_ArcShader->SetUniform("cameraScale", m_CameraScale);
 }
 
-void Draw::CircleInternal(const Vector2 center, const float_t radius, const bool_t filled, const Color& color)
+void Draw::CircleInternal(const Vector2 center, const float_t radius, const bool_t filled, const Vector2 scale, const Color& color)
 {
     m_DrawList.circle.Emplace(
-        Matrix::Translation(static_cast<Vector3>(center - Vector2::One() * radius)) * Matrix::Scaling(
-            { radius * 2.f, radius * 2.f, 1.f }
+        Matrix::Translation(static_cast<Vector3>(center - scale * radius)) * Matrix::Scaling(
+            { radius * scale.x * 2.f, radius * scale.y * 2.f, 1.f }
         ),
         center,
         radius,
+        scale,
         color,
         filled
     );
     m_DrawList.AddCommand(DrawDataType::Circle);
+}
+
+void Draw::ArcInternal(
+    Vector2 center,
+    float_t radius,
+    float_t startingAngle,
+    float_t deltaAngle,
+    bool_t filled,
+    Vector2 scale,
+    const Color& color
+)
+{
+    m_DrawList.arc.Emplace(
+        Matrix::Translation(static_cast<Vector3>(center - scale * radius)) * Matrix::Scaling(
+            { radius * scale.x * 2.f, radius * scale.y * 2.f, 1.f }
+        ),
+        center,
+        radius,
+        startingAngle,
+        deltaAngle,
+        scale,
+        color,
+        filled
+    );
+    m_DrawList.AddCommand(DrawDataType::Arc);
 }
 
 void Draw::RenderPointData(const List<PointData>& points, const size_t index, const size_t count)
@@ -798,6 +900,22 @@ void Draw::RenderCircleData(const List<CircleData>& circles, const size_t index,
     glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr, static_cast<GLsizei>(count));
 
     m_CircleShader->Unuse();
+    glBindVertexArray(0);
+}
+
+void Draw::RenderArcData(const List<ArcData>& arcs, const size_t index, const size_t count)
+{
+    if (arcs.Empty())
+        return;
+
+    glNamedBufferData(m_Vbo, static_cast<GLsizeiptr>(sizeof(ArcData) * count), &arcs[index], GL_STREAM_DRAW);
+
+    glBindVertexArray(m_ArcVao);
+    m_ArcShader->Use();
+
+    glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr, static_cast<GLsizei>(count));
+
+    m_ArcShader->Unuse();
     glBindVertexArray(0);
 }
 

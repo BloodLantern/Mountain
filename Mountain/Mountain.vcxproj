@@ -377,6 +377,8 @@
     <ClCompile Include="src\Mountain\window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="shaders\arc\arc.frag" />
+    <Content Include="shaders\arc\arc.vert" />
     <Content Include="shaders\circle\circle.frag" />
     <Content Include="shaders\circle\circle.vert" />
     <Content Include="shaders\easing.glsl" />
@@ -386,6 +388,7 @@
     <Content Include="shaders\particles\color_over_lifetime.glsl" />
     <Content Include="shaders\particles\force_over_lifetime.glsl" />
     <Content Include="shaders\particles\module_types.glsl" />
+    <Content Include="shaders\particles\shape.glsl" />
     <Content Include="shaders\particles\update.comp" />
     <Content Include="shaders\particles\common.glsl" />
     <Content Include="shaders\particles\draw\draw.frag" />

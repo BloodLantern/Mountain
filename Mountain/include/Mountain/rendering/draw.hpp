@@ -102,14 +102,34 @@ namespace Mountain
         /// @brief Draw a hollow circle
         /// @param center The center position of the circle
         /// @param radius The radius of the circle
+        /// @param scale The scale of the circle
         /// @param color The color of the circle
-        MOUNTAIN_API static void Circle(Vector2 center, float_t radius, const Color& color = Color::White());
+        MOUNTAIN_API static void Circle(Vector2 center, float_t radius, Vector2 scale = Vector2::One(), const Color& color = Color::White());
 
         /// @brief Draw a filled circle
         /// @param center The center position of the circle
         /// @param radius The radius of the circle
+        /// @param scale The scale of the circle
         /// @param color The color of the circle
-        MOUNTAIN_API static void CircleFilled(Vector2 center, float_t radius, const Color& color = Color::White());
+        MOUNTAIN_API static void CircleFilled(Vector2 center, float_t radius, Vector2 scale = Vector2::One(), const Color& color = Color::White());
+
+        /// @brief Draw a hollow arc
+        /// @param center The center position of the arc
+        /// @param radius The radius of the arc
+        /// @param startingAngle The starting angle of the arc
+        /// @param deltaAngle The delta angle of the arc, e.g. the ending angle is @code startingAngle + deltaAngle@endcode
+        /// @param scale The scale of the arc
+        /// @param color The color of the arc
+        MOUNTAIN_API static void Arc(Vector2 center, float_t radius, float_t startingAngle, float_t deltaAngle, Vector2 scale = Vector2::One(), const Color& color = Color::White());
+
+        /// @brief Draw a filled arc
+        /// @param center The center position of the arc
+        /// @param radius The radius of the arc
+        /// @param startingAngle The starting angle of the arc
+        /// @param deltaAngle The delta angle of the arc, e.g. the ending angle is @code startingAngle + deltaAngle@endcode
+        /// @param scale The scale of the arc
+        /// @param color The color of the arc
+        MOUNTAIN_API static void ArcFilled(Vector2 center, float_t radius, float_t startingAngle, float_t deltaAngle, Vector2 scale = Vector2::One(), const Color& color = Color::White());
 
         /// @brief Draw a texture
         /// @param texture The texture to draw
@@ -210,6 +230,19 @@ namespace Mountain
             Matrix transformation;
             Vector2 center;
             float_t radius;
+            Vector2 scale;
+            Color color;
+            int32_t filled; // 32-bit boolean for GLSL
+        };
+
+        struct ArcData
+        {
+            Matrix transformation;
+            Vector2 center;
+            float_t radius;
+            float_t startingAngle;
+            float_t deltaAngle;
+            Vector2 scale;
             Color color;
             int32_t filled; // 32-bit boolean for GLSL
         };
@@ -249,6 +282,7 @@ namespace Mountain
             Rectangle,
             RectangleFilled,
             Circle,
+            Arc,
             Texture,
             Text,
             RenderTarget
@@ -273,6 +307,7 @@ namespace Mountain
             List<RectangleData> rectangle;
             List<RectangleData> rectangleFilled;
             List<CircleData> circle;
+            List<ArcData> arc;
             List<TextureData> texture;
             List<uint32_t> textureId;
             List<TextData> text;
@@ -291,11 +326,12 @@ namespace Mountain
         static inline Pointer<Shader> m_TriangleColoredShader;
         static inline Pointer<Shader> m_RectangleShader;
         static inline Pointer<Shader> m_CircleShader;
+        static inline Pointer<Shader> m_ArcShader;
 
         static inline Pointer<Shader> m_TextureShader, m_TextShader, m_RenderTargetShader;
 
         static inline uint32_t m_RectangleEbo, m_Vbo, m_RectangleVbo, m_TextureVbo, m_TextVbo, m_RenderTargetVbo, m_RenderTargetSsbo;
-        static inline uint32_t m_PointVao, m_LineVao, m_LineColoredVao, m_TriangleVao, m_TriangleColoredVao, m_RectangleVao, m_CircleVao, m_TextureVao, m_TextVao, m_RenderTargetVao;
+        static inline uint32_t m_PointVao, m_LineVao, m_LineColoredVao, m_TriangleVao, m_TriangleColoredVao, m_RectangleVao, m_CircleVao, m_ArcVao, m_TextureVao, m_TextVao, m_RenderTargetVao;
 
         static inline Matrix m_ProjectionMatrix;
 
@@ -315,6 +351,7 @@ namespace Mountain
         static void InitializeTriangleColoredBuffers();
         static void InitializeRectangleBuffers();
         static void InitializeCircleBuffers();
+        static void InitializeArcBuffers();
         static void InitializeTextureBuffers();
         static void InitializeTextBuffers();
         static void InitializeRenderTargetBuffers();
@@ -323,7 +360,8 @@ namespace Mountain
         static void SetCamera(const Matrix& newCameraMatrix, Vector2 newCameraScale);
         static void UpdateShaderMatrices();
 
-        static void CircleInternal(Vector2 center, float_t radius, bool_t filled, const Color& color);
+        static void CircleInternal(Vector2 center, float_t radius, bool_t filled, Vector2 scale, const Color& color);
+        static void ArcInternal(Vector2 center, float_t radius, float_t startingAngle, float_t deltaAngle, bool_t filled, Vector2 scale, const Color& color);
 
         static void RenderPointData(const List<PointData>& points, size_t index, size_t count);
         static void RenderLineData(const List<LineData>& lines, size_t index, size_t count);
@@ -332,6 +370,7 @@ namespace Mountain
         static void RenderTriangleColoredData(const List<TriangleColoredData>& trianglesColored, bool_t filled, size_t index, size_t count);
         static void RenderRectangleData(const List<RectangleData>& rectangles, bool_t filled, size_t index, size_t count);
         static void RenderCircleData(const List<CircleData>& circles, size_t index, size_t count);
+        static void RenderArcData(const List<ArcData>& arcs, size_t index, size_t count);
         static void RenderTextureData(const List<TextureData>& textures, uint32_t textureId, size_t index, size_t count);
         static void RenderTextData(const List<TextData>& texts, size_t index, size_t count);
         static void RenderRenderTargetData(const List<RenderTargetData>& renderTargets, size_t index, size_t count);

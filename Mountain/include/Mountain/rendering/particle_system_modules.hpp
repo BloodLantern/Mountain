@@ -1,8 +1,15 @@
 ﻿#pragma once
 
+#include <variant>
+
 #include "Mountain/core.hpp"
 #include "Mountain/utils/color.hpp"
 #include "Mountain/utils/utils.hpp"
+
+namespace Mountain
+{
+    class ParticleSystem;
+}
 
 namespace Mountain::ParticleSystemModules
 {
@@ -33,17 +40,72 @@ namespace Mountain::ParticleSystemModules
 
         virtual void SetComputeShaderUniforms(const ComputeShader& computeShader, Types enabledModules) const = 0;
         virtual void RenderImGui(uint32_t* enabledModulesInt) = 0;
+        virtual void RenderDebug(const ParticleSystem& system, Vector2 renderTargetSizeDiff) const;
 
     protected:
-        bool_t BeginImGui(uint32_t* enabledModulesInt, Types type, const char_t* name) const;
+        bool_t BeginImGui(uint32_t* enabledModulesInt, Types type) const;
         void EndImGui() const;
     };
 
-    class MOUNTAIN_API Shape : public Base
+    enum class ShapeType : uint32_t  // NOLINT(performance-enum-size)
+    {
+        Circle,
+        Line,
+        Rectangle,
+    };
+
+    enum class ShapeArcMode : uint32_t  // NOLINT(performance-enum-size)
+    {
+        Random,
+        Loop,
+        PingPong,
+        BurstSpread,
+    };
+
+    struct ShapeArc
+    {
+        ShapeArcMode mode = ShapeArcMode::Random;
+        float_t spread = 0.f;
+    };
+
+    struct ShapeCircle
+    {
+        float_t radius = 1.f;
+        /// @brief A value of 0 means the particles can only spawn on the edge of the radius, while 1 means they can spawn everywhere within the given radius
+        float_t radiusThickness = 1.f;
+        /// @brief Angle in radians in the range [0, 2pi]
+        float_t arcAngle = Calc::TwoPi;
+        ShapeArc arc;
+    };
+
+    struct ShapeLine
+    {
+        float_t radius = 1.f;
+        ShapeArc arc;
+    };
+
+    struct ShapeRectangle
+    {
+        /// @see ShapeCircle::radiusThickness
+        Vector2 scaleThickness = Vector2::One();
+    };
+
+    class Shape : public Base
     {
     public:
-        void SetComputeShaderUniforms(const ComputeShader& computeShader, Types enabledModules) const override;
-        void RenderImGui(uint32_t* enabledModulesInt) override;
+        ShapeType type = ShapeType::Circle;
+
+        std::variant<ShapeCircle, ShapeLine, ShapeRectangle> data;
+
+        Vector2 offset;
+        float_t rotation;
+        Vector2 scale = Vector2::One();
+
+        bool_t showWireframe = false;
+
+        MOUNTAIN_API void SetComputeShaderUniforms(const ComputeShader& computeShader, Types enabledModules) const override;
+        MOUNTAIN_API void RenderImGui(uint32_t* enabledModulesInt) override;
+        MOUNTAIN_API void RenderDebug(const ParticleSystem& system, Vector2 renderTargetSizeDiff) const override;
     };
 
     class MOUNTAIN_API ColorOverLifetime : public Base
