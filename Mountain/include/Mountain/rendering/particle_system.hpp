@@ -67,6 +67,7 @@ namespace Mountain
         MOUNTAIN_API void Update();
         MOUNTAIN_API void Render();
         MOUNTAIN_API void RenderImGui();
+        MOUNTAIN_API void RenderDebug();
 
         MOUNTAIN_API void TogglePlay();
         MOUNTAIN_API void Restart();
@@ -103,7 +104,8 @@ namespace Mountain
         uint32_t m_LiveSsbo, m_ParticleSsbo;
         uint32_t m_DrawVao;
 
-        bool_t m_ImGuiParticleBurstTimeHeld = false;
+        bool_t m_GuiParticleBurstTimeHeld = false;
+        Vector2 m_RenderTargetSize;
 
         void SetComputeShaderUniforms(float_t deltaTime) const;
         void SpawnNewParticles();

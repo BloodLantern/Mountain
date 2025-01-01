@@ -23,6 +23,7 @@ public:
 	Mountain::ParticleSystem particleSystem{ 1000 };
 
 	Mountain::RenderTarget renderTarget;
+	Mountain::RenderTarget debugRenderTarget;
 
 	Camera camera{};
 
