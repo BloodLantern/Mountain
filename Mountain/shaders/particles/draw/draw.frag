@@ -1,4 +1,4 @@
-#version 460 core
+#version 460
 
 in flat int particleAlive;
 in vec4 particleColor;

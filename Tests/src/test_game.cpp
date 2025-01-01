@@ -28,6 +28,7 @@ using namespace Mountain;
 GameExample::GameExample(const char_t* const windowTitle)
     : Game(windowTitle)
     , renderTarget(BaseResolution, Graphics::MagnificationFilter::Nearest)
+    , debugRenderTarget(Window::GetSize(), Graphics::MagnificationFilter::Nearest)
 {
     //renderTarget.ambientLight = Color(0.1f);
 }
@@ -82,26 +83,13 @@ namespace
 
         for (auto& shaderBase : ResourceManager::FindAll<ShaderBase>())
         {
-            std::filesystem::path shaderParentPath;
-            Pointer<Shader> shader = Utils::DynamicPointerCast<Shader>(shaderBase);
-            if (shader)
-            {
-                shaderParentPath = shader->GetFiles()[0]->GetParent()->GetPath();
-            }
-            else
-            {
-                Pointer<ComputeShader> computeShader = Utils::DynamicPointerCast<ComputeShader>(shaderBase);
-                if (computeShader)
-                    shaderParentPath = computeShader->GetFile()->GetParent()->GetPath();
-            }
-
             if (shaderBase->dependentShaderFiles.contains(path))
                 shadersToReload.Add(shaderBase);
         }
 
         const bool_t isDrawShader = Utils::StringArrayContains(Shader::VertexFileExtensions, extension) ||
                                     Utils::StringArrayContains(Shader::FragmentFileExtensions, extension);
-        const std::string name = isDrawShader ? path.stem().string() : path.generic_string();
+        const std::string name = isDrawShader ? path.parent_path().generic_string() : path.generic_string();
 
         if (!ResourceManager::Contains(name))
             return;
@@ -114,7 +102,10 @@ namespace
 
 void GameExample::Initialize()
 {
-    shadersWatcher.SetPath(Utils::GetBuiltinShadersPath());
+    std::string builtinShadersPath = Utils::GetBuiltinShadersPath();
+    if (builtinShadersPath.ends_with('/'))
+        builtinShadersPath.pop_back();
+    shadersWatcher.SetPath(builtinShadersPath);
     shadersWatcher.recursive = true;
     shadersWatcher.Start();
     shadersWatcher.onModified += [&](const std::filesystem::path& path)
@@ -127,7 +118,9 @@ void GameExample::Initialize()
                  })
             {
                 if (p.is_directory())
+                {
                     continue;
+                }
 
                 ReloadShader(p);
             }
@@ -146,6 +139,7 @@ void GameExample::Initialize()
     player = new Player({ 10.f, 100.f }, renderTarget.NewLightSource());
 
     renderTarget.SetDebugName("Game RenderTarget");
+    debugRenderTarget.SetDebugName("Game Debug RenderTarget");
 
     particleSystem.position = BaseResolution * 0.5f;//{ 250.f, 100.f };
     particleSystem.modules.AddRange(
@@ -304,14 +298,6 @@ void GameExample::Render()
 
     particleSystem.Render();
 
-    if (debugRender)
-    {
-        for (Entity* const entity : entities)
-            entity->RenderDebug();
-
-        player->RenderDebug();
-    }
-
     //Draw::Text(*font, "Hello, tiny World!", { 90.f, 30.f });
 
     Renderer::PopRenderTarget();
@@ -326,6 +312,41 @@ void GameExample::Render()
         filmGrain.effect.Apply(Renderer::GetCurrentRenderTarget().GetSize(), false);
     vignette.effect.imageBindings.Clear();
     filmGrain.effect.imageBindings.Clear();
+
+    if (debugRender)
+    {
+        debugRenderTarget.SetCameraMatrix(camera.matrix);
+        Renderer::PushRenderTarget(debugRenderTarget);
+        Draw::Clear(Color::Transparent());
+
+        /*for (Entity* const entity : entities)
+            entity->RenderDebug();
+
+        player->RenderDebug();*/
+
+        particleSystem.RenderDebug();
+
+        static Vector2 position, scale = Vector2::One();
+        static float_t radius = 0.f, startingAngle = 0.f, deltaAngle = 0.f;
+        static bool_t filled = false;
+        ImGui::Begin("Arc debug");
+        ImGui::DragFloat2("position", position.Data());
+        ImGui::DragFloat2("scale", scale.Data());
+        ImGui::DragFloat("radius", &radius);
+        ImGui::DragAngle("startingAngle", &startingAngle);
+        ImGui::DragAngle("deltaAngle", &deltaAngle);
+        ImGui::Checkbox("filled", &filled);
+        ImGui::End();
+
+        if (filled)
+            Draw::ArcFilled(position, radius, startingAngle, deltaAngle, scale);
+        else
+            Draw::Arc(position, radius, startingAngle, deltaAngle, scale);
+
+        Renderer::PopRenderTarget();
+
+        Draw::RenderTarget(debugRenderTarget);
+    }
 
     /*Draw::Texture(*oldLady, { 10.f, 80.f });
 
@@ -424,8 +445,8 @@ void GameExample::Render()
         ImGui::Text("Frame time left (if negative the game is lagging): %.1fms", (Time::GetTargetDeltaTime() - Time::GetLastFrameDuration()) * 1000.f);
         ImGui::Checkbox("Show inputs window", &showInputs);
         ImGui::SliderFloat("Time scale", &Time::timeScale, 0.f, 2.f);
-        /*ImGui::Checkbox("Debug render", &debugRender);
-        Sprite* s = character->GetComponent<Sprite>();
+        ImGui::Checkbox("Debug render", &debugRender);
+        /*Sprite* s = character->GetComponent<Sprite>();
         float_t f = s->GetFrameDuration();
         const float_t oldF = f;
         ImGui::DragFloat("Old lady animation speed", &f, 0.01f);
