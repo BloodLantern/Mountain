@@ -12,7 +12,7 @@
 #include "camera.hpp"
 #include "player.hpp"
 
-constexpr Vector2i BaseResolution = { 320, 180 };
+constexpr Vector2i BaseResolution = { 1280, 720 };
 
 class GameExample : public Mountain::Game
 {

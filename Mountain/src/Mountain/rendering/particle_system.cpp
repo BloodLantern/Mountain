@@ -51,7 +51,7 @@ ParticleSystem::~ParticleSystem()
 
 void ParticleSystem::Update()
 {
-    if (!m_Playing)
+    if (!m_Playing || m_MaxParticles == 0)
         return;
 
     const float_t deltaTime = useUnscaledDeltaTime ? Time::GetDeltaTimeUnscaled() : Time::GetDeltaTime();
@@ -280,9 +280,6 @@ uint32_t ParticleSystem::GetMaxParticles() const { return m_MaxParticles; }
 
 void ParticleSystem::SetMaxParticles(const uint32_t newMaxParticles)
 {
-    if (newMaxParticles == 0)
-        throw std::invalid_argument{ "ParticleSystem max particle count must be at least 1" };
-
     m_MaxParticles = newMaxParticles;
 
     // Set up the GPU particle buffer
