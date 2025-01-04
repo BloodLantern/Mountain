@@ -278,10 +278,10 @@ void ImGuiUtils::ShowInputsWindow()
         {
             ImGui::Text("Left stick axis: %f, %f", gamepad.GetAxis(GamepadAxis::LeftStickHorizontal), gamepad.GetAxis(GamepadAxis::LeftStickVertical));
             Vector2 leftStick = gamepad.GetStick(GamepadStick::Left);
-            ImGuiUtils::DirectionVector("Left stick", &leftStick);
+            DirectionVector("Left stick", &leftStick);
             ImGui::Text("Right stick axis: %f, %f", gamepad.GetAxis(GamepadAxis::RightStickHorizontal), gamepad.GetAxis(GamepadAxis::RightStickVertical));
             Vector2 rightStick = gamepad.GetStick(GamepadStick::Right);
-            ImGuiUtils::DirectionVector("Left stick", &rightStick);
+            DirectionVector("Right stick", &rightStick);
             
             ImGui::Text("Left trigger axis: %f", gamepad.GetAxis(GamepadAxis::LeftTrigger));
             ImGui::Text("Right trigger axis: %f", gamepad.GetAxis(GamepadAxis::RightTrigger));
@@ -375,7 +375,7 @@ namespace
     )
     {
         const List<Pointer<T>> resources = ResourceManager::FindAll<T>([&] (Pointer<T> r) -> bool_t { return Utils::StringContainsIgnoreCase(r->GetName(), resourceNameFilter); });
-        const List<const Pointer<T>*> packagedResources = resources.FindAll([] (const Pointer<T>* r) -> bool_t { return (*r)->GetFile() == nullptr; });
+        const List<const Pointer<T>*> packagedResources = resources.FindAll([] (const Pointer<T>* r) -> bool_t { return ResourceManager::IsBinary((*r)->GetName()); });
         if (ImGui::TreeNode(std::format("{} ({}, {} packaged in binary)", typeName, resources.GetSize(), packagedResources.GetSize()).c_str()))
         {
             for (Pointer resource : resources)
@@ -407,10 +407,7 @@ namespace
         const List<const Pointer<Shader>*> packagedShaders = shaders.FindAll(
             [](const Pointer<Shader>* r) -> bool_t
             {
-                return std::ranges::find_if(
-                           (*r)->GetFiles(),
-                           [](const Pointer<File>& f) -> bool_t { return f != nullptr; }
-                       ) == (*r)->GetFiles().end();
+                return ResourceManager::IsBinary((*r)->GetFiles()[0]->GetPathString());
             }
         );
 
