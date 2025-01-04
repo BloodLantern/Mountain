@@ -249,6 +249,11 @@ bool ResourceManager::Contains(const Pointer<File>& file)
     return m_Resources.contains(file->GetPathString());
 }
 
+bool_t ResourceManager::IsBinary(const std::string& name)
+{
+    return Utils::StringArrayContains(rh::embed.ListFiles(), std::filesystem::path(name).make_preferred().string());
+}
+
 Pointer<Font> ResourceManager::GetFont(const std::string& name, uint32_t size)
 {
     std::string internalName = std::format("{}/{}", name, size);
