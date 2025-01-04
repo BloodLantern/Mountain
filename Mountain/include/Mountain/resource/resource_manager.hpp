@@ -55,6 +55,11 @@ namespace Mountain
         [[nodiscard]]
         MOUNTAIN_API static bool_t Contains(const Pointer<File>& file);
 
+        /// @brief Checks whether the given Resource name is an embedded binary Resource.
+        /// @see LoadAllBinaries()
+        [[nodiscard]]
+        MOUNTAIN_API static bool_t IsBinary(const std::string& name);
+
         /// @brief Returns the Resource that was either added or loaded using the given @p name.
         template <Concepts::ResourceT T = Resource>
         [[nodiscard]]
