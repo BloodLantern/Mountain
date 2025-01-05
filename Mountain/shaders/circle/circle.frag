@@ -1,9 +1,10 @@
 #version 460
 
-layout(origin_upper_left, pixel_center_integer) in vec4 gl_FragCoord;
+layout(origin_upper_left) in vec4 gl_FragCoord;
 
 in vec2 center;
 in vec2 size;
+in vec2 scale;
 in vec4 color;
 in flat int filled;
 
@@ -14,11 +15,11 @@ out vec4 fragmentColor;
 void main()
 {
     vec2 cameraScaleInverse = vec2(1.f) / cameraScale;
-    vec2 centerToFragment = abs(gl_FragCoord.xy - center) * cameraScaleInverse;
+    vec2 centerToFragment = abs(gl_FragCoord.xy - center) * cameraScaleInverse * cameraScaleInverse;
 
-    vec2 circleSize = size * cameraScale;
+    vec2 circleSize = size;
 
-    vec2 temp = normalize(centerToFragment);
+    vec2 temp = centerToFragment / scale;
     float angle = atan(temp.y, temp.x);
     float c = cos(angle), s = sin(angle);
     circleSize *= vec2(c, s);
