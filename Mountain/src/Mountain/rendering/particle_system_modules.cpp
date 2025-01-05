@@ -8,7 +8,7 @@
 
 using namespace Mountain::ParticleSystemModules;
 
-void Base::RenderDebug(const ParticleSystem&, const Vector2 renderTargetSizeDiff) const
+void Base::RenderDebug(const ParticleSystem&, const Vector2) const
 {
 }
 
