@@ -15,6 +15,7 @@ uniform mat4 camera;
 
 out vec2 center;
 out vec2 size;
+out vec2 scale;
 out vec2 angles; // startingAngle, deltaAngle
 out vec4 color;
 out int filled;
@@ -23,6 +24,7 @@ void main()
 {
     center = (camera * vec4(instanceCenter, 0.f, 1.f)).xy;
     size = instanceRadius * instanceScale;
+    scale = instanceScale;
     angles = vec2(instanceStartingAngle, instanceDeltaAngle);
     color = instanceColor;
     filled = instanceFilled;

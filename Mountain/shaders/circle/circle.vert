@@ -11,8 +11,11 @@ layout (location = 9) in int instanceFilled;
 uniform mat4 projection;
 uniform mat4 camera;
 
+uniform vec2 cameraScale;
+
 out vec2 center;
 out vec2 size;
+out vec2 scale;
 out vec4 color;
 out int filled;
 
@@ -20,6 +23,7 @@ void main()
 {
     center = (camera * vec4(instanceCenter, 0.f, 1.f)).xy;
     size = instanceRadius * instanceScale;
+    scale = instanceScale;
     color = instanceColor;
     filled = instanceFilled;
 

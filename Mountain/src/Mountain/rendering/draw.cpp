@@ -751,9 +751,8 @@ void Draw::UpdateShaderMatrices()
 void Draw::CircleInternal(const Vector2 center, const float_t radius, const bool_t filled, const Vector2 scale, const Color& color)
 {
     m_DrawList.circle.Emplace(
-        Matrix::Translation(static_cast<Vector3>(center - scale * radius)) * Matrix::Scaling(
-            { radius * scale.x * 2.f, radius * scale.y * 2.f, 1.f }
-        ),
+        Matrix::Translation(static_cast<Vector3>(center - scale * radius * m_CameraScale))
+            * Matrix::Scaling({ radius * scale.x * 2.f * m_CameraScale.x, radius * scale.y * 2.f * m_CameraScale.y, 1.f }),
         center,
         radius,
         scale,
@@ -774,9 +773,8 @@ void Draw::ArcInternal(
 )
 {
     m_DrawList.arc.Emplace(
-        Matrix::Translation(static_cast<Vector3>(center - scale * radius)) * Matrix::Scaling(
-            { radius * scale.x * 2.f, radius * scale.y * 2.f, 1.f }
-        ),
+        Matrix::Translation(static_cast<Vector3>(center - scale * radius * m_CameraScale))
+            * Matrix::Scaling({ radius * scale.x * 2.f * m_CameraScale.x, radius * scale.y * 2.f * m_CameraScale.y, 1.f }),
         center,
         radius,
         startingAngle,

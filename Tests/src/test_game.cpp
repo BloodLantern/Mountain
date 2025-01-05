@@ -326,17 +326,16 @@ void GameExample::Render()
 
         particleSystem.RenderDebug();
 
-        static Vector2 position, scale = Vector2::One();
-        static float_t radius = 0.f, startingAngle = 0.f, deltaAngle = 0.f;
+        static Vector2 position = BaseResolution * 0.5f, scale = Vector2::One();
+        static float_t radius = 65.f, startingAngle = 0.f, deltaAngle = Calc::TwoPi;
         static bool_t filled = false;
         ImGui::Begin("Arc debug");
         ImGui::DragFloat2("position", position.Data());
-        ImGui::DragFloat2("scale", scale.Data());
+        ImGui::DragFloat2("scale", scale.Data(), 0.01f, 0.1f);
         ImGui::DragFloat("radius", &radius);
         ImGui::DragAngle("startingAngle", &startingAngle);
         ImGui::DragAngle("deltaAngle", &deltaAngle);
         ImGui::Checkbox("filled", &filled);
-        ImGui::End();
 
         if (filled)
         {
@@ -349,19 +348,31 @@ void GameExample::Render()
             Draw::Circle(position + Vector2::UnitX() * radius * 3.f, radius, scale);
         }
 
-        const Vector2 center = position - Vector2::UnitX() * radius * 3.f;
-        const Vector2 quadPosition = center - Vector2::One() * radius;
-        for (int32_t y = 0; y < static_cast<int32_t>(radius * 2.f); y++)
+        Vector2 center = position - Vector2::UnitX() * radius * 3.f;
+        Vector2 quadPosition = center - radius * scale * camera.scale;
+        Vector2i quadSize{static_cast<int32_t>(radius * 2.f * scale.x * camera.scale.x), static_cast<int32_t>(radius * 2.f * scale.y * camera.scale.y)};
+
+        ImGuiUtils::PushSeparatorText("Quad info");
+        ImGui::BeginDisabled();
+
+        ImGui::DragFloat2("Position", quadPosition.Data());
+        ImGui::DragFloat2("Center", center.Data());
+        ImGui::DragInt2("Size", quadSize.Data());
+
+        ImGui::EndDisabled();
+        ImGuiUtils::PopSeparatorText();
+
+        for (int32_t y = 0; y < quadSize.y; y++)
         {
-            for (int32_t x = 0; x < static_cast<int32_t>(radius * 2.f); x++)
+            for (int32_t x = 0; x < quadSize.x; x++)
             {
-                const Vector2 fragmentPosition = quadPosition + Vector2{static_cast<float_t>(x), static_cast<float_t>(y)};
-                constexpr Vector2 cameraScaleInverse = Vector2::One();
+                Vector2 fragmentPosition = quadPosition + Vector2{static_cast<float_t>(x), static_cast<float_t>(y)};
+                const Vector2 cameraScaleInverse = Vector2::One() / camera.scale;
                 Vector2 centerToFragment = fragmentPosition - center;
 
-                Vector2 circleSize = Vector2::One() * radius * scale;
+                Vector2 circleSize = radius * scale;
 
-                const Vector2 temp = (centerToFragment * cameraScaleInverse).Normalized();
+                Vector2 temp = centerToFragment * cameraScaleInverse;
                 float_t angle = std::atan2(temp.y, -temp.x) + Calc::Pi;
 
                 const float_t positiveStartingAngle = startingAngle < 0.f ? startingAngle + static_cast<float_t>(-static_cast<int32_t>(startingAngle / Calc::TwoPi) + 1) * Calc::TwoPi : startingAngle;
@@ -375,25 +386,46 @@ void GameExample::Render()
                 if (angle < 0.f || angle > maxAngle)
                     continue;
 
-                centerToFragment = Calc::Abs(centerToFragment) * cameraScaleInverse;
-                angle = std::atan2(centerToFragment.y, centerToFragment.x);
+                Vector2 centerToFragmentAbs = Calc::Abs(centerToFragment) * cameraScaleInverse;
+                temp = centerToFragmentAbs / scale;
+                angle = std::atan2(temp.y, temp.x);
                 const float_t c = std::cos(angle), s = std::sin(angle);
                 circleSize *= Vector2(c, s);
 
+                if (static_cast<Vector2i>(Input::GetMousePosition()) == static_cast<Vector2i>(fragmentPosition))
+                {
+                    ImGuiUtils::PushSeparatorText("Fragment info");
+                    ImGui::BeginDisabled();
+
+                    ImGui::DragFloat2("Position", fragmentPosition.Data());
+                    Vector2 p = fragmentPosition - quadPosition;
+                    ImGui::DragFloat2("Position (quad origin)", p.Data());
+                    ImGui::DragFloat2("Center to position", centerToFragment.Data());
+                    ImGui::DragFloat2("Center to position abs", centerToFragmentAbs.Data());
+                    ImGui::DragAngle("Angle", &angle);
+                    ImGui::DragFloat2("Circle size", circleSize.Data());
+
+                    ImGui::EndDisabled();
+                    ImGuiUtils::PopSeparatorText();
+                }
+
                 // Discard the pixels outside the circle
-                if (centerToFragment.x > circleSize.x && centerToFragment.y > circleSize.y)
+                if (centerToFragmentAbs.x > circleSize.x && centerToFragmentAbs.y > circleSize.y)
                     continue;
 
                 // In case of a hollow circle, we also need to discard the pixels inside
                 if (filled == 0 || deltaAngle == 0.f)
                 {
-                    if (centerToFragment.x + 1.f < circleSize.x || centerToFragment.y + 1.f < circleSize.y || centerToFragment == Vector2::Zero())
+                    if (centerToFragmentAbs.x + 1.f < circleSize.x || centerToFragmentAbs.y + 1.f < circleSize.y || centerToFragmentAbs == Vector2::Zero())
                         continue;
                 }
 
                 Draw::Point(fragmentPosition);
             }
         }
+        Draw::Rectangle(quadPosition, quadSize, Color::Green());
+
+        ImGui::End();
 
         Renderer::PopRenderTarget();
 
@@ -440,7 +472,7 @@ void GameExample::Render()
         }
         ImGui::DragFloat2("Position", camera.position.Data());
         ImGui::DragAngle("Rotation", &camera.rotation);
-        ImGui::DragFloat2("Scale", camera.scale.Data(), 0.1f, 0.1f);
+        ImGui::DragFloat2("Scale", camera.scale.Data(), 0.01f, 0.1f);
 
         camera.UpdateMatrix();
 
