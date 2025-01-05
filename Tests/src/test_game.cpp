@@ -339,9 +339,61 @@ void GameExample::Render()
         ImGui::End();
 
         if (filled)
+        {
             Draw::ArcFilled(position, radius, startingAngle, deltaAngle, scale);
+            Draw::CircleFilled(position + Vector2::UnitX() * radius * 3.f, radius, scale);
+        }
         else
+        {
             Draw::Arc(position, radius, startingAngle, deltaAngle, scale);
+            Draw::Circle(position + Vector2::UnitX() * radius * 3.f, radius, scale);
+        }
+
+        const Vector2 center = position - Vector2::UnitX() * radius * 3.f;
+        const Vector2 quadPosition = center - Vector2::One() * radius;
+        for (int32_t y = 0; y < static_cast<int32_t>(radius * 2.f); y++)
+        {
+            for (int32_t x = 0; x < static_cast<int32_t>(radius * 2.f); x++)
+            {
+                const Vector2 fragmentPosition = quadPosition + Vector2{static_cast<float_t>(x), static_cast<float_t>(y)};
+                constexpr Vector2 cameraScaleInverse = Vector2::One();
+                Vector2 centerToFragment = fragmentPosition - center;
+
+                Vector2 circleSize = Vector2::One() * radius * scale;
+
+                const Vector2 temp = (centerToFragment * cameraScaleInverse).Normalized();
+                float_t angle = std::atan2(temp.y, -temp.x) + Calc::Pi;
+
+                const float_t positiveStartingAngle = startingAngle < 0.f ? startingAngle + static_cast<float_t>(-static_cast<int32_t>(startingAngle / Calc::TwoPi) + 1) * Calc::TwoPi : startingAngle;
+
+                angle -= std::fmodf(positiveStartingAngle, Calc::TwoPi);
+                if (angle < 0.f)
+                    angle += Calc::TwoPi;
+                const float_t maxAngle = std::min(deltaAngle, Calc::TwoPi);
+
+                // Discard the pixels outside the arc angles
+                if (angle < 0.f || angle > maxAngle)
+                    continue;
+
+                centerToFragment = Calc::Abs(centerToFragment) * cameraScaleInverse;
+                angle = std::atan2(centerToFragment.y, centerToFragment.x);
+                const float_t c = std::cos(angle), s = std::sin(angle);
+                circleSize *= Vector2(c, s);
+
+                // Discard the pixels outside the circle
+                if (centerToFragment.x > circleSize.x && centerToFragment.y > circleSize.y)
+                    continue;
+
+                // In case of a hollow circle, we also need to discard the pixels inside
+                if (filled == 0 || deltaAngle == 0.f)
+                {
+                    if (centerToFragment.x + 1.f < circleSize.x || centerToFragment.y + 1.f < circleSize.y || centerToFragment == Vector2::Zero())
+                        continue;
+                }
+
+                Draw::Point(fragmentPosition);
+            }
+        }
 
         Renderer::PopRenderTarget();
 
