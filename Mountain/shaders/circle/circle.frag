@@ -1,6 +1,6 @@
 #version 460
 
-layout(origin_upper_left) in vec4 gl_FragCoord;
+layout(origin_upper_left, pixel_center_integer) in vec4 gl_FragCoord;
 
 in vec2 center;
 in vec2 size;
@@ -30,7 +30,7 @@ void main()
     // In case of a hollow circle, we also need to discard the pixels inside
     if (filled == 0)
     {
-        if (centerToFragment.x + 1.f < circleSize.x || centerToFragment.y + 1.f < circleSize.y)
+        if (centerToFragment.x + 1.f < circleSize.x || centerToFragment.y + 1.f < circleSize.y || centerToFragment == vec2(0.f))
             discard;
     }
 
