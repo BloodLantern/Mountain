@@ -1,9 +1,9 @@
 #ifndef PARTICLE_H
 #define PARTICLE_H
 
-#include "types.h"
-#include "oam.h"
-#include "structs/particle.h"
+#include "mzm/types.h"
+#include "mzm/oam.h"
+#include "mzm/structs/particle.h"
 
 // Functions
 

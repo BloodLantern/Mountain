@@ -1,7 +1,7 @@
 #ifndef SEARCHLIGHT_EYE_AI_H
 #define SEARCHLIGHT_EYE_AI_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define SEARCHLIGHT_EYE_POSE_IDLE 0x9
 #define SEARCHLIGHT_EYE_POSE_GETTING_ALERTED 0x23

@@ -1,19 +1,19 @@
-#include "sprites_AI/save_platform_chozodia.h"
-#include "sprites_AI/item_banner.h"
-#include "gba.h"
-#include "sprite_util.h"
+#include "mzm/sprites_AI/save_platform_chozodia.h"
+#include "mzm/sprites_AI/item_banner.h"
+#include "mzm/gba.h"
+#include "mzm/sprite_util.h"
 
-#include "data/sprites/save_platform_chozodia.h"
+#include "mzm/data/sprites/save_platform_chozodia.h"
 
-#include "constants/escape.h"
-#include "constants/sprite.h"
-#include "constants/samus.h"
-#include "constants/text.h"
+#include "mzm/constants/escape.h"
+#include "mzm/constants/sprite.h"
+#include "mzm/constants/samus.h"
+#include "mzm/constants/text.h"
 
-#include "structs/game_state.h"
-#include "structs/hud.h"
-#include "structs/sprite.h"
-#include "structs/samus.h"
+#include "mzm/structs/game_state.h"
+#include "mzm/structs/hud.h"
+#include "mzm/structs/sprite.h"
+#include "mzm/structs/samus.h"
 
 /**
  * @brief 46708 | 168 | Initializes a save platform (Chozodia) sprite

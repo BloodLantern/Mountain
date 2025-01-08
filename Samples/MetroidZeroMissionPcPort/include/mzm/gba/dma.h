@@ -1,8 +1,8 @@
 #ifndef GBA_DMA_H
 #define GBA_DMA_H
 
-#include "memory.h"
-#include "types.h"
+#include "mzm/memory.h"
+#include "mzm/types.h"
 
 #define REG_DMA0 (gRegBuffer + 0x0b0)
 #define REG_DMA1 (gRegBuffer + 0x0bc)
@@ -16,7 +16,7 @@
 #define REG_DMA2_DST (REG_DMA2 + 4)
 #define REG_DMA2_CNT (REG_DMA2 + 8)
 
-#define DMA_SET(channel, src, dst, cnt) (DmaTransfer(channel, src, dst, (cnt) & 0xFFFF, 16))
+#define DMA_SET(channel, src, dst, cnt) (DmaTransfer(channel, src, dst, ((cnt) & 0xFFFF) * 2, 16))
 
 #define dma_fill(channel, val, dst, size, bit) (memset(dst, val, size))
 

@@ -1,13 +1,13 @@
-#include "color_fading.h"
+#include "mzm/color_fading.h"
 
-#include "constants/demo.h"
-#include "constants/game_state.h"
-#include "constants/color_fading.h"
+#include "mzm/constants/demo.h"
+#include "mzm/constants/game_state.h"
+#include "mzm/constants/color_fading.h"
 
-#include "structs/demo.h"
-#include "structs/game_state.h"
-#include "structs/power_bomb_explosion.h"
-#include "structs/samus.h"
+#include "mzm/structs/demo.h"
+#include "mzm/structs/game_state.h"
+#include "mzm/structs/power_bomb_explosion.h"
+#include "mzm/structs/samus.h"
 
 /**
  * @brief 57c4c | b8 | Processes a pause button press

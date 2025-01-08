@@ -1,8 +1,8 @@
 #ifndef IMAGO_LARVA_RIGHT_SIDE_DATA_H
 #define IMAGO_LARVA_RIGHT_SIDE_DATA_H
 
-#include "types.h"
-#include "oam.h"
+#include "mzm/types.h"
+#include "mzm/oam.h"
 
 extern const u32 sImagoLarvaRightSideGfx[592];
 extern const u16 sImagoLarvaRightSidePAL[32];

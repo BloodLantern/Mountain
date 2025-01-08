@@ -1,8 +1,8 @@
 #ifndef FILE_SELECT_STRUCT_H
 #define FILE_SELECT_STRUCT_H
 
-#include "types.h"
-#include "structs/menu.h"
+#include "mzm/types.h"
+#include "mzm/structs/menu.h"
 
 #define FILE_SELECT_DATA sNonGameplayRamPointer->fileSelect
 #define FILE_SELECT_EWRAM sEwramPointer->fileSelect

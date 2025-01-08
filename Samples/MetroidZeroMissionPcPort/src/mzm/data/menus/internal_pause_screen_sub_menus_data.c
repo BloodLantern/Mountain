@@ -1,7 +1,7 @@
-#include "data/menus/internal_pause_screen_sub_menus_data.h"
-#include "data/menus/pause_screen_sub_menus_data.h"
+#include "mzm/data/menus/internal_pause_screen_sub_menus_data.h"
+#include "mzm/data/menus/pause_screen_sub_menus_data.h"
 
-#include "constants/connection.h"
+#include "mzm/constants/connection.h"
 
 const s8* const sChozoStatueTargetPathPointers[6] = {
     [AREA_BRINSTAR] = (s8*)sChozoStatueTargetPathBrinstar,

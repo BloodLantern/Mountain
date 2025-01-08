@@ -1,9 +1,9 @@
 #ifndef INTRO_DATA_H
 #define INTRO_DATA_H
 
-#include "types.h"
-#include "structs/in_game_timer.h"
-#include "structs/intro.h"
+#include "mzm/types.h"
+#include "mzm/structs/in_game_timer.h"
+#include "mzm/structs/intro.h"
 
 extern const u16 sIntroEmergencyOrderTextOAM[52];
 extern const u16 sIntroExterminateAllTextOAM[163];

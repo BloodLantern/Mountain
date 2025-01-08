@@ -1,17 +1,17 @@
-#include "hud.h"
-#include "gba.h"
-#include "macros.h"
-#include "oam.h"
+#include "mzm/hud.h"
+#include "mzm/gba.h"
+#include "mzm/macros.h"
+#include "mzm/oam.h"
 
-#include "data/hud_data.h"
+#include "mzm/data/hud_data.h"
 
-#include "constants/minimap.h"
-#include "constants/samus.h"
+#include "mzm/constants/minimap.h"
+#include "mzm/constants/samus.h"
 
-#include "structs/hud.h"
-#include "structs/minimap.h"
-#include "structs/samus.h"
-#include "structs/game_state.h"
+#include "mzm/structs/hud.h"
+#include "mzm/structs/minimap.h"
+#include "mzm/structs/samus.h"
+#include "mzm/structs/game_state.h"
 
 u8 gHideHud;
 u8 gMissileHighlightStatus;
@@ -44,13 +44,14 @@ static const float sHudOam_HealthBar[] = {
  */
 void HUDUpdateOAM(void)
 {
-    struct SpriteRenderData renderData;
+    // TODO - Modern
+    /*struct SpriteRenderData renderData;
     memset(&renderData, 0, sizeof(renderData));
 
     renderData.scaling = 1.f;
     renderData.paletteRow = 1;
 
-    SpriteRendererRender(gCommonSpriteGraphics, gCommonSpritePalette, sHudOam_HealthBar, &renderData);
+    SpriteRendererRender(gCommonSpriteGraphics, gCommonSpritePalette, sHudOam_HealthBar, &renderData);*/
     return;
 
     u32 oamSlot;

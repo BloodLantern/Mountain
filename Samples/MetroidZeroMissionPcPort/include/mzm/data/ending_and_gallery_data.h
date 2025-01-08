@@ -1,10 +1,10 @@
 #ifndef ENDING_AND_GALLERY_DATA_H
 #define ENDING_AND_GALLERY_DATA_H
 
-#include "types.h"
-#include "constants/ending_and_gallery.h"
-#include "structs/ending_and_gallery.h"
-#include "macros.h"
+#include "mzm/types.h"
+#include "mzm/constants/ending_and_gallery.h"
+#include "mzm/structs/ending_and_gallery.h"
+#include "mzm/macros.h"
 
 extern const u16 sEndingImageTextPAL[14 * 16];
 

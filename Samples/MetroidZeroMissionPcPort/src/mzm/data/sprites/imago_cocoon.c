@@ -1,5 +1,5 @@
-#include "data/sprites/imago_cocoon.h"
-#include "macros.h"
+#include "mzm/data/sprites/imago_cocoon.h"
+#include "mzm/macros.h"
 
 const s16 sImagoCocoonMultiSpriteData_Idle_Frame0[30] = {
     3, 320, 0,

@@ -1,8 +1,8 @@
 #ifndef SCROLL_H
 #define SCROLL_H
 
-#include "types.h"
-#include "structs/scroll.h"
+#include "mzm/types.h"
+#include "mzm/structs/scroll.h"
 
 void ScrollProcess(struct RawCoordsX* pCoords);
 void ScrollScreen(u16 screenX, u16 screenY);

@@ -1,6 +1,6 @@
-#include "data/tilesets/tilesets_set0.h"
-#include "data/common_pals.h"
-#include "macros.h"
+#include "mzm/data/tilesets/tilesets_set0.h"
+#include "mzm/data/common_pals.h"
+#include "mzm/macros.h"
 
 const u32 sTileset_42_Gfx[736] = INCBIN_U32("data/tilesets/42.gfx.lz");
 const u32 sTileset_78_Gfx[736] = INCBIN_U32("data/tilesets/78.gfx.lz");

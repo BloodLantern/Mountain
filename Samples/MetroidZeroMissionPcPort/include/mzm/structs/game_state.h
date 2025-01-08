@@ -1,10 +1,8 @@
 #ifndef GAME_STATE_STRUCT_H
 #define GAME_STATE_STRUCT_H
 
-#include "types.h"
-#include "input.h"
-
-#include "GLFW/glfw3.h"
+#include "mzm/types.h"
+#include "mzm/input.h"
 
 struct GameCompletion {
     s8 completedGame;
@@ -57,8 +55,6 @@ extern u8 gSubGameModeStage;
 extern u8 gHasSaved;
 extern s8 gMostRecentSaveFile;
 extern u8 gCompletedGameFlagCopy;
-
-extern GLFWwindow* gWindow;
 
 extern u8 gTargetFps;
 

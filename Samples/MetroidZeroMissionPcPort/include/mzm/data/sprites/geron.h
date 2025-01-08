@@ -1,8 +1,8 @@
 #ifndef GERON_DATA_H
 #define GERON_DATA_H
 
-#include "types.h"
-#include "oam.h"
+#include "mzm/types.h"
+#include "mzm/oam.h"
 
 extern const u32 sGeronGfx[711];
 extern const u16 sGeronPAL[48];

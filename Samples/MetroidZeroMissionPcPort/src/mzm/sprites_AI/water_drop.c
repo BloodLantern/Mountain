@@ -1,15 +1,15 @@
-#include "sprites_AI/water_drop.h"
-#include "macros.h"
-#include "sprite_util.h"
+#include "mzm/sprites_AI/water_drop.h"
+#include "mzm/macros.h"
+#include "mzm/sprite_util.h"
 
-#include "data/particle_data.h"
-#include "data/sprite_data.h"
+#include "mzm/data/particle_data.h"
+#include "mzm/data/sprite_data.h"
 
-#include "constants/clipdata.h"
-#include "constants/sprite.h"
+#include "mzm/constants/clipdata.h"
+#include "mzm/constants/sprite.h"
 
-#include "structs/clipdata.h"
-#include "structs/sprite.h"
+#include "mzm/structs/clipdata.h"
+#include "mzm/structs/sprite.h"
 
 /**
  * @brief 12780 | 2c | Initializes a water drop sprite

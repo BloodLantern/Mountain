@@ -1,7 +1,7 @@
 #ifndef HAZE_H
 #define HAZE_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 void HazeSetBackgroundEffect(void);
 void HazeTransferAndDeactivate(void);

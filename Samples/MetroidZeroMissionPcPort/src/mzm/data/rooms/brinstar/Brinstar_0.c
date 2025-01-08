@@ -1,5 +1,5 @@
-#include "data/rooms/brinstar_rooms_data.h"
-#include "macros.h"
+#include "mzm/data/rooms/brinstar_rooms_data.h"
+#include "mzm/macros.h"
 
 const u8 sBrinstar_0_Scrolls[SCROLL_DATA_SIZE(3)] = {
 	0, // Room

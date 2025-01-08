@@ -1,7 +1,7 @@
 #ifndef CHOZODIA_ESCAPE_H
 #define CHOZODIA_ESCAPE_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 void ChozodiaEscapeVBlank(void);
 void ChozodiaEscapeHBlank(void);

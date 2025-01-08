@@ -1,17 +1,17 @@
-#include "sprites_AI/zoomer.h"
-#include "macros.h"
-#include "sprite_util.h"
+#include "mzm/sprites_AI/zoomer.h"
+#include "mzm/macros.h"
+#include "mzm/sprite_util.h"
 
-#include "data/sprites/zoomer.h"
-#include "data/sprite_data.h"
+#include "mzm/data/sprites/zoomer.h"
+#include "mzm/data/sprite_data.h"
 
-#include "constants/particle.h"
-#include "constants/clipdata.h"
-#include "constants/sprite.h"
-#include "constants/sprite_util.h"
+#include "mzm/constants/particle.h"
+#include "mzm/constants/clipdata.h"
+#include "mzm/constants/sprite.h"
+#include "mzm/constants/sprite_util.h"
 
-#include "structs/game_state.h"
-#include "structs/sprite.h"
+#include "mzm/structs/game_state.h"
+#include "mzm/structs/sprite.h"
 
 /**
  * @brief 16694 | 96 | Checks if a zoomer is colliding with air

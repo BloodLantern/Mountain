@@ -1,10 +1,10 @@
 #ifndef CLIPDATA_DATA_H
 #define CLIPDATA_DATA_H
 
-#include "types.h"
+#include "mzm/types.h"
 
-#include "structs/clipdata.h"
-#include "structs/scroll.h"
+#include "mzm/structs/clipdata.h"
+#include "mzm/structs/scroll.h"
 
 extern const u16 sMovementClipdataValues[16];
 extern const u16 sHazardsDefinitions[8][2];

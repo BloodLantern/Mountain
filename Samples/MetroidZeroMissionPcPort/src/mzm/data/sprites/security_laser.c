@@ -1,5 +1,5 @@
-#include "data/sprites/security_laser.h"
-#include "macros.h"
+#include "mzm/data/sprites/security_laser.h"
+#include "mzm/macros.h"
 
 const u32 sSecurityLaserGfx[104] = INCBIN_U32("data/sprites/SecurityLaser.gfx.lz");
 const u16 sSecurityLaserPAL[16] = INCBIN_U16("data/sprites/SecurityLaser.pal");

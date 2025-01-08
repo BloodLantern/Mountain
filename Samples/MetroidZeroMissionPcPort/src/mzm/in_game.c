@@ -1,35 +1,37 @@
-#include "in_game.h"
-#include "gba.h"
-#include "callbacks.h"
-#include "oam.h"
-#include "projectile.h"
-#include "samus.h"
-#include "sprite.h"
-#include "demo_input.h"
-#include "particle.h"
-#include "room.h"
-#include "scroll.h"
-#include "init_helpers.h"
-#include "hud_generic.h"
-#include "display.h"
-#include "color_fading.h"
-#include "modern/shader.h"
+#include "mzm/in_game.h"
+#include "mzm/gba.h"
+#include "mzm/callbacks.h"
+#include "mzm/oam.h"
+#include "mzm/projectile.h"
+#include "mzm/samus.h"
+#include "mzm/sprite.h"
+#include "mzm/demo_input.h"
+#include "mzm/particle.h"
+#include "mzm/room.h"
+#include "mzm/scroll.h"
+#include "mzm/init_helpers.h"
+#include "mzm/hud_generic.h"
+#include "mzm/display.h"
+#include "mzm/color_fading.h"
+#include "mzm/hud.h"
+#include "mzm/projectile_util.h"
+#include "mzm/transparency.h"
 
-#include "data/hud_data.h"
+#include "mzm/data/hud_data.h"
 
-#include "constants/demo.h"
-#include "constants/haze.h"
-#include "constants/game_state.h"
+#include "mzm/constants/demo.h"
+#include "mzm/constants/haze.h"
+#include "mzm/constants/game_state.h"
 
-#include "structs/bg_clip.h"
-#include "structs/haze.h"
-#include "structs/cutscene.h"
-#include "structs/demo.h"
-#include "structs/display.h"
-#include "structs/game_state.h"
-#include "structs/room.h"
-#include "structs/sprite.h"
-#include "structs/connection.h"
+#include "mzm/structs/bg_clip.h"
+#include "mzm/structs/haze.h"
+#include "mzm/structs/cutscene.h"
+#include "mzm/structs/demo.h"
+#include "mzm/structs/display.h"
+#include "mzm/structs/game_state.h"
+#include "mzm/structs/room.h"
+#include "mzm/structs/sprite.h"
+#include "mzm/structs/connection.h"
 
 /**
  * @brief c4b4 | 244 | Main loop in game
@@ -66,7 +68,7 @@ u32 InGameMainLoop(void)
             DemoMainLoop();
             IoWriteRegisters();
 
-            if ((gChangedInput & gButtonAssignments.pause || gPauseScreenFlag != PAUSE_SCREEN_NONE) && ProcessPauseButtonPress())
+            if ((gChangedInput & gButtonAssignments.pause || gPauseScreenFlag != PAUSE_SCREEN_NONE) /*&& ProcessPauseButtonPress()*/) // TODO - Modern
                 gGameModeSub1++;
 
             if (gGameModeSub1 == SUB_GAME_MODE_PLAYING)
@@ -85,7 +87,7 @@ u32 InGameMainLoop(void)
                     SamusUpdateHitboxMovingDirection();
                 }
 
-                InGameTimerUpdate();
+                //InGameTimerUpdate(); // TODO - Modern
             }
 
             RoomUpdateGfxInfo();
@@ -376,8 +378,8 @@ void InitAndLoadGenerics(void)
     write16(REG_IF, IF_HBLANK);
     write16(REG_IME, TRUE);
 
-    SpriteRendererLoadAllSpriteGraphics();
-    ShaderLoadCommons();
+    /*SpriteRendererLoadAllSpriteGraphics();
+    ShaderLoadCommons();*/ // TODO - Modern
 
     CallbackSetVBlank(VBlankInGame_Empty);
 

@@ -1,7 +1,7 @@
 #ifndef VIOLA_AI_H
 #define VIOLA_AI_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define VIOLA_POSE_MOVE_RIGHT 0x9
 #define VIOLA_POSE_FALLING_INIT 0x1E

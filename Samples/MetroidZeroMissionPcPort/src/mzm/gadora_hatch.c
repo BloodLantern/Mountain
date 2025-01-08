@@ -1,9 +1,9 @@
-#include "types.h"
-#include "macros.h"
+#include "mzm/types.h"
+#include "mzm/macros.h"
 
-#include "constants/connection.h"
+#include "mzm/constants/connection.h"
 
-#include "structs/connection.h"
+#include "mzm/structs/connection.h"
 
 /**
  * @brief 5790c | ac | Activates/deactivates the hatch for a gadora

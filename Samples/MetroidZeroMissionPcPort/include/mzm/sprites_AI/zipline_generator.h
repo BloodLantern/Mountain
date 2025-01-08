@@ -1,7 +1,7 @@
 #ifndef ZIPLINE_GENERATOR_AI_H
 #define ZIPLINE_GENERATOR_AI_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define ZIPLINE_GENERATOR_POSE_DETECT_SAMUS 0x9
 #define ZIPLINE_GENERATOR_POSE_ACTIVATING 0xB

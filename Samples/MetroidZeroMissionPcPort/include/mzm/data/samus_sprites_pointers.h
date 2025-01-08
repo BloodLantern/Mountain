@@ -1,15 +1,15 @@
 #ifndef SAMUS_SPRITES_POINTERS_H
 #define SAMUS_SPRITES_POINTERS_H
 
-#include "types.h"
+#include "mzm/types.h"
 
-#include "constants/samus.h"
-#include "constants/sprite.h"
+#include "mzm/constants/samus.h"
+#include "mzm/constants/sprite.h"
 
-#include "structs/connection.h"
-#include "structs/samus.h"
-#include "structs/particle.h"
-#include "structs/projectile.h"
+#include "mzm/structs/connection.h"
+#include "mzm/structs/samus.h"
+#include "mzm/structs/particle.h"
+#include "mzm/structs/projectile.h"
 
 #define MAX_AMOUNT_OF_SPRITESET 114
 

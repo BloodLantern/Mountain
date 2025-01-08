@@ -1,7 +1,7 @@
 #ifndef DEFAULT_BACKGROUND_DATA_H
 #define DEFAULT_BACKGROUND_DATA_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 extern const u32 sTileset_0_Bg_Gfx[949];
 extern const u8 sDebug_Bg3[896];

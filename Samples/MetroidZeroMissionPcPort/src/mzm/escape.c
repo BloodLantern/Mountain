@@ -1,17 +1,20 @@
-#include "escape.h"
-#include "gba.h"
+#include "mzm/escape.h"
+#include "mzm/gba.h"
 
-#include "data/visual_effects_data.h"
+#include "mzm/data/visual_effects_data.h"
 
-#include "constants/event.h"
-#include "constants/escape.h"
-#include "constants/game_state.h"
-#include "constants/particle.h"
+#include "mzm/constants/event.h"
+#include "mzm/constants/escape.h"
+#include "mzm/constants/game_state.h"
+#include "mzm/constants/particle.h"
 
-#include "structs/escape.h"
-#include "structs/game_state.h"
-#include "structs/particle.h"
-#include "structs/samus.h"
+#include "mzm/structs/escape.h"
+
+#include "mzm/event.h"
+#include "mzm/particle.h"
+#include "mzm/structs/game_state.h"
+#include "mzm/structs/particle.h"
+#include "mzm/structs/samus.h"
 
 u8 gCurrentEscapeStatus;
 u8 gEscapeTimerCounter;

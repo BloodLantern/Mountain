@@ -1,5 +1,5 @@
-#include "data/rooms/brinstar_rooms_data.h"
-#include "macros.h"
+#include "mzm/data/rooms/brinstar_rooms_data.h"
+#include "mzm/macros.h"
 
 const u8 sBrinstar_39_Clipdata[78] = INCBIN_U8("data/rooms/brinstar/Brinstar_39_Clipdata.gfx");
 

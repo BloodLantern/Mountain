@@ -1,5 +1,5 @@
-#include "data/samus_close_up_data.h"
-#include "macros.h"
+#include "mzm/data/samus_close_up_data.h"
+#include "mzm/macros.h"
 
 const u16 sSamusCloseUpPal[6 * 16] = INCBIN_U16("data/close_up/Palette.pal");
 const u32 sSamusCloseUpGfx[2319] = INCBIN_U32("data/close_up/CloseUp.gfx.lz");

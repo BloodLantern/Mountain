@@ -1,7 +1,7 @@
 #ifndef WATER_DROP_AI_H
 #define WATER_DROP_AI_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define WATER_DROP_POSE_CHECK_SPAWNING_ENDED 0x9
 #define WATER_DROP_POSE_SPLASHING_INIT 0xE

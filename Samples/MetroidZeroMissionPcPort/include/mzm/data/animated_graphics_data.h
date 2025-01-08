@@ -1,7 +1,7 @@
 #ifndef ANIMATED_GFX_DATA_H
 #define ANIMATED_GFX_DATA_H
 
-#include "structs/animated_graphics.h"
+#include "mzm/structs/animated_graphics.h"
 
 extern const struct AnimatedGraphicsData sAnimatedGraphicsEntries[38];
 extern const u8 sAnimatedTilesetEntries[8][48];

@@ -1,17 +1,17 @@
-#include "cutscenes/ridley_landing.h"
-#include "cutscenes/cutscene_utils.h"
-#include "temp_globals.h"
+#include "mzm/cutscenes/ridley_landing.h"
+#include "mzm/cutscenes/cutscene_utils.h"
+#include "mzm/temp_globals.h"
 
-#include "data/cutscenes/cutscenes_data.h"
-#include "data/cutscenes/ridley_landing_data.h"
-#include "data/cutscenes/internal_ridley_landing_data.h"
-#include "data/shortcut_pointers.h"
+#include "mzm/data/cutscenes/cutscenes_data.h"
+#include "mzm/data/cutscenes/ridley_landing_data.h"
+#include "mzm/data/cutscenes/internal_ridley_landing_data.h"
+#include "mzm/data/shortcut_pointers.h"
 
-#include "constants/audio.h"
-#include "constants/cutscene.h"
+#include "mzm/constants/audio.h"
+#include "mzm/constants/cutscene.h"
 
-#include "structs/display.h"
-#include "structs/game_state.h"
+#include "mzm/structs/display.h"
+#include "mzm/structs/game_state.h"
 
 /**
  * @brief 647d0 | 178 | Handles the ridley flying part

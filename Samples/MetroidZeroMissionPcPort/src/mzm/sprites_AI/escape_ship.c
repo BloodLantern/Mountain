@@ -1,17 +1,17 @@
-#include "sprites_AI/escape_ship.h"
-#include "gba.h"
-#include "sprite_util.h"
+#include "mzm/sprites_AI/escape_ship.h"
+#include "mzm/gba.h"
+#include "mzm/sprite_util.h"
 
-#include "data/sprites/escape_ship.h"
+#include "mzm/data/sprites/escape_ship.h"
 
-#include "constants/particle.h"
-#include "constants/samus.h"
-#include "constants/event.h"
-#include "constants/color_fading.h"
-#include "constants/sprite.h"
+#include "mzm/constants/particle.h"
+#include "mzm/constants/samus.h"
+#include "mzm/constants/event.h"
+#include "mzm/constants/color_fading.h"
+#include "mzm/constants/sprite.h"
 
-#include "structs/samus.h"
-#include "structs/sprite.h"
+#include "mzm/structs/samus.h"
+#include "mzm/structs/sprite.h"
 
 /**
  * @brief 4ac00 | 94 | Updates the palette of the escape ship

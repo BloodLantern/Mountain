@@ -1,9 +1,9 @@
-#include "sprites_AI/chozo_statue_movement.h"
-#include "macros.h"
-#include "sprite_util.h"
+#include "mzm/sprites_AI/chozo_statue_movement.h"
+#include "mzm/macros.h"
+#include "mzm/sprite_util.h"
 
-#include "structs/sprite.h"
-#include "constants/sprite.h"
+#include "mzm/structs/sprite.h"
+#include "mzm/constants/sprite.h"
 
 /**
  * @brief 125e8 | 160 | Spawns a new chozo statue movement secondary sprite

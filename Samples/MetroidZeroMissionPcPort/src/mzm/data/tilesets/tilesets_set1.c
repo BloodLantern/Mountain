@@ -1,5 +1,5 @@
-#include "data/tilesets/tilesets_set1.h"
-#include "macros.h"
+#include "mzm/data/tilesets/tilesets_set1.h"
+#include "mzm/macros.h"
 
 const u8 sTileset_42_Tilemap[1796] = INCBIN_U8("data/tilesets/42.tm");
 const u8 sTileset_78_Tilemap[1796] = INCBIN_U8("data/tilesets/78.tm");

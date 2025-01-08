@@ -1,5 +1,5 @@
-#include "data/internal_tourian_escape_data.h"
-#include "tourian_escape.h"
+#include "mzm/data/internal_tourian_escape_data.h"
+#include "mzm/tourian_escape.h"
 
 const TourianEscapeFunc_T sTourianEscapeSubroutinePointers[12] = {
     [0]  = TourianEscapeZebesExploding,

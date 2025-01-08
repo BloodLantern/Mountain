@@ -1,7 +1,7 @@
 #ifndef SRAM_MISC
 #define SRAM_MISC
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define SRAM_OPERATION_WRITE_FILE_SCREEN_OPTIONS 0
 #define SRAM_OPERATION_SAVE_MOST_RECENT_FILE 5

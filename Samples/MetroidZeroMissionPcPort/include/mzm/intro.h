@@ -1,7 +1,7 @@
 #ifndef INTRO_H
 #define INTRO_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 void IntroVBlank(void);
 void IntroFuzzVBlank(void);

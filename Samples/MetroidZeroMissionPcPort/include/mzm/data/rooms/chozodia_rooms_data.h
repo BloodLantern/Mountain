@@ -1,10 +1,10 @@
 #ifndef CHOZODIA_ROOMS_DATA_H
 #define CHOZODIA_ROOMS_DATA_H
 
-#include "types.h"
-#include "structs/scroll.h"
-#include "structs/sprite.h"
-#include "structs/room.h"
+#include "mzm/types.h"
+#include "mzm/structs/scroll.h"
+#include "mzm/structs/sprite.h"
+#include "mzm/structs/room.h"
 
 extern const u8 sChozodia_0_Clipdata[139];
 extern const u8 sChozodia_0_Bg2[116];

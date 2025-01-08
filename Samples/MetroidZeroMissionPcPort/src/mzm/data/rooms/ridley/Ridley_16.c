@@ -1,5 +1,5 @@
-#include "data/rooms/ridley_rooms_data.h"
-#include "macros.h"
+#include "mzm/data/rooms/ridley_rooms_data.h"
+#include "mzm/macros.h"
 
 const u8 sRidley_9_Scrolls[SCROLL_DATA_SIZE(3)] = {
 	16, // Room

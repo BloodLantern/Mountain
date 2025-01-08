@@ -1,8 +1,8 @@
 #ifndef CHARGE_BEAM_DATA_H
 #define CHARGE_BEAM_DATA_H
 
-#include "types.h"
-#include "oam.h"
+#include "mzm/types.h"
+#include "mzm/oam.h"
 
 extern const s16 sChargeBeamIdleYMovement[66];
 

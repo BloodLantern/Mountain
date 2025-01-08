@@ -1,7 +1,7 @@
 #ifndef CHOZO_BALL_AI_H
 #define CHOZO_BALL_AI_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 void ChozoBallSpawnItemBanner(u8 spriteId);
 void ChozoBallSetClosedOAM(u8 spriteId);

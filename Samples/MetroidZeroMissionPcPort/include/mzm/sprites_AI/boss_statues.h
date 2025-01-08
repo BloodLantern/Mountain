@@ -1,7 +1,7 @@
 #ifndef BOSS_STATUES_AI_H
 #define BOSS_STATUES_AI_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define BOSS_STATUE_POSE_CHECK_START_OPEN 0x9
 #define BOSS_STATUE_POSE_OPENING 0xB

@@ -1,7 +1,7 @@
-#include "data/cutscenes/internal_kraid_rising_data.h"
+#include "mzm/data/cutscenes/internal_kraid_rising_data.h"
 
-#include "cutscenes/cutscene_utils.h"
-#include "cutscenes/kraid_rising.h"
+#include "mzm/cutscenes/cutscene_utils.h"
+#include "mzm/cutscenes/kraid_rising.h"
 
 const u16 sKraidRisingPuffData[11][4] = {
     [0] = {

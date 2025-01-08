@@ -1,19 +1,23 @@
-#include "text.h"
-#include "gba.h"
-#include "macros.h"
+#include "mzm/text.h"
+#include "mzm/gba.h"
+#include "mzm/macros.h"
 
-#include "data/text_data.h"
-#include "data/text_pointers.h"
-#include "data/internal_text_data.h"
-#include "data/shortcut_pointers.h"
-#include "data/menus/pause_screen_data.h"
-#include "data/cutscenes/internal_story_text_cutscene_data.h"
+#include "mzm/data/text_data.h"
+#include "mzm/data/text_pointers.h"
+#include "mzm/data/internal_text_data.h"
+#include "mzm/data/shortcut_pointers.h"
+#include "mzm/data/menus/pause_screen_data.h"
+#include "mzm/data/cutscenes/internal_story_text_cutscene_data.h"
 
-#include "constants/text.h"
-#include "constants/menus/pause_screen.h"
+#include "mzm/constants/text.h"
 
-#include "structs/game_state.h"
-#include "structs/menus/pause_screen.h"
+#include "mzm/bg_clip.h"
+#include "mzm/oam_id.h"
+#include "mzm/constants/menus/pause_screen.h"
+#include "mzm/menus/status_screen.h"
+
+#include "mzm/structs/game_state.h"
+#include "mzm/structs/menus/pause_screen.h"
 
 struct Message gCurrentMessage;
 u32 gCurrentCharacterGfx[32];
@@ -854,7 +858,7 @@ void TextStartStory(u8 textID)
 u8 TextProcessStory(void)
 {
     s32 i;
-    u32* dst;
+    u32* dst = NULL;
     s32 flag;
     s32 maxLine;
     s32 state;

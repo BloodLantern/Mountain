@@ -1,7 +1,7 @@
 #ifndef SIDEHOPPER_AI_H
 #define SIDEHOPPER_AI_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define SIDEHOPPER_POSE_JUMP_WARNING_INIT 0x8
 #define SIDEHOPPER_POSE_JUMP_WARNING 0x9

@@ -1,9 +1,9 @@
 #ifndef SAMUS_ARM_CANNON_DATA_H
 #define SAMUS_ARM_CANNON_DATA_H
 
-#include "types.h"
-#include "macros.h"
-#include "structs/samus.h"
+#include "mzm/types.h"
+#include "mzm/macros.h"
+#include "mzm/structs/samus.h"
 
 // 2 tiles in size
 #define SAMUS_ARM_CANNON_Gfx_SIZE (2 * 32)

@@ -1,7 +1,7 @@
-#include "data/text_data.h"
-#include "macros.h"
+#include "mzm/data/text_data.h"
+#include "mzm/macros.h"
 
-#include "constants/text.h"
+#include "mzm/constants/text.h"
 
 const u8 sCharactersGfx[176 * 1024] = INCBIN_U8("data/characters_graphics.gfx");
 

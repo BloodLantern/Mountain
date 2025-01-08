@@ -1,7 +1,7 @@
 #ifndef AUDIO_DATA_H
 #define AUDIO_DATA_H
 
-#include "structs/audio.h"
+#include "mzm/structs/audio.h"
 
 extern const u16 sUnk_808cad0[128];
 extern const u8 sDelayNoteLengthTable[49];

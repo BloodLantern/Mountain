@@ -1,20 +1,20 @@
-#include "intro.h"
-#include "callbacks.h"
-#include "macros.h"
-#include "complex_oam.h" // Required
+#include "mzm/intro.h"
+#include "mzm/callbacks.h"
+#include "mzm/macros.h"
+#include "mzm/complex_oam.h" // Required
 
-#include "data/shortcut_pointers.h"
-#include "data/intro_data.h"
-#include "data/internal_intro_data.h"
+#include "mzm/data/shortcut_pointers.h"
+#include "mzm/data/intro_data.h"
+#include "mzm/data/internal_intro_data.h"
 
-#include "constants/game_state.h"
-#include "constants/intro.h"
-#include "constants/text.h"
+#include "mzm/constants/game_state.h"
+#include "mzm/constants/intro.h"
+#include "mzm/constants/text.h"
 
-#include "structs/bg_clip.h"
-#include "structs/display.h"
-#include "structs/game_state.h"
-#include "structs/intro.h"
+#include "mzm/structs/bg_clip.h"
+#include "mzm/structs/display.h"
+#include "mzm/structs/game_state.h"
+#include "mzm/structs/intro.h"
 
 /**
  * @brief 800f4 | 90 | V-blank code for the intro

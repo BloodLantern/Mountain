@@ -1,8 +1,8 @@
 #ifndef MOTHER_BRAIN_DATA_H
 #define MOTHER_BRAIN_DATA_H
 
-#include "types.h"
-#include "oam.h"
+#include "mzm/types.h"
+#include "mzm/oam.h"
 
 extern const s16 sMotherBrainMultiSpriteData_Part0[12];
 

@@ -1,7 +1,7 @@
 #ifndef ENTER_TOURIAN_DATA_H
 #define ENTER_TOURIAN_DATA_H
 
-#include "structs/cutscene.h"
+#include "mzm/structs/cutscene.h"
 
 extern const struct CutscenePageData sEnterTourianPageData[2];
 extern const struct OamArray sEnterTourianOam[7];

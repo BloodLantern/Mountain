@@ -1,7 +1,7 @@
 #ifndef GLASS_TUBE_AI_H
 #define GLASS_TUBE_AI_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define GLASS_TUBE_POSE_POWER_BOMB_COLLISION 0x9
 #define GLASS_TUBE_POSE_IDLE 0xF

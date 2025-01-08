@@ -1,16 +1,16 @@
-#include "sprites_AI/escape_gate.h"
-#include "gba.h"
-#include "macros.h"
-#include "sprite_util.h"
+#include "mzm/sprites_AI/escape_gate.h"
+#include "mzm/gba.h"
+#include "mzm/macros.h"
+#include "mzm/sprite_util.h"
 
-#include "data/sprites/escape_gate.h"
+#include "mzm/data/sprites/escape_gate.h"
 
-#include "constants/clipdata.h"
-#include "constants/sprite.h"
-#include "constants/sprite_util.h"
+#include "mzm/constants/clipdata.h"
+#include "mzm/constants/sprite.h"
+#include "mzm/constants/sprite_util.h"
 
-#include "structs/sprite.h"
-#include "structs/clipdata.h"
+#include "mzm/structs/sprite.h"
+#include "mzm/structs/clipdata.h"
 
 /**
  * @brief 4e910 | b0 | Updates the hitbox of the escape gate

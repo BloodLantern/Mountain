@@ -1,10 +1,10 @@
-#include "complex_oam.h"
-#include "oam.h"
-#include "macros.h"
-#include "fixed_point.h"
+#include "mzm/complex_oam.h"
+#include "mzm/oam.h"
+#include "mzm/macros.h"
+#include "mzm/fixed_point.h"
 
-#include "data/generic_data.h"
-#include "data/intro_data.h"
+#include "mzm/data/generic_data.h"
+#include "mzm/data/intro_data.h"
 
 #ifdef NON_MATCHING
 u8 ProcessComplexOam(u32 oamSlot, s16 xPosition, s16 yPosition, u16 rotation, s16 scaling, u8 doubleSize, u8 matrixNum)

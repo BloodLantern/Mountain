@@ -1,8 +1,8 @@
 #ifndef INTERNAL_KRAID_RISING_DATA_H
 #define INTERNAL_KRAID_RISING_DATA_H
 
-#include "types.h"
-#include "structs/cutscene.h"
+#include "mzm/types.h"
+#include "mzm/structs/cutscene.h"
 
 // 75fe5c
 

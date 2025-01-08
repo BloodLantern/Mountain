@@ -1,7 +1,7 @@
 #ifndef FUSION_GALLERY_STRUCT_H
 #define FUSION_GALLERY_STRUCT_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define FUSION_GALLERY_DATA sNonGameplayRamPointer->fusionGallery
 

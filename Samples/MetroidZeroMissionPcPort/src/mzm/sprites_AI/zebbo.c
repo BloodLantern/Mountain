@@ -1,16 +1,16 @@
-#include "sprites_AI/zebbo.h"
-#include "macros.h"
-#include "sprite_util.h"
+#include "mzm/sprites_AI/zebbo.h"
+#include "mzm/macros.h"
+#include "mzm/sprite_util.h"
 
-#include "data/sprites/zebbo.h"
-#include "data/sprite_data.h"
+#include "mzm/data/sprites/zebbo.h"
+#include "mzm/data/sprite_data.h"
 
-#include "constants/particle.h"
-#include "constants/sprite.h"
-#include "constants/sprite_util.h"
+#include "mzm/constants/particle.h"
+#include "mzm/constants/sprite.h"
+#include "mzm/constants/sprite_util.h"
 
-#include "structs/sprite.h"
-#include "structs/samus.h"
+#include "mzm/structs/sprite.h"
+#include "mzm/structs/samus.h"
 
 /**
  * @brief 2f058 | 58 | Initializes a zebbo sprite

@@ -1,8 +1,8 @@
 #ifndef KRAID_DATA_H
 #define KRAID_DATA_H
 
-#include "types.h"
-#include "oam.h"
+#include "mzm/types.h"
+#include "mzm/oam.h"
 
 extern const s16 sKraidMultiSpriteData_Rising_Frame0[36];
 

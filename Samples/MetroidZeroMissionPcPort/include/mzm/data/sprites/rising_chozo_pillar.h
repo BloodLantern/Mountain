@@ -1,8 +1,8 @@
 #ifndef RISING_CHOZO_PILLAR_DATA_H
 #define RISING_CHOZO_PILLAR_DATA_H
 
-#include "types.h"
-#include "oam.h"
+#include "mzm/types.h"
+#include "mzm/oam.h"
 
 extern const u32 sRisingChozoPillarGfx[671];
 extern const u16 sRisingChozoPillarPAL[64];

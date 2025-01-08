@@ -1,5 +1,5 @@
-#include "data/rooms/kraid_rooms_data.h"
-#include "macros.h"
+#include "mzm/data/rooms/kraid_rooms_data.h"
+#include "mzm/macros.h"
 
 const u8 sKraid_9_Clipdata[83] = INCBIN_U8("data/rooms/kraid/Kraid_9_Clipdata.gfx");
 

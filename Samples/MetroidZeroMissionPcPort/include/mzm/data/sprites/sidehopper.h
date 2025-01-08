@@ -1,8 +1,8 @@
 #ifndef SIDEHOPPER_DATA_H
 #define SIDEHOPPER_DATA_H
 
-#include "types.h"
-#include "oam.h"
+#include "mzm/types.h"
+#include "mzm/oam.h"
 
 extern const s16 sSidehopperHighJumpVelocity[10];
 

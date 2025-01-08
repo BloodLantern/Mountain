@@ -1,10 +1,10 @@
 #ifndef PROJECTILE_H
 #define PROJECTILE_H
 
-#include "types.h"
-#include "oam.h"
-#include "structs/projectile.h"
-#include "structs/sprite.h"
+#include "mzm/types.h"
+#include "mzm/oam.h"
+#include "mzm/structs/projectile.h"
+#include "mzm/structs/sprite.h"
 
 void ProjectileProcessNormalBeam(struct ProjectileData* pProj);
 void ProjectileProcessLongBeam(struct ProjectileData* pProj);

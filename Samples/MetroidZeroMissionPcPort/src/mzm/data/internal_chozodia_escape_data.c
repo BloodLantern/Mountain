@@ -1,7 +1,7 @@
-#include "data/internal_chozodia_escape_data.h"
-#include "data/io_transfer_data.h"
-#include "macros.h"
-#include "chozodia_escape.h"
+#include "mzm/data/internal_chozodia_escape_data.h"
+#include "mzm/data/io_transfer_data.h"
+#include "mzm/macros.h"
+#include "mzm/chozodia_escape.h"
 
 const ChozodiaEscapeFunc_T sChozodiaEscapeFunctionPointers[5] = {
     [0] = ChozodiaEscapeShipLeaving,

@@ -1,8 +1,8 @@
 #ifndef IMAGO_COCOON_DATA_H
 #define IMAGO_COCOON_DATA_H
 
-#include "types.h"
-#include "oam.h"
+#include "mzm/types.h"
+#include "mzm/oam.h"
 
 extern const s16 sImagoCocoonMultiSpriteData_Idle_Frame0[30];
 

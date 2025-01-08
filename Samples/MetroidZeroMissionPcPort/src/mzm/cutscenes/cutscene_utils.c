@@ -1,25 +1,32 @@
-#include "cutscenes/cutscene_utils.h"
-#include "gba.h"
-#include "oam.h"
-#include "color_effects.h"
+#include "mzm/cutscenes/cutscene_utils.h"
 
-#include "data/cutscenes/cutscenes_data.h"
-#include "data/menus/pause_screen_data.h"
-#include "data/shortcut_pointers.h"
-#include "data/engine_pointers.h"
+#include "mzm/audio_wrappers.h"
+#include "mzm/callbacks.h"
+#include "mzm/gba.h"
+#include "mzm/oam.h"
+#include "mzm/color_effects.h"
+#include "mzm/color_fading.h"
+#include "mzm/event.h"
+#include "mzm/init_helpers.h"
+#include "mzm/music_wrappers.h"
 
-#include "constants/audio.h"
-#include "constants/connection.h"
-#include "constants/color_fading.h"
-#include "constants/cutscene.h"
-#include "constants/event.h"
-#include "constants/game_state.h"
+#include "mzm/data/cutscenes/cutscenes_data.h"
+#include "mzm/data/menus/pause_screen_data.h"
+#include "mzm/data/shortcut_pointers.h"
+#include "mzm/data/engine_pointers.h"
 
-#include "structs/audio.h"
-#include "structs/cutscene.h"
-#include "structs/connection.h"
-#include "structs/display.h"
-#include "structs/game_state.h"
+#include "mzm/constants/audio.h"
+#include "mzm/constants/connection.h"
+#include "mzm/constants/color_fading.h"
+#include "mzm/constants/cutscene.h"
+#include "mzm/constants/event.h"
+#include "mzm/constants/game_state.h"
+
+#include "mzm/structs/audio.h"
+#include "mzm/structs/cutscene.h"
+#include "mzm/structs/connection.h"
+#include "mzm/structs/display.h"
+#include "mzm/structs/game_state.h"
 
 u8 gCutsceneToSkip;
 s8 gCurrentCutscene;
@@ -1155,7 +1162,7 @@ void unk_61f60(void)
 {
     if (CUTSCENE_DATA.unk_BC)
     {
-        DmaTransfer(3, (void*)sEwramPointer + 0x400, gPalramBuffer, 0x400, 0x10);
+        DmaTransfer(3, (u8*)sEwramPointer + 0x400, gPalramBuffer, 0x400, 0x10);
         CUTSCENE_DATA.unk_BC = FALSE;
     }
 }
@@ -1182,7 +1189,7 @@ u8 CutsceneStartBackgroundFading(u8 type)
     {
         case 1:
             BitFill(3, 0, gPalramBuffer, PALRAM_SIZE, 16);
-            DmaTransfer(3, gPalramBuffer, (void*)sEwramPointer + PALRAM_SIZE, PALRAM_SIZE, 16);
+            DmaTransfer(3, gPalramBuffer, (u8*)sEwramPointer + PALRAM_SIZE, PALRAM_SIZE, 16);
 
             CUTSCENE_DATA.fadingStage = 0;
             CUTSCENE_DATA.fadingIntensity = 2;
@@ -1192,7 +1199,7 @@ u8 CutsceneStartBackgroundFading(u8 type)
 
         case 2:
             BitFill(3, 0, gPalramBuffer, PALRAM_SIZE, 16);
-            DmaTransfer(3, gPalramBuffer, (void*)sEwramPointer + PALRAM_SIZE, PALRAM_SIZE, 16);
+            DmaTransfer(3, gPalramBuffer, (u8*)sEwramPointer + PALRAM_SIZE, PALRAM_SIZE, 16);
 
             CUTSCENE_DATA.fadingStage = 0;
             CUTSCENE_DATA.fadingIntensity = 1;
@@ -1202,7 +1209,7 @@ u8 CutsceneStartBackgroundFading(u8 type)
 
         case 3:
             BitFill(3, 0, gPalramBuffer, PALRAM_SIZE, 16);
-            DmaTransfer(3, gPalramBuffer, (void*)sEwramPointer + PALRAM_SIZE, PALRAM_SIZE, 16);
+            DmaTransfer(3, gPalramBuffer, (u8*)sEwramPointer + PALRAM_SIZE, PALRAM_SIZE, 16);
 
             CUTSCENE_DATA.fadingStage = 0;
             CUTSCENE_DATA.fadingIntensity = 1;
@@ -1281,11 +1288,11 @@ u8 CutsceneUpdateFading(void)
             if (CUTSCENE_DATA.fadingColor < 32)
             {
                 src = (void*)sEwramPointer;
-                dst = (void*)sEwramPointer + PALRAM_SIZE;
+                dst = (u16*)sEwramPointer + PALRAM_SIZE;
                 ApplySpecialBackgroundFadingColor(CUTSCENE_DATA.fadingType, CUTSCENE_DATA.fadingColor, &src, &dst, USHORT_MAX);
 
-                src = (void*)sEwramPointer + PALRAM_SIZE / 2;
-                dst = (void*)sEwramPointer + PALRAM_SIZE + PALRAM_SIZE / 2;
+                src = (u16*)sEwramPointer + PALRAM_SIZE / 2;
+                dst = (u16*)sEwramPointer + PALRAM_SIZE + PALRAM_SIZE / 2;
                 ApplySpecialBackgroundFadingColor(CUTSCENE_DATA.fadingType, CUTSCENE_DATA.fadingColor, &src, &dst, USHORT_MAX);
 
                 CUTSCENE_DATA.unk_BC = TRUE;
@@ -1303,7 +1310,7 @@ u8 CutsceneUpdateFading(void)
             }
             else
             {
-                DmaTransfer(3, (void*)sEwramPointer, (void*)sEwramPointer + PALRAM_SIZE, PALRAM_SIZE, 16);
+                DmaTransfer(3, (void*)sEwramPointer, (u8*)sEwramPointer + PALRAM_SIZE, PALRAM_SIZE, 16);
                 CUTSCENE_DATA.unk_BC = TRUE;
                 CUTSCENE_DATA.fadingStage++;
             }
@@ -1329,11 +1336,11 @@ u8 CutsceneUpdateFading(void)
             if (CUTSCENE_DATA.fadingColor < 32)
             {
                 src = (void*)sEwramPointer;
-                dst = (void*)sEwramPointer + PALRAM_SIZE;
+                dst = (u16*)sEwramPointer + PALRAM_SIZE;
                 ApplySpecialBackgroundFadingColor(CUTSCENE_DATA.fadingType, CUTSCENE_DATA.fadingColor, &src, &dst, USHORT_MAX);
 
-                src = (void*)sEwramPointer + PALRAM_SIZE / 2;
-                dst = (void*)sEwramPointer + PALRAM_SIZE + PALRAM_SIZE / 2;
+                src = (u16*)sEwramPointer + PALRAM_SIZE / 2;
+                dst = (u16*)sEwramPointer + PALRAM_SIZE + PALRAM_SIZE / 2;
                 ApplySpecialBackgroundFadingColor(CUTSCENE_DATA.fadingType, CUTSCENE_DATA.fadingColor, &src, &dst, USHORT_MAX);
 
                 CUTSCENE_DATA.unk_BC = TRUE;
@@ -1352,9 +1359,9 @@ u8 CutsceneUpdateFading(void)
             else
             {
                 if (CUTSCENE_DATA.fadingType == 3)
-                    BitFill(3, COLOR_WHITE, (void*)sEwramPointer + PALRAM_SIZE, PALRAM_SIZE, 16);
+                    BitFill(3, COLOR_WHITE, (u8*)sEwramPointer + PALRAM_SIZE, PALRAM_SIZE, 16);
                 else                
-                    BitFill(3, COLOR_BLACK, (void*)sEwramPointer + PALRAM_SIZE, PALRAM_SIZE, 16);
+                    BitFill(3, COLOR_BLACK, (u8*)sEwramPointer + PALRAM_SIZE, PALRAM_SIZE, 16);
 
                 CUTSCENE_DATA.unk_BC = TRUE;
                 CUTSCENE_DATA.fadingStage = 3;

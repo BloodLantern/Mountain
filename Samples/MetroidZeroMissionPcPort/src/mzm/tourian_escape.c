@@ -1,24 +1,32 @@
-#include "tourian_escape.h"
-#include "macros.h"
-#include "fixed_point.h"
-#include "complex_oam.h"
-#include "callbacks.h"
+#include "mzm/tourian_escape.h"
+#include "mzm/macros.h"
+#include "mzm/fixed_point.h"
+#include "mzm/complex_oam.h"
+#include "mzm/callbacks.h"
 
-#include "data/generic_data.h"
-#include "data/intro_data.h"
-#include "data/shortcut_pointers.h"
-#include "data/tourian_escape_data.h"
-#include "data/cutscenes/story_text_cutscene_data.h"
-#include "data/internal_tourian_escape_data.h"
+#include "mzm/data/generic_data.h"
+#include "mzm/data/intro_data.h"
+#include "mzm/data/shortcut_pointers.h"
+#include "mzm/data/tourian_escape_data.h"
+#include "mzm/data/cutscenes/story_text_cutscene_data.h"
+#include "mzm/data/internal_tourian_escape_data.h"
 
-#include "constants/audio.h"
-#include "constants/connection.h"
-#include "constants/samus.h"
-#include "constants/text.h"
+#include "mzm/constants/audio.h"
+#include "mzm/constants/connection.h"
+#include "mzm/constants/samus.h"
+#include "mzm/constants/text.h"
 
-#include "structs/bg_clip.h"
-#include "structs/display.h"
-#include "structs/tourian_escape.h"
+#include "mzm/structs/bg_clip.h"
+#include "mzm/structs/display.h"
+#include "mzm/structs/tourian_escape.h"
+
+#include "mzm/animated_graphics.h"
+#include "mzm/audio_wrappers.h"
+#include "mzm/init_helpers.h"
+#include "mzm/music_wrappers.h"
+#include "mzm/syscalls.h"
+#include "mzm/room_cutscene.h"
+#include "mzm/text.h"
 
 u16 gBg2Rotation;
 u16 gBg2Scaling;
@@ -535,7 +543,7 @@ void TourianEscapeInit(void)
 
 /**
  * @brief 81e30 | 834 | Handles the rooms exploding and ship leaving the planet part
- * 
+ *
  * @return u8 bool, ended
  */
 u8 TourianEscapeZebesExploding(void)

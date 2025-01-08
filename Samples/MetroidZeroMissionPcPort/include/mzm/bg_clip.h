@@ -1,7 +1,7 @@
 #ifndef BG_CLIP_H
 #define BG_CLIP_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 // Functions
 

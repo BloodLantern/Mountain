@@ -1,7 +1,7 @@
 #ifndef CHOZODIA_ESCAPE_STRUCT_H
 #define CHOZODIA_ESCAPE_STRUCT_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define CHOZODIA_ESCAPE_DATA sNonGameplayRamPointer->chozodiaEscape
 

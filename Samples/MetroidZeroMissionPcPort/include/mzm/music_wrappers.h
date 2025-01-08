@@ -1,7 +1,7 @@
 #ifndef MUSIC_WRAPPERS_H
 #define MUSIC_WRAPPERS_H
 
-#include "structs/audio.h"
+#include "mzm/structs/audio.h"
 
 void DMA2IntrCode(void);
 void unk_33dc(void);

@@ -1,7 +1,7 @@
 #ifndef SKREE_AI_H
 #define SKREE_AI_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define SKREE_POSE_DETECTING_SAMUS 0x9
 #define SKREE_POSE_SPINNING_INIT 0x22

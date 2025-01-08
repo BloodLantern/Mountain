@@ -1,7 +1,7 @@
 #ifndef LOCATION_TEXT_H
 #define LOCATION_TEXT_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 // Globals
 

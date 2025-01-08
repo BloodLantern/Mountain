@@ -1,8 +1,7 @@
 #ifndef HUD_H
 #define HUD_H
 
-#include "types.h"
-#include "modern/sprite_renderer.h"
+#include "mzm/types.h"
 
 // Defines
 

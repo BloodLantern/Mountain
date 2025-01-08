@@ -1,15 +1,15 @@
-#include "sprites_AI/geron_norfair.h"
-#include "macros.h"
-#include "sprite_util.h"
+#include "mzm/sprites_AI/geron_norfair.h"
+#include "mzm/macros.h"
+#include "mzm/sprite_util.h"
 
-#include "data/sprites/geron_norfair.h"
+#include "mzm/data/sprites/geron_norfair.h"
 
-#include "constants/sprite.h"
-#include "constants/event.h"
-#include "constants/clipdata.h"
+#include "mzm/constants/sprite.h"
+#include "mzm/constants/event.h"
+#include "mzm/constants/clipdata.h"
 
-#include "structs/sprite.h"
-#include "structs/clipdata.h"
+#include "mzm/structs/sprite.h"
+#include "mzm/structs/clipdata.h"
 
 /**
  * 40178 | b8 | Geron Norfair AI

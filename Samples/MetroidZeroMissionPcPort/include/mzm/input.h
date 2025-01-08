@@ -1,7 +1,7 @@
 #ifndef GBA_INPUT_H
 #define GBA_INPUT_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 struct ButtonAssignments {
     u16 armWeapon;

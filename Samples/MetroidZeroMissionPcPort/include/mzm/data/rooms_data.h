@@ -1,8 +1,8 @@
 #ifndef DOORS_DATA_H
 #define DOORS_DATA_H
 
-#include "structs/connection.h"
-#include "structs/room.h"
+#include "mzm/structs/connection.h"
+#include "mzm/structs/room.h"
 
 extern const u8 sEnemyRoomData_Empty[3];
 

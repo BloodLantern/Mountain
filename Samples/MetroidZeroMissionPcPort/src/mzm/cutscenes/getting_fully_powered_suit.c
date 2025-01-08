@@ -1,18 +1,18 @@
-#include "cutscenes/getting_fully_powered_suit.h"
-#include "cutscenes/cutscene_utils.h"
-#include "macros.h"
+#include "mzm/cutscenes/getting_fully_powered_suit.h"
+#include "mzm/cutscenes/cutscene_utils.h"
+#include "mzm/macros.h"
 
-#include "data/shortcut_pointers.h"
-#include "data/generic_data.h"
-#include "data/cutscenes/getting_fully_powered_suit_data.h"
-#include "data/cutscenes/internal_getting_fully_powered_suit_data.h"
+#include "mzm/data/shortcut_pointers.h"
+#include "mzm/data/generic_data.h"
+#include "mzm/data/cutscenes/getting_fully_powered_suit_data.h"
+#include "mzm/data/cutscenes/internal_getting_fully_powered_suit_data.h"
 
-#include "constants/audio.h"
-#include "constants/cutscene.h"
-#include "constants/game_state.h"
+#include "mzm/constants/audio.h"
+#include "mzm/constants/cutscene.h"
+#include "mzm/constants/game_state.h"
 
-#include "structs/game_state.h"
-#include "structs/display.h"
+#include "mzm/structs/game_state.h"
+#include "mzm/structs/display.h"
 
 #define OAM_UP_SPARKLES_AMOUNT 5
 #define OAM_UP_SPARKLES_START (OAM_RING_SPARKLES_AMOUNT + 1)

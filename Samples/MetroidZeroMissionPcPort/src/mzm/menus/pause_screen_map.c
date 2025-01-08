@@ -1,21 +1,21 @@
-#include "menus/pause_screen_map.h"
-#include "menus/pause_screen.h"
-#include "menus/status_screen.h"
+#include "mzm/menus/pause_screen_map.h"
+#include "mzm/menus/pause_screen.h"
+#include "mzm/menus/status_screen.h"
 
-#include "data/shortcut_pointers.h"
-#include "data/block_data.h"
-#include "data/menus/pause_screen_data.h"
-#include "data/menus/pause_screen_map_data.h"
-#include "data/menus/internal_pause_screen_data.h"
+#include "mzm/data/shortcut_pointers.h"
+#include "mzm/data/block_data.h"
+#include "mzm/data/menus/pause_screen_data.h"
+#include "mzm/data/menus/pause_screen_map_data.h"
+#include "mzm/data/menus/internal_pause_screen_data.h"
 
-#include "constants/block.h"
-#include "constants/connection.h"
-#include "constants/minimap.h"
-#include "constants/menus/pause_screen.h"
+#include "mzm/constants/block.h"
+#include "mzm/constants/connection.h"
+#include "mzm/constants/minimap.h"
+#include "mzm/constants/menus/pause_screen.h"
 
-#include "structs/bg_clip.h"
-#include "structs/minimap.h"
-#include "structs/menus/pause_screen.h"
+#include "mzm/structs/bg_clip.h"
+#include "mzm/structs/minimap.h"
+#include "mzm/structs/menus/pause_screen.h"
 
 /**
  * @brief 6cef8 | 168 | Counts the number of tanks in the crrent area

@@ -1,5 +1,5 @@
-#include "data/sprites/imago.h"
-#include "macros.h"
+#include "mzm/data/sprites/imago.h"
+#include "mzm/macros.h"
 
 const s16 sImagoMultiSpriteData_Idle_Frame0[21] = {
     3, 0, 0,

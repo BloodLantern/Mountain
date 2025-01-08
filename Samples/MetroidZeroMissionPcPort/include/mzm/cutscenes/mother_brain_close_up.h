@@ -1,8 +1,8 @@
 #ifndef MOTHER_BRAIN_CLOSE_UP_CUTSCENE
 #define MOTHER_BRAIN_CLOSE_UP_CUTSCENE
 
-#include "types.h"
-#include "structs/cutscene.h"
+#include "mzm/types.h"
+#include "mzm/structs/cutscene.h"
 
 #define MOTHER_BRAIN_CLOSE_UP_OAM_ID_BUBBLE 1
 #define MOTHER_BRAIN_CLOSE_UP_OAM_ID_UNUSED_EYE 2

@@ -1,8 +1,8 @@
 #ifndef INTERNAL_MECHA_SEES_SAMUS_DATA_H
 #define INTERNAL_MECHA_SEES_SAMUS_DATA_H
 
-#include "types.h"
-#include "structs/cutscene.h"
+#include "mzm/types.h"
+#include "mzm/structs/cutscene.h"
 
 // 760014
 

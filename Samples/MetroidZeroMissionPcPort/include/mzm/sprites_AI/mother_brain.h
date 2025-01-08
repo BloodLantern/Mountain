@@ -1,7 +1,7 @@
 #ifndef MOTHER_BRAIN_AI_H
 #define MOTHER_BRAIN_AI_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define MOTHER_BRAIN_POSE_WAITING_GLASS 0x1
 #define MOTHER_BRAIN_POSE_MAIN_LOOP 0x9

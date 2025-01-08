@@ -1,5 +1,5 @@
-#include "data/sprites/viola.h"
-#include "macros.h"
+#include "mzm/data/sprites/viola.h"
+#include "mzm/macros.h"
 
 const u32 sViolaBlueGfx[302] = INCBIN_U32("data/sprites/ViolaBlue.gfx.lz");
 const u16 sViolaBluePAL[16] = INCBIN_U16("data/sprites/ViolaBlue.pal");

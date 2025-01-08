@@ -1,8 +1,8 @@
 #ifndef STORY_TEXT_CUTSCENE
 #define STORY_TEXT_CUTSCENE
 
-#include "types.h"
-#include "structs/cutscene.h"
+#include "mzm/types.h"
+#include "mzm/structs/cutscene.h"
 
 u8 StoryTextCutsceneInit(void);
 u8 StoryTextCutsceneProcessText(void);

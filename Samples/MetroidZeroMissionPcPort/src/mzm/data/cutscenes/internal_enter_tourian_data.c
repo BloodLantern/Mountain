@@ -1,6 +1,6 @@
-#include "data/cutscenes/internal_enter_tourian_data.h"
-#include "cutscenes/cutscene_utils.h"
-#include "cutscenes/enter_tourian.h"
+#include "mzm/data/cutscenes/internal_enter_tourian_data.h"
+#include "mzm/cutscenes/cutscene_utils.h"
+#include "mzm/cutscenes/enter_tourian.h"
 
 const u16 sEnterTourian_760090[9][2] = {
     [0] = {

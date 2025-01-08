@@ -1,8 +1,8 @@
-#include "data/intro_data.h"
+#include "mzm/data/intro_data.h"
 
-#include "oam.h"
-#include "macros.h"
-#include "constants/intro.h"
+#include "mzm/oam.h"
+#include "mzm/macros.h"
+#include "mzm/constants/intro.h"
 
 const u16 sIntroEmergencyOrderTextOAM[52] = {
     0x11,

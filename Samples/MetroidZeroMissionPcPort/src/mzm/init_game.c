@@ -1,16 +1,16 @@
-#include "init_game.h"
+#include "mzm/init_game.h"
 
-#include "callbacks.h"
-#include "data/save_file_data.h"
+#include "mzm/callbacks.h"
+#include "mzm/data/save_file_data.h"
 
-#include "gba.h"
-#include "gbaio.h"
-#include "softreset_input.h"
-#include "types.h"
+#include "mzm/gba.h"
+#include "mzm/gbaio.h"
+#include "mzm/softreset_input.h"
+#include "mzm/types.h"
 
-#include "constants/game_state.h"
-#include "structs/audio.h"
-#include "structs/game_state.h"
+#include "mzm/constants/game_state.h"
+#include "mzm/structs/audio.h"
+#include "mzm/structs/game_state.h"
 #include <stdio.h>
 
 void InitializeGame(void)

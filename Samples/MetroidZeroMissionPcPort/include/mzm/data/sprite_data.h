@@ -1,7 +1,7 @@
 #ifndef SPRITE_DATA_H
 #define SPRITE_DATA_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 // 2b0c94
 

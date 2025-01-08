@@ -1,18 +1,21 @@
-#include "cutscenes/story_text_cutscene.h"
-#include "cutscenes/cutscene_utils.h"
-#include "text.h" // Required
+#include "mzm/cutscenes/story_text_cutscene.h"
 
-#include "data/shortcut_pointers.h"
-#include "data/cutscenes/cutscenes_data.h"
-#include "data/cutscenes/story_text_cutscene_data.h"
-#include "data/cutscenes/internal_story_text_cutscene_data.h"
+#include "mzm/audio_wrappers.h"
+#include "mzm/syscall_wrappers.h"
+#include "mzm/cutscenes/cutscene_utils.h"
+#include "mzm/text.h" // Required
 
-#include "constants/cutscene.h"
-#include "constants/text.h"
+#include "mzm/data/shortcut_pointers.h"
+#include "mzm/data/cutscenes/cutscenes_data.h"
+#include "mzm/data/cutscenes/story_text_cutscene_data.h"
+#include "mzm/data/cutscenes/internal_story_text_cutscene_data.h"
 
-#include "structs/display.h"
-#include "structs/game_state.h"
-#include "structs/text.h"
+#include "mzm/constants/cutscene.h"
+#include "mzm/constants/text.h"
+
+#include "mzm/structs/display.h"
+#include "mzm/structs/game_state.h"
+#include "mzm/structs/text.h"
 
 /**
  * @brief 62b90 | fc | Initializes a story text cutscene
@@ -298,7 +301,7 @@ u8 StoryTextCutsceneEnd(void)
 
     // Stil has some text to process, clear graphics
     dst = gVramBuffer + 0x3000 + sStoryTextCutscenePagesData[0].graphicsPage * 0x4000;
-    BitFill(3, 0, dst + CUTSCENE_DATA.timeInfo.subStage * 0x1000, 0x1000, 0x20);
+    BitFill(3, 0, (u8*)dst + CUTSCENE_DATA.timeInfo.subStage * 0x1000, 0x1000, 0x20);
 
     CUTSCENE_DATA.timeInfo.subStage++;
     if (CUTSCENE_DATA.timeInfo.subStage > 4)

@@ -1,6 +1,6 @@
-#include "data/sprites/area_banner.h"
+#include "mzm/data/sprites/area_banner.h"
 
-#include "macros.h"
+#include "mzm/macros.h"
 
 const u32 sAreaBannerGfx[65] = INCBIN_U32("data/sprites/AreaBanner.gfx.lz");
 const u16 sAreaBannerPAL[16] = INCBIN_U16("data/sprites/AreaBanner.pal");

@@ -1,4 +1,4 @@
-#include "oam.h"
+#include "mzm/oam.h"
 
 extern const struct FrameData* const sChozoStatueFrameDataPointers[16];
 

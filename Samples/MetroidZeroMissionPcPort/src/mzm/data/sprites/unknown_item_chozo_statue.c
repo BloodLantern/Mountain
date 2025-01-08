@@ -1,5 +1,5 @@
-#include "data/sprites/unknown_item_chozo_statue.h"
-#include "macros.h"
+#include "mzm/data/sprites/unknown_item_chozo_statue.h"
+#include "mzm/macros.h"
 
 const s16 sUnknownItemChozoStatueMultiSpriteData_Standing_Frame0[15] = {
     8, -176, -104,

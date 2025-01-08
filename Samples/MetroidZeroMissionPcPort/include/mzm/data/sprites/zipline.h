@@ -1,8 +1,8 @@
 #ifndef ZIPLINE_DATA_H
 #define ZIPLINE_DATA_H
 
-#include "types.h"
-#include "oam.h"
+#include "mzm/types.h"
+#include "mzm/oam.h"
 
 extern const u32 sZiplineGfx[264];
 extern const u16 sZiplinePAL[16];

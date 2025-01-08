@@ -1,7 +1,7 @@
 #ifndef BLOCK_STRUCT_H
 #define BLOCK_STRUCT_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define MAX_AMOUNT_OF_MAKE_SOLID_BLOCKS 64
 #define MAX_AMOUNT_OF_BROKEN_BLOCKS 48

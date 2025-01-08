@@ -1,7 +1,7 @@
 #ifndef ENEMY_DROP_AI_H
 #define ENEMY_DROP_AI_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define ENEMY_DROP_POSE_IDLE 0x9
 

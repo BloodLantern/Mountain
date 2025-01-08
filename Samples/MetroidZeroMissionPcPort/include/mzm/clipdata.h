@@ -1,8 +1,8 @@
 #ifndef CLIPDATA_H
 #define CLIPDATA_H
 
-#include "types.h"
-#include "structs/clipdata.h"
+#include "mzm/types.h"
+#include "mzm/structs/clipdata.h"
 
 // Functions
 

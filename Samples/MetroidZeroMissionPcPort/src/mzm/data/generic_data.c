@@ -1,7 +1,7 @@
-#include "data/generic_data.h"
+#include "mzm/data/generic_data.h"
 
-#include "music_wrappers.h"
-#include "callbacks.h"
+#include "mzm/music_wrappers.h"
+#include "mzm/callbacks.h"
 
 const s16 sSineTable[320] = {
     0, 6, 12, 18, 25, 31, 37, 43, 49, 56, 62, 68, 74, 80,

@@ -1,5 +1,5 @@
-#include "data/ending_and_gallery_data.h"
-#include "oam.h"
+#include "mzm/data/ending_and_gallery_data.h"
+#include "mzm/oam.h"
 
 const u16 sEndingImageTextPAL[14 * 16] = INCBIN_U16("data/ending/ImageText.pal");
 

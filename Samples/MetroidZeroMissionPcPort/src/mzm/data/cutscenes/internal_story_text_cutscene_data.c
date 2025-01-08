@@ -1,8 +1,8 @@
-#include "data/cutscenes/internal_story_text_cutscene_data.h"
-#include "data/text_pointers.h"
-#include "cutscenes/story_text_cutscene.h"
+#include "mzm/data/cutscenes/internal_story_text_cutscene_data.h"
+#include "mzm/data/text_pointers.h"
+#include "mzm/cutscenes/story_text_cutscene.h"
 
-#include "constants/game_state.h"
+#include "mzm/constants/game_state.h"
 
 const u16* const * const sStoryTextPointers[7] = {
     [LANGUAGE_JAPANESE] = sJapaneseTextPointers_Story,

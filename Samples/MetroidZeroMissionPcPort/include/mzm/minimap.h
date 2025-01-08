@@ -1,7 +1,7 @@
 #ifndef MINIMAP_H
 #define MINIMAP_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 void MinimapUpdate(void);
 void MinimapSetTileAsExplored(void);

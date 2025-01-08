@@ -1,7 +1,7 @@
 #ifndef BARISTUTE_AI_H
 #define BARISTUTE_AI_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define BARISTUTE_POSE_JUMP_WARNING_INIT 0x8
 #define BARISTUTE_POSE_CHECK_WARNING_ENDED 0x9

@@ -1,7 +1,7 @@
 #ifndef POWER_BOMB_EXPLOSION_H
 #define POWER_BOMB_EXPLOSION_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 void PowerBombExplosionProcess(void);
 void PowerBombExplosion(void);

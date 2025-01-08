@@ -1,4 +1,4 @@
-#include "data/sprites/enemy_drop.h"
+#include "mzm/data/sprites/enemy_drop.h"
 
 const u16 sEnemyDropOAM_SmallEnergy_Frame0[4] = {
     0x1,

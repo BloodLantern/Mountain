@@ -1,22 +1,22 @@
-#include "sprites_AI/atomic.h"
-#include "sprite_util.h"
+#include "mzm/sprites_AI/atomic.h"
+#include "mzm/sprite_util.h"
 
-#include "data/frame_data_pointers.h"
-#include "data/sprites/atomic.h"
-#include "data/sprite_data.h"
+#include "mzm/data/frame_data_pointers.h"
+#include "mzm/data/sprites/atomic.h"
+#include "mzm/data/sprite_data.h"
 
-#include "constants/clipdata.h"
-#include "constants/game_state.h"
-#include "constants/sprite.h"
-#include "constants/sprite_util.h"
-#include "constants/particle.h"
-#include "constants/projectile.h"
+#include "mzm/constants/clipdata.h"
+#include "mzm/constants/game_state.h"
+#include "mzm/constants/sprite.h"
+#include "mzm/constants/sprite_util.h"
+#include "mzm/constants/particle.h"
+#include "mzm/constants/projectile.h"
 
-#include "structs/game_state.h"
-#include "structs/display.h"
-#include "structs/projectile.h"
-#include "structs/samus.h"
-#include "structs/sprite.h"
+#include "mzm/structs/game_state.h"
+#include "mzm/structs/display.h"
+#include "mzm/structs/projectile.h"
+#include "mzm/structs/samus.h"
+#include "mzm/structs/sprite.h"
 
 #ifdef NON_MATCHING
 void AtomicSmoothMovement(void)

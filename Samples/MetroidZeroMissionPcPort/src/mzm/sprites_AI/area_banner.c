@@ -1,12 +1,12 @@
-#include "sprites_AI/area_banner.h"
-#include "sprite_util.h"
-#include "macros.h"
+#include "mzm/sprites_AI/area_banner.h"
+#include "mzm/sprite_util.h"
+#include "mzm/macros.h"
 
-#include "data/sprites/area_banner.h"
+#include "mzm/data/sprites/area_banner.h"
 
-#include "constants/sprite.h"
+#include "mzm/constants/sprite.h"
 
-#include "structs/sprite.h"
+#include "mzm/structs/sprite.h"
 
 /**
  * @brief 3c704 | a4 | Initializes an area banner sprite

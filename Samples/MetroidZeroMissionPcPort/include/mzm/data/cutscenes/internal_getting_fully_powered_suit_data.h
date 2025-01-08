@@ -1,8 +1,8 @@
 #ifndef INTERNAL_GETTING_FULLY_POWERED_SUIT_DATA_H
 #define INTERNAL_GETTING_FULLY_POWERED_SUIT_DATA_H
 
-#include "types.h"
-#include "structs/cutscene.h"
+#include "mzm/types.h"
+#include "mzm/structs/cutscene.h"
 
 extern const struct CutsceneSubroutineData sGettingFullyPoweredSuitSubroutineData[3];
 

@@ -1,12 +1,12 @@
-#include "sram_misc.h"
-#include "gba.h"
-#include "globals.h"
-#include "memory.h"
-#include "sram/sram.h"
-#include "types.h"
-#include "structs/save_file.h"
+#include "mzm/sram_misc.h"
+#include "mzm/gba.h"
+#include "mzm/globals.h"
+#include "mzm/memory.h"
+#include "mzm/sram/sram.h"
+#include "mzm/types.h"
+#include "mzm/structs/save_file.h"
 
-#include "data/shortcut_pointers.h"
+#include "mzm/data/shortcut_pointers.h"
 
 #include <stdio.h>
 

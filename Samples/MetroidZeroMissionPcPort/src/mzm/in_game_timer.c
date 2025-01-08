@@ -1,5 +1,5 @@
-#include "types.h"
-#include "structs/in_game_timer.h"
+#include "mzm/types.h"
+#include "mzm/structs/in_game_timer.h"
 
 u8 gMaxInGameTimerFlag;
 struct InGameTimer gInGameTimer;

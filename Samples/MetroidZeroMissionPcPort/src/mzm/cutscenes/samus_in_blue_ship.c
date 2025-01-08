@@ -1,12 +1,12 @@
-#include "cutscenes/samus_in_blue_ship.h"
-#include "cutscenes/cutscene_utils.h"
-#include "data/shortcut_pointers.h"
-#include "data/cutscenes/samus_in_blue_ship_data.h"
-#include "data/cutscenes/internal_samus_in_blue_ship_data.h"
+#include "mzm/cutscenes/samus_in_blue_ship.h"
+#include "mzm/cutscenes/cutscene_utils.h"
+#include "mzm/data/shortcut_pointers.h"
+#include "mzm/data/cutscenes/samus_in_blue_ship_data.h"
+#include "mzm/data/cutscenes/internal_samus_in_blue_ship_data.h"
 
-#include "constants/cutscene.h"
+#include "mzm/constants/cutscene.h"
 
-#include "structs/display.h"
+#include "mzm/structs/display.h"
 
 /**
  * @brief 67d8c | f8 | Handles the sip powering up part (entire cutscene)
