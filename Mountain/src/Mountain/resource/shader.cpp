@@ -53,13 +53,8 @@ bool_t Shader::Load(const char_t* const buffer, const int64_t length, const Grap
 
 void Shader::Load()
 {
-    m_Id = glCreateProgram();
-#ifdef _DEBUG
-    const std::string name = m_Name;
-    glObjectLabel(GL_PROGRAM, m_Id, static_cast<GLsizei>(name.length()), name.c_str());
-#endif
-
     std::array<uint32_t, Graphics::ShaderTypeCount> shaderIds;
+    bool_t compileError = false;
     for (size_t i = 0; i < Graphics::ShaderTypeCount; i++)
     {
         const ShaderCode& code = m_Code[i];
@@ -70,7 +65,7 @@ void Shader::Load()
         id = glCreateShader(ShaderTypeToOpenGl(code.type));
 #ifdef _DEBUG
         const Pointer file = m_Files[i];
-        const std::string& fileName = file ? file->GetName() : name + '/' + magic_enum::enum_name(code.type).data();
+        const std::string& fileName = file ? file->GetName() : m_Name + '/' + magic_enum::enum_name(code.type).data();
         glObjectLabel(GL_SHADER, id, static_cast<GLsizei>(fileName.length()), fileName.c_str());
 #endif
 
@@ -79,10 +74,27 @@ void Shader::Load()
         glShaderSource(id, 1, &data, &dataLength);
 
         glCompileShader(id);
-		CheckCompileError(shaderIds[i], code.type);
-
-		glAttachShader(m_Id, id);
+		if (CheckCompileError(shaderIds[i], code.type))
+		    compileError = true;
     }
+
+    if (compileError)
+    {
+        Logger::LogWarning("Shader load canceled because of compilation errors");
+        return;
+    }
+
+    if (glIsProgram(m_Id))
+        glDeleteProgram(m_Id);
+
+    m_Id = glCreateProgram();
+#ifdef _DEBUG
+    glObjectLabel(GL_PROGRAM, m_Id, static_cast<GLsizei>(m_Name.length()), m_Name.c_str());
+#endif
+
+    for (size_t i = 0; i < Graphics::ShaderTypeCount; i++)
+		glAttachShader(m_Id, shaderIds[i]);
+
     glLinkProgram(m_Id);
 
     for (const uint32_t shaderId : shaderIds)
@@ -116,8 +128,7 @@ void Shader::ResetSourceData()
 
 bool_t Shader::Reload(const bool_t reloadInBackend)
 {
-    if (reloadInBackend)
-        Unload();
+    dependentShaderFiles.clear();
 
     const bool_t result = SetSourceData(m_Files[0]) && SetSourceData(m_Files[1]);
 
@@ -142,7 +153,7 @@ void Shader::Use() const { glUseProgram(m_Id); }
 // ReSharper disable once CppMemberFunctionMayBeStatic
 void Shader::Unuse() const { glUseProgram(0); }
 
-void Shader::CheckCompileError(const uint32_t id, const Graphics::ShaderType type) const
+bool_t Shader::CheckCompileError(const uint32_t id, const Graphics::ShaderType type) const
 {
-    ShaderBase::CheckCompileError(id, magic_enum::enum_name(type), m_Code[static_cast<size_t>(type)].code);
+    return ShaderBase::CheckCompileError(id, magic_enum::enum_name(type), m_Code[static_cast<size_t>(type)].code);
 }

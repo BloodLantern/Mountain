@@ -25,9 +25,8 @@ namespace Mountain::Random
     MOUNTAIN_API Color Color(Color minValues = Color::Black(), Color maxValues = Color::White());
     MOUNTAIN_API ColorHsva ColorHsva(ColorHsva minValues = { 0.f, 0.f, 0.f, 0.f }, ColorHsva maxValues = { 1.f, 1.f, 1.f, 1.f });
 
-    /// @brief Returns true if the given probability have been met.
+    /// @brief Returns true if the given probability has been met.
     /// @param probability The probability to check in the range [0, 1].
-    /// @return True if the given probability have been met, false otherwise.
     MOUNTAIN_API bool_t Chance(float_t probability = 0.5f);
 
     MOUNTAIN_API Vector2 PointInCircle(const Vector2& center = Vector2::Zero(), float_t radius = 1);

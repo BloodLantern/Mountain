@@ -1,4 +1,4 @@
-#version 460 core
+#version 460
 
 layout (local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 
@@ -8,6 +8,7 @@ layout (local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 
 uniform float time;
 
+#include "shape.glsl"
 #include "color_over_lifetime.glsl"
 #include "force_over_lifetime.glsl"
 
@@ -15,16 +16,19 @@ uniform uint enabledModules;
 
 Particle NewParticle()
 {
-    float r = Random(vec2(gl_GlobalInvocationID.x, time));
-    float r2 = Random(vec2(r, time));
-
-    return Particle(
+    Particle result = Particle(
         particleLifetime,
-        int[3](0.f),
         vec2(0.f),
-        normalize(vec2(r, r2) * 2.f - vec2(1.f)) * particleSpeed,
+        vec2(0.f, -1.f),
         particleStartColor
     );
+
+    if ((enabledModules & ModuleTypesShape) != 0)
+        ShapeInitialize(result);
+
+    result.velocity *= particleSpeed;
+
+    return result;
 }
 
 void main()
@@ -32,23 +36,21 @@ void main()
     const uint id = gl_GlobalInvocationID.x;
     Particle particle = particles[id]; // We take a copy of the current particle here so we need to remember to reinsert it in the buffer before exiting
 
-    if (!aliveParticles[id])
+    if (!liveParticles[id])
         return;
 
     if (particle.lifetime <= 0.f)
     {
-        float negativeInfinity = -1.f / 0.f;
-
-        if (particle.lifetime > negativeInfinity)
+        if (particle.lifetime > NegativeInfinity)
         {
-            aliveParticles[id] = false;
-            particle.lifetime = negativeInfinity; // Use negative infinity as a flag
+            liveParticles[id] = false;
+            particle.lifetime = NegativeInfinity; // Use negative infinity as a flag
             particles[id] = particle;
             return;
         }
         else
         {
-            aliveParticles[id] = true;
+            liveParticles[id] = true;
             particle = NewParticle();
         }
     }
@@ -57,9 +59,9 @@ void main()
 
     // Modules updates
     if ((enabledModules & ModuleTypesColorOverLifetime) != 0)
-        particle = ColorOverLifetimeUpdate(particle);
+        ColorOverLifetimeUpdate(particle);
     if ((enabledModules & ModuleTypesForceOverLifetime) != 0)
-        particle = ForceOverLifetimeUpdate(particle);
+        ForceOverLifetimeUpdate(particle);
 
     particle.lifetime -= deltaTime;
 

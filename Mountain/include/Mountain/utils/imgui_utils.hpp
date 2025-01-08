@@ -31,6 +31,18 @@ namespace Mountain::ImGuiUtils
     MOUNTAIN_API void ShowFileManager();
 
     MOUNTAIN_API void ShowResourceManager();
+
+    MOUNTAIN_API void PushSeparatorText(const char_t* label);
+
+    MOUNTAIN_API void PopSeparatorText();
+
+    MOUNTAIN_API bool_t PushCollapsingHeader(const char_t* label, ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_None);
+
+    MOUNTAIN_API void PopCollapsingHeader();
+
+    /// @brief Set the next item width to be the available width
+    /// Shorthand for writing @code ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x);@endcode
+    MOUNTAIN_API void SetNextItemWidthAvail();
 }
 
 // ReSharper disable CppInconsistentNaming
@@ -42,7 +54,7 @@ namespace ImGui
         float v_speed = 1, 
         float v_min = 0, 
         float v_max = 0, 
-        const char* format = "%.3f", 
+        const char* format = "%.3f",
         ImGuiSliderFlags flags = 0
     );
 

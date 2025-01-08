@@ -40,11 +40,13 @@ namespace Mountain
 		/// @brief Unloads the compute shader
 		MOUNTAIN_API void ResetSourceData() override;
 
+		MOUNTAIN_API bool_t Reload(bool_t reloadInBackend) override;
+
 		MOUNTAIN_API void Dispatch(uint32_t groupsX = 1, uint32_t groupsY = 1, uint32_t groupsZ = 1) const;
 
 	private:
 		std::string m_Code;
 
-		void CheckCompileError(uint32_t id) const;
+	    bool_t CheckCompileError(uint32_t id) const;  // NOLINT(modernize-use-nodiscard)
 	};
 }
