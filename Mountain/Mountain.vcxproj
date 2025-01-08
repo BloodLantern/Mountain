@@ -206,6 +206,7 @@
     <ClInclude Include="include\Mountain\utils\rectangle.hpp" />
     <ClInclude Include="include\Mountain\utils\reference_counter.hpp" />
     <ClInclude Include="include\Mountain\utils\run_length_encoding.hpp" />
+    <ClInclude Include="include\Mountain\utils\stopwatch.hpp" />
     <ClInclude Include="include\Mountain\utils\ts_queue.hpp" />
     <ClInclude Include="include\Mountain\utils\utils.hpp" />
     <ClInclude Include="include\Mountain\utils\windows.hpp" />
@@ -370,11 +371,14 @@
     <ClCompile Include="src\Mountain\utils\message_box.cpp" />
     <ClCompile Include="src\Mountain\utils\random.cpp" />
     <ClCompile Include="src\Mountain\utils\run_length_encoding.cpp" />
+    <ClCompile Include="src\Mountain\utils\stopwatch.cpp" />
     <ClCompile Include="src\Mountain\utils\utils.cpp" />
     <ClCompile Include="src\Mountain\utils\windows.cpp" />
     <ClCompile Include="src\Mountain\window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="shaders\arc\arc.frag" />
+    <Content Include="shaders\arc\arc.vert" />
     <Content Include="shaders\circle\circle.frag" />
     <Content Include="shaders\circle\circle.vert" />
     <Content Include="shaders\easing.glsl" />
@@ -384,6 +388,7 @@
     <Content Include="shaders\particles\color_over_lifetime.glsl" />
     <Content Include="shaders\particles\force_over_lifetime.glsl" />
     <Content Include="shaders\particles\module_types.glsl" />
+    <Content Include="shaders\particles\shape.glsl" />
     <Content Include="shaders\particles\update.comp" />
     <Content Include="shaders\particles\common.glsl" />
     <Content Include="shaders\particles\draw\draw.frag" />

@@ -12,7 +12,7 @@
 #include "camera.hpp"
 #include "player.hpp"
 
-constexpr Vector2i BaseResolution = { 320, 180 };
+constexpr Vector2i BaseResolution = { 1280, 720 };
 
 class GameExample : public Mountain::Game
 {
@@ -23,6 +23,7 @@ public:
 	Mountain::ParticleSystem particleSystem{ 1000 };
 
 	Mountain::RenderTarget renderTarget;
+	Mountain::RenderTarget debugRenderTarget;
 
 	Camera camera{};
 
