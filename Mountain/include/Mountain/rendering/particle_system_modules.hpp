@@ -1,7 +1,5 @@
 ﻿#pragma once
 
-#include <variant>
-
 #include "Mountain/core.hpp"
 #include "Mountain/utils/color.hpp"
 #include "Mountain/utils/utils.hpp"
@@ -95,13 +93,19 @@ namespace Mountain::ParticleSystemModules
     public:
         ShapeType type = ShapeType::Circle;
 
-        std::variant<ShapeCircle, ShapeLine, ShapeRectangle> data;
+        ShapeCircle circle;
+        ShapeLine line;
+        ShapeRectangle rectangle;
 
         Vector2 offset;
         float_t rotation;
         Vector2 scale = Vector2::One();
 
-        bool_t showWireframe = false;
+        float_t randomizeDirection = 0.f;
+        float_t randomizeRotation = 0.f;
+        float_t randomizePosition = 0.f;
+
+        bool_t showSpawnArea = false;
 
         MOUNTAIN_API void SetComputeShaderUniforms(const ComputeShader& computeShader, Types enabledModules) const override;
         MOUNTAIN_API void RenderImGui(uint32_t* enabledModulesInt) override;

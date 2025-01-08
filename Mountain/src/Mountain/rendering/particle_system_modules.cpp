@@ -38,6 +38,24 @@ void Shape::SetComputeShaderUniforms(const ComputeShader& computeShader, const T
 {
     if (!(enabledModules & Types::Shape))
         return;
+
+    computeShader.SetUniform("shape.type", static_cast<uint32_t>(type));
+
+    computeShader.SetUniform("shape.circle.radius", circle.radius);
+    computeShader.SetUniform("shape.circle.radiusThickness", circle.radiusThickness);
+    computeShader.SetUniform("shape.circle.arcAngle", circle.arcAngle);
+    computeShader.SetUniform("shape.circle.arc.mode", static_cast<uint32_t>(circle.arc.mode));
+    computeShader.SetUniform("shape.circle.arc.spread", circle.arc.spread);
+
+    computeShader.SetUniform("shape.line.radius", line.radius);
+    computeShader.SetUniform("shape.line.arc.mode", static_cast<uint32_t>(line.arc.mode));
+    computeShader.SetUniform("shape.line.arc.spread", line.arc.spread);
+
+    computeShader.SetUniform("shape.rectangle.scaleThickness", rectangle.scaleThickness);
+
+    computeShader.SetUniform("shape.offset", offset);
+    computeShader.SetUniform("shape.rotation", rotation);
+    computeShader.SetUniform("shape.scale", scale);
 }
 
 void Shape::RenderImGui(uint32_t* enabledModulesInt)
@@ -45,26 +63,11 @@ void Shape::RenderImGui(uint32_t* enabledModulesInt)
     if (!BeginImGui(enabledModulesInt, Types::Shape))
         return;
 
-    if (ImGui::ComboEnum("Type", &type))
-    {
-        switch (type)
-        {
-            case ShapeType::Circle:
-                data = ShapeCircle{};
-                break;
-
-            case ShapeType::Line:
-                data = ShapeLine{};
-                break;
-
-            case ShapeType::Rectangle:
-                data = ShapeRectangle{};
-                break;
-        }
-    }
+    ImGui::ComboEnum("Type", &type);
 
     static constexpr auto ShapeArcRenderImGui = [](ShapeArc& arc)
     {
+        ImGui::Text("Arc");
         ImGui::Indent();
         ImGui::ComboEnum("Mode", &arc.mode);
         ImGui::DragFloat("Spread", &arc.spread, 0.01f, 0.f, 1.f, "%.2f", ImGuiSliderFlags_AlwaysClamp);
@@ -75,7 +78,6 @@ void Shape::RenderImGui(uint32_t* enabledModulesInt)
     {
         case ShapeType::Circle:
         {
-            ShapeCircle& circle = std::get<ShapeCircle>(data);
             ImGui::DragFloat("Radius", &circle.radius, 0.01f, 0.f, std::numeric_limits<float_t>::max(), "%.2f", ImGuiSliderFlags_AlwaysClamp);
             ImGui::DragFloat("Radius thickness", &circle.radiusThickness, 0.01f, 0.f, 1.f, "%.2f", ImGuiSliderFlags_AlwaysClamp);
             ImGui::DragAngle("Arc angle", &circle.arcAngle, 0.1f, 0.f, Calc::TwoPi, "%.2f", ImGuiSliderFlags_AlwaysClamp);
@@ -85,7 +87,6 @@ void Shape::RenderImGui(uint32_t* enabledModulesInt)
 
         case ShapeType::Line:
         {
-            ShapeLine& line = std::get<ShapeLine>(data);
             ImGui::DragFloat("Radius", &line.radius, 0.01f, 0.f, std::numeric_limits<float_t>::max(), "%.2f", ImGuiSliderFlags_AlwaysClamp);
             ShapeArcRenderImGui(line.arc);
             break;
@@ -93,7 +94,6 @@ void Shape::RenderImGui(uint32_t* enabledModulesInt)
 
         case ShapeType::Rectangle:
         {
-            ShapeRectangle& rectangle = std::get<ShapeRectangle>(data);
             ImGui::DragFloat2("Scale thickness", rectangle.scaleThickness.Data(), 0.01f, 0.f, 1.f, "%.2f", ImGuiSliderFlags_AlwaysClamp);
             break;
         }
@@ -103,33 +103,38 @@ void Shape::RenderImGui(uint32_t* enabledModulesInt)
     ImGui::DragAngle("Rotation", &rotation, 0.1f, 0.f, 0.f, "%.2f");
     ImGui::DragFloat2("Scale", scale.Data(), 0.01f);
 
-    ImGui::Checkbox("Show wireframe", &showWireframe);
+    ImGui::Checkbox("Show spawn area", &showSpawnArea);
 
     EndImGui();
 }
 
 void Shape::RenderDebug(const ParticleSystem& system, const Vector2 renderTargetSizeDiff) const
 {
-    if (!showWireframe)
+    if (!showSpawnArea)
         return;
 
+    static constexpr Color DrawColor = Color::Green();
+
     const Vector2 center = (system.position + offset) * renderTargetSizeDiff;
+    const Vector2 actualScale = scale * renderTargetSizeDiff;
     switch (type)
     {
         case ShapeType::Circle:
         {
-            const ShapeCircle& circle = std::get<ShapeCircle>(data);
-            Draw::Circle(center, circle.radius, scale * renderTargetSizeDiff, Color::Green());
+            Draw::Circle(center, circle.radius, actualScale, DrawColor);
+            Draw::Circle(center, circle.radius - circle.radius * circle.radiusThickness, actualScale, DrawColor);
             break;
         }
         case ShapeType::Line:
         {
-            const ShapeLine& line = std::get<ShapeLine>(data);
+            // TODO - Take rotation into account
+            Draw::Line(center - Vector2::UnitX() * line.radius, center + Vector2::UnitX() * line.radius, DrawColor);
             break;
         }
         case ShapeType::Rectangle:
         {
-            const ShapeRectangle& rectangle = std::get<ShapeRectangle>(data);
+            // TODO - Take rotation into account
+            Draw::Rectangle(center - actualScale * 0.5f, actualScale, DrawColor);
             break;
         }
     }
