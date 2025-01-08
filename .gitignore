@@ -534,10 +534,10 @@ FodyWeavers.xsd
 
 docs
 
-imgui.ini
+Tests/imgui.ini
 
 !Tests/Tests.vcxproj.user
 
 !*.gitkeep
 
-!LivePP/**
+!Tests/LivePP/**
