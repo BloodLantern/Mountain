@@ -135,6 +135,9 @@ namespace Mountain
         template <class... Args>
         void Emplace(Args&&... args);
 
+        /// @brief Removes the last element of the list
+        void PopBack();
+
         /**
          * @brief Inserts an element at the given position using the default constructor
          *

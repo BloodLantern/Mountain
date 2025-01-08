@@ -1,4 +1,4 @@
-#version 460 core
+#version 460
 
 #include "../common.glsl"
 
@@ -12,7 +12,7 @@ out vec4 particleColor;
 
 void main()
 {
-    particleAlive = int(aliveParticles[gl_InstanceID]);
+    particleAlive = int(liveParticles[gl_InstanceID]);
 
     if (particleAlive == 0) // If the particle is dead, we don't care about its vertex position as it will be discarded in the fragment shader anyway
         return;

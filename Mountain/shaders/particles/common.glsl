@@ -2,7 +2,7 @@
 struct Particle
 {
     float lifetime;
-    int padding0[3];
+    //int padding0[3]; implicit padding here
 
     vec2 offset;
     vec2 velocity;
@@ -11,7 +11,7 @@ struct Particle
 
 layout(std430, binding = 0) coherent buffer AliveParticles
 {
-    bool aliveParticles[]; // true if the particle is alive and should be updated and drawn
+    bool liveParticles[]; // true if the particle is alive and should be updated and drawn
 };
 
 layout(std430, binding = 1) buffer Particles

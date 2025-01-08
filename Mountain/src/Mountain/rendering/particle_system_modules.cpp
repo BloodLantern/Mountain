@@ -2,17 +2,23 @@
 
 #include <ImGui/imgui.h>
 
+#include "Mountain/rendering/draw.hpp"
+#include "Mountain/rendering/particle_system.hpp"
 #include "Mountain/utils/imgui_utils.hpp"
 
 using namespace Mountain::ParticleSystemModules;
 
-bool_t Base::BeginImGui(uint32_t* const enabledModulesInt, const Types type, const char_t* const name) const
+void Base::RenderDebug(const ParticleSystem&, const Vector2) const
+{
+}
+
+bool_t Base::BeginImGui(uint32_t* const enabledModulesInt, const Types type) const
 {
     ImGui::PushID(this);
 
     ImGui::CheckboxFlags("##enabled", enabledModulesInt, static_cast<uint32_t>(type));
     ImGui::SameLine();
-    const bool_t result = ImGui::TreeNode(name);
+    const bool_t result = ImGui::TreeNode(magic_enum::enum_name(type).data());
 
     if (!result)
         ImGui::PopID();
@@ -28,6 +34,104 @@ void Base::EndImGui() const
     ImGui::PopID();
 }
 
+void Shape::SetComputeShaderUniforms(const ComputeShader& computeShader, const Types enabledModules) const
+{
+    if (!(enabledModules & Types::Shape))
+        return;
+
+    computeShader.SetUniform("shape.type", static_cast<uint32_t>(type));
+
+    computeShader.SetUniform("shape.circle.radius", circle.radius);
+    computeShader.SetUniform("shape.circle.radiusThickness", circle.radiusThickness);
+    computeShader.SetUniform("shape.circle.arcAngle", circle.arcAngle);
+    computeShader.SetUniform("shape.circle.arc.mode", static_cast<uint32_t>(circle.arc.mode));
+    computeShader.SetUniform("shape.circle.arc.spread", circle.arc.spread);
+
+    computeShader.SetUniform("shape.line.radius", line.radius);
+    computeShader.SetUniform("shape.line.arc.mode", static_cast<uint32_t>(line.arc.mode));
+    computeShader.SetUniform("shape.line.arc.spread", line.arc.spread);
+
+    computeShader.SetUniform("shape.rectangle.scaleThickness", rectangle.scaleThickness);
+
+    computeShader.SetUniform("shape.offset", offset);
+    computeShader.SetUniform("shape.rotation", rotation);
+    computeShader.SetUniform("shape.scale", scale);
+}
+
+void Shape::RenderImGui(uint32_t* enabledModulesInt)
+{
+    if (!BeginImGui(enabledModulesInt, Types::Shape))
+        return;
+
+    ImGui::ComboEnum("Type", &type);
+
+    static constexpr auto ShapeArcRenderImGui = [](ShapeArc& arc)
+    {
+        ImGui::Text("Arc");
+        ImGui::Indent();
+        ImGui::ComboEnum("Mode", &arc.mode);
+        ImGui::DragFloat("Spread", &arc.spread, 0.01f, 0.f, 1.f, "%.2f", ImGuiSliderFlags_AlwaysClamp);
+        ImGui::Unindent();
+    };
+
+    switch (type)
+    {
+        case ShapeType::Circle:
+            ImGui::DragFloat("Radius", &circle.radius, 0.01f, 0.f, std::numeric_limits<float_t>::max(), "%.2f", ImGuiSliderFlags_AlwaysClamp);
+            ImGui::DragFloat("Radius thickness", &circle.radiusThickness, 0.01f, 0.f, 1.f, "%.2f", ImGuiSliderFlags_AlwaysClamp);
+            ImGui::DragAngle("Arc angle", &circle.arcAngle, 0.1f, 0.f, Calc::TwoPi, "%.2f", ImGuiSliderFlags_AlwaysClamp);
+            ShapeArcRenderImGui(circle.arc);
+            break;
+
+        case ShapeType::Line:
+            ImGui::DragFloat("Radius", &line.radius, 0.01f, 0.f, std::numeric_limits<float_t>::max(), "%.2f", ImGuiSliderFlags_AlwaysClamp);
+            ShapeArcRenderImGui(line.arc);
+            break;
+
+        case ShapeType::Rectangle:
+            ImGui::DragFloat2("Scale thickness", rectangle.scaleThickness.Data(), 0.01f, 0.f, 1.f, "%.2f", ImGuiSliderFlags_AlwaysClamp);
+            break;
+    }
+
+    ImGui::DragFloat2("Offset", offset.Data(), 0.1f);
+    ImGui::DragAngle("Rotation", &rotation, 0.1f, 0.f, 0.f, "%.2f");
+    ImGui::DragFloat2("Scale", scale.Data(), 0.01f);
+
+    ImGui::Checkbox("Show spawn area", &showSpawnArea);
+
+    EndImGui();
+}
+
+void Shape::RenderDebug(const ParticleSystem& system, const Vector2 renderTargetSizeDiff) const
+{
+    if (!showSpawnArea)
+        return;
+
+    static constexpr Color DrawColor = Color::Green();
+
+    const Vector2 center = (system.position + offset) * renderTargetSizeDiff;
+    const Vector2 actualScale = scale * renderTargetSizeDiff;
+    switch (type)
+    {
+        case ShapeType::Circle:
+            Draw::Circle(center, circle.radius, actualScale, DrawColor);
+            Draw::Circle(center, circle.radius - circle.radius * circle.radiusThickness, actualScale, DrawColor);
+            break;
+
+        case ShapeType::Line:
+            // TODO - Take rotation into account
+            Draw::Line(center - Vector2::UnitX() * line.radius, center + Vector2::UnitX() * line.radius, DrawColor);
+            break;
+
+        case ShapeType::Rectangle:
+            // TODO - Take rotation into account
+            Draw::Rectangle(center - actualScale * 0.5f, actualScale, DrawColor);
+            const Vector2 actualScaleThickness = actualScale * (Vector2::One() - rectangle.scaleThickness);
+            Draw::Rectangle(center - actualScaleThickness * 0.5f, actualScaleThickness, DrawColor);
+            break;
+    }
+}
+
 void ColorOverLifetime::SetComputeShaderUniforms(const ComputeShader& computeShader, const Types enabledModules) const
 {
     if (!(enabledModules & Types::ColorOverLifetime))
@@ -38,7 +142,7 @@ void ColorOverLifetime::SetComputeShaderUniforms(const ComputeShader& computeSha
 
 void ColorOverLifetime::RenderImGui(uint32_t* const enabledModulesInt)
 {
-    if (!BeginImGui(enabledModulesInt, Types::ColorOverLifetime, "ColorOverLifetime"))
+    if (!BeginImGui(enabledModulesInt, Types::ColorOverLifetime))
         return;
 
     ImGui::ColorEdit4("Target", target.Data());
@@ -56,7 +160,7 @@ void ForceOverLifetime::SetComputeShaderUniforms(const ComputeShader& computeSha
 
 void ForceOverLifetime::RenderImGui(uint32_t* enabledModulesInt)
 {
-    if (!BeginImGui(enabledModulesInt, Types::ForceOverLifetime, "ForceOverLifetime"))
+    if (!BeginImGui(enabledModulesInt, Types::ForceOverLifetime))
         return;
 
     Vector2 direction = force.Normalized();

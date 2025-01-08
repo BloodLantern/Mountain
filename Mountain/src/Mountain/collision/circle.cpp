@@ -20,7 +20,7 @@ Circle::Circle(const Vector2 off, const float_t radius)
 
 void Circle::RenderDebug(const Color& color) const
 {
-    Draw::Circle(GetActualPosition(), radius, color);
+    Draw::Circle(GetActualPosition(), radius, Vector2::One(), color);
 }
 
 bool Circle::CheckCollision(const Vector2 point) const
