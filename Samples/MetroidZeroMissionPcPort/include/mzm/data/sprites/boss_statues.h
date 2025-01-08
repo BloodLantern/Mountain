@@ -1,8 +1,8 @@
 #ifndef BOSS_STATUES_DATA_H
 #define BOSS_STATUES_DATA_H
 
-#include "types.h"
-#include "oam.h"
+#include "mzm/types.h"
+#include "mzm/oam.h"
 
 extern const u32 sBossStatuesGfx[2388];
 extern const u16 sBossStatuesPAL[128];

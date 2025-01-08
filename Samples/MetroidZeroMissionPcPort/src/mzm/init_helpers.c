@@ -1,9 +1,9 @@
-#include "funcs.h"
-#include "gba.h"
-#include "globals.h"
-#include "interrupts.h"
-#include "memory.h"
-#include "types.h"
+#include "mzm/funcs.h"
+#include "mzm/gba.h"
+#include "mzm/globals.h"
+#include "mzm/interrupts.h"
+#include "mzm/memory.h"
+#include "mzm/types.h"
 
 u16 gInterruptCode[0x100];
 

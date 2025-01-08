@@ -1,6 +1,6 @@
-#include "data/cutscenes/internal_ridley_spawn_data.h"
-#include "cutscenes/ridley_spawn.h"
-#include "cutscenes/cutscene_utils.h"
+#include "mzm/data/cutscenes/internal_ridley_spawn_data.h"
+#include "mzm/cutscenes/ridley_spawn.h"
+#include "mzm/cutscenes/cutscene_utils.h"
 
 const struct RawCoordsX sRidleySpawnRidleyPositions[3] = {
     [0] = {

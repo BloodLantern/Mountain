@@ -1,7 +1,7 @@
 #ifndef PISTON_AI_H
 #define PISTON_AI_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define PISTON_POSE_IDLE_INIT 0x8
 #define PISTON_POSE_CHECK_FOR_PROJECTILES 0x9

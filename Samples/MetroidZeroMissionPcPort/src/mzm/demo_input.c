@@ -1,10 +1,10 @@
-#include "demo_input.h"
-#include "gba.h"
+#include "mzm/demo_input.h"
+#include "mzm/gba.h"
 
-#include "constants/demo.h"
+#include "mzm/constants/demo.h"
 
-#include "structs/demo.h"
-#include "structs/game_state.h"
+#include "mzm/structs/demo.h"
+#include "mzm/structs/game_state.h"
 
 u8 gDemoState;
 struct Demo gCurrentDemo;

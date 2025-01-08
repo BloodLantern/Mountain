@@ -1,5 +1,5 @@
-#include "data/nes_metroid.h"
-#include "macros.h"
+#include "mzm/data/nes_metroid.h"
+#include "mzm/macros.h"
 
 static const u8 sNesMetroidBuffer[488136] = {	
     0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,

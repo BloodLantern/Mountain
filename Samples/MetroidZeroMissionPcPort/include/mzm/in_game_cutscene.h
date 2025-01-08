@@ -1,7 +1,7 @@
 #ifndef IN_GAME_CUTSCENE_H
 #define IN_GAME_CUTSCENE_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 u32 InGameCutsceneSamusCloseUp(u8 cutsceneNumber, u8 cutsceneNumberNoFlag);
 void unk_5fd58(void);

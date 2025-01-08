@@ -1,8 +1,8 @@
 #ifndef PAUSE_SCREEN_SUB_MENUS_MENU_H
 #define PAUSE_SCREEN_SUB_MENUS_MENU_H
 
-#include "types.h"
-#include "structs/menus/pause_screen.h"
+#include "mzm/types.h"
+#include "mzm/structs/menus/pause_screen.h"
 
 u32 PauseScreenEasySleepSubroutine(void);
 u32 unk_72144(struct ChozoHintRelated* param_1);

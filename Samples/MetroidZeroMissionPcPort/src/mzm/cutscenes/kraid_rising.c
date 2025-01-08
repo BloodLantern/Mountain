@@ -1,22 +1,22 @@
-#include "cutscenes/kraid_rising.h"
-#include "cutscenes/cutscene_utils.h"
-#include "oam.h"
-#include "oam_id.h"
-#include "syscall_wrappers.h"
+#include "mzm/cutscenes/kraid_rising.h"
+#include "mzm/cutscenes/cutscene_utils.h"
+#include "mzm/oam.h"
+#include "mzm/oam_id.h"
+#include "mzm/syscall_wrappers.h"
 
-#include "data/cutscenes/cutscenes_data.h"
-#include "data/cutscenes/internal_kraid_rising_data.h"
-#include "data/cutscenes/kraid_rising_data.h"
-#include "data/generic_data.h"
-#include "data/shortcut_pointers.h"
+#include "mzm/data/cutscenes/cutscenes_data.h"
+#include "mzm/data/cutscenes/internal_kraid_rising_data.h"
+#include "mzm/data/cutscenes/kraid_rising_data.h"
+#include "mzm/data/generic_data.h"
+#include "mzm/data/shortcut_pointers.h"
 
-#include "constants/audio.h"
-#include "constants/cutscene.h"
-#include "constants/samus.h"
+#include "mzm/constants/audio.h"
+#include "mzm/constants/cutscene.h"
+#include "mzm/constants/samus.h"
 
-#include "structs/game_state.h"
-#include "structs/display.h"
-#include "structs/samus.h"
+#include "mzm/structs/game_state.h"
+#include "mzm/structs/display.h"
+#include "mzm/structs/samus.h"
 
 /**
  * @brief 6240c | 2ec | Handles the kraid rising part

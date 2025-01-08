@@ -1,5 +1,5 @@
-#include "data/rooms/crateria_rooms_data.h"
-#include "macros.h"
+#include "mzm/data/rooms/crateria_rooms_data.h"
+#include "mzm/macros.h"
 
 const u8 sCrateria_2_Scrolls[SCROLL_DATA_SIZE(2)] = {
 	3, // Room

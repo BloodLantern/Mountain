@@ -1,10 +1,10 @@
-#include "softreset_input.h"
-#include "gba.h"
-#include "macros.h"
+#include "mzm/softreset_input.h"
+#include "mzm/gba.h"
+#include "mzm/macros.h"
 
-#include "constants/game_state.h"
-#include "structs/audio.h"
-#include "structs/game_state.h"
+#include "mzm/constants/game_state.h"
+#include "mzm/structs/audio.h"
+#include "mzm/structs/game_state.h"
 
 #define SOFTRESET_KEYS (KEY_A | KEY_B | KEY_START | KEY_SELECT)
 

@@ -1,5 +1,6 @@
-#include "syscalls.h"
+#include "mzm/syscalls.h"
 #include <stdint.h>
+#include <stdio.h>
 
 void CpuFastSet(void *src, void *dst, u16 size)
 {
@@ -23,8 +24,8 @@ s32 DivarmMod(s32 denom, s32 number)
 
 void LZ77UncompVRAM(const void *src, void *dst)
 {
-    s32 remaining = *(u32*)src >> 8;
-	src += 4;
+    s32 remaining = *(const u32*)src >> 8;
+	src = (const u8*)src + 4;
 	s32 blocksRemaining = 0;
 	u8* disp;
 	s32 bytes;
@@ -38,8 +39,8 @@ void LZ77UncompVRAM(const void *src, void *dst)
 			if (blockheader & 0x80) {
 				// Compressed
 				int block = ((u8*)src)[1] | (((u8*)src)[0] << 8);
-				src += 2;
-				disp = dst - (block & 0x0FFF) - 1;
+				src = (const u8*)src + 2;
+				disp = (u8*)dst - (block & 0x0FFF) - 1;
 				bytes = (block >> 12) + 3;
 				while (bytes--) {
 					if (remaining) {
@@ -63,12 +64,12 @@ void LZ77UncompVRAM(const void *src, void *dst)
                         *(u8*)dst = byte;
 					}
 					++disp;
-					++dst;
+					dst = (u8*)dst + 1;
 				}
 			} else {
 				// Uncompressed
-				byte = *(u8*)src;
-				++src;
+				byte = *(const u8*)src;
+				src = (const u8*)src + 1;
 				if (width == 2) {
 					if ((size_t)dst & 1) {
 						halfword |= byte << 8;
@@ -81,14 +82,14 @@ void LZ77UncompVRAM(const void *src, void *dst)
 				} else {
 					*(u8*)dst = byte;
 				}
-				++dst;
+				dst = (u8*)dst + 1;
 				--remaining;
 			}
 			blockheader <<= 1;
 			--blocksRemaining;
 		} else {
-			blockheader = *(u8*)src;
-			++src;
+			blockheader = *(const u8*)src;
+			src = (const u8*)src + 1;
 			blocksRemaining = 8;
 		}
 	}
@@ -97,7 +98,7 @@ void LZ77UncompVRAM(const void *src, void *dst)
 void LZ77UncompWRAM(const void *src, void *dst)
 {
     s32 remaining = *(u32*)src >> 8;
-	src += 4;
+	src = (const u8*)src + 4;
 	s32 blocksRemaining = 0;
 	u8* disp;
 	s32 bytes;
@@ -111,8 +112,8 @@ void LZ77UncompWRAM(const void *src, void *dst)
 			if (blockheader & 0x80) {
 				// Compressed
 				int block = ((u8*)src)[1] | (((u8*)src)[0] << 8);
-				src += 2;
-				disp = dst - (block & 0x0FFF) - 1;
+				src = (const u8*)src + 2;
+				disp = (u8*)dst - (block & 0x0FFF) - 1;
 				bytes = (block >> 12) + 3;
 				while (bytes--) {
 					if (remaining) {
@@ -136,12 +137,12 @@ void LZ77UncompWRAM(const void *src, void *dst)
                         *(u8*)dst = byte;
 					}
 					++disp;
-					++dst;
+					dst = (u8*)dst + 1;
 				}
 			} else {
 				// Uncompressed
-				byte = *(u8*)src;
-				++src;
+				byte = *(const u8*)src;
+				src = (const u8*)src + 1;
 				if (width == 2) {
 					if ((size_t)dst & 1) {
 						halfword |= byte << 8;
@@ -154,14 +155,14 @@ void LZ77UncompWRAM(const void *src, void *dst)
 				} else {
 					*(u8*)dst = byte;
 				}
-				++dst;
+				dst = (u8*)dst + 1;
 				--remaining;
 			}
 			blockheader <<= 1;
 			--blocksRemaining;
 		} else {
-			blockheader = *(u8*)src;
-			++src;
+			blockheader = *(const u8*)src;
+			src = (const u8*)src + 1;
 			blocksRemaining = 8;
 		}
 	}

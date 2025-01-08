@@ -1,8 +1,8 @@
 #ifndef INTERNAL_FILE_SELECT_MENU_DATA_H
 #define INTERNAL_FILE_SELECT_MENU_DATA_H
 
-#include "types.h"
-#include "structs/menus/file_select.h"
+#include "mzm/types.h"
+#include "mzm/structs/menus/file_select.h"
 
 extern const s8 sSaveFileAreasId[12];
 extern const u32* const sFileSelectTextGfxPointers[5];

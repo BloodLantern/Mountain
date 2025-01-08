@@ -1,9 +1,9 @@
-#include "data/in_game_cutscene_data.h"
-#include "macros.h"
+#include "mzm/data/in_game_cutscene_data.h"
+#include "mzm/macros.h"
 
-#include "constants/in_game_cutscene.h"
-#include "constants/connection.h"
-#include "in_game_cutscene.h"
+#include "mzm/constants/in_game_cutscene.h"
+#include "mzm/constants/connection.h"
+#include "mzm/in_game_cutscene.h"
 
 const struct InGameCutsceneData sInGameCutsceneData[32] = {
     [0] = {

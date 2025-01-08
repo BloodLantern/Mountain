@@ -1,7 +1,7 @@
 #ifndef SAMUS_PALETTE_DATA_H
 #define SAMUS_PALETTE_DATA_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 extern const u16 sSamusPal_PowerSuit_Default[3 * 16];
 extern const u16 sSamusPal_PowerSuit_BeamRelease[5 * 16];

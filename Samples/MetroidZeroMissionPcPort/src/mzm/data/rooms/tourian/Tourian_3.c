@@ -1,5 +1,5 @@
-#include "data/rooms/tourian_rooms_data.h"
-#include "macros.h"
+#include "mzm/data/rooms/tourian_rooms_data.h"
+#include "mzm/macros.h"
 
 const u8 sTourian_3_Clipdata[64] = INCBIN_U8("data/rooms/tourian/Tourian_3_Clipdata.gfx");
 

@@ -1,8 +1,8 @@
 #ifndef ESCAPE_GATE_DATA_H
 #define ESCAPE_GATE_DATA_H
 
-#include "types.h"
-#include "oam.h"
+#include "mzm/types.h"
+#include "mzm/oam.h"
 
 extern const u8 sEscapeGateAndTimerGfx[2048];
 extern const u16 sEscapeGateAndTimerPAL[16];

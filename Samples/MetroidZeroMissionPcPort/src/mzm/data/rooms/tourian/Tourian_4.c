@@ -1,5 +1,5 @@
-#include "data/rooms/tourian_rooms_data.h"
-#include "macros.h"
+#include "mzm/data/rooms/tourian_rooms_data.h"
+#include "mzm/macros.h"
 
 const u8 sTourian_1_Scrolls[SCROLL_DATA_SIZE(1)] = {
 	4, // Room

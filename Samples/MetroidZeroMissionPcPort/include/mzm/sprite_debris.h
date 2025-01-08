@@ -1,8 +1,8 @@
 #ifndef SPRITE_DEBRIS_H
 #define SPRITE_DEBRIS_H
 
-#include "types.h"
-#include "oam.h"
+#include "mzm/types.h"
+#include "mzm/oam.h"
 
 #define MAX_AMOUNT_OF_SPRITE_DEBRIS 8
 

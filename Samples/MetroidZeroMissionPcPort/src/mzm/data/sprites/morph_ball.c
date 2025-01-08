@@ -1,5 +1,5 @@
-#include "data/sprites/morph_ball.h"
-#include "macros.h"
+#include "mzm/data/sprites/morph_ball.h"
+#include "mzm/macros.h"
 
 const u32 sMorphBallGfx[168] = INCBIN_U32("data/sprites/MorphBall.gfx.lz");
 const u16 sMorphBallPAL[16] = INCBIN_U16("data/sprites/MorphBall.pal");

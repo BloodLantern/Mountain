@@ -1,7 +1,7 @@
-#include "data/menus/status_screen_data.h"
-#include "constants/menus/status_screen.h"
-#include "constants/menus/pause_screen.h"
-#include "macros.h"
+#include "mzm/data/menus/status_screen_data.h"
+#include "mzm/constants/menus/status_screen.h"
+#include "mzm/constants/menus/pause_screen.h"
+#include "mzm/macros.h"
 
 const u16 sStatusScreen_40dd10[6 * 16] = INCBIN_U16("data/menus/PauseScreen/40dd10.pal");
 const u16 sStatusScreen_40ddd0[4 * 16] = INCBIN_U16("data/menus/PauseScreen/40ddd0.pal");

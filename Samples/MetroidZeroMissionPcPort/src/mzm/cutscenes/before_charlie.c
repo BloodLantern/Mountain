@@ -1,16 +1,18 @@
-#include "cutscenes/before_charlie.h"
-#include "cutscenes/cutscene_utils.h"
-#include "gba.h"
-#include "color_effects.h" // Required
+#include "mzm/cutscenes/before_charlie.h"
+#include "mzm/cutscenes/cutscene_utils.h"
+#include "mzm/gba.h"
+#include "mzm/color_effects.h" // Required
+#include "mzm/music_wrappers.h"
+#include "mzm/syscall_wrappers.h"
 
-#include "data/shortcut_pointers.h"
-#include "data/cutscenes/before_charlie_data.h"
-#include "data/cutscenes/internal_before_charlie_data.h"
+#include "mzm/data/shortcut_pointers.h"
+#include "mzm/data/cutscenes/before_charlie_data.h"
+#include "mzm/data/cutscenes/internal_before_charlie_data.h"
 
-#include "constants/cutscene.h"
-#include "constants/audio.h"
+#include "mzm/constants/cutscene.h"
+#include "mzm/constants/audio.h"
 
-#include "structs/display.h"
+#include "mzm/structs/display.h"
 
 /**
  * @brief 663c8 | 270 | Handles the close up part
@@ -149,7 +151,7 @@ u8 BeforeCharlieWallAndGreyVoice(void)
             DmaTransfer(3, sBeforeCharlieChozoWallPAL, gPalramBuffer, sizeof(sBeforeCharlieChozoWallPAL), 0x10);
             SET_BACKDROP_COLOR(COLOR_BLACK);
 
-            ApplyMonochromeToPalette(sBeforeCharlieChozoWallPAL, (void*)sEwramPointer + 0x3800, 0);
+            ApplyMonochromeToPalette(sBeforeCharlieChozoWallPAL, (u16*)sEwramPointer + 0x3800, 0);
             DmaTransfer(3, sBeforeCharlieChozoWallPAL, (void*)sEwramPointer, sizeof(sBeforeCharlieChozoWallPAL), 0x10);
 
             CallLZ77UncompVram(sBeforeCharlieChozoWallBackgroundGfx, gVramBuffer + sBeforeCharliePageData[2].graphicsPage * 0x4000);
@@ -287,8 +289,8 @@ void BeforeCharlieWallAndGreyVoiceApplyMonochrome(struct CutsceneGraphicsData* p
     pGraphics->timer = pGraphics->maxTimer;
     pGraphics->paletteStage++;
 
-    ApplySmoothMonochromeToPalette((void*)sEwramPointer, (void*)sEwramPointer + 0x3800, (void*)sEwramPointer + 0x400, pGraphics->paletteStage);
-    DmaTransfer(3, (void*)sEwramPointer + 0x400, gPalramBuffer, 0x200, 0x10);
+    ApplySmoothMonochromeToPalette((void*)sEwramPointer, (u16*)sEwramPointer + 0x3800, (u16*)sEwramPointer + 0x400, pGraphics->paletteStage);
+    DmaTransfer(3, (u8*)sEwramPointer + 0x400, gPalramBuffer, 0x200, 0x10);
 
     if (pGraphics->paletteStage == 32)
         pGraphics->active = FALSE;

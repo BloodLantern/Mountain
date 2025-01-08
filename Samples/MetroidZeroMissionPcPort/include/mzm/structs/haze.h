@@ -1,7 +1,7 @@
 #ifndef HAZE_STRUCT_H
 #define HAZE_STRUCT_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 typedef u32 (*HazeFunc_T)(void);
 

@@ -1,7 +1,7 @@
-#include "data/color_fading_data.h"
-#include "constants/color_fading.h"
-#include "color_fading.h"
-#include "macros.h"
+#include "mzm/data/color_fading_data.h"
+#include "mzm/constants/color_fading.h"
+#include "mzm/color_fading.h"
+#include "mzm/macros.h"
 
 const struct ColorFadingData sColorFadingData[25] = {
     [0] = {

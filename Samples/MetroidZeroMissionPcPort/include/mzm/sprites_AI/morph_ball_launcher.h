@@ -1,7 +1,7 @@
 #ifndef MORPH_BALL_LAUNCHER_AI_H
 #define MORPH_BALL_LAUNCHER_AI_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define MORPH_BALL_LAUNCHER_POSE_IDLE 0x9
 #define MORPH_BALL_LAUNCHER_POSE_DELAY_BEFORE_LAUNCHING 0xB

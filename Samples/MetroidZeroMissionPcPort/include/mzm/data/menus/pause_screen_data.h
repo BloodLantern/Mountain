@@ -1,13 +1,13 @@
 #ifndef PAUSE_SCREEN_DATA_H
 #define PAUSE_SCREEN_DATA_H
 
-#include "types.h"
-#include "structs/cutscene.h"
-#include "structs/text.h"
-#include "structs/menus/pause_screen.h"
-#include "connection.h"
+#include "mzm/types.h"
+#include "mzm/structs/cutscene.h"
+#include "mzm/structs/text.h"
+#include "mzm/structs/menus/pause_screen.h"
+#include "mzm/connection.h"
 
-#include "constants/game_state.h"
+#include "mzm/constants/game_state.h"
 
 extern const u16 sPauseScreen_3fcef0[11 * 16];
 extern const u16 sTankIconsPal[16 * 16];

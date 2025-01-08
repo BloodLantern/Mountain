@@ -1,11 +1,11 @@
-#include "data/block_data.h"
+#include "mzm/data/block_data.h"
 
-#include "macros.h"
+#include "mzm/macros.h"
 
 
-#include "constants/block.h"
-#include "constants/connection.h"
-#include "constants/text.h"
+#include "mzm/constants/block.h"
+#include "mzm/constants/connection.h"
+#include "mzm/constants/text.h"
 
 const struct TankList sNumberOfTanksPerArea[MAX_AMOUNT_OF_AREAS] = {
     [AREA_BRINSTAR] = {

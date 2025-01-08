@@ -1,7 +1,7 @@
 #ifndef FUSION_GALLERY_H
 #define FUSION_GALLERY_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 void FusionGalleryVBlank(void);
 void FusionGalleryInit(void);

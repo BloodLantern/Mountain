@@ -1,8 +1,8 @@
 #ifndef RIDLEY_SPAWN_CUTSCENE
 #define RIDLEY_SPAWN_CUTSCENE
 
-#include "types.h"
-#include "structs/cutscene.h"
+#include "mzm/types.h"
+#include "mzm/structs/cutscene.h"
 
 #define RIDLEY_SPAWN_OAM_ID_RIDLEY_FLYING_REFLECTION 1
 #define RIDLEY_SPAWN_OAM_ID_RIDLEY_FLYING 2

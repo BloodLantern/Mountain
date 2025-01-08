@@ -1,6 +1,6 @@
-#include "sprites_AI/gekitai_machine.h"
-#include "structs/sprite.h"
-#include "sprite_util.h"
+#include "mzm/sprites_AI/gekitai_machine.h"
+#include "mzm/structs/sprite.h"
+#include "mzm/sprite_util.h"
 
 /**
  * @brief 3897c | c | Gekitai machine AI

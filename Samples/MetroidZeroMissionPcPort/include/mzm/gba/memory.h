@@ -1,9 +1,9 @@
 #ifndef GBA_MEMORY_H
 #define GBA_MEMORY_H
 
-#include "types.h"
-#include "macros.h"
-#include "structs/save_file.h"
+#include "mzm/types.h"
+#include "mzm/macros.h"
+#include "mzm/structs/save_file.h"
 
 #define EWRAM_SIZE (256 * 0x400)
 extern u8 gEwramBuffer[EWRAM_SIZE];

@@ -1,4 +1,4 @@
-#include "data/particle_data.h"
+#include "mzm/data/particle_data.h"
 
 const u16 sParticleShootingBeamHorizontalOam_Frame0[4] = {
     0x1,

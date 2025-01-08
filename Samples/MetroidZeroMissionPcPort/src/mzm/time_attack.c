@@ -1,13 +1,13 @@
-#include "time_attack.h"
-#include "macros.h"
+#include "mzm/time_attack.h"
+#include "mzm/macros.h"
 
-#include "data/intro_data.h"
-#include "data/time_attack_data.h"
+#include "mzm/data/intro_data.h"
+#include "mzm/data/time_attack_data.h"
 
-#include "constants/ending_and_gallery.h"
+#include "mzm/constants/ending_and_gallery.h"
 
-#include "structs/in_game_timer.h"
-#include "structs/game_state.h"
+#include "mzm/structs/in_game_timer.h"
+#include "mzm/structs/game_state.h"
 
 struct TimeAttackData gTimeAttackData;
 struct TimeAttackRecord gTimeAttackRecord;

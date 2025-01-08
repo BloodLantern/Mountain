@@ -1,10 +1,10 @@
 #ifndef STATUE_OPENING_DATA_H
 #define STATUE_OPENING_DATA_H
 
-#include "macros.h"
-#include "types.h"
+#include "mzm/macros.h"
+#include "mzm/types.h"
 
-#include "structs/cutscene.h"
+#include "mzm/structs/cutscene.h"
 
 extern const struct CutscenePageData sStatueOpeningPageData[3];
 extern const u8 sStatueOpening_Padding3ed4b0[4];

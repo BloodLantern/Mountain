@@ -1,8 +1,8 @@
 #ifndef DEMO_DATA_H
 #define DEMO_DATA_H
 
-#include "structs/demo.h"
-#include "structs/save_file.h"
+#include "mzm/structs/demo.h"
+#include "mzm/structs/save_file.h"
 
 #define MAX_AMOUNT_OF_DEMOS 16
 

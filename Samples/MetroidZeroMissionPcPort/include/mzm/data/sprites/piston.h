@@ -1,8 +1,8 @@
 #ifndef PISTON_DATA_H
 #define PISTON_DATA_H
 
-#include "types.h"
-#include "oam.h"
+#include "mzm/types.h"
+#include "mzm/oam.h"
 
 extern const u32 sPistonGfx[179];
 extern const u16 sPistonPAL[16];

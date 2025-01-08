@@ -1,13 +1,13 @@
-#include "gba.h"
-#include "sprite_util.h"
-#include "sprites_AI/security_laser.h"
+#include "mzm/gba.h"
+#include "mzm/sprite_util.h"
+#include "mzm/sprites_AI/security_laser.h"
 
-#include "data/sprites/security_laser.h"
+#include "mzm/data/sprites/security_laser.h"
 
-#include "constants/clipdata.h"
-#include "constants/sprite.h"
+#include "mzm/constants/clipdata.h"
+#include "mzm/constants/sprite.h"
 
-#include "structs/sprite.h"
+#include "mzm/structs/sprite.h"
 
 /**
  * @brief 37cbc | 21c | Initializes a security laser sprite

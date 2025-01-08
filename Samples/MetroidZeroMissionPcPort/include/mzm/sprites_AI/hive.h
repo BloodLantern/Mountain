@@ -1,8 +1,8 @@
 #ifndef HIVE_AI_H
 #define HIVE_AI_H
 
-#include "types.h"
-#include "structs/sprite.h"
+#include "mzm/types.h"
+#include "mzm/structs/sprite.h"
 
 void HiveSpawnParticle(void);
 void HiveInit(void);

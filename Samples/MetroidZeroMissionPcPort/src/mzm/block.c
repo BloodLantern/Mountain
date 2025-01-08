@@ -1,22 +1,25 @@
-#include "block.h"
-#include "macros.h"
-#include "gba.h"
+#include "mzm/block.h"
+#include "mzm/macros.h"
+#include "mzm/gba.h"
 
-#include "data/block_data.h"
-#include "data/engine_pointers.h"
-#include "data/clipdata_types_tilemap.h"
+#include "mzm/data/block_data.h"
+#include "mzm/data/engine_pointers.h"
+#include "mzm/data/clipdata_types_tilemap.h"
 
-#include "constants/block.h"
-#include "constants/clipdata.h"
-#include "constants/samus.h"
+#include "mzm/constants/block.h"
+#include "mzm/constants/clipdata.h"
+#include "mzm/constants/samus.h"
 
-#include "structs/bg_clip.h"
-#include "structs/clipdata.h"
-#include "structs/game_state.h"
-#include "structs/samus.h"
-#include "structs/power_bomb_explosion.h"
+#include "mzm/structs/bg_clip.h"
+#include "mzm/structs/clipdata.h"
+#include "mzm/structs/game_state.h"
+#include "mzm/structs/samus.h"
+#include "mzm/structs/power_bomb_explosion.h"
 
 #include <stdio.h>
+
+#include "mzm/audio_wrappers.h"
+#include "mzm/bg_clip.h"
 
 struct BrokenBlock gBrokenBlocks[MAX_AMOUNT_OF_BROKEN_BLOCKS];
 u16 gMakeSolidBlocks[MAX_AMOUNT_OF_MAKE_SOLID_BLOCKS];

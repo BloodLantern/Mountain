@@ -1,7 +1,7 @@
 #ifndef SKULTERA_AI_H
 #define SKULTERA_AI_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define SKULTERA_POSE_IDLE_INIT 0x8
 #define SKULTERA_POSE_IDLE 0x9

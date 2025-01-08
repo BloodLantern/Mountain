@@ -1,6 +1,6 @@
-#include "data/cutscenes/samus_in_blue_ship_data.h"
-#include "gba.h"
-#include "macros.h"
+#include "mzm/data/cutscenes/samus_in_blue_ship_data.h"
+#include "mzm/gba.h"
+#include "mzm/macros.h"
 
 const struct CutscenePageData sSamusInBlueShipPageData[1] = {
     [0] = {

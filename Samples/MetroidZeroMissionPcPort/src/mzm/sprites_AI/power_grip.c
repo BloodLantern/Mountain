@@ -1,16 +1,16 @@
-#include "sprites_AI/power_grip.h"
-#include "macros.h"
-#include "sprite_util.h"
+#include "mzm/sprites_AI/power_grip.h"
+#include "mzm/macros.h"
+#include "mzm/sprite_util.h"
 
-#include "data/sprites/power_grip.h"
+#include "mzm/data/sprites/power_grip.h"
 
-#include "constants/sprite.h"
-#include "constants/event.h"
-#include "constants/samus.h"
-#include "constants/text.h"
+#include "mzm/constants/sprite.h"
+#include "mzm/constants/event.h"
+#include "mzm/constants/samus.h"
+#include "mzm/constants/text.h"
 
-#include "structs/sprite.h"
-#include "structs/samus.h"
+#include "mzm/structs/sprite.h"
+#include "mzm/structs/samus.h"
 
 /**
  * @brief 132d4 | 13c | Power grip AI

@@ -1,10 +1,10 @@
 #ifndef STORY_TEXT_CUTSCENE_DATA_H
 #define STORY_TEXT_CUTSCENE_DATA_H
 
-#include "macros.h"
-#include "types.h"
+#include "mzm/macros.h"
+#include "mzm/types.h"
 
-#include "structs/cutscene.h"
+#include "mzm/structs/cutscene.h"
 
 extern const struct CutscenePageData sStoryTextCutscenePagesData[1];
 

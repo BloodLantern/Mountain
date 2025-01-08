@@ -1,8 +1,8 @@
 #ifndef CUTSCENE_STRUCT_H
 #define CUTSCENE_STRUCT_H
 
-#include "types.h"
-#include "oam.h"
+#include "mzm/types.h"
+#include "mzm/oam.h"
 
 struct OamArray {
     const struct FrameData* const pOam;

@@ -1,7 +1,7 @@
 #ifndef ENDING_AND_GALLERY_STRUCT_H
 #define ENDING_AND_GALLERY_STRUCT_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define ENDING_DATA sNonGameplayRamPointer->ending
 

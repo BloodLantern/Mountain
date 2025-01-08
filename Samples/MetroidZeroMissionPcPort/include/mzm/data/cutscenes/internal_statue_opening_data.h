@@ -1,8 +1,8 @@
 #ifndef INTERNAL_STATUE_OPENING_DATA_H
 #define INTERNAL_STATUE_OPENING_DATA_H
 
-#include "types.h"
-#include "structs/cutscene.h"
+#include "mzm/types.h"
+#include "mzm/structs/cutscene.h"
 
 extern const struct CutsceneSubroutineData sStatueOpeningSubroutineData[3];
 

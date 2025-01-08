@@ -1,5 +1,5 @@
-#include "data/sprites/glass_tube.h"
-#include "macros.h"
+#include "mzm/data/sprites/glass_tube.h"
+#include "mzm/macros.h"
 
 const u32 sGlassTubeGfx[514] = INCBIN_U32("data/sprites/GlassTube.gfx.lz");
 const u16 sGlassTubePAL[80] = INCBIN_U16("data/sprites/GlassTube.pal");

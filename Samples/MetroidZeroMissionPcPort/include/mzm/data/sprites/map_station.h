@@ -1,8 +1,8 @@
 #ifndef MAP_STATION_DATA_H
 #define MAP_STATION_DATA_H
 
-#include "types.h"
-#include "oam.h"
+#include "mzm/types.h"
+#include "mzm/oam.h"
 
 extern const u32 sMapStationGfx[680];
 extern const u16 sMapStationPAL[64];

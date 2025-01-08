@@ -1,18 +1,18 @@
 #ifndef SAVE_FILE_STRUCT_H
 #define SAVE_FILE_STRUCT_H
 
-#include "types.h"
-#include "macros.h"
-#include "gba.h"
-#include "sram_misc.h"
+#include "mzm/types.h"
+#include "mzm/macros.h"
+#include "mzm/gba.h"
+#include "mzm/sram_misc.h"
 
-#include "structs/game_state.h"
-#include "structs/samus.h"
-#include "structs/scroll.h"
-#include "structs/connection.h"
-#include "structs/in_game_timer.h"
-#include "structs/time_attack.h"
-#include "structs/demo.h"
+#include "mzm/structs/game_state.h"
+#include "mzm/structs/samus.h"
+#include "mzm/structs/scroll.h"
+#include "mzm/structs/connection.h"
+#include "mzm/structs/in_game_timer.h"
+#include "mzm/structs/time_attack.h"
+#include "mzm/structs/demo.h"
 
 #define CORRUPTED_FILE_FLAG_CURRENT 1
 #define CORRUPTED_FILE_FLAG_CURRENT_AND_BACKUP 2

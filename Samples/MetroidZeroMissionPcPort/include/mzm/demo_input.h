@@ -1,7 +1,7 @@
 #ifndef DEMO_INPUT_H
 #define DEMO_INPUT_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 void DemoMainLoop(void);
 void RecordDemo(void);

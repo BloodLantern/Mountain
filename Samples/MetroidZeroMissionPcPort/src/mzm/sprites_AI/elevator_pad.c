@@ -1,14 +1,14 @@
-#include "sprites_AI/elevator_pad.h"
-#include "macros.h"
-#include "sprite_util.h"
+#include "mzm/sprites_AI/elevator_pad.h"
+#include "mzm/macros.h"
+#include "mzm/sprite_util.h"
 
-#include "data/sprites/elevator_pad.h"
+#include "mzm/data/sprites/elevator_pad.h"
 
-#include "constants/sprite.h"
-#include "constants/samus.h"
+#include "mzm/constants/sprite.h"
+#include "mzm/constants/samus.h"
 
-#include "structs/sprite.h"
-#include "structs/samus.h"
+#include "mzm/structs/sprite.h"
+#include "mzm/structs/samus.h"
 
 /**
  * @brief 2872c | b8 | Elevator pad AI

@@ -1,7 +1,7 @@
 #ifndef KRAID_AI_H
 #define KRAID_AI_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define KRAID_POSE_GO_UP 0x1
 #define KRAID_POSE_CHECK_FULLY_UP 0x2

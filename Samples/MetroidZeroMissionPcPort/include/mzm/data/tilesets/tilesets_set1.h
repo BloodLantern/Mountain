@@ -1,7 +1,7 @@
 #ifndef TILESETS_SET_1_DATA_H
 #define TILESETS_SET_1_DATA_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 extern const u8 sTileset_42_Tilemap[1796];
 extern const u8 sTileset_78_Tilemap[1796];

@@ -1,7 +1,7 @@
 #ifndef DEMO_H
 #define DEMO_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 void DemoVBlank(void);
 void DemoStart(void);

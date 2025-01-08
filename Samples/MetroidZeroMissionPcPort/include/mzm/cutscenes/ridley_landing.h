@@ -1,8 +1,8 @@
 #ifndef RIDLEY_LANDING_CUTSCENE
 #define RIDLEY_LANDING_CUTSCENE
 
-#include "types.h"
-#include "structs/cutscene.h"
+#include "mzm/types.h"
+#include "mzm/structs/cutscene.h"
 
 #define RIDLEY_LANDING_OAM_ID_MOTHER_SHIP_IN_SPACE 1 
 #define RIDLEY_LANDING_OAM_ID_MOTHER_SHIP_BOTTOM_PART 2

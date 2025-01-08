@@ -1,20 +1,28 @@
-#include "cutscenes/enter_tourian.h"
-#include "cutscenes/cutscene_utils.h"
-#include "color_effects.h"
-#include "macros.h"
+#include "mzm/cutscenes/enter_tourian.h"
 
-#include "data/shortcut_pointers.h"
-#include "data/generic_data.h"
-#include "data/cutscenes/enter_tourian_data.h"
-#include "data/cutscenes/internal_enter_tourian_data.h"
-#include "data/sprites/metroid.h"
+#include "mzm/audio_wrappers.h"
+#include "mzm/cutscenes/cutscene_utils.h"
+#include "mzm/color_effects.h"
+#include "mzm/complex_oam.h"
+#include "mzm/init_helpers.h"
+#include "mzm/macros.h"
+#include "mzm/music_wrappers.h"
+#include "mzm/oam_id.h"
+#include "mzm/syscall_wrappers.h"
 
-#include "constants/audio.h"
-#include "constants/cutscene.h"
-#include "constants/game_state.h"
+#include "mzm/data/shortcut_pointers.h"
+#include "mzm/data/generic_data.h"
+#include "mzm/data/cutscenes/enter_tourian_data.h"
+#include "mzm/data/cutscenes/internal_enter_tourian_data.h"
+#include "mzm/data/sprites/metroid.h"
 
-#include "structs/game_state.h"
-#include "structs/display.h"
+#include "mzm/constants/audio.h"
+#include "mzm/constants/cutscene.h"
+#include "mzm/constants/game_state.h"
+#include "mzm/menus/pause_screen.h"
+
+#include "mzm/structs/game_state.h"
+#include "mzm/structs/display.h"
 
 /**
  * @brief 67080 | 310 | Handles the entire cutscene
@@ -472,7 +480,7 @@ void EnterTourianUpdatePirate(struct CutsceneOamData* pOam)
             pOam->unk_1A = 0;
             pOam->unk_12++;
 
-            ApplySmoothPaletteTransition((void*)sEwramPointer + 0x280, (void*)sEwramPointer + 0x3AA0, gPalramBuffer + 0x280, pOam->unk_12);
+            ApplySmoothPaletteTransition((u16*)sEwramPointer + 0x280, (u16*)sEwramPointer + 0x3AA0, gPalramBuffer + 0x280, pOam->unk_12);
             if (pOam->unk_12 > 30)
                 pOam->actions ^= 2;
         }
@@ -576,7 +584,7 @@ u8 EnterTourianInit(void)
     CUTSCENE_DATA.unk_A = TRUE;
 
     PlayMusic(MUSIC_ENTERING_TOURIAN_CUTSCENE, 0);
-    DmaTransfer(3, (&gPalramBuffer[sizeof(gPalramBuffer) / 2]), (void*)sEwramPointer + 0x3A00, 0x200, 0x10);
+    DmaTransfer(3, (&gPalramBuffer[sizeof(gPalramBuffer) / 2]), (u8*)sEwramPointer + 0x3A00, 0x200, 0x10);
     CutsceneStartBackgroundFading(3);
 
     CUTSCENE_DATA.dispcnt = DCNT_OBJ | sEnterTourianPageData[0].bg | sEnterTourianPageData[1].bg;

@@ -1,7 +1,7 @@
 #ifndef SPRITESET_DATA_H
 #define SPRITESET_DATA_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 extern const u8 sSpriteset0[2];
 

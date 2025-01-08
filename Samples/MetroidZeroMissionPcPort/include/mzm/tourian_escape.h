@@ -1,7 +1,7 @@
 #ifndef TOURIAN_ESCAPE_H
 #define TOURIAN_ESCAPE_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 void TourianEscapeVBLank(void);
 void TourianEscapeVBLankZebesExploding(void);

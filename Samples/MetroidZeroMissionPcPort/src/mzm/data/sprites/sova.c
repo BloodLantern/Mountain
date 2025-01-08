@@ -1,5 +1,5 @@
-#include "data/sprites/sova.h"
-#include "macros.h"
+#include "mzm/data/sprites/sova.h"
+#include "mzm/macros.h"
 
 const u32 sSovaGfx[851] = INCBIN_U32("data/sprites/Sova.gfx.lz");
 const u16 sSovaPal[3 * 16] = INCBIN_U16("data/sprites/Sova.pal");

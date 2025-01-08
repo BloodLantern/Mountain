@@ -1,6 +1,6 @@
-#include "data/sprites/dessgeega.h"
+#include "mzm/data/sprites/dessgeega.h"
 
-#include "macros.h"
+#include "mzm/macros.h"
 
 const s16 sDessgeegaHighJumpYVelocity[10] = {
     -8, -16, -16, -8, -4, 0, 4, 8, 16, 16

@@ -1,8 +1,8 @@
 #ifndef ERASE_SRAM_MENU_STRUCT_H
 #define ERASE_SRAM_MENU_STRUCT_H
 
-#include "types.h"
-#include "structs/menu.h"
+#include "mzm/types.h"
+#include "mzm/structs/menu.h"
 
 #define ERASE_SRAM_DATA sNonGameplayRamPointer->eraseSram
 

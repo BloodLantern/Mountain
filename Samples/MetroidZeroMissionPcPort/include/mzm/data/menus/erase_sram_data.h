@@ -1,8 +1,8 @@
 #ifndef ERASE_SRAM_MENU_DATA_H
 #define ERASE_SRAM_MENU_DATA_H
 
-#include "types.h"
-#include "structs/cutscene.h"
+#include "mzm/types.h"
+#include "mzm/structs/cutscene.h"
 
 extern const u16 sEraseSramMenuObjectsPal[7 * 16];
 extern const u16 sEraseSramMenuBackgroundPal[15 * 16 - 1];

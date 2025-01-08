@@ -1,10 +1,10 @@
 #ifndef FILE_SELECT_MENU_DATA_H
 #define FILE_SELECT_MENU_DATA_H
 
-#include "types.h"
-#include "structs/menu.h"
-#include "structs/cutscene.h"
-#include "structs/text.h"
+#include "mzm/types.h"
+#include "mzm/structs/menu.h"
+#include "mzm/structs/cutscene.h"
+#include "mzm/structs/text.h"
 
 extern const u16 sFileSelectPal[7 * 16];
 extern const u16 sFileSelect_4548f8[2 * 16];

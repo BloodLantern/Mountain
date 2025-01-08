@@ -1,16 +1,16 @@
-#include "location_text.h"
-#include "gba.h"
-#include "modern/sprite_renderer.h"
-#include "macros.h"
+#include "mzm/location_text.h"
+#include "mzm/gba.h"
+#include "mzm/macros.h"
+#include "mzm/text.h"
 
-#include "data/sprites/area_banner.h"
+#include "mzm/data/sprites/area_banner.h"
 
-#include "constants/connection.h"
-#include "constants/sprite.h"
+#include "mzm/constants/connection.h"
+#include "mzm/constants/sprite.h"
 
-#include "structs/connection.h"
-#include "structs/sprite.h"
-#include "structs/room.h"
+#include "mzm/structs/connection.h"
+#include "mzm/structs/sprite.h"
+#include "mzm/structs/room.h"
 
 /**
  * @brief 11ed8 | b8 | Gets the location text of the current room for brinstar 
@@ -269,7 +269,7 @@ struct SpriteGraphics* LocationTextGetGfxSlot(void)
     {
         // Location text found with spriteset
         gSpriteData[0].roomSlot = lt;
-        gfxSlot = SpriteRendererGetSpriteGraphics(PSPRITE_AREA_BANNER);
+        //gfxSlot = SpriteRendererGetSpriteGraphics(PSPRITE_AREA_BANNER); // TODO - Modern
         // Draw location text
         TextDrawlocation(lt, gfxSlot);
     }

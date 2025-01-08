@@ -1,5 +1,5 @@
-#include "data/sprites/elevator_pad.h"
-#include "macros.h"
+#include "mzm/data/sprites/elevator_pad.h"
+#include "mzm/macros.h"
 
 const u32 sElevatorPadGfx[136] = INCBIN_U32("data/sprites/ElevatorPad.gfx.lz");
 const u16 sElevatorPadPAL[16] = INCBIN_U16("data/sprites/ElevatorPad.pal");

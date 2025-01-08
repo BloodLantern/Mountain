@@ -1,7 +1,7 @@
 #ifndef SAVE_FILE_H
 #define SAVE_FILE_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 void SramRead_All(void);
 void SramWrite_FileScreenOptionsUnlocked(void);

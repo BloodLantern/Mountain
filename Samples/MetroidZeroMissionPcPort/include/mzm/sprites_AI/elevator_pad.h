@@ -1,7 +1,7 @@
 #ifndef ELEVATOR_PAD_AI_H
 #define ELEVATOR_PAD_AI_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 void ElevatorPad(void);
 

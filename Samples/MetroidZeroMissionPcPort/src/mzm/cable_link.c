@@ -1,16 +1,16 @@
-#include "cable_link.h"
-#include "macros.h"
-#include "gba.h"
-#include "callbacks.h"
-#include "music_wrappers.h"
+#include "mzm/cable_link.h"
+#include "mzm/macros.h"
+#include "mzm/gba.h"
+#include "mzm/callbacks.h"
+#include "mzm/music_wrappers.h"
 
-#include "data/cable_link_data.h"
-#include "data/io_transfer_data.h"
+#include "mzm/data/cable_link_data.h"
+#include "mzm/data/io_transfer_data.h"
 
-#include "constants/cable_link.h"
+#include "mzm/constants/cable_link.h"
 
-#include "structs/audio.h"
-#include "structs/game_state.h"
+#include "mzm/structs/audio.h"
+#include "mzm/structs/game_state.h"
 
 struct IoTransferInfo gIoTransferInfo;
 

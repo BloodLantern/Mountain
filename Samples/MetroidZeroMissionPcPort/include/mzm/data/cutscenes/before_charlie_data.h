@@ -1,7 +1,7 @@
 #ifndef BEFORE_CHARLIE_DATA_H
 #define BEFORE_CHARLIE_DATA_H
 
-#include "structs/cutscene.h"
+#include "mzm/structs/cutscene.h"
 
 extern const struct CutscenePageData sBeforeCharliePageData[9];
 

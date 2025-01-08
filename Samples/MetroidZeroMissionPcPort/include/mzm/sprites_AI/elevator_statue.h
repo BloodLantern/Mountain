@@ -1,7 +1,7 @@
 #ifndef ELEVATOR_STATUE_AI_H
 #define ELEVATOR_STATUE_AI_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define ELEVATOR_STATUE_POSE_CHECK_FALL 0x8
 #define ELEVATOR_STATUE_POSE_DELAY_BEFORE_FALLING 0x9

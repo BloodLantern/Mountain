@@ -1,5 +1,5 @@
-#include "data/sprites/kraid.h"
-#include "macros.h"
+#include "mzm/data/sprites/kraid.h"
+#include "mzm/macros.h"
 
 const s16 sKraidMultiSpriteData_Rising_Frame0[36] = {
     36, 0, 0,

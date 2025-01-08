@@ -1,5 +1,5 @@
-#include "fixed_point.h"
-#include "macros.h"
+#include "mzm/fixed_point.h"
+#include "mzm/macros.h"
 
 /**
  * @brief a4c | 1c | Fixed point multiplication

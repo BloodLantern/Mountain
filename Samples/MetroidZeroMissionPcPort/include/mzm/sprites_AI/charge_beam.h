@@ -1,7 +1,7 @@
 #ifndef CHARGE_BEAM_AI_H
 #define CHARGE_BEAM_AI_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define CHARGE_BEAM_POSE_IDLE 0x9
 #define CHARGE_BEAM_POSE_SPAWN_GLOW 0xA

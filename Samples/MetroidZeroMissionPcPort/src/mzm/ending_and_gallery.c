@@ -1,19 +1,19 @@
-#include "ending_and_gallery.h"
-#include "callbacks.h"
+#include "mzm/ending_and_gallery.h"
+#include "mzm/callbacks.h"
 
-#include "data/shortcut_pointers.h"
-#include "data/ending_and_gallery_data.h"
-#include "data/internal_ending_and_gallery_data.h"
+#include "mzm/data/shortcut_pointers.h"
+#include "mzm/data/ending_and_gallery_data.h"
+#include "mzm/data/internal_ending_and_gallery_data.h"
 
-#include "constants/audio.h"
-#include "constants/ending_and_gallery.h"
-#include "constants/game_state.h"
-#include "constants/text.h"
+#include "mzm/constants/audio.h"
+#include "mzm/constants/ending_and_gallery.h"
+#include "mzm/constants/game_state.h"
+#include "mzm/constants/text.h"
 
-#include "structs/bg_clip.h"
-#include "structs/display.h"
-#include "structs/ending_and_gallery.h"
-#include "structs/game_state.h"
+#include "mzm/structs/bg_clip.h"
+#include "mzm/structs/display.h"
+#include "mzm/structs/ending_and_gallery.h"
+#include "mzm/structs/game_state.h"
 
 /**
  * @brief 84c34 | 48 | Checks if an ending letter should display

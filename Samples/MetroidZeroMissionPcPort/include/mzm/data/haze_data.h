@@ -1,8 +1,8 @@
 #ifndef HAZE_DATA_H
 #define HAZE_DATA_H
 
-#include "types.h"
-#include "structs/haze.h"
+#include "mzm/types.h"
+#include "mzm/structs/haze.h"
 
 extern const u8 sHaze_345ff8[132];
 

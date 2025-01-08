@@ -1,7 +1,7 @@
-#include "data/menus/internal_erase_sram_data.h"
-#include "macros.h"
-#include "data/menus/erase_sram_data.h"
-#include "constants/game_state.h"
+#include "mzm/data/menus/internal_erase_sram_data.h"
+#include "mzm/macros.h"
+#include "mzm/data/menus/erase_sram_data.h"
+#include "mzm/constants/game_state.h"
 
 const u32* const sEraseSramTextGfxPointers[7][2] = {
     [LANGUAGE_JAPANESE] = {

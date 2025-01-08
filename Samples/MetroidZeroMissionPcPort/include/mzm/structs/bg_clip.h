@@ -1,8 +1,8 @@
 #ifndef BG_CLIP_STRUCT_H
 #define BG_CLIP_STRUCT_H
 
-#include "types.h"
-#include "structs/connection.h"
+#include "mzm/types.h"
+#include "mzm/structs/connection.h"
 
 // Structs
 

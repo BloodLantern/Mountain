@@ -1,15 +1,15 @@
-#include "sprites_AI/security_gate.h"
-#include "sprite_util.h"
+#include "mzm/sprites_AI/security_gate.h"
+#include "mzm/sprite_util.h"
 
-#include "data/sprites/security_gate.h"
+#include "mzm/data/sprites/security_gate.h"
 
-#include "constants/clipdata.h"
-#include "constants/sprite.h"
-#include "constants/sprite_util.h"
-#include "constants/particle.h"
+#include "mzm/constants/clipdata.h"
+#include "mzm/constants/sprite.h"
+#include "mzm/constants/sprite_util.h"
+#include "mzm/constants/particle.h"
 
-#include "structs/clipdata.h"
-#include "structs/sprite.h"
+#include "mzm/structs/clipdata.h"
+#include "mzm/structs/sprite.h"
 
 /**
  * @brief 2eaf8 | 50 | Updates the clipdata of the security gate

@@ -1,11 +1,11 @@
 #ifndef ESCAPE_STRUCT_H
 #define ESCAPE_STRUCT_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 // Structs
 
-struct __attribute__((packed)) EscapeDigits {
+struct EscapeDigits {
     u8 hundredths;
     u8 tenths;
     u8 secondsOnes;

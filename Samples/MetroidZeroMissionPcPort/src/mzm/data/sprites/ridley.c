@@ -1,5 +1,5 @@
-#include "data/sprites/ridley.h"
-#include "macros.h"
+#include "mzm/data/sprites/ridley.h"
+#include "mzm/macros.h"
 
 const s16 sRidleyMultiSpriteData_Idle_Frame0[18] = {
     17, -76, 16,

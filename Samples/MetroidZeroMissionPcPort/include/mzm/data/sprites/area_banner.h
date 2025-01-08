@@ -1,8 +1,8 @@
 #ifndef AREA_BANNER_DATA_H
 #define AREA_BANNER_DATA_H
 
-#include "types.h"
-#include "oam.h"
+#include "mzm/types.h"
+#include "mzm/oam.h"
 
 extern const u32 sAreaBannerGfx[65];
 extern const u16 sAreaBannerPAL[16];

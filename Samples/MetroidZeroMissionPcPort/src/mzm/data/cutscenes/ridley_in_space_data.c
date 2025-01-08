@@ -1,7 +1,7 @@
-#include "data/cutscenes/ridley_in_space_data.h"
-#include "cutscenes/ridley_in_space.h"
-#include "gba.h"
-#include "macros.h"
+#include "mzm/data/cutscenes/ridley_in_space_data.h"
+#include "mzm/cutscenes/ridley_in_space.h"
+#include "mzm/gba.h"
+#include "mzm/macros.h"
 
 const struct CutsceneScrollingInfo sRidleyInSpaceScrollingInfo[2] = {
     [0] = {

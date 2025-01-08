@@ -1,20 +1,20 @@
-#include "menus/erase_sram.h"
-#include "macros.h"
-#include "callbacks.h"
+#include "mzm/menus/erase_sram.h"
+#include "mzm/macros.h"
+#include "mzm/callbacks.h"
 
-#include "data/shortcut_pointers.h"
-#include "data/menus/erase_sram_data.h"
-#include "data/menus/internal_erase_sram_data.h"
-#include "data/menus/title_screen_data.h"
-#include "data/menus/pause_screen_data.h"
+#include "mzm/data/shortcut_pointers.h"
+#include "mzm/data/menus/erase_sram_data.h"
+#include "mzm/data/menus/internal_erase_sram_data.h"
+#include "mzm/data/menus/title_screen_data.h"
+#include "mzm/data/menus/pause_screen_data.h"
 
-#include "constants/audio.h"
-#include "constants/game_state.h"
-#include "constants/menus/erase_sram.h"
+#include "mzm/constants/audio.h"
+#include "mzm/constants/game_state.h"
+#include "mzm/constants/menus/erase_sram.h"
 
-#include "structs/display.h"
-#include "structs/game_state.h"
-#include "structs/menus/erase_sram.h"
+#include "mzm/structs/display.h"
+#include "mzm/structs/game_state.h"
+#include "mzm/structs/menus/erase_sram.h"
 
 /**
  * @brief 75c30 | 14c | Subroutine for the erase sram menu

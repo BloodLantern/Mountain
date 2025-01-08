@@ -1,4 +1,4 @@
-#include "audio/track_internal.h"
+#include "mzm/audio/track_internal.h"
 
 u8 InitTrack(struct TrackData* pTrack, const u32* pHeader)
 {

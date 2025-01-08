@@ -1,7 +1,7 @@
 #ifndef COLOR_EFFECTS_H
 #define COLOR_EFFECTS_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define FADING_TYPE_IN 0
 #define FADING_TYPE_FLASH 1

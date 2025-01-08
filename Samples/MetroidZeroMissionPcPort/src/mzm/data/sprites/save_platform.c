@@ -1,5 +1,5 @@
-#include "data/sprites/save_platform.h"
-#include "macros.h"
+#include "mzm/data/sprites/save_platform.h"
+#include "mzm/macros.h"
 
 const u32 sSavePlatformGfx[603] = INCBIN_U32("data/sprites/SavePlatform.gfx.lz");
 const u16 sSavePlatformPAL[64] = INCBIN_U16("data/sprites/SavePlatform.pal");

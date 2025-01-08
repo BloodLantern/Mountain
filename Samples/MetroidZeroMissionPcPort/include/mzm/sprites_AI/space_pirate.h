@@ -1,7 +1,7 @@
 #ifndef SPACE_PIRATE_AI_H
 #define SPACE_PIRATE_AI_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define SPACE_PIRATE_HEIGHT (BLOCK_SIZE * 3 + 0x34)
 

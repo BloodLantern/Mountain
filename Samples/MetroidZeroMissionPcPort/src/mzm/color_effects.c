@@ -1,15 +1,15 @@
-#include "color_effects.h"
-#include "macros.h"
-#include "gba.h"
+#include "mzm/color_effects.h"
+#include "mzm/macros.h"
+#include "mzm/gba.h"
 
-#include "data/color_fading_data.h"
+#include "mzm/data/color_fading_data.h"
 
-#include "constants/color_fading.h"
-#include "constants/game_state.h"
+#include "mzm/constants/color_fading.h"
+#include "mzm/constants/game_state.h"
 
-#include "structs/color_effects.h"
-#include "structs/room.h"
-#include "structs/game_state.h"
+#include "mzm/structs/color_effects.h"
+#include "mzm/structs/room.h"
+#include "mzm/structs/game_state.h"
 
 #define COLOR_DATA_BG_EWRAM ((u16*)(gEwramBuffer + 0x35000))
 #define COLOR_DATA_OBJ_EWRAM ((u16*)(gEwramBuffer + 0x35200))

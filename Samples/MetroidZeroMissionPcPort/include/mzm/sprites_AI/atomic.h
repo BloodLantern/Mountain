@@ -1,7 +1,7 @@
 #ifndef ATOMIC_AI_H
 #define ATOMIC_AI_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define ATOMIC_POSE_IDLE_INIT 0x8
 #define ATOMIC_POSE_IDLE 0x9

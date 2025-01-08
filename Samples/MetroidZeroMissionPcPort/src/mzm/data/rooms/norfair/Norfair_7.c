@@ -1,5 +1,5 @@
-#include "data/rooms/norfair_rooms_data.h"
-#include "macros.h"
+#include "mzm/data/rooms/norfair_rooms_data.h"
+#include "mzm/macros.h"
 
 const u8 sNorfair_7_Clipdata[180] = INCBIN_U8("data/rooms/norfair/Norfair_7_Clipdata.gfx");
 

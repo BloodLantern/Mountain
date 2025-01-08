@@ -1,7 +1,7 @@
 #ifndef GBA_DISPLAY_H
 #define GBA_DISPLAY_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define REG_DISPCNT (gRegBuffer + 0x000)
 

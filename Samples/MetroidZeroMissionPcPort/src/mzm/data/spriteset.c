@@ -1,5 +1,5 @@
-#include "data/spriteset.h"
-#include "constants/sprite.h"
+#include "mzm/data/spriteset.h"
+#include "mzm/constants/sprite.h"
 
 #define SPRITESET_EMPTY 0, 0
 

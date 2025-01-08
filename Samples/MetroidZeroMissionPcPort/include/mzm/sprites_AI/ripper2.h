@@ -1,7 +1,7 @@
 #ifndef RIPPER2_AI_H
 #define RIPPER2_AI_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define RIPPER2_POSE_MOVING_INIT 0x8
 #define RIPPER2_POSE_MOVING 0x9

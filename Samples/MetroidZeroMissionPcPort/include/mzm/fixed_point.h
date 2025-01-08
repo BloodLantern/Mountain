@@ -1,7 +1,7 @@
 #ifndef FIXED_POINT_H
 #define FIXED_POINT_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 /* All of these use a 1.7.8 fixed point representation */
 

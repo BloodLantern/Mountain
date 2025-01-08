@@ -1,17 +1,17 @@
 #ifndef ENGINE_POINTERS_H
 #define ENGINE_POINTERS_H
 
-#include "types.h"
+#include "mzm/types.h"
 
-#include "data/demo_data.h"
+#include "mzm/data/demo_data.h"
 
-#include "constants/connection.h"
+#include "mzm/constants/connection.h"
 
-#include "structs/connection.h"
-#include "structs/projectile.h"
-#include "structs/particle.h"
-#include "structs/color_effects.h"
-#include "structs/block.h"
+#include "mzm/structs/connection.h"
+#include "mzm/structs/projectile.h"
+#include "mzm/structs/particle.h"
+#include "mzm/structs/color_effects.h"
+#include "mzm/structs/block.h"
 
 extern const ProjFunc_T sProcessProjectileFunctionPointers[16];
 

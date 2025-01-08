@@ -1,7 +1,7 @@
 #ifndef INTRO_STRUCT_H
 #define INTRO_STRUCT_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define INTRO_DATA sNonGameplayRamPointer->intro
 

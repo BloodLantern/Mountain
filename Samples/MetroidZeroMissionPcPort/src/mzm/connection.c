@@ -1,28 +1,36 @@
-#include "gba.h"
-#include "connection.h"
-// #include "bg_clip.h" // Required
+#include "mzm/gba.h"
+#include "mzm/connection.h"
+// #include "mzm/bg_clip.h" // Required
 
-#include "data/engine_pointers.h"
-#include "data/empty_datatypes.h"
-#include "data/hatch_data.h"
+#include "mzm/data/engine_pointers.h"
+#include "mzm/data/empty_datatypes.h"
+#include "mzm/data/hatch_data.h"
 
-#include "constants/connection.h"
-#include "constants/color_fading.h"
-#include "constants/clipdata.h"
-#include "constants/cutscene.h"
-#include "constants/event.h"
-#include "constants/game_state.h"
-#include "constants/samus.h"
-#include "constants/room.h"
+#include "mzm/constants/connection.h"
+#include "mzm/constants/color_fading.h"
+#include "mzm/constants/clipdata.h"
+#include "mzm/constants/cutscene.h"
+#include "mzm/constants/event.h"
+#include "mzm/constants/game_state.h"
+#include "mzm/constants/samus.h"
+#include "mzm/constants/room.h"
 
-#include "structs/bg_clip.h"
-#include "structs/clipdata.h"
-#include "structs/connection.h"
-#include "structs/cutscene.h"
-#include "structs/display.h"
-#include "structs/game_state.h"
-#include "structs/room.h"
-#include "structs/samus.h"
+#include "mzm/structs/bg_clip.h"
+#include "mzm/structs/clipdata.h"
+#include "mzm/structs/connection.h"
+
+#include "mzm/audio_wrappers.h"
+#include "mzm/bg_clip.h"
+#include "mzm/color_fading.h"
+#include "mzm/event.h"
+#include "mzm/music_wrappers.h"
+#include "mzm/room_music.h"
+#include "mzm/transparency.h"
+#include "mzm/structs/cutscene.h"
+#include "mzm/structs/display.h"
+#include "mzm/structs/game_state.h"
+#include "mzm/structs/room.h"
+#include "mzm/structs/samus.h"
 
 u32 gHatchesOpened[MAX_AMOUNT_OF_AREAS][16];
 
@@ -44,7 +52,7 @@ u8 gNumberOfValidHatchesInRoom;
 struct HatchFlashingAnimation gHatchFlashingAnimation;
 
 // FIXME, find a better solution
-void BgClipSetBg1BlockValue(u32, u16, u16);
+void BgClipSetBg1BlockValue(u16, u16, u16);
 void BgClipSetRawBG1BlockValue(u32, u16, u16);
 void BgClipSetClipdataBlockValue(u16, u16, u16);
 
@@ -507,7 +515,7 @@ u32 ConnectionCheckEnterDoor(u16 yPosition, u16 xPosition)
  */
 u32 ConnectionCheckAreaConnection(u16 yPosition, u16 xPosition)
 {
-    const struct Door* pDoor;
+    const struct Door* pDoor = NULL;
     struct HatchData* pHatch;
     s32 i;
     s32 j;

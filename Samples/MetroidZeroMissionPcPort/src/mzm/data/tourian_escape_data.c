@@ -1,4 +1,4 @@
-#include "data/tourian_escape_data.h"
+#include "mzm/data/tourian_escape_data.h"
 
 const u16 sTourianEscapeExplodingPal[9 * 16] = INCBIN_U16("data/tourian_escape/Exploding.pal");
 const u16 sMotherShipBlowingUpExplosionsPal[6 * 16] = INCBIN_U16("data/tourian_escape/BlowingUpExplosions.pal");

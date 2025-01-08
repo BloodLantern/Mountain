@@ -1,7 +1,7 @@
 #ifndef DEOREM_AI_H
 #define DEOREM_AI_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define DEOREM_POSE_SPAWN_GOING_DOWN 0x8
 #define DEOREM_POSE_SPAWN_GOING_UP 0x22

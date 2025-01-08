@@ -1,7 +1,7 @@
 #ifndef METROID_AI_H
 #define METROID_AI_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define METROID_POSE_CHECK_SPAWN 0x1
 #define METROID_POSE_SPAWNING 0x2

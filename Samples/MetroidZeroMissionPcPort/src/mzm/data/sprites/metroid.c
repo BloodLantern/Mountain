@@ -1,5 +1,5 @@
-#include "data/sprites/metroid.h"
-#include "macros.h"
+#include "mzm/data/sprites/metroid.h"
+#include "mzm/macros.h"
 
 const s16 sMetroidSpawningYMovement[65] = {
     0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 2, 2, 1,

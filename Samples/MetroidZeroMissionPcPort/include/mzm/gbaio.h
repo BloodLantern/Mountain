@@ -1,7 +1,7 @@
 #ifndef IO_H
 #define IO_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define write32(addr, val) (0)
 #define write16(addr, val) (0)

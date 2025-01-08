@@ -1,7 +1,7 @@
 #ifndef ROOM_H
 #define ROOM_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 void RoomLoad(void);
 void RoomLoadTileset(void);

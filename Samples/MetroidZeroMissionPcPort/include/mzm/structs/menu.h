@@ -1,7 +1,7 @@
 #ifndef MENU_OAM_H
 #define MENU_OAM_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define OAM_ID_CHANGED_FLAG (TRUE << 1)
 #define CUTSCENE_OAM_ACTION_NONE 0

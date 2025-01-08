@@ -1,7 +1,7 @@
 #ifndef IN_GAME_CUTSCENE_STRUCT_H
 #define IN_GAME_CUTSCENE_STRUCT_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 typedef u32 (*InGameCutsceneFunc_T)(u8, u8);
 

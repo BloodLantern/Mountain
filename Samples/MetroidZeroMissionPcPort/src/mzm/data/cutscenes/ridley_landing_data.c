@@ -1,7 +1,7 @@
-#include "data/cutscenes/ridley_landing_data.h"
-#include "cutscenes/ridley_landing.h"
-#include "gba.h"
-#include "macros.h"
+#include "mzm/data/cutscenes/ridley_landing_data.h"
+#include "mzm/cutscenes/ridley_landing.h"
+#include "mzm/gba.h"
+#include "mzm/macros.h"
 
 const struct CutscenePageData sRidleyLandingPageData[5] = {
     [0] = {

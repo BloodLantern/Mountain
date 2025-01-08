@@ -1,17 +1,17 @@
-#include "sprites_AI/escape_ship_pirate.h"
-#include "sprites_AI/space_pirate.h"
-#include "macros.h"
-#include "sprite_util.h"
+#include "mzm/sprites_AI/escape_ship_pirate.h"
+#include "mzm/sprites_AI/space_pirate.h"
+#include "mzm/macros.h"
+#include "mzm/sprite_util.h"
 
-#include "data/sprite_data.h"
-#include "data/sprites/space_pirate.h"
+#include "mzm/data/sprite_data.h"
+#include "mzm/data/sprites/space_pirate.h"
 
-#include "constants/sprite.h"
-#include "constants/samus.h"
+#include "mzm/constants/sprite.h"
+#include "mzm/constants/samus.h"
 
-#include "structs/game_state.h"
-#include "structs/samus.h"
-#include "structs/sprite.h"
+#include "mzm/structs/game_state.h"
+#include "mzm/structs/samus.h"
+#include "mzm/structs/sprite.h"
 
 /**
  * @brief 2dc78 | 60 | Initializes an escape ship space pirate sprite

@@ -1,14 +1,14 @@
-#include "softreset.h"
-#include "gba.h"
-#include "callbacks.h"
+#include "mzm/softreset.h"
+#include "mzm/gba.h"
+#include "mzm/callbacks.h"
 
-#include "data/shortcut_pointers.h"
+#include "mzm/data/shortcut_pointers.h"
 
-#include "constants/cutscene.h"
+#include "mzm/constants/cutscene.h"
 
-#include "structs/display.h"
-#include "structs/game_state.h"
-#include "structs/cutscene.h"
+#include "mzm/structs/display.h"
+#include "mzm/structs/game_state.h"
+#include "mzm/structs/cutscene.h"
 
 #include <stdio.h>
 

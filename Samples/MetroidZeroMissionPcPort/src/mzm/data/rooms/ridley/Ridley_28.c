@@ -1,5 +1,5 @@
-#include "data/rooms/ridley_rooms_data.h"
-#include "macros.h"
+#include "mzm/data/rooms/ridley_rooms_data.h"
+#include "mzm/macros.h"
 
 const u8 sRidley_28_Clipdata[250] = INCBIN_U8("data/rooms/ridley/Ridley_28_Clipdata.gfx");
 

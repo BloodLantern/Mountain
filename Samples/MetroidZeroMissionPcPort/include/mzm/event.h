@@ -1,7 +1,7 @@
 #ifndef EVENT_H
 #define EVENT_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 extern u32 gEventsTriggered[8];
 

@@ -1,15 +1,15 @@
-#include "sprites_AI/searchlight.h"
-#include "sprite_util.h"
+#include "mzm/sprites_AI/searchlight.h"
+#include "mzm/sprite_util.h"
 
-#include "data/sprites/searchlight.h"
+#include "mzm/data/sprites/searchlight.h"
 
-#include "constants/clipdata.h"
-#include "constants/particle.h"
-#include "constants/sprite.h"
+#include "mzm/constants/clipdata.h"
+#include "mzm/constants/particle.h"
+#include "mzm/constants/sprite.h"
 
-#include "structs/display.h"
-#include "structs/clipdata.h"
-#include "structs/sprite.h"
+#include "mzm/structs/display.h"
+#include "mzm/structs/clipdata.h"
+#include "mzm/structs/sprite.h"
 
 /**
  * @brief 49bd0 | 1fc | Searchlight AI

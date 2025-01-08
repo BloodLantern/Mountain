@@ -1,6 +1,6 @@
-#include "data/menus/internal_game_over_data.h"
-#include "data/menus/game_over_data.h"
-#include "macros.h"
+#include "mzm/data/menus/internal_game_over_data.h"
+#include "mzm/data/menus/game_over_data.h"
+#include "mzm/macros.h"
 
 const u32* const sGameOverTextPromptGfxPointers[LANGUAGE_END] = {
     [LANGUAGE_JAPANESE] = sGameOverTextPromptEnglishGfx,

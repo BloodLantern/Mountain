@@ -1,7 +1,7 @@
 #ifndef RINKA_AI_H
 #define RINKA_AI_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define RINKA_POSE_SPAWNING_INIT 0x8
 #define RINKA_POSE_SPAWNING 0x9
