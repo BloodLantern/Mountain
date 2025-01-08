@@ -77,26 +77,20 @@ void Shape::RenderImGui(uint32_t* enabledModulesInt)
     switch (type)
     {
         case ShapeType::Circle:
-        {
             ImGui::DragFloat("Radius", &circle.radius, 0.01f, 0.f, std::numeric_limits<float_t>::max(), "%.2f", ImGuiSliderFlags_AlwaysClamp);
             ImGui::DragFloat("Radius thickness", &circle.radiusThickness, 0.01f, 0.f, 1.f, "%.2f", ImGuiSliderFlags_AlwaysClamp);
             ImGui::DragAngle("Arc angle", &circle.arcAngle, 0.1f, 0.f, Calc::TwoPi, "%.2f", ImGuiSliderFlags_AlwaysClamp);
             ShapeArcRenderImGui(circle.arc);
             break;
-        }
 
         case ShapeType::Line:
-        {
             ImGui::DragFloat("Radius", &line.radius, 0.01f, 0.f, std::numeric_limits<float_t>::max(), "%.2f", ImGuiSliderFlags_AlwaysClamp);
             ShapeArcRenderImGui(line.arc);
             break;
-        }
 
         case ShapeType::Rectangle:
-        {
             ImGui::DragFloat2("Scale thickness", rectangle.scaleThickness.Data(), 0.01f, 0.f, 1.f, "%.2f", ImGuiSliderFlags_AlwaysClamp);
             break;
-        }
     }
 
     ImGui::DragFloat2("Offset", offset.Data(), 0.1f);
@@ -120,23 +114,21 @@ void Shape::RenderDebug(const ParticleSystem& system, const Vector2 renderTarget
     switch (type)
     {
         case ShapeType::Circle:
-        {
             Draw::Circle(center, circle.radius, actualScale, DrawColor);
             Draw::Circle(center, circle.radius - circle.radius * circle.radiusThickness, actualScale, DrawColor);
             break;
-        }
+
         case ShapeType::Line:
-        {
             // TODO - Take rotation into account
             Draw::Line(center - Vector2::UnitX() * line.radius, center + Vector2::UnitX() * line.radius, DrawColor);
             break;
-        }
+
         case ShapeType::Rectangle:
-        {
             // TODO - Take rotation into account
             Draw::Rectangle(center - actualScale * 0.5f, actualScale, DrawColor);
+            const Vector2 actualScaleThickness = actualScale * (Vector2::One() - rectangle.scaleThickness);
+            Draw::Rectangle(center - actualScaleThickness * 0.5f, actualScaleThickness, DrawColor);
             break;
-        }
     }
 }
 

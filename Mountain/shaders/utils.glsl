@@ -34,11 +34,11 @@ vec2 RandomPointInCircle(in vec2 seed, in vec2 center, in float radius)
     for (int i = 0; i < 10; i++)
     {
         if (SquaredLength(point) < 1.f)
-            break;
+            return center + point * radius;
         point = RandomPointInRectangle(fract((seed + vec2(1.f)) * point), vec2(-1.f), vec2(2.f));
     }
 
-    return center + point * radius;
+    return center;
 }
 
 vec2 RandomPointInCircle(in vec2 seed, in vec2 center, in float radius, in vec2 scale)
@@ -51,3 +51,10 @@ vec2 RandomDirection(in vec2 seed)
     float angle = RandomFloat(seed, 0.f, TwoPi);
     return vec2(cos(angle), sin(angle));
 }
+
+vec2 Rotated(in vec2 value, in float c, in float s)
+{
+    return vec2(value.x * c - value.y * s, value.x * s + value.y * c);
+}
+
+vec2 Rotated(in vec2 value, in float angle) { return Rotated(value, cos(angle), sin(angle)); }
