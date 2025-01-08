@@ -1,0 +1,87 @@
+#ifndef UNKNOWN_ITEM_CHOZO_STATUE_AI_H
+#define UNKNOWN_ITEM_CHOZO_STATUE_AI_H
+
+#include "types.h"
+
+#define UNKNOWN_ITEM_CHOZO_STATUE_BEHAVIOR_ITEM 0x0
+#define UNKNOWN_ITEM_CHOZO_STATUE_BEHAVIOR_REFILL 0x1
+#define UNKNOWN_ITEM_CHOZO_STATUE_BEHAVIOR_HINT 0x2
+#define UNKNOWN_ITEM_CHOZO_STATUE_BEHAVIOR_HINT_TAKEN 0x3
+
+#define UNKNOWN_ITEM_CHOZO_STATUE_POSE_IDLE 0x9
+#define UNKNOWN_ITEM_CHOZO_STATUE_POSE_DO_NOTHING 0xF
+#define UNKNOWN_ITEM_CHOZO_STATUE_POSE_REGISTER_HINT 0x22
+#define UNKNOWN_ITEM_CHOZO_STATUE_POSE_HINT_FLASHING 0x23
+#define UNKNOWN_ITEM_CHOZO_STATUE_POSE_SITTING_INIT 0x24
+#define UNKNOWN_ITEM_CHOZO_STATUE_POSE_SITTING 0x25
+#define UNKNOWN_ITEM_CHOZO_STATUE_POSE_DELAY_AFTER_SITTING 0x27
+#define UNKNOWN_ITEM_CHOZO_STATUE_POSE_WAIT_FOR_ITEM_TO_BE_COLLECTED 0x29
+#define UNKNOWN_ITEM_CHOZO_STATUE_POSE_TIMER_AFTER_ITEM 0x2B
+#define UNKNOWN_ITEM_CHOZO_STATUE_POSE_REFILL_INIT 0x2E
+#define UNKNOWN_ITEM_CHOZO_STATUE_POSE_REFILL 0x2F
+#define UNKNOWN_ITEM_CHOZO_STATUE_POSE_SLEEPING_INIT 0x30
+#define UNKNOWN_ITEM_CHOZO_STATUE_POSE_SLEEPING 0x31
+
+// Chozo statue part
+
+#define UNKNOWN_ITEM_CHOZO_STATUE_HAND_X_OFFSET 0x38
+#define UNKNOWN_ITEM_CHOZO_STATUE_HAND_Y_OFFSET 0x11
+
+#define UNKNOWN_ITEM_CHOZO_STATUE_PART_POSE_ARM_CHECK_GRAB_SAMUS_HINT 0x9
+#define UNKNOWN_ITEM_CHOZO_STATUE_PART_POSE_LEG_IDLE 0xF
+#define UNKNOWN_ITEM_CHOZO_STATUE_PART_POSE_ARM_SITTING 0x23
+#define UNKNOWN_ITEM_CHOZO_STATUE_PART_POSE_ARM_SEATED 0x24
+#define UNKNOWN_ITEM_CHOZO_STATUE_PART_POSE_ARM_CHECK_GRAB_SAMUS_REFILL 0x25
+#define UNKNOWN_ITEM_CHOZO_STATUE_PART_POSE_ARM_REFILL 0x27
+#define UNKNOWN_ITEM_CHOZO_STATUE_PART_POSE_ARM_SLEEPING_INIT 0x29
+#define UNKNOWN_ITEM_CHOZO_STATUE_PART_POSE_ARM_SLEEPING 0x2B
+#define UNKNOWN_ITEM_CHOZO_STATUE_PART_POSE_EYE_OPENING_INIT 0x42
+#define UNKNOWN_ITEM_CHOZO_STATUE_PART_POSE_EYE_OPENING 0x43
+#define UNKNOWN_ITEM_CHOZO_STATUE_PART_POSE_EYE_CLOSING_INIT 0x44
+#define UNKNOWN_ITEM_CHOZO_STATUE_PART_POSE_EYE_CLOSING 0x45
+#define UNKNOWN_ITEM_CHOZO_STATUE_PART_POSE_GLOW_IDLE 0x4F
+#define UNKNOWN_ITEM_CHOZO_STATUE_PART_POSE_DO_NOTHING 0x61
+
+#define UNKNOWN_ITEM_CHOZO_STATUE_PART_ARM 0x0
+#define UNKNOWN_ITEM_CHOZO_STATUE_PART_GLOW 0x1
+#define UNKNOWN_ITEM_CHOZO_STATUE_PART_EYE 0x2
+#define UNKNOWN_ITEM_CHOZO_STATUE_PART_LEG 0x3
+#define UNKNOWN_ITEM_CHOZO_STATUE_PART_HEAD 0x4
+
+void UnknownItemChozoStatueSyncSubSprites(void);
+void UnknownItemChozoStatueInit(void);
+void UnknownItemChozoStatue_Empty(void);
+void UnknownItemChozoStatueRegisterHint(void);
+void UnknownItemChozoStatueHintFlashing(void);
+void UnknownItemChozoStatueSittingInit(void);
+void UnknownItemChozoStatueSitting(void);
+void UnknownItemChozoStatueDelayBeforeRefillAfterHint(void);
+void UnknownItemChozoStatueWaitForItemToBeCollected(void);
+void UnknownItemChozoStatueTimerAfterItemGrabbed(void);
+void UnknownItemChozoStatueRefillInit(void);
+void UnknownItemChozoStatueRefillSamus(void);
+void UnknownItemChozoStatueSleepingInit(void);
+void UnknownItemChozoStatueSleeping(void);
+void UnknownItemChozoStatuePartInit(void);
+void UnknownItemChozoStatuePartGlowIdle(void);
+void UnknownItemChozoStatuePartArmCheckGrabSamusHint(void);
+void UnknownItemChozoStatuePartSyncSamus(void);
+void UnknownItemChozoStatuePartArmSitting(void);
+void UnknownItemChozoStatuePartArmSeated(void);
+void UnknownItemChozoStatuePartArmCheckGrabSamusRefill(void);
+void UnknownItemChozoStatuePartArmRefill(void);
+void UnknownItemChozoStatuePart_Empty(void);
+void UnknownItemChozoStatuePartSleepingInit(void);
+void UnknownItemChozoStatuePartArmSleeping(void);
+void UnknownItemChozoStatuePartEyeOpeningInit(void);
+void UnknownItemChozoStatuePartEyeOpening(void);
+void UnknownItemChozoStatuePartEyeClosingInit(void);
+void UnknownItemChozoStatuePartEyeClosing(void);
+void UnknownItemChozoStatuePartLegIdle(void);
+void UnknownItemChozoStatue(void);
+void UnknownItemChozoStatuePart(void);
+void UnknownItemChozoStatueRefill(void);
+void ChozoStatueStandingChangeCCAA(u8 bodyCaa, u8 handCaa);
+void ChozoStatueSeatedChangeCCAA(u8 caa);
+
+#endif /* UNKNOWN_ITEM_CHOZO_STATUE_AI_H */

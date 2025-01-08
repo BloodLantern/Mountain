@@ -41,7 +41,7 @@ int32_t main(int32_t, char_t**)
 #endif
 
 	Mountain::NoBinaryResources = true;
-	Mountain::BuiltinShadersPath = "Mountain/shaders";
+	Mountain::BuiltinShadersPath = "../Mountain/shaders";
 
 	GameExample* game = new GameExample("Mountain tests");
 	game->Initialize();

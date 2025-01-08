@@ -172,6 +172,10 @@
   <ItemGroup>
     <ClInclude Include="include\mzm_game.hpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="include\mzm\" />
+    <Folder Include="src\mzm\" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
