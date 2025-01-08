@@ -19,6 +19,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Breakout", "Samples\Breakou
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameOfLife", "Samples\GameOfLife\GameOfLife.vcxproj", "{4DFB4753-740A-40B9-AB80-54D1ABD91ADC}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MetroidZeroMissionPcPort", "Samples\MetroidZeroMissionPcPort\MetroidZeroMissionPcPort.vcxproj", "{14EF4F28-0ACA-4495-B19A-B658B29AFB29}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -41,6 +43,10 @@ Global
 		{4DFB4753-740A-40B9-AB80-54D1ABD91ADC}.Debug|x64.Build.0 = Debug|x64
 		{4DFB4753-740A-40B9-AB80-54D1ABD91ADC}.Release|x64.ActiveCfg = Release|x64
 		{4DFB4753-740A-40B9-AB80-54D1ABD91ADC}.Release|x64.Build.0 = Release|x64
+		{14EF4F28-0ACA-4495-B19A-B658B29AFB29}.Debug|x64.ActiveCfg = Debug|x64
+		{14EF4F28-0ACA-4495-B19A-B658B29AFB29}.Debug|x64.Build.0 = Debug|x64
+		{14EF4F28-0ACA-4495-B19A-B658B29AFB29}.Release|x64.ActiveCfg = Release|x64
+		{14EF4F28-0ACA-4495-B19A-B658B29AFB29}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -48,6 +54,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{54E1FA2B-40B8-4341-AEF3-EB48CE7954EC} = {1952D997-4B64-424E-BCA4-82BE2FD53C4E}
 		{4DFB4753-740A-40B9-AB80-54D1ABD91ADC} = {1952D997-4B64-424E-BCA4-82BE2FD53C4E}
+		{14EF4F28-0ACA-4495-B19A-B658B29AFB29} = {1952D997-4B64-424E-BCA4-82BE2FD53C4E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7F0712F4-5482-4016-8C1B-BB08A850AADA}
