@@ -1,6 +1,11 @@
 #ifndef GBA_DISPLAY_H
 #define GBA_DISPLAY_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #define REG_DISPCNT (gRegBuffer + 0x000)
@@ -133,5 +138,9 @@
 #define WIN0_ALL (WIN0_BG0 | WIN0_BG1 | WIN0_BG2 | WIN0_BG3 | WIN0_OBJ | WIN0_COLOR_EFFECT)
 #define WIN1_ALL_NO_COLOR_EFFECT (WIN1_BG0 | WIN1_BG1 | WIN1_BG2 | WIN1_BG3 | WIN1_OBJ)
 #define WIN1_ALL (WIN1_BG0 | WIN1_BG1 | WIN1_BG2 | WIN1_BG3 | WIN1_OBJ | WIN1_COLOR_EFFECT)
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* GBA_DISPLAY_H */

@@ -1,6 +1,11 @@
 #ifndef GLOBALS_H
 #define GLOBALS_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/callbacks.h"
 #include "mzm/types.h"
 #include "mzm/sprite_debris.h"
@@ -39,5 +44,9 @@ extern u16 (*gIntrCodePointer)[0x100];
 extern u16 gInterruptCheckFlag;
 
 // IO
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* GLOBALS_H */

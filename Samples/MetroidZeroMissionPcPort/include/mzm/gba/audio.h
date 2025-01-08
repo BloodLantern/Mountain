@@ -1,6 +1,11 @@
 #ifndef GBA_AUDIO_H
 #define GBA_AUDIO_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/memory.h"
 
 #define REG_SOUND1CNT_L (gRegBuffer + 0x60)
@@ -27,5 +32,9 @@
 #define REG_FIFO_B (gRegBuffer + 0xA4)
 
 #define SOUNDCNT_RESTART_SOUND (1 << 15)
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* GBA_AUDIO_H */

@@ -1,6 +1,11 @@
 #ifndef MOTHER_BRAIN_CLOSE_UP_DATA_H
 #define MOTHER_BRAIN_CLOSE_UP_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/macros.h"
 #include "mzm/types.h"
 
@@ -32,5 +37,9 @@ extern const u32 sMotherBrainCloseUpGlassTileTable[67];
 extern const u32 sMotherBrainCloseUpTankViewGfx[3944];
 extern const u32 sMotherBrainCloseUpTankViewTileTable[368];
 extern const u16 sMotherBrainCloseUpTankViewPal[8 * 16];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* MOTHER_BRAIN_CLOSE_UP_DATA_H */

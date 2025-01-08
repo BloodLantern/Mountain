@@ -1,6 +1,11 @@
 #ifndef MOTHER_BRAIN_AI_H
 #define MOTHER_BRAIN_AI_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #define MOTHER_BRAIN_POSE_WAITING_GLASS 0x1
@@ -44,5 +49,9 @@ void MotherBrainPart(void);
 void MotherBrainBeam(void);
 void MotherBrainBlock(void);
 void MotherBrainGlassBreaking(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* MOTHER_BRAIN_AI_H */

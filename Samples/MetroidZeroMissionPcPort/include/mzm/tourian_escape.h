@@ -1,6 +1,11 @@
 #ifndef TOURIAN_ESCAPE_H
 #define TOURIAN_ESCAPE_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 void TourianEscapeVBLank(void);
@@ -25,5 +30,9 @@ u8 TourianEscapeSamusCrashing(void);
 u8 TourianEscapeSamusLookingAtSky(void);
 u8 TourianEscapeSamusLookingAtMotherShip(void);
 u8 TourianEscapeCallSubroutines(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* TOURIAN_ESCAPE_H */

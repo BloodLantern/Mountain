@@ -1,6 +1,11 @@
 #ifndef ENDING_AND_GALLERY_STRUCT_H
 #define ENDING_AND_GALLERY_STRUCT_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #define ENDING_DATA sNonGameplayRamPointer->ending
@@ -59,5 +64,9 @@ struct EndingData {
     u16 dispcnt;
     u16 bldcnt;
 };
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* ENDING_AND_GALLERY_STRUCT_H */

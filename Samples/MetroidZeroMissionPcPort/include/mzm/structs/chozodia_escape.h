@@ -1,6 +1,11 @@
 #ifndef CHOZODIA_ESCAPE_STRUCT_H
 #define CHOZODIA_ESCAPE_STRUCT_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #define CHOZODIA_ESCAPE_DATA sNonGameplayRamPointer->chozodiaEscape
@@ -47,5 +52,9 @@ struct ChozodiaEscapeData {
     u16 bldcnt;
     u16 monochromePalette[16 * 16];
 };
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* CHOZODIA_ESCAPE_STRUCT_H */

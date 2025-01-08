@@ -1,6 +1,11 @@
 #ifndef IN_GAME_CUTSCENE_H
 #define IN_GAME_CUTSCENE_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 u32 InGameCutsceneSamusCloseUp(u8 cutsceneNumber, u8 cutsceneNumberNoFlag);
@@ -21,5 +26,9 @@ void InGameCutsceneCheckStartQueried(void);
 
 void UpdateAnimatedPaletteAfterTransitionOrReload(void);
 u32 InGameCutsceneCheckFlag(u8 setting, u8 param_2);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* IN_GAME_CUTSCENE_H */

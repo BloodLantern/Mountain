@@ -1,6 +1,11 @@
 #ifndef PROJECTILE_H
 #define PROJECTILE_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/oam.h"
 #include "mzm/structs/projectile.h"
@@ -28,5 +33,9 @@ void ProjectileCheckSamusBombBounce(struct ProjectileData* pProj);
 void ProjectileProcessBomb(struct ProjectileData* pProj);
 void ProjectileProcess_Empty(struct ProjectileData* pProj);
 void ProjectileProcessPowerBomb(struct ProjectileData* pProj);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* PROJECTILE_H */

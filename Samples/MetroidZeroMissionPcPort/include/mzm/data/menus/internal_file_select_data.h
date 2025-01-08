@@ -1,6 +1,11 @@
 #ifndef INTERNAL_FILE_SELECT_MENU_DATA_H
 #define INTERNAL_FILE_SELECT_MENU_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/structs/menus/file_select.h"
 
@@ -22,5 +27,9 @@ extern const struct OptionsSubroutineInfo sOptionsSubroutineInfo[9];
 
 extern const u8 sFileSelectDefaultPassword[8];
 extern const u16 sMenuSounds[13];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* INTERNAL_FILE_SELECT_MENU_DATA_H */

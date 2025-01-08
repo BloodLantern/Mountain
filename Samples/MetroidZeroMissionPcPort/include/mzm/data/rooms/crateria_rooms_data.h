@@ -1,6 +1,11 @@
 #ifndef CRATERIA_ROOMS_DATA_H
 #define CRATERIA_ROOMS_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/structs/scroll.h"
 #include "mzm/structs/sprite.h"
@@ -143,5 +148,9 @@ extern const u8 sCrateria_Bg3_2[1224];
 extern const u8 sCrateria_Bg3_3[1840];
 extern const u8 sCrateria_Bg3_4[520];
 extern const u8 sCrateria_Bg3_5[1472];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* CRATERIA_ROOMS_DATA_H */

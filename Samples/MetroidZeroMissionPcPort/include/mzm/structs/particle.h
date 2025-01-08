@@ -1,6 +1,11 @@
 #ifndef PARTICLE_STRUCT_H
 #define PARTICLE_STRUCT_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/macros.h"
 
@@ -29,5 +34,9 @@ extern struct ParticleEffect gParticleEffects[MAX_AMOUNT_OF_PARTICLES];
 extern const u16* gCurrentParticleEffectOamFramePointer;
 extern u16 gParticleEscapeOamFrames[OAM_DATA_SIZE(8)];
 extern u16 gParticleSamusReflectionOamFrames[OAM_DATA_SIZE(24)];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* PARTICLE_STRUCT_H */

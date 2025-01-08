@@ -22,8 +22,8 @@
  */
 void HudGenericLoadCommonSpriteGfx(void)
 {
-    gCommonSpriteGraphics = SpriteRendererLoadGraphics("data/hud/Common.gfx", FALSE);
-    gCommonSpritePalette = SpriteRendererLoadPalette("data/hud/Common.pal");
+    /*gCommonSpriteGraphics = SpriteRendererLoadGraphics("data/hud/Common.gfx", FALSE);
+    gCommonSpritePalette = SpriteRendererLoadPalette("data/hud/Common.pal");*/ // TODO - Modern
 }
 
 /**

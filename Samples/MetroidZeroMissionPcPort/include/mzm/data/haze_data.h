@@ -1,6 +1,11 @@
 #ifndef HAZE_DATA_H
 #define HAZE_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/structs/haze.h"
 
@@ -19,5 +24,9 @@ extern const s8 sHaze_Bg3_WeakOutside[16];
 extern const s8 sHaze_Bg_WeakOutside[32];
 
 extern const struct HazeLoop sHazeLoop_Empty;
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* HAZE_DATA_H */

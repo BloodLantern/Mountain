@@ -1,6 +1,11 @@
 #ifndef MUSIC_WRAPPERS_H
 #define MUSIC_WRAPPERS_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/structs/audio.h"
 
 void DMA2IntrCode(void);
@@ -41,5 +46,9 @@ void PlaySoundTest(u16 musicTrack);
 void ReplaySoundTest(u16 musicTrack);
 void CheckReplayFileSelectMusic(u16 timer);
 void unk_42bc(u16 musicTrack);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* MUSIC_WRAPPERS_H */

@@ -1,6 +1,11 @@
 #ifndef FUSION_GALLERY_STRUCT_H
 #define FUSION_GALLERY_STRUCT_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #define FUSION_GALLERY_DATA sNonGameplayRamPointer->fusionGallery
@@ -60,5 +65,9 @@ struct FusionGalleryData {
     u16 dispcnt;
     u16 bldcnt;
 };
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* FUSION_GALLERY_STRUCT_H */

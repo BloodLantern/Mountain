@@ -1,6 +1,11 @@
 #ifndef REO_AI_H
 #define REO_AI_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #define REO_POSE_IDLE_INIT 0x8
@@ -14,5 +19,9 @@ void ReoIdle(void);
 void ReoMovingInit(void);
 void ReoMove(void);
 void Reo(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* REO_AI_H */

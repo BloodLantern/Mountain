@@ -1,6 +1,11 @@
 #ifndef MORPH_BALL_LAUNCHER_AI_H
 #define MORPH_BALL_LAUNCHER_AI_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #define MORPH_BALL_LAUNCHER_POSE_IDLE 0x9
@@ -20,5 +25,9 @@ void MorphBallLauncherDelayBeforeLaunching(void);
 void MorphBallLauncherLaunchSamus(void);
 void MorphBallLauncher(void);
 void MorphBallLauncherPart(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* MORPH_BALL_LAUNCHER_AI_H */

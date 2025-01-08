@@ -1,6 +1,11 @@
 #ifndef ERASE_SRAM_MENU_H
 #define ERASE_SRAM_MENU_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/structs/menus/erase_sram.h"
 
@@ -14,5 +19,9 @@ void EraseSramUpdateCursorPosition(void);
 void EraseSramVBlank(void);
 void EraseSramVBlank_Empty(void);
 void EraseSramProcessOAM(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* ERASE_SRAM_MENU_H */

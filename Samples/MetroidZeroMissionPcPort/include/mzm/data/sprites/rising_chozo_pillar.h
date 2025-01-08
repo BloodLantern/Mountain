@@ -1,6 +1,11 @@
 #ifndef RISING_CHOZO_PILLAR_DATA_H
 #define RISING_CHOZO_PILLAR_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/oam.h"
 
@@ -134,5 +139,9 @@ extern const struct FrameData sRisingChozoPillarPlatformOam_Spawning[28];
 extern const struct FrameData sRisingChozoPillarPlatformOam_Spawned[2];
 
 extern const struct FrameData sRisingChozoPillarPlatformShadowOAM[4];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

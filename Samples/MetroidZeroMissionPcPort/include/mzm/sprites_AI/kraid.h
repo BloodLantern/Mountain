@@ -1,6 +1,11 @@
 #ifndef KRAID_AI_H
 #define KRAID_AI_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #define KRAID_POSE_GO_UP 0x1
@@ -92,5 +97,9 @@ void Kraid(void);
 void KraidPart(void);
 void KraidSpike(void);
 void KraidNail(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* KRAID_AI_H */

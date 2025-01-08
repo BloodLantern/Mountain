@@ -1,6 +1,11 @@
 #ifndef ELEVATOR_STATUE_AI_H
 #define ELEVATOR_STATUE_AI_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #define ELEVATOR_STATUE_POSE_CHECK_FALL 0x8
@@ -31,5 +36,9 @@ void RidleyElevatorStatueFalling(void);
 void KraidElevatorStatue(void);
 void RidleyElevatorStatue(void);
 void ElevatorStatueDebris(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* ELEVATOR_STATUE_AI_H */

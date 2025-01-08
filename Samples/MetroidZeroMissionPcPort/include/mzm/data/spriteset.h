@@ -1,6 +1,11 @@
 #ifndef SPRITESET_DATA_H
 #define SPRITESET_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 extern const u8 sSpriteset0[2];
@@ -248,5 +253,9 @@ extern const s16 sDebris6YVelocity[9];
 extern const s16 sDebris7YVelocity[9];
 
 extern const s16 sDebris8YVelocity[9];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* SPRITESET_DATA_H */

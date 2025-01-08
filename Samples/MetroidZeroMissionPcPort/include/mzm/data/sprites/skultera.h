@@ -1,6 +1,11 @@
 #ifndef SKULTERA_DATA_H
 #define SKULTERA_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/oam.h"
 
@@ -36,5 +41,9 @@ extern const struct FrameData sSkulteraOam_Idle[5];
 extern const struct FrameData sSkulteraOam_TurningAround[9];
 
 extern const struct FrameData sSkulteraOam_ChasingSamus[5];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

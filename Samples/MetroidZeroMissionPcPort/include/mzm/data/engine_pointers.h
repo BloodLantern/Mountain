@@ -1,6 +1,11 @@
 #ifndef ENGINE_POINTERS_H
 #define ENGINE_POINTERS_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #include "mzm/data/demo_data.h"
@@ -57,5 +62,9 @@ extern const TourianEscapeFunc_T sTourianEscapeFunctionPointers[2];
 extern const s8* const sCutsceneScreenShakeOffsetSetPointers[4];
 
 extern const u8 sCutsceneScreenShakeOffsetSetSizes[4];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* ENGINE_POINTERS_H */

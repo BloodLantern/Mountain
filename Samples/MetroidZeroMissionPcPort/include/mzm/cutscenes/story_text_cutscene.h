@@ -1,6 +1,11 @@
 #ifndef STORY_TEXT_CUTSCENE
 #define STORY_TEXT_CUTSCENE
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/structs/cutscene.h"
 
@@ -12,5 +17,9 @@ u8 StoryTextCutsceneFadeOut(void);
 u8 StoryTextCutsceneCheckInput(void);
 u8 StoryTextCutsceneEnd(void);
 u8 StoryTextCutsceneSubroutine(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* STORY_TEXT_CUTSCENE */

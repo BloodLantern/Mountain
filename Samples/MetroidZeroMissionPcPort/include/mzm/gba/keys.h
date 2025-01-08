@@ -1,6 +1,11 @@
 #ifndef GBA_KEYS_H
 #define GBA_KEYS_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/memory.h"
 #include "mzm/types.h"
 
@@ -25,5 +30,9 @@
 #define KEY_CONTROL_ENABLE (1 << 14)
 #define KEY_CONTROL_ANY_INPUT (0 << 15)
 #define KEY_CONTROL_ALL_INPUTS (1 << 15)
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* GBA_KEYS_H */

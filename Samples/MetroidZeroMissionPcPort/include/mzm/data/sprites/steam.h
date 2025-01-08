@@ -1,6 +1,11 @@
 #ifndef STEAM_DATA_H
 #define STEAM_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/oam.h"
 
@@ -120,5 +125,9 @@ extern const struct FrameData sSteamOam_VerticalSmall[10];
 extern const struct FrameData sSteamDiagonalOam_Large[12];
 
 extern const struct FrameData sSteamDiagonalOam_Small[10];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

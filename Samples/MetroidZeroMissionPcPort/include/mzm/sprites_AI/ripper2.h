@@ -1,6 +1,11 @@
 #ifndef RIPPER2_AI_H
 #define RIPPER2_AI_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #define RIPPER2_POSE_MOVING_INIT 0x8
@@ -16,5 +21,9 @@ void Ripper2TurnAroundInit(void);
 void Ripper2TurnAroundPart1(void);
 void Ripper2TurnAroundPart2(void);
 void Ripper2(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* RIPPER2_AI_H */

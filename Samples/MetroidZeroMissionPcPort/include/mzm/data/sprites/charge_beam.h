@@ -1,6 +1,11 @@
 #ifndef CHARGE_BEAM_DATA_H
 #define CHARGE_BEAM_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/oam.h"
 
@@ -48,5 +53,9 @@ extern const struct FrameData sChargeBeamOAM_Visible[5];
 extern const struct FrameData sChargeBeamOAM_Spawning[13];
 
 extern const struct FrameData sChargeBeamGlowOAM_Idle[15];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

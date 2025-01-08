@@ -1,6 +1,11 @@
 #ifndef SAMUS_STRUCT_H
 #define SAMUS_STRUCT_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/macros.h"
 
@@ -197,5 +202,9 @@ extern u8 gDisableDrawingSamusAndScrolling;
 extern u16 gSamusPalette[16 * 2];
 extern u16 gSamusPaletteSize;
 extern s16 gSamusDoorPositionOffset;
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* SAMUS_STRUCT_H */

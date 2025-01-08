@@ -1,6 +1,11 @@
 #ifndef TANGLE_VINE_AI_H
 #define TANGLE_VINE_AI_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #define TANGLE_VINE_GERUTA_STATUS_VINE_DEAD 0x0
 #define TANGLE_VINE_GERUTA_STATUS_GERUTA_DEAD 0x1
 #define TANGLE_VINE_GERUTA_STATUS_FULL 0x2
@@ -19,5 +24,9 @@ void TangleVineTall(void);
 void TangleVineMedium(void);
 void TangleVineCurved(void);
 void TangleVineShort(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* TANGLE_VINE_AI_H */

@@ -1,6 +1,11 @@
 #ifndef TOURIAN_ROOMS_DATA_H
 #define TOURIAN_ROOMS_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/structs/scroll.h"
 #include "mzm/structs/sprite.h"
@@ -127,5 +132,9 @@ extern const u8 sTourian_Bg3_2[936];
 extern const u8 sTourian_Bg3_3[932];
 extern const u8 sTourian_Bg3_4[860];
 extern const u8 sTourian_Bg3_5[852];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* TOURIAN_ROOMS_DATA_H */

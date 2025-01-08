@@ -1,6 +1,11 @@
 #ifndef POLYP_AI_H
 #define POLYP_AI_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #define POLYP_POSE_IDLE_INIT 0x8
@@ -31,5 +36,9 @@ void PolypProjectileExplodingInit(void);
 void PolypProjectileCheckExplodingAnimEnded(void);
 void Polyp(void);
 void PolypProjectile(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* POLYP_AI_H */

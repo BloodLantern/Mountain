@@ -1,6 +1,11 @@
 #ifndef HATCH_DATA_H
 #define HATCH_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #include "mzm/structs/connection.h"
@@ -28,5 +33,9 @@ extern const u16 sHatchesTilemapValues[MAX_AMOUNT_OF_HATCH_TYPES];
 extern const u16 sNumberOfHatchLockEventsPerArea[MAX_AMOUNT_OF_AREAS];
 
 // 3603e8
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

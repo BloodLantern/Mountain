@@ -1,6 +1,11 @@
 #ifndef TEXT_STRUCT_H
 #define TEXT_STRUCT_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 struct Message {
@@ -23,5 +28,9 @@ struct Message {
 extern struct Message gCurrentMessage;
 extern u32 gCurrentCharacterGfx[32];
 extern s8 gCurrentItemBeingAcquired;
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* TEXT_STRUCT_H */

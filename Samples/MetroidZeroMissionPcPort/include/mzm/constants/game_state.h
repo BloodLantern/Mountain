@@ -1,6 +1,11 @@
 #ifndef GAME_STATE_CONSTANTS_H
 #define GAME_STATE_CONSTANTS_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #define PAUSE_SCREEN_NONE 0
 #define PAUSE_SCREEN_UNKNOWN_1 1
 #define PAUSE_SCREEN_PAUSE_OR_CUTSCENE 2
@@ -57,5 +62,9 @@ enum Language {
 #define SUB_GAME_MODE_LOADING_ROOM 0x3
 #define SUB_GAME_MODE_DYING 0x5
 #define SUB_GAME_MODE_FREE_MOVEMENT 0x6
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* GAME_STATE_CONSTANTS_H */

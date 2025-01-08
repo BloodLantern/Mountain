@@ -1,6 +1,11 @@
 #ifndef MORPH_BALL_DATA_H
 #define MORPH_BALL_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/oam.h"
 
@@ -26,5 +31,9 @@ extern const u16 sMorphBallOutsideOam_Idle_Frame4[4];
 extern const struct FrameData sMorphBallOam_Idle[5];
 
 extern const struct FrameData sMorphBallOutsideOam_Idle[6];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

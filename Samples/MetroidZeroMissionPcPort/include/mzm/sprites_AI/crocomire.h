@@ -1,6 +1,11 @@
 #ifndef CROCOMIRE_AI_H
 #define CROCOMIRE_AI_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #define CROCOMIRE_POSE_IDLE_INIT 0x8
@@ -25,5 +30,9 @@ void Crocomire_Empty(void);
 void CrocomirePartInit(void);
 void Crocomire(void);
 void CrocomirePart(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* CROCOMIRE_AI_H */

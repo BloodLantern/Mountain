@@ -1,6 +1,11 @@
 #ifndef SAMUS_ANIMATION_POINTERS_DATA_H
 #define SAMUS_ANIMATION_POINTERS_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #include "mzm/constants/samus.h"
@@ -179,5 +184,9 @@ extern const s16 sSamusHitboxData[3][3];
 extern const s16 sSamusHitboxData_Above[3];
 extern const struct FrameData* const sSamusEnvEffectsFrameDataPointers[ENV_EFFECT_END - 1];
 extern const u16 sSamusPullingSelfUpVelocity[4];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* SAMUS_ANIMATION_POINTERS_DATA_H */

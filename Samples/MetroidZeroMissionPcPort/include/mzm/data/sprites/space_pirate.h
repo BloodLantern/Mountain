@@ -1,6 +1,11 @@
 #ifndef SPACE_PIRATE_DATA_H
 #define SPACE_PIRATE_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/oam.h"
 
@@ -336,5 +341,9 @@ extern const struct FrameData sSpacePirateLaserOAM_Exploding[8];
 extern const struct FrameData sSpacePirateOAM_LookingAtCamera_Unused[5];
 
 extern const struct FrameData sSpacePirateCarryingPowerBombOAM[9];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

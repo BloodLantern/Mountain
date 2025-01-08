@@ -1,6 +1,11 @@
 #ifndef NORFAIR_ROOMS_DATA_H
 #define NORFAIR_ROOMS_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/structs/scroll.h"
 #include "mzm/structs/sprite.h"
@@ -386,5 +391,9 @@ extern const u8 sNorfair_Bg3_8[2028];
 extern const u8 sNorfair_Bg3_9[1236];
 extern const u8 sNorfair_Bg3_10[1252];
 extern const u8 sNorfair_Bg3_11[1272];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* NORFAIR_ROOMS_DATA_H */

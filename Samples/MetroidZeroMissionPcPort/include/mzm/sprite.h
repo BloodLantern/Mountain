@@ -1,6 +1,11 @@
 #ifndef SPRITE_H
 #define SPRITE_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/oam.h"
 #include "mzm/structs/sprite.h"
@@ -22,5 +27,9 @@ void SpriteInitPrimary(u8 spritesetSlot, u16 yPosition, u16 xPosition, u8 roomSl
 u8 SpriteSpawnSecondary(u8 spriteId, u8 roomSlot, struct SpriteGraphics* gfxSlot, u8 ramSlot, u16 yPosition, u16 xPosition, u16 statusToAdd);
 u8 SpriteSpawnPrimary(u8 spriteId, u8 roomSlot, struct SpriteGraphics* gfxSlot, u16 yPosition, u16 xPosition, u16 statusToAdd);
 u8 SpriteSpawnDropFollowers(u8 spriteId, u8 roomSlot, struct SpriteGraphics* gfxSlot, u8 ramSlot, u16 yPosition, u16 xPosition, u16 statusToAdd);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* SPRITE_H */

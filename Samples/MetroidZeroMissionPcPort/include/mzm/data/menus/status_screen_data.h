@@ -1,6 +1,11 @@
 #ifndef STATUS_SCREEN_MENU_DATA_H
 #define STATUS_SCREEN_MENU_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/structs/menus/status_screen.h"
 
@@ -15,5 +20,9 @@ extern const struct StatusScreenItemAcquisitionData sStatusScreenItemsAcquisitio
 extern const u8 sStatusScreen_40df64[8];
 extern const u8 sStatusScreen_40df6c[6];
 extern const u8 sStatusScreen_40df72[6];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* STATUS_SCREEN_MENU_DATA_H */

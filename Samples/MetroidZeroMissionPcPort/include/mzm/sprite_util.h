@@ -1,6 +1,11 @@
 #ifndef SPRITE_UTIL_H
 #define SPRITE_UTIL_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/structs/sprite.h"
 #include "mzm/structs/samus.h"
@@ -88,5 +93,9 @@ void SpriteUtilSetSplashEffect(u16 yPosition, u16 xPosition, u8 size);
 u32 SpriteUtilCheckOutOfRoomEffect(u16 oldY, u16 yPosition, u16 xPosition, u8 size);
 u32 SpriteUtilCheckInRoomEffect(u16 oldY, u16 yPosition, u16 xPosition, u8 size);
 u32 SpriteUtilGetFinalCompletionPercentage(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* SPRITE_UTIL_H */

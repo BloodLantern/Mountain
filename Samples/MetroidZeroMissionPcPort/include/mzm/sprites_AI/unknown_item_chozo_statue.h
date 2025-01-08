@@ -1,6 +1,11 @@
 #ifndef UNKNOWN_ITEM_CHOZO_STATUE_AI_H
 #define UNKNOWN_ITEM_CHOZO_STATUE_AI_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #define UNKNOWN_ITEM_CHOZO_STATUE_BEHAVIOR_ITEM 0x0
@@ -83,5 +88,9 @@ void UnknownItemChozoStatuePart(void);
 void UnknownItemChozoStatueRefill(void);
 void ChozoStatueStandingChangeCCAA(u8 bodyCaa, u8 handCaa);
 void ChozoStatueSeatedChangeCCAA(u8 caa);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* UNKNOWN_ITEM_CHOZO_STATUE_AI_H */

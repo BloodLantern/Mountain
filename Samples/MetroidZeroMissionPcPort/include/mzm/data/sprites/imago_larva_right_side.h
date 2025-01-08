@@ -1,6 +1,11 @@
 #ifndef IMAGO_LARVA_RIGHT_SIDE_DATA_H
 #define IMAGO_LARVA_RIGHT_SIDE_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/oam.h"
 
@@ -32,5 +37,9 @@ extern const u16 sImagoLarvaRightSideOAM_Frame11[43];
 extern const u16 sImagoLarvaRightSideOAM_Frame12[43];
 
 extern const struct FrameData sImagoLarvaRightSideOAM[35];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

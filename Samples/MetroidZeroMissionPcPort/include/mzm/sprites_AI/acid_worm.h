@@ -1,6 +1,11 @@
 #ifndef ACID_WORM_AI_H
 #define ACID_WORM_AI_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 // Acid worm
@@ -77,5 +82,9 @@ void AcidWormSpitCheckExplodingOnAcidAnimEnded(void);
 void AcidWorm(void);
 void AcidWormBody(void);
 void AcidWormSpit(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* ACID_WORM_AI_H */

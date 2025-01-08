@@ -1,6 +1,11 @@
 #ifndef AUDIO_ENGINE_CONSTANTS_H
 #define AUDIO_ENGINE_CONSTANTS_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 // center value of PAN, BEND, TUNE (-64 ~ +63)
 #define C_V 	0x40
 
@@ -53,5 +58,9 @@
 #define	EOT 	0xce
 // Tie
 #define	TIE 	0xcf
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* AUDIO_ENGINE_CONSTANTS_H */

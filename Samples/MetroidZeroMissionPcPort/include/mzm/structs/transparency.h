@@ -1,6 +1,11 @@
 #ifndef TRANSPARENCY_STRUCT_H
 #define TRANSPARENCY_STRUCT_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 // Structs
@@ -48,5 +53,9 @@ extern struct BldalphaData gBldalphaData1;
 extern struct BldalphaData gBldalphaData2;
 extern struct BldyData gBLDYData1;
 extern struct BldyData gBLDYData2;
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* TRANSPARENCY_STRUCT_H */

@@ -1,6 +1,11 @@
 #ifndef TEXT_POINTERS_DATA_H
 #define TEXT_POINTERS_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/location_text.h"
 
@@ -31,5 +36,9 @@ extern const u16* const sHiraganaTextPointers_FileScreen[FILE_SCREEN_TEXT_END];
 extern const u16* const sEnglishTextPointers_Description[DESCRIPTION_TEXT_END];
 extern const u16* const sEnglishTextPointers_Story[STORY_TEXT_END];
 extern const u16* const sEnglishTextPointers_FileScreen[FILE_SCREEN_TEXT_END];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* TEXT_POINTERS_DATA_H */

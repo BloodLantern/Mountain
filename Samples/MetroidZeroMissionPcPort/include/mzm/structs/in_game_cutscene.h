@@ -1,6 +1,11 @@
 #ifndef IN_GAME_CUTSCENE_STRUCT_H
 #define IN_GAME_CUTSCENE_STRUCT_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 typedef u32 (*InGameCutsceneFunc_T)(u8, u8);
@@ -32,5 +37,9 @@ extern struct InGameCutscene gInGameCutscene;
 extern struct SuitFlashEffect gSuitFlashEffect;
 
 extern u32 gInGameCutscenesTriggered[1];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* IN_GAME_CUTSCENE_STRUCT_H */

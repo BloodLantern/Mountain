@@ -1,6 +1,11 @@
 #ifndef GBA_WAITSTATE_H
 #define GBA_WAITSTATE_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #define REG_WAITCNT (gRegBuffer + 0x204)
 
 #define WAIT_SRAM_4CYCLES 0
@@ -38,5 +43,9 @@
 #define WAIT_PREFETCH (1 << 13)
 
 #define WAIT_GAMEPACK_CGB (1 << 14)
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* GBA_WAITSTATE_H */

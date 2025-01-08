@@ -1,6 +1,11 @@
 #ifndef SAMUS_CONSTANTS_H
 #define SAMUS_CONSTANTS_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #define BBF_NONE 0x0
 #define BBF_LONG_BEAM 0x1
 #define BBF_ICE_BEAM 0x2
@@ -285,5 +290,9 @@ enum EnvEffect {
 #define SAMUS_HAZARD_DAMAGE_TYPE_NONE 0
 #define SAMUS_HAZARD_DAMAGE_TYPE_LIQUID 1
 #define SAMUS_HAZARD_DAMAGE_TYPE_ROOM 15
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* SAMUS_CONSTANTS_H */

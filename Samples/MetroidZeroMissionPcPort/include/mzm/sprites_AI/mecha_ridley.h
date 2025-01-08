@@ -1,6 +1,11 @@
 #ifndef MECHA_RIDLEY_AI_H
 #define MECHA_RIDLEY_AI_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #define MECHA_RIDLEY_POSE_CRAWLING_INIT 0x1
@@ -131,5 +136,9 @@ void MechaRidleyPart(void);
 void MechaRidleyLaser(void);
 void MechaRidleyMissile(void);
 void MechaRidleyFireball(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* MECHA_RIDLEY_AI_H */

@@ -1,6 +1,11 @@
 #ifndef SAMUS_ARM_CANNON_DATA_H
 #define SAMUS_ARM_CANNON_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/macros.h"
 #include "mzm/structs/samus.h"
@@ -598,5 +603,9 @@ extern const struct ArmCannonAnimationData sArmCannonAnim_Suitless_DownloadingMa
 extern const struct ArmCannonAnimationData sArmCannonAnim_Suitless_FacingTheBackground[1];
 extern const struct ArmCannonAnimationData sArmCannonAnim_Suitless_Left_TurningFromFacingTheBackground[1];
 extern const struct ArmCannonAnimationData sArmCannonAnim_Suitless_Right_TurningFromFacingTheBackground[1];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* SAMUS_ARM_CANNON_DATA_H */

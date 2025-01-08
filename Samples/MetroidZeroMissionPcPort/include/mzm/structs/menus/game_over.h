@@ -1,6 +1,11 @@
 #ifndef GAME_OVER_STRUCT_H
 #define GAME_OVER_STRUCT_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/structs/menu.h"
 
@@ -44,5 +49,9 @@ struct GameOverData {
     
     struct MenuOamData oam[1];
 };
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* GAME_OVER_STRUCT_H */

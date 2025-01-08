@@ -1,6 +1,11 @@
 #ifndef GBA_INTERRUPT_H
 #define GBA_INTERRUPT_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/memory.h"
 #include "mzm/types.h"
 
@@ -23,5 +28,9 @@
 #define IF_DMA3 (1 << 11)
 #define IF_KEYPAD (1 << 12)
 #define IF_GAMEPAK (1 << 13)
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* GBA_INTERRUPT_H */

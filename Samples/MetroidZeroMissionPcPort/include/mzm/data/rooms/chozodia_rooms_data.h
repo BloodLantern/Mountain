@@ -1,6 +1,11 @@
 #ifndef CHOZODIA_ROOMS_DATA_H
 #define CHOZODIA_ROOMS_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/structs/scroll.h"
 #include "mzm/structs/sprite.h"
@@ -643,5 +648,9 @@ extern const u8 sChozodia_Bg3_7[788];
 extern const u8 sChozodia_Bg3_8[1364];
 extern const u8 sChozodia_Bg3_9[1040];
 extern const u8 sChozodia_Bg3_10[676];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* CHOZODIA_ROOMS_DATA_H */

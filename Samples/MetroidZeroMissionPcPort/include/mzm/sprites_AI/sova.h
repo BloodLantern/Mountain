@@ -1,6 +1,11 @@
 #ifndef SOVA_AI_H
 #define SOVA_AI_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #define SOVA_TURNING_DIRECTION_BOTTOM_LEFT_CORNER 0x0
@@ -35,5 +40,9 @@ void SovaFallingInit(void);
 void SovaFalling(void);
 void SovaDeath(void);
 void Sova(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* SOVA_AI_H */

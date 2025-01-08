@@ -1,6 +1,11 @@
 #ifndef DESSGEEGA_AI_H
 #define DESSGEEGA_AI_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #define DESSGEEGA_POSE_JUMP_WARNING_INIT 0x8
@@ -32,5 +37,9 @@ void DessgeegaDeath(void);
 void DessgeegaLongBeamDetectSamus(void);
 void DessgeegaLongBeamSpawning(void);
 void Dessgeega(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* DESSGEEGA_AI_H */

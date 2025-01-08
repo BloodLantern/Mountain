@@ -1,6 +1,11 @@
 #ifndef TRANSPARENCY_H
 #define TRANSPARENCY_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/structs/transparency.h"
 
@@ -21,5 +26,9 @@ void TransparencyApplyNewBLDALPHA(struct BldalphaData* pBldalpha);
 void TransparencyApplyNewBLDY(struct BldyData* pBldy);
 void unk_55e60(void);
 void unk_55f68(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* TRANSPARENCY_H */

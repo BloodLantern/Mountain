@@ -1,6 +1,11 @@
 #ifndef PISTON_AI_H
 #define PISTON_AI_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #define PISTON_POSE_IDLE_INIT 0x8
@@ -19,5 +24,9 @@ void PistonCheckProjectile(void);
 void PistonOpen(void);
 void PistonOpened(void);
 void Piston(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* PISTON_AI_H */

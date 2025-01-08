@@ -1,6 +1,11 @@
 #ifndef SPRITE_CONSTANTS_H
 #define SPRITE_CONSTANTS_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #define SPRITE_STATUS_EXISTS             (1 << 0)
 #define SPRITE_STATUS_ONSCREEN           (1 << 1)
 #define SPRITE_STATUS_NOT_DRAWN          (1 << 2)
@@ -381,5 +386,9 @@ enum SamusSpriteCollision {
 #define SPRITE_POSE_SUDO_SCREW_DESTROYED 0x66
 
 #define PSPRITE_OFFSET_FOR_GRAPHICS(id) ((id) - PSPRITE_UNUSED16)
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* SPRITE_CONSTANTS_H */

@@ -1,5 +1,10 @@
 #include "mzm/oam.h"
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 extern const struct FrameData* const sChozoStatueFrameDataPointers[16];
 
 extern const struct FrameData* const sUnknownItemChozoStatueFrameDataPointers[16];
@@ -23,3 +28,7 @@ extern const struct FrameData* const sImagoFrameDataPointers[17];
 extern const struct FrameData* const sCrocomireFrameDataPointers[25];
 
 extern const struct FrameData* const sMechaRidleyFrameDataPointers[63];
+
+#ifdef __cplusplus
+}
+#endif

@@ -1,6 +1,11 @@
 #ifndef SPRITE_STRUCT_H
 #define SPRITE_STRUCT_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #define ENEMY_ROOM_DATA_SIZE 3
@@ -114,5 +119,9 @@ extern u8 gSpriteDrawOrder[MAX_AMOUNT_OF_SPRITES];
 extern struct BossWork gBossWork;
 extern u8 gSpriteRng;
 extern u8 gDisableDrawingSprites;
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

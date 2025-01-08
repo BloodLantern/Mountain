@@ -1,6 +1,11 @@
 #ifndef COLOR_FADING_H
 #define COLOR_FADING_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 u8 ColorFadingUpdate(void);
@@ -37,5 +42,9 @@ u8 ColorFading_UpdateDefault(void);
 u8 ColorFading_UpdateDoorTransition(void);
 
 void ColorFadingApplyMonochrome(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* COLOR_FADING_H */

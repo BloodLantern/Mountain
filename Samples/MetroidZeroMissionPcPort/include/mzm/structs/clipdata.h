@@ -1,6 +1,11 @@
 #ifndef CLIPDATA_STRUCT_H
 #define CLIPDATA_STRUCT_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 // Structs
@@ -50,5 +55,9 @@ extern struct TilemapAndClipPointers gTilemapAndClipPointers;
 
 extern u16 gEffectYPosition;
 extern s16 gEffectYPositionOffset;
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

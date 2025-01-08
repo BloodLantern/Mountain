@@ -1,6 +1,11 @@
 #ifndef GETTING_FULLY_POWERED_SUIT_CUTSCENE
 #define GETTING_FULLY_POWERED_SUIT_CUTSCENE
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/structs/cutscene.h"
 
@@ -20,5 +25,9 @@ void GettingFullyPoweredSuitUpdateSparkleGoingUp(struct CutsceneOamData* pOam, u
 u8 GettingFullyPoweredSuitInit(void);
 u8 GettingFullyPoweredSuitSubroutine(void);
 void GettingFullyPoweredSuitProcessOAM(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* GETTING_FULLY_POWERED_SUIT_CUTSCENE */

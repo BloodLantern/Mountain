@@ -1,6 +1,11 @@
 #ifndef TIME_ATTACK_STRUCT_H
 #define TIME_ATTACK_STRUCT_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/structs/in_game_timer.h"
 
@@ -34,5 +39,9 @@ struct TimeAttackRecord {
 
 extern struct TimeAttackData gTimeAttackData;
 extern struct TimeAttackRecord gTimeAttackRecord;
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* TIME_ATTACK_STRUCT_H */

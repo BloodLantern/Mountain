@@ -1,6 +1,11 @@
 #ifndef CABLE_LINK_H
 #define CABLE_LINK_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/structs/cable_link.h"
 
@@ -55,5 +60,9 @@ void unk_8aaf0(void);
 void unk_8ab24(void);
 void unk_8ab54(void);
 void unk_8ab9c(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* CABLE_LINK_H */

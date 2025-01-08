@@ -1,6 +1,11 @@
 #ifndef SIDEHOPPER_DATA_H
 #define SIDEHOPPER_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/oam.h"
 
@@ -50,5 +55,9 @@ extern const struct FrameData sSidehopperOAM_JumpWarning[6];
 extern const struct FrameData sSidehopperOAM_Jumping[4];
 
 extern const struct FrameData sSidehopperOAM_Landing[7];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

@@ -1,6 +1,11 @@
 #ifndef GAME_STATE_STRUCT_H
 #define GAME_STATE_STRUCT_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/input.h"
 
@@ -57,5 +62,9 @@ extern s8 gMostRecentSaveFile;
 extern u8 gCompletedGameFlagCopy;
 
 extern u8 gTargetFps;
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

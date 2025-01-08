@@ -1,6 +1,11 @@
 #ifndef BLOCK_H
 #define BLOCK_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/structs/block.h"
 
@@ -28,5 +33,9 @@ u32 BlockStartBombChain(u8 type, u16 xPosition, u16 yPosition);
 void BlockProcessBombChains(void);
 void BlockCheckStartNewSubBombChain(u8 type, u8 xPosition, u8 yPosition);
 void BlockBrokenBlockRemoveCollision(u16 yPosition, u16 xPosition);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* BLOCK_H */

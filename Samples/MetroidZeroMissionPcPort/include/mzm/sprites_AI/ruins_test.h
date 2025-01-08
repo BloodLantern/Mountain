@@ -1,6 +1,11 @@
 #ifndef RUINS_TEST_AI_H
 #define RUINS_TEST_AI_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #define RUINS_TEST_FIGHT_STAGE_ON_GOING 0x0
@@ -139,5 +144,9 @@ void RuinsTestGhost(void);
 void RuinsTestSamusReflectionEnd(void);
 void RuinsTestLightningOnGroundInit(void);
 void RuinsTestLightning(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* RUINS_TEST_AI_H */

@@ -1,6 +1,11 @@
 #ifndef VIOLA_AI_H
 #define VIOLA_AI_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #define VIOLA_POSE_MOVE_RIGHT 0x9
@@ -18,5 +23,9 @@ void ViolaMoveUp(void);
 void ViolaFallingInit(void);
 void ViolaFalling(void);
 void Viola(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* VIOLA_AI_H */

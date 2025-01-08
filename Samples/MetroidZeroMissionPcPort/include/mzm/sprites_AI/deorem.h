@@ -1,6 +1,11 @@
 #ifndef DEOREM_AI_H
 #define DEOREM_AI_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #define DEOREM_POSE_SPAWN_GOING_DOWN 0x8
@@ -79,5 +84,9 @@ void Deorem(void);
 void DeoremSegment(void);
 void DeoremEye(void);
 void DeoremThorn(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* DEOREM_AI_H */

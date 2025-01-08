@@ -1,6 +1,11 @@
 #ifndef CHARGE_BEAM_AI_H
 #define CHARGE_BEAM_AI_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #define CHARGE_BEAM_POSE_IDLE 0x9
@@ -17,5 +22,9 @@ void ChargeBeamGlowInit(void);
 void ChargeBeamGlowMovement(void);
 void ChargeBeam(void);
 void ChargeBeamGlow(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* POWER_GRIP_AI_H */

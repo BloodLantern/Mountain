@@ -1,6 +1,11 @@
 #ifndef ZEELA_AI_H
 #define ZEELA_AI_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #define ZEELA_TURNING_DIRECTION_BOTTOM_LEFT_CORNER 0x0
@@ -51,5 +56,9 @@ void ZeelaEyesExplodingInit(void);
 void ZeelaEyesExploding(void);
 void Zeela(void);
 void ZeelaEyes(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* ZEELA_AI_H */

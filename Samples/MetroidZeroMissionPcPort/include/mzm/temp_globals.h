@@ -1,6 +1,11 @@
 #ifndef TEMP_GLOBALS_H
 #define TEMP_GLOBALS_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/gba.h"
 #include "mzm/types.h"
 
@@ -55,5 +60,9 @@ extern u16 gBg3VOFS_NonGameplay;
 
 extern u16 gCurrentOamRotation;
 extern u16 gCurrentOamScaling;
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

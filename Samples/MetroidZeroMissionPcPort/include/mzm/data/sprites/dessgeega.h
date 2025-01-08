@@ -1,6 +1,11 @@
 #ifndef DESSGEEGA_DATA_H
 #define DESSGEEGA_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/oam.h"
 
@@ -46,5 +51,9 @@ extern const struct FrameData sDessgeegaOAM_JumpWarning[4];
 extern const struct FrameData sDessgeegaOAM_Jumping[3];
 
 extern const struct FrameData sDessgeegaOAM_Landing[5];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

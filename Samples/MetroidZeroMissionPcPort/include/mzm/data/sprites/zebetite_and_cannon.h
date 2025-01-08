@@ -1,6 +1,11 @@
 #ifndef ZEBETITE_AND_CANNON_DATA_H
 #define ZEBETITE_AND_CANNON_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/macros.h"
 #include "mzm/oam.h"
@@ -193,5 +198,9 @@ extern const struct FrameData sCannonBulletOam_DownRight[3];
 extern const struct FrameData sCannonBulletOam_Right[3];
 
 extern const struct FrameData sMotherBrainBlockOAM[5];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

@@ -1,6 +1,11 @@
 #ifndef BLOCK_DATA_H
 #define BLOCK_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #include "mzm/constants/clipdata.h"
@@ -38,5 +43,9 @@ extern const s8 sSubBombChainPositionOffset[4][4];
 extern const u8 sHatchRelated_345cee[4][2];
 
 extern const u16 sMotherBrainGlassBreakingBaseTilemapValues[5];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

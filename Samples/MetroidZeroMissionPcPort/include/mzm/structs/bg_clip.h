@@ -1,6 +1,11 @@
 #ifndef BG_CLIP_STRUCT_H
 #define BG_CLIP_STRUCT_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/structs/connection.h"
 
@@ -60,5 +65,9 @@ extern u16 gBg3YPosition;
 extern s8 gCollectingTank;
 extern u8 gDisableDoorAndTanks;
 extern u8 gDisableClipdataChangingTransparency;
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

@@ -1,6 +1,11 @@
 #ifndef DRAGON_AI_H
 #define DRAGON_AI_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #define DRAGON_POSE_IDLE_INIT 0x8
@@ -31,5 +36,9 @@ void DragonFireballExplodingInit(void);
 void DragonFireballCheckExplodingAnimEnded(void);
 void Dragon(void);
 void DragonFireball(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* DRAGON_AI_H */

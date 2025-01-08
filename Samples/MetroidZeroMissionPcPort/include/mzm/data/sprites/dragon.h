@@ -1,6 +1,11 @@
 #ifndef DRAGON_DATA_H
 #define DRAGON_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/oam.h"
 
@@ -56,5 +61,9 @@ extern const struct FrameData sDragonOAM_TurningAroundPart2[3];
 extern const struct FrameData sDragonFireballOAM_Moving[4];
 
 extern const struct FrameData sDragonFireballOAM_Exploding[5];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

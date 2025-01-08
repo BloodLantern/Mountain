@@ -1,6 +1,11 @@
 #ifndef BOSS_STATUES_AI_H
 #define BOSS_STATUES_AI_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #define BOSS_STATUE_POSE_CHECK_START_OPEN 0x9
@@ -22,5 +27,9 @@ void RidleyStatueCheckBackgroundLocked(void);
 void RidleyStatueOpening(void);
 void KraidStatue(void);
 void RidleyStatue(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* BOSS_STATUES_AI_H */

@@ -1,6 +1,11 @@
 #ifndef CONNECTION_STRUCT_H
 #define CONNECTION_STRUCT_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 // Structs
@@ -113,5 +118,9 @@ extern struct LastElevatorUsed gLastElevatorUsed;
 extern u8 gNumberOfValidHatchesInRoom;
 
 extern struct HatchFlashingAnimation gHatchFlashingAnimation;
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

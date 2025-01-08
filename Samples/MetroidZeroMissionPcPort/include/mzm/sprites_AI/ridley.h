@@ -1,6 +1,11 @@
 #ifndef RIDLEY_AI_H
 #define RIDLEY_AI_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #define RIDLEY_GROUND_POSITION (BLOCK_SIZE * 18 - ONE_SUB_PIXEL)
@@ -159,5 +164,9 @@ void Ridley(void);
 void RidleyTail(void);
 void RidleyPart(void);
 void RidleyFireball(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* RIDLEY_AI_H */

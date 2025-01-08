@@ -1,6 +1,11 @@
 #ifndef AUDIO_STRUCT_H
 #define AUDIO_STRUCT_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 // Structs
@@ -308,5 +313,9 @@ extern u8 gSoundCodeC[176];
 
 extern struct PSGSoundData gUnk_300376c[];
 extern struct PSGSoundData gPsgSounds[4];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

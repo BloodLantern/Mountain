@@ -1,6 +1,11 @@
 #ifndef RIDLEY_ROOMS_DATA_H
 #define RIDLEY_ROOMS_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/structs/scroll.h"
 #include "mzm/structs/sprite.h"
@@ -219,5 +224,9 @@ extern const u8 sRidley_Bg3_2[1416];
 extern const u8 sRidley_Bg3_3[1248];
 extern const u8 sRidley_Bg3_4[1248];
 extern const u8 sRidley_Bg3_5[1268];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* RIDLEY_ROOMS_DATA_H */

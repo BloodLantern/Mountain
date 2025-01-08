@@ -1,6 +1,11 @@
 #ifndef MORPH_BALL_LAUNCHER_DATA_H
 #define MORPH_BALL_LAUNCHER_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/oam.h"
 
@@ -48,5 +53,9 @@ extern const struct FrameData sMorphBallLauncherOam_Launching[9];
 extern const struct FrameData sMorphBallLauncherPartOam_Back[2];
 
 extern const struct FrameData sMorphBallLauncherPartOam_Energy[9];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

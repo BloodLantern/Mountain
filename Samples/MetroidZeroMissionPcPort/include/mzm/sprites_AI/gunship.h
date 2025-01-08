@@ -1,6 +1,11 @@
 #ifndef GUNSHIP_AI_H
 #define GUNSHIP_AI_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #define GUNSHIP_POSE_IDLE 0x9
@@ -84,5 +89,9 @@ void GunshipPartCheckPlatformGoDown(void);
 void GunshipPartPlatformGoDown(void);
 void Gunship(void);
 void GunshipPart(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* GUNSHIP_AI_H */

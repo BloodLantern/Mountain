@@ -1,6 +1,11 @@
 #ifndef ELEVATOR_PAD_DATA_H
 #define ELEVATOR_PAD_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/oam.h"
 
@@ -24,5 +29,9 @@ extern const u16 sElevatorPadOAM_Idle_Frame3[4];
 extern const struct FrameData sElevatorPadOAM_Moving[5];
 
 extern const struct FrameData sElevatorPadOAM_Idle[7];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

@@ -1,6 +1,11 @@
 #ifndef CUTSCENE_UTILS_H
 #define CUTSCENE_UTILS_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/structs/cutscene.h"
 
@@ -34,5 +39,9 @@ u32 unk_61f44(void);
 void unk_61f60(void);
 u8 CutsceneStartBackgroundFading(u8 type);
 u8 CutsceneUpdateFading(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

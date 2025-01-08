@@ -1,6 +1,11 @@
 #ifndef HOLTZ_AI_H
 #define HOLTZ_AI_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #define HOLTZ_POSE_IDLE_INIT 0x8
@@ -26,5 +31,9 @@ void HoltzSlidingMove(void);
 void HoltzGoingUpMove(void);
 void HoltzBackToCeiling(void);
 void Holtz(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* HOLTZ_AI_H */

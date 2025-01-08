@@ -1,6 +1,11 @@
 #ifndef IMAGO_COCOON_DATA_H
 #define IMAGO_COCOON_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/oam.h"
 
@@ -182,5 +187,9 @@ extern const struct FrameData sWingedRipperOAM_Moving[10];
 extern const struct FrameData sWingedRipperOAM_TurningAround[10];
 
 extern const struct FrameData sDefeatedImagoCocoonOAM[9];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

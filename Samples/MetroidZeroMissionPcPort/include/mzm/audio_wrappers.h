@@ -1,6 +1,11 @@
 #ifndef AUDIO_WRAPPERS_H
 #define AUDIO_WRAPPERS_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/structs/audio.h"
 
 void InitializeAudio(void);
@@ -32,5 +37,9 @@ void unk_30b4(struct TrackData* pTrack, u16 variablesMask, u16 param_3);
 void unk_3110(struct TrackData* pTrack, u16 variablesMask, u8 param_3);
 void unk_315c(struct TrackData* pTrack, u16 variablesMask, u8 param_3);
 void unk_31a0(struct TrackData* pTrack, u16 variablesMask, u8 param_3);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* AUDIO_WRAPPERS_H */

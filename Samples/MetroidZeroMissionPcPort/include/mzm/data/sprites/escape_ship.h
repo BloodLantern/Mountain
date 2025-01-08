@@ -1,6 +1,11 @@
 #ifndef ESCAPE_SHIP_DATA_H
 #define ESCAPE_SHIP_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/oam.h"
 
@@ -115,5 +120,9 @@ extern const struct FrameData sEscapeShipPartOAM_Flames[4];
 extern const struct FrameData sEscapeShipPartOAM_Tail[2];
 
 extern const struct FrameData sEscapeShipPartOAM_TailMoving[26];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

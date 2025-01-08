@@ -1,6 +1,11 @@
 #ifndef DEBUG_ROOMS_DATA_H
 #define DEBUG_ROOMS_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/structs/room.h"
 
@@ -43,5 +48,9 @@ extern const u8 sDebug_9_SpriteData[7 * 3];
 extern const u8 sDebug_10_SpriteData[1 * 3];
 extern const u8 sDebug_11_SpriteData[1 * 3];
 extern const u8 sDebug_12_SpriteData[3 * 3];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* DEBUG_ROOMS_DATA_H */

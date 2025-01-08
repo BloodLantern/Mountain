@@ -1,6 +1,11 @@
 #ifndef SCROLL_STRUCT_H
 #define SCROLL_STRUCT_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/macros.h"
 
@@ -67,5 +72,9 @@ extern s16 gScreenXOffset;
 extern u8 gFreeMovementLockCamera;
 extern struct CameraScrollVelocityCaps gScrollingVelocityCaps;
 extern const u8* gCurrentRoomScrollDataPointer;
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

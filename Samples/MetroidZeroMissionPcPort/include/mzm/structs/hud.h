@@ -1,6 +1,11 @@
 #ifndef HUD_STRUCT_H
 #define HUD_STRUCT_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 // Structs
@@ -31,5 +36,9 @@ extern u8 gSuperMissileRefillAnimation;
 extern u8 gPowerBombRefillAnimation;
 
 extern u8 gAmmoDigitsGfx[64];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

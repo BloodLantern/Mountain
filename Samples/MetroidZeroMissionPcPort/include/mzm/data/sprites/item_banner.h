@@ -1,6 +1,11 @@
 #ifndef ITEM_BANNER_DATA_H
 #define ITEM_BANNER_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/oam.h"
 
@@ -56,5 +61,9 @@ extern const struct FrameData sItemBannerOAM_OneLineSpawn[9];
 extern const struct FrameData sItemBannerOAM_OneLineRemoving[9];
 
 extern const struct FrameData sItemBannerOAM_OneLineStatic[2];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

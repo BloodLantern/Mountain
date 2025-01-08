@@ -1,6 +1,11 @@
 #ifndef COLOR_EFFECTS_STRUCT_H
 #define COLOR_EFFECTS_STRUCT_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 // Typedef
@@ -41,5 +46,9 @@ struct ColorFadingColorInfo {
 extern struct ColorFading gColorFading;
 extern u16 gBg1CntDuringDoorTransition;
 extern u16 gBg3CntDuringDoorTransition;
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

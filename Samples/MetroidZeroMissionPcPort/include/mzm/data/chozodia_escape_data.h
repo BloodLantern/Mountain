@@ -1,6 +1,11 @@
 #ifndef CHOZODIA_ESCAPE_DATA_H
 #define CHOZODIA_ESCAPE_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/oam.h"
 #include "mzm/macros.h"
@@ -45,5 +50,9 @@ extern const u32 sChozodiaEscapeSamusInBlueShipGfx[2699];
 extern const u32 sChozodiaEscapeSamusInBlueShipTileTable[368];
 
 extern const u32 sChozodiaEscapeMissionAccomplishedLettersGfx[414];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* CHOZODIA_ESCAPE_DATA_H */

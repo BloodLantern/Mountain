@@ -1,6 +1,11 @@
 #ifndef MENU_OAM_H
 #define MENU_OAM_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #define OAM_ID_CHANGED_FLAG (TRUE << 1)
@@ -37,5 +42,9 @@ struct MaintainedInput {
 
 extern struct MaintainedInput gMaintainedInputData;
 extern u16 gUnk_3005804;
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* MENU_OAM_H */

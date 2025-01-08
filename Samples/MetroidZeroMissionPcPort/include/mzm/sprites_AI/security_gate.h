@@ -1,6 +1,11 @@
 #ifndef SECURITY_GATE_AI_H
 #define SECURITY_GATE_AI_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 void SecurityGateChangeCCAA(u8 caa);
@@ -17,5 +22,9 @@ void SecurityGateDefaultClosedCheckAlarm(void);
 void SecurityGateDefaultClosedCloseAfterAlarm(void);
 void SecurityGateDefaultOpen(void);
 void SecurityGateDefaultClosed(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* SECURITY_GATE_AI_H */

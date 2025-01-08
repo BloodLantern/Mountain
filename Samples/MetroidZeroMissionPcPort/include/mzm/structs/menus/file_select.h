@@ -1,6 +1,11 @@
 #ifndef FILE_SELECT_STRUCT_H
 #define FILE_SELECT_STRUCT_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/structs/menu.h"
 
@@ -131,5 +136,9 @@ struct FileSelectData {
 };
 
 extern s8 gOptionsOptionSelected;
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* FILE_SELECT_STRUCT_H */

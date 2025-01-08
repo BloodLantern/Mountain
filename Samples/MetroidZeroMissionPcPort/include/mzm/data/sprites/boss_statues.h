@@ -1,6 +1,11 @@
 #ifndef BOSS_STATUES_DATA_H
 #define BOSS_STATUES_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/oam.h"
 
@@ -118,5 +123,9 @@ extern const struct FrameData sRidleyStatueOAM_Activated[7];
 extern const struct FrameData sRidleyStatueOAM_Opening[43];
 
 extern const struct FrameData sRidleyStatueOAM_Opened[2];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

@@ -1,6 +1,11 @@
 #ifndef PAUSE_SCREEN_DATA_H
 #define PAUSE_SCREEN_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/structs/cutscene.h"
 #include "mzm/structs/text.h"
@@ -132,5 +137,9 @@ extern const u8 sPauseScreen_40dcf4[16];
 extern const u8 sMinimapAnimatedPaletteOffsets[MAX_AMOUNT_OF_AREAS + 1];
 
 // ...?
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* PAUSE_SCREEN_DATA_H */

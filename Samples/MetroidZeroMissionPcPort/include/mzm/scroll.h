@@ -1,6 +1,11 @@
 #ifndef SCROLL_H
 #define SCROLL_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/structs/scroll.h"
 
@@ -22,5 +27,9 @@ void ScrollBg3Related(void);
 void ScrollAutoBg3(void);
 void ScrollBg2(struct RawCoordsX* pCoords);
 void ScrollFreeMovementDebugCameraLock(struct RawCoordsX* pCoords);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* SCROLL_H */

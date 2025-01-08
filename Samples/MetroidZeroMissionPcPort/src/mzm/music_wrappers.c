@@ -3,7 +3,7 @@
 #include "mzm/syscalls.h"
 #include "mzm/gba.h"
 
-#include "mzm/data/audio.h"
+#include "mzm/data/data_audio.h"
 
 #include "mzm/constants/audio.h"
 

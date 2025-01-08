@@ -1,6 +1,11 @@
 #ifndef HUD_H
 #define HUD_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 // Defines
@@ -26,5 +31,9 @@ void HudDrawSuperMissiles(u8 updateHighlight);
 void HUDUpdateGfx(void);
 void HudDrawSuitless(void);
 void HudDraw(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* HUD_H */

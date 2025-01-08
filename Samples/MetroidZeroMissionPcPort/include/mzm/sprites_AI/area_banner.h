@@ -1,6 +1,11 @@
 #ifndef AREA_BANNER_AI_H
 #define AREA_BANNER_AI_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/location_text.h"
 
@@ -15,5 +20,9 @@ void AreaBannerScrollingUp(void);
 void AreaBannerStatic(void);
 void AreaBannerCheckRemovingAnimEnded(void);
 void AreaBanner(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* AREA_BANNER_AI_H */

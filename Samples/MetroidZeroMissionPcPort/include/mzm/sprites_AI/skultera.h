@@ -1,6 +1,11 @@
 #ifndef SKULTERA_AI_H
 #define SKULTERA_AI_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #define SKULTERA_POSE_IDLE_INIT 0x8
@@ -27,5 +32,9 @@ void SkulteraChasingSamus(void);
 void SkulteraTurningAroundInit(void);
 void SkulteraCheckTurningAroundAnimEnded(void);
 void Skultera(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* SKULTERA_AI_H */

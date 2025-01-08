@@ -1,6 +1,11 @@
 #ifndef WORKER_ROBOT_AI_H
 #define WORKER_ROBOT_AI_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #define WORKER_ROBOT_POSE_WALKING_INIT 0x8
@@ -40,5 +45,9 @@ void WorkerRobotFalling(void);
 void WorkerRobotFallingSleepInit(void);
 void WorkerRobotFallingSleep(void);
 void WorkerRobot(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* WORKER_ROBOT_AI_H */

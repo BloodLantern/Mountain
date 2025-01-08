@@ -1,6 +1,11 @@
 #ifndef MINIMAP_H
 #define MINIMAP_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 void MinimapUpdate(void);
@@ -20,5 +25,9 @@ void MinimapUpdateForCollectedItem(u8 xPosition, u8 yPosition);
 u32 MinimapCheckIsTileExplored(u8 xPosition, u8 yPosition);
 void MinimapLoadTilesWithObtainedItems(void);
 void MinimapUpdateChunk(u8 event);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* MINIMAP_H */

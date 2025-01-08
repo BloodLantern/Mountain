@@ -1,6 +1,11 @@
 #ifndef ERASE_SRAM_MENU_DATA_H
 #define ERASE_SRAM_MENU_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/structs/cutscene.h"
 
@@ -26,5 +31,9 @@ extern const u16 sEraseSramMenuSoundsID[5];
 extern const u16 sEraseSramMenuCursorPosition[2][2];
 extern const u16 sEraseSramMenuCursorPositionOffset[4][2];
 extern const struct OamArray sEraseSramMenuOam[7];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* ERASE_SRAM_MENU_DATA_H */

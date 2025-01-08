@@ -1,6 +1,11 @@
 #ifndef HUD_DATA_H
 #define HUD_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #define SUITLESS_BAR_NBR_ELEMS 56
@@ -71,5 +76,9 @@ extern const u8 sEnergyTanksRefillGfx_Twelve[160 * 3];
 extern const u8 sSuitlessHUDChargeBarGfx[SUITLESS_BAR_NBR_ELEMS * SUITLESS_BAR_SIZE];
 
 // 8339aa8
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

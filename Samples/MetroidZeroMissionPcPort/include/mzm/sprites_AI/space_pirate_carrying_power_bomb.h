@@ -1,6 +1,11 @@
 #ifndef SPACE_PIRATE_CARRYING_POWER_BOMB_AI
 #define SPACE_PIRATE_CARRYING_POWER_BOMB_AI
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #define SPACE_PIRATE_CARRYING_POWER_BOMB_POSE_SPAWNING 0x9
 #define SPACE_PIRATE_CARRYING_POWER_BOMB_POSE_MOVING 0x23
 
@@ -11,5 +16,9 @@
 void SpacePirateCarryingPowerBomb(void);
 void FakePowerBomb(void);
 void FakePowerBombEventTrigger(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* SPACE_PIRATE_CARRYING_POWER_BOMB_AI */
