@@ -1,8 +1,8 @@
 #ifndef RINKA_DATA_H
 #define RINKA_DATA_H
 
-#include "types.h"
-#include "oam.h"
+#include "mzm/types.h"
+#include "mzm/oam.h"
 
 extern const u32 sRinkaOrangeGfx[242];
 extern const u16 sRinkaOrangePAL[16];

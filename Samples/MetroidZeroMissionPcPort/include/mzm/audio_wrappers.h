@@ -1,7 +1,7 @@
 #ifndef AUDIO_WRAPPERS_H
 #define AUDIO_WRAPPERS_H
 
-#include "structs/audio.h"
+#include "mzm/structs/audio.h"
 
 void InitializeAudio(void);
 void DoSoundAction(u32 action);

@@ -1,6 +1,6 @@
-#include "data/menus/internal_status_screen_data.h"
+#include "mzm/data/menus/internal_status_screen_data.h"
 
-#include "constants/menus/status_screen.h"
+#include "mzm/constants/menus/status_screen.h"
 
 const u8 sStatusScreenRowsData[6][3] = {
     [0] = {

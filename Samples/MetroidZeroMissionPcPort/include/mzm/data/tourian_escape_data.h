@@ -1,11 +1,11 @@
 #ifndef TOURIAN_ESCAPE_DATA_H
 #define TOURIAN_ESCAPE_DATA_H
 
-#include "types.h"
-#include "oam.h"
-#include "macros.h"
+#include "mzm/types.h"
+#include "mzm/oam.h"
+#include "mzm/macros.h"
 
-#include "structs/tourian_escape.h"
+#include "mzm/structs/tourian_escape.h"
 
 extern const u16 sTourianEscape_375cc4[OAM_DATA_SIZE(12)];
 

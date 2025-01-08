@@ -1,7 +1,7 @@
 #ifndef DISPLAY_STRUCT_H
 #define DISPLAY_STRUCT_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 struct IORegistersBackup {
     u16 Dispcnt_NonGameplay;

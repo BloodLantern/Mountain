@@ -1,7 +1,7 @@
 #ifndef CLIPDATA_STRUCT_H
 #define CLIPDATA_STRUCT_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 // Structs
 

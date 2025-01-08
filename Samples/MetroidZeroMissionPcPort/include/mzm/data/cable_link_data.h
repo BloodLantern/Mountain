@@ -1,7 +1,7 @@
 #ifndef CABLE_LINK_DATA_H
 #define CABLE_LINK_DATA_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 extern const u8 sTransferData_8754bd0[6900];
 extern const u8 sTransferRom[32740];

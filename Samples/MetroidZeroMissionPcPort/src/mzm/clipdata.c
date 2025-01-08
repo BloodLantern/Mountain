@@ -1,19 +1,21 @@
-#include "gba.h"
-#include "clipdata.h"
-#include "macros.h"
-#include "block.h"
-#include "temp_globals.h"
+#include "mzm/gba.h"
+#include "mzm/clipdata.h"
+#include "mzm/macros.h"
+#include "mzm/block.h"
+#include "mzm/temp_globals.h"
 
-#include "data/clipdata_data.h"
+#include "mzm/data/clipdata_data.h"
 
-#include "constants/clipdata.h"
-#include "constants/connection.h"
-#include "constants/event.h"
-#include "constants/samus.h"
+#include "mzm/constants/clipdata.h"
 
-#include "structs/bg_clip.h"
-#include "structs/room.h"
-#include "structs/samus.h"
+#include "mzm/event.h"
+#include "mzm/constants/connection.h"
+#include "mzm/constants/event.h"
+#include "mzm/constants/samus.h"
+
+#include "mzm/structs/bg_clip.h"
+#include "mzm/structs/room.h"
+#include "mzm/structs/samus.h"
 
 u16 unk_02035400;
 
@@ -46,12 +48,11 @@ s16 gEffectYPositionOffset;
  */
 void ClipdataSetupCode(void)
 {
-    return;
     // Copy code to RAM
-    DMA_SET(3, ClipdataConvertToCollision + 1, gNonGameplayRAM.inGame, (DMA_ENABLE << 0x10) | 0x140);
+    //DMA_SET(3, ClipdataConvertToCollision + 1, gNonGameplayRAM.inGame, (DMA_ENABLE << 0x10) | 0x140);
 
     // Set pointer
-    gClipdataCodePointer = (ClipFunc_T)(gNonGameplayRAM.inGame + 1);
+    //gClipdataCodePointer = (ClipFunc_T)(gNonGameplayRAM.inGame + 1);
 }
 
 /**

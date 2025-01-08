@@ -1,7 +1,7 @@
 #ifndef COLOR_EFFECTS_STRUCT_H
 #define COLOR_EFFECTS_STRUCT_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 // Typedef
 

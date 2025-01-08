@@ -1,7 +1,7 @@
 #ifndef IMAGO_COCOON_AI_H
 #define IMAGO_COCOON_AI_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define IMAGO_COCOON_POSE_IDLE 0x8
 #define IMAGO_COCOON_POSE_FALLING_BEFORE_BLOCKS 0x9

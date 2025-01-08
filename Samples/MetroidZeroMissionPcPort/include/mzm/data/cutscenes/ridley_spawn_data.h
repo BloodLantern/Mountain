@@ -1,10 +1,10 @@
 #ifndef RIDLEY_SPAWN_DATA_H
 #define RIDLEY_SPAWN_DATA_H
 
-#include "macros.h"
-#include "types.h"
+#include "mzm/macros.h"
+#include "mzm/types.h"
 
-#include "structs/cutscene.h"
+#include "mzm/structs/cutscene.h"
 
 extern const struct CutscenePageData sRidleySpawnPageData[4];
 extern const struct OamArray sRidleySpawnOam[5];

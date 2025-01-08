@@ -1,5 +1,5 @@
-#include "data/sprites/multiviola.h"
-#include "macros.h"
+#include "mzm/data/sprites/multiviola.h"
+#include "mzm/macros.h"
 
 const u32 sMultiviolaGfx[221] = INCBIN_U32("data/sprites/Multiviola.gfx.lz");
 const u16 sMultiviolaPAL[16] = INCBIN_U16("data/sprites/Multiviola.pal");

@@ -1,22 +1,22 @@
-#include "sprites_AI/rinka.h"
-#include "sprites_AI/zebetite_and_cannon.h"
-#include "syscalls.h"
-#include "macros.h"
-#include "sprite_util.h"
+#include "mzm/sprites_AI/rinka.h"
+#include "mzm/sprites_AI/zebetite_and_cannon.h"
+#include "mzm/syscalls.h"
+#include "mzm/macros.h"
+#include "mzm/sprite_util.h"
 
-#include "data/sprites/rinka.h"
-#include "data/sprites/zebetite_and_cannon.h"
-#include "data/sprite_data.h"
+#include "mzm/data/sprites/rinka.h"
+#include "mzm/data/sprites/zebetite_and_cannon.h"
+#include "mzm/data/sprite_data.h"
 
-#include "constants/particle.h"
-#include "constants/sprite.h"
-#include "constants/sprite_util.h"
-#include "constants/event.h"
-#include "constants/samus.h"
+#include "mzm/constants/particle.h"
+#include "mzm/constants/sprite.h"
+#include "mzm/constants/sprite_util.h"
+#include "mzm/constants/event.h"
+#include "mzm/constants/samus.h"
 
-#include "structs/display.h"
-#include "structs/sprite.h"
-#include "structs/samus.h"
+#include "mzm/structs/display.h"
+#include "mzm/structs/sprite.h"
+#include "mzm/structs/samus.h"
 
 /**
  * @brief 3630c | 98 | Initializes a rinka sprite

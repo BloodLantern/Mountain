@@ -1,7 +1,7 @@
 #ifndef ESCAPE_SHIP_SPACE_PIRATE_AI_H
 #define ESCAPE_SHIP_SPACE_PIRATE_AI_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define ESCAPE_SHIP_SPACE_PIRATE_SPAWN 0x1
 #define ESCAPE_SHIP_SPACE_PIRATE_DELAY_BEFORE_JUMPING 0x2

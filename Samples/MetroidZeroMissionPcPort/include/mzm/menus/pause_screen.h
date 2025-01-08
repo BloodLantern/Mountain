@@ -1,9 +1,9 @@
 #ifndef PAUSE_SCREEN_MENU_H
 #define PAUSE_SCREEN_MENU_H
 
-#include "types.h"
-#include "structs/menu.h"
-#include "structs/cutscene.h"
+#include "mzm/types.h"
+#include "mzm/structs/menu.h"
+#include "mzm/structs/cutscene.h"
 
 u32 unk_68168(u16 param_1, u8 param_2, u32 param_3);
 u8 unk_681c8(void);

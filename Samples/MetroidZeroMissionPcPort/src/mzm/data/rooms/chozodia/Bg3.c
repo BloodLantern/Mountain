@@ -1,5 +1,5 @@
-#include "data/rooms/chozodia_rooms_data.h"
-#include "macros.h"
+#include "mzm/data/rooms/chozodia_rooms_data.h"
+#include "mzm/macros.h"
 
 const u8 sCrateria_Bg3_6[1500] = INCBIN_U8("data/rooms/chozodia/Crateria_Bg3_6.gfx");
 

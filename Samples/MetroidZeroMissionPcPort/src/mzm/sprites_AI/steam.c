@@ -1,14 +1,14 @@
-#include "sprites_AI/steam.h"
-#include "macros.h"
-#include "sprite_util.h"
+#include "mzm/sprites_AI/steam.h"
+#include "mzm/macros.h"
+#include "mzm/sprite_util.h"
 
-#include "data/sprites/steam.h"
+#include "mzm/data/sprites/steam.h"
 
-#include "constants/audio.h"
-#include "constants/clipdata.h"
-#include "constants/sprite.h"
+#include "mzm/constants/audio.h"
+#include "mzm/constants/clipdata.h"
+#include "mzm/constants/sprite.h"
 
-#include "structs/sprite.h"
+#include "mzm/structs/sprite.h"
 
 /**
  * @brief 4a5e4 | 208 | Steam AI

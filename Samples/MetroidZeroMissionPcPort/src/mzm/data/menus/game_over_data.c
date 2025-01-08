@@ -1,10 +1,10 @@
-#include "data/menus/game_over_data.h"
-#include "macros.h"
+#include "mzm/data/menus/game_over_data.h"
+#include "mzm/macros.h"
 
-#include "data/menus/file_select_data.h"
+#include "mzm/data/menus/file_select_data.h"
 
-#include "constants/game_over.h"
-#include "constants/samus.h"
+#include "mzm/constants/game_over.h"
+#include "mzm/constants/samus.h"
 
 const u16 sGameOverMenuPal[16 * 5] = INCBIN_U16("data/menus/GameOver/Palette.pal");
 const u32 sGameOverTextAndBackgroundGfx[2738] = INCBIN_U32("data/menus/GameOver/TextAndBackground.gfx.lz");

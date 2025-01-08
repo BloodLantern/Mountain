@@ -1,7 +1,7 @@
 #ifndef SQUEEPT_AI_H
 #define SQUEEPT_AI_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define SQUEEPT_POSE_IDLE_INIT 0xE
 #define SQUEEPT_POSE_IDLE 0xF

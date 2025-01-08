@@ -1,8 +1,8 @@
 #ifndef RIDLEY_DATA_H
 #define RIDLEY_DATA_H
 
-#include "types.h"
-#include "oam.h"
+#include "mzm/types.h"
+#include "mzm/oam.h"
 
 extern const s16 sRidleyMultiSpriteData_Idle_Frame0[18];
 

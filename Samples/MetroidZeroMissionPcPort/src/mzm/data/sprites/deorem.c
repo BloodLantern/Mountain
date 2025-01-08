@@ -1,5 +1,5 @@
-#include "data/sprites/deorem.h"
-#include "macros.h"
+#include "mzm/data/sprites/deorem.h"
+#include "mzm/macros.h"
 
 const s16 sDeoremSegmentXVelocity[33] = {
     1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0,

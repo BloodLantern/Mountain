@@ -1,5 +1,5 @@
-#include "data/sprites/mother_brain.h"
-#include "macros.h"
+#include "mzm/data/sprites/mother_brain.h"
+#include "mzm/macros.h"
 
 const s16 sMotherBrainMultiSpriteData_Part0[12] = {
     0x8, 0x18, 0x9C, 0x0, 0x0, 0x0, 0x2, 0x18, 0x9C, 0x7, 0x60, 0x18

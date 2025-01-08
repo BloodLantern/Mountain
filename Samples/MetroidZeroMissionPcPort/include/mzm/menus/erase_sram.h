@@ -1,8 +1,8 @@
 #ifndef ERASE_SRAM_MENU_H
 #define ERASE_SRAM_MENU_H
 
-#include "types.h"
-#include "structs/menus/erase_sram.h"
+#include "mzm/types.h"
+#include "mzm/structs/menus/erase_sram.h"
 
 u32 EraseSramSubroutine(void);
 u32 EraseSramProcessInput(void);

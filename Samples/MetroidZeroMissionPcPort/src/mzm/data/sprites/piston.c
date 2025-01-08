@@ -1,5 +1,5 @@
-#include "data/sprites/piston.h"
-#include "macros.h"
+#include "mzm/data/sprites/piston.h"
+#include "mzm/macros.h"
 
 const u32 sPistonGfx[179] = INCBIN_U32("data/sprites/Piston.gfx.lz");
 const u16 sPistonPAL[16] = INCBIN_U16("data/sprites/Piston.pal");

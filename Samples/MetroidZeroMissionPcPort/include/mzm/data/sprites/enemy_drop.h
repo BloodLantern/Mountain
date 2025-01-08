@@ -1,8 +1,8 @@
 #ifndef ENEMY_DROP_DATA_H
 #define ENEMY_DROP_DATA_H
 
-#include "types.h"
-#include "oam.h"
+#include "mzm/types.h"
+#include "mzm/oam.h"
 
 extern const u16 sEnemyDropOAM_SmallEnergy_Frame0[4];
 

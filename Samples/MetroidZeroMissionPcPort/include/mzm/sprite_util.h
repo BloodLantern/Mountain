@@ -1,9 +1,9 @@
 #ifndef SPRITE_UTIL_H
 #define SPRITE_UTIL_H
 
-#include "types.h"
-#include "structs/sprite.h"
-#include "structs/samus.h"
+#include "mzm/types.h"
+#include "mzm/structs/sprite.h"
+#include "mzm/structs/samus.h"
 
 void SpriteUtilInitLocationText(void);
 void SpriteUtilCheckStopSamusAgainstSolidSpriteLeft(u16 yPosition, u16 xPosition);

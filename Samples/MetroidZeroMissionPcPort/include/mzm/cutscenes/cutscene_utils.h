@@ -1,8 +1,8 @@
 #ifndef CUTSCENE_UTILS_H
 #define CUTSCENE_UTILS_H
 
-#include "types.h"
-#include "structs/cutscene.h"
+#include "mzm/types.h"
+#include "mzm/structs/cutscene.h"
 
 u8 CutsceneDefaultRoutine(void);
 u8 TourianEscapeSubroutine(void);

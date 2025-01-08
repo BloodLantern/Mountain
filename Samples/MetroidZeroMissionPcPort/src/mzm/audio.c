@@ -1,4 +1,4 @@
-#include "audio.h"
+#include "mzm/audio.h"
 
 u8 gStereoFlag;
 struct MusicTrackInfo gMusicTrackInfo;

@@ -1,5 +1,5 @@
-#include "data/sprites/zeb.h"
-#include "macros.h"
+#include "mzm/data/sprites/zeb.h"
+#include "mzm/macros.h"
 
 const u32 sZebPinkGfx[162] = INCBIN_U32("data/sprites/ZebPink.gfx.lz");
 const u16 sZebPinkPAL[16] = INCBIN_U16("data/sprites/ZebPink.pal");

@@ -1,6 +1,6 @@
-#include "data/sprites/crocomire.h"
+#include "mzm/data/sprites/crocomire.h"
 
-#include "macros.h"
+#include "mzm/macros.h"
 
 const s16 sCrocomireMultiSpriteData_Idle_Frame0[18] = {
     5, -196, 0,

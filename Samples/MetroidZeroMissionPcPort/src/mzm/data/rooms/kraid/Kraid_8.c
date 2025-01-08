@@ -1,5 +1,5 @@
-#include "data/rooms/kraid_rooms_data.h"
-#include "macros.h"
+#include "mzm/data/rooms/kraid_rooms_data.h"
+#include "mzm/macros.h"
 
 const u8 sKraid_4_Scrolls[SCROLL_DATA_SIZE(3)] = {
 	8, // Room

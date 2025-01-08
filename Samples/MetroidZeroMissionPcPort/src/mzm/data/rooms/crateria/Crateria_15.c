@@ -1,5 +1,5 @@
-#include "data/rooms/crateria_rooms_data.h"
-#include "macros.h"
+#include "mzm/data/rooms/crateria_rooms_data.h"
+#include "mzm/macros.h"
 
 const u8 sCrateria_15_Clipdata[237] = INCBIN_U8("data/rooms/crateria/Crateria_15_Clipdata.gfx");
 

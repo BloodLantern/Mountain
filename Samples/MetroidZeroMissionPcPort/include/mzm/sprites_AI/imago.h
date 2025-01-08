@@ -1,7 +1,7 @@
 #ifndef IMAGO_AI_H
 #define IMAGO_AI_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define IMAGO_SIZE BLOCK_SIZE * 4
 

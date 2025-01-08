@@ -1,8 +1,8 @@
 #ifndef GEEGA_DATA_H
 #define GEEGA_DATA_H
 
-#include "types.h"
-#include "oam.h"
+#include "mzm/types.h"
+#include "mzm/oam.h"
 
 extern const u32 sGeegaGfx[153];
 extern const u16 sGeegaPAL[16];

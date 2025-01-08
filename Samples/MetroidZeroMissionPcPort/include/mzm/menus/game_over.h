@@ -1,7 +1,7 @@
 #ifndef GAME_OVER_H
 #define GAME_OVER_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 u32 GameOverSubroutine(void);
 u32 GameOverProcessInput(void);

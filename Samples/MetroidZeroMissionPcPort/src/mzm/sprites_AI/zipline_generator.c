@@ -1,18 +1,18 @@
-#include "sprites_AI/zipline_generator.h"
-#include "macros.h"
-#include "sprite_util.h"
+#include "mzm/sprites_AI/zipline_generator.h"
+#include "mzm/macros.h"
+#include "mzm/sprite_util.h"
 
-#include "data/sprites/zipline_generator.h"
+#include "mzm/data/sprites/zipline_generator.h"
 
-#include "constants/clipdata.h"
-#include "constants/event.h"
-#include "constants/sprite.h"
-#include "constants/samus.h"
+#include "mzm/constants/clipdata.h"
+#include "mzm/constants/event.h"
+#include "mzm/constants/sprite.h"
+#include "mzm/constants/samus.h"
 
-#include "structs/clipdata.h"
-#include "structs/sprite.h"
-#include "structs/samus.h"
-#include "structs/animated_graphics.h"
+#include "mzm/structs/clipdata.h"
+#include "mzm/structs/sprite.h"
+#include "mzm/structs/samus.h"
+#include "mzm/structs/animated_graphics.h"
 
 /**
  * @brief 2e1f0 | 64 | Updates the clipdata of the zipline generator

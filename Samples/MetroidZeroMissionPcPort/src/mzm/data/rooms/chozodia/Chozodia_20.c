@@ -1,5 +1,5 @@
-#include "data/rooms/chozodia_rooms_data.h"
-#include "macros.h"
+#include "mzm/data/rooms/chozodia_rooms_data.h"
+#include "mzm/macros.h"
 
 const u8 sChozodia_20_Clipdata[412] = INCBIN_U8("data/rooms/chozodia/Chozodia_20_Clipdata.gfx");
 

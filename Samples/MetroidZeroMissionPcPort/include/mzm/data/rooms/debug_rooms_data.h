@@ -1,8 +1,8 @@
 #ifndef DEBUG_ROOMS_DATA_H
 #define DEBUG_ROOMS_DATA_H
 
-#include "types.h"
-#include "structs/room.h"
+#include "mzm/types.h"
+#include "mzm/structs/room.h"
 
 extern const u32 sTileset_0_Gfx[445];
 extern const u8 sTileset_0_Tilemap[1410];

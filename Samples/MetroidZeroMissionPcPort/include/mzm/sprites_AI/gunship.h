@@ -1,7 +1,7 @@
 #ifndef GUNSHIP_AI_H
 #define GUNSHIP_AI_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define GUNSHIP_POSE_IDLE 0x9
 #define GUNSHIP_POSE_CHECK_ESCAPE 0xF

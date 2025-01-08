@@ -1,17 +1,17 @@
-#include "cutscenes/ridley_spawn.h"
-#include "cutscenes/cutscene_utils.h"
+#include "mzm/cutscenes/ridley_spawn.h"
+#include "mzm/cutscenes/cutscene_utils.h"
 
-#include "data/shortcut_pointers.h"
-#include "data/cutscenes/ridley_spawn_data.h"
-#include "data/cutscenes/internal_ridley_spawn_data.h"
-#include "data/cutscenes/cutscenes_data.h"
+#include "mzm/data/shortcut_pointers.h"
+#include "mzm/data/cutscenes/ridley_spawn_data.h"
+#include "mzm/data/cutscenes/internal_ridley_spawn_data.h"
+#include "mzm/data/cutscenes/cutscenes_data.h"
 
-#include "constants/audio.h"
-#include "constants/cutscene.h"
-#include "constants/samus.h"
+#include "mzm/constants/audio.h"
+#include "mzm/constants/cutscene.h"
+#include "mzm/constants/samus.h"
 
-#include "structs/display.h"
-#include "structs/samus.h"
+#include "mzm/structs/display.h"
+#include "mzm/structs/samus.h"
 
 /**
  * @brief 65304 | 19c | Handles the ridley flying in part of the cutscene

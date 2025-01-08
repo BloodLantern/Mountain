@@ -1,17 +1,17 @@
-#include "sprites_AI/tangle_vine.h"
-#include "macros.h"
-#include "sprite_util.h"
+#include "mzm/sprites_AI/tangle_vine.h"
+#include "mzm/macros.h"
+#include "mzm/sprite_util.h"
 
-#include "data/frame_data_pointers.h"
-#include "data/sprites/tangle_vine.h"
-#include "data/sprite_data.h"
+#include "mzm/data/frame_data_pointers.h"
+#include "mzm/data/sprites/tangle_vine.h"
+#include "mzm/data/sprite_data.h"
 
-#include "constants/clipdata.h"
-#include "constants/particle.h"
-#include "constants/sprite.h"
-#include "constants/sprite_util.h"
+#include "mzm/constants/clipdata.h"
+#include "mzm/constants/particle.h"
+#include "mzm/constants/sprite.h"
+#include "mzm/constants/sprite_util.h"
 
-#include "structs/sprite.h"
+#include "mzm/structs/sprite.h"
 
 /**
  * @brief 413c4 | 88 | Synchronize the sub sprites of a tangle vine

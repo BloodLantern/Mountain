@@ -1,7 +1,7 @@
 #ifndef GAMET_AI_H
 #define GAMET_AI_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define GAMET_POSE_IDLE_INIT 0x8
 #define GAMET_POSE_IDLE 0x9

@@ -1,9 +1,7 @@
-#include "update_input.h"
-#include "gba.h"
-#include "structs/game_state.h"
-#include "types.h"
-
-#include "GLFW/glfw3.h"
+#include "mzm/update_input.h"
+#include "mzm/gba.h"
+#include "mzm/structs/game_state.h"
+#include "mzm/types.h"
 
 /**
  * @brief 968 | 38 | Updates the input
@@ -11,7 +9,7 @@
  */
 void UpdateInput(void)
 {
-    u16 keys;
+    /*u16 keys;
 
     keys = 0;
 
@@ -47,5 +45,5 @@ void UpdateInput(void)
 
     gChangedInput = keys & ~gPreviousButtonInput;
     gButtonInput = keys;
-    gPreviousButtonInput = keys;
+    gPreviousButtonInput = keys;*/ // TODO - Modern
 }

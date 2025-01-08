@@ -1,4 +1,4 @@
-#include "interrupts.h"
+#include "mzm/interrupts.h"
 
 void IntrMain(void)
 {

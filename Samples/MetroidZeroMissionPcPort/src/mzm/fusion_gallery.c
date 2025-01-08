@@ -1,17 +1,17 @@
-#include "fusion_gallery.h"
+#include "mzm/fusion_gallery.h"
 
-#include "data/shortcut_pointers.h"
-#include "data/fusion_gallery_data.h"
+#include "mzm/data/shortcut_pointers.h"
+#include "mzm/data/fusion_gallery_data.h"
 
-#include "constants/audio.h"
-#include "constants/ending_and_gallery.h"
-#include "constants/game_state.h"
-#include "constants/text.h"
+#include "mzm/constants/audio.h"
+#include "mzm/constants/ending_and_gallery.h"
+#include "mzm/constants/game_state.h"
+#include "mzm/constants/text.h"
 
-#include "structs/bg_clip.h"
-#include "structs/display.h"
-#include "structs/fusion_gallery.h"
-#include "structs/game_state.h"
+#include "mzm/structs/bg_clip.h"
+#include "mzm/structs/display.h"
+#include "mzm/structs/fusion_gallery.h"
+#include "mzm/structs/game_state.h"
 
 /**
  * @brief 847f8 | 78 | V-blank code for the fusion gallery

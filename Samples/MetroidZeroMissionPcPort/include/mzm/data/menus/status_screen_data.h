@@ -1,8 +1,8 @@
 #ifndef STATUS_SCREEN_MENU_DATA_H
 #define STATUS_SCREEN_MENU_DATA_H
 
-#include "types.h"
-#include "structs/menus/status_screen.h"
+#include "mzm/types.h"
+#include "mzm/structs/menus/status_screen.h"
 
 extern const u16 sStatusScreen_40dd10[6 * 16];
 extern const u16 sStatusScreen_40ddd0[4 * 16];

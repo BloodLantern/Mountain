@@ -1,7 +1,7 @@
 #ifndef ANIMATED_GRAPHICS_H
 #define ANIMATED_GRAPHICS_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 void AnimatedGraphicsTransfer(void);
 void AnimatedGraphicsUpdate(void);

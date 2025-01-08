@@ -1,7 +1,7 @@
 #ifndef ROOM_MUSIC_H
 #define ROOM_MUSIC_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 void CheckPlayRoomMusicTrack(u8 area, u8 room);
 void CheckPlayLoadingJingle(void);

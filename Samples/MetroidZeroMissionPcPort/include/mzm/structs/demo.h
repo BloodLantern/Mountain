@@ -1,7 +1,7 @@
 #ifndef DEMO_STRUCT_H
 #define DEMO_STRUCT_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 struct Demo {
     u8 number;

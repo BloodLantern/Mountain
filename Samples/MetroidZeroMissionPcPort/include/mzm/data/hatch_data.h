@@ -1,9 +1,9 @@
 #ifndef HATCH_DATA_H
 #define HATCH_DATA_H
 
-#include "types.h"
+#include "mzm/types.h"
 
-#include "structs/connection.h"
+#include "mzm/structs/connection.h"
 
 // 360130
 

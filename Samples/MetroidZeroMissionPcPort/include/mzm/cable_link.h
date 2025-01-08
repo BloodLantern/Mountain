@@ -1,8 +1,8 @@
 #ifndef CABLE_LINK_H
 #define CABLE_LINK_H
 
-#include "types.h"
-#include "structs/cable_link.h"
+#include "mzm/types.h"
+#include "mzm/structs/cable_link.h"
 
 #define READ_SIO_MULTI(i) (*(((vu16*)REG_SIO_MULTI) + i))
 

@@ -1,17 +1,17 @@
-#include "sprites_AI/sova.h"
-#include "macros.h"
-#include "sprite_util.h"
+#include "mzm/sprites_AI/sova.h"
+#include "mzm/macros.h"
+#include "mzm/sprite_util.h"
 
-#include "data/sprites/sova.h"
-#include "data/sprite_data.h"
+#include "mzm/data/sprites/sova.h"
+#include "mzm/data/sprite_data.h"
 
-#include "constants/clipdata.h"
-#include "constants/sprite.h"
-#include "constants/sprite_util.h"
-#include "constants/particle.h"
+#include "mzm/constants/clipdata.h"
+#include "mzm/constants/sprite.h"
+#include "mzm/constants/sprite_util.h"
+#include "mzm/constants/particle.h"
 
-#include "structs/game_state.h"
-#include "structs/sprite.h"
+#include "mzm/structs/game_state.h"
+#include "mzm/structs/sprite.h"
 
 /**
  * @brief 1da24 | b8 | Checks if a sova is colliding with air

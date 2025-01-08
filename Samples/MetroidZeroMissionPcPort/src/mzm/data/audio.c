@@ -1,11 +1,11 @@
-#include "data/audio.h"
-#include "gba.h"
-#include "macros.h"
+#include "mzm/data/audio.h"
+#include "mzm/gba.h"
+#include "mzm/macros.h"
 
-#include "audio.h"
-#include "audio/track_internal.h"
+#include "mzm/audio.h"
+#include "mzm/audio/track_internal.h"
 
-#include "constants/audio_engine.h"
+#include "mzm/constants/audio_engine.h"
 
 const u16 sUnk_808cad0[128] = {
     0x2c, 0x9d, 0x107, 0x16b, 0x1ca, 0x223, 0x277, 0x2c7, 0x312, 0x358, 0x39b, 0x3da, 0x2c, 0x9d, 0x107, 0x16b,

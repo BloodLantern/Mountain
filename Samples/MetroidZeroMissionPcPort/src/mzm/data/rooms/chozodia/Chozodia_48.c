@@ -1,5 +1,5 @@
-#include "data/rooms/chozodia_rooms_data.h"
-#include "macros.h"
+#include "mzm/data/rooms/chozodia_rooms_data.h"
+#include "mzm/macros.h"
 
 const u8 sChozodia_30_Scrolls[SCROLL_DATA_SIZE(3)] = {
 	48, // Room

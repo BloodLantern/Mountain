@@ -1,8 +1,8 @@
 #ifndef STATUE_OPENING_CUTSCENE
 #define STATUE_OPENING_CUTSCENE
 
-#include "types.h"
-#include "structs/cutscene.h"
+#include "mzm/types.h"
+#include "mzm/structs/cutscene.h"
 
 #define STATUE_OPENING_OAM_ID_KRAID_IDLE 1
 #define STATUE_OPENING_OAM_ID_KRAID_ACTIVATING 2

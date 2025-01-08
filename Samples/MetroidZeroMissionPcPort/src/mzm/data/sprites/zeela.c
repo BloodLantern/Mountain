@@ -1,5 +1,5 @@
-#include "data/sprites/zeela.h"
-#include "macros.h"
+#include "mzm/data/sprites/zeela.h"
+#include "mzm/macros.h"
 
 const s16 sZeelaEyesFallingFromUpSpeed[16] = {
     -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 12, SHORT_MAX

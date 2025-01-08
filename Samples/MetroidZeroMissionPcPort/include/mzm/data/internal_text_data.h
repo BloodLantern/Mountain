@@ -1,8 +1,8 @@
 #ifndef INTERNAL_TEXT_DATA
 #define INTERNAL_TEXT_DATA
 
-#include "types.h"
-#include "constants/game_state.h"
+#include "mzm/types.h"
+#include "mzm/constants/game_state.h"
 
 extern const u16* const * const sDescriptionTextPointers[LANGUAGE_END];
 

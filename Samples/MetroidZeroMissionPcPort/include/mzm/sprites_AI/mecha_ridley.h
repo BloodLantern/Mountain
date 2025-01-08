@@ -1,7 +1,7 @@
 #ifndef MECHA_RIDLEY_AI_H
 #define MECHA_RIDLEY_AI_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define MECHA_RIDLEY_POSE_CRAWLING_INIT 0x1
 #define MECHA_RIDLEY_POSE_DELAY_BEFORE_CRAWLING 0x2

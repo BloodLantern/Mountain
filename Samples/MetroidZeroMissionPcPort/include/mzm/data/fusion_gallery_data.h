@@ -1,7 +1,7 @@
 #ifndef ENDING_AND_GALLERY_DATA_H
 #define ENDING_AND_GALLERY_DATA_H
 
-#include "structs/fusion_gallery.h"
+#include "mzm/structs/fusion_gallery.h"
 
 #define NUMBER_OF_FUSION_GALLERY_IMAGES 13
 

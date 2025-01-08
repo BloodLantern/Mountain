@@ -1,6 +1,6 @@
-#include "data/cutscenes/internal_statue_opening_data.h"
-#include "cutscenes/statue_opening.h"
-#include "cutscenes/cutscene_utils.h"
+#include "mzm/data/cutscenes/internal_statue_opening_data.h"
+#include "mzm/cutscenes/statue_opening.h"
+#include "mzm/cutscenes/cutscene_utils.h"
 
 const struct CutsceneSubroutineData sStatueOpeningSubroutineData[3] = {
     [0] = {

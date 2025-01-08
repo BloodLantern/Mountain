@@ -1,20 +1,20 @@
-#include "sprites_AI/worker_robot.h"
-#include "macros.h"
-#include "sprite_util.h"
+#include "mzm/sprites_AI/worker_robot.h"
+#include "mzm/macros.h"
+#include "mzm/sprite_util.h"
 
-#include "data/sprites/worker_robot.h"
-#include "data/sprite_data.h"
+#include "mzm/data/sprites/worker_robot.h"
+#include "mzm/data/sprite_data.h"
 
-#include "constants/clipdata.h"
-#include "constants/particle.h"
-#include "constants/sprite.h"
-#include "constants/sprite_util.h"
-#include "constants/samus.h"
-#include "constants/projectile.h"
+#include "mzm/constants/clipdata.h"
+#include "mzm/constants/particle.h"
+#include "mzm/constants/sprite.h"
+#include "mzm/constants/sprite_util.h"
+#include "mzm/constants/samus.h"
+#include "mzm/constants/projectile.h"
 
-#include "structs/sprite.h"
-#include "structs/samus.h"
-#include "structs/projectile.h"
+#include "mzm/structs/sprite.h"
+#include "mzm/structs/samus.h"
+#include "mzm/structs/projectile.h"
 
 /**
  * @brief 2f534 | c4 | Checks if samus is in front of the worker robot

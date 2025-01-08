@@ -1,5 +1,5 @@
-#include "data/sprites/gadora.h"
-#include "macros.h"
+#include "mzm/data/sprites/gadora.h"
+#include "mzm/macros.h"
 
 const u32 sGadoraGfx[585] = INCBIN_U32("data/sprites/Gadora.gfx.lz");
 const u16 sGadoraPAL[32] = INCBIN_U16("data/sprites/Gadora.pal");

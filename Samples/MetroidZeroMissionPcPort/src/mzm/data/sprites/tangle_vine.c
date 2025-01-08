@@ -1,5 +1,5 @@
-#include "data/sprites/tangle_vine.h"
-#include "macros.h"
+#include "mzm/data/sprites/tangle_vine.h"
+#include "mzm/macros.h"
 
 const s16 sTangleVineGerutaMultiSpriteData_Idle_Frame0[9] = {
     8, 0, -8,

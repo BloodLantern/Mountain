@@ -1,9 +1,9 @@
 #ifndef WORKER_ROBOT_DATA_H
 #define WORKER_ROBOT_DATA_H
 
-#include "types.h"
-#include "macros.h"
-#include "oam.h"
+#include "mzm/types.h"
+#include "mzm/macros.h"
+#include "mzm/oam.h"
 
 extern const u32 sWorkerRobotGfx[376];
 extern const u16 sWorkerRobotPAL[32];

@@ -1,14 +1,14 @@
 #ifndef EMPTY_DATATYPES_H
 #define EMPTY_DATATYPES_H
 
-#include "structs/block.h"
-#include "structs/connection.h"
-#include "structs/transparency.h"
-#include "structs/screen_shake.h"
-#include "structs/scroll.h"
-#include "structs/room.h"
-#include "structs/power_bomb_explosion.h"
-#include "structs/animated_graphics.h"
+#include "mzm/structs/block.h"
+#include "mzm/structs/connection.h"
+#include "mzm/structs/transparency.h"
+#include "mzm/structs/screen_shake.h"
+#include "mzm/structs/scroll.h"
+#include "mzm/structs/room.h"
+#include "mzm/structs/power_bomb_explosion.h"
+#include "mzm/structs/animated_graphics.h"
 
 // 345868
 

@@ -1,7 +1,7 @@
 #ifndef DATA_COMMON_PALS_H
 #define DATA_COMMON_PALS_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 extern const u16 sCommonTilesPal[1 * 16 - 1];
 extern const u16 sDoorTransitionPal[15 * 16 + 1];

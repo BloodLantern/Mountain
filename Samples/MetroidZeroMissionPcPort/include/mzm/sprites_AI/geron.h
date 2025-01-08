@@ -1,7 +1,7 @@
 #ifndef GERON_AI_H
 #define GERON_AI_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define GERON_POSE_IDLE 0x9
 #define GERON_POSE_GETTING_DESTROYED 0x23

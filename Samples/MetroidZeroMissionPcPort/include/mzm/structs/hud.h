@@ -1,7 +1,7 @@
 #ifndef HUD_STRUCT_H
 #define HUD_STRUCT_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 // Structs
 

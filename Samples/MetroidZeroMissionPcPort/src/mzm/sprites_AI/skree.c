@@ -1,18 +1,18 @@
-#include "sprites_AI/skree.h"
-#include "macros.h"
-#include "sprite_util.h"
+#include "mzm/sprites_AI/skree.h"
+#include "mzm/macros.h"
+#include "mzm/sprite_util.h"
 
-#include "data/sprites/skree.h"
-#include "data/sprite_data.h"
+#include "mzm/data/sprites/skree.h"
+#include "mzm/data/sprite_data.h"
 
-#include "constants/particle.h"
-#include "constants/clipdata.h"
-#include "constants/sprite.h"
-#include "constants/sprite_util.h"
+#include "mzm/constants/particle.h"
+#include "mzm/constants/clipdata.h"
+#include "mzm/constants/sprite.h"
+#include "mzm/constants/sprite_util.h"
 
-#include "structs/display.h"
-#include "structs/sprite.h"
-#include "structs/samus.h"
+#include "mzm/structs/display.h"
+#include "mzm/structs/sprite.h"
+#include "mzm/structs/samus.h"
 
 /**
  * @brief 1c644 | 50 | Initializes a skree sprite

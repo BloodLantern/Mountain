@@ -1,13 +1,13 @@
-#include "sprites_AI/primary_sprite_B3.h"
-#include "gba.h"
-#include "macros.h"
-#include "sprite_util.h"
+#include "mzm/sprites_AI/primary_sprite_B3.h"
+#include "mzm/gba.h"
+#include "mzm/macros.h"
+#include "mzm/sprite_util.h"
 
-#include "data/sprites/enemy_drop.h"
+#include "mzm/data/sprites/enemy_drop.h"
 
-#include "constants/sprite.h"
+#include "mzm/constants/sprite.h"
 
-#include "structs/sprite.h"
+#include "mzm/structs/sprite.h"
 
 /**
  * @brief 49dcc | ec | Primary Sprite B3 AI, the purpose of this sprite is unknown but it's related to the searchlights in Chozodia

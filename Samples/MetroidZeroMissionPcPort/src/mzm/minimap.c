@@ -1,22 +1,22 @@
-#include "minimap.h"
-#include "gba.h"
-#include "macros.h"
+#include "mzm/minimap.h"
+#include "mzm/gba.h"
+#include "mzm/macros.h"
 
-#include "data/shortcut_pointers.h"
-#include "data/engine_pointers.h"
-#include "data/menus/pause_screen_data.h"
-#include "data/menus/pause_screen_map_data.h"
-#include "data/menus/internal_pause_screen_data.h"
+#include "mzm/data/shortcut_pointers.h"
+#include "mzm/data/engine_pointers.h"
+#include "mzm/data/menus/pause_screen_data.h"
+#include "mzm/data/menus/pause_screen_map_data.h"
+#include "mzm/data/menus/internal_pause_screen_data.h"
 
-#include "constants/connection.h"
-#include "constants/game_state.h"
-#include "constants/minimap.h"
+#include "mzm/constants/connection.h"
+#include "mzm/constants/game_state.h"
+#include "mzm/constants/minimap.h"
 
-#include "structs/bg_clip.h"
-#include "structs/game_state.h"
-#include "structs/minimap.h"
-#include "structs/samus.h"
-#include "structs/room.h"
+#include "mzm/structs/bg_clip.h"
+#include "mzm/structs/game_state.h"
+#include "mzm/structs/minimap.h"
+#include "mzm/structs/samus.h"
+#include "mzm/structs/room.h"
 
 struct LastAreaName gLastAreaNameVisited;
 u32 gMinimapTilesWithObtainedItems[MAX_AMOUNT_OF_AREAS * MINIMAP_SIZE * 2];

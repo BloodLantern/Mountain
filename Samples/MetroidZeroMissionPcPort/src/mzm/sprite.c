@@ -1,24 +1,29 @@
-#include "sprite.h"
-#include "sprite_debris.h"
-#include "syscalls.h"
-#include "gba.h"
-#include "macros.h"
-#include "fixed_point.h"
-#include "sprite_util.h"
+#include "mzm/sprite.h"
+#include "mzm/sprite_debris.h"
+#include "mzm/syscalls.h"
+#include "mzm/gba.h"
+#include "mzm/macros.h"
+#include "mzm/fixed_point.h"
+#include "mzm/sprite_util.h"
 
-#include "data/generic_data.h"
-#include "data/samus_sprites_pointers.h"
-#include "data/sprite_data.h"
+#include "mzm/data/generic_data.h"
+#include "mzm/data/samus_sprites_pointers.h"
+#include "mzm/data/sprite_data.h"
 
-#include "constants/game_state.h"
-#include "constants/connection.h"
-#include "constants/sprite.h"
-#include "constants/particle.h"
+#include "mzm/constants/game_state.h"
+#include "mzm/constants/connection.h"
+#include "mzm/constants/sprite.h"
 
-#include "structs/bg_clip.h"
-#include "structs/game_state.h"
-#include "structs/room.h"
-#include "structs/samus.h"
+#include <string.h>
+
+#include "mzm/escape.h"
+#include "mzm/constants/particle.h"
+#include "mzm/sprites_AI/space_pirate.h"
+
+#include "mzm/structs/bg_clip.h"
+#include "mzm/structs/game_state.h"
+#include "mzm/structs/room.h"
+#include "mzm/structs/samus.h"
 
 u16 gAlarmTimer;
 struct SpriteData gSpriteData[MAX_AMOUNT_OF_SPRITES];
@@ -413,7 +418,7 @@ void SpriteDrawAll_Upper(void)
  */
 void SpriteDraw(struct SpriteData* pSprite, s32 slot)
 {
-    struct SpriteRenderData renderData;
+    /*struct SpriteRenderData renderData;
 
     memset(&renderData, 0, sizeof(renderData));
 
@@ -429,7 +434,7 @@ void SpriteDraw(struct SpriteData* pSprite, s32 slot)
         renderData.rotation = Q_8_8_TO_INT(pSprite->oamRotation) * 3.14f * 2;
 
     renderData.bgPriority = pSprite->bgPriority;
-    renderData.paletteRow = pSprite->paletteRow;
+    renderData.paletteRow = pSprite->paletteRow;*/ // TODO - Modern
 
     // printf("%f ; %f\n", renderData.xPosition, renderData.yPosition);
 
@@ -1183,8 +1188,8 @@ void SpriteInitPrimary(u8 spritesetSlot, u16 yPosition, u16 xPosition, u8 roomSl
 
             // Fetch the gfx slot and the sprite id
             pSprite->spriteId = gSpritesetSpritesID[spritesetSlot];
-            pSprite->spritesetGfxSlot = SpriteRendererGetSpriteGraphics(pSprite->spriteId);
-            pSprite->palette = SpriteRendererGetSpritePalette(pSprite->spriteId);
+            /*pSprite->spritesetGfxSlot = SpriteRendererGetSpriteGraphics(pSprite->spriteId);
+            pSprite->palette = SpriteRendererGetSpritePalette(pSprite->spriteId);*/ // TODO - Modern
         }
         else
         {

@@ -1,10 +1,10 @@
 #ifndef TITLE_SCREEN_DATA_H
 #define TITLE_SCREEN_DATA_H
 
-#include "types.h"
-#include "structs/cutscene.h"
-#include "structs/menus/title_screen.h"
-#include "structs/menu.h"
+#include "mzm/types.h"
+#include "mzm/structs/cutscene.h"
+#include "mzm/structs/menus/title_screen.h"
+#include "mzm/structs/menu.h"
 
 extern const u16 sTitleScreenPal[15 * 16];
 extern const u16 sTitleScreenPromptPAL[5 * 16];

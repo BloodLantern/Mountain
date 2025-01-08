@@ -1,8 +1,8 @@
 #ifndef SAVE_FILE_DATA_H
 #define SAVE_FILE_DATA_H
 
-#include "types.h"
-#include "structs/save_file.h"
+#include "mzm/types.h"
+#include "mzm/structs/save_file.h"
 
 extern const u8 sMetZeroSramCheck_Text[SRAM_TEXT_SIZE];
 extern const u8 sZERO_MISSION_010_Text[SRAM_TEXT_SIZE];

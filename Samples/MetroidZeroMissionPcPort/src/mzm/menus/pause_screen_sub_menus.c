@@ -1,20 +1,20 @@
-#include "menus/pause_screen_sub_menus.h"
-#include "menus/pause_screen.h"
-#include "menus/pause_screen_map.h"
-#include "syscalls.h"
-#include "oam_id.h"
+#include "mzm/menus/pause_screen_sub_menus.h"
+#include "mzm/menus/pause_screen.h"
+#include "mzm/menus/pause_screen_map.h"
+#include "mzm/syscalls.h"
+#include "mzm/oam_id.h"
 
-#include "data/shortcut_pointers.h"
-#include "data/clipdata_data.h"
-#include "data/menus/pause_screen_data.h"
-#include "data/menus/pause_screen_sub_menus_data.h"
-#include "data/menus/internal_pause_screen_sub_menus_data.h"
+#include "mzm/data/shortcut_pointers.h"
+#include "mzm/data/clipdata_data.h"
+#include "mzm/data/menus/pause_screen_data.h"
+#include "mzm/data/menus/pause_screen_sub_menus_data.h"
+#include "mzm/data/menus/internal_pause_screen_sub_menus_data.h"
 
-#include "constants/connection.h"
-#include "constants/event.h"
-#include "constants/menus/pause_screen.h"
+#include "mzm/constants/connection.h"
+#include "mzm/constants/event.h"
+#include "mzm/constants/menus/pause_screen.h"
 
-#include "structs/display.h"
+#include "mzm/structs/display.h"
 
 /**
  * @brief 71f70 | 1da | Easy sleep menu subroutine

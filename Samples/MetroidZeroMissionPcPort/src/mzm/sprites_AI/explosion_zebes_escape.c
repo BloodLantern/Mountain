@@ -1,11 +1,11 @@
-#include "sprites_AI/explosion_zebes_escape.h"
-#include "data/sprites/enemy_drop.h"
-#include "constants/particle.h"
-#include "constants/sprite.h"
-#include "structs/bg_clip.h"
-#include "structs/sprite.h"
-#include "structs/samus.h"
-#include "sprite_util.h"
+#include "mzm/sprites_AI/explosion_zebes_escape.h"
+#include "mzm/data/sprites/enemy_drop.h"
+#include "mzm/constants/particle.h"
+#include "mzm/constants/sprite.h"
+#include "mzm/structs/bg_clip.h"
+#include "mzm/structs/sprite.h"
+#include "mzm/structs/samus.h"
+#include "mzm/sprite_util.h"
 
 /**
  * @brief 12a34 | 2e0 | Explosion zebes escape AI

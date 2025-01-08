@@ -1,8 +1,8 @@
-#include "display.h"
-#include "gba.h"
+#include "mzm/display.h"
+#include "mzm/gba.h"
 
-#include "structs/display.h"
-#include "structs/color_effects.h"
+#include "mzm/structs/display.h"
+#include "mzm/structs/color_effects.h"
 
 u16 gWrittenToWIN1H;
 u16 gWrittenToWIN1V;

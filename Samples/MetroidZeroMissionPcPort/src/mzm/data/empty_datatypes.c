@@ -1,8 +1,8 @@
-#include "data/empty_datatypes.h"
-#include "types.h"
+#include "mzm/data/empty_datatypes.h"
+#include "mzm/types.h"
 
-#include "constants/block.h"
-#include "constants/connection.h"
+#include "mzm/constants/block.h"
+#include "mzm/constants/connection.h"
 
 // 345868
 

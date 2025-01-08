@@ -1,7 +1,7 @@
-#include "data/cutscenes/internal_ridley_in_space_data.h"
-#include "cutscenes/ridley_in_space.h"
-#include "cutscenes/cutscene_utils.h"
-#include "macros.h"
+#include "mzm/data/cutscenes/internal_ridley_in_space_data.h"
+#include "mzm/cutscenes/ridley_in_space.h"
+#include "mzm/cutscenes/cutscene_utils.h"
+#include "mzm/macros.h"
 
 const struct RawCoordsX sRidleyInSpaceShipLeavingPosition = {
     .x = -(BLOCK_SIZE * 4 + QUARTER_BLOCK_SIZE),

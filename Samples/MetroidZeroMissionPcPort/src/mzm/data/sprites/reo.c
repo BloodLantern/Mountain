@@ -1,5 +1,5 @@
-#include "data/sprites/reo.h"
-#include "macros.h"
+#include "mzm/data/sprites/reo.h"
+#include "mzm/macros.h"
 
 const s16 sReoIdleYMovement[65] = {
     0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1,

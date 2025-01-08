@@ -1,12 +1,12 @@
-#include "data/menus/pause_screen_data.h"
-#include "macros.h"
-#include "gba.h"
+#include "mzm/data/menus/pause_screen_data.h"
+#include "mzm/macros.h"
+#include "mzm/gba.h"
 
-#include "constants/connection.h"
-#include "constants/menus/pause_screen.h"
-#include "constants/event.h"
-#include "constants/samus.h"
-#include "constants/text.h"
+#include "mzm/constants/connection.h"
+#include "mzm/constants/menus/pause_screen.h"
+#include "mzm/constants/event.h"
+#include "mzm/constants/samus.h"
+#include "mzm/constants/text.h"
 
 const u16 sPauseScreen_3fcef0[11 * 16] = INCBIN_U16("data/menus/PauseScreen/3fcef0.pal");
 const u16 sTankIconsPal[16 * 16] = INCBIN_U16("data/menus/PauseScreen/TankIcons.pal");

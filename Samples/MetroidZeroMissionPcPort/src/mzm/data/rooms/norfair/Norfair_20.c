@@ -1,5 +1,5 @@
-#include "data/rooms/norfair_rooms_data.h"
-#include "macros.h"
+#include "mzm/data/rooms/norfair_rooms_data.h"
+#include "mzm/macros.h"
 
 const u8 sNorfair_6_Scrolls[SCROLL_DATA_SIZE(4)] = {
 	20, // Room

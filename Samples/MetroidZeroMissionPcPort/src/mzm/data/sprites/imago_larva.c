@@ -1,5 +1,5 @@
-#include "data/sprites/imago_larva.h"
-#include "macros.h"
+#include "mzm/data/sprites/imago_larva.h"
+#include "mzm/macros.h"
 
 const s16 sImagoLarvaMultiSpriteData_Attacking_Frame0[18] = {
     4, 0, 0,

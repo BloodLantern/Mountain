@@ -1,18 +1,18 @@
-#include "sprites_AI/rising_chozo_pillar.h"
-#include "macros.h"
-#include "sprite_util.h"
+#include "mzm/sprites_AI/rising_chozo_pillar.h"
+#include "mzm/macros.h"
+#include "mzm/sprite_util.h"
 
-#include "data/sprites/rising_chozo_pillar.h"
-#include "data/sprites/enemy_drop.h"
+#include "mzm/data/sprites/rising_chozo_pillar.h"
+#include "mzm/data/sprites/enemy_drop.h"
 
-#include "constants/clipdata.h"
-#include "constants/event.h"
-#include "constants/particle.h"
-#include "constants/sprite.h"
+#include "mzm/constants/clipdata.h"
+#include "mzm/constants/event.h"
+#include "mzm/constants/particle.h"
+#include "mzm/constants/sprite.h"
 
-#include "structs/bg_clip.h"
-#include "structs/clipdata.h"
-#include "structs/sprite.h"
+#include "mzm/structs/bg_clip.h"
+#include "mzm/structs/clipdata.h"
+#include "mzm/structs/sprite.h"
 
 /**
  * 4854c | a8 | Spawns random sprite debris depending on the parameters

@@ -1,8 +1,8 @@
 #ifndef METROID_DATA_H
 #define METROID_DATA_H
 
-#include "types.h"
-#include "oam.h"
+#include "mzm/types.h"
+#include "mzm/oam.h"
 
 extern const s16 sMetroidSpawningYMovement[65];
 

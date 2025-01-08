@@ -1,19 +1,19 @@
-#include "sprites_AI/morph_ball_launcher.h"
-#include "macros.h"
-#include "sprite_util.h"
+#include "mzm/sprites_AI/morph_ball_launcher.h"
+#include "mzm/macros.h"
+#include "mzm/sprite_util.h"
 
-#include "data/sprites/morph_ball_launcher.h"
+#include "mzm/data/sprites/morph_ball_launcher.h"
 
-#include "constants/clipdata.h"
-#include "constants/sprite.h"
-#include "constants/samus.h"
-#include "constants/projectile.h"
+#include "mzm/constants/clipdata.h"
+#include "mzm/constants/sprite.h"
+#include "mzm/constants/samus.h"
+#include "mzm/constants/projectile.h"
 
-#include "structs/display.h"
-#include "structs/clipdata.h"
-#include "structs/sprite.h"
-#include "structs/samus.h"
-#include "structs/projectile.h"
+#include "mzm/structs/display.h"
+#include "mzm/structs/clipdata.h"
+#include "mzm/structs/sprite.h"
+#include "mzm/structs/samus.h"
+#include "mzm/structs/projectile.h"
 
 /**
  * @brief 268bc | 74 | Updates the clipdata of a morph ball launcher

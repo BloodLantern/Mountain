@@ -1,5 +1,5 @@
-#include "data/sprites/polyp.h"
-#include "macros.h"
+#include "mzm/data/sprites/polyp.h"
+#include "mzm/macros.h"
 
 const s16 sPolypProjectileYVelocity[44] = {
     -16, -16, -14, -14, -12, -12, -10, -10, -8, -8, -8, -8,

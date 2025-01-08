@@ -1,8 +1,8 @@
 #ifndef INTERNAL_RIDLEY_SPAWN_DATA_H
 #define INTERNAL_RIDLEY_SPAWN_DATA_H
 
-#include "types.h"
-#include "structs/cutscene.h"
+#include "mzm/types.h"
+#include "mzm/structs/cutscene.h"
 
 extern const struct RawCoordsX sRidleySpawnRidleyPositions[3];
 

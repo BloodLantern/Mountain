@@ -1,5 +1,5 @@
-#include "data/sprites/ruins_test.h"
-#include "macros.h"
+#include "mzm/data/sprites/ruins_test.h"
+#include "mzm/macros.h"
 
 const u32 sRuinsTestGfx[1951] = INCBIN_U32("data/sprites/RuinsTest.gfx.lz");
 const u32 sRuinsTestGfx_SamusReflectionTurningRightTop[96] = INCBIN_U32("data/sprites/RuinsTest_SamusReflectionTurningRightTop.gfx");

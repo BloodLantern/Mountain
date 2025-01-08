@@ -1,9 +1,9 @@
 #ifndef SPRITE_H
 #define SPRITE_H
 
-#include "types.h"
-#include "oam.h"
-#include "structs/sprite.h"
+#include "mzm/types.h"
+#include "mzm/oam.h"
+#include "mzm/structs/sprite.h"
 
 void SpriteUpdate(void);
 void SpriteUpdateAnimation(struct SpriteData* pSprite);

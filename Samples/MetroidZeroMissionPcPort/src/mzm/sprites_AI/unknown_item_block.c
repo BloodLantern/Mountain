@@ -1,16 +1,16 @@
-#include "sprites_AI/unknown_item_block.h"
-#include "macros.h"
-#include "sprite_util.h"
+#include "mzm/sprites_AI/unknown_item_block.h"
+#include "mzm/macros.h"
+#include "mzm/sprite_util.h"
 
-#include "data/sprites/unknown_item_block.h"
+#include "mzm/data/sprites/unknown_item_block.h"
 
-#include "constants/clipdata.h"
-#include "constants/event.h"
-#include "constants/sprite.h"
+#include "mzm/constants/clipdata.h"
+#include "mzm/constants/event.h"
+#include "mzm/constants/sprite.h"
 
-#include "structs/clipdata.h"
-#include "structs/display.h"
-#include "structs/sprite.h"
+#include "mzm/structs/clipdata.h"
+#include "mzm/structs/display.h"
+#include "mzm/structs/sprite.h"
 
 /**
  * @brief 4a930 | 70 | Updates the clipdata of the 4 blocks of the unknown item block

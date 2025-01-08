@@ -1,5 +1,5 @@
-#include "data/sprites/worker_robot.h"
-#include "macros.h"
+#include "mzm/data/sprites/worker_robot.h"
+#include "mzm/macros.h"
 
 const u32 sWorkerRobotGfx[376] = INCBIN_U32("data/sprites/WorkerRobot.gfx.lz");
 const u16 sWorkerRobotPAL[32] = INCBIN_U16("data/sprites/WorkerRobot.pal");

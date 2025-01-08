@@ -1,16 +1,16 @@
-#include "sprites_AI/multiviola.h"
-#include "macros.h"
-#include "sprite_util.h"
+#include "mzm/sprites_AI/multiviola.h"
+#include "mzm/macros.h"
+#include "mzm/sprite_util.h"
 
-#include "data/sprites/multiviola.h"
-#include "data/sprite_data.h"
+#include "mzm/data/sprites/multiviola.h"
+#include "mzm/data/sprite_data.h"
 
-#include "constants/particle.h"
-#include "constants/clipdata.h"
-#include "constants/sprite.h"
-#include "constants/sprite_util.h"
+#include "mzm/constants/particle.h"
+#include "mzm/constants/clipdata.h"
+#include "mzm/constants/sprite.h"
+#include "mzm/constants/sprite_util.h"
 
-#include "structs/sprite.h"
+#include "mzm/structs/sprite.h"
 
 /**
  * @brief 1e854 | 70 | Initializes a multiviola sprite

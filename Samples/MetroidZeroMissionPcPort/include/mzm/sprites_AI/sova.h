@@ -1,7 +1,7 @@
 #ifndef SOVA_AI_H
 #define SOVA_AI_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define SOVA_TURNING_DIRECTION_BOTTOM_LEFT_CORNER 0x0
 #define SOVA_TURNING_DIRECTION_TOP_RIGHT_EDGE 0x1

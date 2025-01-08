@@ -1,7 +1,7 @@
 #ifndef ESCAPE_SHIP_AI_H
 #define ESCAPE_SHIP_AI_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define ESCAPE_SHIP_POSE_CHECK_OPEN 0x8
 #define ESCAPE_SHIP_POSE_OPENING 0x9

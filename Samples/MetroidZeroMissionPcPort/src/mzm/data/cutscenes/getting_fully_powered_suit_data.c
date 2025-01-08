@@ -1,7 +1,7 @@
-#include "data/cutscenes/getting_fully_powered_suit_data.h"
-#include "cutscenes/getting_fully_powered_suit.h"
-#include "gba.h"
-#include "macros.h"
+#include "mzm/data/cutscenes/getting_fully_powered_suit_data.h"
+#include "mzm/cutscenes/getting_fully_powered_suit.h"
+#include "mzm/gba.h"
+#include "mzm/macros.h"
 
 const struct CutscenePageData sGettingFullyPoweredSuitPageData[3] = {
     [0] = {

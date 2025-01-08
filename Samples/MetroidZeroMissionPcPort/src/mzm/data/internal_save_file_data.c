@@ -1,7 +1,7 @@
-#include "data/internal_save_file_data.h"
-#include "constants/connection.h"
-#include "constants/samus.h"
-#include "constants/game_state.h"
+#include "mzm/data/internal_save_file_data.h"
+#include "mzm/constants/connection.h"
+#include "mzm/constants/samus.h"
+#include "mzm/constants/game_state.h"
 
 const struct SaveFileInfo sSaveFileInfo_Empty = {
     .exists = FALSE,

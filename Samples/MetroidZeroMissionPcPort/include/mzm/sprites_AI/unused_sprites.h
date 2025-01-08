@@ -1,7 +1,7 @@
 #ifndef UNUSED_SPRITES_AI_H
 #define UNUSED_SPRITES_AI_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 void UnusedSprites(void);
 

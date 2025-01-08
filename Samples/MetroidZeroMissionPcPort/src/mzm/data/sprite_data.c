@@ -1,5 +1,5 @@
-#include "data/sprite_data.h"
-#include "constants/sprite.h"
+#include "mzm/data/sprite_data.h"
+#include "mzm/constants/sprite.h"
 
 // 2b0c94
 

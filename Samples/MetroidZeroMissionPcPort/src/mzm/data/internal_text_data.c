@@ -1,6 +1,6 @@
-#include "data/internal_text_data.h"
-#include "data/text_pointers.h"
-#include "macros.h"
+#include "mzm/data/internal_text_data.h"
+#include "mzm/data/text_pointers.h"
+#include "mzm/macros.h"
 
 const u16* const * const sDescriptionTextPointers[LANGUAGE_END] = {
     [LANGUAGE_JAPANESE] = sJapaneseTextPointers_Description,

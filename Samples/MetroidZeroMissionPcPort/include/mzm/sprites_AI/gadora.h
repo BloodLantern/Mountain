@@ -1,7 +1,7 @@
 #ifndef GADORA_AI_H
 #define GADORA_AI_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define GADORA_POSE_IDLE_INIT 0x8
 #define GADORA_POSE_SAMUS_DETECTION 0x9

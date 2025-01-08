@@ -1,7 +1,7 @@
 #ifndef SCREEN_SHAKE_STRUCT_H
 #define SCREEN_SHAKE_STRUCT_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 struct ScreenShake {
     u8 timer;

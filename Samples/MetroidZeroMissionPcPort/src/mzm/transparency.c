@@ -1,17 +1,17 @@
-#include "transparency.h"
-#include "gba.h"
+#include "mzm/transparency.h"
+#include "mzm/gba.h"
 
-#include "data/empty_datatypes.h"
+#include "mzm/data/empty_datatypes.h"
 
-#include "constants/room.h"
-#include "constants/game_state.h"
+#include "mzm/constants/room.h"
+#include "mzm/constants/game_state.h"
 
-#include "structs/power_bomb_explosion.h"
-#include "structs/game_state.h"
-#include "structs/in_game_cutscene.h"
-#include "structs/display.h"
-#include "structs/samus.h"
-#include "structs/room.h"
+#include "mzm/structs/power_bomb_explosion.h"
+#include "mzm/structs/game_state.h"
+#include "mzm/structs/in_game_cutscene.h"
+#include "mzm/structs/display.h"
+#include "mzm/structs/samus.h"
+#include "mzm/structs/room.h"
 
 struct TransparencyRelated gTransparencyRelated;
 struct DefaultTransparency gDefaultTransparency;

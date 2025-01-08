@@ -1,6 +1,6 @@
-#include "data/common_pals.h"
+#include "mzm/data/common_pals.h"
 
-#include "macros.h"
+#include "mzm/macros.h"
 
 const u16 sDoorTransitionPal[15 * 16 + 1] = INCBIN_U16("data/common/DoorTransition.pal");
 

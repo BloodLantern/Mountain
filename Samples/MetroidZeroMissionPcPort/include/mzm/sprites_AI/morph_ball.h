@@ -1,7 +1,7 @@
 #ifndef MORPH_BALL_AI_H
 #define MORPH_BALL_AI_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define MORPH_BALL_POSE_IDLE 0x9
 #define MORPH_BALL_POSE_BEING_ACQUIRED 0x23

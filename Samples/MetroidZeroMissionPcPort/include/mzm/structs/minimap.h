@@ -1,8 +1,8 @@
 #ifndef MINIMAP_STRUCT_H
 #define MINIMAP_STRUCT_H
 
-#include "types.h"
-#include "structs/connection.h"
+#include "mzm/types.h"
+#include "mzm/structs/connection.h"
 
 #define MINIMAP_SIZE 32
 

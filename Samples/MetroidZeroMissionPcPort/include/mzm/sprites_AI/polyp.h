@@ -1,7 +1,7 @@
 #ifndef POLYP_AI_H
 #define POLYP_AI_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define POLYP_POSE_IDLE_INIT 0x8
 #define POLYP_POSE_IDLE 0x9

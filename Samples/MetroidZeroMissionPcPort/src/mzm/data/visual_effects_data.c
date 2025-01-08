@@ -1,5 +1,5 @@
-#include "data/visual_effects_data.h"
-#include "macros.h"
+#include "mzm/data/visual_effects_data.h"
+#include "mzm/macros.h"
 
 const u16 sEnvEffectOam_RunningOnDustyGround_Frame0[4] = {
     0x1,

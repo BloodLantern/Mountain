@@ -1,8 +1,8 @@
 #ifndef PROJECTILE_DATA_H
 #define PROJECTILE_DATA_H
 
-#include "types.h"
-#include "oam.h"
+#include "mzm/types.h"
+#include "mzm/oam.h"
 
 // 326ca8
 

@@ -1,8 +1,8 @@
 #ifndef SECURITY_LASER_DATA_H
 #define SECURITY_LASER_DATA_H
 
-#include "types.h"
-#include "oam.h"
+#include "mzm/types.h"
+#include "mzm/oam.h"
 
 extern const u32 sSecurityLaserGfx[104];
 extern const u16 sSecurityLaserPAL[16];

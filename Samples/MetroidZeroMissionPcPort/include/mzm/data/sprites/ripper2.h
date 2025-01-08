@@ -1,8 +1,8 @@
 #ifndef RIPPER2_DATA_H
 #define RIPPER2_DATA_H
 
-#include "types.h"
-#include "oam.h"
+#include "mzm/types.h"
+#include "mzm/oam.h"
 
 extern const u32 sRipper2Gfx[212];
 extern const u16 sRipper2PAL[16];

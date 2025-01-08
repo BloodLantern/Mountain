@@ -1,5 +1,5 @@
-#include "data/sprites/mecha_ridley.h"
-#include "macros.h"
+#include "mzm/data/sprites/mecha_ridley.h"
+#include "mzm/macros.h"
 
 const s16 sMechaRidleyMultiSpriteData_CrawlingForwardLow_Frame0[33] = {
     18, 0, 192,

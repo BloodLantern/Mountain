@@ -1,4 +1,4 @@
-#include "data/haze_data.h"
+#include "mzm/data/haze_data.h"
 
 const u8 sHaze_345ff8[132] = {
     30, 31, 30, 31, 0, 6, 12, 19, 25, 31, 37, 43, 49, 54, 60, 65,

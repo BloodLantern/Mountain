@@ -1,5 +1,5 @@
-#include "data/sprites/mella.h"
-#include "macros.h"
+#include "mzm/data/sprites/mella.h"
+#include "mzm/macros.h"
 
 const s16 sMellaIdleYMovement[65] = {
     0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1,

@@ -1,7 +1,7 @@
 #ifndef SYSCALLS_H
 #define SYSCALLS_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define SYSCALL(num) asm("svc " #num)
 

@@ -1,6 +1,6 @@
-#include "screen_shake.h"
-#include "macros.h"
-#include "structs/screen_shake.h"
+#include "mzm/screen_shake.h"
+#include "mzm/macros.h"
+#include "mzm/structs/screen_shake.h"
 
 u8 gScreenShakeXOffset;
 u8 gScreenShakeYOffset;

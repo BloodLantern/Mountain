@@ -1,7 +1,7 @@
 #ifndef AUDIO_STRUCT_H
 #define AUDIO_STRUCT_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 // Structs
 

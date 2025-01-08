@@ -1,7 +1,7 @@
 #ifndef CABLE_LINK_STRUCTS_H
 #define CABLE_LINK_STRUCTS_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 typedef u16 (CableLinkBuffer1_T)[2][2];
 

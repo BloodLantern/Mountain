@@ -1,19 +1,19 @@
-#include "cutscenes/mother_brain_close_up.h"
-#include "cutscenes/cutscene_utils.h"
-#include "temp_globals.h"
+#include "mzm/cutscenes/mother_brain_close_up.h"
+#include "mzm/cutscenes/cutscene_utils.h"
+#include "mzm/temp_globals.h"
 
-#include "data/shortcut_pointers.h"
-#include "data/cutscenes/cutscenes_data.h"
-#include "data/cutscenes/mother_brain_close_up_data.h"
-#include "data/cutscenes/internal_mother_brain_close_up_data.h"
+#include "mzm/data/shortcut_pointers.h"
+#include "mzm/data/cutscenes/cutscenes_data.h"
+#include "mzm/data/cutscenes/mother_brain_close_up_data.h"
+#include "mzm/data/cutscenes/internal_mother_brain_close_up_data.h"
 
-#include "constants/audio.h"
-#include "constants/cutscene.h"
-#include "constants/samus.h"
+#include "mzm/constants/audio.h"
+#include "mzm/constants/cutscene.h"
+#include "mzm/constants/samus.h"
 
-#include "structs/display.h"
-#include "structs/game_state.h"
-#include "structs/samus.h"
+#include "mzm/structs/display.h"
+#include "mzm/structs/game_state.h"
+#include "mzm/structs/samus.h"
 
 #define OAM_BUBBLES_COUNT 6
 

@@ -1,9 +1,9 @@
-#include "data/clipdata_data.h"
-#include "macros.h"
+#include "mzm/data/clipdata_data.h"
+#include "mzm/macros.h"
 
-#include "constants/clipdata.h"
-#include "constants/connection.h"
-#include "constants/room.h"
+#include "mzm/constants/clipdata.h"
+#include "mzm/constants/connection.h"
+#include "mzm/constants/room.h"
 
 const u16 sMovementClipdataValues[16] = {
     [CLIP_BEHAVIOR_NONE] = CLIPDATA_MOVEMENT_NONE,

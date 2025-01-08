@@ -1,5 +1,5 @@
-#include "data/sprites/rinka.h"
-#include "macros.h"
+#include "mzm/data/sprites/rinka.h"
+#include "mzm/macros.h"
 
 const u32 sRinkaOrangeGfx[242] = INCBIN_U32("data/sprites/RinkaOrange.gfx.lz");
 const u16 sRinkaOrangePAL[16] = INCBIN_U16("data/sprites/RinkaOrange.pal");

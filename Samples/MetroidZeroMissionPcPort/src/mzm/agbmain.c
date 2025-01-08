@@ -1,53 +1,53 @@
-#include "glad/glad.h"
+#include "mzm/glad/glad.h"
 
-#include "syscalls.h"
-#include "gba.h"
-#include "demo.h"
-#include "update_input.h"
-#include "softreset_input.h"
-#include "softreset.h"
-#include "intro.h"
-#include "in_game.h"
-#include "chozodia_escape.h"
-#include "ending_and_gallery.h"
-#include "fusion_gallery.h"
-#include "init_game.h"
+#include "mzm/syscalls.h"
+#include "mzm/gba.h"
+#include "mzm/demo.h"
+#include "mzm/update_input.h"
+#include "mzm/softreset_input.h"
+#include "mzm/softreset.h"
+#include "mzm/intro.h"
+#include "mzm/in_game.h"
+#include "mzm/chozodia_escape.h"
+#include "mzm/ending_and_gallery.h"
+#include "mzm/fusion_gallery.h"
+#include "mzm/init_game.h"
 
-#include "cutscenes/cutscene_utils.h"
+#include "mzm/cutscenes/cutscene_utils.h"
 
-#include "data/generic_data.h"
+#include "mzm/data/generic_data.h"
 
-#include "constants/game_state.h"
-#include "constants/samus.h"
-#include "constants/sprite.h"
+#include "mzm/constants/game_state.h"
+#include "mzm/constants/samus.h"
+#include "mzm/constants/sprite.h"
 
-#include "structs/cutscene.h"
-#include "structs/demo.h"
-#include "structs/game_state.h"
-#include "structs/samus.h"
-#include "structs/sprite.h"
+#include "mzm/structs/cutscene.h"
+#include "mzm/structs/demo.h"
+#include "mzm/structs/game_state.h"
+#include "mzm/structs/samus.h"
+#include "mzm/structs/sprite.h"
 
-#include "modern/audio.h"
-#include "modern/debug.h"
+#include "mzm/modern/audio.h"
+#include "mzm/modern/debug.h"
 
-#include "menus/title_screen.h"
-#include "menus/file_select.h"
-#include "menus/pause_screen.h"
-#include "menus/game_over.h"
-#include "menus/erase_sram.h"
+#include "mzm/menus/title_screen.h"
+#include "mzm/menus/file_select.h"
+#include "mzm/menus/pause_screen.h"
+#include "mzm/menus/game_over.h"
+#include "mzm/menus/erase_sram.h"
 
-#include "audio/track_internal.h"
+#include "mzm/audio/track_internal.h"
 
 #include <stdio.h>
 #include <windows.h>
 
-#include "openal/al.h"
-#include "openal/alc.h"
+#include "mzm/openal/al.h"
+#include "mzm/openal/alc.h"
 
-#include "GLFW/glfw3.h"
+#include "mzm/GLFW/glfw3.h"
 
 #define CIMGUI_DEFINE_ENUMS_AND_STRUCTS
-#include "imgui/cimgui.h"
+#include "mzm/imgui/cimgui.h"
 
 struct GameCompletion gGameCompletion;
 struct FileScreenOptionsUnlocked gFileScreenOptionsUnlocked;

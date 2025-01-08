@@ -1,16 +1,16 @@
-#include "sprites_AI/geega.h"
-#include "macros.h"
-#include "sprite_util.h"
+#include "mzm/sprites_AI/geega.h"
+#include "mzm/macros.h"
+#include "mzm/sprite_util.h"
 
-#include "data/sprites/geega.h"
-#include "data/sprite_data.h"
+#include "mzm/data/sprites/geega.h"
+#include "mzm/data/sprite_data.h"
 
-#include "constants/particle.h"
-#include "constants/sprite.h"
-#include "constants/sprite_util.h"
+#include "mzm/constants/particle.h"
+#include "mzm/constants/sprite.h"
+#include "mzm/constants/sprite_util.h"
 
-#include "structs/sprite.h"
-#include "structs/samus.h"
+#include "mzm/structs/sprite.h"
+#include "mzm/structs/samus.h"
 
 /**
  * @brief 40230 | 60 | Initializes a geega sprite

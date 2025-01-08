@@ -1,5 +1,5 @@
-#include "data/sprites/geega.h"
-#include "macros.h"
+#include "mzm/data/sprites/geega.h"
+#include "mzm/macros.h"
 
 const u32 sGeegaGfx[153] = INCBIN_U32("data/sprites/Geega.gfx.lz");
 const u16 sGeegaPAL[16] = INCBIN_U16("data/sprites/Geega.pal");

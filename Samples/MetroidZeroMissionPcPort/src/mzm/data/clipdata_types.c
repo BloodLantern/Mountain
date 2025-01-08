@@ -1,7 +1,7 @@
-#include "data/clipdata_types.h"
+#include "mzm/data/clipdata_types.h"
 
-#include "constants/clipdata.h"
-#include "macros.h"
+#include "mzm/constants/clipdata.h"
+#include "mzm/macros.h"
 
 const u8 sClipdataCollisionTypes[176] = {
     [CLIPDATA_AIR] = CLIPDATA_TYPE_AIR,

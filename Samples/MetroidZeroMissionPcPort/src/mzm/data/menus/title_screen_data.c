@@ -1,7 +1,7 @@
-#include "data/menus/title_screen_data.h"
-#include "constants/menus/title_screen.h"
-#include "gba.h"
-#include "macros.h"
+#include "mzm/data/menus/title_screen_data.h"
+#include "mzm/constants/menus/title_screen.h"
+#include "mzm/gba.h"
+#include "mzm/macros.h"
 
 const u16 sTitleScreenPal[15 * 16] = INCBIN_U16("data/menus/TitleScreen/Palette.pal");
 const u16 sTitleScreenPromptPAL[5 * 16] = INCBIN_U16("data/menus/TitleScreen/Prompt.pal");

@@ -1,9 +1,9 @@
 #ifndef KRAID_RISING_CUTSCENE
 #define KRAID_RISING_CUTSCENE
 
-#include "types.h"
-#include "gba.h"
-#include "structs/cutscene.h"
+#include "mzm/types.h"
+#include "mzm/gba.h"
+#include "mzm/structs/cutscene.h"
 
 #define KRAID_RISING_OAM_ID_SAMUS 1
 #define KRAID_RISING_OAM_ID_DEBRIS 2

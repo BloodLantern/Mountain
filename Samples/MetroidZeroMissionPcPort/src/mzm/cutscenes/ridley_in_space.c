@@ -1,18 +1,18 @@
-#include "cutscenes/ridley_in_space.h"
-#include "cutscenes/cutscene_utils.h"
-#include "oam_id.h"
+#include "mzm/cutscenes/ridley_in_space.h"
+#include "mzm/cutscenes/cutscene_utils.h"
+#include "mzm/oam_id.h"
 
-#include "data/generic_data.h"
-#include "data/shortcut_pointers.h"
-#include "data/cutscenes/cutscenes_data.h"
-#include "data/cutscenes/ridley_in_space_data.h"
-#include "data/cutscenes/internal_ridley_in_space_data.h"
+#include "mzm/data/generic_data.h"
+#include "mzm/data/shortcut_pointers.h"
+#include "mzm/data/cutscenes/cutscenes_data.h"
+#include "mzm/data/cutscenes/ridley_in_space_data.h"
+#include "mzm/data/cutscenes/internal_ridley_in_space_data.h"
 
-#include "constants/audio.h"
-#include "constants/cutscene.h"
+#include "mzm/constants/audio.h"
+#include "mzm/constants/cutscene.h"
 
-#include "structs/display.h"
-#include "structs/game_state.h"
+#include "mzm/structs/display.h"
+#include "mzm/structs/game_state.h"
 
 #define SHIP_ACTION_MOVE_HORIZONTALLY 1
 #define SHIP_ACTION_MOVE_VERTICALLY 2

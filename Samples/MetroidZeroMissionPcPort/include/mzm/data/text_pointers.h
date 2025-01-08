@@ -1,11 +1,11 @@
 #ifndef TEXT_POINTERS_DATA_H
 #define TEXT_POINTERS_DATA_H
 
-#include "types.h"
-#include "location_text.h"
+#include "mzm/types.h"
+#include "mzm/location_text.h"
 
-#include "constants/game_state.h"
-#include "constants/text.h"
+#include "mzm/constants/game_state.h"
+#include "mzm/constants/text.h"
 
 extern const u16* const sJapaneseTextPointers_Message[MESSAGE_END];
 extern const u16* const sJapaneseTextPointers_Location[LT_END];

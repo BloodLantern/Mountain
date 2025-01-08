@@ -1,7 +1,7 @@
 #ifndef SOFTRESET_H
 #define SOFTRESET_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 u32 SoftresetSubroutine(void);
 void SoftresetInit(void);

@@ -1,18 +1,18 @@
-#include "sprites_AI/dragon.h"
-#include "macros.h"
-#include "sprite_util.h"
+#include "mzm/sprites_AI/dragon.h"
+#include "mzm/macros.h"
+#include "mzm/sprite_util.h"
 
-#include "data/sprites/dragon.h"
-#include "data/sprite_data.h"
+#include "mzm/data/sprites/dragon.h"
+#include "mzm/data/sprite_data.h"
 
-#include "constants/clipdata.h"
-#include "constants/particle.h"
-#include "constants/sprite.h"
-#include "constants/sprite_util.h"
+#include "mzm/constants/clipdata.h"
+#include "mzm/constants/particle.h"
+#include "mzm/constants/sprite.h"
+#include "mzm/constants/sprite_util.h"
 
-#include "structs/display.h"
-#include "structs/samus.h"
-#include "structs/sprite.h"
+#include "mzm/structs/display.h"
+#include "mzm/structs/samus.h"
+#include "mzm/structs/sprite.h"
 
 /**
  * @brief 20564 | 50 | Handles the Y movement of a dragon

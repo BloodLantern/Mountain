@@ -1,21 +1,21 @@
-#include "sprites_AI/map_station.h"
-#include "gba.h"
-#include "macros.h"
-#include "sprites_AI/item_banner.h"
-#include "sprite_util.h"
+#include "mzm/sprites_AI/map_station.h"
+#include "mzm/gba.h"
+#include "mzm/macros.h"
+#include "mzm/sprites_AI/item_banner.h"
+#include "mzm/sprite_util.h"
 
-#include "data/sprites/map_station.h"
+#include "mzm/data/sprites/map_station.h"
 
-#include "constants/connection.h"
-#include "constants/game_state.h"
-#include "constants/sprite.h"
-#include "constants/samus.h"
-#include "constants/text.h"
+#include "mzm/constants/connection.h"
+#include "mzm/constants/game_state.h"
+#include "mzm/constants/sprite.h"
+#include "mzm/constants/samus.h"
+#include "mzm/constants/text.h"
 
-#include "structs/connection.h"
-#include "structs/game_state.h"
-#include "structs/sprite.h"
-#include "structs/samus.h"
+#include "mzm/structs/connection.h"
+#include "mzm/structs/game_state.h"
+#include "mzm/structs/sprite.h"
+#include "mzm/structs/samus.h"
 
 /**
  * @brief 1f41c | f0 | Initializes a map station sprite

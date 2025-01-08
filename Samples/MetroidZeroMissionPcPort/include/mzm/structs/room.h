@@ -1,7 +1,7 @@
 #ifndef ROOM_STRUCT_H
 #define ROOM_STRUCT_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define ROOM_SPRITE_DATA_TERMINATOR UCHAR_MAX, UCHAR_MAX, UCHAR_MAX
 

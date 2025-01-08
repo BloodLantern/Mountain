@@ -1,5 +1,5 @@
-#include "data/sprites/skultera.h"
-#include "macros.h"
+#include "mzm/data/sprites/skultera.h"
+#include "mzm/macros.h"
 
 const u32 sSkulteraGfx[285] = INCBIN_U32("data/sprites/Skultera.gfx.lz");
 const u16 sSkulteraPAL[16] = INCBIN_U16("data/sprites/Skultera.pal");

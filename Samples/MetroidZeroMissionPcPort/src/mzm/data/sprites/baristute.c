@@ -1,6 +1,6 @@
-#include "data/sprites/baristute.h"
+#include "mzm/data/sprites/baristute.h"
 
-#include "macros.h"
+#include "mzm/macros.h"
 
 const s16 sBaristuteFallingYVelocity[8] = {
     4, 8, 12, 16, 20, 24, 28, SHORT_MAX

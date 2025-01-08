@@ -1,8 +1,8 @@
 #ifndef UNKNOWN_ITEM_CHOZO_STATUE_DATA_H
 #define UNKNOWN_ITEM_CHOZO_STATUE_DATA_H
 
-#include "types.h"
-#include "oam.h"
+#include "mzm/types.h"
+#include "mzm/oam.h"
 
 extern const s16 sUnknownItemChozoStatueMultiSpriteData_Standing_Frame0[15];
 

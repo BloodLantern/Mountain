@@ -1,8 +1,8 @@
 #ifndef SKULTERA_DATA_H
 #define SKULTERA_DATA_H
 
-#include "types.h"
-#include "oam.h"
+#include "mzm/types.h"
+#include "mzm/oam.h"
 
 extern const u32 sSkulteraGfx[285];
 extern const u16 sSkulteraPAL[16];

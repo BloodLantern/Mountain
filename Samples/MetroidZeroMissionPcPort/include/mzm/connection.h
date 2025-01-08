@@ -1,7 +1,7 @@
 #ifndef CONNECTION_H
 #define CONNECTION_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 // Functions
 

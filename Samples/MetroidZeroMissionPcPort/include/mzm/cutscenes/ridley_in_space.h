@@ -1,8 +1,8 @@
 #ifndef RIDLEY_IN_SPACE_CUTSCENE
 #define RIDLEY_IN_SPACE_CUTSCENE
 
-#include "types.h"
-#include "structs/cutscene.h"
+#include "mzm/types.h"
+#include "mzm/structs/cutscene.h"
 
 #define RIDLEY_IN_SPACE_OAM_ID_LEFT_BLUE_SHIP 1
 #define RIDLEY_IN_SPACE_OAM_ID_RIGHT_BLUE_SHIP 2

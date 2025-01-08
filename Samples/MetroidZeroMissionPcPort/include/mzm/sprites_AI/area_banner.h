@@ -1,8 +1,8 @@
 #ifndef AREA_BANNER_AI_H
 #define AREA_BANNER_AI_H
 
-#include "types.h"
-#include "location_text.h"
+#include "mzm/types.h"
+#include "mzm/location_text.h"
 
 #define AREA_BANNER_POSE_SPAWN 0x8
 #define AREA_BANNER_POSE_SCROLLING_UP 0x9

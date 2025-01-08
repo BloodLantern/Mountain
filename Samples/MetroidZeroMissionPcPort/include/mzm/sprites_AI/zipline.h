@@ -1,7 +1,7 @@
 #ifndef ZIPLINE_AI_H
 #define ZIPLINE_AI_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 // Zipline
 

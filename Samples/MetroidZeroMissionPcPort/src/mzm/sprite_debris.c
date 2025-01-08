@@ -1,17 +1,17 @@
-#include "oam.h"
-#include "sprite_debris.h"
-#include "data/particle_data.h"
-#include "data/spriteset.h"
+#include "mzm/oam.h"
+#include "mzm/sprite_debris.h"
+#include "mzm/data/particle_data.h"
+#include "mzm/data/spriteset.h"
 
-#include "constants/clipdata.h"
-#include "constants/game_state.h"
-#include "constants/sprite_util.h"
+#include "mzm/constants/clipdata.h"
+#include "mzm/constants/game_state.h"
+#include "mzm/constants/sprite_util.h"
 
-#include "structs/bg_clip.h"
-#include "structs/clipdata.h"
-#include "structs/game_state.h"
-#include "structs/samus.h"
-#include "structs/sprite.h"
+#include "mzm/structs/bg_clip.h"
+#include "mzm/structs/clipdata.h"
+#include "mzm/structs/game_state.h"
+#include "mzm/structs/samus.h"
+#include "mzm/structs/sprite.h"
 
 struct SpriteDebris gSpriteDebris[MAX_AMOUNT_OF_SPRITE_DEBRIS];
 

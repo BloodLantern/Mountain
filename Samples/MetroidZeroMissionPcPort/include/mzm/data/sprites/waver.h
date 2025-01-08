@@ -1,8 +1,8 @@
 #ifndef WAVER_DATA_H
 #define WAVER_DATA_H
 
-#include "types.h"
-#include "oam.h"
+#include "mzm/types.h"
+#include "mzm/oam.h"
 
 extern const u32 sWaverGfx[289];
 extern const u16 sWaverPAL[16];

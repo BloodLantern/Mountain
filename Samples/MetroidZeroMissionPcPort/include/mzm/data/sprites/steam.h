@@ -1,8 +1,8 @@
 #ifndef STEAM_DATA_H
 #define STEAM_DATA_H
 
-#include "types.h"
-#include "oam.h"
+#include "mzm/types.h"
+#include "mzm/oam.h"
 
 extern const u32 sSteamGfx[195];
 extern const u16 sSteamPAL[16];

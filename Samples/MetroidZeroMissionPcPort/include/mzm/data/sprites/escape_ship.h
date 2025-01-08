@@ -1,8 +1,8 @@
 #ifndef ESCAPE_SHIP_DATA_H
 #define ESCAPE_SHIP_DATA_H
 
-#include "types.h"
-#include "oam.h"
+#include "mzm/types.h"
+#include "mzm/oam.h"
 
 extern const s16 sEscapeShipHoveringYMovement[65];
 

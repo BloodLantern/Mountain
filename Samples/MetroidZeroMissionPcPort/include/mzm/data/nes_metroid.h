@@ -1,7 +1,7 @@
 #ifndef NES_METROID_DATA_H
 #define NES_METROID_DATA_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 typedef void (*NesEmuFunc_T)(void*);
 

@@ -1,29 +1,34 @@
-#include "gba.h"
-#include "samus.h"
-#include "block.h" // Necessary
-#include "clipdata.h" // Necessary
-#include "macros.h"
-#include "temp_globals.h"
+#include "mzm/gba.h"
+#include "mzm/samus.h"
+#include "mzm/block.h" // Necessary
+#include "mzm/clipdata.h" // Necessary
+#include "mzm/macros.h"
+#include "mzm/temp_globals.h"
 
-#include "data/samus_sprites_pointers.h"
-#include "data/samus/samus_palette_data.h"
-#include "data/samus/samus_animation_pointers.h"
-#include "data/samus/samus_graphics.h"
+#include "mzm/data/samus_sprites_pointers.h"
+#include "mzm/data/samus/samus_palette_data.h"
+#include "mzm/data/samus/samus_animation_pointers.h"
+#include "mzm/data/samus/samus_graphics.h"
 
-#include "constants/audio.h"
-#include "constants/clipdata.h"
-#include "constants/color_fading.h"
-#include "constants/game_state.h"
-#include "constants/samus.h"
-#include "constants/projectile.h"
+#include "mzm/constants/audio.h"
+#include "mzm/constants/clipdata.h"
+#include "mzm/constants/color_fading.h"
+#include "mzm/constants/game_state.h"
+#include "mzm/constants/samus.h"
+#include "mzm/constants/projectile.h"
 
-#include "structs/bg_clip.h"
-#include "structs/clipdata.h"
-#include "structs/game_state.h"
-#include "structs/visual_effects.h"
-#include "structs/samus.h"
-#include "structs/screen_shake.h"
-#include "structs/scroll.h"
+#include "mzm/structs/bg_clip.h"
+#include "mzm/structs/clipdata.h"
+#include "mzm/structs/game_state.h"
+#include "mzm/structs/visual_effects.h"
+#include "mzm/structs/samus.h"
+
+#include <string.h>
+
+#include "mzm/audio_wrappers.h"
+#include "mzm/screen_shake.h"
+#include "mzm/structs/screen_shake.h"
+#include "mzm/structs/scroll.h"
 
 u8 gSamusOnTopOfBackgrounds;
 struct SamusData gSamusData;
@@ -6865,7 +6870,7 @@ void SamusUpdateGraphicsOam(struct SamusData* pData, u8 direction)
     struct ScrewSpeedAnimation* pScrew;
     const struct SamusAnimationData* pAnim;
     const struct ArmCannonAnimationData* pArmCannonAnim;
-    const struct SamusEffectAnimationData* pEffectAnim;
+    const struct SamusEffectAnimationData* pEffectAnim = NULL;
     const u8* pGraphics;
     u8 pose;
     u8 acd;

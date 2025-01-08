@@ -1,7 +1,7 @@
 #ifndef WAVER_AI_H
 #define WAVER_AI_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define WAVER_POSE_MOVING 0x9
 

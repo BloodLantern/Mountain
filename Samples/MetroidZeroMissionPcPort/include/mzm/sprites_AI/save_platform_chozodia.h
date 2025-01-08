@@ -1,7 +1,7 @@
 #ifndef SAVE_PLATFORM_CHOZODIA_AI_H
 #define SAVE_PLATFORM_CHOZODIA_AI_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define SAVE_PLATFORM_CHOZODIA_POSE_IDLE 0x9
 #define SAVE_PLATFORM_CHOZODIA_POSE_OPENING 0x23

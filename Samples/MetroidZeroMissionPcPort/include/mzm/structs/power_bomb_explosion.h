@@ -1,7 +1,7 @@
 #ifndef POWER_BOMB_EXPLOSION_STRUCT_H
 #define POWER_BOMB_EXPLOSION_STRUCT_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 // Structs
 

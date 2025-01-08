@@ -1,7 +1,7 @@
 #ifndef ITEM_BANNER_AI_H
 #define ITEM_BANNER_AI_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 // Item banner
 

@@ -1,9 +1,9 @@
 #ifndef CHOZODIA_ESCAPE_DATA_H
 #define CHOZODIA_ESCAPE_DATA_H
 
-#include "types.h"
-#include "oam.h"
-#include "macros.h"
+#include "mzm/types.h"
+#include "mzm/oam.h"
+#include "mzm/macros.h"
 
 extern const u16 sChozodiaEscapeShipHeatingUpPAL[8 * 16];
 extern const u16 sChozodiaEscapeGroundHeatingUpPAL[8 * 16];

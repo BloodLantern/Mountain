@@ -1,8 +1,8 @@
 #ifndef PARTICLE_STRUCT_H
 #define PARTICLE_STRUCT_H
 
-#include "types.h"
-#include "macros.h"
+#include "mzm/types.h"
+#include "mzm/macros.h"
 
 // Structs
 

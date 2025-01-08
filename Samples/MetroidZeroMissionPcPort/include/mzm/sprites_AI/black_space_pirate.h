@@ -1,7 +1,7 @@
 #ifndef BLACK_SPACE_PIRATE_AI_H
 #define BLACK_SPACE_PIRATE_AI_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define BLACK_SPACE_PIRATE_POSE_INACTIVE 0x1
 

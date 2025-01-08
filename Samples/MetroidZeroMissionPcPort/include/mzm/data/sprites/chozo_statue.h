@@ -1,8 +1,8 @@
 #ifndef CHOZO_STATUE_H
 #define CHOZO_STATUE_H
 
-#include "types.h"
-#include "oam.h"
+#include "mzm/types.h"
+#include "mzm/oam.h"
 
 extern const s16 sChozoStatueMultiSpriteData_Standing_Frame0[15];
 

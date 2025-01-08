@@ -1,6 +1,6 @@
-#include "data/projectile_data.h"
-#include "structs/particle.h"
-#include "macros.h"
+#include "mzm/data/projectile_data.h"
+#include "mzm/structs/particle.h"
+#include "mzm/macros.h"
 
 // 326ca8
 

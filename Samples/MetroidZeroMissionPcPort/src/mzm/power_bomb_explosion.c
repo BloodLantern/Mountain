@@ -1,21 +1,21 @@
-#include "gba.h"
-#include "power_bomb_explosion.h"
+#include "mzm/gba.h"
+#include "mzm/power_bomb_explosion.h"
 
-#include "data/engine_pointers.h"
+#include "mzm/data/engine_pointers.h"
 
-#include "constants/clipdata.h"
-#include "constants/haze.h"
-#include "constants/game_state.h"
-#include "constants/room.h"
+#include "mzm/constants/clipdata.h"
+#include "mzm/constants/haze.h"
+#include "mzm/constants/game_state.h"
+#include "mzm/constants/room.h"
 
-#include "structs/bg_clip.h"
-#include "structs/clipdata.h"
-#include "structs/display.h"
-#include "structs/in_game_cutscene.h"
-#include "structs/game_state.h"
-#include "structs/room.h"
-#include "structs/power_bomb_explosion.h"
-#include "temp_globals.h"
+#include "mzm/structs/bg_clip.h"
+#include "mzm/structs/clipdata.h"
+#include "mzm/structs/display.h"
+#include "mzm/structs/in_game_cutscene.h"
+#include "mzm/structs/game_state.h"
+#include "mzm/structs/room.h"
+#include "mzm/structs/power_bomb_explosion.h"
+#include "mzm/temp_globals.h"
 
 struct PowerBomb gCurrentPowerBomb;
 

@@ -1,7 +1,7 @@
 #ifndef DISPLAY_H
 #define DISPLAY_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 // Globals
 

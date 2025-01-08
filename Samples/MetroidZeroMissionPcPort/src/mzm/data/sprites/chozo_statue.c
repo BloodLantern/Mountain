@@ -1,6 +1,6 @@
-#include "data/sprites/chozo_statue.h"
+#include "mzm/data/sprites/chozo_statue.h"
 
-#include "macros.h"
+#include "mzm/macros.h"
 
 const s16 sChozoStatueMultiSpriteData_Standing_Frame0[15] = {
     8, -176, -104,

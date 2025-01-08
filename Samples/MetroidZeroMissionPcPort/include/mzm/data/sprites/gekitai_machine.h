@@ -1,8 +1,8 @@
 #ifndef GEKITAI_MACHINE_DATA_H
 #define GEKITAI_MACHINE_DATA_H
 
-#include "types.h"
-#include "oam.h"
+#include "mzm/types.h"
+#include "mzm/oam.h"
 
 extern const u32 sGekitaiMachineGfx[364];
 extern const u16 sGekitaiMachinePAL[80];

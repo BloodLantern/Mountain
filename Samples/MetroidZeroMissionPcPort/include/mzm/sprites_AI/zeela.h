@@ -1,7 +1,7 @@
 #ifndef ZEELA_AI_H
 #define ZEELA_AI_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define ZEELA_TURNING_DIRECTION_BOTTOM_LEFT_CORNER 0x0
 #define ZEELA_TURNING_DIRECTION_TOP_RIGHT_EDGE 0x1

@@ -1,7 +1,7 @@
 #ifndef CROCOMIRE_AI_H
 #define CROCOMIRE_AI_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define CROCOMIRE_POSE_IDLE_INIT 0x8
 #define CROCOMIRE_POSE_IDLE 0x9

@@ -1,6 +1,6 @@
-#include "data/sprites/atomic.h"
+#include "mzm/data/sprites/atomic.h"
 
-#include "macros.h"
+#include "mzm/macros.h"
 
 const s16 sAtomicIdleYMovement[65] = {
     0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1,

@@ -1,5 +1,5 @@
-#include "data/samus/samus_palette_data.h"
-#include "macros.h"
+#include "mzm/data/samus/samus_palette_data.h"
+#include "mzm/macros.h"
 
 const u16 sSamusPal_PowerSuit_Default[3 * 16] = INCBIN_U16("data/samus/palettes/PowerSuit_Default.pal");
 const u16 sSamusPal_PowerSuit_BeamRelease[5 * 16] = INCBIN_U16("data/samus/palettes/PowerSuit_BeamRelease.pal");

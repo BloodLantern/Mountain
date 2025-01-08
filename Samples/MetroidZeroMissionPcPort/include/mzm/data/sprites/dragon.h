@@ -1,8 +1,8 @@
 #ifndef DRAGON_DATA_H
 #define DRAGON_DATA_H
 
-#include "types.h"
-#include "oam.h"
+#include "mzm/types.h"
+#include "mzm/oam.h"
 
 extern const s16 sDragonFireballYMovement[40];
 

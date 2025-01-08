@@ -1,5 +1,5 @@
-#include "data/sprites/skree.h"
-#include "macros.h"
+#include "mzm/data/sprites/skree.h"
+#include "mzm/macros.h"
 
 const s16 sSkreeFallingSpeed[8] = {
     2, 4, 6, 8, 12, 14, 16, SHORT_MAX

@@ -1,11 +1,11 @@
-#include "data/samus/samus_animation_pointers.h"
+#include "mzm/data/samus/samus_animation_pointers.h"
 
-#include "data/samus/samus_graphics.h"
-#include "data/samus/arm_cannon_data.h"
-#include "data/samus/samus_palette_data.h"
-#include "data/visual_effects_data.h"
+#include "mzm/data/samus/samus_graphics.h"
+#include "mzm/data/samus/arm_cannon_data.h"
+#include "mzm/data/samus/samus_palette_data.h"
+#include "mzm/data/visual_effects_data.h"
 
-#include "constants/samus.h"
+#include "mzm/constants/samus.h"
 
 const struct EnvironmentalEffect sEnvironmentalEffect_Empty = {
     .type = ENV_EFFECT_NONE,

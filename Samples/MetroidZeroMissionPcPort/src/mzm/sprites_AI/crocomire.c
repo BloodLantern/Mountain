@@ -1,14 +1,14 @@
-#include "sprites_AI/crocomire.h"
-#include "macros.h"
-#include "sprite_util.h"
+#include "mzm/sprites_AI/crocomire.h"
+#include "mzm/macros.h"
+#include "mzm/sprite_util.h"
 
-#include "data/frame_data_pointers.h"
-#include "data/sprites/crocomire.h"
-#include "data/sprite_data.h"
+#include "mzm/data/frame_data_pointers.h"
+#include "mzm/data/sprites/crocomire.h"
+#include "mzm/data/sprite_data.h"
 
-#include "constants/sprite.h"
+#include "mzm/constants/sprite.h"
 
-#include "structs/sprite.h"
+#include "mzm/structs/sprite.h"
 
 /**
  * @brief 43d88 | 68 | Synchronize the sub sprites of Crocomire

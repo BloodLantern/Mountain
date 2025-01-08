@@ -1,7 +1,7 @@
 #ifndef ENDING_AND_GALLERY_H
 #define ENDING_AND_GALLERY_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 void EndingImageUpdateLettersSpawnDelay(u32 offset);
 void EndingImageLoadTextOAM(u32 set);

@@ -1,7 +1,7 @@
 #ifndef CHOZO_STATUE_AI_H
 #define CHOZO_STATUE_AI_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define CHOZO_STATUE_BEHAVIOR_ITEM 0x0
 #define CHOZO_STATUE_BEHAVIOR_REFILL 0x1

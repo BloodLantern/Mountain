@@ -1,5 +1,5 @@
-#include "data/sprites/zebetite_and_cannon.h"
-#include "macros.h"
+#include "mzm/data/sprites/zebetite_and_cannon.h"
+#include "mzm/macros.h"
 
 const u32 sRinkaZebetiteAndCannonGfx[476] = INCBIN_U32("data/sprites/ZebetiteRinkaCannon.gfx.lz");
 const u16 sRinkaZebetiteAndCannonPAL[32] = INCBIN_U16("data/sprites/ZebetiteRinkaCannon.pal");

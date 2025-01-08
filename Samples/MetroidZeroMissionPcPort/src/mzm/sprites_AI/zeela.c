@@ -1,17 +1,17 @@
-#include "sprites_AI/zeela.h"
-#include "macros.h"
-#include "sprite_util.h"
+#include "mzm/sprites_AI/zeela.h"
+#include "mzm/macros.h"
+#include "mzm/sprite_util.h"
 
-#include "data/sprites/zeela.h"
-#include "data/sprite_data.h"
+#include "mzm/data/sprites/zeela.h"
+#include "mzm/data/sprite_data.h"
 
-#include "constants/clipdata.h"
-#include "constants/particle.h"
-#include "constants/sprite.h"
-#include "constants/sprite_util.h"
+#include "mzm/constants/clipdata.h"
+#include "mzm/constants/particle.h"
+#include "mzm/constants/sprite.h"
+#include "mzm/constants/sprite_util.h"
 
-#include "structs/game_state.h"
-#include "structs/sprite.h"
+#include "mzm/structs/game_state.h"
+#include "mzm/structs/sprite.h"
 
 /**
  * @brief 17328 | 118 | Spawns the dead zeela eyes

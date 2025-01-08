@@ -1,9 +1,9 @@
-#include "callbacks.h"
+#include "mzm/callbacks.h"
 
-#include "gba.h"
-#include "globals.h"
-#include "gbaio.h"
-#include "structs/game_state.h"
+#include "mzm/gba.h"
+#include "mzm/globals.h"
+#include "mzm/gbaio.h"
+#include "mzm/structs/game_state.h"
 
 Func_T gVBlankCallback;
 Func_T gHBlankCallback;

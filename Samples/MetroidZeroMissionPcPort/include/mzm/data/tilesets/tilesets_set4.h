@@ -1,7 +1,7 @@
 #ifndef TILESETS_SET_4_DATA_H
 #define TILESETS_SET_4_DATA_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 extern const u32 sTileset_23_Gfx[2582];
 extern const u32 sTileset_24_Gfx[1770];

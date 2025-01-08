@@ -1,5 +1,5 @@
-#include "data/internal_ending_and_gallery_data.h"
-#include "ending_and_gallery.h"
+#include "mzm/data/internal_ending_and_gallery_data.h"
+#include "mzm/ending_and_gallery.h"
 
 const CreditsFunc_T sCreditsFunctionPointers[3] = {
     [0] = CreditsDisplay,

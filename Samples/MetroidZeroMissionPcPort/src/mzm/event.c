@@ -1,5 +1,5 @@
-#include "event.h"
-#include "constants/event.h"
+#include "mzm/event.h"
+#include "mzm/constants/event.h"
 
 u32 gEventsTriggered[8];
 

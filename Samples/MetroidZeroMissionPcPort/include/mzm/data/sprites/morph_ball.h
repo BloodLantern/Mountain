@@ -1,8 +1,8 @@
 #ifndef MORPH_BALL_DATA_H
 #define MORPH_BALL_DATA_H
 
-#include "types.h"
-#include "oam.h"
+#include "mzm/types.h"
+#include "mzm/oam.h"
 
 extern const u32 sMorphBallGfx[168];
 extern const u16 sMorphBallPAL[16];

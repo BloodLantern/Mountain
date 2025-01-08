@@ -1,7 +1,7 @@
-#include "data/demo_data.h"
+#include "mzm/data/demo_data.h"
 
-#include "constants/connection.h"
-#include "constants/samus.h"
+#include "mzm/constants/connection.h"
+#include "mzm/constants/samus.h"
 
 static const u16 sDemo0_Inputs[] = {
 	KEY_NONE,

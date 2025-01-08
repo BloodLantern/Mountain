@@ -1,7 +1,7 @@
 #ifndef RUINS_TEST_AI_H
 #define RUINS_TEST_AI_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define RUINS_TEST_FIGHT_STAGE_ON_GOING 0x0
 #define RUINS_TEST_FIGHT_STAGE_LAST_SYMBOL_HIT 0x1

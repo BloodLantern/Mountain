@@ -1,17 +1,17 @@
-#include "data/animated_graphics_data.h"
-#include "macros.h"
+#include "mzm/data/animated_graphics_data.h"
+#include "mzm/macros.h"
 
-#include "data/animated_tiles_data.h"
-#include "data/tilesets/tilesets_set0.h"
-#include "data/tilesets/tilesets_set1.h"
-#include "data/tilesets/tilesets_set2.h"
-#include "data/tilesets/tilesets_set3.h"
-#include "data/tilesets/tilesets_set4.h"
-#include "data/tilesets/tilesets_set5.h"
-#include "data/tilesets/tilesets_set6.h"
-#include "data/tilesets/tilesets_set7.h"
+#include "mzm/data/animated_tiles_data.h"
+#include "mzm/data/tilesets/tilesets_set0.h"
+#include "mzm/data/tilesets/tilesets_set1.h"
+#include "mzm/data/tilesets/tilesets_set2.h"
+#include "mzm/data/tilesets/tilesets_set3.h"
+#include "mzm/data/tilesets/tilesets_set4.h"
+#include "mzm/data/tilesets/tilesets_set5.h"
+#include "mzm/data/tilesets/tilesets_set6.h"
+#include "mzm/data/tilesets/tilesets_set7.h"
 
-#include "constants/animated_graphics.h"
+#include "mzm/constants/animated_graphics.h"
 
 
 const struct AnimatedGraphicsData sAnimatedGraphicsEntries[38] = {

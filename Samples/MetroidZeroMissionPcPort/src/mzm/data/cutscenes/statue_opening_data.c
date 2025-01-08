@@ -1,8 +1,8 @@
-#include "data/cutscenes/statue_opening_data.h"
-#include "cutscenes/statue_opening.h"
-#include "data/sprites/boss_statues.h"
-#include "gba.h"
-#include "macros.h"
+#include "mzm/data/cutscenes/statue_opening_data.h"
+#include "mzm/cutscenes/statue_opening.h"
+#include "mzm/data/sprites/boss_statues.h"
+#include "mzm/gba.h"
+#include "mzm/macros.h"
 
 const struct CutscenePageData sStatueOpeningPageData[3] = {
     [0] = {

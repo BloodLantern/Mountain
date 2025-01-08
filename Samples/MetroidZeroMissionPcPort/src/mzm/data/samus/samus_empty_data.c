@@ -1,5 +1,5 @@
-#include "data/samus/samus_empty_data.h"
-#include "macros.h"
+#include "mzm/data/samus/samus_empty_data.h"
+#include "mzm/macros.h"
 
 const u8 sSamusGfx_Empty[2] = {
     0, 0

@@ -1,19 +1,19 @@
-#include "sprites_AI/hive.h"
-#include "macros.h"
-#include "sprite_util.h"
+#include "mzm/sprites_AI/hive.h"
+#include "mzm/macros.h"
+#include "mzm/sprite_util.h"
 
-#include "data/sprites/hive.h"
-#include "data/sprite_data.h"
+#include "mzm/data/sprites/hive.h"
+#include "mzm/data/sprite_data.h"
 
-#include "constants/particle.h"
-#include "constants/sprite.h"
-#include "constants/event.h"
-#include "constants/sprite_util.h"
+#include "mzm/constants/particle.h"
+#include "mzm/constants/sprite.h"
+#include "mzm/constants/event.h"
+#include "mzm/constants/sprite_util.h"
 
-#include "structs/bg_clip.h"
-#include "structs/display.h"
-#include "structs/sprite.h"
-#include "structs/samus.h"
+#include "mzm/structs/bg_clip.h"
+#include "mzm/structs/display.h"
+#include "mzm/structs/sprite.h"
+#include "mzm/structs/samus.h"
 
 /**
  * @brief 24a10 | 2c | Spawns 2 particle effects

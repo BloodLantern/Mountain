@@ -1,7 +1,7 @@
-#include "data/clipdata_types_tilemap.h"
+#include "mzm/data/clipdata_types_tilemap.h"
 
-#include "constants/clipdata.h"
-#include "macros.h"
+#include "mzm/constants/clipdata.h"
+#include "mzm/macros.h"
 
 const u16 sClipdataBehaviorTypes_Tilemap[208] = {
     [CLIPDATA_TILEMAP_AIR] = CLIP_BEHAVIOR_NONE, // 0x0

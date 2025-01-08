@@ -1,19 +1,19 @@
-#include "sprites_AI/dessgeega.h"
-#include "macros.h"
-#include "sprite_util.h"
+#include "mzm/sprites_AI/dessgeega.h"
+#include "mzm/macros.h"
+#include "mzm/sprite_util.h"
 
-#include "data/sprites/dessgeega.h"
-#include "data/sprite_data.h"
+#include "mzm/data/sprites/dessgeega.h"
+#include "mzm/data/sprite_data.h"
 
-#include "constants/clipdata.h"
-#include "constants/event.h"
-#include "constants/particle.h"
-#include "constants/sprite.h"
-#include "constants/sprite_util.h"
+#include "mzm/constants/clipdata.h"
+#include "mzm/constants/event.h"
+#include "mzm/constants/particle.h"
+#include "mzm/constants/sprite.h"
+#include "mzm/constants/sprite_util.h"
 
-#include "structs/clipdata.h"
-#include "structs/connection.h"
-#include "structs/sprite.h"
+#include "mzm/structs/clipdata.h"
+#include "mzm/structs/connection.h"
+#include "mzm/structs/sprite.h"
 
 /**
  * @brief 23b4c | 20 | Checks if samus is near the dessgeega on the sides in a 5 block range

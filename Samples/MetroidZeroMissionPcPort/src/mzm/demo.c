@@ -1,16 +1,16 @@
-#include "demo.h"
-#include "callbacks.h"
+#include "mzm/demo.h"
+#include "mzm/callbacks.h"
 
-#include "data/demo_data.h"
+#include "mzm/data/demo_data.h"
 
-#include "constants/connection.h"
-#include "constants/demo.h"
-#include "constants/event.h"
+#include "mzm/constants/connection.h"
+#include "mzm/constants/demo.h"
+#include "mzm/constants/event.h"
 
-#include "structs/demo.h"
-#include "structs/game_state.h"
-#include "structs/minimap.h"
-#include "structs/save_file.h"
+#include "mzm/structs/demo.h"
+#include "mzm/structs/game_state.h"
+#include "mzm/structs/minimap.h"
+#include "mzm/structs/save_file.h"
 
 /**
  * @brief 60b14 | c | Demo v-blank, empty

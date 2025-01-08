@@ -1,5 +1,5 @@
-#include "data/sprites/unknown_item_block.h"
-#include "macros.h"
+#include "mzm/data/sprites/unknown_item_block.h"
+#include "mzm/macros.h"
 
 const u32 sPlasmaBeamBlockGfx[306] = INCBIN_U32("data/sprites/PlasmaBeamBlock.gfx.lz");
 const u16 sPlasmaBeamBlockPAL[16] = INCBIN_U16("data/sprites/PlasmaBeamBlock.pal");

@@ -1,20 +1,20 @@
-#include "cutscenes/statue_opening.h"
-#include "cutscenes/cutscene_utils.h"
+#include "mzm/cutscenes/statue_opening.h"
+#include "mzm/cutscenes/cutscene_utils.h"
 
-#include "data/shortcut_pointers.h"
-#include "data/cutscenes/statue_opening_data.h"
-#include "data/cutscenes/internal_statue_opening_data.h"
-#include "data/sprites/boss_statues.h"
-#include "data/tilesets/tilesets_set1.h"
-#include "data/rooms/brinstar_rooms_data.h"
+#include "mzm/data/shortcut_pointers.h"
+#include "mzm/data/cutscenes/statue_opening_data.h"
+#include "mzm/data/cutscenes/internal_statue_opening_data.h"
+#include "mzm/data/sprites/boss_statues.h"
+#include "mzm/data/tilesets/tilesets_set1.h"
+#include "mzm/data/rooms/brinstar_rooms_data.h"
 
-#include "constants/audio.h"
-#include "constants/connection.h"
-#include "constants/cutscene.h"
-#include "constants/event.h"
+#include "mzm/constants/audio.h"
+#include "mzm/constants/connection.h"
+#include "mzm/constants/cutscene.h"
+#include "mzm/constants/event.h"
 
-#include "structs/connection.h"
-#include "structs/display.h"
+#include "mzm/structs/connection.h"
+#include "mzm/structs/display.h"
 
 /**
  * @brief 66c00 | 164 | Handles the statue opening animation

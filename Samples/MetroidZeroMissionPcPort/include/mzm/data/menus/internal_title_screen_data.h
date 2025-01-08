@@ -1,8 +1,8 @@
 #ifndef INTERNAL_TITLE_SCREEN_DATA_H
 #define INTERNAL_TITLE_SCREEN_DATA_H
 
-#include "types.h"
-#include "structs/menus/title_screen.h"
+#include "mzm/types.h"
+#include "mzm/structs/menus/title_screen.h"
 
 extern const struct TitleScreenAnimatedPalette sTitleScreenAnimatedPaletteTemplates[4];
 extern const u8 sTitleScreenCometsFlags[2][2];

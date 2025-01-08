@@ -1,6 +1,6 @@
-#include "data/cutscenes/story_text_cutscene_data.h"
-#include "gba.h"
-#include "macros.h"
+#include "mzm/data/cutscenes/story_text_cutscene_data.h"
+#include "mzm/gba.h"
+#include "mzm/macros.h"
 
 const struct CutscenePageData sStoryTextCutscenePagesData[1] = {
     [0] = {

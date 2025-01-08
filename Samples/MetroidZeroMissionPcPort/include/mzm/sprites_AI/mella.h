@@ -1,7 +1,7 @@
 #ifndef MELLA_AI_H
 #define MELLA_AI_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define MELLA_POSE_IDLE_INIT 0x8
 #define MELLA_POSE_IDLE 0x9

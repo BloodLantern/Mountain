@@ -1,7 +1,7 @@
 #ifndef CONNECTION_STRUCT_H
 #define CONNECTION_STRUCT_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 // Structs
 

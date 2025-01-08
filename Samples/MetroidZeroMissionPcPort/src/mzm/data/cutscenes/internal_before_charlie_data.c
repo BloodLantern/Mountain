@@ -1,6 +1,6 @@
-#include "data/cutscenes/internal_before_charlie_data.h"
-#include "cutscenes/cutscene_utils.h"
-#include "cutscenes/before_charlie.h"
+#include "mzm/data/cutscenes/internal_before_charlie_data.h"
+#include "mzm/cutscenes/cutscene_utils.h"
+#include "mzm/cutscenes/before_charlie.h"
 
 const struct CutsceneGraphicsData sBeforeCharlieCutsceneGraphicsData = {
     .active = FALSE,

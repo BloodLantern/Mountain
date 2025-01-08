@@ -1,7 +1,7 @@
 #ifndef RISING_CHOZO_PILLAR_AI_H
 #define RISING_CHOZO_PILLAR_AI_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define RISING_CHOZO_PILLAR_POSE_WAIT_FOR_POWER_GRIP 0x8
 #define RISING_CHOZO_PILLAR_POSE_EXTENDING 0x9

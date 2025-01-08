@@ -1,15 +1,15 @@
-#include "sprites_AI/falling_chozo_pillar.h"
-#include "sprites_AI/ruins_test.h"
+#include "mzm/sprites_AI/falling_chozo_pillar.h"
+#include "mzm/sprites_AI/ruins_test.h"
 
-#include "data/sprites/falling_chozo_pillar.h"
+#include "mzm/data/sprites/falling_chozo_pillar.h"
 
-#include "constants/particle.h"
-#include "constants/sprite.h"
+#include "mzm/constants/particle.h"
+#include "mzm/constants/sprite.h"
 
-#include "structs/display.h"
-#include "structs/game_state.h"
-#include "structs/sprite.h"
-#include "sprite_util.h"
+#include "mzm/structs/display.h"
+#include "mzm/structs/game_state.h"
+#include "mzm/structs/sprite.h"
+#include "mzm/sprite_util.h"
 
 /**
  * @brief 4b884 | 218 | Falling chozo pillar AI

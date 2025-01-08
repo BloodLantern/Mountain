@@ -1,7 +1,7 @@
-#include "data/save_file_data.h"
-#include "gba.h"
+#include "mzm/data/save_file_data.h"
+#include "mzm/gba.h"
 
-#include "constants/connection.h"
+#include "mzm/constants/connection.h"
 
 const u8 sMetZeroSramCheck_Text[SRAM_TEXT_SIZE] = "MetZeroSramCheck";
 const u8 sZERO_MISSION_010_Text[SRAM_TEXT_SIZE] = "ZERO_MISSION_010";

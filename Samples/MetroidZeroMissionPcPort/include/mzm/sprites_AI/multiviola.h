@@ -1,7 +1,7 @@
 #ifndef MULTIVIOLA_AI_H
 #define MULTIVIOLA_AI_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define MULTIVIOLA_POSE_MOVING 0x9
 

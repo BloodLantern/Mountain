@@ -1,9 +1,9 @@
 #ifndef MAP_SCREEN_MENU_STRUCT_H
 #define MAP_SCREEN_MENU_STRUCT_H
 
-#include "types.h"
-#include "structs/menu.h"
-#include "structs/connection.h"
+#include "mzm/types.h"
+#include "mzm/structs/menu.h"
+#include "mzm/structs/connection.h"
 
 #define PAUSE_SCREEN_DATA sNonGameplayRamPointer->pauseScreen
 #define PAUSE_SCREEN_EWRAM sEwramPointer->pauseScreen

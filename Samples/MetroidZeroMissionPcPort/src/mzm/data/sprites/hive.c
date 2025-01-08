@@ -1,5 +1,5 @@
-#include "data/sprites/hive.h"
-#include "macros.h"
+#include "mzm/data/sprites/hive.h"
+#include "mzm/macros.h"
 
 const s16 sMellowIdleYVelocity[65] = {
     0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3,

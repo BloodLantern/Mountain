@@ -1,17 +1,17 @@
 #ifndef GLOBALS_H
 #define GLOBALS_H
 
-#include "callbacks.h"
-#include "types.h"
-#include "sprite_debris.h"
-#include "room.h"
-#include "particle.h"
-#include "oam.h"
-#include "screen_shake.h"
-#include "display.h"
-#include "samus.h"
-#include "gba/keys.h"
-#include "projectile.h"
+#include "mzm/callbacks.h"
+#include "mzm/types.h"
+#include "mzm/sprite_debris.h"
+#include "mzm/room.h"
+#include "mzm/particle.h"
+#include "mzm/oam.h"
+#include "mzm/screen_shake.h"
+#include "mzm/display.h"
+#include "mzm/samus.h"
+#include "mzm/gba/keys.h"
+#include "mzm/projectile.h"
 
 // IWRAM
 

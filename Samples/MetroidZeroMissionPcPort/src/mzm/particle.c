@@ -1,26 +1,26 @@
-#include "particle.h"
-#include "sprites_AI/ruins_test.h"
-#include "escape.h" // Required
+#include "mzm/particle.h"
+#include "mzm/sprites_AI/ruins_test.h"
+#include "mzm/escape.h" // Required
 
-#include "data/engine_pointers.h"
-#include "data/projectile_data.h"
-#include "data/sprite_data.h"
-#include "data/particle_data.h"
-#include "data/visual_effects_data.h"
+#include "mzm/data/engine_pointers.h"
+#include "mzm/data/projectile_data.h"
+#include "mzm/data/sprite_data.h"
+#include "mzm/data/particle_data.h"
+#include "mzm/data/visual_effects_data.h"
 
-#include "constants/color_fading.h"
-#include "constants/escape.h"
-#include "constants/game_state.h"
-#include "constants/particle.h"
-#include "constants/samus.h"
-#include "constants/projectile.h"
+#include "mzm/constants/color_fading.h"
+#include "mzm/constants/escape.h"
+#include "mzm/constants/game_state.h"
+#include "mzm/constants/particle.h"
+#include "mzm/constants/samus.h"
+#include "mzm/constants/projectile.h"
 
-#include "structs/bg_clip.h"
-#include "structs/clipdata.h"
-#include "structs/escape.h"
-#include "structs/game_state.h"
-#include "structs/samus.h"
-#include "structs/sprite.h"
+#include "mzm/structs/bg_clip.h"
+#include "mzm/structs/clipdata.h"
+#include "mzm/structs/escape.h"
+#include "mzm/structs/game_state.h"
+#include "mzm/structs/samus.h"
+#include "mzm/structs/sprite.h"
 
 struct ParticleEffect gParticleEffects[MAX_AMOUNT_OF_PARTICLES];
 const u16* gCurrentParticleEffectOamFramePointer;

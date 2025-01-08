@@ -1,14 +1,15 @@
-#include "types.h"
-#include "gba.h"
+#include "mzm/animated_graphics.h"
+#include "mzm/types.h"
+#include "mzm/gba.h"
 
-#include "transparency.h"
-#include "room.h"
-#include "scroll.h"
-#include "connection.h"
+#include "mzm/transparency.h"
+#include "mzm/room.h"
+#include "mzm/scroll.h"
+#include "mzm/connection.h"
 
-#include "structs/bg_clip.h"
-#include "structs/display.h"
-#include "structs/room.h"
+#include "mzm/structs/bg_clip.h"
+#include "mzm/structs/display.h"
+#include "mzm/structs/room.h"
 
 /**
  * @brief 57d04 | c8 | Loads a room for the escape sequence

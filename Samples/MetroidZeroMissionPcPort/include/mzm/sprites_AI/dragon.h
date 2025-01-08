@@ -1,7 +1,7 @@
 #ifndef DRAGON_AI_H
 #define DRAGON_AI_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define DRAGON_POSE_IDLE_INIT 0x8
 #define DRAGON_POSE_IDLE 0x9

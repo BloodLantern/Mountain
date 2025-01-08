@@ -1,7 +1,7 @@
-#include "data/cutscenes/mecha_sees_samus_data.h"
-#include "cutscenes/mecha_sees_samus.h"
-#include "gba.h"
-#include "macros.h"
+#include "mzm/data/cutscenes/mecha_sees_samus_data.h"
+#include "mzm/cutscenes/mecha_sees_samus.h"
+#include "mzm/gba.h"
+#include "mzm/macros.h"
 
 const struct CutscenePageData sMechaRidleySeesSamusPagesData[1] = {
     [0] = {

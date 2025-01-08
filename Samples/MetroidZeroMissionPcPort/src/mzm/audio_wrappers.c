@@ -1,10 +1,6 @@
-#include "audio_wrappers.h"
+#include "mzm/audio_wrappers.h"
 
-#include "macros.h"
-
-#include "modern/audio.h"
-
-#include <stdio.h>
+#include "mzm/macros.h"
 
 void InitializeAudio(void)
 {
@@ -23,23 +19,10 @@ void SetupSoundTransfer(void)
 
 void SoundPlay(u16 sound)
 {
-    u16 index = SourceQueueSound(sound);
-
-    alSourcePlay(gAudioSources[index]);
-    TestALError("alSourcePlay");
-
-    printf("Playing audio buffer ID: %d, source ID: %d (index = %d)\n", gAudioBuffers[sound - 1], gAudioSources[index], index);
 }
 
 void SoundStop(u16 sound)
 {
-    s32 source = SourceFromSound(sound);
-    if (source == -1)
-        return;
-        
-    alSourceStop(gAudioSources[source]);
-
-    printf("Stopping sound: %d, source ID: %d (index = %d)\n", sound, gAudioSources[source], source);
 }
 
 void unk_2a38(struct TrackData* pTrack)

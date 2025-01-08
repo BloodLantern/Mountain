@@ -1,8 +1,8 @@
 #ifndef GLASS_TUBE_DATA_H
 #define GLASS_TUBE_DATA_H
 
-#include "types.h"
-#include "oam.h"
+#include "mzm/types.h"
+#include "mzm/oam.h"
 
 extern const u32 sGlassTubeGfx[514];
 extern const u16 sGlassTubePAL[80];

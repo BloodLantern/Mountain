@@ -1,13 +1,13 @@
-#include "cutscenes/mecha_sees_samus.h"
-#include "cutscenes/cutscene_utils.h"
-#include "syscall_wrappers.h"
+#include "mzm/cutscenes/mecha_sees_samus.h"
+#include "mzm/cutscenes/cutscene_utils.h"
+#include "mzm/syscall_wrappers.h"
 
-#include "data/cutscenes/cutscenes_data.h"
-#include "data/cutscenes/internal_mecha_sees_samus_data.h"
-#include "data/cutscenes/mecha_sees_samus_data.h"
-#include "data/shortcut_pointers.h"
+#include "mzm/data/cutscenes/cutscenes_data.h"
+#include "mzm/data/cutscenes/internal_mecha_sees_samus_data.h"
+#include "mzm/data/cutscenes/mecha_sees_samus_data.h"
+#include "mzm/data/shortcut_pointers.h"
 
-#include "constants/cutscene.h"
+#include "mzm/constants/cutscene.h"
 
 /**
  * @brief 65924 | 100 | Handles the eye part of the mecha sees samus cutscene

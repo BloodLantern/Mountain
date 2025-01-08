@@ -1,8 +1,8 @@
 #ifndef SAMUS_IN_BLUE_SHIP_CUTSCENE
 #define SAMUS_IN_BLUE_SHIP_CUTSCENE
 
-#include "types.h"
-#include "structs/cutscene.h"
+#include "mzm/types.h"
+#include "mzm/structs/cutscene.h"
 
 u8 SamusInBlueShipPoweringUp(void);
 void SamusInBlueShipShakeScreen(struct CutsceneGraphicsData* pGraphics);

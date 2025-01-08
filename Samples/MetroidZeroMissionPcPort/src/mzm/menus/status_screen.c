@@ -1,25 +1,28 @@
-#include "menus/status_screen.h"
-#include "menus/pause_screen.h"
+#include "mzm/menus/status_screen.h"
+#include "mzm/menus/pause_screen.h"
 
-#include "data/shortcut_pointers.h"
-#include "data/menus/status_screen_data.h"
-#include "data/menus/pause_screen_data.h"
-#include "data/menus/internal_pause_screen_data.h"
-#include "data/menus/internal_status_screen_data.h"
+#include "mzm/data/shortcut_pointers.h"
+#include "mzm/data/menus/status_screen_data.h"
+#include "mzm/data/menus/pause_screen_data.h"
+#include "mzm/data/menus/internal_pause_screen_data.h"
+#include "mzm/data/menus/internal_status_screen_data.h"
 
-#include "constants/connection.h"
-#include "constants/demo.h"
-#include "constants/samus.h"
-#include "constants/text.h"
-#include "constants/game_state.h"
-#include "constants/menus/pause_screen.h"
-#include "constants/menus/status_screen.h"
+#include "mzm/constants/connection.h"
+#include "mzm/constants/demo.h"
+#include "mzm/constants/samus.h"
+#include "mzm/constants/text.h"
+#include "mzm/constants/game_state.h"
+#include "mzm/constants/menus/pause_screen.h"
+#include "mzm/constants/menus/status_screen.h"
 
-#include "structs/demo.h"
-#include "structs/game_state.h"
-#include "structs/samus.h"
-#include "structs/text.h"
-#include "structs/menus/pause_screen.h"
+#include "mzm/audio_wrappers.h"
+#include "mzm/oam_id.h"
+#include "mzm/text.h"
+#include "mzm/structs/demo.h"
+#include "mzm/structs/game_state.h"
+#include "mzm/structs/samus.h"
+#include "mzm/structs/text.h"
+#include "mzm/structs/menus/pause_screen.h"
 
 /**
  * @brief 6fd00 | 118 | Updates the minimap animated palette
@@ -315,8 +318,8 @@ lbl_0807001c: .4byte 0x0600c000 \n\
  */
 u8 StatusScreenGetSlotForNewItem(u8 param_1, u8 item)
 {
-    u8* pActivation;
-    u8* pStatusActivation;
+    u8* pActivation = NULL;
+    u8* pStatusActivation = NULL;
     u8 slot;
     u8 flag;
     s32 i;
@@ -398,7 +401,7 @@ void StatusScreenDraw(void)
 
     if (gEquipment.suitType == SUIT_SUITLESS)
     {
-        DmaTransfer(3, (void*)sEwramPointer + 0x8000, PAUSE_SCREEN_EWRAM.statusScreenTilemap, 0x800, 0x10);
+        DmaTransfer(3, (u8*)sEwramPointer + 0x8000, PAUSE_SCREEN_EWRAM.statusScreenTilemap, 0x800, 0x10);
         BitFill(3, 0, &PAUSE_SCREEN_DATA.statusScreenData, sizeof(PAUSE_SCREEN_DATA.statusScreenData), 0x20);
         StatusScreenSetPistolVisibility(PAUSE_SCREEN_EWRAM.statusScreenTilemap);
         StatusScreenDrawSingleTankAmount(ABILITY_GROUP_CURRENT_ENERGY, gEquipment.currentEnergy, 11, FALSE);
@@ -406,7 +409,7 @@ void StatusScreenDraw(void)
         return;
     }
 
-    DmaTransfer(3, (void*)sEwramPointer + 0x7800, PAUSE_SCREEN_EWRAM.statusScreenTilemap, 0x800, 0x10);
+    DmaTransfer(3, (u8*)sEwramPointer + 0x7800, PAUSE_SCREEN_EWRAM.statusScreenTilemap, 0x800, 0x10);
 
     previousSlots[0] = PAUSE_SCREEN_DATA.statusScreenData.currentStatusSlot;
     previousSlots[1] = PAUSE_SCREEN_DATA.statusScreenData.previousLeftStatusSlot;
@@ -595,7 +598,7 @@ void StatusScreenSetBeamsVisibility(u16* pTilemap)
     u32 dstPosition;
     s32 tmp;
     u8* pVisibility;
-    u8* ptr;
+    u8* ptr = NULL;
     s32 size;
 
     pVisibility = PAUSE_SCREEN_DATA.statusScreenData.beamActivation;
@@ -684,7 +687,7 @@ void StatusScreenSetSuitsVisibility(u16* pTilemap)
     u32 dstPosition;
     s32 tmp;
     u8* pVisibility;
-    u8* ptr;
+    u8* ptr = NULL;
     s32 size;
     
     pVisibility = PAUSE_SCREEN_DATA.statusScreenData.suitActivation;
@@ -1070,7 +1073,7 @@ void StatusScreenUpdateRow(u8 group, u8 row, u8 isActivated, u8 param_4)
     // Weird pointer/array access? this is just PAUSE_SCREEN_EWRAM.statusScreenTilemap[position + 1];
     pEwram = (u16*)&PAUSE_SCREEN_EWRAM;
     pTilemap = &pEwram[position + 1];
-    pTilemap = (u16*)((void*)sEwramPointer + 0x7000) + position + 1;
+    pTilemap = (u16*)((u16*)sEwramPointer + 0x7000) + position + 1;
 
     for (i = 1; i < size; i++, pTilemap++)
     {
@@ -1975,7 +1978,7 @@ u32 StatusScreenIsStatusSlotEnabled(u8 statusSlot)
 s8 StatusScreenToggleItem(u8 statusSlot, u8 action)
 {
     u32 flag;
-    u8* pActivation;
+    u8* pActivation = NULL;
     u8 oamId;
     u8 i;
     s8 isActivated;

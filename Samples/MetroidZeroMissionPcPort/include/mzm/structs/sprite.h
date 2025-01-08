@@ -1,8 +1,7 @@
 #ifndef SPRITE_STRUCT_H
 #define SPRITE_STRUCT_H
 
-#include "types.h"
-#include "modern/sprite_renderer.h"
+#include "mzm/types.h"
 
 #define ENEMY_ROOM_DATA_SIZE 3
 #define ENEMY_ROOM_DATA_ARRAY_SIZE(nbr) (ENEMY_ROOM_DATA_SIZE * nbr)

@@ -1,7 +1,7 @@
 #ifndef GBA_AUDIO_H
 #define GBA_AUDIO_H
 
-#include "memory.h"
+#include "mzm/memory.h"
 
 #define REG_SOUND1CNT_L (gRegBuffer + 0x60)
 #define REG_SOUND1CNT_H (gRegBuffer + 0x62)

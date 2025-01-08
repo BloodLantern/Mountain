@@ -1,23 +1,29 @@
-#include "gba.h"
-#include "sprites_AI/item_banner.h"
-#include "sprites_AI/ruins_test.h"
-#include "text.h"
-#include "macros.h"
-#include "sprite_util.h"
+#include "mzm/gba.h"
+#include "mzm/sprites_AI/item_banner.h"
+#include "mzm/sprites_AI/ruins_test.h"
+#include "mzm/text.h"
+#include "mzm/macros.h"
+#include "mzm/sprite_util.h"
 
-#include "data/sprites/item_banner.h"
+#include "mzm/data/sprites/item_banner.h"
 
-#include "constants/audio.h"
-#include "constants/game_state.h"
-#include "constants/sprite.h"
-#include "constants/samus.h"
-#include "constants/text.h"
+#include "mzm/audio_wrappers.h"
+#include "mzm/bg_clip.h"
+#include "mzm/escape.h"
+#include "mzm/music_wrappers.h"
+#include "mzm/save_file.h"
+#include "mzm/sprite.h"
+#include "mzm/constants/audio.h"
+#include "mzm/constants/game_state.h"
+#include "mzm/constants/sprite.h"
+#include "mzm/constants/samus.h"
+#include "mzm/constants/text.h"
 
-#include "structs/bg_clip.h"
-#include "structs/demo.h"
-#include "structs/game_state.h"
-#include "structs/sprite.h"
-#include "structs/samus.h"
+#include "mzm/structs/bg_clip.h"
+#include "mzm/structs/demo.h"
+#include "mzm/structs/game_state.h"
+#include "mzm/structs/sprite.h"
+#include "mzm/structs/samus.h"
 
 /**
  * @brief 1b6b8 | 110 | Initializes an item banner sprite
@@ -67,7 +73,7 @@ void ItemBannerInit(void)
     else
         gCurrentSprite.workVariable = FALSE;
 
-    gCurrentSprite.spritesetGfxSlot = SpriteRendererGetSpriteGraphics(PSPRITE_ITEM_BANNER);
+    /*gCurrentSprite.spritesetGfxSlot = SpriteRendererGetSpriteGraphics(PSPRITE_ITEM_BANNER);
     gCurrentSprite.pose = ITEM_BANNER_POSE_POP_UP;
 
     // Middle of the screen
@@ -75,7 +81,7 @@ void ItemBannerInit(void)
     gCurrentSprite.xPosition = BLOCK_SIZE + QUARTER_BLOCK_SIZE * 3 + PIXEL_SIZE * 2;
 
     // FIXME maybe
-    TextStartMessage(message, gCurrentSprite.spritesetGfxSlot->handle);
+    TextStartMessage(message, gCurrentSprite.spritesetGfxSlot->handle);*/ // TODO - Modern
 }
 
 /**

@@ -1,7 +1,7 @@
 #ifndef OAM_H
 #define OAM_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 // Attribute 0
 

@@ -1,5 +1,5 @@
-#include "data/sprites/zipline_generator.h"
-#include "macros.h"
+#include "mzm/data/sprites/zipline_generator.h"
+#include "mzm/macros.h"
 
 const u32 sZiplineGeneratorGfx[1124] = INCBIN_U32("data/sprites/ZiplineGenerator.gfx.lz");
 const u16 sZiplineGeneratorPAL[64] = INCBIN_U16("data/sprites/ZiplineGenerator.pal");

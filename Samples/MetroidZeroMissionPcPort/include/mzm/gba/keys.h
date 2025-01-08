@@ -1,8 +1,8 @@
 #ifndef GBA_KEYS_H
 #define GBA_KEYS_H
 
-#include "memory.h"
-#include "types.h"
+#include "mzm/memory.h"
+#include "mzm/types.h"
 
 #define REG_KEY_INPUT (gRegBuffer + 0x130)
 #define REG_KEY_CONTROL (gRegBuffer + 0x132)

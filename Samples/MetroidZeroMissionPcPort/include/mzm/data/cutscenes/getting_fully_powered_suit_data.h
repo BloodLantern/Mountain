@@ -1,8 +1,8 @@
 #ifndef GETTING_FULLY_POWERED_SUIT_DATA_H
 #define GETTING_FULLY_POWERED_SUIT_DATA_H
 
-#include "structs/cutscene.h"
-#include "cutscenes/getting_fully_powered_suit.h"
+#include "mzm/structs/cutscene.h"
+#include "mzm/cutscenes/getting_fully_powered_suit.h"
 
 extern const struct CutscenePageData sGettingFullyPoweredSuitPageData[3];
 extern const struct CutscenePaletteData sGettingFullyPoweredSuitPaletteData;

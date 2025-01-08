@@ -1,7 +1,7 @@
 #ifndef COLOR_FADING_H
 #define COLOR_FADING_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 u8 ColorFadingUpdate(void);
 u8 unk_5bd58(u8 param_1, u8 color);

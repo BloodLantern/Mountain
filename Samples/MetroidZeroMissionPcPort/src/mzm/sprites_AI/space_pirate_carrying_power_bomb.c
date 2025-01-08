@@ -1,17 +1,17 @@
-#include "sprites_AI/space_pirate_carrying_power_bomb.h"
-#include "sprite_util.h"
+#include "mzm/sprites_AI/space_pirate_carrying_power_bomb.h"
+#include "mzm/sprite_util.h"
 
-#include "data/sprites/space_pirate_carrying_power_bomb.h"
-#include "data/sprites/space_pirate.h"
-#include "data/sprites/enemy_drop.h"
+#include "mzm/data/sprites/space_pirate_carrying_power_bomb.h"
+#include "mzm/data/sprites/space_pirate.h"
+#include "mzm/data/sprites/enemy_drop.h"
 
-#include "constants/clipdata.h"
-#include "constants/event.h"
-#include "constants/sprite.h"
+#include "mzm/constants/clipdata.h"
+#include "mzm/constants/event.h"
+#include "mzm/constants/sprite.h"
 
-#include "structs/connection.h"
-#include "structs/clipdata.h"
-#include "structs/sprite.h"
+#include "mzm/structs/connection.h"
+#include "mzm/structs/clipdata.h"
+#include "mzm/structs/sprite.h"
 
 /**
  * @brief 4b604 | 180 | Space pirate carrying power bomb AI

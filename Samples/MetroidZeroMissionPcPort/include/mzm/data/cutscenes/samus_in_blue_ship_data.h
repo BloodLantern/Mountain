@@ -1,10 +1,10 @@
 #ifndef SAMUS_IN_BLUE_SHIP_DATA_H
 #define SAMUS_IN_BLUE_SHIP_DATA_H
 
-#include "macros.h"
-#include "types.h"
+#include "mzm/macros.h"
+#include "mzm/types.h"
 
-#include "structs/cutscene.h"
+#include "mzm/structs/cutscene.h"
 
 extern const struct CutscenePageData sSamusInBlueShipPageData[1];
 extern const struct OamArray sSamusInBlueShipOam[3];

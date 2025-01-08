@@ -1,16 +1,16 @@
-#include "data/frame_data_pointers.h"
+#include "mzm/data/frame_data_pointers.h"
 
-#include "data/sprites/chozo_statue.h"
-#include "data/sprites/crocomire.h"
-#include "data/sprites/unknown_item_chozo_statue.h"
-#include "data/sprites/kraid.h"
-#include "data/sprites/ridley.h"
-#include "data/sprites/tangle_vine.h"
-#include "data/sprites/imago_larva.h"
-#include "data/sprites/imago.h"
-#include "data/sprites/imago_cocoon.h"
-#include "data/sprites/mother_brain.h"
-#include "data/sprites/mecha_ridley.h"
+#include "mzm/data/sprites/chozo_statue.h"
+#include "mzm/data/sprites/crocomire.h"
+#include "mzm/data/sprites/unknown_item_chozo_statue.h"
+#include "mzm/data/sprites/kraid.h"
+#include "mzm/data/sprites/ridley.h"
+#include "mzm/data/sprites/tangle_vine.h"
+#include "mzm/data/sprites/imago_larva.h"
+#include "mzm/data/sprites/imago.h"
+#include "mzm/data/sprites/imago_cocoon.h"
+#include "mzm/data/sprites/mother_brain.h"
+#include "mzm/data/sprites/mecha_ridley.h"
 
 const struct FrameData* const sChozoStatueFrameDataPointers[16] = {
     sChozoStatuePartOAM_LegStanding,

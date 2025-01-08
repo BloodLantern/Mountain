@@ -215,5 +215,5 @@
 #define _INCBIN_S16 INCBIN
 #define _INCBIN_S32 INCBIN
 
-#define FORCE_RODATA __attribute__((section(".rodata")))
-#define NAKED_FUNCTION __attribute__((naked))
+#define FORCE_RODATA
+#define NAKED_FUNCTION

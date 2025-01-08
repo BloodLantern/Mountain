@@ -1,8 +1,8 @@
 #ifndef GETTING_FULLY_POWERED_SUIT_CUTSCENE
 #define GETTING_FULLY_POWERED_SUIT_CUTSCENE
 
-#include "types.h"
-#include "structs/cutscene.h"
+#include "mzm/types.h"
+#include "mzm/structs/cutscene.h"
 
 #define GETTING_FULLY_POWERED_SUIT_OAM_ID_SPARKLE_GOING_UP 1
 #define GETTING_FULLY_POWERED_SUIT_OAM_ID_SPARKLE_AROUND_RING1 2

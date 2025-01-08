@@ -1,7 +1,7 @@
 #ifndef SECURITY_GATE_AI_H
 #define SECURITY_GATE_AI_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 void SecurityGateChangeCCAA(u8 caa);
 void SecurityGateOpen(void);

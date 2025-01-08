@@ -1,8 +1,8 @@
 #ifndef SCROLL_STRUCT_H
 #define SCROLL_STRUCT_H
 
-#include "types.h"
-#include "macros.h"
+#include "mzm/types.h"
+#include "mzm/macros.h"
 
 #define SCROLL_SUB_DATA_SIZE 8
 #define SCROLL_DATA_SIZE(nbrScrolls) (2 + SCROLL_SUB_DATA_SIZE * nbrScrolls)

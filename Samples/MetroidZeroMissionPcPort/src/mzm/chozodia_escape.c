@@ -1,23 +1,23 @@
-#include "chozodia_escape.h"
-#include "gba.h"
-#include "callbacks.h"
-#include "complex_oam.h" // Required
+#include "mzm/chozodia_escape.h"
+#include "mzm/gba.h"
+#include "mzm/callbacks.h"
+#include "mzm/complex_oam.h" // Required
 
-#include "data/block_data.h"
-#include "data/haze_data.h"
-#include "data/shortcut_pointers.h"
-#include "data/tourian_escape_data.h"
-#include "data/chozodia_escape_data.h"
-#include "data/internal_chozodia_escape_data.h"
-#include "data/cutscenes/ridley_landing_data.h"
+#include "mzm/data/block_data.h"
+#include "mzm/data/haze_data.h"
+#include "mzm/data/shortcut_pointers.h"
+#include "mzm/data/tourian_escape_data.h"
+#include "mzm/data/chozodia_escape_data.h"
+#include "mzm/data/internal_chozodia_escape_data.h"
+#include "mzm/data/cutscenes/ridley_landing_data.h"
 
-#include "constants/audio.h"
-#include "constants/ending_and_gallery.h"
-#include "constants/samus.h"
+#include "mzm/constants/audio.h"
+#include "mzm/constants/ending_and_gallery.h"
+#include "mzm/constants/samus.h"
 
-#include "structs/bg_clip.h"
-#include "structs/chozodia_escape.h"
-#include "structs/display.h"
+#include "mzm/structs/bg_clip.h"
+#include "mzm/structs/chozodia_escape.h"
+#include "mzm/structs/display.h"
 
 /**
  * @brief 8784c | ec | V-blank code for the chozodia escape

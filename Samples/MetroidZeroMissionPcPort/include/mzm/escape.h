@@ -1,7 +1,7 @@
 #ifndef ESCAPE_H
 #define ESCAPE_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 // Functions
 

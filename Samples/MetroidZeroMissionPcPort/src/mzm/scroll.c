@@ -1,19 +1,19 @@
-#include "scroll.h"
-#include "gba.h"
+#include "mzm/scroll.h"
+#include "mzm/gba.h"
 
-#include "data/clipdata_data.h"
-#include "data/engine_pointers.h"
+#include "mzm/data/clipdata_data.h"
+#include "mzm/data/engine_pointers.h"
 
-#include "constants/game_state.h"
-#include "constants/samus.h"
-#include "constants/room.h"
+#include "mzm/constants/game_state.h"
+#include "mzm/constants/samus.h"
+#include "mzm/constants/room.h"
 
-#include "structs/bg_clip.h"
-#include "structs/display.h"
-#include "structs/game_state.h"
-#include "structs/color_effects.h"
-#include "structs/samus.h"
-#include "structs/room.h"
+#include "mzm/structs/bg_clip.h"
+#include "mzm/structs/display.h"
+#include "mzm/structs/game_state.h"
+#include "mzm/structs/color_effects.h"
+#include "mzm/structs/samus.h"
+#include "mzm/structs/room.h"
 
 u8 gDisableScrolling;
 u16 gSlowScrollingTimer;

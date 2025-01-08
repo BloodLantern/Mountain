@@ -1,8 +1,8 @@
 #ifndef VISUAL_EFFECTS_DATA_H
 #define VISUAL_EFFECTS_DATA_H
 
-#include "types.h"
-#include "oam.h"
+#include "mzm/types.h"
+#include "mzm/oam.h"
 
 extern const struct FrameData sEnvEffectOam_RunningOnDustyGround[6];
 extern const struct FrameData sEnvEffectOam_LandingOnDustyGround[8];

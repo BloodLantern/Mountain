@@ -1,7 +1,7 @@
 #ifndef TOURIAN_ESCAPE_STRUCT_H
 #define TOURIAN_ESCAPE_STRUCT_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define TOURIAN_ESCAPE_DATA sNonGameplayRamPointer->tourianEscape
 

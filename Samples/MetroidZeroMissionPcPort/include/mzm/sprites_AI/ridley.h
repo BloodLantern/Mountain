@@ -1,7 +1,7 @@
 #ifndef RIDLEY_AI_H
 #define RIDLEY_AI_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define RIDLEY_GROUND_POSITION (BLOCK_SIZE * 18 - ONE_SUB_PIXEL)
 

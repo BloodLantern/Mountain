@@ -1,36 +1,43 @@
-#include "menus/pause_screen.h"
-#include "temp_globals.h"
-#include "gba.h"
-#include "macros.h"
-#include "minimap.h"
-#include "oam_id.h"
-#include "event.h"
-#include "text.h"
-#include "color_effects.h"
-#include "callbacks.h"
-#include "menus/status_screen.h"
-#include "menus/pause_screen_map.h"
-#include "menus/pause_screen_sub_menus.h"
+#include "mzm/menus/pause_screen.h"
+#include "mzm/temp_globals.h"
+#include "mzm/gba.h"
+#include "mzm/macros.h"
+#include "mzm/minimap.h"
+#include "mzm/oam_id.h"
+#include "mzm/event.h"
+#include "mzm/text.h"
+#include "mzm/color_effects.h"
+#include "mzm/callbacks.h"
+#include "mzm/menus/status_screen.h"
+#include "mzm/menus/pause_screen_map.h"
+#include "mzm/menus/pause_screen_sub_menus.h"
 
-#include "data/shortcut_pointers.h"
-#include "data/menus/pause_screen_data.h"
-#include "data/menus/status_screen_data.h"
-#include "data/menus/internal_pause_screen_data.h"
-#include "data/menus/pause_screen_map_data.h"
+#include "mzm/data/shortcut_pointers.h"
+#include "mzm/data/menus/pause_screen_data.h"
+#include "mzm/data/menus/status_screen_data.h"
+#include "mzm/data/menus/internal_pause_screen_data.h"
+#include "mzm/data/menus/pause_screen_map_data.h"
 
-#include "constants/connection.h"
-#include "constants/event.h"
-#include "constants/game_state.h"
-#include "constants/samus.h"
-#include "constants/menus/pause_screen.h"
-#include "constants/menus/status_screen.h"
+#include "mzm/constants/connection.h"
+#include "mzm/constants/event.h"
+#include "mzm/constants/game_state.h"
+#include "mzm/constants/samus.h"
+#include "mzm/constants/menus/pause_screen.h"
+#include "mzm/constants/menus/status_screen.h"
 
-#include "structs/menus/pause_screen.h"
-#include "structs/demo.h"
-#include "structs/display.h"
-#include "structs/minimap.h"
-#include "structs/game_state.h"
-#include "structs/text.h"
+#include "mzm/structs/menus/pause_screen.h"
+
+#include "mzm/audio_wrappers.h"
+#include "mzm/complex_oam.h"
+#include "mzm/demo.h"
+#include "mzm/init_helpers.h"
+#include "mzm/music_wrappers.h"
+#include "mzm/syscall_wrappers.h"
+#include "mzm/structs/demo.h"
+#include "mzm/structs/display.h"
+#include "mzm/structs/minimap.h"
+#include "mzm/structs/game_state.h"
+#include "mzm/structs/text.h"
 
 #ifdef NON_MATCHING
 u32 unk_68168(u16 param_1, u8 param_2, u32 param_3)
@@ -2477,7 +2484,7 @@ void PauseScreenUpdateBottomVisorOverlay(u8 param_1, u8 param_2)
     s16 var_1;
     u16* dst;
     u16* src;
-    s32 tmp;
+    s32 tmp = 0;
 
     dst = gVramBuffer + 0xCC40;
     src = &PAUSE_SCREEN_EWRAM.visorOverlayTilemap[0x380];

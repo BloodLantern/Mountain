@@ -1,5 +1,5 @@
-#include "data/sprites/falling_chozo_pillar.h"
-#include "macros.h"
+#include "mzm/data/sprites/falling_chozo_pillar.h"
+#include "mzm/macros.h"
 
 const u32 sFallingChozoPillarGfx[219] = INCBIN_U32("data/sprites/FallingChozoPillar.gfx.lz");
 const u16 sFallingChozoPillarPAL[16] = INCBIN_U16("data/sprites/FallingChozoPillar.pal");

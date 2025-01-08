@@ -1,7 +1,7 @@
 #ifndef WORKER_ROBOT_AI_H
 #define WORKER_ROBOT_AI_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define WORKER_ROBOT_POSE_WALKING_INIT 0x8
 #define WORKER_ROBOT_POSE_WALKING 0x9

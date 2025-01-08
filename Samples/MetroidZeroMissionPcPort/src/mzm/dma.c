@@ -1,6 +1,6 @@
-#include "funcs.h"
-#include "globals.h"
-#include "gba.h"
+#include "mzm/funcs.h"
+#include "mzm/globals.h"
+#include "mzm/gba.h"
 
 #include <string.h>
 

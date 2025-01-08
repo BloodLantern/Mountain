@@ -1,6 +1,6 @@
-#include "data/sprites/sidehopper.h"
-#include "macros.h"
-#include "oam.h"
+#include "mzm/data/sprites/sidehopper.h"
+#include "mzm/macros.h"
+#include "mzm/oam.h"
 
 const s16 sSidehopperHighJumpVelocity[10] = {
     -8, -16, -16, -8, -4, 0, 4, 8, 16, 16

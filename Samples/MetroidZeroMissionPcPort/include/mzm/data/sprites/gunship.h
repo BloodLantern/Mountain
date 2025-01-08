@@ -1,8 +1,8 @@
 #ifndef GUNSHIP_DATA_DATA_H
 #define GUNSHIP_DATA_DATA_H
 
-#include "types.h"
-#include "oam.h"
+#include "mzm/types.h"
+#include "mzm/oam.h"
 
 extern const s16 sGunshipTakingOffYVelocity[153];
 

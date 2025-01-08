@@ -1,7 +1,7 @@
 #ifndef GENERIC_DATA_H
 #define GENERIC_DATA_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 extern const s16 sSineTable[320];
 

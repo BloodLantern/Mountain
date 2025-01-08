@@ -1,11 +1,11 @@
-#include "music_wrappers.h"
-#include "audio_wrappers.h"
-#include "syscalls.h"
-#include "gba.h"
+#include "mzm/music_wrappers.h"
+#include "mzm/audio_wrappers.h"
+#include "mzm/syscalls.h"
+#include "mzm/gba.h"
 
-#include "data/audio.h"
+#include "mzm/data/audio.h"
 
-#include "constants/audio.h"
+#include "mzm/constants/audio.h"
 
 void DMA2IntrCode(void)
 {

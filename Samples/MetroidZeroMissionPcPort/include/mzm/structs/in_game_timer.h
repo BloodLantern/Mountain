@@ -1,7 +1,7 @@
 #ifndef IN_GAME_TIMER_STRUCT_H
 #define IN_GAME_TIMER_STRUCT_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define MAX_AMOUNT_OF_IGT_AT_BOSSES 5
 

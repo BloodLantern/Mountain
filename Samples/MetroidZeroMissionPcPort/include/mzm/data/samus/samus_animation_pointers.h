@@ -1,11 +1,11 @@
 #ifndef SAMUS_ANIMATION_POINTERS_DATA_H
 #define SAMUS_ANIMATION_POINTERS_DATA_H
 
-#include "types.h"
+#include "mzm/types.h"
 
-#include "constants/samus.h"
+#include "mzm/constants/samus.h"
 
-#include "structs/samus.h"
+#include "mzm/structs/samus.h"
 
 extern const struct EnvironmentalEffect sEnvironmentalEffect_Empty;
 

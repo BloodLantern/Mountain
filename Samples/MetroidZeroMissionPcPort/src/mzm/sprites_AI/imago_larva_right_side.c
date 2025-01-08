@@ -1,8 +1,8 @@
-#include "sprites_AI/imago_larva_right_side.h"
-#include "data/sprites/imago_larva_right_side.h"
-#include "constants/sprite.h"
-#include "structs/sprite.h"
-#include "sprite_util.h"
+#include "mzm/sprites_AI/imago_larva_right_side.h"
+#include "mzm/data/sprites/imago_larva_right_side.h"
+#include "mzm/constants/sprite.h"
+#include "mzm/structs/sprite.h"
+#include "mzm/sprite_util.h"
 
 /**
  * @brief 412a8 | 11c | Imago larva (right side) AI

@@ -1,7 +1,7 @@
 #ifndef ZEBETITE_AND_CANNON_AI_H
 #define ZEBETITE_AND_CANNON_AI_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define ZEBETITE_HEALTH_THRESHOLD 20
 #define ZEBETITE_HEAL_TIMER 30

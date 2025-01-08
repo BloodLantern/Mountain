@@ -1,8 +1,8 @@
 #ifndef AUDIO_H
 #define AUDIO_H
 
-#include "types.h"
-#include "structs/audio.h"
+#include "mzm/types.h"
+#include "mzm/structs/audio.h"
 
 void UpdateMusic(void);
 void UpdatePsgSounds(void);

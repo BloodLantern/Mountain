@@ -1,8 +1,8 @@
 #ifndef BLOCK_H
 #define BLOCK_H
 
-#include "types.h"
-#include "structs/block.h"
+#include "mzm/types.h"
+#include "mzm/structs/block.h"
 
 u32 BlockCheckCCAA(struct ClipdataBlockData* pClipBlock);
 u32 BlockDestroyNonReformBlock(struct ClipdataBlockData* pClipBlock);

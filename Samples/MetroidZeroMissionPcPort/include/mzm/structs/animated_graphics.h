@@ -1,7 +1,7 @@
 #ifndef ANIMATED_GRAPHICS_STRUCT_H
 #define ANIMATED_GRAPHICS_STRUCT_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 struct BackgroundEffect {
     u8 unused;

@@ -1,8 +1,8 @@
 #ifndef SAVE_PLATFORM_CHOZODIA_DATA_H
 #define SAVE_PLATFORM_CHOZODIA_DATA_H
 
-#include "types.h"
-#include "oam.h"
+#include "mzm/types.h"
+#include "mzm/oam.h"
 
 extern const u32 sSavePlatformChozodiaGfx[552];
 extern const u16 sSavePlatformChozodiaPAL[64];

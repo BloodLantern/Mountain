@@ -1,10 +1,10 @@
 #ifndef RIDLEY_IN_SPACE_DATA_H
 #define RIDLEY_IN_SPACE_DATA_H
 
-#include "macros.h"
-#include "types.h"
+#include "mzm/macros.h"
+#include "mzm/types.h"
 
-#include "structs/cutscene.h"
+#include "mzm/structs/cutscene.h"
 
 extern const struct CutsceneScrollingInfo sRidleyInSpaceScrollingInfo[2];
 extern const struct CutscenePageData sRidleyInSpacePageData[6];

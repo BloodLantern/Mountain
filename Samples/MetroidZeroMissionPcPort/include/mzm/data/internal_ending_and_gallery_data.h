@@ -1,7 +1,7 @@
 #ifndef INTERNAL_ENDING_AND_GALLERY_DATA
 #define INTERNAL_ENDING_AND_GALLERY_DATA
 
-#include "types.h"
+#include "mzm/types.h"
 
 typedef u8 (*CreditsFunc_T)(void);
 

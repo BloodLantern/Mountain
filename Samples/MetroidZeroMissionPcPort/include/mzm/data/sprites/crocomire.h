@@ -1,8 +1,8 @@
 #ifndef CROCOMIRE_DATA_H
 #define CROCOMIRE_DATA_H
 
-#include "types.h"
-#include "oam.h"
+#include "mzm/types.h"
+#include "mzm/oam.h"
 
 extern const s16 sCrocomireMultiSpriteData_Idle_Frame0[18];
 

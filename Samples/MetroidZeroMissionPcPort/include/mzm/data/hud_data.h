@@ -1,7 +1,7 @@
 #ifndef HUD_DATA_H
 #define HUD_DATA_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 #define SUITLESS_BAR_NBR_ELEMS 56
 #define SUITLESS_BAR_SIZE 256

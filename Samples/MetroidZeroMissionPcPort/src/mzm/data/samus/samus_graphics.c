@@ -1,6 +1,6 @@
-#include "data/samus/samus_graphics.h"
-#include "data/samus/samus_empty_data.h"
-#include "oam.h"
+#include "mzm/data/samus/samus_graphics.h"
+#include "mzm/data/samus/samus_empty_data.h"
+#include "mzm/oam.h"
 
 #define SAMUS_ANIM_TERMINATOR { .pTopGfx = NULL, .pBottomGfx = NULL, .pOam = NULL, .timer = 0 }
 

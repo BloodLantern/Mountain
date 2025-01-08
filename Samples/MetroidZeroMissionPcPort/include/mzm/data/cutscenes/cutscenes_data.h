@@ -1,10 +1,10 @@
 #ifndef CUTSCENES_DATA_H
 #define CUTSCENES_DATA_H
 
-#include "macros.h"
-#include "types.h"
+#include "mzm/macros.h"
+#include "mzm/types.h"
 
-#include "structs/cutscene.h"
+#include "mzm/structs/cutscene.h"
 
 extern const struct CutsceneInfo sCutsceneData[15];
 

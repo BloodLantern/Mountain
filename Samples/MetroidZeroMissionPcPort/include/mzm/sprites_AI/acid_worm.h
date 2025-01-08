@@ -1,7 +1,7 @@
 #ifndef ACID_WORM_AI_H
 #define ACID_WORM_AI_H
 
-#include "types.h"
+#include "mzm/types.h"
 
 // Acid worm
 

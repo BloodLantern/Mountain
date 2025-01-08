@@ -1,8 +1,8 @@
 #ifndef BEFORE_CHARLIE_CUTSCENE
 #define BEFORE_CHARLIE_CUTSCENE
 
-#include "types.h"
-#include "structs/cutscene.h"
+#include "mzm/types.h"
+#include "mzm/structs/cutscene.h"
 
 u8 BeforeCharlieSamusCloseUp(void);
 u8 BeforeCharlieWallAndGreyVoice(void);

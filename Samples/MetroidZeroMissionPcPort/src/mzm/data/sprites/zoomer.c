@@ -1,5 +1,5 @@
-#include "data/sprites/zoomer.h"
-#include "macros.h"
+#include "mzm/data/sprites/zoomer.h"
+#include "mzm/macros.h"
 
 const u32 sZoomerGfx[379] = INCBIN_U32("data/sprites/Zoomer.gfx.lz");
 const u16 sZoomerPAL[32] = INCBIN_U16("data/sprites/Zoomer.pal");
