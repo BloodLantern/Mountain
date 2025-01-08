@@ -313,7 +313,7 @@ struct SpriteGraphics* LocationTextGetGfxSlot(void)
             {
                 // If found
                 gSpriteData[0].roomSlot = lt;
-                gfxSlot = SpriteRendererGetSpriteGraphics(PSPRITE_AREA_BANNER);
+                //gfxSlot = SpriteRendererGetSpriteGraphics(PSPRITE_AREA_BANNER); // TODO - Modern
 
                 // Draw location text
                 TextDrawlocation(lt, gfxSlot);

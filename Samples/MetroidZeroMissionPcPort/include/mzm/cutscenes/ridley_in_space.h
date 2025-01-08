@@ -1,6 +1,11 @@
 #ifndef RIDLEY_IN_SPACE_CUTSCENE
 #define RIDLEY_IN_SPACE_CUTSCENE
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/structs/cutscene.h"
 
@@ -38,5 +43,9 @@ void RidleyInSpaceViewOfShipParticles(void);
 u32 RidleyInSpaceViewOfShipUpdateParticle(struct CutsceneOamData* pOam);
 void RidleyInSpaceShipLeavingParticles(void);
 struct CutsceneOamData* RidleyInSpaceShipLeavingUpdateParticle(struct CutsceneOamData* pOam);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* RIDLEY_IN_SPACE_CUTSCENE */

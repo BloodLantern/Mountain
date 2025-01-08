@@ -1,6 +1,11 @@
 #ifndef SECURITY_LASER_AI_H
 #define SECURITY_LASER_AI_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #define SECURITY_LASER_SMALL 0x2
 #define SECURITY_LASER_MEDIUM 0x3
 #define SECURITY_LASER_LARGE 0x4
@@ -18,5 +23,9 @@ void SecurityLaserCheckDespawnAnimEnded(void);
 void SecurityLaserSetAlarm(void);
 void SecurityLaser_Unused(void);
 void SecurityLaser(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* SECURITY_LASER_AI_H */

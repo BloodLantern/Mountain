@@ -1,6 +1,11 @@
 #ifndef ESCAPE_STRUCT_H
 #define ESCAPE_STRUCT_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 // Structs
@@ -29,5 +34,9 @@ extern struct EscapeDigits gEscapeTimerDigits;
     gEscapeTimerDigits.minutesOnes = (minutes) % 10;\
     gEscapeTimerDigits.minutesTens = (minutes) / 10;\
 }
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* ESCAPE_STRUCT_H */

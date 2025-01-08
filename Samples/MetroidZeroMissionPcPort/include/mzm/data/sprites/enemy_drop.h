@@ -1,6 +1,11 @@
 #ifndef ENEMY_DROP_DATA_H
 #define ENEMY_DROP_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/oam.h"
 
@@ -71,5 +76,9 @@ extern const struct FrameData sEnemyDropOAM_MultipleLargeEnergySlot1[5];
 extern const struct FrameData sEnemyDropOAM_MultipleLargeEnergySlot3[5];
 
 extern const struct FrameData sEnemyDropOAM_MultipleLargeEnergySlot2[5];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

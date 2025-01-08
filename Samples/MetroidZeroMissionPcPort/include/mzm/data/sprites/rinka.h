@@ -1,6 +1,11 @@
 #ifndef RINKA_DATA_H
 #define RINKA_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/oam.h"
 
@@ -53,5 +58,9 @@ extern const u16 sRinkaGreenOAM_Spawning_Frame5[10];
 extern const struct FrameData sRinkaGreenOAM_Spawning[16];
 
 extern const struct FrameData sRinkaGreenOAM_Moving[5];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

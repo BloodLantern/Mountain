@@ -1,6 +1,11 @@
 #ifndef FILE_SELECT_MENU_H
 #define FILE_SELECT_MENU_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/structs/save_file.h"
 
@@ -72,5 +77,9 @@ void unk_7e3fc(u8 param_1, u8 param_2);
 u32 FileSelectUpdateTilemap(u8 request);
 void unk_7eedc(u16* pTilemap);
 void FileSelectPlayMenuSound(u8 request);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* FILE_SELECT_MENU_H */

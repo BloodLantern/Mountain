@@ -1,6 +1,11 @@
 #ifndef ESCAPE_GATE_AI_H
 #define ESCAPE_GATE_AI_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #define ESCAPE_GATE_POSE_LOAD_GRAPHICS 0x1
@@ -12,5 +17,9 @@
 
 void EscapeGateChangeCCAA(u8 caa);
 void EscapeGate(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* ESCAPE_GATE_AI_H */

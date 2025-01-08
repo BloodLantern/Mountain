@@ -1,6 +1,11 @@
 #ifndef IMAGO_LARVA_DATA_H
 #define IMAGO_LARVA_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/oam.h"
 
@@ -226,5 +231,9 @@ extern const struct FrameData sImagoLarvaPartOAM_ClawsWarningSecondPart[3];
 extern const struct FrameData sImagoLarvaOAM_Warning[10];
 
 extern const struct FrameData sImagoLarvaPartOAM_ShellTakingDamage[5];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

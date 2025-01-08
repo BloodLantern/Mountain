@@ -1,6 +1,11 @@
 #ifndef RUINS_TEST_DATA_H
 #define RUINS_TEST_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/macros.h"
 #include "mzm/oam.h"
@@ -269,5 +274,9 @@ extern const struct FrameData sRuinsTestLightningOam_OnGroundHorizontal[17];
 extern const struct FrameData sRuinsTestLightningOam_OnGroundVertical[17];
 
 extern const struct FrameData sRuinsTestGhostOutlineOam_ShootingGroundLightning[9];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

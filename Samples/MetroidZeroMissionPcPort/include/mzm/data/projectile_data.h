@@ -1,6 +1,11 @@
 #ifndef PROJECTILE_DATA_H
 #define PROJECTILE_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/oam.h"
 
@@ -623,5 +628,9 @@ extern const struct FrameData sParticleEscapeOam_Unused[2];
 extern const struct FrameData sParticleSamusReflectionOAM_Unused[2];
 
 // 32ba08
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

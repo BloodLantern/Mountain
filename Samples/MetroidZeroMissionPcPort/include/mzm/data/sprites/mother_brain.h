@@ -1,6 +1,11 @@
 #ifndef MOTHER_BRAIN_DATA_H
 #define MOTHER_BRAIN_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/oam.h"
 
@@ -100,5 +105,9 @@ extern const struct FrameData sMotherBrainBeamOAM_Moving[3];
 extern const struct FrameData sMotherBrainGlassBreakingOAM_Breaking[18];
 
 extern const struct FrameData sMotherBrainPartOAM_EyeClosing[4];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

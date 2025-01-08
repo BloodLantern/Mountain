@@ -1,6 +1,11 @@
 #ifndef SAVE_FILE_STRUCT_H
 #define SAVE_FILE_STRUCT_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/macros.h"
 #include "mzm/gba.h"
@@ -237,5 +242,9 @@ extern u16 gSramDemoInputData[DEMO_MAX_DURATION];
 extern u16 gSramDemoInputDuration[DEMO_MAX_DURATION];
 
 extern u8 gSramBuffer[sizeof(struct Sram)];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* SAVE_FILE_STRUCT_H */

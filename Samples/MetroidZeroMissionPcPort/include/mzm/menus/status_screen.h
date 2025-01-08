@@ -1,6 +1,11 @@
 #ifndef STATUS_SCREEN_MENU_H
 #define STATUS_SCREEN_MENU_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 void UpdateMinimapAnimatedPalette(void);
@@ -31,5 +36,9 @@ u32 StatusScreenIsStatusSlotEnabled(u8 statusSlot);
 s8 StatusScreenToggleItem(u8 statusSlot, u8 action);
 void StatusScreenMoveCursor(void);
 u32 StatusScreenGetDestinationSlot(s32 offset, u32 previousSlot);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* STATUS_SCREEN_MENU_H */

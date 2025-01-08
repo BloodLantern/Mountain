@@ -1,6 +1,11 @@
 #ifndef PROJECTILE_STRUCT_H
 #define PROJECTILE_STRUCT_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 
 #include "mzm/types.h"
 
@@ -35,5 +40,9 @@ extern u16 gArmCannonX;
 // Typedef
 
 typedef void (*ProjFunc_T)(struct ProjectileData*);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

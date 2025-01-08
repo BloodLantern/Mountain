@@ -1,6 +1,11 @@
 #ifndef INTERNAL_PAUSE_SCREEN_DATA_H
 #define INTERNAL_PAUSE_SCREEN_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #include "mzm/constants/game_state.h"
@@ -32,5 +37,9 @@ extern u32* sPauseScreen_7602a8;
 extern u8 sMapDownloadLineTrailOamOffsets[4];
 
 extern const u32 sPauseScreen_7602b0[9];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* INTERNAL_PAUSE_SCREEN_DATA_H */

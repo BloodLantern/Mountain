@@ -1,6 +1,11 @@
 #ifndef IMAGO_LARVA_AI_H
 #define IMAGO_LARVA_AI_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/structs/sprite.h"
 
@@ -72,5 +77,9 @@ void ImagoLarvaPartDotCheckAppearingAnimEnded(struct SubSpriteData* pSub);
 void ImagoLarvaPartDead(struct SubSpriteData* pSub);
 void ImagoLarva(void);
 void ImagoLarvaPart(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* IMAGO_LARVA_AI_H */

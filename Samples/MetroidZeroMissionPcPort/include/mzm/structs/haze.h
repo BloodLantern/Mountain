@@ -1,6 +1,11 @@
 #ifndef HAZE_STRUCT_H
 #define HAZE_STRUCT_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 typedef u32 (*HazeFunc_T)(void);
@@ -33,5 +38,9 @@ extern u8 gCurrentHazeValue;
 
 extern u16 gHazeValues[1280];
 extern u16 gPreviousHazeValues[1280];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* HAZE_STRUCT_H */

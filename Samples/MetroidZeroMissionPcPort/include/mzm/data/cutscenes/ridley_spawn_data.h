@@ -1,6 +1,11 @@
 #ifndef RIDLEY_SPAWN_DATA_H
 #define RIDLEY_SPAWN_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/macros.h"
 #include "mzm/types.h"
 
@@ -22,5 +27,9 @@ extern const u32 sRidleySpawnScreamingGfx[1663];
 extern const u32 sRidleySpawnBackgroundTileTable[368];
 extern const u32 sRidleySpawnSamusHelmetTileTable[368];
 extern const u32 sRidleySpawnSamusFaceTileTable[189];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* RIDLEY_SPAWN_DATA_H */

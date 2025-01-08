@@ -1,6 +1,11 @@
 #ifndef KRAID_RISING_DATA_H
 #define KRAID_RISING_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/macros.h"
 #include "mzm/types.h"
 
@@ -65,5 +70,9 @@ extern const u32 sKraidRisingKraidCloseUpEyesALittleOpenedTileTable[368];
 extern const u32 sKraidRisingKraidCloseUpEyesOpenedTileTable[368];
 extern const u32 sKraidRisingKraidRisingTileTable[295];
 extern const u32 sKraidRisingCaveBackgroundTileTable[370];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* KRAID_RISING_DATA_H */

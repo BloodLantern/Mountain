@@ -1,6 +1,11 @@
 #ifndef PROJECTILE_UTIL_H
 #define PROJECTILE_UTIL_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/oam.h"
 #include "mzm/structs/projectile.h"
@@ -40,5 +45,9 @@ void ProjectileStartTumblingMissileCurrentSprite(struct ProjectileData* pProj, u
 void ProjectileMissileHitSprite(struct SpriteData* pSprite, struct ProjectileData* pProj, u16 yPosition, u16 xPosition);
 void ProjectileSuperMissileHitSprite(struct SpriteData* pSprite, struct ProjectileData* pProj, u16 yPosition, u16 xPosition);
 void ProjectileBombHitSprite(struct SpriteData* pSprite, u16 yPosition, u16 xPosition);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* PROJECTILE_UTIL_H */

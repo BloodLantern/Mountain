@@ -1,6 +1,11 @@
 #ifndef GAME_OVER_DATA_H
 #define GAME_OVER_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/constants/game_state.h"
 #include "mzm/structs/menus/game_over.h"
@@ -20,5 +25,9 @@ extern const u16 sGameOverSamusHeadYPositions[2];
 
 extern const u8 sGameOverSamusHeadOamIds[3][3];
 extern const struct OamArray sGameOverOam[9];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* GAME_OVER_DATA_H */

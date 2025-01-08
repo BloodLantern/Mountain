@@ -1,6 +1,11 @@
 #ifndef GERUTA_AI_H
 #define GERUTA_AI_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #define GERUTA_POSE_IDLE_INIT 0x8
@@ -26,5 +31,9 @@ void GerutaCheckBouncingAnimEnded(void);
 void GerutaGoingUp(void);
 void GerutaCheckBouncingOnCeilingAnimEnded(void);
 void Geruta(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* GERUTA_AI_H */

@@ -1,6 +1,11 @@
 #ifndef SAMUS_GRAPHICS_DATA_H
 #define SAMUS_GRAPHICS_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/structs/samus.h"
 
@@ -3873,5 +3878,9 @@ extern const struct SamusAnimationData sSamusAnim_Suitless_Left_TurningFromFacin
 extern const struct SamusAnimationData sSamusAnim_Suitless_Right_TurningFromFacingTheBackground[2];
 
 extern const struct SamusAnimationData sSamusAnim_Padding[2];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* SAMUS_GRAPHICS_DATA_H */

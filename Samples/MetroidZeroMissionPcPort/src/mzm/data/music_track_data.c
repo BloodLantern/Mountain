@@ -1,7 +1,7 @@
 #include "mzm/types.h"
 #include "mzm/macros.h"
 
-#include "mzm/audio.h"
+#include "mzm/data_audio.h"
 #include "mzm/audio/track_internal.h"
 
 const struct TrackGroupROMData sMusicTrackDataRom[9] = {

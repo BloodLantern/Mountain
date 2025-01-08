@@ -1,6 +1,11 @@
 #ifndef MOTHER_BRAIN_CLOSE_UP_CUTSCENE
 #define MOTHER_BRAIN_CLOSE_UP_CUTSCENE
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/structs/cutscene.h"
 
@@ -21,5 +26,9 @@ void MotherBrainCloseUpProcessOAM(void);
 void MotherBrainCloseUpUpdateEye(u8 lookingAtSamus);
 void MotherBrainCloseUpUpdateBubble(struct CutsceneOamData* pOam);
 u8 MotherBrainCloseUpInitBubbles(u8 packId);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* MOTHER_BRAIN_CLOSE_UP_CUTSCENE */

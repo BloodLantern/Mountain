@@ -1,6 +1,11 @@
 #ifndef UNKNOWN_ITEM_BLOCK
 #define UNKNOWN_ITEM_BLOCK
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #define UNKNOWN_ITEM_BLOCK_POSE_CHECK_ACTIVATE 0x9
@@ -10,5 +15,9 @@
 void UnknownItemBlockChangeCCAA(u8 caa);
 void UnknownItemBlock(void);
 void UnknownItemBlockLight(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* UNKNOWN_ITEM_BLOCK */

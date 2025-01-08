@@ -1,6 +1,11 @@
 #ifndef BARISTUTE_AI_H
 #define BARISTUTE_AI_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #define BARISTUTE_POSE_JUMP_WARNING_INIT 0x8
@@ -31,5 +36,9 @@ void BaristuteFallingInit(void);
 void BaristuteFalling(void);
 void BaristuteDeath(void);
 void Baristute(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* BARISTUTE_AI_H */

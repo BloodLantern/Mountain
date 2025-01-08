@@ -1,6 +1,11 @@
 #ifndef ENDING_AND_GALLERY_H
 #define ENDING_AND_GALLERY_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 void EndingImageUpdateLettersSpawnDelay(u32 offset);
@@ -26,5 +31,9 @@ u32 CreditsSubroutine(void);
 void GalleryInit(void);
 u32 GalleryDisplay(void);
 u32 GallerySubroutine(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* ENDING_AND_GALLERY_H */

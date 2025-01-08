@@ -1,6 +1,11 @@
 #ifndef RINKA_AI_H
 #define RINKA_AI_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #define RINKA_POSE_SPAWNING_INIT 0x8
@@ -18,5 +23,9 @@ void RinkaMotherBrainSpawning(void);
 void RinkaMotherBrainMove(void);
 void Rinka(void);
 void RinkaMotherBrain(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* RINKA_AI_H */

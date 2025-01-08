@@ -1,6 +1,11 @@
 #ifndef SAMUS_SPRITES_POINTERS_H
 #define SAMUS_SPRITES_POINTERS_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #include "mzm/constants/samus.h"
@@ -29,5 +34,9 @@ extern const u16* const sSpritesPalettePointers[PSPRITE_END - 16];
 extern const Func_T sSecondarySpritesAIPointers[SSPRITE_END];
 
 extern const u8* const sSpritesetPointers[MAX_AMOUNT_OF_SPRITESET];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* SAMUS_SPRITES_POINTERS_H */

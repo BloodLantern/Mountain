@@ -1,6 +1,11 @@
 #ifndef GADORA_DATA_H
 #define GADORA_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/oam.h"
 
@@ -70,5 +75,9 @@ extern const struct FrameData sGadoraOAM_Death[5];
 extern const struct FrameData sGadoraOAM_EyeOpened[7];
 
 extern const struct FrameData sGadoraOAM_BeforeClosing[5];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

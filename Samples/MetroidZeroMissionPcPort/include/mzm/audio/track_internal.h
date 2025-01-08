@@ -1,6 +1,11 @@
 #ifndef TRACK_INTERNAL_H
 #define TRACK_INTERNAL_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/structs/audio.h"
 
 u8 InitTrack(struct TrackData* pTrack, const u32* pHeader);
@@ -17,5 +22,9 @@ void AudioCommand_Goto(struct TrackVariables* pVariables);
 void AudioCommand_PatternPlay(struct TrackVariables* pVariables);
 void UploadSampleToWaveRAM(const u32* pSample);
 void unk_5104(struct PSGSoundData* pSound);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* TRACK_INTERNAL_H */

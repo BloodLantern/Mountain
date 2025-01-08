@@ -1,6 +1,11 @@
 #ifndef GAMET_AI_H
 #define GAMET_AI_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #define GAMET_POSE_IDLE_INIT 0x8
@@ -15,5 +20,9 @@ void GametGoingUp(void);
 void GametRespawn(void);
 void GametMove(void);
 void Gamet(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* GAMET_AI_H */

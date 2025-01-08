@@ -1,6 +1,11 @@
 #ifndef HUD_GENERIC_H
 #define HUD_GENERIC_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 // Functions
@@ -10,5 +15,9 @@
 void HudGenericLoadCommonSpriteGfx(void);
 void HudGenericResetRefillAnimations(void);
 void HudGenericResetHUDData(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* HUD_GENERIC_H */

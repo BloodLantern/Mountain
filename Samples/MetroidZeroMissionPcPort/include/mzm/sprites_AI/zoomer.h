@@ -1,6 +1,11 @@
 #ifndef ZOMMER_AI_H
 #define ZOMMER_AI_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #define ZOOMER_TURNING_DIRECTION_BOTTOM_LEFT_CORNER 0x0
@@ -36,5 +41,9 @@ void ZoomerFallingInit(void);
 void ZoomerFalling(void);
 void ZoomerDeath(void);
 void Zoomer(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif   /* ZOMMER_AI_H */

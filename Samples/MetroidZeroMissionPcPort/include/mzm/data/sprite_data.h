@@ -1,6 +1,11 @@
 #ifndef SPRITE_DATA_H
 #define SPRITE_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 // 2b0c94
@@ -50,5 +55,9 @@ extern const u16 sPrimarySpriteStats[206][9];
 extern const u16 sSecondarySpriteStats[77][9];
 
 
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

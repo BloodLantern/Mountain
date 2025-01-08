@@ -1,6 +1,11 @@
 #ifndef BRINSTAR_ROOMS_DATA_H
 #define BRINSTAR_ROOMS_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/structs/scroll.h"
 #include "mzm/structs/sprite.h"
@@ -319,5 +324,9 @@ extern const u8 sBrinstar_Bg3_7[2020];
 extern const u8 sBrinstar_Bg3_8[1164];
 extern const u8 sBrinstar_Bg3_9[1360];
 extern const u8 sBrinstar_Bg3_10[1200];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* BRINSTAR_ROOMS_DATA_H */

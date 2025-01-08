@@ -1,6 +1,11 @@
 #ifndef OAM_H
 #define OAM_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 // Attribute 0
@@ -91,5 +96,9 @@ extern u8 gNextOamSlot;
 #define OAM_BUFFER_AFFINE_SIZE 32
 
 extern union OamData gOamData[OAM_BUFFER_DATA_SIZE + OAM_BUFFER_AFFINE_SIZE];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* OAM_H */

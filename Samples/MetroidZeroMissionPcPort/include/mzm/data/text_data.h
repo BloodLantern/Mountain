@@ -1,6 +1,11 @@
 #ifndef TEXT_DATA_H
 #define TEXT_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #include "mzm/structs/text.h"
@@ -402,5 +407,9 @@ extern const u16 sEnglishText_FileScreen_GalleryUnlock[];
 extern const u16 sEnglishText_FileScreen_TimeAttackRecordUnlock[];
 extern const u16 sEnglishText_FileScreen_SoundTestUnlock[];
 extern const u16 sEnglishText_FileScreen_NesMetroidUnlock[];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* TEXT_DATA_H */

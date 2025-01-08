@@ -1,6 +1,11 @@
 #ifndef SOVA_DATA_H
 #define SOVA_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/oam.h"
 
@@ -18,5 +23,9 @@ extern const struct FrameData sSovaOam_TurningEdgeRight[4];
 extern const struct FrameData sSovaOam_TurningEdgeLeft[4];
 extern const struct FrameData sSovaOam_TurningCornerLeft[4];
 extern const struct FrameData sSovaOam_Falling[7];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

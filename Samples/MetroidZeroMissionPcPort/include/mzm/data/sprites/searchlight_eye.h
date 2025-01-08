@@ -1,6 +1,11 @@
 #ifndef SEARCHLIGHT_EYE_DATA_H
 #define SEARCHLIGHT_EYE_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/oam.h"
 
@@ -44,5 +49,9 @@ extern const struct FrameData sSearchlightEyeBeamOAM_Unused[2];
 extern const struct FrameData sSearchlightEyeProjectileOAM_Moving[9];
 
 extern const struct FrameData sSearchlightEyeOAM_Shooting[4];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

@@ -1,6 +1,11 @@
 #ifndef DEMO_DATA_H
 #define DEMO_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/structs/demo.h"
 #include "mzm/structs/save_file.h"
 
@@ -26,5 +31,9 @@ extern const struct SaveDemo sDemo15_Ram;
 extern const struct DemoEntry sDemoEntries[MAX_AMOUNT_OF_DEMOS];
 
 extern const u8 sDemoNumbers[MAX_AMOUNT_OF_DEMOS];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* DEMO_DATA_H */

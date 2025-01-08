@@ -1,6 +1,11 @@
 #ifndef RIDLEY_LANDING_DATA_H
 #define RIDLEY_LANDING_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/macros.h"
 #include "mzm/types.h"
 
@@ -39,5 +44,9 @@ extern const u32 sCutsceneZebesMotherShipBackgroundTileTable[640];
 extern const u32 sCutscene_3b5168_TileTable[261];
 extern const u32 sCutsceneZebesGroundTileTable[111];
 extern const u32 sRidleyLandingRidleyFlyingBackgroundTileTable[368];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* RIDLEY_LANDING_DATA_H */

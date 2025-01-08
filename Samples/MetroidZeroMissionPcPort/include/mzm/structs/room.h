@@ -1,6 +1,11 @@
 #ifndef ROOM_STRUCT_H
 #define ROOM_STRUCT_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #define ROOM_SPRITE_DATA_TERMINATOR UCHAR_MAX, UCHAR_MAX, UCHAR_MAX
@@ -145,5 +150,9 @@ extern struct BackgroundPositions gBackgroundPositions;
 extern struct Unused_3005504 gUnusedStruct_3005504;
 
 extern u8 gDestinationRoom;
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

@@ -1,6 +1,11 @@
 #ifndef INTRO_DATA_H
 #define INTRO_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/structs/in_game_timer.h"
 #include "mzm/structs/intro.h"
@@ -50,5 +55,9 @@ extern const u32 sIntroMotherBrainGfx[5004];
 extern const u32 sIntroMotherBrainTileTable[577];
 extern const u32 sIntroFuzzGfx[5224];
 extern const u32 sIntro_47920c[125];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* INTRO_DATA_H */

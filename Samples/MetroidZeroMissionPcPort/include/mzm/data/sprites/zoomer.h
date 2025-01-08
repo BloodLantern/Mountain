@@ -1,6 +1,11 @@
 #ifndef ZOOMER_DATA_H
 #define ZOOMER_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/oam.h"
 
@@ -80,5 +85,9 @@ extern const struct FrameData sZoomerOAM_TurningCornerLeft[4];
 extern const struct FrameData sZoomerOAM_WalkingOnLeftSlope[5];
 
 extern const struct FrameData sZoomerOAM_WalkingOnRightSlope[5];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

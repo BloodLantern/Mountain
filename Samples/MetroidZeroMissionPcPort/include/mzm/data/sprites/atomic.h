@@ -1,6 +1,11 @@
 #ifndef ATOMIC_DATA_H
 #define ATOMIC_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/oam.h"
 
@@ -162,5 +167,9 @@ extern const struct FrameData sAtomicElectricityOAM_ExplodingNonDiagonal[8];
 extern const struct FrameData sAtomicElectricityOAM_ExplodingDiagonal[8];
 
 extern const struct FrameData sAtomicElectricityOAM_Charging[12];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

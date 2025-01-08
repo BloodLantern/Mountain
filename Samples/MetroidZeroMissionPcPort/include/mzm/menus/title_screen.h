@@ -1,6 +1,11 @@
 #ifndef TITLE_SCREEN_MENU_H
 #define TITLE_SCREEN_MENU_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/structs/menus/title_screen.h"
 
@@ -32,5 +37,9 @@ void TitleScreenVBlank(void);
 void TitleScreenVBlank_Empty(void);
 void unk_777d8(u8 param_1);
 void unk_77824(u8* param_1, u16* dst, u8 palette);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* TITLE_SCREEN_MENU_H */

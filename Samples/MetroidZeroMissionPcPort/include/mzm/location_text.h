@@ -1,6 +1,11 @@
 #ifndef LOCATION_TEXT_H
 #define LOCATION_TEXT_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 // Globals
@@ -52,5 +57,9 @@ u8 LocationTextGetRidley(void);
 u8 LocationTextGetChozodia(void);
 u8 LocationTextGetTourian(void);
 struct SpriteGraphics* LocationTextGetGfxSlot(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* LOCATION_TEXT_H */

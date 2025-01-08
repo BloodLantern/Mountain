@@ -1,6 +1,11 @@
 #ifndef CABLE_LINK_STRUCTS_H
 #define CABLE_LINK_STRUCTS_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 typedef u16 (CableLinkBuffer1_T)[2][2];
@@ -135,5 +140,9 @@ extern u8 gUnk_30058cc;
 extern u8 gUnk_30058cd;
 extern u8 gUnk_30058ce;
 extern u8 gUnk_30058cf;
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* CABLE_LINK_STRUCTS_H */

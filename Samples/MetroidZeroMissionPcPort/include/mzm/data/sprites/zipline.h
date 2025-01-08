@@ -1,6 +1,11 @@
 #ifndef ZIPLINE_DATA_H
 #define ZIPLINE_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/oam.h"
 
@@ -58,5 +63,9 @@ extern const struct FrameData sZiplineButtonOAM_OffIdle[2];
 extern const struct FrameData sZiplineButtonOAM_OnIdle[7];
 
 extern const struct FrameData sZiplineButtonOAM_Active[7];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

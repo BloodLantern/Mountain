@@ -1,6 +1,11 @@
 #ifndef SAVE_FILE_DATA_H
 #define SAVE_FILE_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/structs/save_file.h"
 
@@ -27,5 +32,9 @@ extern const struct InGameTimer sBestCompletionTime_Empty;
 extern const u8 sUnk_411520[4];
 
 extern const struct StartingInfo sStartingInfo;
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* SAVE_FILE_DATA_H */

@@ -1,6 +1,11 @@
 #ifndef BLOCK_STRUCT_H
 #define BLOCK_STRUCT_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #define MAX_AMOUNT_OF_MAKE_SOLID_BLOCKS 64
@@ -69,5 +74,9 @@ extern struct BrokenBlock gBrokenBlocks[MAX_AMOUNT_OF_BROKEN_BLOCKS];
 extern u16 gMakeSolidBlocks[MAX_AMOUNT_OF_MAKE_SOLID_BLOCKS];
 extern struct BombChain gBombChains[MAX_AMOUNT_OF_BOMB_CHAINS];
 extern u8 gActiveBombChainTypes;
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

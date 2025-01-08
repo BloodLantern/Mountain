@@ -1,6 +1,11 @@
 #ifndef TYPES_H
 #define TYPES_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #define TRUE 1
 #define FALSE 0
 #define NULL ((void *)0)
@@ -64,5 +69,9 @@ struct RawCoordsY {
 };
 
 typedef void (*Func_T)(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* TYPES_H */

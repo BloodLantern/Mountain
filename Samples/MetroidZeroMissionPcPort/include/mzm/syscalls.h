@@ -1,6 +1,11 @@
 #ifndef SYSCALLS_H
 #define SYSCALLS_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #define SYSCALL(num) asm("svc " #num)
@@ -70,5 +75,9 @@ void SoundBias0(void);
 void SoundBias200(void);
 u16 Sqrt(u32 number);
 void VBlankIntrWait(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* SYSCALLS_H */

@@ -1,6 +1,11 @@
 #ifndef ANIMATED_GFX_DATA_H
 #define ANIMATED_GFX_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/structs/animated_graphics.h"
 
 extern const struct AnimatedGraphicsData sAnimatedGraphicsEntries[38];
@@ -17,5 +22,9 @@ extern const u16 sBackgroundEffectBehavior_HeavyYellow[20][3];
 extern const u16 sBackgroundEffectBehavior_ExitZebes[30][3];
 extern const u16 sBackgroundEffectBehavior_IntroText[30][3];
 extern const u16 sBackgroundEffectBehavior_AllBlackWhite[39][3];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* ANIMATED_GFX_DATA_H */

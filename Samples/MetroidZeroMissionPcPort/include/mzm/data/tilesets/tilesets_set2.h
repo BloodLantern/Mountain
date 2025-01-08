@@ -1,6 +1,11 @@
 #ifndef TILESETS_SET_2_DATA_H
 #define TILESETS_SET_2_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 extern const u32 sTileset_9_Gfx[2905];
@@ -28,5 +33,9 @@ extern const u8 sTileset_22_Tilemap[3076];
 extern const u8 sTileset_29_Tilemap[2564];
 extern const u8 sTileset_39_Tilemap[3460];
 extern const u8 sTileset_5_Tilemap[2564];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* TILESETS_SET_2_DATA_H */

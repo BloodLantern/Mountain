@@ -1,6 +1,11 @@
 #ifndef GEEGA_DATA_H
 #define GEEGA_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/oam.h"
 
@@ -24,5 +29,9 @@ extern const u16 sGeegaOAM_Moving_Frame6[4];
 extern const struct FrameData sGeegaOAM_Idle[5];
 
 extern const struct FrameData sGeegaOAM_Moving[9];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

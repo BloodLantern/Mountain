@@ -1,6 +1,11 @@
 #ifndef KRAID_ROOMS_DATA_H
 #define KRAID_ROOMS_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/structs/scroll.h"
 #include "mzm/structs/sprite.h"
@@ -266,5 +271,9 @@ extern const u8 sKraid_Bg3_3[1332];
 extern const u8 sKraid_Bg3_4[1268];
 
 extern const u8 sKraid_5_Bg0[540];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* KRAID_ROOMS_DATA_H */

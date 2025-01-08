@@ -1,6 +1,11 @@
 #ifndef POWER_GRIP_DATA_H
 #define POWER_GRIP_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/oam.h"
 
@@ -26,5 +31,9 @@ extern const u16 sPowerGripGlowOAM_Idle_Frame1[4];
 extern const struct FrameData sPowerGripOAM_Idle[5];
 
 extern const struct FrameData sPowerGripGlowOAM_Idle[15];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

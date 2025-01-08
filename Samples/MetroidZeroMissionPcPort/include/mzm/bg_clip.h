@@ -1,6 +1,11 @@
 #ifndef BG_CLIP_H
 #define BG_CLIP_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 // Functions
@@ -22,5 +27,9 @@ u8 BgClipCheckOpeningHatch(u16 xPosition, u16 yPosition);
 void BgClipSetItemAsCollected(u16 xPosition, u16 yPosition, u8 type);
 void BgClipRemoveCollectedTanks(void);
 void BgClipCallMotherBrainUpdateGlass(u8 stage);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* BG_CLIP_H */

@@ -1,6 +1,11 @@
 #ifndef ERASE_SRAM_MENU_STRUCT_H
 #define ERASE_SRAM_MENU_STRUCT_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/structs/menu.h"
 
@@ -17,5 +22,9 @@ struct EraseSramData {
     u8 padding_C;
     struct MenuOamData oam[3];
 };
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* ERASE_SRAM_MENU_STRUCT_H */
