@@ -67,7 +67,8 @@ void ShapeInitialize(inout Particle particle)
             break;
 
         case ShapeTypeRectangle:
-            particle.offset = RandomPointInRectangle(randomSeed, shape.offset - shape.scale * 0.5f, shape.scale);
+            particle.offset = RandomPointInRectangle(randomSeed, vec2(-0.5f), vec2(1.f));
+            particle.offset = Rotated(particle.offset, shape.rotation);
             break;
     }
 
