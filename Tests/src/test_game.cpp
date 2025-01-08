@@ -22,6 +22,7 @@
 #include "spin_component.hpp"
 #include "Mountain/rendering/effect.hpp"
 #include "Mountain/utils/file_system_watcher.hpp"
+#include "Mountain/utils/random.hpp"
 
 using namespace Mountain;
 
