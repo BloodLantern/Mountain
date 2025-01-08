@@ -1,6 +1,11 @@
 #ifndef MINIMAP_STRUCT_H
 #define MINIMAP_STRUCT_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/structs/connection.h"
 
@@ -24,5 +29,9 @@ extern u8 gMinimapX;
 extern u8 gMinimapY;
 extern u8 gUpdateMinimapFlag;
 extern u32 gMinimapTilesGfx[5 * 24];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

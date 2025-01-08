@@ -1,6 +1,11 @@
 #ifndef CROCOMIRE_DATA_H
 #define CROCOMIRE_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/oam.h"
 
@@ -190,5 +195,9 @@ extern const struct FrameData sCrocomirePartOam_307058[6];
 extern const struct FrameData sCrocomirePartOam_307088[6];
 
 extern const struct FrameData sCrocomirePartOam_3070b8[6];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

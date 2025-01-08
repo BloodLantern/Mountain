@@ -1,6 +1,11 @@
 #ifndef SPACE_PIRATE_AI_H
 #define SPACE_PIRATE_AI_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #define SPACE_PIRATE_HEIGHT (BLOCK_SIZE * 3 + 0x34)
@@ -159,5 +164,9 @@ void SpacePirateLaserCheckExplodingAnimEnded(void);
 void SpacePirateLaserMove(void);
 void SpacePirate(void);
 void SpacePirateLaser(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* SPACE_PIRATE_AI_H */

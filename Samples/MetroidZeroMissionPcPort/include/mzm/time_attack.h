@@ -1,6 +1,11 @@
 #ifndef TIME_ATTACK_H
 #define TIME_ATTACK_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/structs/time_attack.h"
 
@@ -28,5 +33,9 @@ void TimeAttackSeedShuffleFunc8(u8* pSeed, s32 length);
 void TimeAttackRandomizeSeed(u8* pSeed, u32 rng);
 u8 TimeAttackGenerateSeed(struct TimeAttackData* pTimeAttack);
 u8 TimeAttackCheckSetNewRecord(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* TIME_ATTACK_H */

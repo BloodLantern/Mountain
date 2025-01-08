@@ -1,6 +1,11 @@
 #ifndef TEXT_CONSTANTS_H
 #define TEXT_CONSTANTS_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 enum StoryTextId {
     STORY_TEXT_PLANET_ZEBES,
     STORY_TEXT_THE_TIMING,
@@ -447,5 +452,9 @@ enum DescriptionTextId {
 #define TEXT_STATE_ENDED 2
 #define TEXT_STATE_UNK_3 3
 #define TEXT_STATE_NEW_PAGE 4
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* TEXT_CONSTANTS_H */

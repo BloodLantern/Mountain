@@ -1,6 +1,11 @@
 #ifndef GERON_DATA_H
 #define GERON_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/oam.h"
 
@@ -110,5 +115,9 @@ extern const struct FrameData sGeronOAM_Destroyed[2];
 extern const struct FrameData sGeronOAM_GettingDestroyed[32];
 
 extern const struct FrameData sGeronOAM_Shaking[37];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

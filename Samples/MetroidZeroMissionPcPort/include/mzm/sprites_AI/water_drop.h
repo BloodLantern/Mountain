@@ -1,6 +1,11 @@
 #ifndef WATER_DROP_AI_H
 #define WATER_DROP_AI_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #define WATER_DROP_POSE_CHECK_SPAWNING_ENDED 0x9
@@ -11,5 +16,9 @@
 
 void WaterDropInit(void);
 void WaterDrop(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* WATER_DROP_AI_H */

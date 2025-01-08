@@ -1,6 +1,11 @@
 #ifndef ESCAPE_GATE_DATA_H
 #define ESCAPE_GATE_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/oam.h"
 
@@ -47,5 +52,9 @@ extern const struct FrameData sEscapeGateOAM_Closed[2];
 extern const struct FrameData sEscapeGateOAM_Opening[18];
 
 extern const struct FrameData sEscapeGateOAM_Opened[2];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

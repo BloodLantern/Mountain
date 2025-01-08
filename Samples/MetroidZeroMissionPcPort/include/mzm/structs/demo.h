@@ -1,6 +1,11 @@
 #ifndef DEMO_STRUCT_H
 #define DEMO_STRUCT_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 struct Demo {
@@ -29,5 +34,9 @@ extern u16 gDemoInputDuration[DEMO_MAX_DURATION];
 extern u16 gDemoInputNumber;
 extern u16 gDemoInputTimer;
 extern u16 gDemoInput;
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

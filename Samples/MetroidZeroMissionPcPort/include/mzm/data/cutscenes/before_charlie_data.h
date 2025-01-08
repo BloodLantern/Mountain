@@ -1,6 +1,11 @@
 #ifndef BEFORE_CHARLIE_DATA_H
 #define BEFORE_CHARLIE_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/structs/cutscene.h"
 
 extern const struct CutscenePageData sBeforeCharliePageData[9];
@@ -26,5 +31,9 @@ extern const u32 sBeforeCharlieYoungSamusCloseUpTileTable[368];
 extern const u32 sBeforeCharlieSamusCloseUpEyesClosedTileTable[251];
 extern const u32 sBeforeCharlieSamusCloseUpEyesOpenedTileTable[232];
 extern const u32 sBeforeCharlieSamusCloseUpOutlineTileTable[333];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* BEFORE_CHARLIE_DATA_H */

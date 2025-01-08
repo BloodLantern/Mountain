@@ -1,6 +1,11 @@
 #ifndef PAUSE_SCREEN_MENU_H
 #define PAUSE_SCREEN_MENU_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/structs/menu.h"
 #include "mzm/structs/cutscene.h"
@@ -42,5 +47,9 @@ s32 PauseScreenQuitStatusScreen(void);
 s32 PauseScreenEasySleepInit(void);
 s32 PauseScreenQuitEasySleep(void);
 void CheckForMaintainedInput(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* PAUSE_SCREEN_MENU_H */

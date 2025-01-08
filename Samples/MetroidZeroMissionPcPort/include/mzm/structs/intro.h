@@ -1,6 +1,11 @@
 #ifndef INTRO_STRUCT_H
 #define INTRO_STRUCT_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #define INTRO_DATA sNonGameplayRamPointer->intro
@@ -38,5 +43,9 @@ struct IntroData {
 };
 
 typedef u8 (*IntroFunc_T)(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* INTRO_STRUCT_H */

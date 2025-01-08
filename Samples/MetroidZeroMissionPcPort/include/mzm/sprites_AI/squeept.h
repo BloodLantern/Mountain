@@ -1,6 +1,11 @@
 #ifndef SQUEEPT_AI_H
 #define SQUEEPT_AI_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #define SQUEEPT_POSE_IDLE_INIT 0xE
@@ -19,5 +24,9 @@ void SqueeptGoUp(void);
 void SqueeptTurningAround(void);
 void SqueeptGoDown(void);
 void Squeept(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* SQUEEPT_AI_H */

@@ -1,6 +1,11 @@
 #ifndef DISPLAY_STRUCT_H
 #define DISPLAY_STRUCT_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 struct IORegistersBackup {
@@ -39,5 +44,9 @@ extern u16 gWrittenToDISPCNT;
 extern u8 gWrittenToWININ_H;
 extern u8 gWrittenToWINOUT_L;
 extern struct IORegistersBackup gIoRegistersBackup;
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

@@ -1,6 +1,11 @@
 #ifndef SHORTCUT_POINTERS_H
 #define SHORTCUT_POINTERS_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/temp_globals.h"
 #include "mzm/structs/save_file.h"
@@ -12,5 +17,9 @@ extern u32* sVisitedMinimapTilesPointer;
 extern union NonGameplayRAM* sNonGameplayRamPointer;
 extern struct Sram* sSramEwramPointer;
 extern struct Sram* sSramFlashPointer;
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* SHORTCUT_POINTERS_H */

@@ -1,6 +1,11 @@
 #ifndef SEARCHLIGHT_DATA_H
 #define SEARCHLIGHT_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/oam.h"
 
@@ -18,5 +23,9 @@ extern const u16 sSearchlightOAM_Moving_Frame3[25];
 extern const struct FrameData sSearchlightOAM_Moving[7];
 
 extern const struct FrameData sSearchlightOAM_Unused[5];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

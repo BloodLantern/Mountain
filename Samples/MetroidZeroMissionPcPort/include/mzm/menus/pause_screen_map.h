@@ -1,6 +1,11 @@
 #ifndef PAUSE_SCREEN_MAP_MENU_H
 #define PAUSE_SCREEN_MAP_MENU_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/structs/menu.h"
 #include "mzm/structs/cutscene.h"
@@ -20,5 +25,9 @@ void PauseScreenMapCheckExploredAreas(void);
 void MapScreenSubroutine(void);
 void MapScreenTogglehWorldMap(u8 notOpeningWorldMap);
 void MapScreenChangeMap(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* PAUSE_SCREEN_MAP_MENU_H */

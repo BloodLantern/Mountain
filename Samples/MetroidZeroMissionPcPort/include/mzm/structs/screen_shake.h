@@ -1,6 +1,11 @@
 #ifndef SCREEN_SHAKE_STRUCT_H
 #define SCREEN_SHAKE_STRUCT_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 struct ScreenShake {
@@ -15,5 +20,9 @@ extern u8 gScreenShakeYOffset;
 extern u16 gScreenShakeRelated;
 extern struct ScreenShake gScreenShakeY;
 extern struct ScreenShake gScreenShakeX;
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

@@ -1,6 +1,11 @@
 #ifndef INTRO_H
 #define INTRO_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 void IntroVBlank(void);
@@ -20,5 +25,9 @@ u8 IntroMotherBrain(void);
 void IntroFuzzProcessOAM(void);
 u8 IntroFuzz(void);
 u32 IntroSubroutine(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* INTRO_H */

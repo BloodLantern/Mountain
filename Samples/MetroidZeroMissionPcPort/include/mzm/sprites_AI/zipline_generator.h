@@ -1,6 +1,11 @@
 #ifndef ZIPLINE_GENERATOR_AI_H
 #define ZIPLINE_GENERATOR_AI_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #define ZIPLINE_GENERATOR_POSE_DETECT_SAMUS 0x9
@@ -23,5 +28,9 @@ void ZiplineGeneratorDetectSamus(void);
 void ZiplineGeneratorActivating(void);
 void ZiplineGenerator(void);
 void ZiplineGeneratorPart(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* ZIPLINE_GENERATOR_AI_H */

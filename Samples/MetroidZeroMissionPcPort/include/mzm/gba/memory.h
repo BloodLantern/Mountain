@@ -1,6 +1,11 @@
 #ifndef GBA_MEMORY_H
 #define GBA_MEMORY_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/macros.h"
 #include "mzm/structs/save_file.h"
@@ -24,5 +29,9 @@ extern u8 gVramBuffer[VRAM_SIZE];
 extern u8 gOamBuffer[OAM_SIZE];
 
 #define ROM_BASE (void *)0x08000000
+
+#ifdef __cplusplus
+}
+#endif
 #define ROM_SIZE (32 * 0x100000)
 #endif /* GBA_MEMORY_H */

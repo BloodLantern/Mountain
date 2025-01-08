@@ -1,6 +1,11 @@
 #ifndef SAMUS_PALETTE_DATA_H
 #define SAMUS_PALETTE_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 extern const u16 sSamusPal_PowerSuit_Default[3 * 16];
@@ -55,5 +60,9 @@ extern const u16 sSamusPal_Suitless_Saving[3 * 16];
 extern const u16 sSamusPal_Suitless_ChargingBeam[10 * 16];
 extern const u16 sSamusPal_Suitless_DownloadingMap[2 * 16];
 extern const u16 sSamusPal_Suitless_Frozen[3 * 16];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* SAMUS_PALETTE_DATA_H */

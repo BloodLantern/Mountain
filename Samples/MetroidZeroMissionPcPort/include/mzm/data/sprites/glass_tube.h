@@ -1,6 +1,11 @@
 #ifndef GLASS_TUBE_DATA_H
 #define GLASS_TUBE_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/oam.h"
 
@@ -74,5 +79,9 @@ extern const struct FrameData sGlassTubeOAM_Cracking[12];
 extern const struct FrameData sGlassTubeOAM_Breaking[19];
 
 extern const struct FrameData sGlassTubeOAM_Broken[2];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

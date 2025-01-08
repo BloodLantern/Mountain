@@ -1,6 +1,11 @@
 #ifndef ATOMIC_AI_H
 #define ATOMIC_AI_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #define ATOMIC_POSE_IDLE_INIT 0x8
@@ -33,5 +38,9 @@ void AtomicElectricityExploding(void);
 void AtomicElectricityCheckOnGroundAnimEnded(void);
 void Atomic(void);
 void AtomicElectricity(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* ATOMIC_AI_H */

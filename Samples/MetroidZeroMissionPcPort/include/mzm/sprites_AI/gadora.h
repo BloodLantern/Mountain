@@ -1,6 +1,11 @@
 #ifndef GADORA_AI_H
 #define GADORA_AI_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #define GADORA_POSE_IDLE_INIT 0x8
@@ -29,5 +34,9 @@ void GadoraDeath(void);
 void Gadora(void);
 void GadoraEye(void);
 void GadoraBeam(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* GADORA_AI_H */

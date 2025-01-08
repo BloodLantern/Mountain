@@ -1,6 +1,11 @@
 #ifndef GBA_DMA_H
 #define GBA_DMA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/memory.h"
 #include "mzm/types.h"
 
@@ -51,5 +56,9 @@
 
 #define CPU_SET_SRC_FIXED (1 << 8)
 #define CPU_SET_32BIT (1 << 10)
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* GBA_DMA_H */

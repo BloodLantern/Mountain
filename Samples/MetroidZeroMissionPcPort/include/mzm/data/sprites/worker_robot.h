@@ -1,6 +1,11 @@
 #ifndef WORKER_ROBOT_DATA_H
 #define WORKER_ROBOT_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/macros.h"
 #include "mzm/oam.h"
@@ -61,5 +66,9 @@ extern const struct FrameData sWorkerRobotOAM_GoingToSleep[3];
 extern const struct FrameData sWorkerRobotOAM_TurningAround[3];
 
 extern const struct FrameData sWorkerRobotOAM_WakingUp[9];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

@@ -1,6 +1,11 @@
 #ifndef ZEB_DATA_H
 #define ZEB_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/oam.h"
 
@@ -18,5 +23,9 @@ extern const u16 sZebOAM_Idle_Frame2[7];
 extern const struct FrameData sZebOAM_Idle[5];
 
 extern const struct FrameData sZebOAM_Moving[5];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

@@ -1,6 +1,11 @@
 #ifndef IMAGO_COCOON_AI_H
 #define IMAGO_COCOON_AI_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #define IMAGO_COCOON_POSE_IDLE 0x8
@@ -100,5 +105,9 @@ void DefeatedImagoCocoon(void);
 void ImagoCocoonCeilingVine(void);
 void EventTriggerDiscoveredImagoPassage(void);
 void ImagoCocoonAfterFight(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* IMAGO_COCOON_AI_H */

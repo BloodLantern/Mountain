@@ -1,6 +1,11 @@
 #ifndef TEXT_H
 #define TEXT_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/structs/text.h"
 
@@ -20,5 +25,9 @@ void TextProcessDescription(void);
 u8 TextProcessCurrentMessage(struct Message* pMessage, const u16* pText, u32* dst);
 void TextDrawYesNoEasySleep(void);
 void TextDrawEasySleep(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* TEXT_H */

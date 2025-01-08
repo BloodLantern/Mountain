@@ -1,6 +1,11 @@
 #ifndef IMAGO_DATA_H
 #define IMAGO_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/oam.h"
 
@@ -162,5 +167,9 @@ extern const struct FrameData sImagoDamagedStingerOAM_Unused[9];
 extern const struct FrameData sImagoEggOAM_Breaking[10];
 
 extern const struct FrameData sImagoEggOAM_Standing[2];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

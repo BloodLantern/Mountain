@@ -1,6 +1,11 @@
 #ifndef METROID_DATA_H
 #define METROID_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/oam.h"
 
@@ -55,5 +60,9 @@ extern const struct FrameData sMetroidOAM_Moving[17];
 extern const struct FrameData sMetroidOAM_SamusGrabbed[15];
 
 extern const struct FrameData sMetroidOAM_Spanwing[3];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

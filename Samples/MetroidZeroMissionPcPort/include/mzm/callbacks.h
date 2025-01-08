@@ -1,6 +1,11 @@
 #ifndef CALLBACKS_H
 #define CALLBACKS_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 // Globals
@@ -24,5 +29,9 @@ void CallbackSetSerialCommunication(Func_T callback);
 void CallbackCallTimer3(void);
 void CallbackSetTimer3(Func_T callback);
 void Callback_Empty(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* CALLBACKS_H */

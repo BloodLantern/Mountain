@@ -1,6 +1,11 @@
 #ifndef DEOREM_DATA_H
 #define DEOREM_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/oam.h"
 
@@ -25,5 +30,9 @@ extern const struct FrameData sDeoremOam_GoingDown[3];
 extern const struct FrameData sDeoremOam_OpenedFast[5];
 extern const struct FrameData sDeoremOam_ClosedFast[5];
 extern const struct FrameData sDeoremOam_Dying[5];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* DEOREM_DATA_H */

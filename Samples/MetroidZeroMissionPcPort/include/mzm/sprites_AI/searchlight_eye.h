@@ -1,6 +1,11 @@
 #ifndef SEARCHLIGHT_EYE_AI_H
 #define SEARCHLIGHT_EYE_AI_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #define SEARCHLIGHT_EYE_POSE_IDLE 0x9
@@ -25,5 +30,9 @@ void SearchlightEyeBeamDisappear(void);
 void SearchlightEye(void);
 void SearchlightEyeBeam(void);
 void SearchlightEyeProjectile(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* SEARCHLIGHT_EYE_AI_H */

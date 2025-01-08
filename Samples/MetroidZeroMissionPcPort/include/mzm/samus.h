@@ -1,6 +1,11 @@
 #ifndef SAMUS_H
 #define SAMUS_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/structs/samus.h"
 
@@ -131,5 +136,9 @@ void SamusUpdateArmCannonPositionOffset(u8 direction);
 void SamusInit(void);
 void SamusDraw(void);
 
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* SAMUS_H */

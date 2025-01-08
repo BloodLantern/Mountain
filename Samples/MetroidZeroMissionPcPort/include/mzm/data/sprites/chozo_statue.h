@@ -1,6 +1,11 @@
 #ifndef CHOZO_STATUE_H
 #define CHOZO_STATUE_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/oam.h"
 
@@ -189,5 +194,9 @@ extern const u16 sChozoStatueScrewAttackPAL[80];
 
 extern const u32 sChozoStatueVariaGfx[1348];
 extern const u16 sChozoStatueVariaPAL[80];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

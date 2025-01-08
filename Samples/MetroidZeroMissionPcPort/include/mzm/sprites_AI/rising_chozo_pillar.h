@@ -1,6 +1,11 @@
 #ifndef RISING_CHOZO_PILLAR_AI_H
 #define RISING_CHOZO_PILLAR_AI_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #define RISING_CHOZO_PILLAR_POSE_WAIT_FOR_POWER_GRIP 0x8
@@ -22,5 +27,9 @@ void RisingChozoPillarSpawnOnePlatform(u16 yPosition, u16 xPosition, u8 caa);
 void RisingChozoPillar(void);
 void ChozoPillarPlatform(void);
 void ChozoPillarPlatformShadow(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* RISING_CHOZO_PILLAR_AI_H */

@@ -1,6 +1,11 @@
 #ifndef HAZE_H
 #define HAZE_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 void HazeSetBackgroundEffect(void);
@@ -20,5 +25,9 @@ void Haze_Bg3Bg2Bg1(void);
 
 u32 Haze_PowerBombExpanding(void);
 u32 Haze_PowerBombRetracting(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* HAZE_H */

@@ -1,6 +1,11 @@
 #ifndef MAP_STATION_AI
 #define MAP_STATION_AI
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #define MAP_STATION_POSE_IDLE 0x9
 #define MAP_STATION_POSE_DO_NOTHING 0xF
 #define MAP_STATION_POSE_GRABBING_SAMUS 0x23
@@ -30,5 +35,9 @@ void MapStationDelayBeforeRetracting(void);
 void MapStationRetracting(void);
 void MapStation(void);
 void MapStationPart(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* MAP_STATION_AI */

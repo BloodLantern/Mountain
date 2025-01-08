@@ -1,6 +1,11 @@
 #ifndef PAUSE_SCREEN_SUB_MENUS_MENU_H
 #define PAUSE_SCREEN_SUB_MENUS_MENU_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/structs/menus/pause_screen.h"
 
@@ -16,5 +21,9 @@ void PauseScreenCheckActivatedTargets(void);
 void PauseScreenCheckAreasWithTargets(void);
 void PauseScreenDrawBossFlames(void);
 void PauseScreenUpdateBossFlameAnimation(struct BossFlameData* pFlame);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* PAUSE_SCREEN_SUB_MENUS_MENU_H */

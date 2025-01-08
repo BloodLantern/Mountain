@@ -1,6 +1,11 @@
 #ifndef COLOR_EFFECTS_H
 #define COLOR_EFFECTS_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #define FADING_TYPE_IN 0
@@ -27,5 +32,9 @@ void ApplySpecialBackgroundEffectColorOnBG(u16 mask, u16 color, u8 stage);
 void ApplySpecialBackgroundEffectColorOnOBJ(u16 mask, u16 color, u8 stage);
 void ApplySpecialBackgroundFadingColor(u8 type, u8 color, u16** ppSrc, u16** ppDst, u16 mask);
 u16 ApplyFadeOnColor(u8 type, u16 color, u8 currentColor);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* COLOR_EFFECTS_H */

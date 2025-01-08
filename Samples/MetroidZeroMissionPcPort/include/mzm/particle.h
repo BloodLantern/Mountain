@@ -1,6 +1,11 @@
 #ifndef PARTICLE_H
 #define PARTICLE_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/oam.h"
 #include "mzm/structs/particle.h"
@@ -77,5 +82,9 @@ void ParticlePlayBeamFullChargedSound(void);
 void ParticleChargingBeam(struct ParticleEffect* pParticle);
 void ParticleEscape(struct ParticleEffect* pParticle);
 void ParticleSamusReflection(struct ParticleEffect* pParticle);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* PARTICLE_H */

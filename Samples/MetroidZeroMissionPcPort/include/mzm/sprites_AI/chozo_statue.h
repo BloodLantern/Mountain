@@ -1,6 +1,11 @@
 #ifndef CHOZO_STATUE_AI_H
 #define CHOZO_STATUE_AI_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #define CHOZO_STATUE_BEHAVIOR_ITEM 0x0
@@ -91,5 +96,9 @@ void ChozoStatuePartLegIdle(void);
 void ChozoStatue(void);
 void ChozoStatuePart(void);
 void ChozoStatueRefill(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* CHOZO_STATUE_AI_H */

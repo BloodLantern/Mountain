@@ -1,6 +1,11 @@
 #ifndef TOURIAN_ESCAPE_STRUCT_H
 #define TOURIAN_ESCAPE_STRUCT_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #define TOURIAN_ESCAPE_DATA sNonGameplayRamPointer->tourianEscape
@@ -63,5 +68,9 @@ extern s32 gWrittenToBG2X;
 extern s32 gWrittenToBG2Y;
 extern u16 gUnk_30013a2;
 
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* TOURIAN_ESCAPE_STRUCT_H */

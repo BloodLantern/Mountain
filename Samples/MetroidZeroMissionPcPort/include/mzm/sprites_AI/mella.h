@@ -1,6 +1,11 @@
 #ifndef MELLA_AI_H
 #define MELLA_AI_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 #define MELLA_POSE_IDLE_INIT 0x8
@@ -20,5 +25,9 @@ void MellaDelayBeforeGoingDown(void);
 void MellaGoingDown(void);
 void MellaGoingUp(void);
 void Mella(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* MELLA_AI_H */

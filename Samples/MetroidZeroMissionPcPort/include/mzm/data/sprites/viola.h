@@ -1,6 +1,11 @@
 #ifndef VIOLA_DATA_H
 #define VIOLA_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/oam.h"
 
@@ -88,5 +93,9 @@ extern const struct FrameData sViolaOAM_MovingOffsetUp[17];
 extern const struct FrameData sViolaOAM_MovingOffsetRight[17];
 
 extern const struct FrameData sViolaOAM_MovingOffsetDown[17];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

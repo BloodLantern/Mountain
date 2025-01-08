@@ -1,6 +1,11 @@
 #ifndef BARISTUTE_DATA_H
 #define BARISTUTE_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/oam.h"
 
@@ -50,5 +55,9 @@ extern const struct FrameData sBaristuteOAM_WalkingFast[7];
 extern const struct FrameData sBaristuteOAM_WalkingVeryFast[7];
 
 extern const struct FrameData sBaristuteOAM_WalkingExtremelyFast[7];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

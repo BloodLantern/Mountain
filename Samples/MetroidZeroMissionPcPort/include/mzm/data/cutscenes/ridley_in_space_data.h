@@ -1,6 +1,11 @@
 #ifndef RIDLEY_IN_SPACE_DATA_H
 #define RIDLEY_IN_SPACE_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/macros.h"
 #include "mzm/types.h"
 
@@ -35,5 +40,9 @@ extern const u32 sRidleyInSpaceRidleySuspiciousEyesOpenTileTable[287];
 extern const u32 sRidleyInSpaceRidleySuspiciousEyesSquintedTileTable[287];
 extern const u32 sRidleyInSpaceShipInteriorTileTable2[385];
 extern const u32 sRidleyInSpaceSpaceBackgroundTileTable[577];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* RIDLEY_IN_SPACE_DATA_H */

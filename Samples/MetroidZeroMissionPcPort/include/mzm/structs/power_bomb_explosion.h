@@ -1,6 +1,11 @@
 #ifndef POWER_BOMB_EXPLOSION_STRUCT_H
 #define POWER_BOMB_EXPLOSION_STRUCT_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 
 // Structs
@@ -22,5 +27,9 @@ struct PowerBomb {
 };
 
 extern struct PowerBomb gCurrentPowerBomb;
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

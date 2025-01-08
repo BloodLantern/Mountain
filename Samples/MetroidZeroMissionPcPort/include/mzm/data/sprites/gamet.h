@@ -1,6 +1,11 @@
 #ifndef GAMET_DATA_H
 #define GAMET_DATA_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "mzm/types.h"
 #include "mzm/oam.h"
 
@@ -24,5 +29,9 @@ extern const u16 sGametOAM_Moving_Frame0[10];
 extern const struct FrameData sGametOAM_Idle[5];
 
 extern const struct FrameData sGametOAM_Moving[5];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
