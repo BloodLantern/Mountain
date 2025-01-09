@@ -13,7 +13,13 @@
   </ItemGroup>
   <PropertyGroup>
     <MountainDir>$(ProjectDir)..\..\Mountain\</MountainDir>
+<!--    <SourceFiles Include="src\**\*.c" />-->
   </PropertyGroup>
+<!--  <Target Name="CopyFiles">-->
+<!--    <Copy SourceFiles="@(SourceFiles)"-->
+<!--          DestinationFolder="$(IntermediateOutputPath)"-->
+<!--    />-->
+<!--  </Target>-->
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -5434,6 +5440,7 @@
     <Content Include="data\weapons\WaveBeamChargedBottom.gfx" />
     <Content Include="data\weapons\WaveBeamChargedTop.gfx" />
     <Content Include="data\weapons\WaveBeamTop.gfx" />
+    <Content Include="tools\MzmPreproc.exe" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
