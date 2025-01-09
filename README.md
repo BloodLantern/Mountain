@@ -8,7 +8,7 @@ This project is compiled using C++23 features (`/std:c++latest`), on MSVC, for t
 
 ## Samples
 
-Sample projects are available in the [Samples](https://github.com/BloodLantern/Mountain/tree/samples/Samples) directory.
+Sample projects are available in the [Samples](https://github.com/BloodLantern/Mountain.Samples) repository.
 
 ## Documentation
 
