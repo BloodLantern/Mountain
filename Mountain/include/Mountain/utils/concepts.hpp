@@ -1,10 +1,8 @@
 #pragma once
 
-#include "Mountain/core.hpp"
-#include "Mountain/rendering/effect.hpp"
+#include <format>
 
-#include "Mountain/resource/font.hpp"
-#include "Mountain/utils/color.hpp"
+#include "Mountain/core.hpp"
 
 /// @file concepts.hpp
 /// @brief Defines the Mountain::Concepts namespace which contains useful concepts used in the engine.
@@ -15,6 +13,10 @@ namespace Mountain
     class Entry;
     class Component;
     class Entity;
+    class Font;
+    class Effect;
+    struct Color;
+    struct ColorHsva;
 
     /// @namespace Concepts
     /// @brief Contains useful general-use concepts.

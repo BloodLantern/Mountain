@@ -971,7 +971,7 @@ void Draw::RenderTextData(const List<TextData>& texts, const size_t index, const
                 };
 
                     
-                glBindTexture(GL_TEXTURE_2D, character.textureId);
+                Graphics::BindTexture(character.texture);
                 
                 glNamedBufferSubData(m_TextVbo, 0, sizeof(vertices), vertices.data());
                 
