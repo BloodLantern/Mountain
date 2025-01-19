@@ -110,6 +110,9 @@ namespace
                 t = "Unknown";
         }
 
+        if (Mountain::BreakOnGraphicsError)
+            __debugbreak();
+
         Mountain::Logger::Log(level, "[OpenGL] Log of type {} received from {}: {}", t, src, std::string_view(message, length));
     }
 }
