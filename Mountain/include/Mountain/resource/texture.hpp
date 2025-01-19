@@ -5,6 +5,7 @@
 #include <Maths/vector2i.hpp>
 
 #include "Mountain/core.hpp"
+#include "Mountain/rendering/gpu_texture.hpp"
 #include "Mountain/rendering/graphics.hpp"
 #include "Mountain/resource/resource.hpp"
 
@@ -74,15 +75,18 @@ namespace Mountain
         /// @brief Unbinds the texture
         MOUNTAIN_API void Unuse() const;
 
-        /// @brief Gets the texture id
-        /// @return Texture id
+        /// @brief Get the ID of this texture on the GPU
         [[nodiscard]]
         MOUNTAIN_API uint32_t GetId() const;
+
+        /// @brief Gets the underlying GpuTexture
+        [[nodiscard]]
+        MOUNTAIN_API GpuTexture GetGpuTexture() const;
 
     private:
         uint8_t* m_Data = nullptr;
         Vector2i m_Size;
-        uint32_t m_Id = 0;
+        GpuTexture m_GpuTexture;
         Graphics::MagnificationFilter m_Filter = Graphics::MagnificationFilter::Nearest;
     };
 }

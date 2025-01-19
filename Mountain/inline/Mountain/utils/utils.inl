@@ -1,4 +1,5 @@
 #pragma once
+#include "Maths/vector2i.hpp"
 
 namespace Mountain
 {

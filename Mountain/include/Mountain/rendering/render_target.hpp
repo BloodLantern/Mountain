@@ -5,6 +5,7 @@
 #include <Maths/matrix.hpp>
 #include <Maths/vector2i.hpp>
 
+#include "Mountain/rendering/gpu_texture.hpp"
 #include "Mountain/rendering/graphics.hpp"
 #include "Mountain/rendering/light_source.hpp"
 #include "Mountain/utils/color.hpp"
@@ -50,6 +51,9 @@ namespace Mountain
         MOUNTAIN_API uint32_t GetTextureId() const;
 
         [[nodiscard]]
+        MOUNTAIN_API GpuTexture GetGpuTexture() const;
+
+        [[nodiscard]]
         MOUNTAIN_API bool_t GetInitialized() const;
 
         [[nodiscard]]
@@ -68,7 +72,7 @@ namespace Mountain
         MOUNTAIN_API const Vector2& GetCameraScale() const;
 
     private:
-        uint32_t m_Texture;
+        GpuTexture m_Texture;
         uint32_t m_Framebuffer;
         uint32_t m_Vbo, m_Vao;
 

@@ -150,6 +150,16 @@ namespace Mountain
     constexpr Color Color::Yellow() { return Color(0xff / 255.f, 0xff / 255.f, 0x00 / 255.f); }
     constexpr Color Color::YellowGreen() { return Color(0x9a / 255.f, 0xcd / 255.f, 0x32 / 255.f); }
 
+    constexpr Color::Color(const float_t rgb, const float_t a): r(rgb), g(rgb), b(rgb), a(a) {}
+
+    constexpr Color::Color(const float_t r, const float_t g, const float_t b, const float_t a): r(r), g(g), b(b), a(a) {}
+
+    constexpr Color::Color(const Vector3& rgb, const float_t a): r(rgb.x), g(rgb.y), b(rgb.z), a(a) {}
+
+    constexpr Color::Color(const Vector4& rgba): r(rgba.x), g(rgba.y), b(rgba.z), a(rgba.w) {}
+
+    constexpr Color::Color(const float* data): r(data[0]), g(data[1]), b(data[2]), a(data[3]) {}
+
     constexpr float_t* Color::Data() { return &r; }
 
     constexpr const float_t* Color::Data() const { return &r; }
@@ -208,6 +218,8 @@ namespace Mountain
     constexpr ColorHsva ColorHsva::LightBlue() { return ColorHsva(HueCircleOver3 + HueCircleOver6, 1.f, 1.f); }
 
     constexpr ColorHsva ColorHsva::Magenta() { return ColorHsva(HueCircleOver3 * 2 + HueCircleOver6, 1.f, 1.f); }
+
+    constexpr ColorHsva::ColorHsva(const float_t h, const float_t s, const float_t v, const float_t a): h(h), s(s), v(v), a(a) {}
 
     constexpr ColorHsva::operator Color() const
     {

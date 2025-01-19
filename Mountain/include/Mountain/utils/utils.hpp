@@ -4,6 +4,8 @@
 #include <functional>
 #include <thread>
 
+#include <magic_enum/magic_enum.hpp>
+
 #include <Maths/quaternion.hpp>
 #include <Maths/vector2.hpp>
 #include <Maths/vector3.hpp>

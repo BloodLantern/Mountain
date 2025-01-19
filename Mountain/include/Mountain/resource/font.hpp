@@ -6,6 +6,7 @@
 #include <Maths/vector2i.hpp>
 
 #include "Mountain/core.hpp"
+#include "Mountain/rendering/gpu_texture.hpp"
 #include "Mountain/resource/resource.hpp"
 
 namespace Mountain
@@ -38,7 +39,7 @@ namespace Mountain
     private:
         struct Character
         {
-            uint32_t textureId;
+            GpuTexture texture;
             Vector2i size;       // Size of glyph
             Vector2i bearing;    // Offset from baseline to left/top of glyph
             uint32_t advance;

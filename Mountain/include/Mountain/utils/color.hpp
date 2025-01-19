@@ -612,8 +612,7 @@ namespace Mountain
         /// @param rgb Red, Green and Blue components
         /// @param a Alpha component
         [[nodiscard]]
-        explicit constexpr Color(const float_t rgb, const float_t a = 1.f)
-        : r(rgb), g(rgb), b(rgb), a(a) {}
+        explicit constexpr Color(const float_t rgb, const float_t a = 1.f);
 
         /// @brief Constructs a color with each specified component
         ///
@@ -622,23 +621,26 @@ namespace Mountain
         /// @param b Blue component
         /// @param a Alpha component
         [[nodiscard]]
-        constexpr Color(const float_t r, const float_t g, const float_t b, const float_t a = 1.f)
-        : r(r), g(g), b(b), a(a) {}
+        constexpr Color(const float_t r, const float_t g, const float_t b, const float_t a = 1.f);
 
         /// @brief Constructs a color from a Vector3 and an alpha value
         ///
         /// @param rgb Red, Green and Blue components
         /// @param a Alpha component
         [[nodiscard]]
-        explicit constexpr Color(const Vector3& rgb, const float_t a = 1.f)
-        : r(rgb.x), g(rgb.y), b(rgb.z), a(a) {}
+        explicit constexpr Color(const Vector3& rgb, const float_t a = 1.f);
 
         /// @brief Constructs a color from a Vector4
         ///
         /// @param rgba Color components
         [[nodiscard]]
-        explicit constexpr Color(const Vector4& rgba)
-        : r(rgba.x), g(rgba.y), b(rgba.z), a(rgba.w) {}
+        explicit constexpr Color(const Vector4& rgba);
+
+        /// @brief Constructs a color from four floats at the given pointer address
+        ///
+        /// @param data Color components
+        [[nodiscard]]
+        explicit constexpr Color(const float* data);
 
         [[nodiscard]]
         uint32_t GetPackedValue() const;
@@ -730,8 +732,7 @@ namespace Mountain
         /// @param v Value component
         /// @param a Alpha component
         [[nodiscard]]
-        constexpr ColorHsva(const float_t h, const float_t s, const float_t v, const float_t a = 1.f)
-        : h(h), s(s), v(v), a(a) {}
+        constexpr ColorHsva(const float_t h, const float_t s, const float_t v, const float_t a = 1.f);
 
         /// @brief Converts the ColorHsva to a Color
         [[nodiscard]]

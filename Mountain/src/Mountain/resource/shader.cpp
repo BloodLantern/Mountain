@@ -62,7 +62,7 @@ void Shader::Load()
             continue;
 
         uint32_t& id = shaderIds[i];
-        id = glCreateShader(ShaderTypeToOpenGl(code.type));
+        id = glCreateShader(ToOpenGl(code.type));
 #ifdef _DEBUG
         const Pointer file = m_Files[i];
         const std::string& fileName = file ? file->GetName() : m_Name + '/' + magic_enum::enum_name(code.type).data();

@@ -15,13 +15,15 @@
 #include <Maths/vector2.hpp>
 #include <Maths/vector3.hpp>
 
-#include "Mountain/utils/color.hpp"
 #include "Mountain/utils/concepts.hpp"
-#include "Mountain/utils/list.hpp"
-#include "Mountain/utils/pointer.hpp"
 
 namespace Mountain
 {
+    template <typename>
+    class Pointer;
+    template <typename>
+    class List;
+
     /// @namespace Meta
     /// @brief Defines utilities for meta programming and template manipulation
     namespace Meta
@@ -138,7 +140,6 @@ namespace Mountain
         template <typename>
         constexpr bool_t IsMountainList = false;
 
-        /// @private
         template <typename T>
         constexpr bool_t IsMountainList<List<T>> = true;
 

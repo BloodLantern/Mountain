@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include "Mountain/core.hpp"
+#include "Mountain/resource/compute_shader.hpp"
 #include "Mountain/utils/color.hpp"
 #include "Mountain/utils/utils.hpp"
 
