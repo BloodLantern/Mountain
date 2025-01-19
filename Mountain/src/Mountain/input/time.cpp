@@ -4,19 +4,6 @@
 
 #include "Mountain/screen.hpp"
 #include "Mountain/window.hpp"
-#include "Mountain/utils/windows.hpp"
-
-// ReSharper disable CppInconsistentNaming
-using NtQueryTimerResolutionFunc = DWORD (NTAPI *)(OUT PULONG MinimumResolution, OUT PULONG MaximumResolution, OUT PULONG ActualResolution);
-// ReSharper restore CppInconsistentNaming
-/// Hidden Windows API function from ntdll.dll
-namespace
-{
-    NtQueryTimerResolutionFunc NtQueryTimerResolution = reinterpret_cast<NtQueryTimerResolutionFunc>(GetProcAddress(  // NOLINT(clang-diagnostic-cast-function-type-strict)
-        GetModuleHandle(L"ntdll.dll"),
-        "NtQueryTimerResolution"
-    ));
-}
 
 using namespace Mountain;
 
@@ -51,10 +38,6 @@ void Time::Initialize()
 {
     // Initialize the total time to avoid a huge delta time on the first frame
     m_TotalTimeUnscaled = static_cast<decltype(m_TotalTimeUnscaled)>(glfwGetTime());
-    
-    ULONG min, max, current;
-    (void) NtQueryTimerResolution(&min, &max, &current);
-    m_LowestSleepThreshold = 1.0 + max / 10000.0;
 }
 
 void Time::Update()
@@ -74,18 +57,6 @@ void Time::Update()
     m_TotalFrameCount++;
 }
 
-void Time::SleepForNoMoreThan(const double_t milliseconds)
-{
-    // Assumption is that std::this_thread::sleep_for(t) will sleep for at least (t), and at most (t + timerResolution)
-
-    if (milliseconds < m_LowestSleepThreshold)
-        return;
-
-    const uint32_t sleepTime = static_cast<uint32_t>(milliseconds - GetCurrentTimerResolution());
-    if (sleepTime > 1.0)
-        std::this_thread::sleep_for(std::chrono::milliseconds(sleepTime));
-}
-
 void Time::WaitForNextFrame()
 {
     using namespace std::chrono;
@@ -96,30 +67,13 @@ void Time::WaitForNextFrame()
     // FIXME - Wait is not accurate (around 10% error margin)
     if (m_TargetFps.has_value())
     {
-        const double_t wait = 1.0 / (static_cast<double_t>(m_TargetFps.value()) - m_LastFrameDuration);
-        
-        duration<double_t> accumulatedElapsedTime{ 0.0 };
-        time_point<steady_clock> previousTime = steady_clock::now();
-        const duration<double_t> targetElapsedTime{ wait };
-        while (accumulatedElapsedTime < targetElapsedTime)
-        {
-            time_point<steady_clock> now = steady_clock::now();
-            accumulatedElapsedTime += now - previousTime;
-            previousTime = now;
-            
-            const double_t sleepTime = (targetElapsedTime - accumulatedElapsedTime).count();
-            SleepForNoMoreThan(sleepTime);
-        }
+        const double_t wait = 1.0 / static_cast<double_t>(m_TargetFps.value()) - m_LastFrameDuration;
+
+        time_point<steady_clock> t{steady_clock::now().time_since_epoch() + duration_cast<time_point<steady_clock>::duration>(duration<double_t>{wait * 0.5})};
+        std::this_thread::sleep_until(t);
     }
     
     Window::SwapBuffers();
 
     frameStart = steady_clock::now();
-}
-
-double_t Time::GetCurrentTimerResolution()
-{
-    ULONG min, max, current;
-    (void) NtQueryTimerResolution(&min, &max, &current);
-    return current / 10000.0;
 }
