@@ -81,6 +81,8 @@ namespace Mountain
         /// @param dataType The type of the given data
         /// @param data The data to set
         /// @param mipmapLevel The mipmap level to set
+        /// @note This will fail if the texture data is immutable, e.g. a call to @c SetStorage() was already made.
+        /// If you want to use this function and the texture data is immutable, you first need to @c Recreate() the texture.
         /// @see <a href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/glTexImage2D.xhtml">glTexImage2D()</a>
         MOUNTAIN_API void SetData(
             Graphics::InternalFormat internalFormat,
