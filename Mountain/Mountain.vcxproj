@@ -398,7 +398,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
       <AdditionalLibraryDirectories>externals/libs/static/$(Configuration)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>toolbox.lib;glfw3.lib;freetype.lib;OpenAL32.lib;soft_oal.lib;ntdll.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>toolbox.lib;glfw3.lib;freetype.lib;OpenAL32.lib;soft_oal.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/WHOLEARCHIVE:toolbox.lib</AdditionalOptions>
       <CreateHotPatchableImage>Enabled</CreateHotPatchableImage>
       <OptimizeReferences>false</OptimizeReferences>
@@ -432,7 +432,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
       <AdditionalLibraryDirectories>externals/libs/static/$(Configuration)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>toolbox.lib;glfw3.lib;freetype.lib;OpenAL32.lib;soft_oal.lib;ntdll.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>toolbox.lib;glfw3.lib;freetype.lib;OpenAL32.lib;soft_oal.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/WHOLEARCHIVE:toolbox.lib</AdditionalOptions>
       <CreateHotPatchableImage>Enabled</CreateHotPatchableImage>
       <OptimizeReferences>false</OptimizeReferences>
@@ -467,7 +467,7 @@
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
       <OptimizeReferences>false</OptimizeReferences>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
-      <AdditionalDependencies>toolbox.lib;glfw3.lib;freetype.lib;OpenAL32.lib;soft_oal.lib;ntdll.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>toolbox.lib;glfw3.lib;freetype.lib;OpenAL32.lib;soft_oal.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>externals/libs/static/$(Configuration)</AdditionalLibraryDirectories>
       <AdditionalOptions>/WHOLEARCHIVE:toolbox.lib</AdditionalOptions>
       <CreateHotPatchableImage>Enabled</CreateHotPatchableImage>
