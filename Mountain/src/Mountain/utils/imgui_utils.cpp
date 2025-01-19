@@ -7,6 +7,7 @@
 #include "Mountain/file/file_manager.hpp"
 #include "Mountain/input/input.hpp"
 #include "Mountain/resource/audio_track.hpp"
+#include "Mountain/resource/font.hpp"
 #include "Mountain/resource/resource_manager.hpp"
 #include "Mountain/utils/file_system_watcher.hpp"
 

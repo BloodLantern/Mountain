@@ -96,25 +96,14 @@ void Font::Load()
             .bearing = { face->glyph->bitmap_left, face->glyph->bitmap_top },
             .advance = static_cast<uint32_t>(face->glyph->advance.x)
         };
-        
-        glGenTextures(1, &character.textureId);
-        glBindTexture(GL_TEXTURE_2D, character.textureId);
-        glTexImage2D(
-            GL_TEXTURE_2D,
-            0,
-            GL_RED,
-            glyphSize.x,
-            glyphSize.y,
-            0,
-            GL_RED,
-            GL_UNSIGNED_BYTE,
-            face->glyph->bitmap.buffer
-        );
-        // set texture options
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+        character.texture.Create();
+        character.texture.SetStorage(Graphics::InternalFormat::Red8, glyphSize);
+        character.texture.SetSubData(Vector2i::Zero(), glyphSize, Graphics::Format::Red, Graphics::DataType::UnsignedByte, face->glyph->bitmap.buffer);
+        character.texture.SetMinFilter(Graphics::MagnificationFilter::Linear);
+        character.texture.SetMagFilter(Graphics::MagnificationFilter::Linear);
+        character.texture.SetWrappingHorizontal(Graphics::Wrapping::ClampToEdge);
+        character.texture.SetWrappingVertical(Graphics::Wrapping::ClampToEdge);
 
         m_Characters.emplace(c, character);
     }
@@ -129,7 +118,7 @@ void Font::Load()
 void Font::Unload()
 {
     for (auto&& character : m_Characters | std::views::values)
-        glDeleteTextures(1, &character.textureId);
+        character.texture.Delete();
 
     m_Loaded = false;
 }

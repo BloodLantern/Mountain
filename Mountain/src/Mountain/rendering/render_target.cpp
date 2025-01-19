@@ -37,26 +37,21 @@ void RenderTarget::Initialize(const Vector2i size, const Graphics::Magnification
     m_Projection = ComputeProjection(size);
     
     // Color Texture
-    
-    glCreateTextures(GL_TEXTURE_2D, 1, &m_Texture);
 
-    const int32_t magFilter = ToOpenGl(filter);
-    glTextureParameteri(m_Texture, GL_TEXTURE_MIN_FILTER, magFilter);
-    glTextureParameteri(m_Texture, GL_TEXTURE_MAG_FILTER, magFilter);
-    
-    glTextureParameteri(m_Texture, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    glTextureParameteri(m_Texture, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    m_Texture.Create();
+    m_Texture.SetMinFilter(filter);
+    m_Texture.SetMagFilter(filter);
+    m_Texture.SetWrappingHorizontal(Graphics::Wrapping::ClampToEdge);
+    m_Texture.SetWrappingVertical(Graphics::Wrapping::ClampToEdge);
 
-    glBindTexture(GL_TEXTURE_2D, m_Texture);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, size.x, size.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
-    glBindTexture(GL_TEXTURE_2D, 0);
+    m_Texture.SetData(Graphics::InternalFormat::RedGreenBlueAlpha32Float, size, Graphics::Format::RedGreenBlueAlpha, Graphics::DataType::UnsignedByte, nullptr);
 
     // Framebuffer
     
     glCreateFramebuffers(1, &m_Framebuffer);
     glBindFramebuffer(GL_FRAMEBUFFER, m_Framebuffer);
     
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_Texture, 0);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_Texture.GetId(), 0);
 
     // Draw buffers
 
@@ -103,7 +98,7 @@ void RenderTarget::Reset()
     glDeleteVertexArrays(1, &m_Vao);
     glDeleteBuffers(1, &m_Vbo);
     glDeleteFramebuffers(1, &m_Framebuffer);
-    glDeleteTextures(1, &m_Texture);
+    m_Texture.Delete();
     
     m_Initialized = false;
 }
@@ -139,14 +134,16 @@ const List<LightSource>& RenderTarget::GetLightSources() const { return m_LightS
 void RenderTarget::SetDebugName([[maybe_unused]] const std::string_view name) const
 {
 #ifdef _DEBUG
-    glObjectLabel(GL_TEXTURE, m_Texture, static_cast<GLsizei>(name.length()), name.data());
+    m_Texture.SetDebugName(name);
     glObjectLabel(GL_FRAMEBUFFER, m_Framebuffer, static_cast<GLsizei>(name.length()), name.data());
     glObjectLabel(GL_BUFFER, m_Vbo, static_cast<GLsizei>(name.length()), name.data());
     glObjectLabel(GL_VERTEX_ARRAY, m_Vao, static_cast<GLsizei>(name.length()), name.data());
 #endif
 }
 
-uint32_t RenderTarget::GetTextureId() const { return m_Texture; }
+uint32_t RenderTarget::GetTextureId() const { return m_Texture.GetId(); }
+
+GpuTexture RenderTarget::GetGpuTexture() const { return m_Texture; }
 
 bool_t RenderTarget::GetInitialized() const { return m_Initialized; }
 
@@ -157,12 +154,10 @@ void RenderTarget::SetSize(const Vector2i newSize)
     if (!m_Initialized)
         throw std::logic_error("Cannot set the size of an uninitialized RenderTarget");
 
-    glBindTexture(GL_TEXTURE_2D, m_Texture);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, newSize.x, newSize.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
-    glBindTexture(GL_TEXTURE_2D, 0);
+    m_Texture.SetData(Graphics::InternalFormat::RedGreenBlueAlpha32Float, newSize, Graphics::Format::RedGreenBlueAlpha, Graphics::DataType::UnsignedByte, nullptr);
 
     glBindFramebuffer(GL_FRAMEBUFFER, m_Framebuffer);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_Texture, 0);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_Texture.GetId(), 0);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     
     m_Size = newSize;
@@ -179,12 +174,10 @@ void RenderTarget::SetFilter(const Graphics::MagnificationFilter newFilter)
     if (!m_Initialized)
         throw std::logic_error("Cannot set the magnification filter of an uninitialized RenderTarget");
 
-    const int32_t magFilter = ToOpenGl(newFilter);
-    glTextureParameteri(m_Texture, GL_TEXTURE_MIN_FILTER, magFilter);
-    glTextureParameteri(m_Texture, GL_TEXTURE_MAG_FILTER, magFilter);
-
-    glTextureParameteri(m_Texture, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    glTextureParameteri(m_Texture, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    m_Texture.SetMinFilter(newFilter);
+    m_Texture.SetMagFilter(newFilter);
+    m_Texture.SetWrappingHorizontal(Graphics::Wrapping::ClampToEdge);
+    m_Texture.SetWrappingVertical(Graphics::Wrapping::ClampToEdge);
 
     m_Filter = newFilter;
 }
