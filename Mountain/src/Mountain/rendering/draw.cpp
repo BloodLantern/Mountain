@@ -3,8 +3,6 @@
 #include <ImGui/imgui_stdlib.h>
 
 #include "Mountain/globals.hpp"
-#include "Mountain/rendering/gpu_buffer.hpp"
-#include "Mountain/rendering/gpu_vertex_array.hpp"
 #include "Mountain/rendering/renderer.hpp"
 #include "Mountain/resource/font.hpp"
 #include "Mountain/resource/resource_manager.hpp"
