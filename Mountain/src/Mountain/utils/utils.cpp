@@ -263,3 +263,13 @@ std::string Utils::GetLine(const std::string& str, const size_t lineIndex)
 
     return "";
 }
+
+uint16_t Utils::Concat16(const uint8_t right, const uint8_t left)
+{
+    return static_cast<uint16_t>(right | left << 8);
+}
+
+uint32_t Utils::Concat32(const uint8_t right0, const uint8_t right1, const uint8_t left0, const uint8_t left1)
+{
+    return right0 | right1 << 8 | left0 << 16 | left1 << 24;
+}

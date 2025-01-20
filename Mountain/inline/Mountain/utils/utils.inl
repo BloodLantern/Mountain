@@ -106,4 +106,11 @@ namespace Mountain
 
         return R{}; // Might not compile if R isn't default constructible
     }
+
+    template <uint64_t Offset, uint64_t Count>
+    constexpr uint64_t Utils::GetBits(const uint64_t value)
+    {
+        constexpr uint64_t mask = (static_cast<uint64_t>(1) << Count) - 1;
+        return value >> Offset & mask;
+    }
 }

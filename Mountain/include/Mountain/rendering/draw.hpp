@@ -6,6 +6,8 @@
 
 #include <Maths/vector2.hpp>
 
+#include "Mountain/rendering/gpu_buffer.hpp"
+#include "Mountain/rendering/gpu_vertex_array.hpp"
 #include "Mountain/rendering/render_target.hpp"
 #include "Mountain/resource/shader.hpp"
 #include "Mountain/resource/texture.hpp"

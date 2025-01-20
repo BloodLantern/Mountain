@@ -221,6 +221,13 @@ namespace Mountain::Utils
     MOUNTAIN_API std::string Trim(std::string_view str, TrimOptions options = TrimOptions::Both);
 
     MOUNTAIN_API std::string GetLine(const std::string& str, size_t lineIndex);
+
+    MOUNTAIN_API uint16_t Concat16(uint8_t right, uint8_t left);
+
+    MOUNTAIN_API uint32_t Concat32(uint8_t right0, uint8_t right1, uint8_t left0, uint8_t left1);
+
+    template <uint64_t Offset, uint64_t Count>
+    constexpr uint64_t GetBits(const uint64_t value);
 }
 
 namespace Easing
