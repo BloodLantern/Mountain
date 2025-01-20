@@ -6,13 +6,15 @@ using namespace Mountain;
 
 void GpuTexture::Create() { glCreateTextures(GL_TEXTURE_2D, 1, &m_Id); }
 
-void GpuTexture::Delete() { glDeleteTextures(1, &m_Id); }
+void GpuTexture::Delete() { glDeleteTextures(1, &m_Id); m_Id = 0; }
+
+void GpuTexture::Recreate() { Delete(); Create(); }
 
 void GpuTexture::CreateFrom(
-    uint32_t originalTextureId,
-    Graphics::InternalFormat newInternalFormat,
-    uint32_t minMipmapLevel,
-    uint32_t mipmapLevels
+    const uint32_t originalTextureId,
+    const Graphics::InternalFormat newInternalFormat,
+    const uint32_t minMipmapLevel,
+    const uint32_t mipmapLevels
 )
 {
     glGenTextures(1, &m_Id);
@@ -20,38 +22,38 @@ void GpuTexture::CreateFrom(
 }
 
 void GpuTexture::CreateFrom(
-    GpuTexture originalGpuTexture,
-    Graphics::InternalFormat newInternalFormat,
-    uint32_t minMipmapLevel,
-    uint32_t mipmapLevels
+    const GpuTexture originalGpuTexture,
+    const Graphics::InternalFormat newInternalFormat,
+    const uint32_t minMipmapLevel,
+    const uint32_t mipmapLevels
 )
 {
     CreateFrom(originalGpuTexture.m_Id, newInternalFormat, minMipmapLevel, mipmapLevels);
 }
 
-void GpuTexture::SetStorage(Graphics::InternalFormat internalFormat, Vector2i size, int32_t mipmapLevels) const
+void GpuTexture::SetStorage(const Graphics::InternalFormat internalFormat, const Vector2i size, const int32_t mipmapLevels) const
 {
     glTextureStorage2D(m_Id, mipmapLevels, ToOpenGl(internalFormat), size.x, size.y);
 }
 
 void GpuTexture::SetSubData(
-    Vector2i offset,
-    Vector2i size,
-    Graphics::Format dataFormat,
-    Graphics::DataType dataType,
+    const Vector2i offset,
+    const Vector2i size,
+    const Graphics::Format dataFormat,
+    const Graphics::DataType dataType,
     const void* data,
-    int32_t mipmapLevel
+    const int32_t mipmapLevel
 ) const
 {
     glTextureSubImage2D(m_Id, mipmapLevel, offset.x, offset.y, size.x, size.y, ToOpenGl(dataFormat), ToOpenGl(dataType), data); }
 
 void GpuTexture::SetData(
-    Graphics::InternalFormat internalFormat,
-    Vector2i size,
-    Graphics::Format dataFormat,
-    Graphics::DataType dataType,
+    const Graphics::InternalFormat internalFormat,
+    const Vector2i size,
+    const Graphics::Format dataFormat,
+    const Graphics::DataType dataType,
     const void* data,
-    int32_t mipmapLevel
+    const int32_t mipmapLevel
 ) const
 {
     Graphics::BindTexture(m_Id);
@@ -61,7 +63,7 @@ void GpuTexture::SetData(
 
 void GpuTexture::GenerateMipmap() const { glGenerateTextureMipmap(m_Id); }
 
-void GpuTexture::SetDebugName(std::string_view name) const
+void GpuTexture::SetDebugName(const std::string_view name) const
 {
 #ifdef _DEBUG
     glObjectLabel(GL_TEXTURE, m_Id, static_cast<GLsizei>(name.length()), name.data());
@@ -82,7 +84,7 @@ Graphics::MagnificationFilter GpuTexture::GetMinFilter() const
     return Graphics::FromOpenGl<Graphics::MagnificationFilter>(result);
 }
 
-void GpuTexture::SetMinFilter(Graphics::MagnificationFilter newMinFilter)
+void GpuTexture::SetMinFilter(const Graphics::MagnificationFilter newMinFilter) const
 {
     glTextureParameteri(m_Id, GL_TEXTURE_MIN_FILTER, ToOpenGl(newMinFilter));
 }
@@ -94,7 +96,7 @@ Graphics::MagnificationFilter GpuTexture::GetMagFilter() const
     return Graphics::FromOpenGl<Graphics::MagnificationFilter>(result);
 }
 
-void GpuTexture::SetMagFilter(Graphics::MagnificationFilter newMagFilter)
+void GpuTexture::SetMagFilter(const Graphics::MagnificationFilter newMagFilter) const
 {
     glTextureParameteri(m_Id, GL_TEXTURE_MAG_FILTER, ToOpenGl(newMagFilter));
 }
@@ -106,7 +108,7 @@ Graphics::Wrapping GpuTexture::GetWrappingHorizontal() const
     return Graphics::FromOpenGl<Graphics::Wrapping>(result);
 }
 
-void GpuTexture::SetWrappingHorizontal(Graphics::Wrapping newWrappingHorizontal)
+void GpuTexture::SetWrappingHorizontal(const Graphics::Wrapping newWrappingHorizontal) const
 {
     glTextureParameteri(m_Id, GL_TEXTURE_WRAP_S, ToOpenGl(newWrappingHorizontal));
 }
@@ -118,7 +120,7 @@ Graphics::Wrapping GpuTexture::GetWrappingVertical() const
     return Graphics::FromOpenGl<Graphics::Wrapping>(result);
 }
 
-void GpuTexture::SetWrappingVertical(Graphics::Wrapping newWrappingVertical)
+void GpuTexture::SetWrappingVertical(const Graphics::Wrapping newWrappingVertical) const
 {
     glTextureParameteri(m_Id, GL_TEXTURE_WRAP_T, ToOpenGl(newWrappingVertical));
 }
@@ -130,7 +132,7 @@ Color GpuTexture::GetBorderColor() const
     return Color{result};
 }
 
-void GpuTexture::SetBorderColor(Color newBorderColor)
+void GpuTexture::SetBorderColor(Color newBorderColor) const
 {
     glTextureParameterfv(m_Id, GL_TEXTURE_BORDER_COLOR, newBorderColor.Data());
 }

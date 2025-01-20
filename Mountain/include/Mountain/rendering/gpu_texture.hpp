@@ -1,7 +1,5 @@
 ﻿#pragma once
 
-#include <string_view>
-
 #include <Maths/vector2i.hpp>
 
 #include "Mountain/core.hpp"
@@ -112,31 +110,31 @@ namespace Mountain
         [[nodiscard]]
         MOUNTAIN_API Graphics::MagnificationFilter GetMinFilter() const;
         /// @see <a href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/glTexParameter.xhtml">glTexParameteri()</a>
-        MOUNTAIN_API void SetMinFilter(Graphics::MagnificationFilter newMinFilter);
+        MOUNTAIN_API void SetMinFilter(Graphics::MagnificationFilter newMinFilter) const;
 
         /// @see <a href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/glGetTexParameter.xhtml">glGetTexParameteriv()</a>
         [[nodiscard]]
         MOUNTAIN_API Graphics::MagnificationFilter GetMagFilter() const;
         /// @see <a href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/glTexParameter.xhtml">glTexParameteri()</a>
-        MOUNTAIN_API void SetMagFilter(Graphics::MagnificationFilter newMagFilter);
+        MOUNTAIN_API void SetMagFilter(Graphics::MagnificationFilter newMagFilter) const;
 
         /// @see <a href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/glGetTexParameter.xhtml">glGetTexParameteriv()</a>
         [[nodiscard]]
         MOUNTAIN_API Graphics::Wrapping GetWrappingHorizontal() const;
         /// @see <a href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/glTexParameter.xhtml">glTexParameteri()</a>
-        MOUNTAIN_API void SetWrappingHorizontal(Graphics::Wrapping newWrappingHorizontal);
+        MOUNTAIN_API void SetWrappingHorizontal(Graphics::Wrapping newWrappingHorizontal) const;
 
         /// @see <a href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/glGetTexParameter.xhtml">glGetTexParameteriv()</a>
         [[nodiscard]]
         MOUNTAIN_API Graphics::Wrapping GetWrappingVertical() const;
         /// @see <a href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/glTexParameter.xhtml">glTexParameteri()</a>
-        MOUNTAIN_API void SetWrappingVertical(Graphics::Wrapping newWrappingVertical);
+        MOUNTAIN_API void SetWrappingVertical(Graphics::Wrapping newWrappingVertical) const;
 
         /// @see <a href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/glGetTexParameter.xhtml">glGetTexParameterfv()</a>
         [[nodiscard]]
         MOUNTAIN_API Color GetBorderColor() const;
         /// @see <a href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/glTexParameter.xhtml">glTexParameterfv()</a>
-        MOUNTAIN_API void SetBorderColor(Color newBorderColor);
+        MOUNTAIN_API void SetBorderColor(Color newBorderColor) const;
 
         [[nodiscard]]
         MOUNTAIN_API uint32_t GetId() const;

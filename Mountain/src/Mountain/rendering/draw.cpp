@@ -1,11 +1,12 @@
 #include "Mountain/rendering/draw.hpp"
 
-#include <glad/glad.h>
-
 #include <ImGui/imgui_stdlib.h>
 
 #include "Mountain/globals.hpp"
+#include "Mountain/rendering/gpu_buffer.hpp"
+#include "Mountain/rendering/gpu_vertex_array.hpp"
 #include "Mountain/rendering/renderer.hpp"
+#include "Mountain/resource/font.hpp"
 #include "Mountain/resource/resource_manager.hpp"
 #include "Mountain/resource/shader.hpp"
 #include "Mountain/utils/logger.hpp"
@@ -14,8 +15,8 @@ using namespace Mountain;
 
 void Draw::Clear(const Color& color)
 {
-    glClearColor(color.r, color.g, color.b, color.a);
-    glClear(GL_COLOR_BUFFER_BIT);
+    Graphics::SetClearColor(color);
+    Graphics::Clear(Graphics::ClearFlags::ColorBuffer);
 }
 
 void Draw::Point(Vector2 position, const Color& color)
@@ -389,29 +390,43 @@ void Draw::DrawList::Clear()
 
 void Draw::Initialize()
 {
-    glCreateBuffers(7, &m_RectangleEbo);
-    glCreateVertexArrays(11, &m_PointVao);
+    m_RectangleEbo.Create();
+    m_Vbo.Create();
+    m_RectangleVbo.Create();
+    m_TextureVbo.Create();
+    m_TextVbo.Create();
+    m_RenderTargetVbo.Create();
+    m_RenderTargetSsbo.Create();
 
-#ifdef _DEBUG
-    glObjectLabel(GL_BUFFER, m_RectangleEbo, -1, "Rectangle EBO");
-    glObjectLabel(GL_BUFFER, m_Vbo, -1, "Global VBO");
-    glObjectLabel(GL_BUFFER, m_RectangleVbo, -1, "Rectangle VBO");
-    glObjectLabel(GL_BUFFER, m_TextureVbo, -1, "Texture VBO");
-    glObjectLabel(GL_BUFFER, m_TextVbo, -1, "Text VBO");
-    glObjectLabel(GL_BUFFER, m_RenderTargetVbo, -1, "RenderTarget VBO");
-    glObjectLabel(GL_BUFFER, m_RenderTargetSsbo, -1, "RenderTarget SSBO");
+    m_LineVao.Create();
+    m_LineColoredVao.Create();
+    m_TriangleVao.Create();
+    m_TriangleColoredVao.Create();
+    m_RectangleVao.Create();
+    m_CircleVao.Create();
+    m_ArcVao.Create();
+    m_TextureVao.Create();
+    m_TextVao.Create();
+    m_RenderTargetVao.Create();
 
-    glObjectLabel(GL_VERTEX_ARRAY, m_LineVao, -1, "Line VAO");
-    glObjectLabel(GL_VERTEX_ARRAY, m_LineColoredVao, -1, "Line Colored VAO");
-    glObjectLabel(GL_VERTEX_ARRAY, m_TriangleVao, -1, "Triangle VAO");
-    glObjectLabel(GL_VERTEX_ARRAY, m_TriangleColoredVao, -1, "Triangle Colored VAO");
-    glObjectLabel(GL_VERTEX_ARRAY, m_RectangleVao, -1, "Rectangle VAO");
-    glObjectLabel(GL_VERTEX_ARRAY, m_CircleVao, -1, "Circle VAO");
-    glObjectLabel(GL_VERTEX_ARRAY, m_ArcVao, -1, "Arc VAO");
-    glObjectLabel(GL_VERTEX_ARRAY, m_TextureVao, -1, "Texture VAO");
-    glObjectLabel(GL_VERTEX_ARRAY, m_TextVao, -1, "Text VAO");
-    glObjectLabel(GL_VERTEX_ARRAY, m_RenderTargetVao, -1, "RenderTarget VAO");
-#endif
+    m_RectangleEbo.SetDebugName("Rectangle EBO");
+    m_Vbo.SetDebugName("Global VBO");
+    m_RectangleVbo.SetDebugName("Rectangle VBO");
+    m_TextureVbo.SetDebugName("Texture VBO");
+    m_TextVbo.SetDebugName("Text VBO");
+    m_RenderTargetVbo.SetDebugName("RenderTarget VBO");
+    m_RenderTargetSsbo.SetDebugName("RenderTarget SSBO");
+
+    m_LineVao.SetDebugName("Line VAO");
+    m_LineColoredVao.SetDebugName("Line Colored VAO");
+    m_TriangleVao.SetDebugName("Triangle VAO");
+    m_TriangleColoredVao.SetDebugName("Triangle Colored VAO");
+    m_RectangleVao.SetDebugName("Rectangle VAO");
+    m_CircleVao.SetDebugName("Circle VAO");
+    m_ArcVao.SetDebugName("Arc VAO");
+    m_TextureVao.SetDebugName("Texture VAO");
+    m_TextVao.SetDebugName("Text VAO");
+    m_RenderTargetVao.SetDebugName("RenderTarget VAO");
 
     InitializePointBuffers();
     InitializeLineBuffers();
@@ -425,9 +440,9 @@ void Draw::Initialize()
     InitializeTextBuffers();
     InitializeRenderTargetBuffers();
 
-    glBindVertexArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    Graphics::BindVertexArray(0);
+    BindBuffer(Graphics::BufferType::ArrayBuffer, 0);
+    BindBuffer(Graphics::BufferType::ElementArrayBuffer, 0);
 }
 
 void Draw::LoadResources()
@@ -451,82 +466,98 @@ void Draw::LoadResources()
 
 void Draw::Shutdown()
 {
-    glDeleteBuffers(7, &m_RectangleEbo);
-    glDeleteVertexArrays(11, &m_PointVao);
+    m_RectangleEbo.Delete();
+    m_Vbo.Delete();
+    m_RectangleVbo.Delete();
+    m_TextureVbo.Delete();
+    m_TextVbo.Delete();
+    m_RenderTargetVbo.Delete();
+    m_RenderTargetSsbo.Delete();
+
+    m_LineVao.Delete();
+    m_LineColoredVao.Delete();
+    m_TriangleVao.Delete();
+    m_TriangleColoredVao.Delete();
+    m_RectangleVao.Delete();
+    m_CircleVao.Delete();
+    m_ArcVao.Delete();
+    m_TextureVao.Delete();
+    m_TextVao.Delete();
+    m_RenderTargetVao.Delete();
 }
 
 void Draw::InitializePointBuffers()
 {
-    glBindVertexArray(m_PointVao);
+    Graphics::BindVertexArray(m_PointVao);
 
-    glBindBuffer(GL_ARRAY_BUFFER, m_Vbo);
+    BindBuffer(Graphics::BufferType::ArrayBuffer, m_Vbo);
     uint32_t index = 0;
     size_t offset = 0;
     // Position
-    SetVertexAttribute(index, 2, sizeof(PointData), offset, 1);
+    Graphics::SetVertexAttribute(index, 2, sizeof(PointData), offset, 1);
     // Color
-    SetVertexAttribute(++index, 4, sizeof(PointData), offset += sizeof(Vector2), 1);
+    Graphics::SetVertexAttribute(++index, 4, sizeof(PointData), offset += sizeof(Vector2), 1);
 }
 
 void Draw::InitializeLineBuffers()
 {
-    glBindVertexArray(m_LineVao);
+    Graphics::BindVertexArray(m_LineVao);
 
-    glBindBuffer(GL_ARRAY_BUFFER, m_Vbo);
+    BindBuffer(Graphics::BufferType::ArrayBuffer, m_Vbo);
     uint32_t index = 0;
     size_t offset = 0;
     // Points
-    SetVertexAttribute(index, 2, sizeof(LineData), offset, 1);
-    SetVertexAttribute(++index, 2, sizeof(LineData), offset += sizeof(Vector2), 1);
+    Graphics::SetVertexAttribute(index, 2, sizeof(LineData), offset, 1);
+    Graphics::SetVertexAttribute(++index, 2, sizeof(LineData), offset += sizeof(Vector2), 1);
     // Color
-    SetVertexAttribute(++index, 4, sizeof(LineData), offset += sizeof(Vector2), 1);
+    Graphics::SetVertexAttribute(++index, 4, sizeof(LineData), offset += sizeof(Vector2), 1);
 }
 
 void Draw::InitializeLineColoredBuffers()
 {
-    glBindVertexArray(m_LineColoredVao);
+    Graphics::BindVertexArray(m_LineColoredVao);
 
-    glBindBuffer(GL_ARRAY_BUFFER, m_Vbo);
+    BindBuffer(Graphics::BufferType::ArrayBuffer, m_Vbo);
     uint32_t index = 0;
     size_t offset = 0;
     // Points
-    SetVertexAttribute(index, 2, sizeof(LineColoredData), offset, 1);
-    SetVertexAttribute(++index, 2, sizeof(LineColoredData), offset += sizeof(Vector2), 1);
+    Graphics::SetVertexAttribute(index, 2, sizeof(LineColoredData), offset, 1);
+    Graphics::SetVertexAttribute(++index, 2, sizeof(LineColoredData), offset += sizeof(Vector2), 1);
     // Colors
-    SetVertexAttribute(++index, 4, sizeof(LineColoredData), offset += sizeof(Vector2), 1);
-    SetVertexAttribute(++index, 4, sizeof(LineColoredData), offset += sizeof(Color), 1);
+    Graphics::SetVertexAttribute(++index, 4, sizeof(LineColoredData), offset += sizeof(Vector2), 1);
+    Graphics::SetVertexAttribute(++index, 4, sizeof(LineColoredData), offset += sizeof(Color), 1);
 }
 
 void Draw::InitializeTriangleBuffers()
 {
-    glBindVertexArray(m_TriangleVao);
+    Graphics::BindVertexArray(m_TriangleVao);
 
-    glBindBuffer(GL_ARRAY_BUFFER, m_Vbo);
+    BindBuffer(Graphics::BufferType::ArrayBuffer, m_Vbo);
     uint32_t index = 0;
     size_t offset = 0;
     // Points
-    SetVertexAttribute(index, 2, sizeof(TriangleData), offset, 1);
-    SetVertexAttribute(++index, 2, sizeof(TriangleData), offset += sizeof(Vector2), 1);
-    SetVertexAttribute(++index, 2, sizeof(TriangleData), offset += sizeof(Vector2), 1);
+    Graphics::SetVertexAttribute(index, 2, sizeof(TriangleData), offset, 1);
+    Graphics::SetVertexAttribute(++index, 2, sizeof(TriangleData), offset += sizeof(Vector2), 1);
+    Graphics::SetVertexAttribute(++index, 2, sizeof(TriangleData), offset += sizeof(Vector2), 1);
     // Color
-    SetVertexAttribute(++index, 4, sizeof(TriangleData), offset += sizeof(Vector2), 1);
+    Graphics::SetVertexAttribute(++index, 4, sizeof(TriangleData), offset += sizeof(Vector2), 1);
 }
 
 void Draw::InitializeTriangleColoredBuffers()
 {
-    glBindVertexArray(m_TriangleColoredVao);
+    Graphics::BindVertexArray(m_TriangleColoredVao);
 
-    glBindBuffer(GL_ARRAY_BUFFER, m_Vbo);
+    BindBuffer(Graphics::BufferType::ArrayBuffer, m_Vbo);
     uint32_t index = 0;
     size_t offset = 0;
     // Points
-    SetVertexAttribute(index, 2, sizeof(TriangleColoredData), offset, 1);
-    SetVertexAttribute(++index, 2, sizeof(TriangleColoredData), offset += sizeof(Vector2), 1);
-    SetVertexAttribute(++index, 2, sizeof(TriangleColoredData), offset += sizeof(Vector2), 1);
+    Graphics::SetVertexAttribute(index, 2, sizeof(TriangleColoredData), offset, 1);
+    Graphics::SetVertexAttribute(++index, 2, sizeof(TriangleColoredData), offset += sizeof(Vector2), 1);
+    Graphics::SetVertexAttribute(++index, 2, sizeof(TriangleColoredData), offset += sizeof(Vector2), 1);
     // Colors
-    SetVertexAttribute(++index, 4, sizeof(TriangleColoredData), offset += sizeof(Vector2), 1);
-    SetVertexAttribute(++index, 4, sizeof(TriangleColoredData), offset += sizeof(Color), 1);
-    SetVertexAttribute(++index, 4, sizeof(TriangleColoredData), offset += sizeof(Color), 1);
+    Graphics::SetVertexAttribute(++index, 4, sizeof(TriangleColoredData), offset += sizeof(Vector2), 1);
+    Graphics::SetVertexAttribute(++index, 4, sizeof(TriangleColoredData), offset += sizeof(Color), 1);
+    Graphics::SetVertexAttribute(++index, 4, sizeof(TriangleColoredData), offset += sizeof(Color), 1);
 }
 
 void Draw::InitializeRectangleBuffers()
@@ -543,100 +574,100 @@ void Draw::InitializeRectangleBuffers()
         2, 3, 0
     };
     
-    glBindVertexArray(m_RectangleVao);
+    Graphics::BindVertexArray(m_RectangleVao);
 
     // VBO
-    glBindBuffer(GL_ARRAY_BUFFER, m_RectangleVbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData.data(), GL_STATIC_DRAW);
+    BindBuffer(Graphics::BufferType::ArrayBuffer, m_RectangleVbo);
+    m_RectangleVbo.SetData(sizeof(vertexData), vertexData.data(), Graphics::BufferUsage::StaticDraw);
 
     // EBO
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RectangleEbo);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indexData), indexData.data(), GL_STATIC_DRAW);
+    BindBuffer(Graphics::BufferType::ElementArrayBuffer, m_RectangleEbo);
+    m_RectangleEbo.SetData(sizeof(indexData), indexData.data(), Graphics::BufferUsage::StaticDraw);
 
     // VAO
     uint32_t index = 0;
     // Vertex position
-    SetVertexAttribute(index, 2, sizeof(Vector2), 0, 0);
+    Graphics::SetVertexAttribute(index, 2, sizeof(Vector2), 0, 0);
     
-    glBindBuffer(GL_ARRAY_BUFFER, m_Vbo);
+    BindBuffer(Graphics::BufferType::ArrayBuffer, m_Vbo);
     size_t offset = 0;
     // Transformation Matrix
-    SetVertexAttribute(++index, 4, sizeof(RectangleData), offset, 1);
-    SetVertexAttribute(++index, 4, sizeof(RectangleData), offset += sizeof(Vector4), 1);
-    SetVertexAttribute(++index, 4, sizeof(RectangleData), offset += sizeof(Vector4), 1);
-    SetVertexAttribute(++index, 4, sizeof(RectangleData), offset += sizeof(Vector4), 1);
+    Graphics::SetVertexAttribute(++index, 4, sizeof(RectangleData), offset, 1);
+    Graphics::SetVertexAttribute(++index, 4, sizeof(RectangleData), offset += sizeof(Vector4), 1);
+    Graphics::SetVertexAttribute(++index, 4, sizeof(RectangleData), offset += sizeof(Vector4), 1);
+    Graphics::SetVertexAttribute(++index, 4, sizeof(RectangleData), offset += sizeof(Vector4), 1);
     // Color
-    SetVertexAttribute(++index, 4, sizeof(RectangleData), offset += sizeof(Vector4), 1);
+    Graphics::SetVertexAttribute(++index, 4, sizeof(RectangleData), offset += sizeof(Vector4), 1);
 }
 
 void Draw::InitializeCircleBuffers()
 {
-    glBindVertexArray(m_CircleVao);
+    Graphics::BindVertexArray(m_CircleVao);
 
     // VBO
-    glBindBuffer(GL_ARRAY_BUFFER, m_RectangleVbo);
+    BindBuffer(Graphics::BufferType::ArrayBuffer, m_RectangleVbo);
     // EBO
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RectangleEbo);
+    BindBuffer(Graphics::BufferType::ElementArrayBuffer, m_RectangleEbo);
 
     // VAO
     uint32_t index = 0;
     // Vertex position
-    SetVertexAttribute(index, 2, sizeof(Vector2), 0, 0);
+    Graphics::SetVertexAttribute(index, 2, sizeof(Vector2), 0, 0);
     
-    glBindBuffer(GL_ARRAY_BUFFER, m_Vbo);
+    BindBuffer(Graphics::BufferType::ArrayBuffer, m_Vbo);
     size_t offset = 0;
     // Transformation Matrix
-    SetVertexAttribute(++index, 4, sizeof(CircleData), offset, 1);
-    SetVertexAttribute(++index, 4, sizeof(CircleData), offset += sizeof(Vector4), 1);
-    SetVertexAttribute(++index, 4, sizeof(CircleData), offset += sizeof(Vector4), 1);
-    SetVertexAttribute(++index, 4, sizeof(CircleData), offset += sizeof(Vector4), 1);
+    Graphics::SetVertexAttribute(++index, 4, sizeof(CircleData), offset, 1);
+    Graphics::SetVertexAttribute(++index, 4, sizeof(CircleData), offset += sizeof(Vector4), 1);
+    Graphics::SetVertexAttribute(++index, 4, sizeof(CircleData), offset += sizeof(Vector4), 1);
+    Graphics::SetVertexAttribute(++index, 4, sizeof(CircleData), offset += sizeof(Vector4), 1);
     // Center
-    SetVertexAttribute(++index, 2, sizeof(CircleData), offset += sizeof(Vector4), 1);
+    Graphics::SetVertexAttribute(++index, 2, sizeof(CircleData), offset += sizeof(Vector4), 1);
     // Radius
-    SetVertexAttribute(++index, 1, sizeof(CircleData), offset += sizeof(Vector2), 1);
+    Graphics::SetVertexAttribute(++index, 1, sizeof(CircleData), offset += sizeof(Vector2), 1);
     // Scale
-    SetVertexAttribute(++index, 2, sizeof(CircleData), offset += sizeof(float_t), 1);
+    Graphics::SetVertexAttribute(++index, 2, sizeof(CircleData), offset += sizeof(float_t), 1);
     // Color
-    SetVertexAttribute(++index, 4, sizeof(CircleData), offset += sizeof(Vector2), 1);
+    Graphics::SetVertexAttribute(++index, 4, sizeof(CircleData), offset += sizeof(Vector2), 1);
     // Filled
-    SetVertexAttributeInt(++index, 1, sizeof(CircleData), offset += sizeof(Color), 1);
+    Graphics::SetVertexAttributeInt(++index, 1, sizeof(CircleData), offset += sizeof(Color), 1);
 }
 
 void Draw::InitializeArcBuffers()
 {
-    glBindVertexArray(m_ArcVao);
+    Graphics::BindVertexArray(m_ArcVao);
 
     // VBO
-    glBindBuffer(GL_ARRAY_BUFFER, m_RectangleVbo);
+    BindBuffer(Graphics::BufferType::ArrayBuffer, m_RectangleVbo);
     // EBO
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RectangleEbo);
+    BindBuffer(Graphics::BufferType::ElementArrayBuffer, m_RectangleEbo);
 
     // VAO
     uint32_t index = 0;
     // Vertex position
-    SetVertexAttribute(index, 2, sizeof(Vector2), 0, 0);
+    Graphics::SetVertexAttribute(index, 2, sizeof(Vector2), 0, 0);
 
-    glBindBuffer(GL_ARRAY_BUFFER, m_Vbo);
+    BindBuffer(Graphics::BufferType::ArrayBuffer, m_Vbo);
     size_t offset = 0;
     // Transformation Matrix
-    SetVertexAttribute(++index, 4, sizeof(ArcData), offset, 1);
-    SetVertexAttribute(++index, 4, sizeof(ArcData), offset += sizeof(Vector4), 1);
-    SetVertexAttribute(++index, 4, sizeof(ArcData), offset += sizeof(Vector4), 1);
-    SetVertexAttribute(++index, 4, sizeof(ArcData), offset += sizeof(Vector4), 1);
+    Graphics::SetVertexAttribute(++index, 4, sizeof(ArcData), offset, 1);
+    Graphics::SetVertexAttribute(++index, 4, sizeof(ArcData), offset += sizeof(Vector4), 1);
+    Graphics::SetVertexAttribute(++index, 4, sizeof(ArcData), offset += sizeof(Vector4), 1);
+    Graphics::SetVertexAttribute(++index, 4, sizeof(ArcData), offset += sizeof(Vector4), 1);
     // Center
-    SetVertexAttribute(++index, 2, sizeof(ArcData), offset += sizeof(Vector4), 1);
+    Graphics::SetVertexAttribute(++index, 2, sizeof(ArcData), offset += sizeof(Vector4), 1);
     // Radius
-    SetVertexAttribute(++index, 1, sizeof(ArcData), offset += sizeof(Vector2), 1);
+    Graphics::SetVertexAttribute(++index, 1, sizeof(ArcData), offset += sizeof(Vector2), 1);
     // Starting angle
-    SetVertexAttribute(++index, 1, sizeof(ArcData), offset += sizeof(float_t), 1);
+    Graphics::SetVertexAttribute(++index, 1, sizeof(ArcData), offset += sizeof(float_t), 1);
     // Delta angle
-    SetVertexAttribute(++index, 1, sizeof(ArcData), offset += sizeof(float_t), 1);
+    Graphics::SetVertexAttribute(++index, 1, sizeof(ArcData), offset += sizeof(float_t), 1);
     // Scale
-    SetVertexAttribute(++index, 2, sizeof(ArcData), offset += sizeof(float_t), 1);
+    Graphics::SetVertexAttribute(++index, 2, sizeof(ArcData), offset += sizeof(float_t), 1);
     // Color
-    SetVertexAttribute(++index, 4, sizeof(ArcData), offset += sizeof(Vector2), 1);
+    Graphics::SetVertexAttribute(++index, 4, sizeof(ArcData), offset += sizeof(Vector2), 1);
     // Filled
-    SetVertexAttributeInt(++index, 1, sizeof(ArcData), offset += sizeof(Color), 1);
+    Graphics::SetVertexAttributeInt(++index, 1, sizeof(ArcData), offset += sizeof(Color), 1);
 }
 
 void Draw::InitializeTextureBuffers()
@@ -648,44 +679,44 @@ void Draw::InitializeTextureBuffers()
         0.f, 1.f
     };
     
-    glBindVertexArray(m_TextureVao);
+    Graphics::BindVertexArray(m_TextureVao);
 
     // VBO
-    glBindBuffer(GL_ARRAY_BUFFER, m_TextureVbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData.data(), GL_STATIC_DRAW);
+    BindBuffer(Graphics::BufferType::ArrayBuffer, m_TextureVbo);
+    m_TextureVbo.SetData(sizeof(vertexData), vertexData.data(), Graphics::BufferUsage::StaticDraw);
 
     // EBO
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RectangleEbo);
+    BindBuffer(Graphics::BufferType::ElementArrayBuffer, m_RectangleEbo);
 
     // VAO
     uint32_t index = 0;
     // Vertex position
-    SetVertexAttribute(index, 2, sizeof(Vector2), 0, 0);
+    Graphics::SetVertexAttribute(index, 2, sizeof(Vector2), 0, 0);
     
-    glBindBuffer(GL_ARRAY_BUFFER, m_Vbo);
+    BindBuffer(Graphics::BufferType::ArrayBuffer, m_Vbo);
     size_t offset = 0;
     // Transformation Matrix
-    SetVertexAttribute(++index, 4, sizeof(TextureData), offset, 1);
-    SetVertexAttribute(++index, 4, sizeof(TextureData), offset += sizeof(Vector4), 1);
-    SetVertexAttribute(++index, 4, sizeof(TextureData), offset += sizeof(Vector4), 1);
-    SetVertexAttribute(++index, 4, sizeof(TextureData), offset += sizeof(Vector4), 1);
+    Graphics::SetVertexAttribute(++index, 4, sizeof(TextureData), offset, 1);
+    Graphics::SetVertexAttribute(++index, 4, sizeof(TextureData), offset += sizeof(Vector4), 1);
+    Graphics::SetVertexAttribute(++index, 4, sizeof(TextureData), offset += sizeof(Vector4), 1);
+    Graphics::SetVertexAttribute(++index, 4, sizeof(TextureData), offset += sizeof(Vector4), 1);
     // UV projection Matrix
-    SetVertexAttribute(++index, 4, sizeof(TextureData), offset += sizeof(Vector4), 1);
-    SetVertexAttribute(++index, 4, sizeof(TextureData), offset += sizeof(Vector4), 1);
-    SetVertexAttribute(++index, 4, sizeof(TextureData), offset += sizeof(Vector4), 1);
-    SetVertexAttribute(++index, 4, sizeof(TextureData), offset += sizeof(Vector4), 1);
+    Graphics::SetVertexAttribute(++index, 4, sizeof(TextureData), offset += sizeof(Vector4), 1);
+    Graphics::SetVertexAttribute(++index, 4, sizeof(TextureData), offset += sizeof(Vector4), 1);
+    Graphics::SetVertexAttribute(++index, 4, sizeof(TextureData), offset += sizeof(Vector4), 1);
+    Graphics::SetVertexAttribute(++index, 4, sizeof(TextureData), offset += sizeof(Vector4), 1);
     // Color
-    SetVertexAttribute(++index, 4, sizeof(TextureData), offset += sizeof(Vector4), 1);
+    Graphics::SetVertexAttribute(++index, 4, sizeof(TextureData), offset += sizeof(Vector4), 1);
 }
 
 void Draw::InitializeTextBuffers()
 {
-    glBindVertexArray(m_TextVao);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RectangleEbo);
-    glBindBuffer(GL_ARRAY_BUFFER, m_TextVbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(Vector4) * 4, nullptr, GL_DYNAMIC_DRAW);
+    Graphics::BindVertexArray(m_TextVao);
+    BindBuffer(Graphics::BufferType::ElementArrayBuffer, m_RectangleEbo);
+    BindBuffer(Graphics::BufferType::ArrayBuffer, m_TextVbo);
+    m_TextVbo.SetStorage(sizeof(Vector4) * 4, nullptr, Graphics::BufferStorageFlags::None);
 
-    SetVertexAttribute(0, 4, sizeof(Vector4), 0);
+    Graphics::SetVertexAttribute(0, 4, sizeof(Vector4), 0);
 }
 
 void Draw::InitializeRenderTargetBuffers()
@@ -697,18 +728,18 @@ void Draw::InitializeRenderTargetBuffers()
         0.f, 1.f
     };
     
-    glBindVertexArray(m_RenderTargetVao);
+    Graphics::BindVertexArray(m_RenderTargetVao);
 
     // VBO
-    glBindBuffer(GL_ARRAY_BUFFER, m_RenderTargetVbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData.data(), GL_STATIC_DRAW);
+    BindBuffer(Graphics::BufferType::ArrayBuffer, m_RenderTargetVbo);
+    m_RenderTargetVbo.SetData(sizeof(vertexData), vertexData.data(), Graphics::BufferUsage::StaticDraw);
 
     // EBO
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RectangleEbo);
+    BindBuffer(Graphics::BufferType::ElementArrayBuffer, m_RectangleEbo);
 
     // VAO
     // Vertex position
-    SetVertexAttribute(0, 2, sizeof(Vector2), 0, 0);
+    Graphics::SetVertexAttribute(0, 2, sizeof(Vector2), 0, 0);
 }
 
 void Draw::SetProjectionMatrix(const Matrix& newProjectionMatrix)
@@ -791,15 +822,15 @@ void Draw::RenderPointData(const List<PointData>& points, const size_t index, co
     if (points.Empty())
         return;
 
-    glNamedBufferData(m_Vbo, static_cast<GLsizeiptr>(sizeof(PointData) * count), &points[index], GL_STREAM_DRAW);
+    m_Vbo.SetData(static_cast<int64_t>(sizeof(PointData) * count), &points[index], Graphics::BufferUsage::StreamDraw);
 
-    glBindVertexArray(m_PointVao);
+    Graphics::BindVertexArray(m_PointVao);
     m_PointShader->Use();
 
-    glDrawArraysInstanced(GL_POINTS, 0, 1, static_cast<GLsizei>(count));
+    DrawArraysInstanced(Graphics::DrawMode::Points, 0, 1, static_cast<int32_t>(count));
 
     m_PointShader->Unuse();
-    glBindVertexArray(0);
+    Graphics::BindVertexArray(0);
 }
 
 void Draw::RenderLineData(const List<LineData>& lines, const size_t index, const size_t count)
@@ -807,15 +838,15 @@ void Draw::RenderLineData(const List<LineData>& lines, const size_t index, const
     if (lines.Empty())
         return;
 
-    glNamedBufferData(m_Vbo, static_cast<GLsizeiptr>(sizeof(LineData) * count), &lines[index], GL_STREAM_DRAW);
-    
-    glBindVertexArray(m_LineVao);
+    m_Vbo.SetData(static_cast<int64_t>(sizeof(LineData) * count), &lines[index], Graphics::BufferUsage::StreamDraw);
+
+    Graphics::BindVertexArray(m_LineVao);
     m_LineShader->Use();
 
-    glDrawArraysInstanced(GL_LINES, 0, 2, static_cast<GLsizei>(count));
+    DrawArraysInstanced(Graphics::DrawMode::Lines, 0, 2, static_cast<int32_t>(count));
 
     m_LineShader->Unuse();
-    glBindVertexArray(0);
+    Graphics::BindVertexArray(0);
 }
 
 void Draw::RenderLineColoredData(const List<LineColoredData>& linesColored, const size_t index, const size_t count)
@@ -823,15 +854,15 @@ void Draw::RenderLineColoredData(const List<LineColoredData>& linesColored, cons
     if (linesColored.Empty())
         return;
 
-    glNamedBufferData(m_Vbo, static_cast<GLsizeiptr>(sizeof(LineColoredData) * count), &linesColored[index], GL_STREAM_DRAW);
-    
-    glBindVertexArray(m_LineColoredVao);
+    m_Vbo.SetData(static_cast<int64_t>(sizeof(LineColoredData) * count), &linesColored[index], Graphics::BufferUsage::StreamDraw);
+
+    Graphics::BindVertexArray(m_LineColoredVao);
     m_LineColoredShader->Use();
 
-    glDrawArraysInstanced(GL_LINES, 0, 2, static_cast<GLsizei>(count));
+    DrawArraysInstanced(Graphics::DrawMode::Lines, 0, 2, static_cast<int32_t>(count));
 
     m_LineColoredShader->Unuse();
-    glBindVertexArray(0);
+    Graphics::BindVertexArray(0);
 }
 
 void Draw::RenderTriangleData(const List<TriangleData>& triangles, const bool_t filled, const size_t index, const size_t count)
@@ -839,15 +870,15 @@ void Draw::RenderTriangleData(const List<TriangleData>& triangles, const bool_t 
     if (triangles.Empty())
         return;
 
-    glNamedBufferData(m_Vbo, static_cast<GLsizeiptr>(sizeof(TriangleData) * count), &triangles[index], GL_STREAM_DRAW);
+    m_Vbo.SetData(static_cast<int64_t>(sizeof(TriangleData) * count), &triangles[index], Graphics::BufferUsage::StreamDraw);
     
-    glBindVertexArray(m_TriangleVao);
+    Graphics::BindVertexArray(m_TriangleVao);
     m_TriangleShader->Use();
 
-    glDrawArraysInstanced(filled ? GL_TRIANGLES : GL_LINE_LOOP, 0, 3, static_cast<GLsizei>(count));
+    DrawArraysInstanced(filled ? Graphics::DrawMode::Triangles : Graphics::DrawMode::LineLoop, 0, 3, static_cast<int32_t>(count));
 
     m_TriangleShader->Unuse();
-    glBindVertexArray(0);
+    Graphics::BindVertexArray(0);
 }
 
 void Draw::RenderTriangleColoredData(const List<TriangleColoredData>& trianglesColored, const bool_t filled, const size_t index, const size_t count)
@@ -855,15 +886,15 @@ void Draw::RenderTriangleColoredData(const List<TriangleColoredData>& trianglesC
     if (trianglesColored.Empty())
         return;
 
-    glNamedBufferData(m_Vbo, static_cast<GLsizeiptr>(sizeof(TriangleColoredData) * count), &trianglesColored[index], GL_STREAM_DRAW);
-    
-    glBindVertexArray(m_TriangleColoredVao);
+    m_Vbo.SetData(static_cast<int64_t>(sizeof(TriangleColoredData) * count), &trianglesColored[index], Graphics::BufferUsage::StreamDraw);
+
+    Graphics::BindVertexArray(m_TriangleColoredVao);
     m_TriangleColoredShader->Use();
 
-    glDrawArraysInstanced(filled ? GL_TRIANGLES : GL_LINE_LOOP, 0, 3, static_cast<GLsizei>(count));
+    DrawArraysInstanced(filled ? Graphics::DrawMode::Triangles : Graphics::DrawMode::LineLoop, 0, 3, static_cast<int32_t>(count));
 
     m_TriangleColoredShader->Unuse();
-    glBindVertexArray(0);
+    Graphics::BindVertexArray(0);
 }
 
 void Draw::RenderRectangleData(const List<RectangleData>& rectangles, const bool_t filled, const size_t index, const size_t count)
@@ -871,18 +902,18 @@ void Draw::RenderRectangleData(const List<RectangleData>& rectangles, const bool
     if (rectangles.Empty())
         return;
 
-    glNamedBufferData(m_Vbo, static_cast<GLsizeiptr>(sizeof(RectangleData) * count), &rectangles[index], GL_STREAM_DRAW);
-    
-    glBindVertexArray(m_RectangleVao);
+    m_Vbo.SetData(static_cast<int64_t>(sizeof(RectangleData) * count), &rectangles[index], Graphics::BufferUsage::StreamDraw);
+
+    Graphics::BindVertexArray(m_RectangleVao);
     m_RectangleShader->Use();
 
     if (filled)
-        glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr, static_cast<GLsizei>(count));
+        DrawElementsInstanced(Graphics::DrawMode::Triangles, 6, Graphics::DataType::UnsignedInt, nullptr, static_cast<int32_t>(count));
     else
-        glDrawArraysInstanced(GL_LINE_LOOP, 0, 4, static_cast<GLsizei>(count));
+        DrawArraysInstanced(Graphics::DrawMode::LineLoop, 0, 4, static_cast<int32_t>(count));
 
     m_RectangleShader->Unuse();
-    glBindVertexArray(0);
+    Graphics::BindVertexArray(0);
 }
 
 void Draw::RenderCircleData(const List<CircleData>& circles, const size_t index, const size_t count)
@@ -890,15 +921,15 @@ void Draw::RenderCircleData(const List<CircleData>& circles, const size_t index,
     if (circles.Empty())
         return;
 
-    glNamedBufferData(m_Vbo, static_cast<GLsizeiptr>(sizeof(CircleData) * count), &circles[index], GL_STREAM_DRAW);
-    
-    glBindVertexArray(m_CircleVao);
+    m_Vbo.SetData(static_cast<int64_t>(sizeof(CircleData) * count), &circles[index], Graphics::BufferUsage::StreamDraw);
+
+    Graphics::BindVertexArray(m_CircleVao);
     m_CircleShader->Use();
 
-    glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr, static_cast<GLsizei>(count));
+    DrawElementsInstanced(Graphics::DrawMode::Triangles, 6, Graphics::DataType::UnsignedInt, nullptr, static_cast<int32_t>(count));
 
     m_CircleShader->Unuse();
-    glBindVertexArray(0);
+    Graphics::BindVertexArray(0);
 }
 
 void Draw::RenderArcData(const List<ArcData>& arcs, const size_t index, const size_t count)
@@ -906,15 +937,15 @@ void Draw::RenderArcData(const List<ArcData>& arcs, const size_t index, const si
     if (arcs.Empty())
         return;
 
-    glNamedBufferData(m_Vbo, static_cast<GLsizeiptr>(sizeof(ArcData) * count), &arcs[index], GL_STREAM_DRAW);
+    m_Vbo.SetData(static_cast<int64_t>(sizeof(ArcData) * count), &arcs[index], Graphics::BufferUsage::StreamDraw);
 
-    glBindVertexArray(m_ArcVao);
+    Graphics::BindVertexArray(m_ArcVao);
     m_ArcShader->Use();
 
-    glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr, static_cast<GLsizei>(count));
+    DrawElementsInstanced(Graphics::DrawMode::Triangles, 6, Graphics::DataType::UnsignedInt, nullptr, static_cast<int32_t>(count));
 
     m_ArcShader->Unuse();
-    glBindVertexArray(0);
+    Graphics::BindVertexArray(0);
 }
 
 void Draw::RenderTextureData(const List<TextureData>& textures, const uint32_t textureId, const size_t index, const size_t count)
@@ -922,22 +953,22 @@ void Draw::RenderTextureData(const List<TextureData>& textures, const uint32_t t
     if (textures.Empty())
         return;
 
-    glNamedBufferData(m_Vbo, static_cast<GLsizeiptr>(sizeof(TextureData) * count), &textures[index], GL_STREAM_DRAW);
-    
-    glBindVertexArray(m_TextureVao);
-    glBindTexture(GL_TEXTURE_2D, textureId);
+    m_Vbo.SetData(static_cast<int64_t>(sizeof(TextureData) * count), &textures[index], Graphics::BufferUsage::StreamDraw);
+
+    Graphics::BindVertexArray(m_TextureVao);
+    Graphics::BindTexture(textureId);
     m_TextureShader->Use();
 
-    glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr, static_cast<GLsizei>(count));
+    DrawElementsInstanced(Graphics::DrawMode::Triangles, 6, Graphics::DataType::UnsignedInt, nullptr, static_cast<int32_t>(count));
 
     m_TextureShader->Unuse();
-    glBindTexture(GL_TEXTURE_2D, 0);
-    glBindVertexArray(0);
+    Graphics::BindTexture(0);
+    Graphics::BindVertexArray(0);
 }
 
 void Draw::RenderTextData(const List<TextData>& texts, const size_t index, const size_t count)
 {
-    glBindVertexArray(m_TextVao);
+    Graphics::BindVertexArray(m_TextVao);
     m_TextShader->Use();
 
     for (size_t i = 0; i < count; i++)
@@ -972,25 +1003,26 @@ void Draw::RenderTextData(const List<TextData>& texts, const size_t index, const
 
                     
                 Graphics::BindTexture(character.texture);
-                
-                glNamedBufferSubData(m_TextVbo, 0, sizeof(vertices), vertices.data());
-                
-                glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+
+                m_TextVbo.SetSubData(0, sizeof(vertices), vertices.data());
+
+                DrawElements(Graphics::DrawMode::Triangles, 6, Graphics::DataType::UnsignedInt, nullptr);
             }
             
             // Now advance cursors for next glyph (note that advance is number of 1/64 pixels)
             offset.x += static_cast<float_t>(character.advance >> 6) * data.scale; // bitshift by 6 to get value in pixels (2^6 = 64)
         }
-        glBindTexture(GL_TEXTURE_2D, 0);
+
+        Graphics::BindTexture(0);
     }
     
     m_TextShader->Unuse();
-    glBindVertexArray(0);
+    Graphics::BindVertexArray(0);
 }
 
 void Draw::RenderRenderTargetData(const List<RenderTargetData>& renderTargets, const size_t index, const size_t count)
 {
-    glBindVertexArray(m_RenderTargetVao);
+    Graphics::BindVertexArray(m_RenderTargetVao);
     m_RenderTargetShader->Use();
 
     m_RenderTargetShader->SetUniform("projection", m_ProjectionMatrix * m_CameraMatrix);
@@ -1014,39 +1046,22 @@ void Draw::RenderRenderTargetData(const List<RenderTargetData>& renderTargets, c
         for (auto& lightSource : lightSources)
             lightSource.position = m_CameraMatrix * lightSource.position;
 
-        glNamedBufferData(
-            m_RenderTargetSsbo,
-            static_cast<GLsizeiptr>(sizeof(LightSource) * lightSources.GetSize()),
-            static_cast<const void*>(lightSources.GetData()),
-            GL_STREAM_DRAW
+        m_RenderTargetSsbo.SetData(
+            static_cast<int32_t>(sizeof(LightSource) * lightSources.GetSize()),
+            lightSources.GetData(),
+            Graphics::BufferUsage::StreamDraw
         );
-        
-        glBindTexture(GL_TEXTURE_2D, data.renderTarget->GetTextureId());
 
-        glMemoryBarrier(GL_SHADER_STORAGE_BARRIER_BIT);
+        Graphics::BindTexture(data.renderTarget->GetTextureId());
 
-        glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, m_RenderTargetSsbo);
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+        MemoryBarrier(Graphics::MemoryBarrierFlags::ShaderStorageBarrier);
+
+        BindBufferBase(Graphics::BufferType::ShaderStorageBuffer, 0, m_RenderTargetSsbo);
+        DrawElements(Graphics::DrawMode::Triangles, 6, Graphics::DataType::UnsignedInt, nullptr);
     }
 
-    glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, 0);
-    glBindTexture(GL_TEXTURE_2D, 0);
+    BindBufferBase(Graphics::BufferType::ShaderStorageBuffer, 0, 0);
+    Graphics::BindTexture(0);
     m_RenderTargetShader->Unuse();
-    glBindVertexArray(0);
-}
-
-void Draw::SetVertexAttribute(const uint32_t index, const int32_t size, const int32_t stride, const size_t offset, const uint32_t divisor)
-{
-    glVertexAttribPointer(index, size, GL_FLOAT, GL_FALSE, stride, Utils::IntToPointer<void>(offset));
-    glEnableVertexAttribArray(index);
-    if (divisor != 0)
-        glVertexBindingDivisor(index, divisor);
-}
-
-void Draw::SetVertexAttributeInt(const uint32_t index, const int32_t size, const int32_t stride, const size_t offset, const uint32_t divisor)
-{
-    glVertexAttribIPointer(index, size, GL_INT, stride, Utils::IntToPointer<void>(offset));
-    glEnableVertexAttribArray(index);
-    if (divisor != 0)
-        glVertexBindingDivisor(index, divisor);
+    Graphics::BindVertexArray(0);
 }

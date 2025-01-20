@@ -168,7 +168,9 @@
     <ClInclude Include="include\Mountain\input\time.hpp" />
     <ClInclude Include="include\Mountain\rendering\draw.hpp" />
     <ClInclude Include="include\Mountain\rendering\effect.hpp" />
+    <ClInclude Include="include\Mountain\rendering\gpu_buffer.hpp" />
     <ClInclude Include="include\Mountain\rendering\gpu_texture.hpp" />
+    <ClInclude Include="include\Mountain\rendering\gpu_vertex_array.hpp" />
     <ClInclude Include="include\Mountain\rendering\graphics.hpp" />
     <ClInclude Include="include\Mountain\rendering\light_source.hpp" />
     <ClInclude Include="include\Mountain\rendering\particle_system.hpp" />
@@ -266,6 +268,8 @@
     <ClCompile Include="src\Mountain\input\time.cpp" />
     <ClCompile Include="src\Mountain\rendering\draw.cpp" />
     <ClCompile Include="src\Mountain\rendering\effect.cpp"/>
+    <ClCompile Include="src\Mountain\rendering\gpu_vertex_array.cpp" />
+    <ClCompile Include="src\Mountain\rendering\gpu_buffer.cpp" />
     <ClCompile Include="src\Mountain\rendering\gpu_texture.cpp" />
     <ClCompile Include="src\Mountain\rendering\graphics.cpp" />
     <ClCompile Include="src\Mountain\rendering\particle_system.cpp" />

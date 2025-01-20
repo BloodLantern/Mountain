@@ -1,0 +1,20 @@
+﻿#include "Mountain/rendering/gpu_vertex_array.hpp"
+
+#include <glad/glad.h>
+
+using namespace Mountain;
+
+void GpuVertexArray::Create() { glCreateVertexArrays(1, &m_Id); }
+
+void GpuVertexArray::Delete() { glDeleteVertexArrays(1, &m_Id); m_Id = 0; }
+
+void GpuVertexArray::Recreate() { Delete(); Create(); }
+
+void GpuVertexArray::SetDebugName(const std::string_view name) const
+{
+#ifdef _DEBUG
+    glObjectLabel(GL_VERTEX_ARRAY, m_Id, static_cast<GLsizei>(name.length()), name.data());
+#endif
+}
+
+uint32_t GpuVertexArray::GetId() const { return m_Id; }

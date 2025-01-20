@@ -8,6 +8,8 @@
 
 namespace Mountain
 {
+    struct GpuVertexArray;
+    struct GpuBuffer;
     struct GpuTexture;
 }
 
@@ -213,45 +215,544 @@ namespace Mountain::Graphics
 
     ENUM_COUNT(DataType);
 
+    enum class Constant : uint8_t
+    {
+        ActiveTexture,
+
+        AliasedLineWidthRange,
+
+        ArrayBufferBinding,
+
+        Blend,
+        BlendColor,
+        BlendDstAlpha,
+        BlendDstRgb,
+        BlendEquationRgb,
+        BlendEquationAlpha,
+        BlendSrcAlpha,
+        BlendSrcRgb,
+
+        ColorClearValue,
+        ColorLogicOp,
+        ColorWritemask,
+
+        CompressedTextureFormats,
+
+        MaxComputeShaderStorageBlocks,
+
+        MaxCombinedShaderStorageBlocks,
+
+        MaxComputeUniformBlocks,
+        MaxComputeTextureImageUnits,
+        MaxComputeUniformComponents,
+        MaxComputeAtomicCounters,
+        MaxComputeAtomicCounterBuffers,
+        MaxCombinedComputeUniformComponents,
+        MaxComputeWorkGroupInvocations,
+        MaxComputeWorkGroupCount,
+        MaxComputeWorkGroupSize,
+
+        DispatchIndirectBufferBinding,
+
+        MaxDebugGroupStackDepth,
+
+        DebugGroupStackDepth,
+
+        ContextFlags,
+
+        CullFace,
+        CullFaceMode,
+
+        CurrentProgram,
+
+        DepthClearValue,
+        DepthFunc,
+        DepthRange,
+        DepthTest,
+        DepthWritemask,
+
+        Dither,
+
+        DoubleBuffer,
+
+        DrawBuffer,
+        DrawBuffer0,
+        DrawBuffer1,
+        DrawBuffer2,
+        DrawBuffer3,
+        DrawBuffer4,
+        DrawBuffer5,
+        DrawBuffer6,
+        DrawBuffer7,
+        DrawBuffer8,
+        DrawBuffer9,
+        DrawBuffer10,
+        DrawBuffer11,
+        DrawBuffer12,
+        DrawBuffer13,
+        DrawBuffer14,
+        DrawBuffer15,
+        DrawFramebufferBinding,
+
+        ReadFramebufferBinding,
+
+        ElementArrayBufferBinding,
+
+        FragmentShaderDerivativeHint,
+
+        ImplementationColorReadFormat,
+        ImplementationColorReadType,
+
+        LineSmooth,
+        LineSmoothHint,
+        LineWidth,
+
+        LayerProvokingVertex,
+
+        LogicOpMode,
+
+        MajorVersion,
+
+        Max3dTextureSize,
+
+        MaxArrayTextureLayers,
+
+        MaxClipDistances,
+
+        MaxColorTextureSamples,
+
+        MaxCombinedAtomicCounters,
+        MaxCombinedFragmentUniformComponents,
+        MaxCombinedGeometryUniformComponents,
+        MaxCombinedTextureImageUnits,
+        MaxCombinedUniformBlocks,
+        MaxCombinedVertexUniformComponents,
+
+        MaxCubeMapTextureSize,
+
+        MaxDepthTextureSamples,
+
+        MaxDrawBuffers,
+
+        MaxDualSourceDrawBuffers,
+
+        MaxElementsIndices,
+        MaxElementsVertices,
+
+        MaxFragmentAtomicCounters,
+        MaxFragmentShaderStorageBlocks,
+        MaxFragmentInputComponents,
+        MaxFragmentUniformComponents,
+        MaxFragmentUniformVectors,
+        MaxFragmentUniformBlocks,
+
+        MaxFramebufferWidth,
+        MaxFramebufferHeight,
+        MaxFramebufferLayers,
+        MaxFramebufferSamples,
+
+        MaxGeometryAtomicCounters,
+        MaxGeometryShaderStorageBlocks,
+        MaxGeometryInputComponents,
+        MaxGeometryOutputComponents,
+        MaxGeometryTextureImageUnits,
+        MaxGeometryUniformBlocks,
+        MaxGeometryUniformComponents,
+
+        MaxIntegerSamples,
+
+        MinMapBufferAlignment,
+
+        MaxLabelLength,
+
+        MaxProgramTexelOffset,
+        MinProgramTexelOffset,
+
+        MaxRectangleTextureSize,
+
+        MaxRenderbufferSize,
+
+        MaxSampleMaskWords,
+
+        MaxServerWaitTimeout,
+
+        MaxShaderStorageBufferBindings,
+
+        MaxTessControlAtomicCounters,
+        MaxTessEvaluationAtomicCounters,
+        MaxTessControlShaderStorageBlocks,
+        MaxTessEvaluationShaderStorageBlocks,
+
+        MaxTextureBufferSize,
+        MaxTextureImageUnits,
+        MaxTextureLodBias,
+        MaxTextureSize,
+
+        MaxUniformBufferBindings,
+        MaxUniformBlockSize,
+        MaxUniformLocations,
+
+        MaxVaryingComponents,
+        MaxVaryingVectors,
+        MaxVaryingFloats,
+
+        MaxVertexAtomicCounters,
+        MaxVertexAttribs,
+        MaxVertexShaderStorageBlocks,
+        MaxVertexTextureImageUnits,
+        MaxVertexUniformComponents,
+        MaxVertexUniformVectors,
+        MaxVertexOutputComponents,
+        MaxVertexUniformBlocks,
+
+        MaxViewportDims,
+        MaxViewports,
+
+        MinorVersion,
+
+        NumCompressedTextureFormats,
+        NumExtensions,
+        NumProgramBinaryFormats,
+        NumShaderBinaryFormats,
+
+        PackAlignment,
+        PackImageHeight,
+        PackLsbFirst,
+        PackRowLength,
+        PackSkipImages,
+        PackSkipPixels,
+        PackSkipRows,
+        PackSwapBytes,
+
+        PixelPackBufferBinding,
+        PixelUnpackBufferBinding,
+
+        PointFadeThresholdSize,
+
+        PrimitiveRestartIndex,
+
+        ProgramBinaryFormats,
+        ProgramPipelineBinding,
+        ProgramPointSize,
+
+        ProvokingVertex,
+
+        PointSize,
+        PointSizeGranularity,
+        PointSizeRange,
+
+        PolygonOffsetFactor,
+        PolygonOffsetUnits,
+        PolygonOffsetFill,
+        PolygonOffsetLine,
+        PolygonOffsetPoint,
+        PolygonSmooth,
+        PolygonSmoothHint,
+
+        ReadBuffer,
+
+        RenderbufferBinding,
+
+        SampleBuffers,
+        SampleCoverageValue,
+        SampleCoverageInvert,
+        SampleMaskValue,
+
+        SamplerBinding,
+
+        Samples,
+
+        ScissorBox,
+        ScissorTest,
+
+        ShaderCompiler,
+        ShaderStorageBufferBinding,
+        ShaderStorageBufferOffsetAlignment,
+
+        ShaderStorageBufferStart,
+        ShaderStorageBufferSize,
+
+        SmoothLineWidthRange,
+        SmoothLineWidthGranularity,
+
+        StencilBackFail,
+        StencilBackFunc,
+        StencilBackPassDepthFail,
+        StencilBackPassDepthPass,
+        StencilBackRef,
+        StencilBackValueMask,
+        StencilBackWritemask,
+        StencilClearValue,
+        StencilFail,
+        StencilFunc,
+        StencilPassDepthFail,
+        StencilPassDepthPass,
+        StencilRef,
+        StencilTest,
+        StencilValueMask,
+        StencilWritemask,
+
+        Stereo,
+
+        SubpixelBits,
+
+        TextureBinding1d,
+        TextureBinding1dArray,
+        TextureBinding2d,
+        TextureBinding2dArray,
+        TextureBinding2dMultisample,
+        TextureBinding2dMultisampleArray,
+        TextureBinding3d,
+        TextureBindingBuffer,
+        TextureBindingCubeMap,
+        TextureBindingRectangle,
+        TextureCompressionHint,
+        TextureBufferOffsetAlignment,
+
+        Timestamp,
+
+        TransformFeedbackBufferBinding,
+        TransformFeedbackBufferStart,
+        TransformFeedbackBufferSize,
+
+        UniformBufferBinding,
+        UniformBufferOffsetAlignment,
+        UniformBufferSize,
+        UniformBufferStart,
+
+        UnpackAlignment,
+        UnpackImageHeight,
+        UnpackLsbFirst,
+        UnpackRowLength,
+        UnpackSkipImages,
+        UnpackSkipPixels,
+        UnpackSkipRows,
+        UnpackSwapBytes,
+
+        VertexArrayBinding,
+        VertexBindingDivisor,
+        VertexBindingOffset,
+        VertexBindingStride,
+        VertexBindingBuffer,
+
+        MaxVertexAttribRelativeOffset,
+        MaxVertexAttribBindings,
+
+        Viewport,
+        ViewportBoundsRange,
+        ViewportIndexProvokingVertex,
+        ViewportSubpixelBits,
+
+        MaxElementIndex,
+
+        Count
+    };
+
+    ENUM_COUNT(Constant);
+
+    enum class BufferType : uint8_t
+    {
+        ArrayBuffer,
+        AtomicCounterBuffer,
+        CopyReadBuffer,
+        CopyWriteBuffer,
+        DispatchIndirectBuffer,
+        DrawIndirectBuffer,
+        ElementArrayBuffer,
+        PixelPackBuffer,
+        PixelUnpackBuffer,
+        QueryBuffer,
+        ShaderStorageBuffer,
+        TextureBuffer,
+        TransformFeedbackBuffer,
+        UniformBuffer,
+
+        Count
+    };
+
+    ENUM_COUNT(BufferType);
+
+    enum class BufferUsage : uint8_t
+    {
+        StreamDraw,
+        StreamRead,
+        StreamCopy,
+        StaticDraw,
+        StaticRead,
+        StaticCopy,
+        DynamicDraw,
+        DynamicRead,
+        DynamicCopy,
+
+        Count
+    };
+
+    ENUM_COUNT(BufferUsage);
+
+    enum class BufferStorageFlags : uint16_t
+    {
+        None            = 0,
+
+        MapRead         = 0x001,
+        MapWrite        = 0x002,
+
+        MapPersistent   = 0x040,
+        MapCoherent     = 0x080,
+
+        DynamicStorage  = 0x100,
+        ClientStorage   = 0x200
+    };
+
+    enum class MemoryBarrierFlags : uint16_t
+    {
+        None                        = 0,
+
+        VertexAttribArrayBarrier    = 1 << 0,
+        ElementArrayBarrier         = 1 << 1,
+        UniformBarrier              = 1 << 2,
+        TextureFetchBarrier         = 1 << 3,
+
+        // For some reason, the OpenGL bit values skip the 1 << 4 or 0x10 value
+
+        ShaderImageAccessBarrier    = 1 << 5,
+        CommandBarrier              = 1 << 6,
+        PixelBufferBarrier          = 1 << 7,
+        TextureUpdateBarrier        = 1 << 8,
+        BufferUpdateBarrier         = 1 << 9,
+        FramebufferBarrier          = 1 << 10,
+        TransformFeedbackBarrier    = 1 << 11,
+        AtomicCounterBarrier        = 1 << 12,
+        ShaderStorageBarrier        = 1 << 13
+    };
+
+    enum class DrawMode : uint8_t
+    {
+        Points,
+        LineStrip,
+        LineLoop,
+        Lines,
+        LineStripAdjacency,
+        LinesAdjacency,
+        TriangleStrip,
+        TriangleFan,
+        Triangles,
+        TriangleStripAdjacency,
+        TrianglesAdjacency,
+        Patches,
+
+        Count
+    };
+
+    ENUM_COUNT(DrawMode);
+
+    enum class ClearFlags : uint16_t
+    {
+        None            = 0,
+
+        DepthBuffer     = 0x0100,
+        StencilBuffer   = 0x0400,
+        ColorBuffer     = 0x4000
+    };
+
     template <typename T>
-    concept OpenGlConvertibleT = Meta::IsAny<T, MagnificationFilter, Wrapping, ShaderType, InternalFormat, Format, DataType>;
+    concept OpenGlConvertibleT = Meta::IsAny<
+        T,
+        MagnificationFilter,
+        Wrapping,
+        ShaderType,
+        InternalFormat,
+        Format,
+        DataType,
+        Constant,
+        BufferType,
+        BufferUsage,
+        DrawMode
+    >;
 
     MOUNTAIN_API void BindImage(uint32_t textureId, uint32_t shaderBinding, ImageShaderAccess access);
 
+    MOUNTAIN_API void SetActiveTexture(uint8_t activeTexture);
+
     MOUNTAIN_API void SynchronizeGpuData(GpuDataSynchronizationType dataType);
+
+    MOUNTAIN_API void MemoryBarrier(MemoryBarrierFlags flags);
+
+    MOUNTAIN_API void DrawArrays(DrawMode mode, int32_t first, int32_t count);
+    MOUNTAIN_API void DrawArraysInstanced(DrawMode mode, int32_t first, int32_t count, int32_t instanceCount);
+    MOUNTAIN_API void DrawElements(DrawMode mode, int32_t count, DataType type, const void* indices);
+    MOUNTAIN_API void DrawElementsInstanced(DrawMode mode, int32_t count, DataType type, const void* indices, int32_t instanceCount);
+
+    MOUNTAIN_API void SetClearColor(const Color& newClearColor);
+    MOUNTAIN_API void Clear(ClearFlags flags);
 
     MOUNTAIN_API void BindTexture(uint32_t textureId);
     MOUNTAIN_API void BindTexture(GpuTexture gpuTexture);
 
-    template <OpenGlConvertibleT T>
-    T FromOpenGl(int32_t value);
-    template <>
-    MOUNTAIN_API MagnificationFilter FromOpenGl<MagnificationFilter>(int32_t filter);
-    template <>
-    MOUNTAIN_API Wrapping FromOpenGl<Wrapping>(int32_t wrapping);
-    template <>
-    MOUNTAIN_API ShaderType FromOpenGl<ShaderType>(int32_t shaderType);
-    template <>
-    MOUNTAIN_API InternalFormat FromOpenGl<InternalFormat>(int32_t internalFormat);
-    template <>
-    MOUNTAIN_API Format FromOpenGl<Format>(int32_t format);
-    template <>
-    MOUNTAIN_API DataType FromOpenGl<DataType>(int32_t dataType);
+    MOUNTAIN_API void BindBuffer(BufferType type, uint32_t bufferId);
+    MOUNTAIN_API void BindBuffer(BufferType type, GpuBuffer gpuBuffer);
+
+    MOUNTAIN_API void BindBufferBase(BufferType type, uint32_t index, GpuBuffer gpuBuffer);
+    MOUNTAIN_API void BindBufferBase(BufferType type, uint32_t index, uint32_t bufferId);
+
+    MOUNTAIN_API void BindVertexArray(uint32_t vertexArrayId);
+    MOUNTAIN_API void BindVertexArray(GpuVertexArray gpuVertexArray);
+
+    MOUNTAIN_API void SetVertexAttribute(uint32_t index, int32_t size, int32_t stride, size_t offset, uint32_t divisor = 0);
+    MOUNTAIN_API void SetVertexAttributeInt(uint32_t index, int32_t size, int32_t stride, size_t offset, uint32_t divisor = 0);
 
     template <OpenGlConvertibleT T>
+    // ReSharper disable once CppFunctionIsNotImplemented
+    T FromOpenGl(int32_t value);
+    template <>
+    MOUNTAIN_API MagnificationFilter FromOpenGl<MagnificationFilter>(int32_t value);
+    template <>
+    MOUNTAIN_API Wrapping FromOpenGl<Wrapping>(int32_t value);
+    template <>
+    MOUNTAIN_API ShaderType FromOpenGl<ShaderType>(int32_t value);
+    template <>
+    MOUNTAIN_API InternalFormat FromOpenGl<InternalFormat>(int32_t value);
+    template <>
+    MOUNTAIN_API Format FromOpenGl<Format>(int32_t value);
+    template <>
+    MOUNTAIN_API DataType FromOpenGl<DataType>(int32_t value);
+    template <>
+    MOUNTAIN_API Constant FromOpenGl<Constant>(int32_t value);
+    template <>
+    MOUNTAIN_API BufferType FromOpenGl<BufferType>(int32_t value);
+    template <>
+    MOUNTAIN_API BufferUsage FromOpenGl<BufferUsage>(int32_t value);
+    template <>
+    MOUNTAIN_API DrawMode FromOpenGl<DrawMode>(int32_t value);
+
+    template <OpenGlConvertibleT T>
+    // ReSharper disable once CppFunctionIsNotImplemented
     int32_t ToOpenGl(T value);
     template <>
-    MOUNTAIN_API int32_t ToOpenGl<MagnificationFilter>(MagnificationFilter filter);
+    MOUNTAIN_API int32_t ToOpenGl<MagnificationFilter>(MagnificationFilter value);
     template <>
-    MOUNTAIN_API int32_t ToOpenGl<Wrapping>(Wrapping wrapping);
+    MOUNTAIN_API int32_t ToOpenGl<Wrapping>(Wrapping value);
     template <>
-    MOUNTAIN_API int32_t ToOpenGl<ShaderType>(ShaderType shaderType);
+    MOUNTAIN_API int32_t ToOpenGl<ShaderType>(ShaderType value);
     template <>
-    MOUNTAIN_API int32_t ToOpenGl<InternalFormat>(InternalFormat internalFormat);
+    MOUNTAIN_API int32_t ToOpenGl<InternalFormat>(InternalFormat value);
     template <>
-    MOUNTAIN_API int32_t ToOpenGl<Format>(Format format);
+    MOUNTAIN_API int32_t ToOpenGl<Format>(Format value);
     template <>
-    MOUNTAIN_API int32_t ToOpenGl<DataType>(DataType dataType);
+    MOUNTAIN_API int32_t ToOpenGl<DataType>(DataType value);
+    template <>
+    MOUNTAIN_API int32_t ToOpenGl<Constant>(Constant value);
+    template <>
+    MOUNTAIN_API int32_t ToOpenGl<BufferType>(BufferType value);
+    template <>
+    MOUNTAIN_API int32_t ToOpenGl<BufferUsage>(BufferUsage value);
+    template <>
+    MOUNTAIN_API int32_t ToOpenGl<DrawMode>(DrawMode value);
 }
 
 ENUM_FLAGS(Mountain::Graphics::GpuDataSynchronizationType);
+
+ENUM_FLAGS(Mountain::Graphics::BufferStorageFlags);
+
+ENUM_FLAGS(Mountain::Graphics::MemoryBarrierFlags);
+
+ENUM_FLAGS(Mountain::Graphics::ClearFlags);
