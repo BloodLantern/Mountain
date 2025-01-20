@@ -396,6 +396,7 @@ void Draw::Initialize()
     m_RenderTargetVbo.Create();
     m_RenderTargetSsbo.Create();
 
+    m_PointVao.Create();
     m_LineVao.Create();
     m_LineColoredVao.Create();
     m_TriangleVao.Create();
@@ -415,6 +416,7 @@ void Draw::Initialize()
     m_RenderTargetVbo.SetDebugName("RenderTarget VBO");
     m_RenderTargetSsbo.SetDebugName("RenderTarget SSBO");
 
+    m_PointVao.SetDebugName("Point VAO");
     m_LineVao.SetDebugName("Line VAO");
     m_LineColoredVao.SetDebugName("Line Colored VAO");
     m_TriangleVao.SetDebugName("Triangle VAO");
@@ -472,6 +474,7 @@ void Draw::Shutdown()
     m_RenderTargetVbo.Delete();
     m_RenderTargetSsbo.Delete();
 
+    m_PointVao.Delete();
     m_LineVao.Delete();
     m_LineColoredVao.Delete();
     m_TriangleVao.Delete();
@@ -560,18 +563,18 @@ void Draw::InitializeTriangleColoredBuffers()
 
 void Draw::InitializeRectangleBuffers()
 {
-    constexpr std::array vertexData = {
+    constexpr std::array vertexData{
         0.f, 0.f,
         1.f, 0.f,
         1.f, 1.f,
         0.f, 1.f
     };
-    
-    constexpr std::array<uint32_t, 6> indexData = {
+
+    constexpr std::array<uint32_t, 6> indexData{
         0, 1, 2,
         2, 3, 0
     };
-    
+
     Graphics::BindVertexArray(m_RectangleVao);
 
     // VBO
