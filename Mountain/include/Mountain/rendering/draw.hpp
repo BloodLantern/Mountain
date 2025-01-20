@@ -7,7 +7,6 @@
 #include <Maths/vector2.hpp>
 
 #include "Mountain/rendering/render_target.hpp"
-#include "Mountain/resource/font.hpp"
 #include "Mountain/resource/shader.hpp"
 #include "Mountain/resource/texture.hpp"
 #include "Mountain/utils/color.hpp"
@@ -330,8 +329,8 @@ namespace Mountain
 
         static inline Pointer<Shader> m_TextureShader, m_TextShader, m_RenderTargetShader;
 
-        static inline uint32_t m_RectangleEbo, m_Vbo, m_RectangleVbo, m_TextureVbo, m_TextVbo, m_RenderTargetVbo, m_RenderTargetSsbo;
-        static inline uint32_t m_PointVao, m_LineVao, m_LineColoredVao, m_TriangleVao, m_TriangleColoredVao, m_RectangleVao, m_CircleVao, m_ArcVao, m_TextureVao, m_TextVao, m_RenderTargetVao;
+        static inline GpuBuffer m_RectangleEbo, m_Vbo, m_RectangleVbo, m_TextureVbo, m_TextVbo, m_RenderTargetVbo, m_RenderTargetSsbo;
+        static inline GpuVertexArray m_PointVao, m_LineVao, m_LineColoredVao, m_TriangleVao, m_TriangleColoredVao, m_RectangleVao, m_CircleVao, m_ArcVao, m_TextureVao, m_TextVao, m_RenderTargetVao;
 
         static inline Matrix m_ProjectionMatrix;
 
@@ -374,9 +373,6 @@ namespace Mountain
         static void RenderTextureData(const List<TextureData>& textures, uint32_t textureId, size_t index, size_t count);
         static void RenderTextData(const List<TextData>& texts, size_t index, size_t count);
         static void RenderRenderTargetData(const List<RenderTargetData>& renderTargets, size_t index, size_t count);
-
-        static void SetVertexAttribute(uint32_t index, int32_t size, int32_t stride, size_t offset, uint32_t divisor = 0);
-        static void SetVertexAttributeInt(uint32_t index, int32_t size, int32_t stride, size_t offset, uint32_t divisor = 0);
 
         friend class Renderer;
         friend class RenderTarget;
