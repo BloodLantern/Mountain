@@ -66,7 +66,7 @@ void ResourceManager::LoadAll()
     auto&& start = std::chrono::system_clock::now();
 
     List<Pointer<File>> files;
-    FileManager::FindAll<File>([](Pointer<File> file) { return file->GetResource() == nullptr; }, &files);
+    FileManager::FindAll<File>([](Pointer<File> file) { return file->GetResource() == nullptr && !IsBinary(file->GetPathString()); }, &files);
 
     const size_t oldResourceCount = m_Resources.size();
 
@@ -98,8 +98,7 @@ void ResourceManager::LoadAll()
         {
             Pointer<Shader> shader;
 
-            // We use an underscore before the name to make sure it isn't used elsewhere
-            const std::string&& filenameNoExtension = file->GetParent()->GetPathString();
+            const std::string& filenameNoExtension = file->GetParent()->GetPathString();
             if (Contains(filenameNoExtension))
                 shader = Get<Shader>(filenameNoExtension);
             else
@@ -112,8 +111,7 @@ void ResourceManager::LoadAll()
         {
             Pointer<ComputeShader> shader;
 
-            // We use an underscore before the name to make sure it isn't used elsewhere
-            const std::string&& filenameNoExtension = file->GetPathString();
+            const std::string& filenameNoExtension = file->GetPathString();
             if (Contains(filenameNoExtension))
                 shader = Get<ComputeShader>(filenameNoExtension);
             else
