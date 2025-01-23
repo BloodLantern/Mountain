@@ -24,7 +24,7 @@ void AudioListener::Update()
     AudioContext::CheckError();
 
     const Vector2 velocity = dopplerEffect ? (position - m_LastPosition) / Time::GetDeltaTime() : Vector2::Zero();
-    constexpr std::array orientation = { -Vector3::UnitZ(), Vector3::UnitY() };
+    constexpr Vector3 orientation[2] = { -Vector3::UnitZ(), Vector3::UnitY() };
     
     // Velocity
     alListenerfv(AL_VELOCITY, static_cast<Vector3>(velocity).Data());
