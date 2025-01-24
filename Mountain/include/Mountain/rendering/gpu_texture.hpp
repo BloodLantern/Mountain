@@ -6,7 +6,7 @@
 #include "Mountain/rendering/graphics.hpp"
 #include "Mountain/utils/color.hpp"
 
-namespace Mountain
+namespace Mountain::Graphics
 {
     /// @brief Low-level interface for OpenGL textures
     struct MOUNTAIN_API GpuTexture
@@ -32,7 +32,7 @@ namespace Mountain
         /// @see <a href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/glGenTextures.xhtml">glGenTextures()</a>
         /// <a href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/glTextureView.xhtml">glTextureView()</a>
         /// @note The original texture <b>must</b> be immutable
-        void CreateFrom(uint32_t originalTextureId, Graphics::InternalFormat newInternalFormat, uint32_t minMipmapLevel, uint32_t mipmapLevels);
+        void CreateFrom(uint32_t originalTextureId, InternalFormat newInternalFormat, uint32_t minMipmapLevel, uint32_t mipmapLevels);
 
         /// @brief Create the texture on the GPU from the given immutable texture
         /// @param originalGpuTexture The texture whose data is to be what this texture will view
@@ -44,7 +44,7 @@ namespace Mountain
         /// @see <a href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/glGenTextures.xhtml">glGenTextures()</a>
         /// <a href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/glTextureView.xhtml">glTextureView()</a>
         /// @note The original texture <b>must</b> be immutable
-        void CreateFrom(GpuTexture originalGpuTexture, Graphics::InternalFormat newInternalFormat, uint32_t minMipmapLevel, uint32_t mipmapLevels);
+        void CreateFrom(GpuTexture originalGpuTexture, InternalFormat newInternalFormat, uint32_t minMipmapLevel, uint32_t mipmapLevels);
 
         /// @brief Initialize the immutable data storage on the GPU
         /// @param mipmapLevels The number of mipmap levels to initialize
@@ -53,7 +53,7 @@ namespace Mountain
         /// @note This will fail if the texture data is already immutable, e.g. a call to @c SetStorage() was already made.
         /// If you want to use this function again, you first need to @c Recreate() the texture.
         /// @see <a href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/glTexStorage2D.xhtml">glTexStorage2D()</a>
-        void SetStorage(Graphics::InternalFormat internalFormat, Vector2i size, int32_t mipmapLevels = 1) const;
+        void SetStorage(InternalFormat internalFormat, Vector2i size, int32_t mipmapLevels = 1) const;
 
         /// @brief Set a portion of the texture data
         /// @param offset The offset from in the texture to set the data from
@@ -66,8 +66,8 @@ namespace Mountain
         void SetSubData(
             Vector2i offset,
             Vector2i size,
-            Graphics::Format dataFormat,
-            Graphics::DataType dataType,
+            Format dataFormat,
+            DataType dataType,
             const void* data,
             int32_t mipmapLevel = 0
         ) const;
@@ -83,10 +83,10 @@ namespace Mountain
         /// If you want to use this function and the texture data is immutable, you first need to @c Recreate() the texture.
         /// @see <a href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/glTexImage2D.xhtml">glTexImage2D()</a>
         void SetData(
-            Graphics::InternalFormat internalFormat,
+            InternalFormat internalFormat,
             Vector2i size,
-            Graphics::Format dataFormat,
-            Graphics::DataType dataType,
+            Format dataFormat,
+            DataType dataType,
             const void* data,
             int32_t mipmapLevel = 0
         ) const;
@@ -108,27 +108,27 @@ namespace Mountain
 
         /// @see <a href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/glGetTexParameter.xhtml">glGetTexParameteriv()</a>
         [[nodiscard]]
-        Graphics::MagnificationFilter GetMinFilter() const;
+        MagnificationFilter GetMinFilter() const;
         /// @see <a href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/glTexParameter.xhtml">glTexParameteri()</a>
-        void SetMinFilter(Graphics::MagnificationFilter newMinFilter) const;
+        void SetMinFilter(MagnificationFilter newMinFilter) const;
 
         /// @see <a href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/glGetTexParameter.xhtml">glGetTexParameteriv()</a>
         [[nodiscard]]
-        Graphics::MagnificationFilter GetMagFilter() const;
+        MagnificationFilter GetMagFilter() const;
         /// @see <a href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/glTexParameter.xhtml">glTexParameteri()</a>
-        void SetMagFilter(Graphics::MagnificationFilter newMagFilter) const;
+        void SetMagFilter(MagnificationFilter newMagFilter) const;
 
         /// @see <a href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/glGetTexParameter.xhtml">glGetTexParameteriv()</a>
         [[nodiscard]]
-        Graphics::Wrapping GetWrappingHorizontal() const;
+        Wrapping GetWrappingHorizontal() const;
         /// @see <a href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/glTexParameter.xhtml">glTexParameteri()</a>
-        void SetWrappingHorizontal(Graphics::Wrapping newWrappingHorizontal) const;
+        void SetWrappingHorizontal(Wrapping newWrappingHorizontal) const;
 
         /// @see <a href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/glGetTexParameter.xhtml">glGetTexParameteriv()</a>
         [[nodiscard]]
-        Graphics::Wrapping GetWrappingVertical() const;
+        Wrapping GetWrappingVertical() const;
         /// @see <a href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/glTexParameter.xhtml">glTexParameteri()</a>
-        void SetWrappingVertical(Graphics::Wrapping newWrappingVertical) const;
+        void SetWrappingVertical(Wrapping newWrappingVertical) const;
 
         /// @see <a href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/glGetTexParameter.xhtml">glGetTexParameterfv()</a>
         [[nodiscard]]

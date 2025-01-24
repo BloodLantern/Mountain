@@ -489,7 +489,7 @@ void Draw::Shutdown()
 
 void Draw::InitializePointBuffers()
 {
-    Graphics::BindVertexArray(m_PointVao);
+    BindVertexArray(m_PointVao);
 
     BindBuffer(Graphics::BufferType::ArrayBuffer, m_Vbo);
     uint32_t index = 0;
@@ -502,7 +502,7 @@ void Draw::InitializePointBuffers()
 
 void Draw::InitializeLineBuffers()
 {
-    Graphics::BindVertexArray(m_LineVao);
+    BindVertexArray(m_LineVao);
 
     BindBuffer(Graphics::BufferType::ArrayBuffer, m_Vbo);
     uint32_t index = 0;
@@ -516,7 +516,7 @@ void Draw::InitializeLineBuffers()
 
 void Draw::InitializeLineColoredBuffers()
 {
-    Graphics::BindVertexArray(m_LineColoredVao);
+    BindVertexArray(m_LineColoredVao);
 
     BindBuffer(Graphics::BufferType::ArrayBuffer, m_Vbo);
     uint32_t index = 0;
@@ -531,7 +531,7 @@ void Draw::InitializeLineColoredBuffers()
 
 void Draw::InitializeTriangleBuffers()
 {
-    Graphics::BindVertexArray(m_TriangleVao);
+    BindVertexArray(m_TriangleVao);
 
     BindBuffer(Graphics::BufferType::ArrayBuffer, m_Vbo);
     uint32_t index = 0;
@@ -546,7 +546,7 @@ void Draw::InitializeTriangleBuffers()
 
 void Draw::InitializeTriangleColoredBuffers()
 {
-    Graphics::BindVertexArray(m_TriangleColoredVao);
+    BindVertexArray(m_TriangleColoredVao);
 
     BindBuffer(Graphics::BufferType::ArrayBuffer, m_Vbo);
     uint32_t index = 0;
@@ -575,7 +575,7 @@ void Draw::InitializeRectangleBuffers()
         2, 3, 0
     };
 
-    Graphics::BindVertexArray(m_RectangleVao);
+    BindVertexArray(m_RectangleVao);
 
     // VBO
     BindBuffer(Graphics::BufferType::ArrayBuffer, m_RectangleVbo);
@@ -603,7 +603,7 @@ void Draw::InitializeRectangleBuffers()
 
 void Draw::InitializeCircleBuffers()
 {
-    Graphics::BindVertexArray(m_CircleVao);
+    BindVertexArray(m_CircleVao);
 
     // VBO
     BindBuffer(Graphics::BufferType::ArrayBuffer, m_RectangleVbo);
@@ -636,7 +636,7 @@ void Draw::InitializeCircleBuffers()
 
 void Draw::InitializeArcBuffers()
 {
-    Graphics::BindVertexArray(m_ArcVao);
+    BindVertexArray(m_ArcVao);
 
     // VBO
     BindBuffer(Graphics::BufferType::ArrayBuffer, m_RectangleVbo);
@@ -680,7 +680,7 @@ void Draw::InitializeTextureBuffers()
         0.f, 1.f
     };
     
-    Graphics::BindVertexArray(m_TextureVao);
+    BindVertexArray(m_TextureVao);
 
     // VBO
     BindBuffer(Graphics::BufferType::ArrayBuffer, m_TextureVbo);
@@ -712,7 +712,7 @@ void Draw::InitializeTextureBuffers()
 
 void Draw::InitializeTextBuffers()
 {
-    Graphics::BindVertexArray(m_TextVao);
+    BindVertexArray(m_TextVao);
     BindBuffer(Graphics::BufferType::ElementArrayBuffer, m_RectangleEbo);
     BindBuffer(Graphics::BufferType::ArrayBuffer, m_TextVbo);
     m_TextVbo.SetStorage(sizeof(Vector4) * 4, nullptr, Graphics::BufferStorageFlags::None);
@@ -729,7 +729,7 @@ void Draw::InitializeRenderTargetBuffers()
         0.f, 1.f
     };
     
-    Graphics::BindVertexArray(m_RenderTargetVao);
+    BindVertexArray(m_RenderTargetVao);
 
     // VBO
     BindBuffer(Graphics::BufferType::ArrayBuffer, m_RenderTargetVbo);
@@ -825,7 +825,7 @@ void Draw::RenderPointData(const List<PointData>& points, const size_t index, co
 
     m_Vbo.SetData(static_cast<int64_t>(sizeof(PointData) * count), &points[index], Graphics::BufferUsage::StreamDraw);
 
-    Graphics::BindVertexArray(m_PointVao);
+    BindVertexArray(m_PointVao);
     m_PointShader->Use();
 
     DrawArraysInstanced(Graphics::DrawMode::Points, 0, 1, static_cast<int32_t>(count));
@@ -841,7 +841,7 @@ void Draw::RenderLineData(const List<LineData>& lines, const size_t index, const
 
     m_Vbo.SetData(static_cast<int64_t>(sizeof(LineData) * count), &lines[index], Graphics::BufferUsage::StreamDraw);
 
-    Graphics::BindVertexArray(m_LineVao);
+    BindVertexArray(m_LineVao);
     m_LineShader->Use();
 
     DrawArraysInstanced(Graphics::DrawMode::Lines, 0, 2, static_cast<int32_t>(count));
@@ -857,7 +857,7 @@ void Draw::RenderLineColoredData(const List<LineColoredData>& linesColored, cons
 
     m_Vbo.SetData(static_cast<int64_t>(sizeof(LineColoredData) * count), &linesColored[index], Graphics::BufferUsage::StreamDraw);
 
-    Graphics::BindVertexArray(m_LineColoredVao);
+    BindVertexArray(m_LineColoredVao);
     m_LineColoredShader->Use();
 
     DrawArraysInstanced(Graphics::DrawMode::Lines, 0, 2, static_cast<int32_t>(count));
@@ -873,7 +873,7 @@ void Draw::RenderTriangleData(const List<TriangleData>& triangles, const bool_t 
 
     m_Vbo.SetData(static_cast<int64_t>(sizeof(TriangleData) * count), &triangles[index], Graphics::BufferUsage::StreamDraw);
     
-    Graphics::BindVertexArray(m_TriangleVao);
+    BindVertexArray(m_TriangleVao);
     m_TriangleShader->Use();
 
     DrawArraysInstanced(filled ? Graphics::DrawMode::Triangles : Graphics::DrawMode::LineLoop, 0, 3, static_cast<int32_t>(count));
@@ -889,7 +889,7 @@ void Draw::RenderTriangleColoredData(const List<TriangleColoredData>& trianglesC
 
     m_Vbo.SetData(static_cast<int64_t>(sizeof(TriangleColoredData) * count), &trianglesColored[index], Graphics::BufferUsage::StreamDraw);
 
-    Graphics::BindVertexArray(m_TriangleColoredVao);
+    BindVertexArray(m_TriangleColoredVao);
     m_TriangleColoredShader->Use();
 
     DrawArraysInstanced(filled ? Graphics::DrawMode::Triangles : Graphics::DrawMode::LineLoop, 0, 3, static_cast<int32_t>(count));
@@ -905,7 +905,7 @@ void Draw::RenderRectangleData(const List<RectangleData>& rectangles, const bool
 
     m_Vbo.SetData(static_cast<int64_t>(sizeof(RectangleData) * count), &rectangles[index], Graphics::BufferUsage::StreamDraw);
 
-    Graphics::BindVertexArray(m_RectangleVao);
+    BindVertexArray(m_RectangleVao);
     m_RectangleShader->Use();
 
     if (filled)
@@ -924,7 +924,7 @@ void Draw::RenderCircleData(const List<CircleData>& circles, const size_t index,
 
     m_Vbo.SetData(static_cast<int64_t>(sizeof(CircleData) * count), &circles[index], Graphics::BufferUsage::StreamDraw);
 
-    Graphics::BindVertexArray(m_CircleVao);
+    BindVertexArray(m_CircleVao);
     m_CircleShader->Use();
 
     DrawElementsInstanced(Graphics::DrawMode::Triangles, 6, Graphics::DataType::UnsignedInt, nullptr, static_cast<int32_t>(count));
@@ -940,7 +940,7 @@ void Draw::RenderArcData(const List<ArcData>& arcs, const size_t index, const si
 
     m_Vbo.SetData(static_cast<int64_t>(sizeof(ArcData) * count), &arcs[index], Graphics::BufferUsage::StreamDraw);
 
-    Graphics::BindVertexArray(m_ArcVao);
+    BindVertexArray(m_ArcVao);
     m_ArcShader->Use();
 
     DrawElementsInstanced(Graphics::DrawMode::Triangles, 6, Graphics::DataType::UnsignedInt, nullptr, static_cast<int32_t>(count));
@@ -956,7 +956,7 @@ void Draw::RenderTextureData(const List<TextureData>& textures, const uint32_t t
 
     m_Vbo.SetData(static_cast<int64_t>(sizeof(TextureData) * count), &textures[index], Graphics::BufferUsage::StreamDraw);
 
-    Graphics::BindVertexArray(m_TextureVao);
+    BindVertexArray(m_TextureVao);
     Graphics::BindTexture(textureId);
     m_TextureShader->Use();
 
@@ -969,7 +969,7 @@ void Draw::RenderTextureData(const List<TextureData>& textures, const uint32_t t
 
 void Draw::RenderTextData(const List<TextData>& texts, const size_t index, const size_t count)
 {
-    Graphics::BindVertexArray(m_TextVao);
+    BindVertexArray(m_TextVao);
     m_TextShader->Use();
 
     for (size_t i = 0; i < count; i++)
@@ -1003,7 +1003,7 @@ void Draw::RenderTextData(const List<TextData>& texts, const size_t index, const
                 };
 
                     
-                Graphics::BindTexture(character.texture);
+                BindTexture(character.texture);
 
                 m_TextVbo.SetSubData(0, sizeof(vertices), vertices.data());
 
@@ -1023,7 +1023,7 @@ void Draw::RenderTextData(const List<TextData>& texts, const size_t index, const
 
 void Draw::RenderRenderTargetData(const List<RenderTargetData>& renderTargets, const size_t index, const size_t count)
 {
-    Graphics::BindVertexArray(m_RenderTargetVao);
+    BindVertexArray(m_RenderTargetVao);
     m_RenderTargetShader->Use();
 
     m_RenderTargetShader->SetUniform("projection", m_ProjectionMatrix * m_CameraMatrix);
