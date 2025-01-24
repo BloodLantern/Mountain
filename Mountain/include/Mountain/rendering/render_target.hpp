@@ -51,7 +51,7 @@ namespace Mountain
         MOUNTAIN_API uint32_t GetTextureId() const;
 
         [[nodiscard]]
-        MOUNTAIN_API GpuTexture GetGpuTexture() const;
+        MOUNTAIN_API Graphics::GpuTexture GetGpuTexture() const;
 
         [[nodiscard]]
         MOUNTAIN_API bool_t GetInitialized() const;
@@ -72,7 +72,7 @@ namespace Mountain
         MOUNTAIN_API const Vector2& GetCameraScale() const;
 
     private:
-        GpuTexture m_Texture;
+        Graphics::GpuTexture m_Texture;
         uint32_t m_Framebuffer;
         uint32_t m_Vbo, m_Vao;
 

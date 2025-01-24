@@ -143,7 +143,7 @@ void RenderTarget::SetDebugName([[maybe_unused]] const std::string_view name) co
 
 uint32_t RenderTarget::GetTextureId() const { return m_Texture.GetId(); }
 
-GpuTexture RenderTarget::GetGpuTexture() const { return m_Texture; }
+Graphics::GpuTexture RenderTarget::GetGpuTexture() const { return m_Texture; }
 
 bool_t RenderTarget::GetInitialized() const { return m_Initialized; }
 

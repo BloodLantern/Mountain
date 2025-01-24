@@ -592,8 +592,7 @@ Graphics::DrawMode Graphics::FromOpenGl<Graphics::DrawMode>(const int32_t value)
     }
 }
 
-template <>
-int32_t Graphics::ToOpenGl<Graphics::MagnificationFilter>(const MagnificationFilter value)
+int32_t Graphics::ToOpenGl(const MagnificationFilter value)
 {
     switch (value)
     {
@@ -606,8 +605,7 @@ int32_t Graphics::ToOpenGl<Graphics::MagnificationFilter>(const MagnificationFil
     throw std::invalid_argument("Invalid magnification filter");
 }
 
-template <>
-int32_t Graphics::ToOpenGl<Graphics::Wrapping>(const Wrapping value)
+int32_t Graphics::ToOpenGl(const Wrapping value)
 {
     switch (value)
     {
@@ -622,8 +620,7 @@ int32_t Graphics::ToOpenGl<Graphics::Wrapping>(const Wrapping value)
     throw std::invalid_argument("Invalid wrapping");
 }
 
-template <>
-int32_t Graphics::ToOpenGl<Graphics::ShaderType>(const ShaderType value)
+int32_t Graphics::ToOpenGl(const ShaderType value)
 {
     switch (value)
     {
@@ -636,8 +633,7 @@ int32_t Graphics::ToOpenGl<Graphics::ShaderType>(const ShaderType value)
     throw std::invalid_argument("Invalid shader type");
 }
 
-template <>
-int32_t Graphics::ToOpenGl<Graphics::InternalFormat>(const InternalFormat value)
+int32_t Graphics::ToOpenGl(const InternalFormat value)
 {
     switch (value)
     {
@@ -710,8 +706,7 @@ int32_t Graphics::ToOpenGl<Graphics::InternalFormat>(const InternalFormat value)
     throw std::invalid_argument("Invalid internal format");
 }
 
-template <>
-int32_t Graphics::ToOpenGl<Graphics::Format>(const Format value)
+int32_t Graphics::ToOpenGl(const Format value)
 {
     switch (value)
     {
@@ -728,8 +723,7 @@ int32_t Graphics::ToOpenGl<Graphics::Format>(const Format value)
     throw std::invalid_argument("Invalid format");
 }
 
-template <>
-int32_t Graphics::ToOpenGl<Graphics::DataType>(const DataType value)
+int32_t Graphics::ToOpenGl(const DataType value)
 {
     switch (value)
     {
@@ -762,8 +756,7 @@ int32_t Graphics::ToOpenGl<Graphics::DataType>(const DataType value)
     throw std::invalid_argument("Invalid data type");
 }
 
-template <>
-int32_t Graphics::ToOpenGl<Graphics::Constant>(const Constant value)
+int32_t Graphics::ToOpenGl(const Constant value)
 {
     switch (value)
     {
@@ -1016,8 +1009,7 @@ int32_t Graphics::ToOpenGl<Graphics::Constant>(const Constant value)
     throw std::invalid_argument("Invalid constant");
 }
 
-template <>
-int32_t Graphics::ToOpenGl<Graphics::BufferType>(const BufferType value)
+int32_t Graphics::ToOpenGl(const BufferType value)
 {
     switch (value)
     {
@@ -1042,8 +1034,7 @@ int32_t Graphics::ToOpenGl<Graphics::BufferType>(const BufferType value)
     throw std::invalid_argument("Invalid buffer type");
 }
 
-template <>
-int32_t Graphics::ToOpenGl<Graphics::BufferUsage>(const BufferUsage value)
+int32_t Graphics::ToOpenGl(const BufferUsage value)
 {
     switch (value)
     {
@@ -1063,8 +1054,7 @@ int32_t Graphics::ToOpenGl<Graphics::BufferUsage>(const BufferUsage value)
     throw std::invalid_argument("Invalid buffer usage");
 }
 
-template <>
-int32_t Graphics::ToOpenGl<Graphics::DrawMode>(const DrawMode value)
+int32_t Graphics::ToOpenGl(const DrawMode value)
 {
     switch (value)
     {

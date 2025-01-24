@@ -5,7 +5,7 @@
 #include "Mountain/core.hpp"
 #include "Mountain/rendering/graphics.hpp"
 
-namespace Mountain
+namespace Mountain::Graphics
 {
     /// @brief Low-level interface for OpenGL buffers
     struct MOUNTAIN_API GpuBuffer
@@ -17,11 +17,11 @@ namespace Mountain
         /// @brief Shorthand for @code Delete(); Create();@endcode
         void Recreate();
 
-        void SetStorage(int64_t size, const void* data, Graphics::BufferStorageFlags flags = Graphics::BufferStorageFlags::None) const;
+        void SetStorage(int64_t size, const void* data, BufferStorageFlags flags = BufferStorageFlags::None) const;
 
         void SetSubData(int64_t offset, int64_t size, const void* data) const;
 
-        void SetData(int64_t size, const void* data, Graphics::BufferUsage usage) const;
+        void SetData(int64_t size, const void* data, BufferUsage usage) const;
 
         void SetDebugName(std::string_view name) const;
 
