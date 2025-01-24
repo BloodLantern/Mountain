@@ -87,4 +87,4 @@ void Texture::Unuse() const { Graphics::BindTexture(0); }
 
 uint32_t Texture::GetId() const { return m_GpuTexture.GetId(); }
 
-GpuTexture Texture::GetGpuTexture() const { return m_GpuTexture; }
+Graphics::GpuTexture Texture::GetGpuTexture() const { return m_GpuTexture; }

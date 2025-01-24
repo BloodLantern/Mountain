@@ -4,7 +4,7 @@
 
 #include "Mountain/core.hpp"
 
-namespace Mountain
+namespace Mountain::Graphics
 {
     /// @brief Low-level interface for OpenGL vertex arrays
     struct MOUNTAIN_API GpuVertexArray

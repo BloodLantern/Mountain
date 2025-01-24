@@ -39,7 +39,7 @@ namespace Mountain
     private:
         struct Character
         {
-            GpuTexture texture;
+            Graphics::GpuTexture texture;
             Vector2i size;       // Size of glyph
             Vector2i bearing;    // Offset from baseline to left/top of glyph
             uint32_t advance;

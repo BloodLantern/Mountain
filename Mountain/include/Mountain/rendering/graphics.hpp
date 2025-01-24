@@ -6,19 +6,16 @@
 
 #include "Mountain/utils/meta_programming.hpp"
 
-namespace Mountain
-{
-    struct GpuVertexArray;
-    struct GpuBuffer;
-    struct GpuTexture;
-}
-
 /// @namespace Mountain::Graphics
 /// @brief Low-level graphics interface
 ///
 /// You should only use this if you know what you are doing and/or have experience with graphics APIs such as OpenGL.
 namespace Mountain::Graphics
 {
+    struct GpuVertexArray;
+    struct GpuBuffer;
+    struct GpuTexture;
+
     enum class ImageShaderAccess : uint8_t
     {
         ReadOnly,
@@ -724,29 +721,16 @@ namespace Mountain::Graphics
     template <>
     MOUNTAIN_API DrawMode FromOpenGl<DrawMode>(int32_t value);
 
-    template <OpenGlConvertibleT T>
-    // ReSharper disable once CppFunctionIsNotImplemented
-    int32_t ToOpenGl(T value);
-    template <>
-    MOUNTAIN_API int32_t ToOpenGl<MagnificationFilter>(MagnificationFilter value);
-    template <>
-    MOUNTAIN_API int32_t ToOpenGl<Wrapping>(Wrapping value);
-    template <>
-    MOUNTAIN_API int32_t ToOpenGl<ShaderType>(ShaderType value);
-    template <>
-    MOUNTAIN_API int32_t ToOpenGl<InternalFormat>(InternalFormat value);
-    template <>
-    MOUNTAIN_API int32_t ToOpenGl<Format>(Format value);
-    template <>
-    MOUNTAIN_API int32_t ToOpenGl<DataType>(DataType value);
-    template <>
-    MOUNTAIN_API int32_t ToOpenGl<Constant>(Constant value);
-    template <>
-    MOUNTAIN_API int32_t ToOpenGl<BufferType>(BufferType value);
-    template <>
-    MOUNTAIN_API int32_t ToOpenGl<BufferUsage>(BufferUsage value);
-    template <>
-    MOUNTAIN_API int32_t ToOpenGl<DrawMode>(DrawMode value);
+    MOUNTAIN_API int32_t ToOpenGl(MagnificationFilter value);
+    MOUNTAIN_API int32_t ToOpenGl(Wrapping value);
+    MOUNTAIN_API int32_t ToOpenGl(ShaderType value);
+    MOUNTAIN_API int32_t ToOpenGl(InternalFormat value);
+    MOUNTAIN_API int32_t ToOpenGl(Format value);
+    MOUNTAIN_API int32_t ToOpenGl(DataType value);
+    MOUNTAIN_API int32_t ToOpenGl(Constant value);
+    MOUNTAIN_API int32_t ToOpenGl(BufferType value);
+    MOUNTAIN_API int32_t ToOpenGl(BufferUsage value);
+    MOUNTAIN_API int32_t ToOpenGl(DrawMode value);
 }
 
 ENUM_FLAGS(Mountain::Graphics::GpuDataSynchronizationType);

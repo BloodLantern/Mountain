@@ -331,8 +331,8 @@ namespace Mountain
 
         static inline Pointer<Shader> m_TextureShader, m_TextShader, m_RenderTargetShader;
 
-        static inline GpuBuffer m_RectangleEbo, m_Vbo, m_RectangleVbo, m_TextureVbo, m_TextVbo, m_RenderTargetVbo, m_RenderTargetSsbo;
-        static inline GpuVertexArray m_PointVao, m_LineVao, m_LineColoredVao, m_TriangleVao, m_TriangleColoredVao, m_RectangleVao, m_CircleVao, m_ArcVao, m_TextureVao, m_TextVao, m_RenderTargetVao;
+        static inline Graphics::GpuBuffer m_RectangleEbo, m_Vbo, m_RectangleVbo, m_TextureVbo, m_TextVbo, m_RenderTargetVbo, m_RenderTargetSsbo;
+        static inline Graphics::GpuVertexArray m_PointVao, m_LineVao, m_LineColoredVao, m_TriangleVao, m_TriangleColoredVao, m_RectangleVao, m_CircleVao, m_ArcVao, m_TextureVao, m_TextVao, m_RenderTargetVao;
 
         static inline Matrix m_ProjectionMatrix;
 

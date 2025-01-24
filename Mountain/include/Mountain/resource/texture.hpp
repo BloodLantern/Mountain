@@ -81,12 +81,12 @@ namespace Mountain
 
         /// @brief Gets the underlying GpuTexture
         [[nodiscard]]
-        MOUNTAIN_API GpuTexture GetGpuTexture() const;
+        MOUNTAIN_API Graphics::GpuTexture GetGpuTexture() const;
 
     private:
         uint8_t* m_Data = nullptr;
         Vector2i m_Size;
-        GpuTexture m_GpuTexture;
+        Graphics::GpuTexture m_GpuTexture;
         Graphics::MagnificationFilter m_Filter = Graphics::MagnificationFilter::Nearest;
     };
 }

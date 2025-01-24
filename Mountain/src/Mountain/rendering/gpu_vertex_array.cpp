@@ -2,7 +2,7 @@
 
 #include <glad/glad.h>
 
-using namespace Mountain;
+using namespace Mountain::Graphics;
 
 void GpuVertexArray::Create() { glCreateVertexArrays(1, &m_Id); }
 
