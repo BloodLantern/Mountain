@@ -7,7 +7,7 @@
 #include "Mountain/utils/meta_programming.hpp"
 
 /// @namespace Mountain::Graphics
-/// @brief Low-level graphics interface
+/// @brief Low-level graphics API
 ///
 /// You should only use this if you know what you are doing and/or have experience with graphics APIs such as OpenGL.
 namespace Mountain::Graphics
