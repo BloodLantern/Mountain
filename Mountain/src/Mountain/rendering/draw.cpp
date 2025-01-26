@@ -715,7 +715,7 @@ void Draw::InitializeTextBuffers()
     BindVertexArray(m_TextVao);
     BindBuffer(Graphics::BufferType::ElementArrayBuffer, m_RectangleEbo);
     BindBuffer(Graphics::BufferType::ArrayBuffer, m_TextVbo);
-    m_TextVbo.SetStorage(sizeof(Vector4) * 4, nullptr, Graphics::BufferStorageFlags::None);
+    m_TextVbo.SetStorage(sizeof(Vector4) * 4, nullptr, Graphics::BufferStorageFlags::DynamicStorage);
 
     Graphics::SetVertexAttribute(0, 4, sizeof(Vector4), 0);
 }
@@ -984,7 +984,7 @@ void Draw::RenderTextData(const List<TextData>& texts, const size_t index, const
         {
             const Font::Character& character = data.font->m_Characters.at(c);
             
-            if (c != ' ') // Do not draw spaces
+            if (character.size != Vector2i::Zero()) // Do not draw invisible characters
             {
                 const Vector2 pos = Calc::Round(
                     {
@@ -1002,7 +1002,6 @@ void Draw::RenderTextData(const List<TextData>& texts, const size_t index, const
                     pos.x,          pos.y + size.y,  0.f, 1.f
                 };
 
-                    
                 BindTexture(character.texture);
 
                 m_TextVbo.SetSubData(0, sizeof(vertices), vertices.data());
