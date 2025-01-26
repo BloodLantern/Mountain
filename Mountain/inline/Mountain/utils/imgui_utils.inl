@@ -41,7 +41,7 @@ namespace Mountain
             return result;
         }
 
-        return result || displayFunction(value->value());
+        return displayFunction(value->value()) || result;
     }
 }
 

@@ -427,6 +427,9 @@ void GameExample::Render()
 
         ImGui::Text("Frame time (without wait between frames): %.1fms", Time::GetLastFrameDuration() * 1000.f);
         ImGui::Text("Frame time left (if negative the game is lagging): %.1fms", (Time::GetTargetDeltaTime() - Time::GetLastFrameDuration()) * 1000.f);
+        static bool_t vsync = true;
+        ImGui::Checkbox("Vertical Synchronization", &vsync);
+        Window::SetVSync(vsync);
         ImGui::Checkbox("Show inputs window", &showInputs);
         ImGui::SliderFloat("Time scale", &Time::timeScale, 0.f, 2.f);
         ImGui::Checkbox("Debug render", &debugRender);

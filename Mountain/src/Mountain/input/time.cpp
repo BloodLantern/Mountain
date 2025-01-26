@@ -37,7 +37,7 @@ float_t Time::GetLastFrameDuration() { return m_LastFrameDuration; }
 void Time::Initialize()
 {
     // Initialize the total time to avoid a huge delta time on the first frame
-    m_TotalTimeUnscaled = static_cast<decltype(m_TotalTimeUnscaled)>(glfwGetTime());
+    m_TotalTimeUnscaled = static_cast<float_t>(glfwGetTime());
 }
 
 void Time::Update()
@@ -45,7 +45,7 @@ void Time::Update()
     m_LastTotalTimeUnscaled = m_TotalTimeUnscaled;
     m_LastTotalTime = m_TotalTime;
 
-    m_TotalTimeUnscaled = static_cast<decltype(m_TotalTimeUnscaled)>(glfwGetTime());
+    m_TotalTimeUnscaled = static_cast<float_t>(glfwGetTime());
 
     m_DeltaTimeUnscaled = std::min(m_TotalTimeUnscaled - m_LastTotalTimeUnscaled, maxDeltaTime);
     m_DeltaTime = m_DeltaTimeUnscaled * timeScale;
@@ -64,13 +64,29 @@ void Time::WaitForNextFrame()
 
     m_LastFrameDuration = duration_cast<duration<float_t>>(steady_clock::now() - frameStart).count();
 
-    // FIXME - Wait is not accurate (around 10% error margin)
+    // FIXME - Wait is not accurate (seems to be limited to 60FPS max)
     if (m_TargetFps.has_value())
     {
         const double_t wait = 1.0 / static_cast<double_t>(m_TargetFps.value()) - m_LastFrameDuration;
 
-        time_point<steady_clock> t{steady_clock::now().time_since_epoch() + duration_cast<time_point<steady_clock>::duration>(duration<double_t>{wait * 0.5})};
-        std::this_thread::sleep_until(t);
+        if (wait > 0.0)
+        {
+            using namespace std::chrono_literals;
+
+            auto before = high_resolution_clock::now();
+            std::this_thread::sleep_for(duration<double_t>(wait * 0.5f));
+            duration<double_t, std::milli> sleep = duration_cast<decltype(sleep)>(high_resolution_clock::now() - before);
+
+            Renderer::DebugString(
+                std::format(
+                    "wait: {:3.0f}ms, sleep: {}, factor: {}",
+                    wait * 1000.0,
+                    sleep,
+                    duration_cast<duration<double_t>>(sleep).count() / wait
+                ),
+                0.1f
+            );
+        }
     }
     
     Window::SwapBuffers();

@@ -218,6 +218,8 @@ namespace Mountain::Utils
 
     MOUNTAIN_API std::string GetBuiltinShadersPath();
 
+    MOUNTAIN_API std::string GetBuiltinAssetsPath();
+
     MOUNTAIN_API std::string Trim(std::string_view str, TrimOptions options = TrimOptions::Both);
 
     MOUNTAIN_API std::string GetLine(const std::string& str, size_t lineIndex);

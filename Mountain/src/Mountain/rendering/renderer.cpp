@@ -150,6 +150,24 @@ Mountain::RenderTarget& Mountain::Renderer::GetCurrentRenderTarget()
 
 Mountain::RenderTarget& Mountain::Renderer::GetDefaultRenderTarget() { return *m_RenderTarget; }
 
+void Mountain::Renderer::DebugString(std::string str, const float_t duration, const Color& color)
+{
+    m_DebugStrings.Insert(
+        {
+            .str = std::move(str),
+            .time = std::chrono::system_clock::now(),
+            .color = color,
+            .duration = duration
+        },
+        0
+    );
+}
+
+void Mountain::Renderer::DebugString(DebugStringData data)
+{
+    m_DebugStrings.Insert(std::move(data), 0);
+}
+
 Mountain::OpenGlVersion& Mountain::Renderer::GetOpenGlVersion() { return m_GlVersion; }
 
 bool Mountain::Renderer::Initialize(const std::string_view windowTitle, const Vector2i windowSize, const OpenGlVersion &glVersion)
@@ -178,21 +196,7 @@ bool Mountain::Renderer::Initialize(const std::string_view windowTitle, const Ve
     m_RenderTarget = new RenderTarget(windowSize, Graphics::MagnificationFilter::Linear);
     m_RenderTarget->SetDebugName("Viewport RenderTarget");
 
-    if (NoBinaryResources)
-    {
-        if (BuiltinShadersPath.empty())
-            throw std::runtime_error("NoBinaryResources is true but BuiltinShadersPath hasn't been specified");
-
-        FileManager::LoadDirectory(BuiltinShadersPath);
-        ResourceManager::LoadAll();
-    }
-    else
-    {
-        ResourceManager::LoadAllBinaries();
-    }
-
     Draw::Initialize();
-    Draw::LoadResources();
 
     // Setup FreeType
     if (FT_Init_FreeType(&m_Freetype))
@@ -201,6 +205,22 @@ bool Mountain::Renderer::Initialize(const std::string_view windowTitle, const Ve
         Window::Shutdown();
         return false;
     }
+
+    if (NoBinaryResources)
+    {
+        if (BuiltinShadersPath.empty() || BuiltinAssetsPath.empty())
+            throw std::runtime_error("NoBinaryResources is true but at least one of BuiltinShadersPath and BuiltinAssetsPath hasn't been specified");
+
+        FileManager::LoadDirectory(BuiltinShadersPath);
+        FileManager::LoadDirectory(BuiltinAssetsPath);
+        ResourceManager::LoadAll();
+    }
+    else
+    {
+        ResourceManager::LoadAllBinaries();
+    }
+
+    Draw::LoadResources();
 
     // Setup Dear ImGui context
     IMGUI_CHECKVERSION();
@@ -218,6 +238,7 @@ bool Mountain::Renderer::Initialize(const std::string_view windowTitle, const Ve
     ImGui_ImplOpenGL3_Init(glVersion.glsl);
 
     io.Fonts->AddFontDefault();
+    m_DefaultFont = ResourceManager::GetFont(Utils::GetBuiltinAssetsPath() + "font.ttf", 12);
 
     return true;
 }
@@ -246,6 +267,21 @@ void Mountain::Renderer::PostFrame()
         throw std::logic_error{ "RenderTarget push/pop mismatch, e.g. a RenderTarget that was pushed hasn't been popped" };
 
     Draw::RenderTarget(*m_RenderTarget);
+
+    // Draw debug strings
+    const auto now = std::chrono::system_clock::now();
+    for (size_t i = 0; i < m_DebugStrings.GetSize(); i++)
+    {
+        const DebugStringData& data = m_DebugStrings[i];
+        if (std::chrono::duration_cast<std::chrono::duration<float_t>>(now - data.time).count() > data.duration)
+        {
+            m_DebugStrings.RemoveAt(i);
+            continue;
+        }
+
+        Draw::Text(*m_DefaultFont, data.str, Vector2{20.f, 20.f + static_cast<float_t>(i) * 20.f}, 1.f, data.color);
+    }
+
     Draw::Flush();
     
     // End ImGui frame

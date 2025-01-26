@@ -237,7 +237,9 @@ std::pair<int32_t, std::string_view> Utils::ByteSizeUnit(int64_t size)
     return { static_cast<int32_t>(size), "?" };
 }
 
-std::string Utils::GetBuiltinShadersPath() { return BuiltinShadersPath.empty() ? "shaders/" : BuiltinShadersPath + '/'; }
+std::string Utils::GetBuiltinShadersPath() { return BuiltinShadersPath.empty() ? "shaders_internal/" : BuiltinShadersPath + '/'; }
+
+std::string Utils::GetBuiltinAssetsPath() { return BuiltinAssetsPath.empty() ? "assets_internal/" : BuiltinAssetsPath + '/'; }
 
 std::string Utils::Trim(const std::string_view str, const TrimOptions options)
 {

@@ -1,5 +1,6 @@
 #include "Mountain/resource/font.hpp"
 
+#include <algorithm>
 #include <ranges>
 
 #include <glad/glad.h>
@@ -57,9 +58,8 @@ Vector2 Font::CalcTextSize(const std::string_view text) const
         const Character& character = m_Characters.at(c);
         
         result.x += static_cast<float_t>(character.advance >> 6);
-        
-        if (static_cast<float_t>(character.size.y) > result.y)
-            result.y = static_cast<float_t>(character.size.y);
+
+        result.y = std::max(static_cast<float_t>(character.size.y), result.y);
     }
 
     return result;
@@ -78,14 +78,14 @@ void Font::Load()
     }
 
     FT_Set_Pixel_Sizes(face, 0, m_Size);
-    
+
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     
     for (uint8_t c = 0; c < 128; c++)
     {
         if (FT_Load_Char(face, c, FT_LOAD_RENDER))
         {
-            Logger::LogError("Failed to load Glyph in Font {}", m_Name);
+            Logger::LogError("Failed to load glyph {} ({:X}) in Font {}", c, c, m_Name);
             continue;
         }
 
@@ -97,13 +97,16 @@ void Font::Load()
             .advance = static_cast<uint32_t>(face->glyph->advance.x)
         };
 
-        character.texture.Create();
-        character.texture.SetStorage(Graphics::InternalFormat::Red8, glyphSize);
-        character.texture.SetSubData(Vector2i::Zero(), glyphSize, Graphics::Format::Red, Graphics::DataType::UnsignedByte, face->glyph->bitmap.buffer);
-        character.texture.SetMinFilter(Graphics::MagnificationFilter::Linear);
-        character.texture.SetMagFilter(Graphics::MagnificationFilter::Linear);
-        character.texture.SetWrappingHorizontal(Graphics::Wrapping::ClampToEdge);
-        character.texture.SetWrappingVertical(Graphics::Wrapping::ClampToEdge);
+        if (glyphSize != Vector2i::Zero())
+        {
+            character.texture.Create();
+            character.texture.SetStorage(Graphics::InternalFormat::Red8, glyphSize);
+            character.texture.SetSubData(Vector2i::Zero(), glyphSize, Graphics::Format::Red, Graphics::DataType::UnsignedByte, face->glyph->bitmap.buffer);
+            character.texture.SetMinFilter(Graphics::MagnificationFilter::Linear);
+            character.texture.SetMagFilter(Graphics::MagnificationFilter::Linear);
+            character.texture.SetWrappingHorizontal(Graphics::Wrapping::ClampToEdge);
+            character.texture.SetWrappingVertical(Graphics::Wrapping::ClampToEdge);
+        }
 
         m_Characters.emplace(c, character);
     }
