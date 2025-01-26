@@ -86,10 +86,9 @@ void ResourceManager::LoadAll()
         }
     );
 
-    std::vector<Pointer<Shader>> loadedShaders;
-    std::vector<Pointer<ComputeShader>> loadedComputeShaders;
+    List<Pointer<Shader>> shadersToLoad;
 
-    // Do interface stuff synchronously (OpenGL/OpenAL)
+    // Do interface stuff synchronously (OpenGL/OpenAL/FreeType)
     for (Pointer<File>& file : files)
     {
         std::string&& extension = file->GetExtension();
@@ -105,39 +104,23 @@ void ResourceManager::LoadAll()
                 shader = Add<Shader>(filenameNoExtension);
 
             shader->SetSourceData(file);
-            loadedShaders.push_back(shader);
+            shadersToLoad.Add(shader);
         }
         else if (std::ranges::contains(ComputeShader::FileExtensions, extension))
         {
-            Pointer<ComputeShader> shader;
-
             const std::string& filenameNoExtension = file->GetPathString();
-            if (Contains(filenameNoExtension))
-                shader = Get<ComputeShader>(filenameNoExtension);
-            else
-                shader = Add<ComputeShader>(filenameNoExtension);
-
+            Pointer<ComputeShader> shader = Add<ComputeShader>(filenameNoExtension);
             shader->SetSourceData(file);
-            loadedComputeShaders.push_back(shader);
-        }
-        else if (!std::ranges::contains(Font::FileExtensions, extension))
-        {
-            if (Contains(file))
-                Get(file)->Load();
-        }
-    }
-
-    for (Pointer<Shader>& shader : loadedShaders)
-    {
-        if (!shader->IsLoaded())
             shader->Load();
+        }
+        else if (std::ranges::contains(Font::FileExtensions, extension))
+        {
+            LoadFont(file, 12);
+        }
     }
 
-    for (Pointer<ComputeShader>& computeShader : loadedComputeShaders)
-    {
-        if (!computeShader->IsLoaded())
-            computeShader->Load();
-    }
+    for (Pointer shader : shadersToLoad)
+        shader->Load();
 
     Logger::LogDebug(
         "Successfully loaded {} files in {} resources. Took {}",
@@ -196,7 +179,7 @@ void ResourceManager::LoadAllBinaries()
         {
             Pointer<Shader> shader;
 
-            const std::string&& filenameNoExtension = path.parent_path().generic_string();
+            const std::string& filenameNoExtension = path.parent_path().generic_string();
             if (Contains(filenameNoExtension))
                 shader = Get<Shader>(filenameNoExtension);
             else
@@ -207,16 +190,14 @@ void ResourceManager::LoadAllBinaries()
         }
         else if (std::ranges::contains(ComputeShader::FileExtensions, extension))
         {
-            Pointer<ComputeShader> shader;
-
-            const std::string&& filenameNoExtension = path.generic_string();
-            if (Contains(filenameNoExtension))
-                shader = Get<ComputeShader>(filenameNoExtension);
-            else
-                shader = Add<ComputeShader>(filenameNoExtension);
-
+            const std::string& filenameNoExtension = path.generic_string();
+            Pointer<ComputeShader> shader = Add<ComputeShader>(filenameNoExtension);
             shader->SetSourceData(file);
             shader->Load();
+        }
+        else if (std::ranges::contains(Font::FileExtensions, extension))
+        {
+            LoadFont(file, 12);
         }
         else if (extension != ".glsl")
         {

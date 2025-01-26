@@ -186,7 +186,7 @@ namespace Mountain
 
         /// @brief Flushes the cached draw data onto the current RenderTarget
         ///
-        /// This effectively renders everything that was scheduled since the last RenderTarget push/pop or Flush()
+        /// This effectively renders everything that was scheduled since the last RenderTarget push/pop or @c Flush()
         MOUNTAIN_API static void Flush();
 
     private:

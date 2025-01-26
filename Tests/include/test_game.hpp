@@ -4,6 +4,7 @@
 #include "Mountain/collision/grid.hpp"
 #include "Mountain/rendering/particle_system.hpp"
 #include "Mountain/rendering/render_target.hpp"
+#include "Mountain/resource/font.hpp"
 #include "Mountain/resource/texture.hpp"
 #include "Mountain/utils/color.hpp"
 #include "Mountain/utils/list.hpp"
