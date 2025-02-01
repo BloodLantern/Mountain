@@ -70,7 +70,7 @@ namespace Mountain
     };
 }
 
-/// @private
+/// @brief @c std::hash template specialization for the Mountain::Guid type.
 template <>
 struct std::hash<Mountain::Guid>
 {

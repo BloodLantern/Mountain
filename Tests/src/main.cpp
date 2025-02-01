@@ -27,14 +27,14 @@ namespace
 int32_t main(int32_t, char_t**)
 {
 #ifdef USE_LPP
-	std::cout << "Starting program, waiting for Live++ initialization..." << std::endl;  // NOLINT(performance-avoid-endl)
+	std::println(std::cout, "Starting program, waiting for Live++ initialization...");
 
 	// create a synchronized agent, loading the Live++ agent from the given path, e.g. "ThirdParty/LivePP"
 	lpp::LppSynchronizedAgent lppAgent = lpp::LppCreateSynchronizedAgent(nullptr, L"LivePP");
 
 	// bail out in case the agent is not valid
 	if (!LppIsValidSynchronizedAgent(&lppAgent))
-		return 1;
+		return EXIT_FAILURE;
 
 	// enable Live++ for all loaded modules
 	lppAgent.EnableModule(lpp::LppGetCurrentModulePath(), lpp::LPP_MODULES_OPTION_ALL_IMPORT_MODULES, nullptr, &LppFilterModuleCallback);
@@ -91,5 +91,5 @@ int32_t main(int32_t, char_t**)
 	LppDestroySynchronizedAgent(&lppAgent);
 #endif
 
-    return 0;
+    return EXIT_SUCCESS;
 }
