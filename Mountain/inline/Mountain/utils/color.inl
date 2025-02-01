@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Maths/calc.hpp"
 
 namespace Mountain
