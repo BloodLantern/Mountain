@@ -228,6 +228,7 @@
     <ClInclude Include="include\Mountain\utils\reference_counter.hpp" />
     <ClInclude Include="include\Mountain\utils\run_length_encoding.hpp" />
     <ClInclude Include="include\Mountain\utils\stopwatch.hpp" />
+    <ClInclude Include="include\Mountain\utils\time_span.hpp" />
     <ClInclude Include="include\Mountain\utils\ts_queue.hpp" />
     <ClInclude Include="include\Mountain\utils\utils.hpp" />
     <ClInclude Include="include\Mountain\utils\windows.hpp" />
@@ -248,6 +249,7 @@
     <ClInclude Include="inline\Mountain\utils\pointer.inl" />
     <ClInclude Include="inline\Mountain\utils\rectangle.inl" />
     <ClInclude Include="inline\Mountain\utils\reference_counter.inl" />
+    <ClInclude Include="inline\Mountain\utils\time_span.inl" />
     <ClInclude Include="inline\Mountain\utils\ts_queue.inl" />
     <ClInclude Include="inline\Mountain\utils\utils.inl" />
   </ItemGroup>
@@ -319,6 +321,7 @@
     <ClCompile Include="src\Mountain\utils\random.cpp" />
     <ClCompile Include="src\Mountain\utils\run_length_encoding.cpp" />
     <ClCompile Include="src\Mountain\utils\stopwatch.cpp" />
+    <ClCompile Include="src\Mountain\utils\time_span.cpp" />
     <ClCompile Include="src\Mountain\utils\utils.cpp" />
     <ClCompile Include="src\Mountain\utils\windows.cpp" />
     <ClCompile Include="src\Mountain\window.cpp" />
