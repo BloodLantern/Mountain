@@ -276,12 +276,8 @@ namespace Easing
 
         BounceIn,
         BounceOut,
-        BounceInOut,
-
-        Count
+        BounceInOut
     };
-
-    ENUM_COUNT(Type);
 }
 
 ENUM_FLAGS(Mountain::Utils::TrimOptions)

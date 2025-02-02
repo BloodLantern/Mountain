@@ -256,12 +256,8 @@ namespace Mountain
         /// @brief Menu
         Menu               = 348,
 
-        Count              = 355,
-
-        None = 0,
+        Count = 355
     };
-
-    ENUM_COUNT(Key);
 
     /// @brief %List of keyboard button states
     enum class KeyStatus : uint8_t
@@ -273,10 +269,6 @@ namespace Mountain
         /// @brief Released
         Release,
         /// @brief Repeated
-        Repeat,
-
-        Count
+        Repeat
     };
-
-    ENUM_COUNT(KeyStatus);
 }

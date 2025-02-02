@@ -40,7 +40,7 @@ void Input::HandleKeyboard(GLFWwindow*, const int32_t key, const int32_t, const 
 {
     if (static_cast<size_t>(key) > m_Keyboard.size())
         return;
-    
+
     KeyStatuses& keyStatuses = m_Keyboard.at(static_cast<size_t>(key));
     
     switch (action)
@@ -122,7 +122,7 @@ void Input::UpdateGamepads()
         if (!glfwGetGamepadState(static_cast<int32_t>(i), &state))
             return;
         
-        for (uint32_t k = 0; k < GamepadAxisCount; k++)
+        for (uint32_t k = 0; k < magic_enum::enum_count<GamepadAxis>(); k++)
         {
             float_t& axisValue = gamepad.m_Axes[k];
             axisValue = Calc::MakeZero(state.axes[k], GamepadInput::nullAnalogValue);
@@ -132,7 +132,7 @@ void Input::UpdateGamepads()
                 axisValue = std::max(0.f, axisValue);
         }
 
-        for (uint32_t k = 0; k < GamepadButtonCount; k++)
+        for (uint32_t k = 0; k < magic_enum::enum_count<GamepadButton>(); k++)
         {
             GamepadButtonStatuses& statuses = gamepad.m_Buttons.at(k);
             const bool_t wasDown = statuses.at(static_cast<size_t>(GamepadButtonStatus::Down));
@@ -266,7 +266,7 @@ Vector2 Input::GetMouseWheel() { return m_MouseWheel; }
 
 void Input::Initialize()
 {
-    Logger::LogDebug("Initializing input");
+    Logger::LogVerbose("Initializing input");
     
     glfwSetKeyCallback(Window::GetHandle(), HandleKeyboard);
     glfwSetMouseButtonCallback(Window::GetHandle(), HandleMouseButton);
