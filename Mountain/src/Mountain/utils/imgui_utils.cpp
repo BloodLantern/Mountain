@@ -4,12 +4,18 @@
 
 #include <ImGui/imgui_stdlib.h>
 
+#include "Mountain/screen.hpp"
 #include "Mountain/file/file_manager.hpp"
 #include "Mountain/input/input.hpp"
+#include "Mountain/input/time.hpp"
 #include "Mountain/resource/audio_track.hpp"
 #include "Mountain/resource/font.hpp"
 #include "Mountain/resource/resource_manager.hpp"
 #include "Mountain/utils/file_system_watcher.hpp"
+#include "Mountain/utils/windows.hpp"
+
+// Needs to be included after windows.hpp
+#include <psapi.h>
 
 using namespace Mountain;
 
@@ -102,9 +108,7 @@ void ImGuiUtils::DirectionVector(const std::string_view label, Vector2* const va
 
     // Create rectangle
     ImGui::PushClipRect(p0, p1, true);
-    drawList->AddRectFilled(p0, p1, Color::SlateGray().GetPackedValue());
-        
-    drawList->AddCircle(p0 + size * 0.5f, (size.x + size.y) * 0.5f, Color::Red().GetPackedValue());
+    drawList->AddCircleFilled(p0 + size * 0.5f, size.x * 0.5f, Color::SlateGray().GetPackedValue());
 
     // Remap from [min; max] to [0, 1]
     const Vector2 clamped(
@@ -157,9 +161,7 @@ void ImGuiUtils::DirectionVector(const std::string_view label, Vector2* const va
 
     // Create rectangle
     ImGui::PushClipRect(p0, p1, true);
-    drawList->AddRectFilled(p0, p1, Color::SlateGray().GetPackedValue());
-        
-    drawList->AddCircle(p0 + size * 0.5f, (size.x + size.y) * 0.5f, Color::Red().GetPackedValue());
+    drawList->AddCircleFilled(p0 + size * 0.5f, size.x * 0.5f, Color::SlateGray().GetPackedValue());
 
     // Remap from [min; max] to [0, 1]
     const Vector2 valueClamped(
@@ -187,7 +189,7 @@ void ImGuiUtils::DirectionVector(const std::string_view label, Vector2* const va
     ImGui::PopClipRect();
 }
 
-bool ImGuiUtils::ComboEaser(const std::string_view label, Easing::Easer* v, const ImGuiComboFlags flags)
+bool ImGuiUtils::ComboEaser(const std::string& label, Easing::Easer* v, const ImGuiComboFlags flags)
 {
     static constexpr std::array Functions{
         std::make_pair("Linear", Utils::Identity<float_t>),
@@ -425,7 +427,7 @@ namespace
 
                     if (shaderFile != nullptr)
                     {
-                        if (ImGui::TreeNode(magic_enum::enum_name(static_cast<Graphics::ShaderType>(i)).data()))
+                        if (ImGui::TreeNode(std::string{magic_enum::enum_name(static_cast<Graphics::ShaderType>(i))}.c_str()))
                         {
                             DisplayReloadOptions(*shader, *shaderFile);
 
@@ -513,6 +515,82 @@ void ImGuiUtils::PopCollapsingHeader()
 void ImGuiUtils::SetNextItemWidthAvail()
 {
     ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x);
+}
+
+void ImGuiUtils::ShowPerformanceMonitoring()
+{
+    ImGui::Begin("Performance Monitoring");
+
+    static float_t updateInterval = 0.25f;
+
+    ImGui::SeparatorText("Settings");
+
+    ImGui::DragFloat("Update interval", &updateInterval, 0.01f, 0.f, 1.f);
+
+    auto targetFps = Time::targetFps;
+    const double_t refreshRate = static_cast<double_t>(Screen::GetRefreshRate());
+    constexpr double_t zero = 0;
+    if (Optional(
+        &targetFps,
+        refreshRate,
+        refreshRate,
+        [&](double_t& value) -> bool_t
+        {
+            return ImGui::DragScalar("Target FPS", ImGuiDataType_Double, &value, 1.f, &zero, nullptr, "%.0f");
+        }
+    ))
+    {
+        Time::targetFps = targetFps;
+    }
+    bool_t vsync = Window::GetVSync();
+    ImGui::Checkbox("Vertical Synchronization", &vsync);
+    Window::SetVSync(vsync);
+
+    ImGui::SeparatorText("Statistics");
+
+    static float_t fps = 0.f;
+    static double_t memoryCpuOnly = 0.f;
+    static double_t memoryTotal = 0.f;
+    static float_t deltaTime = 0.f;
+    static float_t frameDuration = 0.f;
+    static float_t frameDurationLeft = 0.f;
+    static Vector2i screenSize;
+
+    static float_t lastUpdateTime = 0.f;
+    static uint64_t lastUpdateTotalFrames = 0;
+
+    if (Time::OnIntervalUnscaled(updateInterval))
+    {
+        const float_t updateTime = Time::GetTotalTimeUnscaled();
+        const uint64_t totalFrames = Time::GetTotalFrameCount();
+
+        deltaTime = Time::GetDeltaTimeUnscaled();
+        fps = Calc::Ceil(static_cast<float_t>(totalFrames - lastUpdateTotalFrames) / (updateTime - lastUpdateTime));
+        frameDuration = Time::GetLastFrameDuration();
+        frameDurationLeft = Time::GetTargetDeltaTime() == 0.f ? 0.f : (Time::GetTargetDeltaTime() - frameDuration);
+        screenSize = Screen::GetSize();
+
+        PROCESS_MEMORY_COUNTERS_EX2 memoryCounter;
+        GetProcessMemoryInfo(GetCurrentProcess(), reinterpret_cast<PPROCESS_MEMORY_COUNTERS>(&memoryCounter), sizeof(memoryCounter));
+        Windows::CheckError();
+
+        memoryCpuOnly = static_cast<double_t>(memoryCounter.PrivateWorkingSetSize) * 1e-6; // Convert to MB
+        memoryTotal = static_cast<double_t>(memoryCounter.PrivateUsage) * 1e-6; // Convert to MB
+
+        lastUpdateTime = updateTime;
+        lastUpdateTotalFrames = totalFrames;
+    }
+
+    ImGui::Text("Graphics:");
+    ImGui::Indent();
+    ImGui::Text("Frame #%llu", lastUpdateTotalFrames);
+    ImGui::Text("%.1f FPS (%.1fms)", fps, deltaTime * 1000.f);
+    ImGui::Text("CPU: %.1fms (%.1fms left)", frameDuration * 1000.f, frameDurationLeft * 1000.f);
+    ImGui::Text("Memory: %.2fMB (%.2fMB including GPU)", memoryCpuOnly, memoryTotal);
+    ImGui::Text("Screen: %dx%d", screenSize.x, screenSize.y);
+    ImGui::Unindent();
+
+    ImGui::End();
 }
 
 // ReSharper disable CppInconsistentNaming

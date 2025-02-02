@@ -15,6 +15,10 @@ float_t Time::GetTargetDeltaTime()
     return Window::GetVSync() ? 1.f / static_cast<float_t>(Screen::GetRefreshRate()) : 0.f;
 }
 
+bool_t Time::OnInterval(const float_t interval) { return Calc::OnInterval(m_TotalTime, m_LastTotalTime, interval); }
+
+bool_t Time::OnIntervalUnscaled(const float_t interval) { return Calc::OnInterval(m_TotalTimeUnscaled, m_LastTotalTimeUnscaled, interval); }
+
 namespace
 {
     HANDLE waitableTimer = nullptr;
@@ -96,6 +100,7 @@ void Time::WaitForNextFrame()
     const double_t lastFrameDurationMs = m_Stopwatch.GetElapsedMilliseconds() - frameStartMs;
     m_LastFrameDuration = static_cast<float_t>(lastFrameDurationMs / 1000.0);
 
+    // FIXME - When sleeping between frames to reach to target FPS, it seems we sleep for slightly too long
     if (targetFps.has_value())
     {
         const double_t targetFrameDuration = 1000.0 / targetFps.value();
