@@ -12,7 +12,7 @@ namespace Mountain
     template <Concepts::LoadableResourceT T>
     Pointer<T> ResourceManager::Add(const std::string& name)
     {
-        Logger::LogDebug("Adding resource {}", name);
+        Logger::LogVerbose("Adding resource {}", name);
 
         if (Contains(name))
         {
@@ -34,7 +34,7 @@ namespace Mountain
     template <Concepts::LoadableResourceT T>
     Pointer<T> ResourceManager::Load(const Pointer<File>& file, const bool_t loadInInterface)
     {
-        Logger::LogDebug("Loading resource {}", file->GetPath());
+        Logger::LogVerbose("Loading resource {}", file->GetPath());
 
         if (Contains(file->GetPathString()))
         {
@@ -156,7 +156,7 @@ namespace Mountain
     template <Concepts::ResourceT T>
     void ResourceManager::Unload(const Pointer<T>& resource)
     {
-        Logger::LogDebug("Unloading resource {}", resource);
+        Logger::LogVerbose("Unloading resource {}", resource);
 
         const size_t oldSize = m_Resources.size();
 

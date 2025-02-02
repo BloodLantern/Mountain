@@ -4,7 +4,7 @@ using namespace Mountain;
 
 Pointer<File> FileManager::Add(std::filesystem::path path)
 {
-    Logger::LogDebug("Adding file {}", path);
+    Logger::LogVerbose("Adding file {}", path);
 
     if (Contains(path))
     {
@@ -34,7 +34,7 @@ Pointer<File> FileManager::Add(std::filesystem::path path)
 
 Pointer<File> FileManager::Load(std::filesystem::path path)
 {
-    Logger::LogDebug("Loading file {}", path);
+    Logger::LogVerbose("Loading file {}", path);
 
     if (Contains(path))
     {
@@ -75,7 +75,7 @@ Pointer<File> FileManager::Load(std::filesystem::path path)
 
 Pointer<Directory> FileManager::AddDirectory(std::filesystem::path path)
 {
-    Logger::LogDebug("Adding directory {}", path);
+    Logger::LogVerbose("Adding directory {}", path);
 
     if (Contains(path))
     {
@@ -148,7 +148,7 @@ Pointer<Directory> FileManager::LoadDirectory(std::filesystem::path path)
     // Make sure to return a weak reference
     directory.ToWeakReference();
 
-    Logger::LogDebug("Directory {} load successful. Took {}", p, std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - start));
+    Logger::LogVerbose("Directory {} load successful. Took {}", p, std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - start));
 
     return directory;
 }
@@ -179,7 +179,7 @@ void FileManager::Rename(const Pointer<Entry>& entry, const std::filesystem::pat
 
 void FileManager::Unload(const std::filesystem::path& path)
 {
-    Logger::LogDebug("Unloading FileManager entry {}", path);
+    Logger::LogVerbose("Unloading FileManager entry {}", path);
 
     if (!exists(path))
     {
@@ -207,7 +207,7 @@ void FileManager::Unload(const std::filesystem::path& path)
 
 void FileManager::Unload(const Pointer<Entry>& entry)
 {
-    Logger::LogDebug("Unloading FileManager entry {}", entry);
+    Logger::LogVerbose("Unloading FileManager entry {}", entry);
     
     const size_t oldSize = m_Entries.size();
     
@@ -235,7 +235,7 @@ void FileManager::UnloadAll()
     
     for (auto&& entry : m_Entries)
     {
-        Logger::LogDebug("Unloading FileManager entry {}", entry.first);
+        Logger::LogVerbose("Unloading FileManager entry {}", entry.first);
 
         if (entry.second->GetLoaded())
             entry.second->Unload();
@@ -244,5 +244,5 @@ void FileManager::UnloadAll()
     // Smart pointers are deleted automatically, we only need to clear the container
     m_Entries.clear();
 
-    Logger::LogDebug("FileManager unload successful. Took {}", std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - start));
+    Logger::LogVerbose("FileManager unload successful. Took {}", std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - start));
 }

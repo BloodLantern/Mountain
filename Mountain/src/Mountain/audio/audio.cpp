@@ -14,7 +14,7 @@ using namespace Mountain;
 
 bool_t Audio::Initialize()
 {
-    Logger::LogDebug("Initializing audio");
+    Logger::LogVerbose("Initializing audio");
     
     m_CurrentDevice = new AudioDevice(alcGetString(nullptr, ALC_DEFAULT_ALL_DEVICES_SPECIFIER));
 
@@ -31,7 +31,7 @@ bool_t Audio::Initialize()
 
 void Audio::Shutdown()
 {
-    Logger::LogDebug("Shutting down audio");
+    Logger::LogVerbose("Shutting down audio");
 
     for (auto&& buffer : m_Buffers)
         delete buffer;

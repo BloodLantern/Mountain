@@ -17,18 +17,18 @@ namespace Mountain
     }
 
     template <Concepts::FormattableT ... Args>
-    void Logger::LogTempDebug(const std::string& format, const char_t* file, const int32_t line, Args&&... args)
+    void Logger::LogDebug(const std::string& format, const char_t* file, const int32_t line, Args&&... args)
     {
-        if (LogLevel::TemporaryDebug < minimumConsoleLevel && LogLevel::TemporaryDebug < minimumFileLevel)
+        if (LogLevel::Debug < minimumConsoleLevel && LogLevel::Debug < minimumFileLevel)
             return;
 
-        PushLog(std::make_shared<LogEntry>(std::vformat(format, std::make_format_args(args...)), LogLevel::TemporaryDebug, file, line));
+        PushLog(std::make_shared<LogEntry>(std::vformat(format, std::make_format_args(args...)), LogLevel::Debug, file, line));
     }
 
     template <Concepts::FormattableT... Args>
-    void Logger::LogDebug(const std::string& format, Args&&... args)
+    void Logger::LogVerbose(const std::string& format, Args&&... args)
     {
-        Logger::Log(LogLevel::Debug, format, std::forward<Args>(args)...);
+        Logger::Log(LogLevel::Verbose, format, std::forward<Args>(args)...);
     }
 
     template <Concepts::FormattableT... Args>

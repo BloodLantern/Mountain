@@ -317,12 +317,12 @@ std::pair<std::string, const char_t*> Logger::BuildLogPrefix(const std::shared_p
     const char_t* color = ANSI_RESET;
     switch (log->level)
     {
-        case LogLevel::TemporaryDebug:
+        case LogLevel::Debug:
             color = ANSI_COLOR_GREEN;
             baseMessage = time + "[TEMP DEBUG] " + log->file + "(" + std::to_string(log->line) + "): ";
             break;
         
-        case LogLevel::Debug:
+        case LogLevel::Verbose:
             color = ANSI_COLOR_GRAY;
             baseMessage = time + "[DEBUG] ";
             break;
