@@ -214,7 +214,7 @@ namespace Mountain::Utils
 
     MOUNTAIN_API std::string ToUpper(std::string_view str);
 
-    MOUNTAIN_API std::pair<int32_t, std::string_view> ByteSizeUnit(int64_t size);
+    MOUNTAIN_API std::pair<float_t, std::string_view> ByteSizeUnit(int64_t size);
 
     MOUNTAIN_API std::string GetBuiltinShadersPath();
 

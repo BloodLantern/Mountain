@@ -59,7 +59,9 @@ namespace Mountain
 
         // Mountain extensions, not supported by GLFW as buttons
         LeftTrigger,
-        RightTrigger
+        RightTrigger,
+
+        None
     };
 
     /// @brief Gamepad button

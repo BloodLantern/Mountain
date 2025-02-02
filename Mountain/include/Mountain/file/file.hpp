@@ -65,6 +65,9 @@ namespace Mountain
         /// @brief Deletes the corresponding filesystem file.
         MOUNTAIN_API void Delete() const;
 
+        /// @brief Get whether this file exists on the file system or is just a virtual file representation
+        MOUNTAIN_API bool_t Exists();
+
         /// @brief Returns the name of this File without the file extension.
         [[nodiscard]]
         MOUNTAIN_API std::string GetNameNoExtension() const;

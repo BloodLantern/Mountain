@@ -96,6 +96,11 @@ void File::Delete() const
         ResourceManager::Unload(resource);
 }
 
+bool_t File::Exists()
+{
+    return exists(m_Path);
+}
+
 std::string File::GetNameNoExtension() const
 {
     return m_NameNoExtension;
