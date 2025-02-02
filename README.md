@@ -1,6 +1,6 @@
 # Mountain
 
-A C++ Framework for making 2D games.
+A (currently) Windows-only C++ Framework for making 2D games.
 
 ## Language version and architecture
 
