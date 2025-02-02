@@ -47,6 +47,7 @@ namespace
     std::mutex shadersToReloadMutex;
 
     bool_t showInputs = false;
+    bool_t showPerformanceMonitoring = false;
     bool_t debugRender = true;
 
     PostProcessingEffect<Vignette> vignette;
@@ -323,30 +324,8 @@ void GameExample::Render()
     static bool_t showResourceManagerWindows = false;
     if (ImGuiUtils::PushCollapsingHeader("Tests"))
     {
-        ImGui::Text("Delta time: %.3f, Unscaled: %.3f, FPS: %.1f", Time::GetDeltaTime(), Time::GetDeltaTimeUnscaled(), 1.f / Time::GetDeltaTimeUnscaled());
-
-        auto targetFps = Time::targetFps;
-        const double_t refreshRate = static_cast<double_t>(Screen::GetRefreshRate());
-        constexpr double_t zero = 0;
-        if (ImGuiUtils::Optional(
-            &targetFps,
-            refreshRate,
-            refreshRate,
-            [&](double_t& value) -> bool_t
-            {
-                return ImGui::DragScalar("Target FPS", ImGuiDataType_Double, &value, 1.f, &zero, nullptr, "%.0f");
-            }
-        ))
-        {
-            Time::targetFps = targetFps;
-        }
-
-        ImGui::Text("Frame time (without wait between frames): %.1fms", Time::GetLastFrameDuration() * 1000.f);
-        ImGui::Text("Frame time left (if negative the game is lagging): %.1fms", Time::GetTargetDeltaTime() == 0.f ? 0.f : (Time::GetTargetDeltaTime() - Time::GetLastFrameDuration()) * 1000.f);
-        bool_t vsync = Window::GetVSync();
-        ImGui::Checkbox("Vertical Synchronization", &vsync);
-        Window::SetVSync(vsync);
         ImGui::Checkbox("Show inputs window", &showInputs);
+        ImGui::Checkbox("Show performance monitoring window", &showPerformanceMonitoring);
         ImGui::SliderFloat("Time scale", &Time::timeScale, 0.f, 2.f);
         ImGui::Checkbox("Debug render", &debugRender);
 
@@ -389,4 +368,7 @@ void GameExample::Render()
  
     if (showInputs)
         ImGuiUtils::ShowInputsWindow();
+
+    if (showPerformanceMonitoring)
+        ImGuiUtils::ShowPerformanceMonitoring();
 }

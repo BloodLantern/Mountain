@@ -93,14 +93,14 @@ void Window::SetWindowMode(const WindowMode newWindowMode)
 
         case WindowMode::Borderless:
             // For a borderless fullscreen, we set the window size to the screen size plus one on the X axis.
-            // This is a hack to make the borderless thing work because otherwise it would default to an exclusive fullscreen.
+            // This hack is used to make the driver think this is still windowed because otherwise it would default to an exclusive fullscreen.
             // I learnt about this hack there: https://github.com/ppy/osu-framework/blob/7774e64cd84232b5e1fe08d527acfe39b67ef989/osu.Framework/Platform/Windows/SDL2WindowsWindow.cs#L270
-            size = Screen::GetSize(static_cast<int32_t>(m_CurrentScreen)) + Vector2i::UnitX();
+            size = Screen::GetSize() + Vector2i::UnitX();
             break;
 
         case WindowMode::Fullscreen:
             monitor = Screen::m_Monitors[m_CurrentScreen];
-            size = Screen::GetSize(static_cast<int32_t>(m_CurrentScreen));
+            size = Screen::GetSize();
             break;
     }
 
