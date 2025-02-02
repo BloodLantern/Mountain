@@ -4,6 +4,7 @@
 
 #include "Mountain/screen.hpp"
 #include "Mountain/input/input.hpp"
+#include "Mountain/input/time.hpp"
 #include "Mountain/utils/logger.hpp"
 
 using namespace Mountain;
@@ -23,8 +24,6 @@ void Window::SetSize(const Vector2i newSize)
 bool_t Window::GetShouldClose() { return glfwWindowShouldClose(m_Window); }
 
 void Window::SetShouldClose(const bool_t newShouldClose) { glfwSetWindowShouldClose(m_Window, newShouldClose); }
-
-void Window::PollEvents() { glfwPollEvents(); }
 
 void Window::MakeContextCurrent() { glfwMakeContextCurrent(m_Window); }
 
@@ -62,7 +61,11 @@ void Window::SetCursorHidden(const bool_t newCursorHidden) { glfwSetInputMode(m_
 
 void Window::SetCursorPosition(const Vector2 newPosition) { glfwSetCursorPos(m_Window, newPosition.x, newPosition.y); }
 
-void Window::SetVSync(const bool_t newVsync) { glfwSwapInterval(newVsync); }
+void Window::SetVSync(const bool_t newVsync)
+{
+    glfwSwapInterval(newVsync);
+    m_VSync = newVsync;
+}
 
 void Window::SetWindowMode(const WindowMode newWindowMode)
 {
@@ -89,7 +92,7 @@ void Window::SetWindowMode(const WindowMode newWindowMode)
             break;
 
         case WindowMode::Borderless:
-            // For a borderless fullscreen, we set the window size to the screen size plus one on the X axis
+            // For a borderless fullscreen, we set the window size to the screen size plus one on the X axis.
             // This is a hack to make the borderless thing work because otherwise it would default to an exclusive fullscreen.
             // I learnt about this hack there: https://github.com/ppy/osu-framework/blob/7774e64cd84232b5e1fe08d527acfe39b67ef989/osu.Framework/Platform/Windows/SDL2WindowsWindow.cs#L270
             size = Screen::GetSize(static_cast<int32_t>(m_CurrentScreen)) + Vector2i::UnitX();
@@ -106,16 +109,9 @@ void Window::SetWindowMode(const WindowMode newWindowMode)
     m_WindowMode = newWindowMode;
 }
 
-uint32_t Window::GetCurrentScreen() { return m_CurrentScreen; }
-
 std::string_view Window::GetTitle() { return glfwGetWindowTitle(m_Window); }
 
 void Window::SetTitle(const std::string& newTitle) { glfwSetWindowTitle(m_Window, newTitle.c_str()); }
-
-bool_t Window::GetMinimized()
-{
-    return m_Minimized;
-}
 
 void Window::Initialize(const std::string& windowTitle, const Vector2i windowSize, const OpenGlVersion& glVersion)
 {
@@ -150,12 +146,11 @@ void Window::Initialize(const std::string& windowTitle, const Vector2i windowSiz
 
     MakeContextCurrent();
 
-    // Set vsync
-    glfwSwapInterval(1);
-
     glfwSetWindowIconifyCallback(m_Window, WindowMinimizeCallback);
 
     UpdateFields();
+
+    Time::targetFps = Screen::GetRefreshRate();
 
     Input::Initialize();
 }
@@ -192,8 +187,6 @@ void Window::UpdateFields()
     if (oldSize != m_Size)
         onSizeChanged(m_Size);
 
-    // Current screen
-    
     UpdateCurrentScreen();
 }
 
@@ -204,12 +197,10 @@ void Window::UpdateCurrentScreen()
 
     int32_t bestOverlap = 0;
 
-    for (uint32_t i = 0; i < Screen::GetScreenCount(); i++)
+    for (int32_t i = 0; i < Screen::GetScreenCount(); i++)
     {
-        const int32_t screenIndex = static_cast<int32_t>(i);
-        
-        Vector2i screenPosition = Screen::GetPosition(screenIndex);
-        const Vector2i screenSize = Screen::GetSize(screenIndex);
+        Vector2i screenPosition = Screen::GetPosition(i);
+        const Vector2i screenSize = Screen::GetSize(i);
 
         const int32_t overlap = std::max(0, std::min(windowPosition.x + windowSize.x, screenPosition.x + screenSize.x) - std::max(windowPosition.x, screenPosition.x))
                               * std::max(0, std::min(windowPosition.y + windowSize.y, screenPosition.y + screenSize.y) - std::max(windowPosition.y, screenPosition.y));
@@ -222,10 +213,12 @@ void Window::UpdateCurrentScreen()
     }
 }
 
+void Window::PollEvents() { glfwPollEvents(); }
+
 void Window::SwapBuffers() { glfwSwapBuffers(m_Window); }
 
 // ReSharper disable once CppParameterMayBeConstPtrOrRef
-void Window::WindowMinimizeCallback(GLFWwindow* const window, const int minimized)
+void Window::WindowMinimizeCallback(GLFWwindow* const window, const int32_t minimized)
 {
     if (window != m_Window)
         return;

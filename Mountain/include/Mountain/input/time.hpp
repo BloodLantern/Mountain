@@ -4,7 +4,6 @@
 #include <optional>
 
 #include "Mountain/core.hpp"
-#include "Mountain/game.hpp"
 #include "Mountain/utils/stopwatch.hpp"
 
 /// @file time.hpp
@@ -29,35 +28,39 @@ namespace Mountain
         MOUNTAIN_API static inline std::optional<double_t> targetFps;
 
         /// @brief Get the total elapsed time
-        MOUNTAIN_API static float_t GetTotalTime();
+        STATIC_GETTER(float_t, TotalTime, m_TotalTime)
 
         /// @brief Get the last total elapsed time
-        MOUNTAIN_API static float_t GetLastTotalTime();
+        STATIC_GETTER(float_t, LastTotalTime, m_LastTotalTime)
 
         /// @brief Get the total unscaled elapsed time
-        MOUNTAIN_API static float_t GetTotalTimeUnscaled();
+        STATIC_GETTER(float_t, TotalTimeUnscaled, m_TotalTimeUnscaled)
 
         /// @brief Get the last total unscaled elapsed time
-        MOUNTAIN_API static float_t GetLastTotalTimeUnscaled();
+        STATIC_GETTER(float_t, LastTotalTimeUnscaled, m_LastTotalTimeUnscaled)
 
-        /// @brief Get the time elapsed since last frame
-        MOUNTAIN_API static float_t GetDeltaTime();
+        /// @brief Get the time elapsed since the last frame
+        STATIC_GETTER(float_t, DeltaTime, m_DeltaTime)
 
         /// @brief Get the unscaled delta time
-        MOUNTAIN_API static float_t GetDeltaTimeUnscaled();
+        STATIC_GETTER(float_t, DeltaTimeUnscaled, m_DeltaTimeUnscaled)
 
         /// @brief Get the total frame count
-        MOUNTAIN_API static uint64_t GetTotalFrameCount();
+        STATIC_GETTER(uint64_t, TotalFrameCount, m_TotalFrameCount)
 
         /// @brief Get the target delta time.
         ///
-        /// This is either @code 1.f / GetTargetFps()@endcode if @code GetTargetFps().has_value()@endcode is @c true or @code 1.f / Screen::GetRefreshRate()@endcode otherwise.
+        /// This is either @code 1.f / GetTargetFps()@endcode
+        /// if @code GetTargetFps().has_value()@endcode is @c true,
+        /// otherwise @code 1.f / Screen::GetRefreshRate()@endcode
+        /// if Window::GetVSync() is @c true,
+        /// or @c 0.f if both are @c false.
         ///
         /// @see GetDeltaTime()
         MOUNTAIN_API static float_t GetTargetDeltaTime();
 
         /// @brief Get how much time the last frame took. If this is equal to the delta time, then the game is lagging.
-        MOUNTAIN_API static float_t GetLastFrameDuration();
+        STATIC_GETTER(float_t, LastFrameDuration, m_LastFrameDuration)
 
         // TODO - Add OnInterval function
 
@@ -83,11 +86,11 @@ namespace Mountain
         /// @brief Used to wait between frames
         /// @remark This is called at the end of a frame by the Game class.
         /// @remark This function might not wait if the game is not keeping up, that is
-        /// if the delta time between frames is greater than what the target FPS/VSync aim for.
+        /// if the delta time between frames is greater than what the targetFps/VSync aim for.
         static void WaitForNextFrame();
         static double_t SleepFor(double_t milliseconds);
 
-        friend void Game::Initialize();
-        friend bool_t Game::NextFrame();
+        // Calls Initialize, Shutdown, Update and WaitForNextFrame
+        friend class Game;
     };
 }
