@@ -20,19 +20,19 @@ namespace Mountain
         STATIC_CLASS(Screen)
 
     public:
-        /// @brief Gets the position of the screen
-        /// @return Screen position
-        static Vector2i GetPosition(int32_t screenIndex = 0);
+        /// @brief Gets the position of the given screen
+        /// @remark If given a negative screen index, will default to @c Window::GetCurrentScreen().
+        static Vector2i GetPosition(int32_t screenIndex = -1);
 
-        /// @brief Gets the size of the screen
-        /// @return Screen size
-        static Vector2i GetSize(int32_t screenIndex = 0);
+        /// @brief Gets the size of the given screen
+        /// @remark If given a negative screen index, will default to @c Window::GetCurrentScreen().
+        static Vector2i GetSize(int32_t screenIndex = -1);
 
-        /// @brief Gets the refresh rate of the screen
-        /// @return Refresh rate
-        static int32_t GetRefreshRate(int32_t screenIndex = 0);
+        /// @brief Gets the refresh rate of the given screen
+        /// @remark If given a negative screen index, will default to @c Window::GetCurrentScreen().
+        static int32_t GetRefreshRate(int32_t screenIndex = -1);
 
-        static uint32_t GetScreenCount();
+        STATIC_GETTER(int32_t, ScreenCount, m_MonitorCount)
 
     private:
         /// @brief Native handle for the monitors
@@ -41,7 +41,7 @@ namespace Mountain
         /// @brief Native handle for the monitors
         static inline const GLFWvidmode** m_VideoModes = nullptr;
 
-        static inline uint32_t m_MonitorCount = 0;
+        static inline int32_t m_MonitorCount = 0;
 
         /// @brief Initializes the screen data
         static void Initialize();

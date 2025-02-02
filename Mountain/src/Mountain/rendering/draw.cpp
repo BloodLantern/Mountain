@@ -3,7 +3,6 @@
 #include <ImGui/imgui_stdlib.h>
 
 #include "Mountain/globals.hpp"
-#include "Mountain/rendering/renderer.hpp"
 #include "Mountain/resource/font.hpp"
 #include "Mountain/resource/resource_manager.hpp"
 #include "Mountain/resource/shader.hpp"
