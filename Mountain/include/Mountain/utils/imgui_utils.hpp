@@ -24,7 +24,7 @@ namespace Mountain::ImGuiUtils
         const std::type_identity_t<std::function<bool_t(T& value)>>& displayFunction
     );
 
-    MOUNTAIN_API bool ComboEaser(std::string_view label, Easing::Easer* v, ImGuiComboFlags flags = ImGuiComboFlags_None);
+    MOUNTAIN_API bool ComboEaser(const std::string& label, Easing::Easer* v, ImGuiComboFlags flags = ImGuiComboFlags_None);
 
     MOUNTAIN_API void ShowInputsWindow();
 
@@ -43,6 +43,8 @@ namespace Mountain::ImGuiUtils
     /// @brief Set the next item width to be the available width
     /// Shorthand for writing @code ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x);@endcode
     MOUNTAIN_API void SetNextItemWidthAvail();
+
+    MOUNTAIN_API void ShowPerformanceMonitoring();
 }
 
 // ReSharper disable CppInconsistentNaming

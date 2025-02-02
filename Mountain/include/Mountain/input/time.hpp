@@ -62,7 +62,19 @@ namespace Mountain
         /// @brief Get how much time the last frame took. If this is equal to the delta time, then the game is lagging.
         STATIC_GETTER(float_t, LastFrameDuration, m_LastFrameDuration)
 
-        // TODO - Add OnInterval function
+        /// @brief Returns @c true on the given time interval
+        /// @details This is a shorthand for writing @code Calc::OnInterval(Time::GetTotalTime(), Time::GetLastTotalTime(), interval)@endcode
+        /// @param interval The time interval between each @c true result
+        /// @return @c true if the interval has passed, @c false otherwise
+        [[nodiscard]]
+        MOUNTAIN_API static bool_t OnInterval(float_t interval);
+
+        /// @brief Returns @c true on the given time interval
+        /// @details This is a shorthand for writing @code Calc::OnInterval(Time::GetTotalTimeUnscaled(), Time::GetLastTotalTimeUnscaled(), interval)@endcode
+        /// @param interval The time interval between each @c true result
+        /// @return @c true if the interval has passed, @c false otherwise
+        [[nodiscard]]
+        MOUNTAIN_API static bool_t OnIntervalUnscaled(float_t interval);
 
     private:
         MOUNTAIN_API static inline float_t m_TotalTime = 0.f;
