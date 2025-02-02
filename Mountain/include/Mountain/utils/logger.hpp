@@ -12,8 +12,8 @@
 /// @file logger.hpp
 /// @brief Defines the Mountain::Logger static class
 
-/// @brief Logs a @ref Mountain::Logger::LogLevel::TemporaryDebug "temporary debug message" using the given format message and arguments.
-#define DEBUG_LOG(message, ...) Mountain::Logger::LogTempDebug(message, __FILE__, __LINE__, __VA_ARGS__)
+/// @brief Logs a @ref Mountain::Logger::LogLevel::Debug "temporary debug message" using the given format message and arguments.
+#define DEBUG_LOG(message, ...) Mountain::Logger::LogDebug(message, __FILE__, __LINE__, __VA_ARGS__)
 
 namespace Mountain
 {
@@ -32,36 +32,36 @@ namespace Mountain
     ///
     /// ### Usage
     /// The most generic way of logging is by using the @c Logger::Log function, which allows you to pass a LogLevel to describe the severity
-    /// of the log. Shortcuts are also available through the use of @c Logger::LogTempDebug, @c Logger::LogDebug, @c Logger::LogInfo, @c Logger::LogWarning, @c Logger::LogError and @c Logger::LogFatal.
+    /// of the log. Shortcuts are also available through the use of @c Logger::LogDebug, @c Logger::LogVerbose, @c Logger::LogInfo, @c Logger::LogWarning, @c Logger::LogError and @c Logger::LogFatal.
     /// Those functions take a format string and format parameters to follow the usage of <a href="https://en.cppreference.com/w/cpp/utility/format/format">std::format</a>.
     /// This means that any new parameter type that is directly printed must satisfy the requirements of the <a href="https://en.cppreference.com/w/cpp/utility/format/formattable">std::formattable</a>
     /// concept (defined a Concepts::Formattable in the Mountain namespace), and therefore needs to implement its own version of the <a href="https://en.cppreference.com/w/cpp/utility/format/formatter">std::formatter</a> struct.
     ///
     /// ### Example
-    /// All logs are preceded by their timestamp (the exact time at which the @c Logger::Log function was called), and a string representation of their LogLevel.
+    /// All logs are preceded by their timestamp (the exact time at which the @c Logger::Log function was called) and a string representation of their LogLevel.
     /// A typical log looks like the following:
     /// @code
     /// [11:26:05.751] [INFO] Starting logging to file.
     /// @endcode
-    /// Also, @ref Logger::LogLevel::TemporaryDebug "temporary debug logs" automatically specify the file and line at which the log was made.
+    /// Also, @ref Logger::LogLevel::Debug "debug logs" automatically specify the file and line at which the log was made.
     class Logger final
     {
         STATIC_CLASS(Logger)
 
     public:
         /// @brief Describes the severity of a log.
-        enum class LogLevel
+        enum class LogLevel : uint8_t
         {
             /// @brief Log intended for temporary debugging only.
             ///
             /// Preceded by '[TEMP DEBUG]' and appears green in the console.
             /// Temporary debug logs are not printed in the log file by default, and they are only printed in the console if in a debug build.
-            TemporaryDebug,
+            Debug,
             /// @brief Log intended for debugging only.
             ///
             /// Preceded by '[DEBUG]' and appears gray in the console.
-            /// Debug logs are not printed in the log file by default, and they are only printed in the console if in a debug build.
-            Debug,
+            /// Verbose logs are not printed in the log file by default, and they are only printed in the console if in a debug build.
+            Verbose,
             /// @brief Log intended for general information.
             ///
             /// Preceded by '[INFO]' and appears white in the console.
@@ -117,10 +117,10 @@ namespace Mountain
     public:
         /// @brief The minimum necessary LogLevel for a log to be printed in the console.
         ///
-        /// Defaults to LogLevel::TemporaryDebug in a debug build, or LogLevel::Info otherwise.
+        /// Defaults to LogLevel::Debug in a debug build, or LogLevel::Info otherwise.
         MOUNTAIN_API static inline LogLevel minimumConsoleLevel =
     #ifdef _DEBUG
-            LogLevel::TemporaryDebug;
+            LogLevel::Debug;
     #else
             LogLevel::Info;
     #endif
@@ -146,15 +146,15 @@ namespace Mountain
         /// This function shouldn't be used directly. To print a temporary debug log message, instead use DEBUG_LOG.
         ///
         /// @see Log
-        /// @see LogLevel::TemporaryDebug
+        /// @see LogLevel::Debug
         template <Concepts::FormattableT... Args>
-        static void LogTempDebug(const std::string& format, const char_t* file, int32_t line, Args&&... args);
+        static void LogDebug(const std::string& format, const char_t* file, int32_t line, Args&&... args);
 
         /// @brief Logs a debug message using the specified format string and arguments.
         ///
         /// @see Log
         template <Concepts::FormattableT... Args>
-        static void LogDebug(const std::string& format, Args&&... args);
+        static void LogVerbose(const std::string& format, Args&&... args);
 
         /// @brief Logs an information message using the specified format string and arguments.
         ///

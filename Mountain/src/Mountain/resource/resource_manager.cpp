@@ -23,7 +23,7 @@ using namespace Mountain;
 
 Pointer<Font> ResourceManager::LoadFont(const Pointer<File>& file, const uint32_t size)
 {
-    Logger::LogDebug("Loading font {} with size {}", file->GetPath(), size);
+    Logger::LogVerbose("Loading font {} with size {}", file->GetPath(), size);
 
     std::string name = std::format("{}/{}", file->GetPathString(), size);
 
@@ -122,7 +122,7 @@ void ResourceManager::LoadAll()
     for (Pointer shader : shadersToLoad)
         shader->Load();
 
-    Logger::LogDebug(
+    Logger::LogVerbose(
         "Successfully loaded {} files in {} resources. Took {}",
         files.GetSize(),
         m_Resources.size() - oldResourceCount,
@@ -208,7 +208,7 @@ void ResourceManager::LoadAllBinaries()
     for (Pointer shader : shadersToLoad)
         shader->Load();
 
-    Logger::LogDebug(
+    Logger::LogVerbose(
         "Successfully loaded {} files in {} resources. Took {}",
         files.size(),
         m_Resources.size() - oldResourceCount,
@@ -275,7 +275,7 @@ void ResourceManager::Rename(const Pointer<Resource>& resource, const std::strin
 
 void ResourceManager::Unload(const std::string& name)
 {
-    Logger::LogDebug("Unloading resource {}", name);
+    Logger::LogVerbose("Unloading resource {}", name);
     
     const auto&& resource = m_Resources.find(name);
     
@@ -302,7 +302,7 @@ void ResourceManager::UnloadAll()
     
     for (auto& resource : m_Resources)
     {
-        Logger::LogDebug("Unloading resource {}", resource.first);
+        Logger::LogVerbose("Unloading resource {}", resource.first);
         
         if (resource.second->IsLoaded())
             resource.second->Unload();
