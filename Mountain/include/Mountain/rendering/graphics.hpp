@@ -20,12 +20,8 @@ namespace Mountain::Graphics
     {
         ReadOnly,
         WriteOnly,
-        ReadWrite,
-
-        Count
+        ReadWrite
     };
-
-    ENUM_COUNT(ImageShaderAccess);
 
     enum class GpuDataSynchronizationType : uint16_t
     {
@@ -54,34 +50,22 @@ namespace Mountain::Graphics
     enum class MagnificationFilter : uint8_t
     {
         Nearest,
-        Linear,
-
-        Count
+        Linear
     };
-
-    ENUM_COUNT(MagnificationFilter);
 
     enum class Wrapping : uint8_t
     {
         Repeat,
         MirroredRepeat,
         ClampToEdge,
-        ClampToBorder,
-
-        Count
+        ClampToBorder
     };
-
-    ENUM_COUNT(Wrapping);
 
     enum class ShaderType : uint8_t
     {
         Vertex,
-        Fragment,
-
-        Count
+        Fragment
     };
-
-    ENUM_COUNT(ShaderType);
 
     enum class InternalFormat : uint8_t
     {
@@ -159,12 +143,8 @@ namespace Mountain::Graphics
         RedGreenBlueAlpha16Int,
         RedGreenBlueAlpha16UnsignedInt,
         RedGreenBlueAlpha32Int,
-        RedGreenBlueAlpha32UnsignedInt,
-
-        Count
+        RedGreenBlueAlpha32UnsignedInt
     };
-
-    ENUM_COUNT(InternalFormat);
 
     enum class Format : uint8_t
     {
@@ -173,12 +153,8 @@ namespace Mountain::Graphics
         RedGreenBlue,
         BlueGreenRed,
         RedGreenBlueAlpha,
-        BlueGreenRedAlpha,
-
-        Count
+        BlueGreenRedAlpha
     };
-
-    ENUM_COUNT(Format);
 
     enum class DataType : uint8_t
     {
@@ -204,13 +180,9 @@ namespace Mountain::Graphics
         UnsignedInt_8_8_8_8,
         UnsignedInt_8_8_8_8_Reverse,
         UnsignedInt_10_10_10_2,
-        UnsignedInt_2_10_10_10_Reverse,
+        UnsignedInt_2_10_10_10_Reverse
         // ReSharper restore CppInconsistentNaming
-
-        Count
     };
-
-    ENUM_COUNT(DataType);
 
     enum class Constant : uint8_t
     {
@@ -540,12 +512,8 @@ namespace Mountain::Graphics
         ViewportIndexProvokingVertex,
         ViewportSubpixelBits,
 
-        MaxElementIndex,
-
-        Count
+        MaxElementIndex
     };
-
-    ENUM_COUNT(Constant);
 
     enum class BufferType : uint8_t
     {
@@ -562,12 +530,8 @@ namespace Mountain::Graphics
         ShaderStorageBuffer,
         TextureBuffer,
         TransformFeedbackBuffer,
-        UniformBuffer,
-
-        Count
+        UniformBuffer
     };
-
-    ENUM_COUNT(BufferType);
 
     enum class BufferUsage : uint8_t
     {
@@ -579,12 +543,8 @@ namespace Mountain::Graphics
         StaticCopy,
         DynamicDraw,
         DynamicRead,
-        DynamicCopy,
-
-        Count
+        DynamicCopy
     };
-
-    ENUM_COUNT(BufferUsage);
 
     enum class BufferStorageFlags : uint16_t
     {
@@ -635,12 +595,8 @@ namespace Mountain::Graphics
         Triangles,
         TriangleStripAdjacency,
         TrianglesAdjacency,
-        Patches,
-
-        Count
+        Patches
     };
-
-    ENUM_COUNT(DrawMode);
 
     enum class ClearFlags : uint16_t
     {
@@ -696,6 +652,8 @@ namespace Mountain::Graphics
 
     MOUNTAIN_API void SetVertexAttribute(uint32_t index, int32_t size, int32_t stride, size_t offset, uint32_t divisor = 0);
     MOUNTAIN_API void SetVertexAttributeInt(uint32_t index, int32_t size, int32_t stride, size_t offset, uint32_t divisor = 0);
+
+    // TODO - Add a GetError function
 
     template <OpenGlConvertibleT T>
     // ReSharper disable once CppFunctionIsNotImplemented

@@ -55,15 +55,15 @@ namespace Mountain
         MOUNTAIN_API static Vector2 GetMouseWheel();
 
     private:
-        using KeyStatuses = std::array<bool_t, KeyStatusCount>;
+        using KeyStatuses = std::array<bool_t, magic_enum::enum_count<KeyStatus>()>;
 
-        using MouseStatuses = std::array<bool_t, MouseButtonStatusCount>;
+        using MouseStatuses = std::array<bool_t, magic_enum::enum_count<MouseButtonStatus>()>;
 
         MOUNTAIN_API static inline uint32_t m_CurrentBoundWindow = 0;
 
-        MOUNTAIN_API static inline std::array<KeyStatuses, KeyCount> m_Keyboard;
+        MOUNTAIN_API static inline std::array<KeyStatuses, static_cast<size_t>(Key::Count)> m_Keyboard;
 
-        MOUNTAIN_API static inline std::array<MouseStatuses, MouseButtonCount> m_Mouse;
+        MOUNTAIN_API static inline std::array<MouseStatuses, magic_enum::enum_count<MouseButton>()> m_Mouse;
 
         MOUNTAIN_API static inline std::array<GamepadInput, GamepadMax> m_Gamepads;
 

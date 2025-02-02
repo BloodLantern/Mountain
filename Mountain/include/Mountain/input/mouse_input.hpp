@@ -27,14 +27,8 @@ namespace Mountain
         /// @brief Extension button 7
         Button7,
         /// @brief Extension button 8
-        Button8,
-
-        Count,
-
-        None
+        Button8
     };
-
-    ENUM_COUNT(MouseButton);
 
     /// @brief %List of mouse button states
     enum class MouseButtonStatus : uint8_t
@@ -44,10 +38,6 @@ namespace Mountain
         /// @brief Held down
         Down,
         /// @brief Released
-        Release,
-
-        Count
+        Release
     };
-
-    ENUM_COUNT(MouseButtonStatus);
 }
