@@ -19,7 +19,6 @@
 #include "Mountain/utils/imgui_utils.hpp"
 #include "Mountain/utils/logger.hpp"
 
-#include "spin_component.hpp"
 #include "Mountain/rendering/effect.hpp"
 #include "Mountain/utils/file_system_watcher.hpp"
 #include "Mountain/utils/random.hpp"
@@ -31,7 +30,6 @@ GameExample::GameExample(const char_t* const windowTitle)
     , renderTarget(BaseResolution, Graphics::MagnificationFilter::Nearest)
     , debugRenderTarget(Window::GetSize(), Graphics::MagnificationFilter::Nearest)
 {
-    //renderTarget.ambientLight = Color(0.1f);
 }
 
 template <Concepts::EffectT T>
@@ -155,9 +153,6 @@ void GameExample::Initialize()
 
 void GameExample::LoadResources()
 {
-    /*FileManager::LoadDirectory("assets");
-    ResourceManager::LoadAll();*/
-
     assetsWatcher.recursive = true;
     assetsWatcher.onCreated += [](const std::filesystem::path& path)
     {
@@ -180,17 +175,6 @@ void GameExample::LoadResources()
         if (r)
             r->Reload();
     };
-
-    /*Entity* entity = new Entity(static_cast<Vector2>(BaseResolution) * 0.5f);
-    entities.Add(entity);
-    entity->AddComponent<SpinComponent>();
-
-    character = new AnimatedCharacter({ 30.f, 80.f });
-    entities.Add(character);
-
-    player->LoadResources();
-
-    font = ResourceManager::LoadFont("assets/font.ttf", 30);*/
 
     vignette.effect.LoadResources();
     filmGrain.effect.LoadResources();
@@ -239,67 +223,8 @@ void GameExample::Render()
     Renderer::PushRenderTarget(renderTarget);
     static Color clearColor = Color::Black();
     Draw::Clear(clearColor);
-    
-    /*for (Entity* const entity : entities)
-        entity->Render();
-
-    const Vector2 resolutionFactor = renderTarget.GetSize() / BaseResolution;
-
-    static constexpr std::array Points {
-        Vector2{ 1.f, 0.f },
-        Vector2{ static_cast<float_t>(BaseResolution.x), 0.f },
-        Vector2{ static_cast<float_t>(BaseResolution.x), static_cast<float_t>(BaseResolution.y) - 1.f },
-        Vector2{ 1.f, static_cast<float_t>(BaseResolution.y) - 1.f }
-    };
-
-    Draw::Line(Points[0], Points[1], Color::Red());
-    Draw::Line(Points[1], Points[2], Color::Green());
-    Draw::Line(Points[2], Points[3], Color::Blue());
-    Draw::Line(Points[3], Points[0], Color::White());
-
-    // Screen origin
-    Draw::Line(Vector2::One() * -15.f, Vector2::One() * 15.f, Color::Red(), Color::Green());
-    Draw::Line(Vector2(15.f, -15.f), Vector2(-15.f, 15.f), Color::Blue(), Color::White());
-
-    static constexpr std::array TrianglePoints {
-        Vector2(100.f, 40.f),
-        Vector2(80.f, 80.f),
-        Vector2(120.f, 90.f)
-    };
-    
-    Draw::Triangle(TrianglePoints[0], TrianglePoints[1], TrianglePoints[2], Color::Aqua());
-    
-    Draw::TriangleFilled(TrianglePoints[0] * 2.f, TrianglePoints[1] * 2.f, TrianglePoints[2] * 2.f, Color::Brown());
-
-    Draw::RectangleFilled(Vector2(23.f), Vector2(54.f, 34.f), Color::Azure());
-    Draw::RectangleFilled(Vector2(27.f), Vector2(46.f, 26.f), Color::Cornsilk());
-
-    Draw::Rectangle(Vector2(20.f), Vector2(60.f, 40.f), Color::Goldenrod());
-    Draw::Rectangle(Vector2(25.f), Vector2(50.f, 30.f), Color::Lavender());
-
-    Draw::CircleFilled(Vector2(130.f), 15.f * std::min(resolutionFactor.x, resolutionFactor.y), Color::Khaki());
-    Draw::Circle(Vector2(130.f), 15.f * std::min(resolutionFactor.x, resolutionFactor.y), Color::Salmon());
-    
-    Draw::Circle(Vector2(100.f, 130.f), 35.f * std::min(resolutionFactor.x, resolutionFactor.y), Color::Salmon());
-    
-    Draw::TriangleFilled(Vector2(160.f, 70.f), Vector2(140.f, 110.f), Vector2(180.f, 110.f), Color::Red(), Color::Green(), Color::Blue());
-
-    Pointer<Texture> oldLady = ResourceManager::Get<Texture>("assets/oldlady/idle00.png");
-    Draw::Texture(*oldLady, { 10.f, 80.f });
-    Draw::Texture(*oldLady, { 10.f, 90.f });
-    Draw::Texture(*oldLady, { 10.f, 100.f });
-    Draw::Texture(*oldLady, { 10.f, 110.f });
-    Draw::Texture(*oldLady, { 10.f, 120.f });
-    Draw::Texture(*oldLady, { 10.f, 130.f });
-    Draw::Texture(*oldLady, { 10.f, 140.f });
-    Draw::Texture(*oldLady, { 10.f, 150.f });
-    Draw::Texture(*oldLady, { 10.f, 160.f });
-
-    player->Render();*/
 
     particleSystem.Render();
-
-    //Draw::Text(*font, "Hello, tiny World!", { 90.f, 30.f });
 
     Renderer::PopRenderTarget();
 
@@ -320,21 +245,12 @@ void GameExample::Render()
         Renderer::PushRenderTarget(debugRenderTarget);
         Draw::Clear(Color::Transparent());
 
-        /*for (Entity* const entity : entities)
-            entity->RenderDebug();
-
-        player->RenderDebug();*/
-
         particleSystem.RenderDebug();
 
         Renderer::PopRenderTarget();
 
         Draw::RenderTarget(debugRenderTarget);
     }
-
-    /*Draw::Texture(*oldLady, { 10.f, 80.f });
-
-    Draw::Text(*font, "Hello, big World!", { 10.f, 160.f });*/
 
     ImGui::Begin("Debug");
     
@@ -426,19 +342,13 @@ void GameExample::Render()
         }
 
         ImGui::Text("Frame time (without wait between frames): %.1fms", Time::GetLastFrameDuration() * 1000.f);
-        ImGui::Text("Frame time left (if negative the game is lagging): %.1fms", (Time::GetTargetDeltaTime() - Time::GetLastFrameDuration()) * 1000.f);
-        static bool_t vsync = true;
+        ImGui::Text("Frame time left (if negative the game is lagging): %.1fms", Time::GetTargetDeltaTime() == 0.f ? 0.f : (Time::GetTargetDeltaTime() - Time::GetLastFrameDuration()) * 1000.f);
+        bool_t vsync = Window::GetVSync();
         ImGui::Checkbox("Vertical Synchronization", &vsync);
         Window::SetVSync(vsync);
         ImGui::Checkbox("Show inputs window", &showInputs);
         ImGui::SliderFloat("Time scale", &Time::timeScale, 0.f, 2.f);
         ImGui::Checkbox("Debug render", &debugRender);
-        /*Sprite* s = character->GetComponent<Sprite>();
-        float_t f = s->GetFrameDuration();
-        const float_t oldF = f;
-        ImGui::DragFloat("Old lady animation speed", &f, 0.01f);
-        if (oldF != f)
-            s->SetFrameDuration(f);*/
 
         ImGui::Checkbox("Show ImGui demo window", &showDemoWindow);
 
