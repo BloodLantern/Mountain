@@ -170,9 +170,9 @@ void Mountain::Renderer::DebugString(DebugStringData data)
 
 Mountain::OpenGlVersion& Mountain::Renderer::GetOpenGlVersion() { return m_GlVersion; }
 
-bool Mountain::Renderer::Initialize(const std::string_view windowTitle, const Vector2i windowSize, const OpenGlVersion &glVersion)
+bool Mountain::Renderer::Initialize(const std::string& windowTitle, const Vector2i windowSize, const OpenGlVersion &glVersion)
 {
-    Logger::LogDebug("Initializing renderer");
+    Logger::LogVerbose("Initializing renderer");
 
     m_GlVersion = glVersion;
 
@@ -303,7 +303,7 @@ void Mountain::Renderer::PostFrame()
 
 void Mountain::Renderer::Shutdown()
 {
-    Logger::LogDebug("Shutting down renderer");
+    Logger::LogVerbose("Shutting down renderer");
     
     // Cleanup
 	ImGui_ImplOpenGL3_Shutdown();
