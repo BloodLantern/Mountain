@@ -57,13 +57,14 @@ namespace Mountain
         static inline Pointer<Font> m_DefaultFont;
         static inline List<DebugStringData> m_DebugStrings;
 
-        static bool Initialize(const std::string& windowTitle, Vector2i windowSize, const OpenGlVersion& glVersion = {});
+        static bool_t Initialize(const std::string& windowTitle, Vector2i windowSize, const OpenGlVersion& glVersion = {});
         static void PreFrame();
         static void PostFrame();
         static void Shutdown();
 
-        friend class Draw;
+        // Needs access to the m_Freetype library instance
         friend class Font;
+        // Calls Initialize, PreFrame, PostFrame and Shutdown
         friend class Game;
     };
 }

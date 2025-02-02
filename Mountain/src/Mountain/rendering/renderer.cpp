@@ -170,7 +170,7 @@ void Mountain::Renderer::DebugString(DebugStringData data)
 
 Mountain::OpenGlVersion& Mountain::Renderer::GetOpenGlVersion() { return m_GlVersion; }
 
-bool Mountain::Renderer::Initialize(const std::string& windowTitle, const Vector2i windowSize, const OpenGlVersion &glVersion)
+bool_t Mountain::Renderer::Initialize(const std::string& windowTitle, const Vector2i windowSize, const OpenGlVersion& glVersion)
 {
     Logger::LogVerbose("Initializing renderer");
 
@@ -202,7 +202,6 @@ bool Mountain::Renderer::Initialize(const std::string& windowTitle, const Vector
     if (FT_Init_FreeType(&m_Freetype))
     {
         Logger::LogError("Failed to initialize FreeType");
-        Window::Shutdown();
         return false;
     }
 

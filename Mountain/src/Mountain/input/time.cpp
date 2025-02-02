@@ -8,23 +8,12 @@
 
 using namespace Mountain;
 
-float_t Time::GetTotalTime() { return m_TotalTime; }
-
-float_t Time::GetLastTotalTime() { return m_LastTotalTime; }
-
-float_t Time::GetTotalTimeUnscaled() { return m_TotalTimeUnscaled; }
-
-float_t Time::GetLastTotalTimeUnscaled() { return m_LastTotalTimeUnscaled; }
-
-float_t Time::GetDeltaTime() { return m_DeltaTime; }
-
-float_t Time::GetDeltaTimeUnscaled() { return m_DeltaTimeUnscaled; }
-
-uint64_t Time::GetTotalFrameCount() { return m_TotalFrameCount; }
-
-float_t Time::GetTargetDeltaTime() { return 1.f / static_cast<float_t>(targetFps.has_value() ? targetFps.value() : Screen::GetRefreshRate()); }
-
-float_t Time::GetLastFrameDuration() { return m_LastFrameDuration; }
+float_t Time::GetTargetDeltaTime()
+{
+    if (targetFps.has_value())
+        return 1.f / static_cast<float_t>(targetFps.value());
+    return Window::GetVSync() ? 1.f / static_cast<float_t>(Screen::GetRefreshRate()) : 0.f;
+}
 
 namespace
 {
