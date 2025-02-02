@@ -213,28 +213,28 @@ std::string Utils::ToUpper(const std::string_view str)
     return result;
 }
 
-std::pair<int32_t, std::string_view> Utils::ByteSizeUnit(int64_t size)
+std::pair<float_t, std::string_view> Utils::ByteSizeUnit(int64_t size)
 {
     if (size < 1000)
-        return { static_cast<int32_t>(size), "B" };
+        return { static_cast<float_t>(size), "B" };
 
-    size /= 1000;
-    if (size < 1000)
-        return { static_cast<int32_t>(size), "KB" };
+    float_t dividedSize = static_cast<float_t>(size) / 1000.f;
+    if (dividedSize < 1000)
+        return { dividedSize, "KB" };
 
-    size /= 1000;
-    if (size < 1000)
-        return { static_cast<int32_t>(size), "MB" };
+    dividedSize /= 1000;
+    if (dividedSize < 1000)
+        return { dividedSize, "MB" };
 
-    size /= 1000;
-    if (size < 1000)
-        return { static_cast<int32_t>(size), "GB" };
+    dividedSize /= 1000;
+    if (dividedSize < 1000)
+        return { dividedSize, "GB" };
 
-    size /= 1000;
-    if (size < 1000)
-        return { static_cast<int32_t>(size), "TB" };
+    dividedSize /= 1000;
+    if (dividedSize < 1000)
+        return { dividedSize, "TB" };
 
-    return { static_cast<int32_t>(size), "?" };
+    return { static_cast<float_t>(size), "?" };
 }
 
 std::string Utils::GetBuiltinShadersPath() { return BuiltinShadersPath.empty() ? "shaders_internal/" : BuiltinShadersPath + '/'; }

@@ -17,31 +17,31 @@ namespace Mountain
         Apostrophe         = 39,
         /// @brief ,
         Comma              = 44,
-        /// @brief \-
+        /// @brief -
         Minus              = 45,
-        /// @brief \.
+        /// @brief .
         Period             = 46,
         /// @brief /
         Slash              = 47,
-        /// @brief Key0
+        /// @brief 0
         Key0               = 48,
-        /// @brief Key1
+        /// @brief 1
         Key1               = 49,
-        /// @brief Key2
+        /// @brief 2
         Key2               = 50,
-        /// @brief Key3
+        /// @brief 3
         Key3               = 51,
-        /// @brief Key4
+        /// @brief 4
         Key4               = 52,
-        /// @brief Key5
+        /// @brief 5
         Key5               = 53,
-        /// @brief Key6
+        /// @brief 6
         Key6               = 54,
-        /// @brief Key7
+        /// @brief 7
         Key7               = 55,
-        /// @brief Key8
+        /// @brief 8
         Key8               = 56,
-        /// @brief Key9
+        /// @brief 9
         Key9               = 57,
         /// @brief ;
         Semicolon          = 59,
@@ -102,7 +102,7 @@ namespace Mountain
 
         /// @brief [
         LeftBracket        = 91,
-        /// @brief Backslash
+        /// @brief \ (Backslash)
         Backslash          = 92,
         /// @brief ]
         RightBracket       = 93,
@@ -203,39 +203,39 @@ namespace Mountain
         F24                = 313,
         /// @brief F25
         F25                = 314,
-        /// @brief Kp0
+        /// @brief Keypad 0
         Kp0                = 320,
-        /// @brief Kp1
+        /// @brief Keypad 1
         Kp1                = 321,
-        /// @brief Kp2
+        /// @brief Keypad 2
         Kp2                = 322,
-        /// @brief Kp3
+        /// @brief Keypad 3
         Kp3                = 323,
-        /// @brief Kp4
+        /// @brief Keypad 4
         Kp4                = 324,
-        /// @brief Kp5
+        /// @brief Keypad 5
         Kp5                = 325,
-        /// @brief Kp6
+        /// @brief Keypad 6
         Kp6                = 326,
-        /// @brief Kp7
+        /// @brief Keypad 7
         Kp7                = 327,
-        /// @brief Kp8
+        /// @brief Keypad 8
         Kp8                = 328,
-        /// @brief Kp9
+        /// @brief Keypad 9
         Kp9                = 329,
-        /// @brief KpDecimal
+        /// @brief Keypad Decimal
         KpDecimal          = 330,
-        /// @brief KpDivide
+        /// @brief Keypad Divide
         KpDivide           = 331,
-        /// @brief KpMultiply
+        /// @brief Keypad Multiply
         KpMultiply         = 332,
-        /// @brief KpSubtract
+        /// @brief Keypad Subtract
         KpSubtract         = 333,
-        /// @brief KpAdd
+        /// @brief Keypad Add
         KpAdd              = 334,
-        /// @brief KpEnter
+        /// @brief Keypad Enter
         KpEnter            = 335,
-        /// @brief KpEqual
+        /// @brief Keypad Equal
         KpEqual            = 336,
         /// @brief LeftShift
         LeftShift          = 340,
@@ -256,7 +256,9 @@ namespace Mountain
         /// @brief Menu
         Menu               = 348,
 
-        Count = 355
+        None = 355,
+
+        Count
     };
 
     /// @brief %List of keyboard button states

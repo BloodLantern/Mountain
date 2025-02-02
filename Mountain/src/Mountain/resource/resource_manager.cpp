@@ -117,6 +117,11 @@ void ResourceManager::LoadAll()
         {
             LoadFont(file, 12);
         }
+        else
+        {
+            if (Contains(file))
+                Get(file)->Load();
+        }
     }
 
     for (Pointer shader : shadersToLoad)
@@ -201,7 +206,8 @@ void ResourceManager::LoadAllBinaries()
         }
         else if (extension != ".glsl")
         {
-            Logger::LogWarning("Unhandled binary resource type (extension {}) for file {}", extension, fileString);
+            if (Contains(file))
+                Get(file)->Load();
         }
     }
 

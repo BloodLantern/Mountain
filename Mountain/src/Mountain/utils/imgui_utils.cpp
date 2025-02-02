@@ -322,16 +322,26 @@ void ImGuiUtils::ShowFileManager()
         const std::string_view format = magic_enum::enum_name(file->GetType());
         ImGui::Text("Format: %.*s", static_cast<int32_t>(format.length()), format.data());
         ImGui::BeginDisabled();
-        const auto byteSize = Utils::ByteSizeUnit(file->GetSize());
-        ImGui::Text("Size: %d %.*s", byteSize.first, static_cast<int32_t>(byteSize.second.length()), byteSize.second.data());
+        if (file->GetSize() < 1000)
+        {
+            ImGui::Text("Size: %lld B", file->GetSize());
+        }
+        else
+        {
+            const auto byteSize = Utils::ByteSizeUnit(file->GetSize());
+            ImGui::Text("Size: %.2f %.*s", byteSize.first, static_cast<int32_t>(byteSize.second.length()), byteSize.second.data());
+        }
         ImGui::EndDisabled();
 
-        if (ImGui::Button("Reload from disk"))
-            file->Reload();
-        if (ImGui::Button("Open with default editor"))
-            file->OpenFile();
-        if (ImGui::Button("Open in file explorer"))
-            file->OpenInExplorer();
+        if (file->Exists())
+        {
+            if (ImGui::Button("Reload from disk"))
+                file->Reload();
+            if (ImGui::Button("Open with default editor"))
+                file->OpenFile();
+            if (ImGui::Button("Open in file explorer"))
+                file->OpenInExplorer();
+        }
 
         ImGui::TreePop();
     }
@@ -341,33 +351,15 @@ void ImGuiUtils::ShowFileManager()
 
 namespace
 {
-    //std::unordered_map<Resource*, std::shared_ptr<FileSystemWatcher>> fileSystemWatchers;
-
     void DisplayReloadOptions(Resource& resource, File& file)
     {
         if (ImGui::Button("Reload from cached file"))
             resource.Reload();
-        if (ImGui::Button("Reload from disk"))
+        if (file.Exists() && ImGui::Button("Reload from disk"))
         {
             file.Reload();
             resource.Reload();
         }
-
-        // TODO - Reload the resource from the main thread somehow
-        /*bool_t fswEnabled = fileSystemWatchers.contains(&resource);
-        if (ImGui::Checkbox("Automatically reload on file change", &fswEnabled))
-        {
-            if (fswEnabled)
-            {
-                std::shared_ptr watcher = std::make_shared<FileSystemWatcher>(file.GetPathString());
-                watcher->onModified += [&] (const auto&) { file.Reload(); resource.Reload(); }; // WRONG THREAD
-                fileSystemWatchers.emplace(&resource, std::move(watcher));
-            }
-            else
-            {
-                fileSystemWatchers.erase(&resource);
-            }
-        }*/
     }
 
     template <Concepts::ResourceT T>

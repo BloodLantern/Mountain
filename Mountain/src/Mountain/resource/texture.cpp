@@ -31,7 +31,11 @@ void Texture::Load()
     m_GpuTexture.Create();
     m_GpuTexture.SetDebugName(m_Name);
 
-    SetFilter(m_Filter);
+    m_GpuTexture.SetMinFilter(m_Filter);
+    m_GpuTexture.SetMagFilter(m_Filter);
+
+    m_GpuTexture.SetWrappingHorizontal(Graphics::Wrapping::ClampToEdge);
+    m_GpuTexture.SetWrappingVertical(Graphics::Wrapping::ClampToEdge);
 
     m_GpuTexture.SetStorage(Graphics::InternalFormat::RedGreenBlueAlpha32Float, m_Size);
     if (m_Data)
