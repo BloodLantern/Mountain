@@ -598,8 +598,6 @@ int32_t Graphics::ToOpenGl(const MagnificationFilter value)
     {
         case MagnificationFilter::Nearest: return GL_NEAREST;
         case MagnificationFilter::Linear: return GL_LINEAR;
-
-        case MagnificationFilter::Count: throw std::invalid_argument("Invalid magnification filter");
     }
 
     throw std::invalid_argument("Invalid magnification filter");
@@ -613,8 +611,6 @@ int32_t Graphics::ToOpenGl(const Wrapping value)
         case Wrapping::MirroredRepeat: return GL_MIRRORED_REPEAT;
         case Wrapping::ClampToEdge: return GL_CLAMP_TO_EDGE;
         case Wrapping::ClampToBorder: return GL_CLAMP_TO_BORDER;
-
-        case Wrapping::Count: throw std::invalid_argument("Invalid wrapping");
     }
 
     throw std::invalid_argument("Invalid wrapping");
@@ -626,8 +622,6 @@ int32_t Graphics::ToOpenGl(const ShaderType value)
     {
         case ShaderType::Vertex: return GL_VERTEX_SHADER;
         case ShaderType::Fragment: return GL_FRAGMENT_SHADER;
-
-        case ShaderType::Count: throw std::invalid_argument("Invalid shader type");
     }
 
     throw std::invalid_argument("Invalid shader type");
@@ -699,8 +693,6 @@ int32_t Graphics::ToOpenGl(const InternalFormat value)
         case InternalFormat::RedGreenBlueAlpha16UnsignedInt: return GL_RGBA16UI;
         case InternalFormat::RedGreenBlueAlpha32Int: return GL_RGBA32I;
         case InternalFormat::RedGreenBlueAlpha32UnsignedInt: return GL_RGBA32UI;
-
-        case InternalFormat::Count: throw std::invalid_argument("Invalid internal format");
     }
 
     throw std::invalid_argument("Invalid internal format");
@@ -716,8 +708,6 @@ int32_t Graphics::ToOpenGl(const Format value)
         case Format::BlueGreenRed: return GL_BGR;
         case Format::RedGreenBlueAlpha: return GL_RGBA;
         case Format::BlueGreenRedAlpha: return GL_BGRA;
-
-        case Format::Count: throw std::invalid_argument("Invalid format");
     }
 
     throw std::invalid_argument("Invalid format");
@@ -749,8 +739,6 @@ int32_t Graphics::ToOpenGl(const DataType value)
         case DataType::UnsignedInt_8_8_8_8_Reverse: return GL_UNSIGNED_INT_8_8_8_8_REV;
         case DataType::UnsignedInt_10_10_10_2: return GL_UNSIGNED_INT_10_10_10_2;
         case DataType::UnsignedInt_2_10_10_10_Reverse: return GL_UNSIGNED_INT_2_10_10_10_REV;
-
-        case DataType::Count: throw std::invalid_argument("Invalid data type");
     }
 
     throw std::invalid_argument("Invalid data type");
@@ -1002,8 +990,6 @@ int32_t Graphics::ToOpenGl(const Constant value)
         case Constant::ViewportIndexProvokingVertex: return GL_VIEWPORT_INDEX_PROVOKING_VERTEX;
         case Constant::ViewportSubpixelBits: return GL_VIEWPORT_SUBPIXEL_BITS;
         case Constant::MaxElementIndex: return GL_MAX_ELEMENT_INDEX;
-
-        case Constant::Count: throw std::invalid_argument("Invalid constant");
     }
 
     throw std::invalid_argument("Invalid constant");
@@ -1027,8 +1013,6 @@ int32_t Graphics::ToOpenGl(const BufferType value)
         case BufferType::TextureBuffer: return GL_TEXTURE_BUFFER;
         case BufferType::TransformFeedbackBuffer: return GL_TRANSFORM_FEEDBACK_BUFFER;
         case BufferType::UniformBuffer: return GL_UNIFORM_BUFFER;
-
-        case BufferType::Count: throw std::invalid_argument("Invalid buffer type");
     }
 
     throw std::invalid_argument("Invalid buffer type");
@@ -1047,8 +1031,6 @@ int32_t Graphics::ToOpenGl(const BufferUsage value)
         case BufferUsage::DynamicDraw: return GL_DYNAMIC_DRAW;
         case BufferUsage::DynamicRead: return GL_DYNAMIC_READ;
         case BufferUsage::DynamicCopy: return GL_DYNAMIC_COPY;
-
-        case BufferUsage::Count: throw std::invalid_argument("Invalid buffer usage");
     }
 
     throw std::invalid_argument("Invalid buffer usage");
@@ -1070,8 +1052,6 @@ int32_t Graphics::ToOpenGl(const DrawMode value)
         case DrawMode::TriangleStripAdjacency: return GL_TRIANGLE_STRIP_ADJACENCY;
         case DrawMode::TrianglesAdjacency: return GL_TRIANGLES_ADJACENCY;
         case DrawMode::Patches: return GL_PATCHES;
-
-        case DrawMode::Count: throw std::invalid_argument("Invalid draw mode");
     }
 
     throw std::invalid_argument("Invalid draw mode");

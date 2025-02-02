@@ -29,8 +29,6 @@ bool_t Mountain::Collider::CheckCollision(const Collider& collider) const
             return CheckCollision(reinterpret_cast<const Grid&>(collider));
         case ColliderType::List:
             return CheckCollision(reinterpret_cast<const ColliderList&>(collider));
-        case ColliderType::Count:
-            throw std::runtime_error("Invalid collider type");
     }
     
     throw std::runtime_error("Invalid collider type");

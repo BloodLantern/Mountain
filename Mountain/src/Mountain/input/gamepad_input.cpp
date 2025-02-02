@@ -6,7 +6,7 @@ bool_t GamepadInput::GetConnected() const { return m_IsConnected; }
 
 const std::string& GamepadInput::GetName() const { return m_Name; }
 
-const std::array<float_t, GamepadAxisCount>& GamepadInput::GetAxes() const { return m_Axes; }
+const std::array<float_t, magic_enum::enum_count<GamepadAxis>()>& GamepadInput::GetAxes() const { return m_Axes; }
 
 float_t GamepadInput::GetAxis(const GamepadAxis axis) const { return m_Axes[static_cast<uint32_t>(axis)]; }
 
@@ -27,7 +27,7 @@ Vector2i GamepadInput::GetDirectionalPad() const
     };
 }
 
-const std::array<GamepadButtonStatuses, GamepadButtonCount>& GamepadInput::GetButtons() const { return m_Buttons; }
+const std::array<GamepadButtonStatuses, magic_enum::enum_count<GamepadButton>()>& GamepadInput::GetButtons() const { return m_Buttons; }
 
 bool_t GamepadInput::GetButton(const GamepadButton button, const GamepadButtonStatus status) const
 {

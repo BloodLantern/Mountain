@@ -13,12 +13,8 @@ namespace Mountain
         Hitbox,
         Circle,
         Grid,
-        List,
-
-        Count
+        List
     };
-
-    ENUM_COUNT(ColliderType);
 
     class Hitbox;
     class Circle;

@@ -156,8 +156,6 @@ using stdstring = std::string;
         static constexpr bool is_flags = true;                                                                                                                                                                              \
     };
 
-#define ENUM_COUNT(enumName) constexpr size_t enumName##Count = static_cast<size_t>(enumName::Count)
-
 /// @brief Defines global definitions that make OpenGL use the dedicated GPU instead of the integrated one
 /// Source: https://www.reddit.com/r/opengl/comments/unc3fy/comment/i8728y3/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
 #define USE_DEDICATED_GPU                                                       \
@@ -177,6 +175,6 @@ using stdstring = std::string;
 #define SETTER(type, name, internalName) void Set##name(const type new##name) { internalName = new##name; }
 #define GETTER_SETTER(type, name, internalName) GETTER(type, name, internalName) SETTER(type, name, internalName)
 
-#define STATIC_GETTER(type, name, internalName) [[nodiscard]] static type Get##name() const { return internalName; }
+#define STATIC_GETTER(type, name, internalName) [[nodiscard]] static type Get##name() { return internalName; }
 #define STATIC_SETTER(type, name, internalName) static void Set##name(const type new##name) { internalName = new##name; }
 #define STATIC_GETTER_SETTER(type, name, internalName) STATIC_GETTER(type, name, internalName) STATIC_SETTER(type, name, internalName)

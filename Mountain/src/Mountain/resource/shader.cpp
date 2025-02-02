@@ -53,9 +53,9 @@ bool_t Shader::Load(const char_t* const buffer, const int64_t length, const Grap
 
 void Shader::Load()
 {
-    std::array<uint32_t, Graphics::ShaderTypeCount> shaderIds;
+    std::array<uint32_t, magic_enum::enum_count<Graphics::ShaderType>()> shaderIds;
     bool_t compileError = false;
-    for (size_t i = 0; i < Graphics::ShaderTypeCount; i++)
+    for (size_t i = 0; i < magic_enum::enum_count<Graphics::ShaderType>(); i++)
     {
         const ShaderCode& code = m_Code[i];
         if (code.code.empty())
@@ -92,7 +92,7 @@ void Shader::Load()
     glObjectLabel(GL_PROGRAM, m_Id, static_cast<GLsizei>(m_Name.length()), m_Name.c_str());
 #endif
 
-    for (size_t i = 0; i < Graphics::ShaderTypeCount; i++)
+    for (size_t i = 0; i < magic_enum::enum_count<Graphics::ShaderType>(); i++)
 		glAttachShader(m_Id, shaderIds[i]);
 
     glLinkProgram(m_Id);
@@ -140,13 +140,13 @@ bool_t Shader::Reload(const bool_t reloadInBackend)
 
 bool_t Shader::Reload(const Pointer<File>& file, const bool_t reloadInBackend) { return Resource::Reload(file, reloadInBackend); }
 
-std::array<Pointer<File>, Graphics::ShaderTypeCount>& Shader::GetFiles() { return m_Files; }
+std::array<Pointer<File>, magic_enum::enum_count<Graphics::ShaderType>()>& Shader::GetFiles() { return m_Files; }
 
-const std::array<Pointer<File>, Graphics::ShaderTypeCount>& Shader::GetFiles() const { return m_Files; }
+const std::array<Pointer<File>, magic_enum::enum_count<Graphics::ShaderType>()>& Shader::GetFiles() const { return m_Files; }
 
-std::array<ShaderCode, Graphics::ShaderTypeCount>& Shader::GetCode() { return m_Code; }
+std::array<ShaderCode, magic_enum::enum_count<Graphics::ShaderType>()>& Shader::GetCode() { return m_Code; }
 
-const std::array<ShaderCode, Graphics::ShaderTypeCount>& Shader::GetCode() const { return m_Code; }
+const std::array<ShaderCode, magic_enum::enum_count<Graphics::ShaderType>()>& Shader::GetCode() const { return m_Code; }
 
 void Shader::Use() const { glUseProgram(m_Id); }
 

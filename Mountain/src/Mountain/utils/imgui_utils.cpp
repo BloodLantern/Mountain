@@ -251,7 +251,7 @@ void ImGuiUtils::ShowInputsWindow()
         ImGui::Text("Position: %d, %d", mousePos.x, mousePos.y);
         ImGui::Text("Button down right: %d", Input::GetMouseButton(MouseButton::Right));
         ImGui::Text("Button release right: %d", Input::GetMouseButton(MouseButton::Right, MouseButtonStatus::Release));
-        for (uint32_t i = 0; i < MouseButtonCount; i++)
+        for (uint32_t i = 0; i < magic_enum::enum_count<MouseButton>(); i++)
         {
             ImGui::Text("Button down %u: %d", i + 1, Input::GetMouseButton(static_cast<MouseButton>(i)));
             ImGui::Text("Button release %u: %d", i + 1, Input::GetMouseButton(static_cast<MouseButton>(i), MouseButtonStatus::Release));
@@ -287,7 +287,7 @@ void ImGuiUtils::ShowInputsWindow()
             ImGui::Text("Left trigger axis: %f", gamepad.GetAxis(GamepadAxis::LeftTrigger));
             ImGui::Text("Right trigger axis: %f", gamepad.GetAxis(GamepadAxis::RightTrigger));
 
-            for (uint32_t j = 0; j < GamepadButtonCount; j++)
+            for (uint32_t j = 0; j < magic_enum::enum_count<GamepadButton>(); j++)
             {
                 const GamepadButton button = static_cast<GamepadButton>(j);
                 const std::string_view name = magic_enum::enum_name(button);

@@ -7,6 +7,8 @@
 #include <Maths/vector2.hpp>
 #include <Maths/vector2i.hpp>
 
+#include "magic_enum/magic_enum.hpp"
+
 #include "Mountain/core.hpp"
 
 /// @file gamepad_input.hpp
@@ -24,27 +26,15 @@ namespace Mountain
         RightStickHorizontal,
         RightStickVertical,
         LeftTrigger,
-        RightTrigger,
-
-        Count,
-
-        None
+        RightTrigger
     };
-
-    ENUM_COUNT(GamepadAxis);
 
     /// @brief Gamepad stick enumeration
     enum class GamepadStick : uint8_t
     {
         Left,
-        Right,
-
-        Count,
-
-        None
+        Right
     };
-
-    ENUM_COUNT(GamepadStick);
 
     /// @brief Gamepad button enumeration
     ///
@@ -69,14 +59,8 @@ namespace Mountain
 
         // Mountain extensions, not supported by GLFW as buttons
         LeftTrigger,
-        RightTrigger,
-
-        Count,
-
-        None
+        RightTrigger
     };
-
-    ENUM_COUNT(GamepadButton);
 
     /// @brief Gamepad button
     enum class GamepadButtonStatus : uint8_t
@@ -88,14 +72,10 @@ namespace Mountain
         /// @brief Pressed this frame
         Pressed,
         /// @brief Released this frame
-        Released,
-
-        Count
+        Released
     };
 
-    ENUM_COUNT(GamepadButtonStatus);
-
-    using GamepadButtonStatuses = std::array<bool_t, GamepadButtonStatusCount>;
+    using GamepadButtonStatuses = std::array<bool_t, magic_enum::enum_count<GamepadButtonStatus>()>;
 
     /// @brief Information about a gamepad
     class GamepadInput
@@ -108,7 +88,7 @@ namespace Mountain
 
         MOUNTAIN_API const std::string& GetName() const;
 
-        MOUNTAIN_API const std::array<float_t, GamepadAxisCount>& GetAxes() const;
+        MOUNTAIN_API const std::array<float_t, magic_enum::enum_count<GamepadAxis>()>& GetAxes() const;
 
         MOUNTAIN_API float_t GetAxis(GamepadAxis axis) const;
 
@@ -116,7 +96,7 @@ namespace Mountain
 
         MOUNTAIN_API Vector2i GetDirectionalPad() const;
 
-        MOUNTAIN_API const std::array<GamepadButtonStatuses, GamepadButtonCount>& GetButtons() const;
+        MOUNTAIN_API const std::array<GamepadButtonStatuses, magic_enum::enum_count<GamepadButton>()>& GetButtons() const;
 
         MOUNTAIN_API bool_t GetButton(GamepadButton button, GamepadButtonStatus status = GamepadButtonStatus::Down) const;
 
@@ -126,9 +106,9 @@ namespace Mountain
         /// @brief The human-readable name of the gamepad
         std::string m_Name;
         /// @brief Array of axis analog values
-        std::array<float_t, GamepadAxisCount> m_Axes{};
+        std::array<float_t, magic_enum::enum_count<GamepadAxis>()> m_Axes{};
         /// @brief Array of button statuses
-        std::array<GamepadButtonStatuses, GamepadButtonCount> m_Buttons{};
+        std::array<GamepadButtonStatuses, magic_enum::enum_count<GamepadButton>()> m_Buttons{};
 
         friend class Input;
     };
