@@ -57,7 +57,7 @@ namespace Mountain
         static inline Pointer<Font> m_DefaultFont;
         static inline List<DebugStringData> m_DebugStrings;
 
-        static bool Initialize(std::string_view windowTitle, Vector2i windowSize, const OpenGlVersion& glVersion = {});
+        static bool Initialize(const std::string& windowTitle, Vector2i windowSize, const OpenGlVersion& glVersion = {});
         static void PreFrame();
         static void PostFrame();
         static void Shutdown();

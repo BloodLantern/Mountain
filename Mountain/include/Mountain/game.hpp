@@ -9,7 +9,7 @@ namespace Mountain
     class MOUNTAIN_API Game
     {
     public:
-        explicit Game(std::string_view windowTitle, Vector2i windowSize = { 1280, 720 });
+        explicit Game(const std::string& windowTitle, Vector2i windowSize = { 1280, 720 });
         virtual ~Game();
 
         DEFAULT_COPY_MOVE_OPERATIONS(Game)

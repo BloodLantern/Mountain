@@ -347,10 +347,10 @@ void GameExample::Render()
         Vector2i size = Window::GetSize();
         ImGui::DragInt2("Size", size.Data());
         Window::SetSize(size);
-        
-        static bool_t fullscreen = false;
-        ImGui::Checkbox("Enable fullscreen", &fullscreen);
-        Window::SetFullscreen(fullscreen);
+
+        static WindowMode windowMode = WindowMode::Windowed;
+        ImGui::ComboEnum("Window mode", &windowMode);
+        Window::SetWindowMode(windowMode);
 
         ImGuiUtils::PopCollapsingHeader();
     }

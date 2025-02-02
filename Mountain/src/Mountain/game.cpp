@@ -12,7 +12,7 @@
 
 using namespace Mountain;
 
-Game::Game(const std::string_view windowTitle, const Vector2i windowSize)
+Game::Game(const std::string& windowTitle, const Vector2i windowSize)
 {
     Logger::Start();
     Logger::OpenDefaultFile();

@@ -8,15 +8,11 @@
 
 using namespace Mountain;
 
-Vector2i Window::GetPosition() { return m_Position; }
-
 void Window::SetPosition(const Vector2i newPosition)
 {
     glfwSetWindowPos(m_Window, newPosition.x, newPosition.y);
     m_Position = newPosition;
 }
-
-Vector2i Window::GetSize() { return m_Size; }
 
 void Window::SetSize(const Vector2i newSize)
 {
@@ -31,10 +27,6 @@ void Window::SetShouldClose(const bool_t newShouldClose) { glfwSetWindowShouldCl
 void Window::PollEvents() { glfwPollEvents(); }
 
 void Window::MakeContextCurrent() { glfwMakeContextCurrent(m_Window); }
-
-GLFWwindow* Window::GetHandle() { return m_Window; }
-
-bool_t Window::GetVisible() { return m_Visible; }
 
 void Window::SetVisible(const bool_t newVisible)
 {
@@ -72,16 +64,14 @@ void Window::SetCursorPosition(const Vector2 newPosition) { glfwSetCursorPos(m_W
 
 void Window::SetVSync(const bool_t newVsync) { glfwSwapInterval(newVsync); }
 
-bool_t Window::GetFullscreen() { return m_Fullscreen; }
-
-void Window::SetFullscreen(const bool_t newFullscreen)
+void Window::SetWindowMode(const WindowMode newWindowMode)
 {
-    if (newFullscreen == m_Fullscreen)
+    if (newWindowMode == m_WindowMode)
         return;
-    
+
     static Vector2i lastWindowedPosition = m_Position, lastWindowedSize = m_Size;
 
-    if (!m_Fullscreen)
+    if (m_WindowMode == WindowMode::Windowed)
     {
         lastWindowedPosition = m_Position;
         lastWindowedSize = m_Size;
@@ -91,34 +81,43 @@ void Window::SetFullscreen(const bool_t newFullscreen)
     Vector2i position;
     Vector2i size;
 
-    if (newFullscreen)
+    switch (newWindowMode)
     {
-        monitor = Screen::m_Monitors[m_CurrentScreen];
-        size = Screen::GetSize(static_cast<int32_t>(m_CurrentScreen));
+        case WindowMode::Windowed:
+            position = lastWindowedPosition;
+            size = lastWindowedSize;
+            break;
+
+        case WindowMode::Borderless:
+            // For a borderless fullscreen, we set the window size to the screen size plus one on the X axis
+            // This is a hack to make the borderless thing work because otherwise it would default to an exclusive fullscreen.
+            // I learnt about this hack there: https://github.com/ppy/osu-framework/blob/7774e64cd84232b5e1fe08d527acfe39b67ef989/osu.Framework/Platform/Windows/SDL2WindowsWindow.cs#L270
+            size = Screen::GetSize(static_cast<int32_t>(m_CurrentScreen)) + Vector2i::UnitX();
+            break;
+
+        case WindowMode::Fullscreen:
+            monitor = Screen::m_Monitors[m_CurrentScreen];
+            size = Screen::GetSize(static_cast<int32_t>(m_CurrentScreen));
+            break;
     }
-    else
-    {
-        position = lastWindowedPosition;
-        size = lastWindowedSize;
-    }
-    
+
     glfwSetWindowMonitor(m_Window, monitor, position.x, position.y, size.x, size.y, GLFW_DONT_CARE);
 
-    m_Fullscreen = newFullscreen;
+    m_WindowMode = newWindowMode;
 }
 
 uint32_t Window::GetCurrentScreen() { return m_CurrentScreen; }
 
 std::string_view Window::GetTitle() { return glfwGetWindowTitle(m_Window); }
 
-void Window::SetTitle(const std::string_view newTitle) { glfwSetWindowTitle(m_Window, newTitle.data()); }
+void Window::SetTitle(const std::string& newTitle) { glfwSetWindowTitle(m_Window, newTitle.c_str()); }
 
 bool_t Window::GetMinimized()
 {
     return m_Minimized;
 }
 
-void Window::Initialize(const std::string_view windowTitle, const Vector2i windowSize, const OpenGlVersion& glVersion)
+void Window::Initialize(const std::string& windowTitle, const Vector2i windowSize, const OpenGlVersion& glVersion)
 {
     glfwSetErrorCallback(
         [](int error, const char* description)
@@ -147,7 +146,7 @@ void Window::Initialize(const std::string_view windowTitle, const Vector2i windo
 
     glfwInitHint(GLFW_JOYSTICK_HAT_BUTTONS, false);
 
-    m_Window = glfwCreateWindow(windowSize.x, windowSize.y, windowTitle.data(), nullptr, nullptr);
+    m_Window = glfwCreateWindow(windowSize.x, windowSize.y, windowTitle.c_str(), nullptr, nullptr);
 
     MakeContextCurrent();
 
@@ -185,7 +184,7 @@ void Window::UpdateFields()
     
     const Vector2i oldSize = m_Size;
     
-    if (m_Fullscreen)
+    if (m_WindowMode != WindowMode::Windowed)
         m_Size = Screen::GetSize();
     else
         glfwGetWindowSize(m_Window, &m_Size.x, &m_Size.y);
