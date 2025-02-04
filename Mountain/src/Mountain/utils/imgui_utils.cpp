@@ -588,17 +588,17 @@ void ImGuiUtils::ShowPerformanceMonitoring()
 // ReSharper disable CppInconsistentNaming
 bool ImGui::DragAngle(
     const char* label,
-    float* v,
+    float* v_rad,
     const float v_speed,
-    const float v_min,
-    const float v_max,
+    const float v_degrees_min,
+    const float v_degrees_max,
     const char* format,
     const ImGuiSliderFlags flags
 )
 {
-    float_t degreeAngle = *v * Calc::Rad2Deg;
-    const bool_t result = DragFloat(label, &degreeAngle, v_speed, v_min, v_max, format, flags);
-    *v = degreeAngle * Calc::Deg2Rad;
+    float_t degreeAngle = *v_rad * Calc::Rad2Deg;
+    const bool_t result = DragFloat(label, &degreeAngle, v_speed, v_degrees_min, v_degrees_max, format, flags);
+    *v_rad = degreeAngle * Calc::Deg2Rad;
     return result;
 }
 // ReSharper restore CppInconsistentNaming

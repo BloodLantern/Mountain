@@ -51,11 +51,11 @@ namespace Mountain::ImGuiUtils
 namespace ImGui
 {
     MOUNTAIN_API bool DragAngle(
-        const char* label, 
-        float* v, 
-        float v_speed = 1, 
-        float v_min = 0, 
-        float v_max = 0, 
+        const char* label,
+        float* v_rad,
+        float v_speed = 1,
+        float v_degrees_min = -360,
+        float v_degrees_max = +360,
         const char* format = "%.3f",
         ImGuiSliderFlags flags = 0
     );

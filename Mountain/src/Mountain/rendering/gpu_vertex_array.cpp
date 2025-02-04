@@ -10,7 +10,7 @@ void GpuVertexArray::Delete() { glDeleteVertexArrays(1, &m_Id); m_Id = 0; }
 
 void GpuVertexArray::Recreate() { Delete(); Create(); }
 
-void GpuVertexArray::SetDebugName(const std::string_view name) const
+void GpuVertexArray::SetDebugName([[maybe_unused]] const std::string_view name) const
 {
 #ifdef _DEBUG
     glObjectLabel(GL_VERTEX_ARRAY, m_Id, static_cast<GLsizei>(name.length()), name.data());
