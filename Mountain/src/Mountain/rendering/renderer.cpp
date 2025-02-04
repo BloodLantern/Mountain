@@ -29,15 +29,15 @@ namespace
         switch (severity) {
             case GL_DEBUG_SEVERITY_HIGH:
                 level = Mountain::Logger::LogLevel::Error;
-            break;
+                break;
 
             case GL_DEBUG_SEVERITY_MEDIUM:
                 level = Mountain::Logger::LogLevel::Warning;
-            break;
+                break;
 
             case GL_DEBUG_SEVERITY_LOW:
                 level = Mountain::Logger::LogLevel::Info;
-            break;
+                break;
 
             case GL_DEBUG_SEVERITY_NOTIFICATION:
                 return; // No need to log notifications
@@ -135,7 +135,7 @@ Mountain::RenderTarget& Mountain::Renderer::PopRenderTarget()
     if (!m_RenderTargets.empty())
         m_RenderTargets.top()->Use();
     else
-        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        BindFramebuffer(Graphics::FramebufferType::Framebuffer, 0);
 
     return *renderTarget;
 }
@@ -187,11 +187,11 @@ bool_t Mountain::Renderer::Initialize(const std::string& windowTitle, const Vect
 
     glDebugMessageCallback(OpenGlDebugCallback, nullptr);
 
-    glViewport(0, 0, windowSize.x, windowSize.y);
+    Graphics::SetViewport(0, 0, windowSize.x, windowSize.y);
 
     // Enable transparency
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    EnableConstant(Graphics::Constant::Blend);
+    SetBlendFunction(Graphics::BlendFunction::SrcAlpha, Graphics::BlendFunction::OneMinusSrcAlpha);
 
     m_RenderTarget = new RenderTarget(windowSize, Graphics::MagnificationFilter::Linear);
     m_RenderTarget->SetDebugName("Viewport RenderTarget");
@@ -288,7 +288,7 @@ void Mountain::Renderer::PostFrame()
     
     Vector2i framebufferSize;
     glfwGetFramebufferSize(Window::GetHandle(), &framebufferSize.x, &framebufferSize.y);
-    glViewport(0, 0, framebufferSize.x, framebufferSize.y);
+    Graphics::SetViewport(0, 0, framebufferSize.x, framebufferSize.y);
     
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
     

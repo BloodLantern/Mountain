@@ -117,6 +117,72 @@ void Graphics::SetVertexAttributeInt(
         glVertexBindingDivisor(index, divisor);
 }
 
+void Graphics::BindFramebuffer(const FramebufferType type, const uint32_t framebuffer) { glBindFramebuffer(ToOpenGl(type), framebuffer); }
+
+uint32_t Graphics::GetLastError() { return glGetError(); }
+
+const char_t* Graphics::GetLastErrorString() { return reinterpret_cast<const char_t*>(glGetString(glGetError())); }
+
+bool_t Graphics::IsConstantEnabled(const Constant constant) { return glIsEnabled(ToOpenGl(constant)); }
+
+bool_t Graphics::IsConstantEnabled(const Constant constant, const uint32_t index) { return glIsEnabledi(ToOpenGl(constant), index); }
+
+void Graphics::GetConstant(const Constant constant, bool_t* outData) { glGetBooleanv(ToOpenGl(constant), reinterpret_cast<GLboolean*>(outData)); }
+
+void Graphics::GetConstant(const Constant constant, double_t* outData) { glGetDoublev(ToOpenGl(constant), outData); }
+
+void Graphics::GetConstant(const Constant constant, float_t* outData) { glGetFloatv(ToOpenGl(constant), outData); }
+
+void Graphics::GetConstant(const Constant constant, int32_t* outData) { glGetIntegerv(ToOpenGl(constant), outData); }
+
+void Graphics::GetConstant(const Constant constant, int64_t* outData) { glGetInteger64v(ToOpenGl(constant), outData); }
+
+void Graphics::GetConstant(const Constant constant, const uint32_t index, bool_t* outData) { glGetBooleani_v(ToOpenGl(constant), index, reinterpret_cast<GLboolean*>(outData)); }
+
+void Graphics::GetConstant(const Constant constant, const uint32_t index, double_t* outData) { glGetDoublei_v(ToOpenGl(constant), index, outData); }
+
+void Graphics::GetConstant(const Constant constant, const uint32_t index, float_t* outData) { glGetFloati_v(ToOpenGl(constant), index, outData); }
+
+void Graphics::GetConstant(const Constant constant, const uint32_t index, int32_t* outData) { glGetIntegeri_v(ToOpenGl(constant), index, outData); }
+
+void Graphics::GetConstant(const Constant constant, const uint32_t index, int64_t* outData) { glGetInteger64i_v(ToOpenGl(constant), index, outData); }
+
+void Graphics::SetConstantEnabled(const Constant constant, const bool_t enabled)
+{
+    if (enabled)
+        EnableConstant(constant);
+    else
+        DisableConstant(constant);
+}
+
+void Graphics::SetConstantEnabled(const Constant constant, const uint32_t index, const bool_t enabled)
+{
+    if (enabled)
+        EnableConstant(constant, index);
+    else
+        DisableConstant(constant, index);
+}
+
+void Graphics::EnableConstant(const Constant constant) { glEnable(ToOpenGl(constant)); }
+
+void Graphics::EnableConstant(const Constant constant, const uint32_t index) { glEnablei(ToOpenGl(constant), index); }
+
+void Graphics::DisableConstant(const Constant constant) { glDisable(ToOpenGl(constant)); }
+
+void Graphics::DisableConstant(const Constant constant, const uint32_t index) { glDisablei(ToOpenGl(constant), index); }
+
+void Graphics::SetBlendFunction(const BlendFunction sourceFactors, const BlendFunction destinationFactors)
+{
+    glBlendFunc(ToOpenGl(sourceFactors), ToOpenGl(destinationFactors));
+}
+
+void Graphics::SetBlendFunction(const uint32_t drawBuffer, const BlendFunction sourceFactors, const BlendFunction destinationFactors)
+{
+    glBlendFunci(drawBuffer, ToOpenGl(sourceFactors), ToOpenGl(destinationFactors));
+}
+
+void Graphics::SetViewport(const int32_t x, const int32_t y, const int32_t width, const int32_t height) { glViewport(x, y, width, height); }
+
 template <>
 Graphics::MagnificationFilter Graphics::FromOpenGl<Graphics::MagnificationFilter>(const int32_t value)
 {
@@ -592,6 +658,43 @@ Graphics::DrawMode Graphics::FromOpenGl<Graphics::DrawMode>(const int32_t value)
     }
 }
 
+template <>
+Graphics::BlendFunction Graphics::FromOpenGl<Graphics::BlendFunction>(const int32_t value)
+{
+    switch (value)
+    {
+        case GL_ZERO: return BlendFunction::Zero;
+        case GL_ONE: return BlendFunction::One;
+        case GL_SRC_COLOR: return BlendFunction::SrcColor;
+        case GL_ONE_MINUS_SRC_COLOR: return BlendFunction::OneMinusSrcColor;
+        case GL_DST_COLOR: return BlendFunction::DstColor;
+        case GL_ONE_MINUS_DST_COLOR: return BlendFunction::OneMinusDstColor;
+        case GL_SRC_ALPHA: return BlendFunction::SrcAlpha;
+        case GL_ONE_MINUS_SRC_ALPHA: return BlendFunction::OneMinusSrcAlpha;
+        case GL_DST_ALPHA: return BlendFunction::DstAlpha;
+        case GL_ONE_MINUS_DST_ALPHA: return BlendFunction::OneMinusDstAlpha;
+        case GL_CONSTANT_COLOR: return BlendFunction::ConstantColor;
+        case GL_ONE_MINUS_CONSTANT_COLOR: return BlendFunction::OneMinusConstantColor;
+        case GL_CONSTANT_ALPHA: return BlendFunction::ConstantAlpha;
+        case GL_ONE_MINUS_CONSTANT_ALPHA: return BlendFunction::OneMinusConstantAlpha;
+        
+        default: throw std::invalid_argument("Invalid blend function");
+    }
+}
+
+template <>
+Graphics::FramebufferType Graphics::FromOpenGl<Graphics::FramebufferType>(const int32_t value)
+{
+    switch (value)
+    {
+        case GL_DRAW_FRAMEBUFFER: return FramebufferType::DrawFramebuffer;
+        case GL_READ_FRAMEBUFFER: return FramebufferType::ReadFramebuffer;
+        case GL_FRAMEBUFFER: return FramebufferType::Framebuffer;
+        
+        default: throw std::invalid_argument("Invalid blend function");
+    }
+}
+
 int32_t Graphics::ToOpenGl(const MagnificationFilter value)
 {
     switch (value)
@@ -1055,4 +1158,39 @@ int32_t Graphics::ToOpenGl(const DrawMode value)
     }
 
     throw std::invalid_argument("Invalid draw mode");
+}
+
+int32_t Graphics::ToOpenGl(const BlendFunction value)
+{
+    switch (value)
+    {
+        case BlendFunction::Zero: return GL_ZERO;
+        case BlendFunction::One: return GL_ONE;
+        case BlendFunction::SrcColor: return GL_SRC_COLOR;
+        case BlendFunction::OneMinusSrcColor: return GL_ONE_MINUS_SRC_COLOR;
+        case BlendFunction::DstColor: return GL_DST_COLOR;
+        case BlendFunction::OneMinusDstColor: return GL_ONE_MINUS_DST_COLOR;
+        case BlendFunction::SrcAlpha: return GL_SRC_ALPHA;
+        case BlendFunction::OneMinusSrcAlpha: return GL_ONE_MINUS_SRC_ALPHA;
+        case BlendFunction::DstAlpha: return GL_DST_ALPHA;
+        case BlendFunction::OneMinusDstAlpha: return GL_ONE_MINUS_DST_ALPHA;
+        case BlendFunction::ConstantColor: return GL_CONSTANT_COLOR;
+        case BlendFunction::OneMinusConstantColor: return GL_ONE_MINUS_CONSTANT_COLOR;
+        case BlendFunction::ConstantAlpha: return GL_CONSTANT_ALPHA;
+        case BlendFunction::OneMinusConstantAlpha: return GL_ONE_MINUS_CONSTANT_ALPHA;
+    }
+        
+    throw std::invalid_argument("Invalid blend function");
+}
+
+int32_t Graphics::ToOpenGl(const FramebufferType value)
+{
+    switch (value)
+    {
+        case FramebufferType::DrawFramebuffer: return GL_DRAW_FRAMEBUFFER;
+        case FramebufferType::ReadFramebuffer: return GL_READ_FRAMEBUFFER;
+        case FramebufferType::Framebuffer: return GL_FRAMEBUFFER;
+    }
+        
+    throw std::invalid_argument("Invalid blend function");
 }
