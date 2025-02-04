@@ -63,7 +63,7 @@ void GpuTexture::SetData(
 
 void GpuTexture::GenerateMipmap() const { glGenerateTextureMipmap(m_Id); }
 
-void GpuTexture::SetDebugName(const std::string_view name) const
+void GpuTexture::SetDebugName([[maybe_unused]] const std::string_view name) const
 {
 #ifdef _DEBUG
     glObjectLabel(GL_TEXTURE, m_Id, static_cast<GLsizei>(name.length()), name.data());
