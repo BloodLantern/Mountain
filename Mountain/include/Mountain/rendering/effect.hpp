@@ -32,7 +32,7 @@ namespace Mountain
         /// @param synchronizeImageData Whether to synchronize the CPU image data with the modified GPU one.
         /// This effectively means that the CPU will wait for the compute shader to finish executing before returning from this function.
         /// If this is @c false, and you want to access the modified GPU image, you need to manually synchronize the GPU data afterward using
-        /// @c Graphics::SynchronizeGpuData() with @c GpuDataSynchronizationType::ShaderImageAccess.
+        /// @c Graphics::SynchronizeGpuData() with @c GpuDataSynchronizationFlags::ShaderImageAccess.
         MOUNTAIN_API void Apply(Vector2i textureSize, bool_t synchronizeImageData) const;
 
     protected:

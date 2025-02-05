@@ -18,3 +18,5 @@ void GpuVertexArray::SetDebugName([[maybe_unused]] const std::string_view name) 
 }
 
 uint32_t GpuVertexArray::GetId() const { return m_Id; }
+
+GpuVertexArray::operator unsigned int() const { return m_Id; }

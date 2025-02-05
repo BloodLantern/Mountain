@@ -30,12 +30,13 @@ ParticleSystem::ParticleSystem(const uint32_t maxParticles)
         }
     );
 
-    glCreateBuffers(2, &m_LiveSsbo);
-    glCreateVertexArrays(1, &m_DrawVao);
+    m_LiveSsbo.Create();
+    m_ParticleSsbo.Create();
+    m_DrawVao.Create();
 
-    glObjectLabel(GL_BUFFER, m_LiveSsbo, -1, "Particle System Live SSBO");
-    glObjectLabel(GL_BUFFER, m_ParticleSsbo, -1, "Particle System Particle SSBO");
-    glObjectLabel(GL_VERTEX_ARRAY, m_DrawVao, -1, "Particle System Draw VAO");
+    m_LiveSsbo.SetDebugName("Particle System Live SSBO");
+    m_ParticleSsbo.SetDebugName("Particle System Particle SSBO");
+    m_DrawVao.SetDebugName("Particle System Draw VAO");
 
     SetMaxParticles(maxParticles);
 }
@@ -43,10 +44,11 @@ ParticleSystem::ParticleSystem(const uint32_t maxParticles)
 
 ParticleSystem::~ParticleSystem()
 {
-    glUnmapNamedBuffer(m_LiveSsbo);
+    glUnmapNamedBuffer(m_LiveSsbo.GetId());
 
-    glDeleteVertexArrays(1, &m_DrawVao);
-    glDeleteBuffers(2, &m_LiveSsbo);
+    m_DrawVao.Delete();
+    m_LiveSsbo.Delete();
+    m_ParticleSsbo.Delete();
 }
 
 void ParticleSystem::Update()
@@ -72,9 +74,11 @@ void ParticleSystem::Update()
         if (spawning)
             SpawnNewParticles();
 
-        glBindBuffersBase(GL_SHADER_STORAGE_BUFFER, 0, 2, &m_LiveSsbo);
+        BindBufferBase(Graphics::BufferType::ShaderStorageBuffer, 0, m_LiveSsbo);
+        BindBufferBase(Graphics::BufferType::ShaderStorageBuffer, 1, m_ParticleSsbo);
         m_UpdateComputeShader->Dispatch(m_MaxParticles);
-        glBindBuffersBase(GL_SHADER_STORAGE_BUFFER, 0, 2, nullptr);
+        BindBufferBase(Graphics::BufferType::ShaderStorageBuffer, 1, 0);
+        BindBufferBase(Graphics::BufferType::ShaderStorageBuffer, 0, 0);
 
         m_SpawnTimer -= deltaTime;
     }
@@ -93,15 +97,17 @@ void ParticleSystem::Render()
     m_DrawShader->SetUniform("systemPosition", position);
     m_DrawShader->SetUniform("systemRotation", rotation);
 
-    glBindVertexArray(m_DrawVao);
+    BindVertexArray(m_DrawVao);
     m_DrawShader->Use();
-    glBindBuffersBase(GL_SHADER_STORAGE_BUFFER, 0, 2, &m_LiveSsbo);
+    BindBufferBase(Graphics::BufferType::ShaderStorageBuffer, 0, m_LiveSsbo);
+    BindBufferBase(Graphics::BufferType::ShaderStorageBuffer, 1, m_ParticleSsbo);
 
-    glDrawArraysInstanced(GL_POINTS, 0, 1, static_cast<GLsizei>(m_MaxParticles));
+    DrawArraysInstanced(Graphics::DrawMode::Points, 0, 1, static_cast<int32_t>(m_MaxParticles));
 
-    glBindBuffersBase(GL_SHADER_STORAGE_BUFFER, 0, 2, nullptr);
+    BindBufferBase(Graphics::BufferType::ShaderStorageBuffer, 1, 0);
+    BindBufferBase(Graphics::BufferType::ShaderStorageBuffer, 0, 0);
     m_DrawShader->Unuse();
-    glBindVertexArray(0);
+    Graphics::BindVertexArray(0);
 
     m_RenderTargetSize = Renderer::GetCurrentRenderTarget().GetSize();
 }
@@ -290,27 +296,33 @@ void ParticleSystem::SetMaxParticles(const uint32_t newMaxParticles)
         float_t& lifetime = *reinterpret_cast<float_t*>(&emptyData[i]);
         lifetime = -std::numeric_limits<float_t>::infinity(); // Set the negative infinity flag for the GPU
     }
-    glNamedBufferData(m_ParticleSsbo, static_cast<GLsizeiptr>(GpuParticleStructSize * newMaxParticles), emptyData.GetData(), GL_DYNAMIC_COPY);
+    m_ParticleSsbo.SetData(static_cast<int64_t>(GpuParticleStructSize * newMaxParticles), emptyData.GetData(), Graphics::BufferUsage::DynamicCopy);
     emptyData.Resize(0);
 
     if (m_LiveParticles)
     {
-        glUnmapNamedBuffer(m_LiveSsbo);
+        glUnmapNamedBuffer(m_LiveSsbo.GetId());
 
-        // As we use an immutable buffer to allow buffer mapping, we need to delete and create the buffer back each time we want to change its size
-        glDeleteBuffers(1, &m_LiveSsbo);
-        glCreateBuffers(1, &m_LiveSsbo);
+        // As we use an immutable buffer to allow buffer mapping,
+        // we need to recreate the buffer back each time we want to change its size.
+        // Usually this should not happen during gameplay though, so it's not that much of a concern.
+        m_LiveSsbo.Recreate();
     }
 
     const GLsizeiptr aliveSsboSize = static_cast<GLsizeiptr>(sizeof(int32_t) * newMaxParticles);
-    glNamedBufferStorage(m_LiveSsbo, aliveSsboSize, nullptr, GL_MAP_PERSISTENT_BIT | GL_MAP_READ_BIT | GL_MAP_WRITE_BIT | GL_MAP_COHERENT_BIT);
+    m_LiveSsbo.SetStorage(
+        aliveSsboSize,
+        nullptr,
+        Graphics::BufferStorageFlags::MapPersistent | Graphics::BufferStorageFlags::MapRead |
+        Graphics::BufferStorageFlags::MapWrite | Graphics::BufferStorageFlags::MapCoherent
+    );
 
-    m_LiveParticles = static_cast<int32_t*>(glMapNamedBufferRange(m_LiveSsbo, 0, aliveSsboSize, GL_MAP_PERSISTENT_BIT | GL_MAP_READ_BIT | GL_MAP_WRITE_BIT | GL_MAP_COHERENT_BIT));
+    m_LiveParticles = static_cast<int32_t*>(glMapNamedBufferRange(m_LiveSsbo.GetId(), 0, aliveSsboSize, GL_MAP_PERSISTENT_BIT | GL_MAP_READ_BIT | GL_MAP_WRITE_BIT | GL_MAP_COHERENT_BIT));
 
     m_UpdateComputeShader->SetUniform("particleCount", newMaxParticles);
     m_DrawShader->SetUniform("particleCount", newMaxParticles);
 
-    glMemoryBarrier(GL_SHADER_STORAGE_BARRIER_BIT);
+    Graphics::MemoryBarrier(Utils::ToFlags(Graphics::MemoryBarrierFlags::ShaderStorageBarrier));
 }
 
 bool_t ParticleSystem::IsPlaying() const { return m_Playing; }

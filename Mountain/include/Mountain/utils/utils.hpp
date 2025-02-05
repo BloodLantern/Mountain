@@ -13,6 +13,7 @@
 #include "Mountain/core.hpp"
 
 #include "Mountain/utils/concepts.hpp"
+#include "Mountain/utils/meta_programming.hpp"
 #include "Mountain/utils/pointer.hpp"
 
 /// @file utils.hpp
@@ -230,6 +231,9 @@ namespace Mountain::Utils
 
     template <uint64_t Offset, uint64_t Count>
     constexpr uint64_t GetBits(const uint64_t value);
+
+    template <Concepts::EnumT T>
+    constexpr Meta::Flags<T> ToFlags(T enumValue);
 }
 
 namespace Easing

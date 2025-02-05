@@ -138,3 +138,5 @@ void GpuTexture::SetBorderColor(Color newBorderColor) const
 }
 
 uint32_t GpuTexture::GetId() const { return m_Id; }
+
+GpuTexture::operator unsigned int() const { return m_Id; }

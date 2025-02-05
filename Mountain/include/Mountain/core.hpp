@@ -9,11 +9,11 @@
 /// @brief This file is meant to be included by every single other header file of this project.
 ///
 /// It includes the standard headers @c \<cmath> and @c \<cstdint> so that types such as
-/// @c int8_t or @c float_t are defined. It also defines typedefs for @ref char_t and
-/// @ref bool_t, as they aren't defined by those standard headers.
+/// @c int8_t or @c float_t are defined. It also defines typedefs for char_t and
+/// bool_t, as they aren't defined by those standard headers.
 ///
-/// Apart from typedefs, this file declares macros ranging from necessary (@ref MOUNTAIN_API)
-/// to useful and of general-use (@ref DEFAULT_COPY_MOVE_OPERATIONS).
+/// Apart from typedefs, this file declares macros ranging from necessary (MOUNTAIN_API)
+/// to useful and of general-use (DEFAULT_COPY_MOVE_OPERATIONS).
 
 // ReSharper disable once CppEnforceTypeAliasCodeStyle
 /// @brief Equivalent to <c>char</c>.
@@ -29,7 +29,7 @@ typedef char char_t;
 // ReSharper disable once CppEnforceTypeAliasCodeStyle
 /// @brief Equivalent to <c>bool</c>.
 ///
-/// @see @ref char_t for reason.
+/// @see char_t for reason.
 typedef bool bool_t;
 
 using Action = std::function<void()>;
@@ -128,7 +128,7 @@ namespace Mountain {}
     DELETE_COPY_MOVE_OPERATIONS(type)   \
     private:
 
-// We need this in order to be able to make Doxygen links to std::string conversion operators.
+// We need this to be able to make Doxygen links to std::string conversion operators.
 #ifdef DOXYGEN
 /// @private
 using stdstring = std::string;
@@ -155,6 +155,8 @@ using stdstring = std::string;
     {                                                                                                                                                                                                                       \
         static constexpr bool is_flags = true;                                                                                                                                                                              \
     };
+
+// TODO - Add comparison operators for enum flags
 
 /// @brief Defines global definitions that make OpenGL use the dedicated GPU instead of the integrated one
 /// Source: https://www.reddit.com/r/opengl/comments/unc3fy/comment/i8728y3/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
