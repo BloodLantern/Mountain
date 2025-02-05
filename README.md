@@ -5,6 +5,7 @@ A (currently) Windows-only C++ Framework for making 2D games.
 ## Language version and architecture
 
 This project is compiled using C++23 features (`/std:c++latest`), on MSVC, for the `x64` architecture.
+Also, it uses some very recent features from the Windows API (as recent as September 2023), so if the code doesn't compile, make sure to update to the latest Visual Studio version.
 
 ## Samples
 
