@@ -5,6 +5,7 @@
 #include <magic_enum/magic_enum.hpp>
 
 #include "Mountain/utils/meta_programming.hpp"
+#include "Mountain/utils/utils.hpp"
 
 /// @namespace Mountain::Graphics
 /// @brief Low-level graphics API
@@ -23,7 +24,7 @@ namespace Mountain::Graphics
         ReadWrite
     };
 
-    enum class GpuDataSynchronizationType : uint16_t
+    enum class GpuDataSynchronizationFlags : uint16_t
     {
         None               = 0,
 
@@ -653,9 +654,9 @@ namespace Mountain::Graphics
 
     MOUNTAIN_API void SetActiveTexture(uint8_t activeTexture);
 
-    MOUNTAIN_API void SynchronizeGpuData(GpuDataSynchronizationType dataType);
+    MOUNTAIN_API void SynchronizeGpuData(Meta::Flags<GpuDataSynchronizationFlags> flags = Utils::ToFlags(GpuDataSynchronizationFlags::None));
 
-    MOUNTAIN_API void MemoryBarrier(MemoryBarrierFlags flags);
+    MOUNTAIN_API void MemoryBarrier(Meta::Flags<MemoryBarrierFlags> flags = Utils::ToFlags(MemoryBarrierFlags::None));
 
     MOUNTAIN_API void DrawArrays(DrawMode mode, int32_t first, int32_t count);
     MOUNTAIN_API void DrawArraysInstanced(DrawMode mode, int32_t first, int32_t count, int32_t instanceCount);
@@ -753,7 +754,7 @@ namespace Mountain::Graphics
     MOUNTAIN_API int32_t ToOpenGl(FramebufferType value);
 }
 
-ENUM_FLAGS(Mountain::Graphics::GpuDataSynchronizationType);
+ENUM_FLAGS(Mountain::Graphics::GpuDataSynchronizationFlags);
 
 ENUM_FLAGS(Mountain::Graphics::BufferStorageFlags);
 

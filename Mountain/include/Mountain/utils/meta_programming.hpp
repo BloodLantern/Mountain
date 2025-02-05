@@ -209,5 +209,8 @@ namespace Mountain
 
         template <Concepts::EnumT T>
         using UnderlyingEnumType = std::underlying_type_t<T>;
+
+        template <Concepts::EnumT T>
+        using Flags = UnderlyingEnumType<T>;
     }
 };

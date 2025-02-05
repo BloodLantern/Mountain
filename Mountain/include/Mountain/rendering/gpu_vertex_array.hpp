@@ -21,6 +21,9 @@ namespace Mountain::Graphics
         [[nodiscard]]
         uint32_t GetId() const;
 
+        [[nodiscard]]
+        explicit operator uint32_t() const;
+
     private:
         uint32_t m_Id = 0;
     };

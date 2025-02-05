@@ -714,7 +714,7 @@ void Draw::InitializeTextBuffers()
     BindVertexArray(m_TextVao);
     BindBuffer(Graphics::BufferType::ElementArrayBuffer, m_RectangleEbo);
     BindBuffer(Graphics::BufferType::ArrayBuffer, m_TextVbo);
-    m_TextVbo.SetStorage(sizeof(Vector4) * 4, nullptr, Graphics::BufferStorageFlags::DynamicStorage);
+    m_TextVbo.SetStorage(sizeof(Vector4) * 4, nullptr, Utils::ToFlags(Graphics::BufferStorageFlags::DynamicStorage));
 
     Graphics::SetVertexAttribute(0, 4, sizeof(Vector4), 0);
 }
@@ -1053,7 +1053,7 @@ void Draw::RenderRenderTargetData(const List<RenderTargetData>& renderTargets, c
 
         Graphics::BindTexture(data.renderTarget->GetTextureId());
 
-        MemoryBarrier(Graphics::MemoryBarrierFlags::ShaderStorageBarrier);
+        Graphics::MemoryBarrier(Utils::ToFlags(Graphics::MemoryBarrierFlags::ShaderStorageBarrier));
 
         BindBufferBase(Graphics::BufferType::ShaderStorageBuffer, 0, m_RenderTargetSsbo);
         DrawElements(Graphics::DrawMode::Triangles, 6, Graphics::DataType::UnsignedInt, nullptr);

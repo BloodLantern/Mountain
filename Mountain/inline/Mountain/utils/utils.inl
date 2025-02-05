@@ -102,9 +102,9 @@ namespace Mountain
     R Utils::CallSafe(const std::function<R(Args...)>& function, Args&&... args)
     {
         if (function)
-            return function(FORWARD(args)...);
+            return function(std::forward<Args>(args)...);
 
-        return R{}; // Might not compile if R isn't default constructible
+        return R{}; // Might not compile if R isn't default-constructible
     }
 
     template <uint64_t Offset, uint64_t Count>
@@ -113,4 +113,7 @@ namespace Mountain
         constexpr uint64_t mask = (1ull << Count) - 1;
         return value >> Offset & mask;
     }
+
+    template <Concepts::EnumT T>
+    constexpr Meta::Flags<T> Utils::ToFlags(T enumValue){ return static_cast<Meta::Flags<T>>(enumValue); }
 }

@@ -18,7 +18,7 @@ bool_t Base::BeginImGui(uint32_t* const enabledModulesInt, const Types type) con
 
     ImGui::CheckboxFlags("##enabled", enabledModulesInt, static_cast<uint32_t>(type));
     ImGui::SameLine();
-    const bool_t result = ImGui::TreeNode(magic_enum::enum_name(type).data());
+    const bool_t result = ImGui::TreeNode(std::string{magic_enum::enum_name(type)}.c_str());
 
     if (!result)
         ImGui::PopID();

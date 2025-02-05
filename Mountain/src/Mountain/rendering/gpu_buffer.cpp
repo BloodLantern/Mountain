@@ -13,7 +13,7 @@ void GpuBuffer::Recreate() { Delete(); Create(); }
 void GpuBuffer::SetStorage(
     const int64_t size,
     const void* data,
-    BufferStorageFlags flags
+    const Meta::Flags<BufferStorageFlags> flags
 ) const
 {
     glNamedBufferStorage(m_Id, size, data, static_cast<GLbitfield>(flags));
@@ -36,4 +36,4 @@ void GpuBuffer::SetDebugName([[maybe_unused]] const std::string_view name) const
 #endif
 }
 
-uint32_t GpuBuffer::GetId() const { return m_Id; }
+GpuBuffer::operator unsigned int() const { return m_Id; }
