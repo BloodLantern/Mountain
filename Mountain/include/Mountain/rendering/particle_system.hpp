@@ -3,6 +3,8 @@
 #include <Maths/vector2.hpp>
 
 #include "Mountain/core.hpp"
+#include "Mountain/rendering/gpu_buffer.hpp"
+#include "Mountain/rendering/gpu_vertex_array.hpp"
 #include "Mountain/rendering/particle_system_modules.hpp"
 #include "Mountain/resource/compute_shader.hpp"
 #include "Mountain/resource/shader.hpp"
@@ -101,8 +103,8 @@ namespace Mountain
         Pointer<ComputeShader> m_UpdateComputeShader;
 
         Pointer<Shader> m_DrawShader;
-        uint32_t m_LiveSsbo, m_ParticleSsbo;
-        uint32_t m_DrawVao;
+        Graphics::GpuBuffer m_LiveSsbo, m_ParticleSsbo;
+        Graphics::GpuVertexArray m_DrawVao;
 
         bool_t m_GuiParticleBurstTimeHeld = false;
         Vector2 m_RenderTargetSize;

@@ -6,7 +6,7 @@
 
 USE_DEDICATED_GPU
 
-#define USE_LPP
+//#define USE_LPP
 
 #ifdef USE_LPP
 // include the API for Windows, 64-bit, C++

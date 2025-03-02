@@ -369,7 +369,14 @@ namespace Calc
 	constexpr Vector4 Lerp(const Vector4& value, const Vector4& target, float_t time, Easing::Easer easer);
 }
 
-constexpr float_t Calc::Sign(const float_t number) noexcept { return number < 0.f ? -1.f : 1.f; }
+constexpr float_t Calc::Sign(const float_t number) noexcept
+{
+	if (number > 0.f)
+		return 1.f;
+	if (number < 0.f)
+		return -1.f;
+	return 0.f;
+}
 
 constexpr float_t Calc::Abs(const float_t number) noexcept { return number < 0.f ? -number : number; }
 

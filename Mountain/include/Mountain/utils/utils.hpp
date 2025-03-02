@@ -13,6 +13,7 @@
 #include "Mountain/core.hpp"
 
 #include "Mountain/utils/concepts.hpp"
+#include "Mountain/utils/meta_programming.hpp"
 #include "Mountain/utils/pointer.hpp"
 
 /// @file utils.hpp
@@ -214,7 +215,7 @@ namespace Mountain::Utils
 
     MOUNTAIN_API std::string ToUpper(std::string_view str);
 
-    MOUNTAIN_API std::pair<int32_t, std::string_view> ByteSizeUnit(int64_t size);
+    MOUNTAIN_API std::pair<float_t, std::string_view> ByteSizeUnit(int64_t size);
 
     MOUNTAIN_API std::string GetBuiltinShadersPath();
 
@@ -230,6 +231,9 @@ namespace Mountain::Utils
 
     template <uint64_t Offset, uint64_t Count>
     constexpr uint64_t GetBits(const uint64_t value);
+
+    template <Concepts::EnumT T>
+    constexpr Meta::Flags<T> ToFlags(T enumValue);
 }
 
 namespace Easing

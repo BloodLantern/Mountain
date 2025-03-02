@@ -26,7 +26,7 @@ void Effect::Apply(const Vector2i textureSize, const bool_t synchronizeImageData
     m_ComputeShader->Dispatch(textureSize.x, textureSize.y);
 
     if (synchronizeImageData)
-        SynchronizeGpuData(Graphics::GpuDataSynchronizationType::ShaderImageAccess);
+        Graphics::SynchronizeGpuData(Utils::ToFlags(Graphics::GpuDataSynchronizationFlags::ShaderImageAccess));
 }
 
 void Vignette::LoadResources()

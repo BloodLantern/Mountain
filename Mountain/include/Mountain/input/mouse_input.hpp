@@ -27,7 +27,9 @@ namespace Mountain
         /// @brief Extension button 7
         Button7,
         /// @brief Extension button 8
-        Button8
+        Button8,
+
+        None
     };
 
     /// @brief %List of mouse button states

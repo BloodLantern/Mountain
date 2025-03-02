@@ -18,7 +18,7 @@ bool_t Base::BeginImGui(uint32_t* const enabledModulesInt, const Types type) con
 
     ImGui::CheckboxFlags("##enabled", enabledModulesInt, static_cast<uint32_t>(type));
     ImGui::SameLine();
-    const bool_t result = ImGui::TreeNode(magic_enum::enum_name(type).data());
+    const bool_t result = ImGui::TreeNode(std::string{magic_enum::enum_name(type)}.c_str());
 
     if (!result)
         ImGui::PopID();
@@ -41,17 +41,26 @@ void Shape::SetComputeShaderUniforms(const ComputeShader& computeShader, const T
 
     computeShader.SetUniform("shape.type", static_cast<uint32_t>(type));
 
-    computeShader.SetUniform("shape.circle.radius", circle.radius);
-    computeShader.SetUniform("shape.circle.radiusThickness", circle.radiusThickness);
-    computeShader.SetUniform("shape.circle.arcAngle", circle.arcAngle);
-    computeShader.SetUniform("shape.circle.arc.mode", static_cast<uint32_t>(circle.arc.mode));
-    computeShader.SetUniform("shape.circle.arc.spread", circle.arc.spread);
-
-    computeShader.SetUniform("shape.line.radius", line.radius);
-    computeShader.SetUniform("shape.line.arc.mode", static_cast<uint32_t>(line.arc.mode));
-    computeShader.SetUniform("shape.line.arc.spread", line.arc.spread);
-
-    computeShader.SetUniform("shape.rectangle.scaleThickness", rectangle.scaleThickness);
+    switch (type)
+    {
+        case ShapeType::Circle:
+            computeShader.SetUniform("shape.circle.radius", circle.radius);
+            computeShader.SetUniform("shape.circle.radiusThickness", circle.radiusThickness);
+            computeShader.SetUniform("shape.circle.arcAngle", circle.arcAngle);
+            computeShader.SetUniform("shape.circle.arc.mode", static_cast<uint32_t>(circle.arc.mode));
+            computeShader.SetUniform("shape.circle.arc.spread", circle.arc.spread);
+            break;
+        
+        case ShapeType::Line:
+            computeShader.SetUniform("shape.line.radius", line.radius);
+            computeShader.SetUniform("shape.line.arc.mode", static_cast<uint32_t>(line.arc.mode));
+            computeShader.SetUniform("shape.line.arc.spread", line.arc.spread);
+            break;
+        
+        case ShapeType::Rectangle:
+            computeShader.SetUniform("shape.rectangle.scaleThickness", rectangle.scaleThickness);
+            break;
+    }
 
     computeShader.SetUniform("shape.offset", offset);
     computeShader.SetUniform("shape.rotation", rotation);
@@ -79,7 +88,7 @@ void Shape::RenderImGui(uint32_t* enabledModulesInt)
         case ShapeType::Circle:
             ImGui::DragFloat("Radius", &circle.radius, 0.01f, 0.f, std::numeric_limits<float_t>::max(), "%.2f", ImGuiSliderFlags_AlwaysClamp);
             ImGui::DragFloat("Radius thickness", &circle.radiusThickness, 0.01f, 0.f, 1.f, "%.2f", ImGuiSliderFlags_AlwaysClamp);
-            ImGui::DragAngle("Arc angle", &circle.arcAngle, 0.1f, 0.f, Calc::TwoPi, "%.2f", ImGuiSliderFlags_AlwaysClamp);
+            ImGui::DragAngle("Arc angle", &circle.arcAngle, 0.1f, 0.f, 360.f, "%.2f", ImGuiSliderFlags_AlwaysClamp);
             ShapeArcRenderImGui(circle.arc);
             break;
 

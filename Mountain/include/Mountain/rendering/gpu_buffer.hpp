@@ -4,6 +4,7 @@
 
 #include "Mountain/core.hpp"
 #include "Mountain/rendering/graphics.hpp"
+#include "Mountain/utils/utils.hpp"
 
 namespace Mountain::Graphics
 {
@@ -17,7 +18,7 @@ namespace Mountain::Graphics
         /// @brief Shorthand for @code Delete(); Create();@endcode
         void Recreate();
 
-        void SetStorage(int64_t size, const void* data, BufferStorageFlags flags = BufferStorageFlags::None) const;
+        void SetStorage(int64_t size, const void* data, Meta::Flags<BufferStorageFlags> flags = Utils::ToFlags(BufferStorageFlags::None)) const;
 
         void SetSubData(int64_t offset, int64_t size, const void* data) const;
 
@@ -28,8 +29,10 @@ namespace Mountain::Graphics
         [[nodiscard]]
         bool_t GetImmutable() const;
 
+        GETTER(uint32_t, Id, m_Id)
+
         [[nodiscard]]
-        uint32_t GetId() const;
+        explicit operator uint32_t() const;
 
     private:
         uint32_t m_Id = 0;

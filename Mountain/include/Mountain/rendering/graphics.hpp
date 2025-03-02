@@ -5,6 +5,7 @@
 #include <magic_enum/magic_enum.hpp>
 
 #include "Mountain/utils/meta_programming.hpp"
+#include "Mountain/utils/utils.hpp"
 
 /// @namespace Mountain::Graphics
 /// @brief Low-level graphics API
@@ -23,7 +24,7 @@ namespace Mountain::Graphics
         ReadWrite
     };
 
-    enum class GpuDataSynchronizationType : uint16_t
+    enum class GpuDataSynchronizationFlags : uint16_t
     {
         None               = 0,
 
@@ -607,6 +608,31 @@ namespace Mountain::Graphics
         ColorBuffer     = 0x4000
     };
 
+    enum class BlendFunction : uint8_t
+    {
+        Zero,
+        One,
+        SrcColor,
+        OneMinusSrcColor,
+        DstColor,
+        OneMinusDstColor,
+        SrcAlpha,
+        OneMinusSrcAlpha,
+        DstAlpha,
+        OneMinusDstAlpha,
+        ConstantColor,
+        OneMinusConstantColor,
+        ConstantAlpha,
+        OneMinusConstantAlpha
+    };
+
+    enum class FramebufferType : uint8_t
+    {
+        DrawFramebuffer,
+        ReadFramebuffer,
+        Framebuffer
+    };
+
     template <typename T>
     concept OpenGlConvertibleT = Meta::IsAny<
         T,
@@ -619,16 +645,18 @@ namespace Mountain::Graphics
         Constant,
         BufferType,
         BufferUsage,
-        DrawMode
+        DrawMode,
+        BlendFunction,
+        FramebufferType
     >;
 
     MOUNTAIN_API void BindImage(uint32_t textureId, uint32_t shaderBinding, ImageShaderAccess access);
 
     MOUNTAIN_API void SetActiveTexture(uint8_t activeTexture);
 
-    MOUNTAIN_API void SynchronizeGpuData(GpuDataSynchronizationType dataType);
+    MOUNTAIN_API void SynchronizeGpuData(Meta::Flags<GpuDataSynchronizationFlags> flags = Utils::ToFlags(GpuDataSynchronizationFlags::None));
 
-    MOUNTAIN_API void MemoryBarrier(MemoryBarrierFlags flags);
+    MOUNTAIN_API void MemoryBarrier(Meta::Flags<MemoryBarrierFlags> flags = Utils::ToFlags(MemoryBarrierFlags::None));
 
     MOUNTAIN_API void DrawArrays(DrawMode mode, int32_t first, int32_t count);
     MOUNTAIN_API void DrawArraysInstanced(DrawMode mode, int32_t first, int32_t count, int32_t instanceCount);
@@ -653,7 +681,36 @@ namespace Mountain::Graphics
     MOUNTAIN_API void SetVertexAttribute(uint32_t index, int32_t size, int32_t stride, size_t offset, uint32_t divisor = 0);
     MOUNTAIN_API void SetVertexAttributeInt(uint32_t index, int32_t size, int32_t stride, size_t offset, uint32_t divisor = 0);
 
-    // TODO - Add a GetError function
+    MOUNTAIN_API void BindFramebuffer(FramebufferType type, uint32_t framebuffer);
+
+    MOUNTAIN_API uint32_t GetLastError();
+    MOUNTAIN_API const char_t* GetLastErrorString();
+
+    MOUNTAIN_API bool_t IsConstantEnabled(Constant constant);
+    MOUNTAIN_API bool_t IsConstantEnabled(Constant constant, uint32_t index);
+
+    MOUNTAIN_API void GetConstant(Constant constant, bool_t* outData);
+    MOUNTAIN_API void GetConstant(Constant constant, double_t* outData);
+    MOUNTAIN_API void GetConstant(Constant constant, float_t* outData);
+    MOUNTAIN_API void GetConstant(Constant constant, int32_t* outData);
+    MOUNTAIN_API void GetConstant(Constant constant, int64_t* outData);
+    MOUNTAIN_API void GetConstant(Constant constant, uint32_t index, bool_t* outData);
+    MOUNTAIN_API void GetConstant(Constant constant, uint32_t index, double_t* outData);
+    MOUNTAIN_API void GetConstant(Constant constant, uint32_t index, float_t* outData);
+    MOUNTAIN_API void GetConstant(Constant constant, uint32_t index, int32_t* outData);
+    MOUNTAIN_API void GetConstant(Constant constant, uint32_t index, int64_t* outData);
+
+    MOUNTAIN_API void SetConstantEnabled(Constant constant, bool_t enabled);
+    MOUNTAIN_API void SetConstantEnabled(Constant constant, uint32_t index, bool_t enabled);
+    MOUNTAIN_API void EnableConstant(Constant constant);
+    MOUNTAIN_API void EnableConstant(Constant constant, uint32_t index);
+    MOUNTAIN_API void DisableConstant(Constant constant);
+    MOUNTAIN_API void DisableConstant(Constant constant, uint32_t index);
+
+    MOUNTAIN_API void SetBlendFunction(BlendFunction sourceFactors, BlendFunction destinationFactors);
+    MOUNTAIN_API void SetBlendFunction(uint32_t drawBuffer, BlendFunction sourceFactors, BlendFunction destinationFactors);
+
+    MOUNTAIN_API void SetViewport(int32_t x, int32_t y, int32_t width, int32_t height);
 
     template <OpenGlConvertibleT T>
     // ReSharper disable once CppFunctionIsNotImplemented
@@ -678,6 +735,10 @@ namespace Mountain::Graphics
     MOUNTAIN_API BufferUsage FromOpenGl<BufferUsage>(int32_t value);
     template <>
     MOUNTAIN_API DrawMode FromOpenGl<DrawMode>(int32_t value);
+    template <>
+    MOUNTAIN_API BlendFunction FromOpenGl<BlendFunction>(int32_t value);
+    template <>
+    MOUNTAIN_API FramebufferType FromOpenGl<FramebufferType>(int32_t value);
 
     MOUNTAIN_API int32_t ToOpenGl(MagnificationFilter value);
     MOUNTAIN_API int32_t ToOpenGl(Wrapping value);
@@ -689,9 +750,11 @@ namespace Mountain::Graphics
     MOUNTAIN_API int32_t ToOpenGl(BufferType value);
     MOUNTAIN_API int32_t ToOpenGl(BufferUsage value);
     MOUNTAIN_API int32_t ToOpenGl(DrawMode value);
+    MOUNTAIN_API int32_t ToOpenGl(BlendFunction value);
+    MOUNTAIN_API int32_t ToOpenGl(FramebufferType value);
 }
 
-ENUM_FLAGS(Mountain::Graphics::GpuDataSynchronizationType);
+ENUM_FLAGS(Mountain::Graphics::GpuDataSynchronizationFlags);
 
 ENUM_FLAGS(Mountain::Graphics::BufferStorageFlags);
 
