@@ -576,7 +576,12 @@ void ImGuiUtils::ShowPerformanceMonitoring()
     ImGui::Text("Graphics:");
     ImGui::Indent();
     ImGui::Text("Frame #%llu", lastUpdateTotalFrames);
-    ImGui::Text("%.1f FPS (%.1fms)", fps, deltaTime * 1000.f);
+    Color fpsColor = Color::LightGreen();
+    if (fps < 60.f)
+        fpsColor = Color::Orange();
+    if (fps < 20.f)
+        fpsColor = Color::Red();
+    ImGui::TextColored(std::bit_cast<ImVec4>(fpsColor), "%.0f FPS (%.1fms)", fps, deltaTime * 1000.f);
     ImGui::Text("CPU: %.1fms (%.1fms left)", frameDuration * 1000.f, frameDurationLeft * 1000.f);
     ImGui::Text("Memory: %.2fMB (%.2fMB including GPU)", memoryCpuOnly, memoryTotal);
     ImGui::Text("Screen: %dx%d", screenSize.x, screenSize.y);
