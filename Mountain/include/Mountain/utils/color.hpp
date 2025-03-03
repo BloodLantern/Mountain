@@ -869,10 +869,16 @@ private:
 namespace Calc
 {
     [[nodiscard]]
-    Mountain::Color Lerp(const Mountain::Color& value, const Mountain::Color& target, float_t time);
+    MOUNTAIN_API Mountain::Color Lerp(const Mountain::Color& value, const Mountain::Color& target, float_t time);
 
     [[nodiscard]]
-    Mountain::Color Lerp(const Mountain::Color& value, const Mountain::Color& target, float_t time, Easing::Easer easer);
+    MOUNTAIN_API Mountain::Color Lerp(const Mountain::Color& value, const Mountain::Color& target, float_t time, Easing::Easer easer);
+    
+    [[nodiscard]]
+    MOUNTAIN_API Mountain::Color LerpFixed(const Mountain::Color& value, const Mountain::Color& target, float_t time);
+
+    [[nodiscard]]
+    MOUNTAIN_API Mountain::Color LerpFixed(const Mountain::Color& value, const Mountain::Color& target, float_t time, Easing::Easer easer);
 }
 
 #include "Mountain/utils/color.inl"
