@@ -786,7 +786,7 @@ void Draw::CircleInternal(const Vector2 center, const float_t radius, const bool
             * Matrix::Scaling({ radius * scale.x * 2.f * m_CameraScale.x, radius * scale.y * 2.f * m_CameraScale.y, 1.f }),
         center,
         radius,
-        scale,
+        scale / m_CameraScale,
         color,
         filled
     );
@@ -810,7 +810,7 @@ void Draw::ArcInternal(
         radius,
         startingAngle,
         deltaAngle,
-        scale,
+        scale / m_CameraScale,
         color,
         filled
     );
