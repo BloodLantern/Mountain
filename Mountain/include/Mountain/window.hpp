@@ -69,7 +69,7 @@ namespace Mountain
         /// @param newCursorHidden @c true hides, @c false displays
         MOUNTAIN_API static void SetCursorHidden(bool_t newCursorHidden);
 
-        /// @brief Set the mouse cursor position in screen space.
+        /// @brief Set the mouse cursor position in screen space
         MOUNTAIN_API static void SetCursorPosition(Vector2 newPosition);
 
         STATIC_GETTER(bool_t, VSync, m_VSync)

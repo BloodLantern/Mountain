@@ -74,10 +74,18 @@ void Window::SetWindowMode(const WindowMode newWindowMode)
 
     static Vector2i lastWindowedPosition = m_Position, lastWindowedSize = m_Size;
 
-    if (m_WindowMode == WindowMode::Windowed)
+    switch (m_WindowMode)
     {
-        lastWindowedPosition = m_Position;
-        lastWindowedSize = m_Size;
+        case WindowMode::Windowed:
+            lastWindowedPosition = m_Position;
+            lastWindowedSize = m_Size;
+            break;
+            
+        case WindowMode::Borderless:
+            glfwSetWindowAttrib(m_Window, GLFW_DECORATED, true);
+            break;
+
+        default: ;
     }
 
     GLFWmonitor* monitor = nullptr;
@@ -92,10 +100,10 @@ void Window::SetWindowMode(const WindowMode newWindowMode)
             break;
 
         case WindowMode::Borderless:
-            // For a borderless fullscreen, we set the window size to the screen size plus one on the X axis.
-            // This hack is used to make the driver think this is still windowed because otherwise it would default to an exclusive fullscreen.
-            // I learnt about this hack there: https://github.com/ppy/osu-framework/blob/7774e64cd84232b5e1fe08d527acfe39b67ef989/osu.Framework/Platform/Windows/SDL2WindowsWindow.cs#L270
+            // For a borderless fullscreen, we need to disable the window decoration.
+            // This is the only difference between windowed and borderless mode.
             size = Screen::GetSize() + Vector2i::UnitX();
+            glfwSetWindowAttrib(m_Window, GLFW_DECORATED, false);
             break;
 
         case WindowMode::Fullscreen:
