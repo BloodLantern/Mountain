@@ -7,6 +7,8 @@
 #include <Maths/vector3.hpp>
 #include <Maths/vector4.hpp>
 
+#include "ImGui/imgui.h"
+
 #include "Mountain/core.hpp"
 
 // Undef windows min and max macros in case they were defined
@@ -612,7 +614,7 @@ namespace Mountain
         /// @param rgb Red, Green and Blue components
         /// @param a Alpha component
         [[nodiscard]]
-        explicit constexpr Color(const float_t rgb, const float_t a = 1.f);
+        explicit constexpr Color(float_t rgb, float_t a = 1.f);
 
         /// @brief Constructs a color with each specified component
         ///
@@ -621,14 +623,14 @@ namespace Mountain
         /// @param b Blue component
         /// @param a Alpha component
         [[nodiscard]]
-        constexpr Color(const float_t r, const float_t g, const float_t b, const float_t a = 1.f);
+        constexpr Color(float_t r, float_t g, float_t b, float_t a = 1.f);
 
         /// @brief Constructs a color from a Vector3 and an alpha value
         ///
         /// @param rgb Red, Green and Blue components
         /// @param a Alpha component
         [[nodiscard]]
-        explicit constexpr Color(const Vector3& rgb, const float_t a = 1.f);
+        explicit constexpr Color(const Vector3& rgb, float_t a = 1.f);
 
         /// @brief Constructs a color from a Vector4
         ///
@@ -662,6 +664,10 @@ namespace Mountain
         /// @brief Converts the Color to a Vector4
         [[nodiscard]]
         constexpr explicit operator Vector4() const;
+
+        /// @brief Converts the Color to a ImVec4
+        [[nodiscard]]
+        constexpr explicit operator ImVec4() const;
     };
 
     /// @brief The ColorHsva struct represents a color in HSVA color space.
@@ -732,7 +738,7 @@ namespace Mountain
         /// @param v Value component
         /// @param a Alpha component
         [[nodiscard]]
-        constexpr ColorHsva(const float_t h, const float_t s, const float_t v, const float_t a = 1.f);
+        constexpr ColorHsva(float_t h, float_t s, float_t v, float_t a = 1.f);
 
         /// @brief Converts the ColorHsva to a Color
         [[nodiscard]]

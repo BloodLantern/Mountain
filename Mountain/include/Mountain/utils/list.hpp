@@ -185,23 +185,37 @@ namespace Mountain
         [[nodiscard]]
         bool_t Contains(const T& element) const;
 
-        /// @brief Allows iteration over the list with a lambda
+        /// @brief Allows iteration over the list with a lambda.
         ///
-        /// <p>The lambda returns void, and has a pointer to the current element as a parameters</p>
+        /// The lambda returns @c void and has a pointer to the current element as a parameter.
         ///
         /// @param lambda Function lambda
         void Iterate(const std::function<void(T*)>& lambda);
 
-        /// @brief Allows iteration over the list with a lambda
+        /// @brief Allows iteration over the list with a lambda.
         ///
-        /// <p>The lambda returns void, and has a pointer to the current element as a parameters</p>
+        /// The lambda returns @c void and has a pointer to the current element as a parameter.
         ///
         /// @param lambda Function lambda
         void Iterate(const std::function<void(const T*)>& lambda) const;
 
-        /// @brief Checks if an element exists that fulfills the requirements provided in a lambda
+        /// @brief Allows iteration over the list with a lambda.
         ///
-        /// <p>The lambda returns bool_t, and has a pointer to the current element as a parameters</p>
+        /// The lambda returns @c void and has a reference to the current element as a parameter.
+        ///
+        /// @param lambda Function lambda
+        void ForEach(const std::function<void(T&)>& lambda);
+
+        /// @brief Allows iteration over the list with a lambda.
+        ///
+        /// The lambda returns @c void and has a reference to the current element as a parameter.
+        ///
+        /// @param lambda Function lambda
+        void ForEach(const std::function<void(const T&)>& lambda) const;
+
+        /// @brief Checks if an element exists that fulfills the requirements provided in a lam.bda
+        ///
+        /// The lambda returns bool_t, and has a pointer to the current element as a parameter.
         ///
         /// @param lambda Function lambda
         /// @return Element exists

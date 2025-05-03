@@ -520,7 +520,7 @@ void ImGuiUtils::ShowPerformanceMonitoring()
     ImGui::DragFloat("Update interval", &updateInterval, 0.01f, 0.f, 1.f);
 
     auto targetFps = Time::targetFps;
-    const double_t refreshRate = static_cast<double_t>(Screen::GetRefreshRate());
+    const double_t refreshRate = Screen::GetRefreshRate();
     constexpr double_t zero = 0;
     if (Optional(
         &targetFps,
@@ -581,7 +581,7 @@ void ImGuiUtils::ShowPerformanceMonitoring()
         fpsColor = Color::Orange();
     if (fps < 20.f)
         fpsColor = Color::Red();
-    ImGui::TextColored(std::bit_cast<ImVec4>(fpsColor), "%.0f FPS (%.1fms)", fps, deltaTime * 1000.f);
+    ImGui::TextColored(static_cast<ImVec4>(fpsColor), "%.0f FPS (%.1fms)", fps, deltaTime * 1000.f);
     ImGui::Text("CPU: %.1fms (%.1fms left)", frameDuration * 1000.f, frameDurationLeft * 1000.f);
     ImGui::Text("Memory: %.2fMB (%.2fMB including GPU)", memoryCpuOnly, memoryTotal);
     ImGui::Text("Screen: %dx%d", screenSize.x, screenSize.y);

@@ -209,6 +209,20 @@ namespace Mountain
     }
 
     template <typename T>
+    void List<T>::ForEach(const std::function<void(T&)>& lambda)
+    {
+        for (size_t i = 0; i < m_Vector.size(); i++)
+            lambda(m_Vector[i]);
+    }
+
+    template <typename T>
+    void List<T>::ForEach(const std::function<void(const T&)>& lambda) const
+    {
+        for (size_t i = 0; i < m_Vector.size(); i++)
+            lambda(m_Vector[i]);
+    }
+
+    template <typename T>
     bool_t List<T>::Exists(const std::function<bool_t(const T*)>& lambda) const
     {
         for (size_t i = 0; i < m_Vector.size(); i++)

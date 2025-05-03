@@ -1,5 +1,7 @@
 #pragma once
 
+#include <algorithm>
+
 #include "Maths/calc.hpp"
 
 namespace Mountain
@@ -168,8 +170,8 @@ namespace Mountain
     constexpr Color::operator ColorHsva() const
     {
         ColorHsva hsv = { 0.f, 0.f, 0.f, a };
-        const float_t minVal = std::min(std::min(r, g), b);
-        const float_t maxVal = std::max(std::max(r, g), b);
+        const float_t minVal = std::min({r, g, b});
+        const float_t maxVal = std::max({r, g, b});
         hsv.v = maxVal;
         const float_t delta = maxVal - minVal;
 
@@ -198,27 +200,29 @@ namespace Mountain
         return hsv;
     }
 
-    constexpr Color::operator Vector3() const { return Vector3(r, g, b); }
+    constexpr Color::operator Vector3() const { return Vector3{r, g, b}; }
 
-    constexpr Color::operator Vector4() const { return Vector4(r, g, b, a); }
+    constexpr Color::operator Vector4() const { return Vector4{r, g, b, a}; }
 
-    constexpr ColorHsva ColorHsva::White() { return ColorHsva(0.f, 0.f, 1.f); }
+    constexpr Color::operator ImVec4() const { return ImVec4{r, g, b, a}; }
 
-    constexpr ColorHsva ColorHsva::Gray() { return ColorHsva(0.f, 0.f, 0.5f); }
+    constexpr ColorHsva ColorHsva::White() { return ColorHsva{0.f, 0.f, 1.f}; }
 
-    constexpr ColorHsva ColorHsva::Black() { return ColorHsva(0.f, 0.f, 0.f); }
+    constexpr ColorHsva ColorHsva::Gray() { return ColorHsva{0.f, 0.f, 0.5f}; }
 
-    constexpr ColorHsva ColorHsva::Red() { return ColorHsva(0.f, 1.f, 1.f); }
+    constexpr ColorHsva ColorHsva::Black() { return ColorHsva{0.f, 0.f, 0.f}; }
 
-    constexpr ColorHsva ColorHsva::Green() { return ColorHsva(HueCircleOver3, 1.f, 1.f); }
+    constexpr ColorHsva ColorHsva::Red() { return ColorHsva{0.f, 1.f, 1.f}; }
 
-    constexpr ColorHsva ColorHsva::Blue() { return ColorHsva(HueCircleOver3 * 2, 1.f, 1.f); }
+    constexpr ColorHsva ColorHsva::Green() { return ColorHsva{HueCircleOver3, 1.f, 1.f}; }
 
-    constexpr ColorHsva ColorHsva::Yellow() { return ColorHsva(HueCircleOver6, 1.f, 1.f); }
+    constexpr ColorHsva ColorHsva::Blue() { return ColorHsva{HueCircleOver3 * 2, 1.f, 1.f}; }
 
-    constexpr ColorHsva ColorHsva::LightBlue() { return ColorHsva(HueCircleOver3 + HueCircleOver6, 1.f, 1.f); }
+    constexpr ColorHsva ColorHsva::Yellow() { return ColorHsva{HueCircleOver6, 1.f, 1.f}; }
 
-    constexpr ColorHsva ColorHsva::Magenta() { return ColorHsva(HueCircleOver3 * 2 + HueCircleOver6, 1.f, 1.f); }
+    constexpr ColorHsva ColorHsva::LightBlue() { return ColorHsva{HueCircleOver3 + HueCircleOver6, 1.f, 1.f}; }
+
+    constexpr ColorHsva ColorHsva::Magenta() { return ColorHsva{HueCircleOver3 * 2 + HueCircleOver6, 1.f, 1.f}; }
 
     constexpr ColorHsva::ColorHsva(const float_t h, const float_t s, const float_t v, const float_t a): h(h), s(s), v(v), a(a) {}
 
