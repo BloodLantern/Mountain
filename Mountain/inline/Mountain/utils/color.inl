@@ -204,8 +204,6 @@ namespace Mountain
 
     constexpr Color::operator Vector4() const { return Vector4{r, g, b, a}; }
 
-    constexpr Color::operator ImVec4() const { return ImVec4{r, g, b, a}; }
-
     constexpr ColorHsva ColorHsva::White() { return ColorHsva{0.f, 0.f, 1.f}; }
 
     constexpr ColorHsva ColorHsva::Gray() { return ColorHsva{0.f, 0.f, 0.5f}; }

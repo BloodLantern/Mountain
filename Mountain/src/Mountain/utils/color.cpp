@@ -12,6 +12,8 @@ uint32_t Color::GetPackedValue() const
     return byteA << 24 | byteB << 16 | byteG << 8 | byteR;
 }
 
+Color::operator ImVec4() const { return ImVec4{ r, g, b, a }; }
+
 Color Calc::Lerp(const Color& value, const Color& target, const float_t time)
 {
     return Color{Lerp(static_cast<Vector4>(value), static_cast<Vector4>(target), time)};

@@ -667,7 +667,7 @@ namespace Mountain
 
         /// @brief Converts the Color to a ImVec4
         [[nodiscard]]
-        constexpr explicit operator ImVec4() const;
+        explicit operator ImVec4() const;
     };
 
     /// @brief The ColorHsva struct represents a color in HSVA color space.
