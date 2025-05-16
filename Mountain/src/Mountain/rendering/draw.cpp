@@ -1,12 +1,9 @@
 #include "Mountain/rendering/draw.hpp"
 
-#include <ImGui/imgui_stdlib.h>
-
 #include "Mountain/globals.hpp"
 #include "Mountain/resource/font.hpp"
 #include "Mountain/resource/resource_manager.hpp"
 #include "Mountain/resource/shader.hpp"
-#include "Mountain/utils/logger.hpp"
 
 using namespace Mountain;
 
@@ -186,7 +183,7 @@ void Draw::Texture(
             return;
         }
     }
-    
+
     m_DrawList.textureId.Add(texture.GetId());
     m_DrawList.commands.Emplace(DrawDataType::Texture, 1ull);
 }
@@ -456,7 +453,7 @@ void Draw::LoadResources()
     m_RectangleShader = ResourceManager::Get<Shader>(basePath + "rectangle");
     m_CircleShader = ResourceManager::Get<Shader>(basePath + "circle");
     m_ArcShader = ResourceManager::Get<Shader>(basePath + "arc");
-    
+
     m_TextureShader = ResourceManager::Get<Shader>(basePath + "texture");
     m_TextShader = ResourceManager::Get<Shader>(basePath + "text");
 
@@ -588,7 +585,7 @@ void Draw::InitializeRectangleBuffers()
     uint32_t index = 0;
     // Vertex position
     Graphics::SetVertexAttribute(index, 2, sizeof(Vector2), 0, 0);
-    
+
     BindBuffer(Graphics::BufferType::ArrayBuffer, m_Vbo);
     size_t offset = 0;
     // Transformation Matrix
@@ -613,7 +610,7 @@ void Draw::InitializeCircleBuffers()
     uint32_t index = 0;
     // Vertex position
     Graphics::SetVertexAttribute(index, 2, sizeof(Vector2), 0, 0);
-    
+
     BindBuffer(Graphics::BufferType::ArrayBuffer, m_Vbo);
     size_t offset = 0;
     // Transformation Matrix
@@ -678,7 +675,7 @@ void Draw::InitializeTextureBuffers()
         1.f, 1.f,
         0.f, 1.f
     };
-    
+
     BindVertexArray(m_TextureVao);
 
     // VBO
@@ -692,7 +689,7 @@ void Draw::InitializeTextureBuffers()
     uint32_t index = 0;
     // Vertex position
     Graphics::SetVertexAttribute(index, 2, sizeof(Vector2), 0, 0);
-    
+
     BindBuffer(Graphics::BufferType::ArrayBuffer, m_Vbo);
     size_t offset = 0;
     // Transformation Matrix
@@ -727,7 +724,7 @@ void Draw::InitializeRenderTargetBuffers()
         1.f, 1.f,
         0.f, 1.f
     };
-    
+
     BindVertexArray(m_RenderTargetVao);
 
     // VBO
@@ -745,7 +742,7 @@ void Draw::InitializeRenderTargetBuffers()
 void Draw::SetProjectionMatrix(const Matrix& newProjectionMatrix)
 {
     m_ProjectionMatrix = newProjectionMatrix;
-    
+
     UpdateShaderMatrices();
 }
 
@@ -753,14 +750,14 @@ void Draw::SetCamera(const Matrix& newCameraMatrix, const Vector2 newCameraScale
 {
     m_CameraMatrix = newCameraMatrix;
     m_CameraScale = newCameraScale;
-    
+
     UpdateShaderMatrices();
 }
 
 void Draw::UpdateShaderMatrices()
 {
     const Matrix proj = m_ProjectionMatrix * m_CameraMatrix;
-    
+
     m_PointShader->SetUniform("projection", proj);
     m_LineShader->SetUniform("projection", proj);
     m_LineColoredShader->SetUniform("projection", proj);
@@ -770,9 +767,9 @@ void Draw::UpdateShaderMatrices()
     m_CircleShader->SetUniform("projection", proj);
     m_ArcShader->SetUniform("projection", proj);
     m_TextureShader->SetUniform("projection", proj);
-    
+
     m_TextShader->SetUniform("projection", proj);
-    
+
     m_CircleShader->SetUniform("camera", m_CameraMatrix);
     m_CircleShader->SetUniform("cameraScale", m_CameraScale);
     m_ArcShader->SetUniform("camera", m_CameraMatrix);
@@ -871,7 +868,7 @@ void Draw::RenderTriangleData(const List<TriangleData>& triangles, const bool_t 
         return;
 
     m_Vbo.SetData(static_cast<int64_t>(sizeof(TriangleData) * count), &triangles[index], Graphics::BufferUsage::StreamDraw);
-    
+
     BindVertexArray(m_TriangleVao);
     m_TriangleShader->Use();
 
@@ -974,7 +971,7 @@ void Draw::RenderTextData(const List<TextData>& texts, const size_t index, const
     for (size_t i = 0; i < count; i++)
     {
         const TextData& data = texts[index + i];
-        
+
         m_TextShader->SetUniform("color", data.color);
 
         Vector2 offset = data.position + Vector2::UnitY() * data.font->CalcTextSize(data.text).y * data.scale;
@@ -982,7 +979,7 @@ void Draw::RenderTextData(const List<TextData>& texts, const size_t index, const
         for (const char_t c : data.text)
         {
             const Font::Character& character = data.font->m_Characters.at(c);
-            
+
             if (character.size != Vector2i::Zero()) // Do not draw invisible characters
             {
                 const Vector2 pos = Calc::Round(
@@ -1007,14 +1004,14 @@ void Draw::RenderTextData(const List<TextData>& texts, const size_t index, const
 
                 DrawElements(Graphics::DrawMode::Triangles, 6, Graphics::DataType::UnsignedInt, nullptr);
             }
-            
+
             // Now advance cursors for next glyph (note that advance is number of 1/64 pixels)
             offset.x += static_cast<float_t>(character.advance >> 6) * data.scale; // bitshift by 6 to get value in pixels (2^6 = 64)
         }
 
         Graphics::BindTexture(0);
     }
-    
+
     m_TextShader->Unuse();
     Graphics::BindVertexArray(0);
 }
@@ -1032,7 +1029,7 @@ void Draw::RenderRenderTargetData(const List<RenderTargetData>& renderTargets, c
 
         m_RenderTargetShader->SetUniform("transformation", data.transformation);
         m_RenderTargetShader->SetUniform("uvProjection", data.uvProjection);
-        
+
         m_RenderTargetShader->SetUniform("camera", m_CameraMatrix);
         m_RenderTargetShader->SetUniform("scale", data.scale);
         m_RenderTargetShader->SetUniform("actualScale", data.scale * data.renderTarget->GetCameraScale());
