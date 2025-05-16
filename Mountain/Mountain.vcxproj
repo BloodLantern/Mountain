@@ -172,6 +172,9 @@
     <ClInclude Include="include\Mountain\collision\collider_list.hpp" />
     <ClInclude Include="include\Mountain\collision\grid.hpp" />
     <ClInclude Include="include\Mountain\collision\hitbox.hpp" />
+    <ClInclude Include="include\Mountain\containers\enumerable.hpp" />
+    <ClInclude Include="include\Mountain\containers\enumerator.hpp" />
+    <ClInclude Include="include\Mountain\containers\list.hpp" />
     <ClInclude Include="include\Mountain\core.hpp" />
     <ClInclude Include="include\Mountain\file\directory.hpp" />
     <ClInclude Include="include\Mountain\file\entry.hpp" />
@@ -218,7 +221,6 @@
     <ClInclude Include="include\Mountain\utils\formatter.hpp" />
     <ClInclude Include="include\Mountain\utils\guid.hpp" />
     <ClInclude Include="include\Mountain\utils\imgui_utils.hpp" />
-    <ClInclude Include="include\Mountain\utils\list.hpp" />
     <ClInclude Include="include\Mountain\utils\logger.hpp" />
     <ClInclude Include="include\Mountain\utils\message_box.hpp" />
     <ClInclude Include="include\Mountain\utils\meta_programming.hpp" />
@@ -234,6 +236,7 @@
     <ClInclude Include="include\Mountain\utils\windows.hpp" />
     <ClInclude Include="include\Mountain\window.hpp" />
     <ClInclude Include="inline\Mountain\collision\hitbox.inl" />
+    <ClInclude Include="inline\Mountain\containers\list.inl" />
     <ClInclude Include="inline\Mountain\file\file.inl" />
     <ClInclude Include="inline\Mountain\file\file_manager.inl" />
     <ClInclude Include="inline\Mountain\resource\audio_track.inl" />
@@ -244,7 +247,6 @@
     <ClInclude Include="inline\Mountain\utils\color.inl" />
     <ClInclude Include="inline\Mountain\utils\event.inl" />
     <ClInclude Include="inline\Mountain\utils\imgui_utils.inl" />
-    <ClInclude Include="inline\Mountain\utils\list.inl" />
     <ClInclude Include="inline\Mountain\utils\logger.inl" />
     <ClInclude Include="inline\Mountain\utils\pointer.inl" />
     <ClInclude Include="inline\Mountain\utils\rectangle.inl" />
@@ -287,7 +289,7 @@
     <ClCompile Include="src\Mountain\input\input.cpp" />
     <ClCompile Include="src\Mountain\input\time.cpp" />
     <ClCompile Include="src\Mountain\rendering\draw.cpp" />
-    <ClCompile Include="src\Mountain\rendering\effect.cpp"/>
+    <ClCompile Include="src\Mountain\rendering\effect.cpp" />
     <ClCompile Include="src\Mountain\rendering\gpu_vertex_array.cpp" />
     <ClCompile Include="src\Mountain\rendering\gpu_buffer.cpp" />
     <ClCompile Include="src\Mountain\rendering\gpu_texture.cpp" />

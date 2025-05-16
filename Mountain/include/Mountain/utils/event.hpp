@@ -4,7 +4,7 @@
 
 #include <functional>
 
-#include "Mountain/utils/list.hpp"
+#include "Mountain/containers/list.hpp"
 
 /// @file event.hpp
 /// @brief Defines the Event class.

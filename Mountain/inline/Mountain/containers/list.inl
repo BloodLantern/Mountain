@@ -9,6 +9,62 @@
 namespace Mountain
 {
     template <typename T>
+    List<T>::Enumerator::Enumerator(List& list)
+        : m_List(&list)
+    {
+    }
+
+    template <typename T>
+    bool List<T>::Enumerator::MoveNext()
+    {
+        m_Index++;
+        m_Current = &m_List[m_Index];
+        return m_Index >= m_List->GetSize();
+    }
+
+    template <typename T>
+    void List<T>::Enumerator::Reset()
+    {
+        m_Index = 0;
+        m_Current = nullptr;
+    }
+
+    template <typename T>
+    IDefaultEnumerator& List<T>::Enumerator::operator++() const
+    {
+    }
+
+    template <typename T>
+    const IDefaultEnumerator& List<T>::Enumerator::operator++(int) const
+    {
+    }
+
+    template <typename T>
+    IDefaultEnumerator& List<T>::Enumerator::operator--() const
+    {
+    }
+
+    template <typename T>
+    const IDefaultEnumerator& List<T>::Enumerator::operator--(int) const
+    {
+    }
+
+    template <typename T>
+    T* List<T>::Enumerator::GetCurrent() const
+    {
+    }
+
+    template <typename T>
+    T& List<T>::Enumerator::operator*() const
+    {
+    }
+
+    template <typename T>
+    T* List<T>::Enumerator::operator->() const
+    {
+    }
+
+    template <typename T>
     List<T>::List(const size_t size)
         : m_Vector(size)
     {

@@ -17,7 +17,7 @@
 
 // ReSharper disable once CppEnforceTypeAliasCodeStyle
 /// @brief Equivalent to <c>char</c>.
-/// 
+///
 /// ### Reason
 /// We use a typedef here instead of a type alias for consistency
 /// with how the other integral types are defined in the <c>cstdint</c> header.
@@ -56,7 +56,7 @@ namespace Mountain {}
 /// - A non-default move constructor
 /// - A non-default copy operator
 /// - A non-default move operator
-/// 
+///
 /// It should be used right after the last constructor declaration:
 /// @code
 /// class A
@@ -64,7 +64,7 @@ namespace Mountain {}
 /// public:
 ///     A();
 ///     A(int);
-///     
+///
 ///     DEFAULT_COPY_MOVE_OPERATIONS(A)
 /// };
 /// @endcode
@@ -76,11 +76,11 @@ namespace Mountain {}
 ///     A();
 ///     A(int);
 ///     ~A();
-///     
+///
 ///     DEFAULT_COPY_MOVE_OPERATIONS(A)
 /// };
 /// @endcode
-/// 
+///
 /// @param type The type to default the copy and move operations of.
 #define DEFAULT_COPY_MOVE_OPERATIONS(type)                  \
     type(const type& other) noexcept = default;             \
@@ -95,7 +95,7 @@ namespace Mountain {}
     virtual type& operator=(type&& other) noexcept = default;
 
 /// @brief Deletes the copy and move operations of a given @p type.
-/// 
+///
 /// @param type The type to delete the copy and move operations of.
 ///
 /// @see @ref DEFAULT_COPY_MOVE_OPERATIONS for usage.
@@ -106,20 +106,20 @@ namespace Mountain {}
     type& operator=(type&& other) = delete;
 
 /// @brief Macro used to declare a static class, e.g. a class that cannot be instantiated.
-/// 
+///
 /// For consistency, this should be the first statement inside the class definition:
 /// @code
 /// class A
 /// {
 ///     STATIC_CLASS(A)
-///     
+///
 /// public:
 ///     ...
 /// };
 /// @endcode
 ///
 /// Also, a static class shouldn't define any other constructors.
-/// 
+///
 /// @param type The type to make static.
 #define STATIC_CLASS(type)              \
     public:                             \
@@ -180,3 +180,19 @@ using stdstring = std::string;
 #define STATIC_GETTER(type, name, internalName) [[nodiscard]] static type Get##name() { return internalName; }
 #define STATIC_SETTER(type, name, internalName) static void Set##name(const type new##name) { internalName = new##name; }
 #define STATIC_GETTER_SETTER(type, name, internalName) STATIC_GETTER(type, name, internalName) STATIC_SETTER(type, name, internalName)
+
+// Make sure to undefine the Windows interface macro
+#undef interface
+
+// ReSharper disable once CppInconsistentNaming
+/// @brief Defines an interface, that is a class that only has public pure virtual member functions.
+///
+/// This is only a struct under the hood, because it declares public members by default and allows for
+/// operators to be defined whereas the @c __interface Microsoft extension doesn't.
+/// Also, because an interface isn't supposed to provide implementations for any of the functions it
+/// declares, it has the @c novtable specification.
+///
+/// @see https://learn.microsoft.com/en-us/cpp/cpp/novtable
+#define interface struct __declspec(novtable)
+
+#define DEFAULT_VIRTUAL_DESTRUCTOR(type) virtual ~type() = default;

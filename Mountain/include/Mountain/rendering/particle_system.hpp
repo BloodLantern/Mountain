@@ -9,7 +9,7 @@
 #include "Mountain/resource/compute_shader.hpp"
 #include "Mountain/resource/shader.hpp"
 #include "Mountain/utils/color.hpp"
-#include "Mountain/utils/list.hpp"
+#include "Mountain/containers/list.hpp"
 
 // OpenGL type forward declaration
 // ReSharper disable once CppInconsistentNaming

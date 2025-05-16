@@ -4,12 +4,15 @@
 #include <vector>
 
 #include "Mountain/core.hpp"
+#include "Mountain/containers/enumerable.hpp"
+#include "Mountain/containers/enumerator.hpp"
 
 /// @file list.hpp
 /// @brief Defines the Mountain::List class.
 
 namespace Mountain
 {
+    // ReSharper disable once CppPolymorphicClassWithNonVirtualPublicDestructor
     /// @brief A dynamic array implementation. Wrapper around the @c std::vector class.
     ///
     /// ### Reasons
@@ -21,9 +24,41 @@ namespace Mountain
     /// @see <a href="https://en.cppreference.com/w/cpp/container/vector">std::vector</a>
     /// @see <a href="https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1?view=net-8.0">C# List</a>
     template <typename T>
-    class List
+    class final List : IEnumerable<T>
     {
     public:
+        struct Enumerator : IEnumerator<T>
+        {
+            explicit Enumerator(List& list);
+            virtual ~Enumerator() = default;
+            DEFAULT_COPY_MOVE_OPERATIONS(Enumerator)
+
+            // IDefaultEnumerator implementation
+
+            [[nodiscard]]
+            bool MoveNext() override;
+            void Reset() override;
+            IDefaultEnumerator& operator++() const override;
+            const IDefaultEnumerator& operator++(int) const override;
+            IDefaultEnumerator& operator--() const override;
+            const IDefaultEnumerator& operator--(int) const override;
+
+            // IEnumerator<T> implementation
+
+            T* GetCurrent() const override;
+            T& operator*() const override;
+            T* operator->() const override;
+
+        private:
+            List<T>* m_List = nullptr;
+            int m_Index = 0;
+            T* m_Current = nullptr;
+        };
+
+        // IEnumerable<T> implementation
+
+        std::shared_ptr<IEnumerator<T>> GetEnumerator() override = 0;
+
         using Iterator = typename std::vector<T>::iterator;
         using ConstIterator = typename std::vector<T>::const_iterator;
         using ReverseIterator = typename std::vector<T>::reverse_iterator;
@@ -377,4 +412,4 @@ namespace Mountain
     };
 }
 
-#include "Mountain/utils/list.inl"
+#include "Mountain/containers/list.inl"

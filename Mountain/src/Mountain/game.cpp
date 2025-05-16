@@ -46,9 +46,9 @@ Game::Game(const std::string& windowTitle, const Vector2i windowSize)
 #endif
         }
     );
-    
+
     Logger::LogInfo("Initializing Mountain Framework");
-    
+
     if (!Renderer::Initialize(windowTitle, windowSize))
         throw std::runtime_error("Failed to initialize renderer");
 
@@ -59,13 +59,13 @@ Game::Game(const std::string& windowTitle, const Vector2i windowSize)
 Game::~Game()
 {
     Logger::LogInfo("Shutting down Mountain Framework...");
-    
+
     ResourceManager::UnloadAll();
     FileManager::UnloadAll();
-    
+
     Audio::Shutdown();
     Renderer::Shutdown();
-    
+
     Logger::Stop();
 }
 

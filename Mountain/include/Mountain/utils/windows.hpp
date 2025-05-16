@@ -2,8 +2,6 @@
 
 #include <string>
 
-#include "Mountain/core.hpp"
-
 /// @file windows.hpp
 /// @brief A way to include the @c <Windows.h> header without some of its conflicting macros.
 
@@ -20,6 +18,8 @@
 #undef min
 #undef max
 #undef MessageBox
+
+#include "Mountain/core.hpp"
 
 namespace Mountain::Windows
 {
