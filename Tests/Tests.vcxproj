@@ -60,7 +60,7 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <EnableModules>true</EnableModules>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>include;externals\include;..\Mountain\include;..\Mountain\inline;..\Mountain\externals\include;LivePP\API\x64</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include;externals\include;..\Mountain\src;..\Mountain\externals\src;LivePP\API\x64</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <AdditionalOptions>/Gw %(AdditionalOptions)</AdditionalOptions>
@@ -87,7 +87,7 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <EnableModules>true</EnableModules>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>include;externals\include;..\Mountain\include;..\Mountain\inline;..\Mountain\externals\include;LivePP\API\x64</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include;externals\include;..\Mountain\src;..\Mountain\externals\src;LivePP\API\x64</AdditionalIncludeDirectories>
       <AdditionalOptions>/Gw %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -103,20 +103,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\animated_character.cpp" />
-    <ClCompile Include="src\camera.cpp" />
-    <ClCompile Include="src\player.cpp" />
-    <ClCompile Include="src\spin_component.cpp" />
-    <ClCompile Include="src\test_game.cpp" />
-    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\AnimatedCharacter.cpp" />
+    <ClCompile Include="src\Camera.cpp" />
+    <ClCompile Include="src\Player.cpp" />
+    <ClCompile Include="src\SpinComponent.cpp" />
+    <ClCompile Include="src\TestGame.cpp" />
+    <ClCompile Include="src\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\animated_character.hpp" />
-    <ClInclude Include="include\camera.hpp" />
-    <ClInclude Include="include\player.hpp" />
-    <ClInclude Include="include\spin_component.hpp" />
-    <ClInclude Include="include\test_entity.hpp" />
-    <ClInclude Include="include\test_game.hpp" />
     <ClInclude Include="LivePP\API\x64\LPP_API.h" />
     <ClInclude Include="LivePP\API\x64\LPP_API_Helpers.h" />
     <ClInclude Include="LivePP\API\x64\LPP_API_Hooks.h" />
@@ -124,6 +118,12 @@
     <ClInclude Include="LivePP\API\x64\LPP_API_Preferences.h" />
     <ClInclude Include="LivePP\API\x64\LPP_API_Version_x64_CPP.h" />
     <ClInclude Include="LivePP\API\x64\LPP_API_x64_CPP.h" />
+    <ClInclude Include="src\AnimatedCharacter.hpp" />
+    <ClInclude Include="src\Camera.hpp" />
+    <ClInclude Include="src\Player.hpp" />
+    <ClInclude Include="src\SpinComponent.hpp" />
+    <ClInclude Include="src\TestEntity.hpp" />
+    <ClInclude Include="src\TestGame.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Mountain\Mountain.vcxproj">
