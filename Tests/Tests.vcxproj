@@ -60,7 +60,7 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <EnableModules>true</EnableModules>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>include;externals\include;..\Mountain\include;..\Mountain\inline;..\Mountain\externals\include;LivePP\API\x64</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include;externals\include;..\Mountain\src;..\Mountain\externals\src;LivePP\API\x64</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <AdditionalOptions>/Gw %(AdditionalOptions)</AdditionalOptions>
@@ -87,7 +87,7 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <EnableModules>true</EnableModules>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>include;externals\include;..\Mountain\include;..\Mountain\inline;..\Mountain\externals\include;LivePP\API\x64</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include;externals\include;..\Mountain\src;..\Mountain\externals\src;LivePP\API\x64</AdditionalIncludeDirectories>
       <AdditionalOptions>/Gw %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
