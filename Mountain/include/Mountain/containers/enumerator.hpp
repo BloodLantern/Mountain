@@ -26,10 +26,6 @@ namespace Mountain
         virtual IDefaultEnumerator& operator++() const = 0;
 
         virtual const IDefaultEnumerator& operator++(int) const = 0;
-
-        virtual IDefaultEnumerator& operator--() const = 0;
-
-        virtual const IDefaultEnumerator& operator--(int) const = 0;
     };
 
     /// @brief Supports a simple iteration over a templated container.

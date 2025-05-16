@@ -24,7 +24,7 @@ namespace Mountain
     /// @see <a href="https://en.cppreference.com/w/cpp/container/vector">std::vector</a>
     /// @see <a href="https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1?view=net-8.0">C# List</a>
     template <typename T>
-    class final List : IEnumerable<T>
+    class List : IEnumerable<T>
     {
     public:
         struct Enumerator : IEnumerator<T>
@@ -40,8 +40,6 @@ namespace Mountain
             void Reset() override;
             IDefaultEnumerator& operator++() const override;
             const IDefaultEnumerator& operator++(int) const override;
-            IDefaultEnumerator& operator--() const override;
-            const IDefaultEnumerator& operator--(int) const override;
 
             // IEnumerator<T> implementation
 
@@ -57,7 +55,7 @@ namespace Mountain
 
         // IEnumerable<T> implementation
 
-        std::shared_ptr<IEnumerator<T>> GetEnumerator() override = 0;
+        std::shared_ptr<IEnumerator<T>> GetEnumerator() override;
 
         using Iterator = typename std::vector<T>::iterator;
         using ConstIterator = typename std::vector<T>::const_iterator;

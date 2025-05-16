@@ -18,7 +18,7 @@ namespace Mountain
     bool List<T>::Enumerator::MoveNext()
     {
         m_Index++;
-        m_Current = &m_List[m_Index];
+        m_Current = &m_List[m_Index];  // NOLINT(bugprone-pointer-arithmetic-on-polymorphic-object)
         return m_Index >= m_List->GetSize();
     }
 
@@ -32,36 +32,39 @@ namespace Mountain
     template <typename T>
     IDefaultEnumerator& List<T>::Enumerator::operator++() const
     {
+        MoveNext();
+        return *this;
     }
 
     template <typename T>
     const IDefaultEnumerator& List<T>::Enumerator::operator++(int) const
     {
-    }
-
-    template <typename T>
-    IDefaultEnumerator& List<T>::Enumerator::operator--() const
-    {
-    }
-
-    template <typename T>
-    const IDefaultEnumerator& List<T>::Enumerator::operator--(int) const
-    {
+        MoveNext();
+        return *this;
     }
 
     template <typename T>
     T* List<T>::Enumerator::GetCurrent() const
     {
+        return m_Current;
     }
 
     template <typename T>
     T& List<T>::Enumerator::operator*() const
     {
+        return *GetCurrent();
     }
 
     template <typename T>
     T* List<T>::Enumerator::operator->() const
     {
+        return GetCurrent();
+    }
+
+    template <typename T>
+    std::shared_ptr<IEnumerator<T>> List<T>::GetEnumerator()
+    {
+        return std::make_shared<IEnumerator<T>>(*this);
     }
 
     template <typename T>
