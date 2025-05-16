@@ -33,8 +33,8 @@ public:
     explicit GameExample(const char_t* windowTitle);
 
 	// Inherited from Game
-	void Initialize() override;
 	void LoadResources() override;
+	void Initialize() override;
     void Shutdown() override;
 	void Update() override;
 	void Render() override;

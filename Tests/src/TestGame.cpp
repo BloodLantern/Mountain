@@ -99,6 +99,35 @@ namespace
     }
 }
 
+void GameExample::LoadResources()
+{
+    assetsWatcher.recursive = true;
+    assetsWatcher.onCreated += [](const std::filesystem::path& path)
+    {
+        if (is_directory(path))
+            return;
+
+        FileManager::Load(path);
+        ResourceManager::LoadAll();
+    };
+    assetsWatcher.onModified += [](const std::filesystem::path& path)
+    {
+        if (is_directory(path))
+            return;
+
+        auto f = FileManager::Get<File>(path);
+        if (!f)
+            return;
+        f->Reload();
+        auto r = f->GetResource();
+        if (r)
+            r->Reload();
+    };
+
+    vignette.effect.LoadResources();
+    filmGrain.effect.LoadResources();
+}
+
 void GameExample::Initialize()
 {
     std::string builtinShadersPath = Utils::GetBuiltinShadersPath();
@@ -147,37 +176,6 @@ void GameExample::Initialize()
             std::make_shared<ParticleSystemModules::ForceOverLifetime>(),
         }
     );
-
-    Game::Initialize();
-}
-
-void GameExample::LoadResources()
-{
-    assetsWatcher.recursive = true;
-    assetsWatcher.onCreated += [](const std::filesystem::path& path)
-    {
-        if (is_directory(path))
-            return;
-
-        FileManager::Load(path);
-        ResourceManager::LoadAll();
-    };
-    assetsWatcher.onModified += [](const std::filesystem::path& path)
-    {
-        if (is_directory(path))
-            return;
-
-        auto f = FileManager::Get<File>(path);
-        if (!f)
-            return;
-        f->Reload();
-        auto r = f->GetResource();
-        if (r)
-            r->Reload();
-    };
-
-    vignette.effect.LoadResources();
-    filmGrain.effect.LoadResources();
 }
 
 void GameExample::Shutdown()
@@ -186,8 +184,6 @@ void GameExample::Shutdown()
         delete entity;
 
     delete player;
-
-    Game::Shutdown();
 }
 
 void GameExample::Update()

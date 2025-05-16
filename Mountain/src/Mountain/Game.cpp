@@ -60,6 +60,8 @@ Game::~Game()
 {
     Logger::LogInfo("Shutting down Mountain Framework...");
 
+	Coroutine::StopAll();
+
     ResourceManager::UnloadAll();
     FileManager::UnloadAll();
 
@@ -71,27 +73,19 @@ Game::~Game()
 
 void Game::Play()
 {
+    LoadResources();
     Initialize();
     MainLoop();
     Shutdown();
 }
 
-void Game::Initialize()
+void Game::MainLoop()
 {
-    LoadResources();
-
     // Start the time now
     Time::Initialize();
 
     Window::SetVisible(true);
-}
 
-void Game::LoadResources()
-{
-}
-
-void Game::MainLoop()
-{
     while (NextFrame()) {}
 }
 
@@ -117,9 +111,4 @@ bool_t Game::NextFrame()
     Time::WaitForNextFrame();
 
     return !Window::GetShouldClose();
-}
-
-void Game::Shutdown()
-{
-	Coroutine::StopAll();
 }

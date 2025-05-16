@@ -47,9 +47,11 @@ int32_t main(int32_t, char_t**)
 	Mountain::BreakOnGraphicsError = true;
 
 	GameExample* game = new GameExample("Mountain tests");
-	game->Initialize();
 
 #ifdef USE_LPP
+	game->LoadResources();
+	game->Initialize();
+
 	// run the main loop
 	while (game->NextFrame())
 	{
@@ -80,11 +82,12 @@ int32_t main(int32_t, char_t**)
 			break;
 		}
 	}
-#else
-	game->MainLoop();
-#endif
 
 	game->Shutdown();
+#else
+	game->Play();
+#endif
+
 	delete game;
 
 #ifdef USE_LPP
