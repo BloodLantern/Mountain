@@ -6,6 +6,7 @@
 /// @brief A way to include the @c <Windows.h> header without some of its conflicting macros.
 
 #undef APIENTRY
+#undef interface
 // ReSharper disable once CppInconsistentNaming
 #define XMLDocument XMLDocument_dont_care
 #include <Windows.h>

@@ -120,6 +120,8 @@
     <ClInclude Include="src\Mountain\Containers\Enumerator.hpp" />
     <ClInclude Include="src\Mountain\Containers\List.hpp" />
     <ClInclude Include="src\Mountain\Core.hpp" />
+    <ClInclude Include="src\Mountain\Exceptions\ConcurrentModificationException.hpp" />
+    <ClInclude Include="src\Mountain\Exceptions\Exception.hpp" />
     <ClInclude Include="src\Mountain\FileSystem\Directory.hpp" />
     <ClInclude Include="src\Mountain\FileSystem\Entry.hpp" />
     <ClInclude Include="src\Mountain\FileSystem\File.hpp" />
@@ -205,6 +207,8 @@
     <ClCompile Include="src\Mountain\Collision\Collision.cpp" />
     <ClCompile Include="src\Mountain\Collision\Grid.cpp" />
     <ClCompile Include="src\Mountain\Collision\Hitbox.cpp" />
+    <ClCompile Include="src\Mountain\Exceptions\ConcurrentModificationException.cpp" />
+    <ClCompile Include="src\Mountain\Exceptions\Exception.cpp" />
     <ClCompile Include="src\Mountain\FileSystem\Directory.cpp" />
     <ClCompile Include="src\Mountain\FileSystem\Entry.cpp" />
     <ClCompile Include="src\Mountain\FileSystem\File.cpp" />

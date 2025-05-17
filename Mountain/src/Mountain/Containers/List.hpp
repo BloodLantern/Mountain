@@ -7,6 +7,7 @@
 
 #include "Mountain/Containers/Enumerable.hpp"
 #include "Mountain/Containers/Enumerator.hpp"
+#include "Mountain/Exceptions/ConcurrentModificationException.hpp"
 
 /// @file List.hpp
 /// @brief Defines the Mountain::List class.
@@ -34,29 +35,37 @@ namespace Mountain
             virtual ~Enumerator() = default;
             DEFAULT_COPY_MOVE_OPERATIONS(Enumerator)
 
-            // IDefaultEnumerator implementation
+            // IEnumeratorBase implementation
 
             [[nodiscard]]
+            T* GetCurrent() const override;
             bool MoveNext() override;
             void Reset() override;
-            IDefaultEnumerator& operator++() const override;
-            const IDefaultEnumerator& operator++(int) const override;
-
-            // IEnumerator<T> implementation
-
-            T* GetCurrent() const override;
-            T& operator*() const override;
+            [[nodiscard]]
             T* operator->() const override;
+            IEnumerator<T>& operator++() override;
+            const IEnumerator<T>& operator++(int) override;
+
+            // IEnumerator implementation
+
+            [[nodiscard]]
+            T& operator*() const override;
 
         private:
             List* m_List = nullptr;
-            int m_Index = 0;
+            size_t m_NextIndex = 0;
             T* m_Current = nullptr;
+            uint32_t m_Version;
+
+            bool MoveNextRare();
         };
 
-        // IEnumerable<T> implementation
 
+        // IEnumerable implementation
+
+        [[nodiscard]]
         std::shared_ptr<IEnumerator<T>> GetEnumerator() override;
+
 
         using Iterator = typename std::vector<T>::iterator;
         using ConstIterator = typename std::vector<T>::const_iterator;
@@ -408,6 +417,7 @@ namespace Mountain
 
     private:
         std::vector<T> m_Vector;
+        uint32_t m_Version = 0;
     };
 }
 
@@ -424,33 +434,39 @@ namespace Mountain
     template <typename T>
     List<T>::Enumerator::Enumerator(List& list)
         : m_List(&list)
+        , m_Version(list.m_Version)
     {
     }
 
     template <typename T>
     bool List<T>::Enumerator::MoveNext()
     {
-        m_Index++;
-        m_Current = &m_List[m_Index];  // NOLINT(bugprone-pointer-arithmetic-on-polymorphic-object)
-        return m_Index >= m_List->GetSize();
+        if (m_Version == m_List->m_Version && m_NextIndex < m_List->GetSize())
+        {
+            //m_Current = &m_List->operator[](m_NextIndex); FIXME
+            m_NextIndex++;
+            return true;
+        }
+
+        return MoveNextRare();
     }
 
     template <typename T>
     void List<T>::Enumerator::Reset()
     {
-        m_Index = 0;
+        m_NextIndex = 0;
         m_Current = nullptr;
     }
 
     template <typename T>
-    IDefaultEnumerator& List<T>::Enumerator::operator++() const
+    IEnumerator<T>& List<T>::Enumerator::operator++()
     {
         MoveNext();
         return *this;
     }
 
     template <typename T>
-    const IDefaultEnumerator& List<T>::Enumerator::operator++(int) const
+    const IEnumerator<T>& List<T>::Enumerator::operator++(int)
     {
         MoveNext();
         return *this;
@@ -475,9 +491,20 @@ namespace Mountain
     }
 
     template <typename T>
+    bool List<T>::Enumerator::MoveNextRare()
+    {
+        if (m_Version != m_List->m_Version)
+            throw ConcurrentModificationException{};
+
+        m_NextIndex = m_List->GetSize() + 1;
+        m_Current = nullptr;
+        return false;
+    }
+
+    template <typename T>
     std::shared_ptr<IEnumerator<T>> List<T>::GetEnumerator()
     {
-        return std::make_shared<IEnumerator<T>>(*this);
+        return std::make_shared<Enumerator>(*this);
     }
 
     template <typename T>

@@ -181,14 +181,13 @@ using stdstring = std::string;
 #define STATIC_SETTER(type, name, internalName) static void Set##name(const type new##name) { internalName = new##name; }
 #define STATIC_GETTER_SETTER(type, name, internalName) STATIC_GETTER(type, name, internalName) STATIC_SETTER(type, name, internalName)
 
-// Make sure to undefine the Windows interface macro
+// Undefine any Windows interface macro
 #undef interface
 
-// ReSharper disable once CppInconsistentNaming
-/// @brief Defines an interface, that is a class that only has public pure virtual member functions.
+/// @brief Defines an interface; that is a class that only has public pure virtual member functions.
 ///
-/// This is only a struct under the hood, because it declares public members by default and allows for
-/// operators to be defined whereas the @c __interface Microsoft extension doesn't.
+/// This is only a struct under the hood because it declares public members by default and allows for
+/// operators to be defined, whereas the @c __interface Microsoft extension doesn't.
 /// Also, because an interface isn't supposed to provide implementations for any of the functions it
 /// declares, it has the @c novtable specification.
 ///
