@@ -4,7 +4,7 @@
 
 #include <glad/glad.h>
 
-#include "Mountain/Window.hpp"
+#include "Mountain/Window.ixx"
 #include "Mountain/Rendering/Draw.hpp"
 #include "Mountain/Utils/Logger.hpp"
 

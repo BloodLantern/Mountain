@@ -4,7 +4,7 @@
 
 #include <ImGui/imgui_stdlib.h>
 
-#include "Mountain/Screen.hpp"
+#include "Mountain/Screen.ixx"
 #include "Mountain/FileSystem/FileManager.hpp"
 #include "Mountain/Input/Input.hpp"
 #include "Mountain/Input/Time.hpp"

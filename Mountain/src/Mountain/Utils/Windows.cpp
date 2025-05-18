@@ -1,49 +1,55 @@
-﻿#include "Mountain/Utils/Windows.hpp"
+﻿module;
 
-#include "Mountain/Utils/Logger.hpp"
+#include "Mountain/Utils/Windows.hpp"
 
-using namespace Mountain;
+module Mountain:Utils;
 
-bool_t Windows::CheckError()
+import std;
+import Mountain.Core;
+
+namespace Mountain
 {
-    const DWORD error = GetLastError();
-
-    if (error != NOERROR)
+    bool_t Windows::CheckError()
     {
-        LPVOID lpMsgBuf = nullptr;
-        FormatMessageA(
-            FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
-            nullptr,
-            error,
-            MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-            reinterpret_cast<LPSTR>(&lpMsgBuf),
-            0,
-            nullptr
-        );
-        SilenceError();
+        const DWORD error = GetLastError();
 
-        Logger::LogError("[Windows] Error {}: {}", error, static_cast<LPSTR>(lpMsgBuf));
+        if (error != NOERROR)
+        {
+            LPVOID lpMsgBuf = nullptr;
+            FormatMessageA(
+                FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
+                nullptr,
+                error,
+                MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+                reinterpret_cast<LPSTR>(&lpMsgBuf),
+                0,
+                nullptr
+            );
+            SilenceError();
 
-        return true;
+            Logger::LogError("[Windows] Error {}: {}", error, static_cast<LPSTR>(lpMsgBuf));
+
+            return true;
+        }
+
+        return false;
     }
 
-    return false;
-}
+    void Windows::SilenceError() { (void) GetLastError(); }
 
-void Windows::SilenceError() { (void) GetLastError(); }
+    std::string Windows::GetAppdataLocalPath()
+    {
+        CHAR result[MAX_PATH]{};
+        (void) SHGetFolderPathA(nullptr, CSIDL_LOCAL_APPDATA, nullptr, 0, result);
+        CheckError();
+        return result;
+    }
 
-std::string Windows::GetAppdataLocalPath()
-{
-    CHAR result[MAX_PATH]{};
-    (void) SHGetFolderPathA(nullptr, CSIDL_LOCAL_APPDATA, nullptr, 0, result);
-    CheckError();
-    return result;
-}
-
-std::string Windows::GetAppdataRoamingPath()
-{
-    CHAR result[MAX_PATH]{};
-    (void) SHGetFolderPathA(nullptr, CSIDL_APPDATA, nullptr, 0, result);
-    CheckError();
-    return result;
+    std::string Windows::GetAppdataRoamingPath()
+    {
+        CHAR result[MAX_PATH]{};
+        (void) SHGetFolderPathA(nullptr, CSIDL_APPDATA, nullptr, 0, result);
+        CheckError();
+        return result;
+    }
 }

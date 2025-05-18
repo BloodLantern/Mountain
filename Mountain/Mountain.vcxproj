@@ -15,7 +15,70 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="externals\src\AL\al.h" />
+    <ClInclude Include="externals\src\AL\alc.h" />
+    <ClInclude Include="externals\src\AL\alext.h" />
+    <ClInclude Include="externals\src\AL\efx-creative.h" />
+    <ClInclude Include="externals\src\AL\efx-presets.h" />
+    <ClInclude Include="externals\src\AL\efx.h" />
+    <ClInclude Include="externals\src\freetype\config\ftconfig.h" />
+    <ClInclude Include="externals\src\freetype\config\ftheader.h" />
+    <ClInclude Include="externals\src\freetype\config\ftmodule.h" />
+    <ClInclude Include="externals\src\freetype\config\ftoption.h" />
+    <ClInclude Include="externals\src\freetype\config\ftstdlib.h" />
+    <ClInclude Include="externals\src\freetype\config\integer-types.h" />
+    <ClInclude Include="externals\src\freetype\config\mac-support.h" />
+    <ClInclude Include="externals\src\freetype\config\public-macros.h" />
+    <ClInclude Include="externals\src\freetype\freetype.h" />
+    <ClInclude Include="externals\src\freetype\ftadvanc.h" />
+    <ClInclude Include="externals\src\freetype\ftbbox.h" />
+    <ClInclude Include="externals\src\freetype\ftbdf.h" />
+    <ClInclude Include="externals\src\freetype\ftbitmap.h" />
+    <ClInclude Include="externals\src\freetype\ftbzip2.h" />
+    <ClInclude Include="externals\src\freetype\ftcache.h" />
+    <ClInclude Include="externals\src\freetype\ftchapters.h" />
+    <ClInclude Include="externals\src\freetype\ftcid.h" />
+    <ClInclude Include="externals\src\freetype\ftcolor.h" />
+    <ClInclude Include="externals\src\freetype\ftdriver.h" />
+    <ClInclude Include="externals\src\freetype\fterrdef.h" />
+    <ClInclude Include="externals\src\freetype\fterrors.h" />
+    <ClInclude Include="externals\src\freetype\ftfntfmt.h" />
+    <ClInclude Include="externals\src\freetype\ftgasp.h" />
+    <ClInclude Include="externals\src\freetype\ftglyph.h" />
+    <ClInclude Include="externals\src\freetype\ftgxval.h" />
+    <ClInclude Include="externals\src\freetype\ftgzip.h" />
+    <ClInclude Include="externals\src\freetype\ftimage.h" />
+    <ClInclude Include="externals\src\freetype\ftincrem.h" />
+    <ClInclude Include="externals\src\freetype\ftlcdfil.h" />
+    <ClInclude Include="externals\src\freetype\ftlist.h" />
+    <ClInclude Include="externals\src\freetype\ftlogging.h" />
+    <ClInclude Include="externals\src\freetype\ftlzw.h" />
+    <ClInclude Include="externals\src\freetype\ftmac.h" />
+    <ClInclude Include="externals\src\freetype\ftmm.h" />
+    <ClInclude Include="externals\src\freetype\ftmodapi.h" />
+    <ClInclude Include="externals\src\freetype\ftmoderr.h" />
+    <ClInclude Include="externals\src\freetype\ftotval.h" />
+    <ClInclude Include="externals\src\freetype\ftoutln.h" />
+    <ClInclude Include="externals\src\freetype\ftparams.h" />
+    <ClInclude Include="externals\src\freetype\ftpfr.h" />
+    <ClInclude Include="externals\src\freetype\ftrender.h" />
+    <ClInclude Include="externals\src\freetype\ftsizes.h" />
+    <ClInclude Include="externals\src\freetype\ftsnames.h" />
+    <ClInclude Include="externals\src\freetype\ftstroke.h" />
+    <ClInclude Include="externals\src\freetype\ftsynth.h" />
+    <ClInclude Include="externals\src\freetype\ftsystem.h" />
+    <ClInclude Include="externals\src\freetype\fttrigon.h" />
+    <ClInclude Include="externals\src\freetype\fttypes.h" />
+    <ClInclude Include="externals\src\freetype\ftwinfnt.h" />
+    <ClInclude Include="externals\src\freetype\otsvg.h" />
+    <ClInclude Include="externals\src\freetype\t1tables.h" />
+    <ClInclude Include="externals\src\freetype\ttnameid.h" />
+    <ClInclude Include="externals\src\freetype\tttables.h" />
+    <ClInclude Include="externals\src\freetype\tttags.h" />
     <ClInclude Include="externals\src\ft2build.h" />
+    <ClInclude Include="externals\src\glad\glad.h" />
+    <ClInclude Include="externals\src\GLFW\glfw3.h" />
+    <ClInclude Include="externals\src\GLFW\glfw3native.h" />
     <ClInclude Include="externals\src\ImGui\imconfig.h" />
     <ClInclude Include="externals\src\ImGui\imgui.h" />
     <ClInclude Include="externals\src\ImGui\imgui_impl_glfw.h" />
@@ -26,8 +89,24 @@
     <ClInclude Include="externals\src\ImGui\imstb_rectpack.h" />
     <ClInclude Include="externals\src\ImGui\imstb_textedit.h" />
     <ClInclude Include="externals\src\ImGui\imstb_truetype.h" />
+    <ClInclude Include="externals\src\KHR\khrplatform.h" />
+    <ClInclude Include="externals\src\magic_enum\magic_enum.hpp" />
+    <ClInclude Include="externals\src\magic_enum\magic_enum_all.hpp" />
+    <ClInclude Include="externals\src\magic_enum\magic_enum_containers.hpp" />
+    <ClInclude Include="externals\src\magic_enum\magic_enum_flags.hpp" />
+    <ClInclude Include="externals\src\magic_enum\magic_enum_format.hpp" />
+    <ClInclude Include="externals\src\magic_enum\magic_enum_fuse.hpp" />
+    <ClInclude Include="externals\src\magic_enum\magic_enum_iostream.hpp" />
+    <ClInclude Include="externals\src\magic_enum\magic_enum_switch.hpp" />
+    <ClInclude Include="externals\src\magic_enum\magic_enum_utility.hpp" />
+    <ClInclude Include="externals\src\Math\Core.hpp" />
     <ClInclude Include="externals\src\minimp3.h" />
     <ClInclude Include="externals\src\minimp3_ex.h" />
+    <ClInclude Include="externals\src\RapidXML\rapidxml.hpp" />
+    <ClInclude Include="externals\src\RapidXML\RapidXMLSTD.hpp" />
+    <ClInclude Include="externals\src\RapidXML\rapidxml_iterators.hpp" />
+    <ClInclude Include="externals\src\RapidXML\rapidxml_print.hpp" />
+    <ClInclude Include="externals\src\RapidXML\rapidxml_utils.hpp" />
     <ClInclude Include="externals\src\stb_image.h" />
     <ClInclude Include="externals\src\stb_vorbis.h" />
     <ClInclude Include="src\Mountain\Audio\Audio.hpp" />
@@ -121,8 +200,6 @@
     <ClInclude Include="src\Mountain\FileSystem\Entry.hpp" />
     <ClInclude Include="src\Mountain\FileSystem\File.hpp" />
     <ClInclude Include="src\Mountain\FileSystem\FileManager.hpp" />
-    <ClInclude Include="src\Mountain\Game.hpp" />
-    <ClInclude Include="src\Mountain\Globals.hpp" />
     <ClInclude Include="src\Mountain\Input\GamepadInput.hpp" />
     <ClInclude Include="src\Mountain\Input\Input.hpp" />
     <ClInclude Include="src\Mountain\Input\KeyboardInput.hpp" />
@@ -153,9 +230,7 @@
     <ClInclude Include="src\Mountain\Ecs\Component\Sprite.hpp" />
     <ClInclude Include="src\Mountain\Ecs\Component\StateMachine.hpp" />
     <ClInclude Include="src\Mountain\Ecs\Entity.hpp" />
-    <ClInclude Include="src\Mountain\Screen.hpp" />
     <ClInclude Include="src\Mountain\Utils\Color.hpp" />
-    <ClInclude Include="src\Mountain\Utils\Concepts.hpp" />
     <ClInclude Include="src\Mountain\Utils\Coroutine.hpp" />
     <ClInclude Include="src\Mountain\Utils\Event.hpp" />
     <ClInclude Include="src\Mountain\Utils\FileSystemWatcher.hpp" />
@@ -163,7 +238,6 @@
     <ClInclude Include="src\Mountain\Utils\Guid.hpp" />
     <ClInclude Include="src\Mountain\Utils\ImGuiUtils.hpp" />
     <ClInclude Include="src\Mountain\Utils\List.hpp" />
-    <ClInclude Include="src\Mountain\Utils\Logger.hpp" />
     <ClInclude Include="src\Mountain\Utils\MessageBox.hpp" />
     <ClInclude Include="src\Mountain\Utils\MetaProgramming.hpp" />
     <ClInclude Include="src\Mountain\Utils\Pointer.hpp" />
@@ -173,12 +247,36 @@
     <ClInclude Include="src\Mountain\Utils\RunLengthEncoding.hpp" />
     <ClInclude Include="src\Mountain\Utils\Stopwatch.hpp" />
     <ClInclude Include="src\Mountain\Utils\TimeSpan.hpp" />
-    <ClInclude Include="src\Mountain\Utils\TsQueue.hpp" />
-    <ClInclude Include="src\Mountain\Utils\Utils.hpp" />
     <ClInclude Include="src\Mountain\Utils\Windows.hpp" />
-    <ClInclude Include="src\Mountain\Window.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="externals\src\Math\Calc.ixx" />
+    <ClCompile Include="externals\src\Math\Easing.ixx" />
+    <ClCompile Include="externals\src\Math\Forward.ixx" />
+    <ClCompile Include="externals\src\Math\Matrix.ixx" />
+    <ClCompile Include="externals\src\Math\Matrix2.ixx" />
+    <ClCompile Include="externals\src\Math\Matrix3.ixx" />
+    <ClCompile Include="externals\src\Math\Module.ixx" />
+    <ClCompile Include="externals\src\Math\Quaternion.ixx" />
+    <ClCompile Include="externals\src\Math\Types.ixx" />
+    <ClCompile Include="externals\src\Math\Vector2.ixx" />
+    <ClCompile Include="externals\src\Math\Vector2i.ixx" />
+    <ClCompile Include="src\Mountain\Utils\Concepts.ixx" />
+    <ClCompile Include="src\Mountain\Utils\Logger.ixx" />
+    <ClCompile Include="src\Mountain\Core\Types.ixx" />
+    <ClCompile Include="src\Mountain\Core\Game.cpp" />
+    <ClCompile Include="src\Mountain\Core\Game.ixx" />
+    <ClCompile Include="src\Mountain\Core\Globals.ixx" />
+    <ClCompile Include="src\Mountain\Core\Module.ixx" />
+    <ClCompile Include="src\Mountain\Core\Screen.cpp" />
+    <ClCompile Include="src\Mountain\Core\Screen.ixx" />
+    <ClCompile Include="src\Mountain\Core\Window.cpp" />
+    <ClCompile Include="src\Mountain\Core\Window.ixx" />
+    <ClCompile Include="src\Mountain\Module.ixx" />
+    <ClCompile Include="src\Mountain\Utils\Module.ixx" />
+    <ClCompile Include="src\Mountain\Utils\TsQueue.ixx" />
+    <ClCompile Include="src\Mountain\Utils\Utils.ixx" />
+    <ClCompile Include="src\Mountain\Utils\Windows.ixx" />
     <ClCompile Include="externals\src\glad.c" />
     <ClCompile Include="externals\src\ImGui\imgui.cpp" />
     <ClCompile Include="externals\src\ImGui\imgui_demo.cpp" />
@@ -207,7 +305,6 @@
     <ClCompile Include="src\Mountain\FileSystem\Entry.cpp" />
     <ClCompile Include="src\Mountain\FileSystem\File.cpp" />
     <ClCompile Include="src\Mountain\FileSystem\FileManager.cpp" />
-    <ClCompile Include="src\Mountain\Game.cpp" />
     <ClCompile Include="src\Mountain\Input\GamepadInput.cpp" />
     <ClCompile Include="src\Mountain\Input\Input.cpp" />
     <ClCompile Include="src\Mountain\Input\Time.cpp" />
@@ -234,7 +331,6 @@
     <ClCompile Include="src\Mountain\Ecs\Component\Component.cpp" />
     <ClCompile Include="src\Mountain\Ecs\Component\Sprite.cpp" />
     <ClCompile Include="src\Mountain\Ecs\Entity.cpp" />
-    <ClCompile Include="src\Mountain\Screen.cpp" />
     <ClCompile Include="src\Mountain\Utils\Color.cpp" />
     <ClCompile Include="src\Mountain\Utils\Coroutine.cpp" />
     <ClCompile Include="src\Mountain\Utils\FileSystemWatcher.cpp" />
@@ -248,7 +344,6 @@
     <ClCompile Include="src\Mountain\Utils\TimeSpan.cpp" />
     <ClCompile Include="src\Mountain\Utils\Utils.cpp" />
     <ClCompile Include="src\Mountain\Utils\Windows.cpp" />
-    <ClCompile Include="src\Mountain\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets_internal\font.ttf" />
@@ -290,6 +385,12 @@
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="Mountain.natvis" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MathToolbox\MathToolbox\MathToolbox.vcxproj">
+      <Project>{c5c03599-2a6c-4a2d-ba9f-a644a49294cb}</Project>
+      <Name>MathToolbox</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -344,6 +445,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <AdditionalOptions>/Gw %(AdditionalOptions)</AdditionalOptions>
+      <BuildStlModules>true</BuildStlModules>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -378,6 +480,7 @@
       <AssemblerOutput>AssemblyAndSourceCode</AssemblerOutput>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <AdditionalOptions>/Gw %(AdditionalOptions)</AdditionalOptions>
+      <BuildStlModules>true</BuildStlModules>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -412,6 +515,7 @@
       <EnableModules>false</EnableModules>
       <AdditionalIncludeDirectories>src;binary_resources;externals\src</AdditionalIncludeDirectories>
       <AdditionalOptions>/Gw %(AdditionalOptions)</AdditionalOptions>
+      <BuildStlModules>true</BuildStlModules>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

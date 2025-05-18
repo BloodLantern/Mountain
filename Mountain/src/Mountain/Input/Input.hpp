@@ -3,7 +3,7 @@
 #include <array>
 
 #include "Mountain/Core.hpp"
-#include "Mountain/Window.hpp"
+#include "Mountain/Window.ixx"
 #include "Mountain/Input/GamepadInput.hpp"
 #include "Mountain/Input/KeyboardInput.hpp"
 #include "Mountain/Input/MouseInput.hpp"

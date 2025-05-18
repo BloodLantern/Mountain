@@ -6,7 +6,7 @@
 
 #include <magic_enum/magic_enum.hpp>
 
-#include "Mountain/Screen.hpp"
+#include "Mountain/Screen.ixx"
 #include "Mountain/Ecs/Entity.hpp"
 #include "Mountain/Ecs/Component/AudioListener.hpp"
 #include "Mountain/FileSystem/FileManager.hpp"

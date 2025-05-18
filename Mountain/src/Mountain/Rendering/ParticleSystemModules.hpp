@@ -3,7 +3,7 @@
 #include "Mountain/Core.hpp"
 #include "Mountain/Resource/ComputeShader.hpp"
 #include "Mountain/Utils/Color.hpp"
-#include "Mountain/Utils/Utils.hpp"
+#include "Mountain/Utils/Utils.ixx"
 
 namespace Mountain
 {

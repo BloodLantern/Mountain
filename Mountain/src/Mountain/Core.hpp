@@ -1,38 +1,11 @@
 ﻿// ReSharper disable CppClangTidyBugproneMacroParentheses
 #pragma once
 
-#include <cmath>
-#include <cstdint>
-#include <functional>
-
 /// @file Core.hpp
 /// @brief This file is meant to be included by every single other header file of this project.
 ///
-/// It includes the standard headers @c \<cmath> and @c \<cstdint> so that types such as
-/// @c int8_t or @c float_t are defined. It also defines typedefs for char_t and
-/// bool_t, as they aren't defined by those standard headers.
-///
-/// Apart from typedefs, this file declares macros ranging from necessary (MOUNTAIN_API)
-/// to useful and of general-use (DEFAULT_COPY_MOVE_OPERATIONS).
-
-// ReSharper disable once CppEnforceTypeAliasCodeStyle
-/// @brief Equivalent to <c>char</c>.
-///
-/// ### Reason
-/// We use a typedef here instead of a type alias for consistency
-/// with how the other integral types are defined in the <c>cstdint</c> header.
-/// Also, we need to manually add this type because it is considered
-/// different to <c>int8_t</c> as the latter is the equivalent of <c>signed char</c>
-/// and not <c>char</c>.
-typedef char char_t;
-
-// ReSharper disable once CppEnforceTypeAliasCodeStyle
-/// @brief Equivalent to <c>bool</c>.
-///
-/// @see char_t for reason.
-typedef bool bool_t;
-
-using Action = std::function<void()>;
+/// Apart from typedefs, this file declares macros ranging from necessary (@c MOUNTAIN_API)
+/// to useful and of general-use (@c DEFAULT_COPY_MOVE_OPERATIONS).
 
 /// @brief Macro used for DLL export/import.
 ///
@@ -49,7 +22,6 @@ namespace Mountain {}
 
 /// @brief Creates default copy and move operations for a given @p type.
 ///
-/// ### Usage
 /// This macro should be used for any type that defines at least one of:
 /// - A non-default destructor (this includes @code = default @endcode implementations),
 /// - A non-default copy constructor
@@ -137,7 +109,7 @@ using stdstring = std::string;
 /// @brief Defines binary flag operators for an enum type
 /// @param enumName The enum
 ///
-/// This macro **must** be used in the global namespace, as it declares a template specialization of magic_enum
+/// This macro <b>must</b> be used in the global namespace, as it declares a template specialization of magic_enum
 #define ENUM_FLAGS(enumName)                                                                                                                                                                                                \
     static_assert(std::is_enum_v<enumName>, "enumName must be a valid enum type");                                                                                                                                          \
                                                                                                                                                                                                                             \

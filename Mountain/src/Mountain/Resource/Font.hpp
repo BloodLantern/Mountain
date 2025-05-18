@@ -56,4 +56,3 @@ namespace Mountain
         friend class Draw;
     };
 }
-

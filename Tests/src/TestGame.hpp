@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Mountain/Game.hpp"
+#include "Mountain/Game.ixx"
 #include "Mountain/Collision/Grid.hpp"
 #include "Mountain/Rendering/ParticleSystem.hpp"
 #include "Mountain/Rendering/RenderTarget.hpp"

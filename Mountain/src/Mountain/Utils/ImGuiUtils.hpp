@@ -6,7 +6,7 @@
 
 #include <ImGui/imgui.h>
 
-#include "Mountain/Utils/Utils.hpp"
+#include "Mountain/Utils/Utils.ixx"
 
 namespace Mountain::ImGuiUtils
 {

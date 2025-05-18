@@ -10,12 +10,12 @@
 
 #include <ft2build.h>
 
-#include "Mountain/Globals.hpp"
+#include "Mountain/Globals.ixx"
 
 #include FT_FREETYPE_H
 
-#include "Mountain/Screen.hpp"
-#include "Mountain/Window.hpp"
+#include "Mountain/Screen.ixx"
+#include "Mountain/Window.ixx"
 #include "Mountain/FileSystem/FileManager.hpp"
 #include "Mountain/Rendering/Draw.hpp"
 #include "Mountain/Resource/ResourceManager.hpp"

@@ -5,7 +5,7 @@
 #include <magic_enum/magic_enum.hpp>
 
 #include "Mountain/Utils/MetaProgramming.hpp"
-#include "Mountain/Utils/Utils.hpp"
+#include "Mountain/Utils/Utils.ixx"
 
 /// @namespace Mountain::Graphics
 /// @brief Low-level graphics API

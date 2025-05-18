@@ -56,7 +56,7 @@ namespace Mountain
 
 // Start of Event.inl
 
-#include "Mountain/Utils/Utils.hpp"
+#include "Mountain/Utils/Utils.ixx"
 
 namespace Mountain
 {

@@ -1,7 +1,7 @@
 #include <iostream>
 
 #include "TestGame.hpp"
-#include "Mountain/globals.hpp"
+#include "Mountain/Globals.ixx"
 #include "Mountain/Utils/Logger.hpp"
 
 USE_DEDICATED_GPU

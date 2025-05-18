@@ -1,6 +1,6 @@
 #include "Mountain/Rendering/Draw.hpp"
 
-#include "Mountain/Globals.hpp"
+#include "Mountain/Globals.ixx"
 #include "Mountain/Resource/Font.hpp"
 #include "Mountain/Resource/ResourceManager.hpp"
 #include "Mountain/Resource/Shader.hpp"

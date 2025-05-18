@@ -2,8 +2,8 @@
 
 #include <GLFW/glfw3.h>
 
-#include "Mountain/Screen.hpp"
-#include "Mountain/Window.hpp"
+#include "Mountain/Screen.ixx"
+#include "Mountain/Window.ixx"
 #include "Mountain/Utils/Windows.hpp"
 
 using namespace Mountain;

@@ -96,7 +96,7 @@ namespace Mountain
 
 // Start of StateMachine.inl
 
-#include "Mountain/Utils/utils.hpp"
+#include "Mountain/Utils/Utils.ixx"
 
 namespace Mountain
 {

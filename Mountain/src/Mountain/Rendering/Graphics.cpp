@@ -7,7 +7,7 @@
 #include "Mountain/Rendering/GpuBuffer.hpp"
 #include "Mountain/Rendering/GpuTexture.hpp"
 #include "Mountain/Rendering/GpuVertexArray.hpp"
-#include "Mountain/Utils/Utils.hpp"
+#include "Mountain/Utils/Utils.ixx"
 
 using namespace Mountain;
 

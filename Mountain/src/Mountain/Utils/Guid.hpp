@@ -75,7 +75,7 @@ template <>
 struct std::hash<Mountain::Guid>
 {
     static constexpr size_t RandomValue = 0x9E3779B9;
-    
+
     size_t operator()(const Mountain::Guid& guid) const noexcept
     {
         size_t result = 0;
@@ -103,10 +103,10 @@ struct std::formatter<Mountain::Guid>
         auto it = ctx.begin();
         if (it == ctx.end())
             return it;
- 
+
         if (*it != '}')
             throw std::format_error("Invalid format args for Mountain::Guid");
- 
+
         return it;
     }
 
@@ -118,7 +118,7 @@ struct std::formatter<Mountain::Guid>
         std::ostringstream out;
 
         out << static_cast<std::string>(guid);
-        
+
         return std::ranges::copy(std::move(out).str(), ctx.out()).out;
     }
 };
