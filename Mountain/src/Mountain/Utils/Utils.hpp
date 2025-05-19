@@ -144,11 +144,11 @@ namespace Mountain::Utils
     /// @return Euler representation
     MOUNTAIN_API Vector3 GetQuaternionEulerAngles(const Quaternion& rot);
 
-    /// @brief Equivalent of a @c dynamic_cast for Pointer "Pointers".
+    /// @brief Equivalent of a @c dynamic_cast for the @c Pointer type.
     ///
-    /// This function first checks if the given Pointer is @c nullptr, and returns @c nullptr if so.
-    /// It then checks if one type is derived from the other, and returns the cast result if so. This actually performs a @c reinterpret_cast under the hood.
-    /// If all other conditions failed, the function returns @c nullptr.
+    /// This function first checks if the given @c Pointer is @c nullptr and returns @c nullptr if so.
+    /// It then checks if one type is derived from the other and returns the cast result if so. This actually performs a @c reinterpret_cast under the hood.
+    /// If all other conditions fail, the function returns @c nullptr.
     ///
     /// @tparam T The type to dynamically cast to.
     /// @tparam U The type to dynamically cast from.
