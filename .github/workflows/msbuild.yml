@@ -35,19 +35,10 @@ jobs:
       with:
         msbuild-architecture: x64
 
-    - name: .NET Restore
-      # You may pin to the exact commit or the version.
-      # uses: codebeltnet/dotnet-restore@1cf30dd0fdddac25bc7dcb559c6d0c310fb0d472
-      uses: codebeltnet/dotnet-restore@v2.1.2
-      with:
-        # Optional path to the project(s) file to restore. Pass empty to restore all dependencies and tools of a solution. Supports globbing.
-        projects: 'UnitTests/UnitTests.vcxproj' # default is **/*.csproj
-        # Sets the verbosity level of the command. Allowed values are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic]. The default is quiet.
-        level: 'minimal' # default is quiet
-        # Whether to use the restore cache or not. Default is not to use the restore cache.
-        useRestoreCache: 'false' # optional, default is false
-        # Allows for a custom provided key that will be used instead of the default implementation.
-        restoreCacheKey: '' # optional, default is
+    # Restore NuGet packages in the solution
+    # We need this for Google Tests projects
+    - name: Restore
+      run: msbuild -t:restore -p:RestorePackagesConfig=true
 
     - name: Build
       working-directory: ${{env.GITHUB_WORKSPACE}}
