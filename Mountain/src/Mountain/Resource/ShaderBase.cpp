@@ -2,7 +2,7 @@
 
 #include <glad/glad.h>
 
-#include <Maths/math.hpp>
+#include <Math/math.hpp>
 
 #include "Mountain/FileSystem/FileManager.hpp"
 #include "Mountain/Utils/Logger.hpp"

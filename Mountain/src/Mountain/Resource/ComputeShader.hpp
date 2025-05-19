@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include <Maths/math.hpp>
+#include <Math/math.hpp>
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Resource/ShaderBase.hpp"

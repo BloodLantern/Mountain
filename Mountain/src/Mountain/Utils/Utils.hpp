@@ -6,9 +6,9 @@
 
 #include <magic_enum/magic_enum.hpp>
 
-#include <Maths/quaternion.hpp>
-#include <Maths/vector2.hpp>
-#include <Maths/vector3.hpp>
+#include <Math/quaternion.hpp>
+#include <Math/vector2.hpp>
+#include <Math/vector3.hpp>
 
 #include "Mountain/Core.hpp"
 
@@ -288,7 +288,7 @@ ENUM_FLAGS(Mountain::Utils::TrimOptions)
 
 // Start of Utils.inl
 
-#include "Maths/vector2i.hpp"
+#include "Math/vector2i.hpp"
 
 namespace Mountain
 {

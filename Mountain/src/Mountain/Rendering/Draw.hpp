@@ -4,7 +4,7 @@
 
 #include <magic_enum/magic_enum.hpp>
 
-#include <Maths/vector2.hpp>
+#include <Math/vector2.hpp>
 
 #include "Mountain/Rendering/GpuBuffer.hpp"
 #include "Mountain/Rendering/GpuVertexArray.hpp"

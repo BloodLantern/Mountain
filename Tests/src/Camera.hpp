@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include <Maths/matrix.hpp>
+#include <Math/matrix.hpp>
 
 class Camera
 {

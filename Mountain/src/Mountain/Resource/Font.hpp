@@ -3,7 +3,7 @@
 #include <array>
 #include <map>
 
-#include <Maths/vector2i.hpp>
+#include <Math/vector2i.hpp>
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Rendering/GpuTexture.hpp"
@@ -56,4 +56,3 @@ namespace Mountain
         friend class Draw;
     };
 }
-

@@ -2,7 +2,7 @@
 
 #include "Mountain/Core.hpp"
 
-#include <Maths/vector2.hpp>
+#include <Math/vector2.hpp>
 
 #include <ImGui/imgui.h>
 
