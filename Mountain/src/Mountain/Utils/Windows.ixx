@@ -2,10 +2,10 @@
 
 #include "Mountain/Core.hpp"
 
-export module Mountain.Utils:Windows;
+export module Mountain:Utils_Windows;
 
 import std;
-import Mountain.Core;
+import :Core_Types;
 
 export namespace Mountain::Windows
 {

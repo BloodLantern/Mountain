@@ -356,7 +356,12 @@ export namespace Calc
 
 namespace Calc
 {
-	constexpr float_t Sign(const float_t number) noexcept { return number < 0.f ? -1.f : 1.f; }
+	constexpr float_t Sign(const float_t number) noexcept
+	{
+		if (number < 0.f)
+			return -1.f;
+		return number > 0.f ? 1.f : 0.f;
+	}
 
 	constexpr float_t Abs(const float_t number) noexcept { return number < 0.f ? -number : number; }
 

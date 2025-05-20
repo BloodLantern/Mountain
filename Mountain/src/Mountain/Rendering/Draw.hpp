@@ -8,13 +8,13 @@
 
 #include "Mountain/Rendering/GpuBuffer.hpp"
 #include "Mountain/Rendering/GpuVertexArray.hpp"
-#include "Mountain/Rendering/RenderTarget.hpp"
-#include "Mountain/Resource/Shader.hpp"
-#include "Mountain/Resource/Texture.hpp"
-#include "Mountain/Utils/Color.hpp"
-#include "Mountain/Utils/List.hpp"
-#include "Mountain/Utils/MetaProgramming.hpp"
-#include "Mountain/Utils/Rectangle.hpp"
+#include "Mountain/Rendering/RenderTarget.ixx"
+#include "Mountain/Resource/Shader.ixx"
+#include "Mountain/Resource/Texture.ixx"
+#include "Mountain/Utils/Color.ixx"
+#include "Mountain/Utils/List.ixx"
+#include "Mountain/Utils/MetaProgramming.ixx"
+#include "Mountain/Utils/Rectangle.ixx"
 
 namespace Mountain
 {

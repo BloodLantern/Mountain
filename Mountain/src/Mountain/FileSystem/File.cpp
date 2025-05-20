@@ -1,15 +1,15 @@
-#include "Mountain/FileSystem/File.hpp"
+#include "Mountain/FileSystem/File.ixx"
 
 #include <fstream>
 #include <ranges>
 
-#include "Mountain/FileSystem/FileManager.hpp"
-#include "Mountain/Resource/AudioTrack.hpp"
-#include "Mountain/Resource/Font.hpp"
-#include "Mountain/Resource/Resource.hpp"
-#include "Mountain/Resource/ResourceManager.hpp"
-#include "Mountain/Resource/Shader.hpp"
-#include "Mountain/Resource/Texture.hpp"
+#include "Mountain/FileSystem/FileManager.ixx"
+#include "Mountain/Resource/AudioTrack.ixx"
+#include "Mountain/Resource/Font.ixx"
+#include "Mountain/Resource/Resource.ixx"
+#include "Mountain/Resource/ResourceManager.ixx"
+#include "Mountain/Resource/Shader.ixx"
+#include "Mountain/Resource/Texture.ixx"
 #include "Mountain/Utils/Logger.hpp"
 
 using namespace Mountain;

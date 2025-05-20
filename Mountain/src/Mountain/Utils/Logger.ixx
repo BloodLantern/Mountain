@@ -1,12 +1,12 @@
-﻿module;
+﻿export module Mountain:Utils_Logger;
 
-#include "Mountain/Core.hpp"
+import "Mountain/Core.hpp";
 
-export module Mountain.Utils:Logger;
-
-import std;
-import :Concepts;
-import :TsQueue;
+export import std;
+export import :Core_Types;
+import :Utils_Concepts;
+import :Utils_TsQueue;
+export import :Utils_Formatter;
 
 /// @file Logger.ixx
 /// @brief Defines the Mountain::Logger static class
@@ -14,7 +14,7 @@ import :TsQueue;
 /// @brief Logs a @c Mountain::Logger::LogLevel::Debug using the given format message and arguments.
 #define DEBUG_LOG(message, ...) Mountain::Logger::LogDebug(message, __FILE__, __LINE__, __VA_ARGS__)
 
-namespace Mountain
+export namespace Mountain
 {
     /// @brief Static class used to log messages to the console and/or a file.
     ///
@@ -259,11 +259,6 @@ namespace Mountain
 }
 
 // Start of Logger.inl
-
-#include <format>
-#include <utility>
-
-#include "Mountain/Utils/Utils.ixx"
 
 namespace Mountain
 {

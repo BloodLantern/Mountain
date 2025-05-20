@@ -1,8 +1,8 @@
-export module Mountain.Utils:Concepts;
+export module Mountain:Utils_Concepts;
 
 import std;
 
-/// @file Concepts.hpp
+/// @file Concepts.ixx
 /// @brief Defines the Mountain::Concepts namespace which contains useful concepts used in the engine.
 
 export namespace Mountain

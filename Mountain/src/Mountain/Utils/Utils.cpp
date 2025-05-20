@@ -2,18 +2,16 @@
 
 #include <ImGui/imgui.h>
 
-#include <Maths/quaternion.hpp>
-
 #include "Mountain/Utils/Windows.hpp"
 
-module Mountain.Utils:Utils;
+module Mountain:Utils_Utils;
 
 import std;
-import Mountain.Core;
+import :Core_Types;
 
-namespace Mountain
+namespace Mountain::Utils
 {
-    void Utils::AlignImGuiCursor(const float_t objectWidth, const float_t alignment)
+    void AlignImGuiCursor(const float_t objectWidth, const float_t alignment)
     {
         const float_t avail = ImGui::GetContentRegionAvail().x;
         const float_t off = avail * alignment - objectWidth / 2.f;
@@ -22,7 +20,7 @@ namespace Mountain
             ImGui::SetCursorPosX(ImGui::GetCursorPosX() + off);
     }
 
-    std::string Utils::HumanizeString(const std::string& str)
+    std::string HumanizeString(const std::string& str)
     {
         // Regex: https://regex101.com/r/3rQ25V/5
         // Matches any uppercase letter that has a lowercase variant,
@@ -64,7 +62,7 @@ namespace Mountain
         return result;
     }
 
-    std::string Utils::HumanizeVariableName(const std::string& str)
+    std::string HumanizeVariableName(const std::string& str)
     {
         std::string result = str;
 
@@ -75,7 +73,7 @@ namespace Mountain
         // return HumanizeString(result);
     }
 
-    float_t Utils::NormalizeAngle(float_t angle)
+    float_t NormalizeAngle(float_t angle)
     {
         while (angle > Calc::PiOver2)
             angle -= Calc::PiOver2;
@@ -86,7 +84,7 @@ namespace Mountain
         return angle;
     }
 
-    Vector3 Utils::NormalizeAngles(const Vector3 angles)
+    Vector3 NormalizeAngles(const Vector3 angles)
     {
         const Vector3 normalized = Vector3(
             NormalizeAngle(angles.x),
@@ -97,7 +95,7 @@ namespace Mountain
         return normalized;
     }
 
-    Vector3 Utils::GetQuaternionEulerAngles(const Quaternion& rot)
+    Vector3 GetQuaternionEulerAngles(const Quaternion& rot)
     {
         const float_t sqw = rot.W() * rot.W();
         const float_t sqx = rot.X() * rot.X();
@@ -129,9 +127,9 @@ namespace Mountain
         return NormalizeAngles(v);
     }
 
-    void Utils::OpenInExplorer(const std::filesystem::path& path) { OpenInExplorer(path, !is_directory(path)); }
+    void OpenInExplorer(const std::filesystem::path& path) { OpenInExplorer(path, !is_directory(path)); }
 
-    void Utils::OpenInExplorer(const std::filesystem::path& path, const bool_t isFile)
+    void OpenInExplorer(const std::filesystem::path& path, const bool_t isFile)
     {
         std::string command = "explorer ";
 
@@ -143,9 +141,9 @@ namespace Mountain
         TerminalCommand(command);
     }
 
-    void Utils::OpenFile(const std::filesystem::path& filepath) { TerminalCommand("explorer " + ('"' + absolute(filepath).string() + '"')); }
+    void OpenFile(const std::filesystem::path& filepath) { TerminalCommand("explorer " + ('"' + absolute(filepath).string() + '"')); }
 
-    bool_t Utils::StringEqualsIgnoreCase(const std::string_view a, const std::string_view b)
+    bool_t StringEqualsIgnoreCase(const std::string_view a, const std::string_view b)
     {
         return std::ranges::equal(
             a, b,
@@ -156,24 +154,24 @@ namespace Mountain
         );
     }
 
-    bool_t Utils::StringContainsIgnoreCase(const std::string_view a, const std::string_view b)
+    bool_t StringContainsIgnoreCase(const std::string_view a, const std::string_view b)
     {
         const std::string left = ToLower(a), right = ToLower(b);
         return left.contains(right);
     }
 
-    int32_t Utils::TerminalCommand(const std::string& command, const bool_t asynchronous)
+    int32_t TerminalCommand(const std::string& command, const bool_t asynchronous)
     {
         return std::system(((asynchronous ? "start /MIN " : "") + command).c_str());  // NOLINT(concurrency-mt-unsafe)
     }
 
-    void Utils::CreateEmptyFile(const std::filesystem::path& path)
+    void CreateEmptyFile(const std::filesystem::path& path)
     {
         // Creating a std::ofstream is the only necessary thing to do to create an empty file
         std::ofstream{ path };
     }
 
-    void Utils::SetThreadName([[maybe_unused]] std::thread& thread, [[maybe_unused]] const std::wstring& name)
+    void SetThreadName([[maybe_unused]] std::thread& thread, [[maybe_unused]] const std::wstring& name)
     {
     #ifdef _DEBUG
         (void) SetThreadDescription(thread.native_handle(), name.c_str());
@@ -181,7 +179,7 @@ namespace Mountain
     #endif
     }
 
-    std::wstring Utils::NarrowToWide(const std::string_view str)
+    std::wstring NarrowToWide(const std::string_view str)
     {
         std::wstring result;
         result.resize(str.size());
@@ -189,7 +187,7 @@ namespace Mountain
         return result;
     }
 
-    std::string Utils::WideToNarrow(const std::wstring_view str)
+    std::string WideToNarrow(const std::wstring_view str)
     {
         std::string result;
         result.resize(str.size());
@@ -197,7 +195,7 @@ namespace Mountain
         return result;
     }
 
-    std::string Utils::ToLower(const std::string_view str)
+    std::string ToLower(const std::string_view str)
     {
         std::string result;
         result.resize(str.size());
@@ -206,7 +204,7 @@ namespace Mountain
         return result;
     }
 
-    std::string Utils::ToUpper(const std::string_view str)
+    std::string ToUpper(const std::string_view str)
     {
         std::string result;
         result.resize(str.size());
@@ -215,7 +213,7 @@ namespace Mountain
         return result;
     }
 
-    std::pair<float_t, std::string_view> Utils::ByteSizeUnit(int64_t size)
+    std::pair<float_t, std::string_view> ByteSizeUnit(int64_t size)
     {
         if (size < 1000)
             return { static_cast<float_t>(size), "B" };
@@ -239,11 +237,11 @@ namespace Mountain
         return { static_cast<float_t>(size), "?" };
     }
 
-    std::string Utils::GetBuiltinShadersPath() { return BuiltinShadersPath.empty() ? "shaders_internal/" : BuiltinShadersPath + '/'; }
+    std::string GetBuiltinShadersPath() { return BuiltinShadersPath.empty() ? "shaders_internal/" : BuiltinShadersPath + '/'; }
 
-    std::string Utils::GetBuiltinAssetsPath() { return BuiltinAssetsPath.empty() ? "assets_internal/" : BuiltinAssetsPath + '/'; }
+    std::string GetBuiltinAssetsPath() { return BuiltinAssetsPath.empty() ? "assets_internal/" : BuiltinAssetsPath + '/'; }
 
-    std::string Utils::Trim(const std::string_view str, const TrimOptions options)
+    std::string Trim(const std::string_view str, const TrimOptions options)
     {
         std::string result{ str.data(), str.length() };
 
@@ -255,7 +253,7 @@ namespace Mountain
         return result;
     }
 
-    std::string Utils::GetLine(const std::string& str, const size_t lineIndex)
+    std::string GetLine(const std::string& str, const size_t lineIndex)
     {
         std::istringstream input{ str };
         size_t currentIndex = 0;
@@ -265,15 +263,15 @@ namespace Mountain
                 return line;
         }
 
-        return "";
+        return {};
     }
 
-    uint16_t Utils::Concat16(const uint8_t right, const uint8_t left)
+    uint16_t Concat16(const uint8_t right, const uint8_t left)
     {
         return static_cast<uint16_t>(right | left << 8);
     }
 
-    uint32_t Utils::Concat32(const uint8_t right0, const uint8_t right1, const uint8_t left0, const uint8_t left1)
+    uint32_t Concat32(const uint8_t right0, const uint8_t right1, const uint8_t left0, const uint8_t left1)
     {
         return right0 | right1 << 8 | left0 << 16 | left1 << 24;
     }

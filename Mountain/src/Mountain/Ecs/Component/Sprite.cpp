@@ -1,8 +1,8 @@
 ﻿#include "Mountain/Ecs/Component/Sprite.hpp"
 
 #include "Mountain/Ecs/Entity.hpp"
-#include "Mountain/Input/Time.hpp"
-#include "Mountain/Resource/ResourceManager.hpp"
+#include "Mountain/Input/Time.ixx"
+#include "Mountain/Resource/ResourceManager.ixx"
 
 using namespace Mountain;
 

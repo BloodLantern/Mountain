@@ -5,7 +5,7 @@
 #include <Maths/vector2.hpp>
 
 #include "Mountain/Ecs/Component/Component.hpp"
-#include "Mountain/Resource/AudioTrack.hpp"
+#include "Mountain/Resource/AudioTrack.ixx"
 
 namespace Mountain
 {

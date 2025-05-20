@@ -2,9 +2,9 @@
 
 #include "Mountain/Ecs/Entity.hpp"
 #include "Mountain/Ecs/Component/AudioSource.hpp"
-#include "Mountain/Input/Time.hpp"
+#include "Mountain/Input/Time.ixx"
 #include "Mountain/Rendering/Draw.hpp"
-#include "Mountain/Resource/ResourceManager.hpp"
+#include "Mountain/Resource/ResourceManager.ixx"
 
 #include "TestGame.hpp"
 

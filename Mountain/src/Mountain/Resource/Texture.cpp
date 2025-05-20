@@ -1,4 +1,4 @@
-#include "Mountain/Resource/Texture.hpp"
+#include "Mountain/Resource/Texture.ixx"
 
 #include <stb_image.h>
 

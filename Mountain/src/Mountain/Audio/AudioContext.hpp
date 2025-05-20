@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Mountain/Core.hpp"
-#include "Mountain/Utils/List.hpp"
+#include "Mountain/Utils/List.ixx"
 
 // ReSharper disable once CppInconsistentNaming
 struct ALCcontext;

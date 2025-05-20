@@ -1,11 +1,12 @@
-#include "Mountain/Resource/AudioTrack.hpp"
+module Mountain:Resource_AudioTrack;
 
-#include <minimp3.h>
-#include <minimp3_ex.h>
-#include <stb_vorbis.h>
+import <minimp3.h>;
+import <minimp3_ex.h>;
+import <stb_vorbis.h>;
 
-#include "Mountain/Audio/Audio.hpp"
-#include "Mountain/Utils/Logger.hpp"
+import std;
+import Mountain.Audio;
+import Mountain.Utils;
 
 using namespace Mountain;
 
@@ -98,9 +99,9 @@ bool_t AudioTrack::LoadWavefront(const uint8_t* const buffer, const int64_t leng
 
     while (offset < length)
     {
-        if (strncmp(str + offset, "fmt ", 4) == 0)
+        if (std::strncmp(str + offset, "fmt ", 4) == 0)
             offset += LoadWavefrontFormat(buffer + offset);
-        else if (strncmp(str + offset, "data", 4) == 0)
+        else if (std::strncmp(str + offset, "data", 4) == 0)
             offset += LoadWavefrontData(buffer + offset);
         else
             offset++;

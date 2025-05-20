@@ -1,8 +1,8 @@
-﻿#include "Mountain/Resource/Resource.hpp"
+﻿#include "Mountain/Resource/Resource.ixx"
 
-#include "Mountain/FileSystem/File.hpp"
-#include "Mountain/FileSystem/FileManager.hpp"
-#include "Mountain/Resource/ResourceManager.hpp"
+#include "Mountain/FileSystem/File.ixx"
+#include "Mountain/FileSystem/FileManager.ixx"
+#include "Mountain/Resource/ResourceManager.ixx"
 #include "Mountain/Utils/Formatter.hpp"
 
 using namespace Mountain;

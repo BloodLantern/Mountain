@@ -1,11 +1,9 @@
-﻿module;
+﻿export module Mountain:Core_Globals;
 
-#include "Mountain/Core.hpp"
-
-export module Mountain.Core:Globals;
+import "Mountain/Core.hpp";
 
 import std;
-import :Types;
+import :Core_Types;
 
 /// @file Globals.ixx
 /// @brief This file contains global configuration variables

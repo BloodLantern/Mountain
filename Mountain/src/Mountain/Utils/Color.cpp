@@ -1,4 +1,9 @@
-﻿#include "Mountain/Utils/Color.hpp"
+﻿module Mountain:Utils_Color;
+
+import <ImGui/imgui.h>;
+
+import std;
+import :Core_Types;
 
 using namespace Mountain;
 

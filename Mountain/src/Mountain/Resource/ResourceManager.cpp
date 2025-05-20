@@ -1,13 +1,13 @@
-﻿#include "Mountain/Resource/ResourceManager.hpp"
+﻿#include "Mountain/Resource/ResourceManager.ixx"
 
 #include <array>
 #include <execution>
 
-#include "Mountain/FileSystem/FileManager.hpp"
-#include "Mountain/Resource/AudioTrack.hpp"
-#include "Mountain/Resource/Font.hpp"
-#include "Mountain/Resource/Shader.hpp"
-#include "Mountain/Resource/Texture.hpp"
+#include "Mountain/FileSystem/FileManager.ixx"
+#include "Mountain/Resource/AudioTrack.ixx"
+#include "Mountain/Resource/Font.ixx"
+#include "Mountain/Resource/Shader.ixx"
+#include "Mountain/Resource/Texture.ixx"
 
 #include "Mountain/BinaryResources/ResourceHolder.hpp"
 

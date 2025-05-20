@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Mountain/Collision/Collider.hpp"
-#include "Mountain/Utils/Rectangle.hpp"
+#include "Mountain/Utils/Rectangle.ixx"
 
 namespace Mountain
 {

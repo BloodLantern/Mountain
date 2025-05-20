@@ -1,9 +1,10 @@
-﻿module;
+﻿export module Mountain:Utils;
 
-export module Mountain.Utils:Utils;
+import "Mountain/Core.hpp";
 
 import std;
-import Mountain.Core;
+import :Core_Types;
+import :Utils_Concepts;
 
 /// @file Utils.ixx
 /// @brief Defines general utility functions.
@@ -216,7 +217,7 @@ export namespace Mountain::Utils
     MOUNTAIN_API uint32_t Concat32(uint8_t right0, uint8_t right1, uint8_t left0, uint8_t left1);
 
     template <uint64_t Offset, uint64_t Count>
-    constexpr uint64_t GetBits(const uint64_t value);
+    constexpr uint64_t GetBits(uint64_t value);
 
     template <Concepts::EnumT T>
     constexpr Meta::Flags<T> ToFlags(T enumValue);
@@ -273,8 +274,6 @@ namespace Easing
 ENUM_FLAGS(Mountain::Utils::TrimOptions)
 
 // Start of Utils.inl
-
-#include "Maths/vector2i.hpp"
 
 namespace Mountain
 {

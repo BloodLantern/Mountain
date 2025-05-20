@@ -1,7 +1,13 @@
-#include "Mountain/Utils/Guid.hpp"
+module;
 
-#include "Mountain/Utils/Logger.hpp"
+#include <stdio.h>
+
 #include "Mountain/Utils/Windows.hpp"
+
+module Mountain:Utils_Guid;
+
+import Mountain.Core;
+import :Logger;
 
 using namespace Mountain;
 

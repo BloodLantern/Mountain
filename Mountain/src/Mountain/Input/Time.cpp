@@ -1,10 +1,15 @@
-﻿#include "Mountain/Input/Time.hpp"
+﻿module;
 
 #include <GLFW/glfw3.h>
 
-#include "Mountain/Screen.ixx"
-#include "Mountain/Window.ixx"
 #include "Mountain/Utils/Windows.hpp"
+
+module Mountain:Input_Time;
+
+import std;
+import Mountain.Core;
+import Mountain.Utils;
+import Mountain.Rendering;
 
 using namespace Mountain;
 

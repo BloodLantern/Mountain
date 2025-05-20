@@ -1,11 +1,11 @@
 // ReSharper disable CppMemberFunctionMayBeStatic
-#include "Mountain/Utils/Coroutine.hpp"
+module Mountain:Utils_Coroutine;
 
-#include <ranges>
-
-#include "Mountain/Input/Time.hpp"
-#include "Mountain/Utils/Formatter.hpp"
-#include "Mountain/Utils/Logger.hpp"
+import std;
+import :Core_Types;
+import Mountain.Input;
+import :Utils_Guid;
+import :Utils_Logger;
 
 using namespace Mountain;
 

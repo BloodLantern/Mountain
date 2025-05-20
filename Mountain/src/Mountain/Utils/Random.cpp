@@ -1,6 +1,8 @@
-#include "Mountain/Utils/Random.hpp"
+module Mountain:Utils_Random;
 
-#include <random>
+import std;
+import Mountain.Core;
+import :Color;
 
 using namespace Mountain;
 

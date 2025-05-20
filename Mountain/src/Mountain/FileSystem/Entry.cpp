@@ -1,7 +1,7 @@
-﻿#include "Mountain/FileSystem/Entry.hpp"
+﻿#include "Mountain/FileSystem/Entry.ixx"
 
-#include "Mountain/FileSystem/Directory.hpp"
-#include "Mountain/FileSystem/FileManager.hpp"
+#include "Mountain/FileSystem/Directory.ixx"
+#include "Mountain/FileSystem/FileManager.ixx"
 
 using namespace Mountain;
 

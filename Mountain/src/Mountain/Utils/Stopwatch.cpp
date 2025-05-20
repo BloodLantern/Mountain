@@ -1,8 +1,9 @@
-﻿#include <algorithm>
+﻿module Mountain:Utils_Stopwatch;
 
-#include "Mountain/Utils/Stopwatch.hpp"
+import "Mountain/Utils/Windows.hpp";
 
-#include "Mountain/Utils/Windows.hpp"
+import std;
+import :Core_Types;
 
 using namespace Mountain;
 

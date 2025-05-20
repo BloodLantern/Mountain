@@ -3,7 +3,7 @@
 #include "Mountain/Ecs/Entity.hpp"
 #include "Mountain/Ecs/Component/Sprite.hpp"
 #include "Mountain/Rendering/LightSource.hpp"
-#include "Mountain/Utils/Pointer.hpp"
+#include "Mountain/Utils/Pointer.ixx"
 
 class Player : public Mountain::Entity
 {

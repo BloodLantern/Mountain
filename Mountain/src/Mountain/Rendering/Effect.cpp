@@ -1,9 +1,9 @@
 ﻿#include "Mountain/Rendering/Effect.hpp"
 
 #include "Mountain/Rendering/Draw.hpp"
-#include "Mountain/Rendering/Renderer.hpp"
-#include "Mountain/Resource/ComputeShader.hpp"
-#include "Mountain/Resource/ResourceManager.hpp"
+#include "Mountain/Rendering/Renderer.ixx"
+#include "Mountain/Resource/ComputeShader.ixx"
+#include "Mountain/Resource/ResourceManager.ixx"
 
 using namespace Mountain;
 

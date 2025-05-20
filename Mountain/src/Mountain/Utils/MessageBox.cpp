@@ -1,8 +1,10 @@
-#include "Mountain/Utils/MessageBox.hpp"
+module Mountain:Utils_MessageBox;
 
-#include <stdexcept>
+import "Mountain/Utils/Windows.hpp";
 
-#include "Mountain/Utils/Windows.hpp"
+import std;
+import Mountain.Core;
+import :Windows;
 
 using namespace Mountain;
 

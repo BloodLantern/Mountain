@@ -1,9 +1,9 @@
 #include "Mountain/Rendering/Draw.hpp"
 
 #include "Mountain/Globals.ixx"
-#include "Mountain/Resource/Font.hpp"
-#include "Mountain/Resource/ResourceManager.hpp"
-#include "Mountain/Resource/Shader.hpp"
+#include "Mountain/Resource/Font.ixx"
+#include "Mountain/Resource/ResourceManager.ixx"
+#include "Mountain/Resource/Shader.ixx"
 
 using namespace Mountain;
 

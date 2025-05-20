@@ -1,9 +1,11 @@
-#include "Mountain/Utils/FileSystemWatcher.hpp"
+module Mountain:Utils_FileSystemWatcher;
 
-#include <regex>
+import "Mountain/Utils/Windows.hpp";
 
-#include "Mountain/Utils/Logger.hpp"
-#include "Mountain/Utils/Windows.hpp"
+import std;
+import Mountain.Core;
+import :Utils;
+import :Windows;
 
 using namespace Mountain;
 

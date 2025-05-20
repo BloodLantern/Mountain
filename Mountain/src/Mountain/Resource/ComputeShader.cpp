@@ -1,8 +1,12 @@
-﻿#include "Mountain/Resource/ComputeShader.hpp"
+﻿module Mountain:Resource_ComputeShader;
 
-#include <glad/glad.h>
+import <glad/glad.h>;
 
-#include "Mountain/Resource/ResourceManager.hpp"
+import std;
+import Mountain.Core;
+import Mountain.Utils;
+import Mountain.FileSystem;
+import :ResourceManager;
 
 using namespace Mountain;
 

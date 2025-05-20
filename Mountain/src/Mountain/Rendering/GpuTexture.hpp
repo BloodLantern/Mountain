@@ -4,7 +4,7 @@
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Rendering/Graphics.hpp"
-#include "Mountain/Utils/Color.hpp"
+#include "Mountain/Utils/Color.ixx"
 
 namespace Mountain::Graphics
 {

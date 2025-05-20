@@ -1,8 +1,15 @@
-﻿#include "Mountain/Input/Input.hpp"
+﻿module;
 
 #include <GLFW/glfw3.h>
 
-#include "Mountain/Utils/Logger.hpp"
+module Mountain:Input_Input;
+
+import std;
+import Mountain.Core;
+import Mountain.Utils;
+import :GamepadInput;
+import :KeyboardInput;
+import :MouseInput;
 
 using namespace Mountain;
 

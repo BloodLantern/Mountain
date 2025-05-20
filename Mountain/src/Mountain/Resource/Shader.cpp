@@ -1,10 +1,10 @@
-#include "Mountain/Resource/Shader.hpp"
+#include "Mountain/Resource/Shader.ixx"
 
 #include <glad/glad.h>
 
 #include <magic_enum/magic_enum.hpp>
 
-#include "Mountain/Resource/ResourceManager.hpp"
+#include "Mountain/Resource/ResourceManager.ixx"
 #include "Mountain/Utils/Logger.hpp"
 
 using namespace Mountain;

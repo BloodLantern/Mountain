@@ -1,8 +1,8 @@
 ﻿#pragma once
 
 #include "Mountain/Core.hpp"
-#include "Mountain/Resource/ComputeShader.hpp"
-#include "Mountain/Utils/Color.hpp"
+#include "Mountain/Resource/ComputeShader.ixx"
+#include "Mountain/Utils/Color.ixx"
 #include "Mountain/Utils/Utils.ixx"
 
 namespace Mountain

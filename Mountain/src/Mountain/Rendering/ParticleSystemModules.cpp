@@ -4,7 +4,7 @@
 
 #include "Mountain/Rendering/Draw.hpp"
 #include "Mountain/Rendering/ParticleSystem.hpp"
-#include "Mountain/Utils/ImGuiUtils.hpp"
+#include "Mountain/Utils/ImGuiUtils.ixx"
 
 using namespace Mountain::ParticleSystemModules;
 

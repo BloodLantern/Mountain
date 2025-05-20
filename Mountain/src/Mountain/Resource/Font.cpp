@@ -1,4 +1,4 @@
-#include "Mountain/Resource/Font.hpp"
+#include "Mountain/Resource/Font.ixx"
 
 #include <algorithm>
 #include <ranges>
@@ -7,7 +7,7 @@
 
 #include <ft2build.h>
 
-#include "Mountain/Rendering/Renderer.hpp"
+#include "Mountain/Rendering/Renderer.ixx"
 #include "Mountain/Utils/Logger.hpp"
 
 #include FT_FREETYPE_H

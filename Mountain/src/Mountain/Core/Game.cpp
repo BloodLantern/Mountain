@@ -1,7 +1,9 @@
-module Mountain.Core:Game;
+module Mountain:Core_Game;
 
 import std;
-import :Types;
+import :Core_Types;
+import :Utils_Logger;
+import :Utils_Coroutine;
 
 namespace Mountain
 {

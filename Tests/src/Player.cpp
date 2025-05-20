@@ -1,8 +1,8 @@
 ﻿#include "Player.hpp"
 
 #include "Mountain/Ecs/Component/AudioListener.hpp"
-#include "Mountain/Input/Input.hpp"
-#include "Mountain/Input/Time.hpp"
+#include "Mountain/Input/Input.ixx"
+#include "Mountain/Input/Time.ixx"
 #include "Mountain/Rendering/Draw.hpp"
 
 Player::Player(const Vector2& pos, Mountain::LightSource& lightSource)

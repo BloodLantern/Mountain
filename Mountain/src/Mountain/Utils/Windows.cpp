@@ -2,14 +2,15 @@
 
 #include "Mountain/Utils/Windows.hpp"
 
-module Mountain:Utils;
+module Mountain:Utils_Windows;
 
 import std;
-import Mountain.Core;
+import :Core_Types;
+import :Utils_Logger;
 
-namespace Mountain
+namespace Mountain::Windows
 {
-    bool_t Windows::CheckError()
+    bool_t CheckError()
     {
         const DWORD error = GetLastError();
 
@@ -35,9 +36,9 @@ namespace Mountain
         return false;
     }
 
-    void Windows::SilenceError() { (void) GetLastError(); }
+    void SilenceError() { (void) GetLastError(); }
 
-    std::string Windows::GetAppdataLocalPath()
+    std::string GetAppdataLocalPath()
     {
         CHAR result[MAX_PATH]{};
         (void) SHGetFolderPathA(nullptr, CSIDL_LOCAL_APPDATA, nullptr, 0, result);
@@ -45,7 +46,7 @@ namespace Mountain
         return result;
     }
 
-    std::string Windows::GetAppdataRoamingPath()
+    std::string GetAppdataRoamingPath()
     {
         CHAR result[MAX_PATH]{};
         (void) SHGetFolderPathA(nullptr, CSIDL_APPDATA, nullptr, 0, result);

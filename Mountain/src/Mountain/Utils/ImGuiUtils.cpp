@@ -1,21 +1,24 @@
-#include "Mountain/Utils/ImGuiUtils.hpp"
+module Mountain:Utils_ImGuiUtils;
 
-#include <magic_enum/magic_enum.hpp>
+import <magic_enum/magic_enum.hpp>;
 
-#include <ImGui/imgui_stdlib.h>
+import <ImGui/imgui_stdlib.h>;
 
-#include "Mountain/Screen.ixx"
-#include "Mountain/FileSystem/FileManager.hpp"
-#include "Mountain/Input/Input.hpp"
-#include "Mountain/Input/Time.hpp"
-#include "Mountain/Resource/AudioTrack.hpp"
-#include "Mountain/Resource/Font.hpp"
-#include "Mountain/Resource/ResourceManager.hpp"
-#include "Mountain/Utils/FileSystemWatcher.hpp"
-#include "Mountain/Utils/Windows.hpp"
+import "Mountain/Utils/Windows.hpp";
 
 // Needs to be included after windows.hpp
-#include <psapi.h>
+import <psapi.h>;
+
+import std;
+import Mountain.Core;
+import Mountain.Input;
+import Mountain.Resource;
+import Mountain.Rendering;
+import :Utils;
+import :Color;
+import :Pointer;
+import :List;
+import :Windows;
 
 using namespace Mountain;
 

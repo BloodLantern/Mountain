@@ -1,10 +1,8 @@
-module;
+export module Mountain:Core_Game;
 
-#include "Mountain/Core.hpp"
+import "Mountain/Core.hpp";
 
-export module Mountain.Core:Game;
-
-import :Types;
+import :Core_Types;
 
 /// @file Game.ixx
 /// @brief This file contains the @c Mountain::Game class. This is the center of a Mountain application.

@@ -1,9 +1,9 @@
 ﻿#pragma once
 
 #include "Mountain/Core.hpp"
-#include "Mountain/Rendering/RenderTarget.hpp"
-#include "Mountain/Resource/ComputeShader.hpp"
-#include "Mountain/Resource/Texture.hpp"
+#include "Mountain/Rendering/RenderTarget.ixx"
+#include "Mountain/Resource/ComputeShader.ixx"
+#include "Mountain/Resource/Texture.ixx"
 
 namespace Mountain
 {

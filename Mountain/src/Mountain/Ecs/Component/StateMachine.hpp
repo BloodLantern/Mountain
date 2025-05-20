@@ -6,8 +6,8 @@
 
 #include "Mountain/Ecs/Component/Component.hpp"
 #include "Mountain/Utils/Concepts.hpp"
-#include "Mountain/Utils/Coroutine.hpp"
-#include "Mountain/Utils/MetaProgramming.hpp"
+#include "Mountain/Utils/Coroutine.ixx"
+#include "Mountain/Utils/MetaProgramming.ixx"
 
 namespace Mountain
 {

@@ -1,4 +1,4 @@
-#include "Mountain/Rendering/Renderer.hpp"
+#include "Mountain/Rendering/Renderer.ixx"
 
 #include <glad/glad.h>
 
@@ -16,9 +16,9 @@
 
 #include "Mountain/Screen.ixx"
 #include "Mountain/Window.ixx"
-#include "Mountain/FileSystem/FileManager.hpp"
+#include "Mountain/FileSystem/FileManager.ixx"
 #include "Mountain/Rendering/Draw.hpp"
-#include "Mountain/Resource/ResourceManager.hpp"
+#include "Mountain/Resource/ResourceManager.ixx"
 #include "Mountain/Utils/Logger.hpp"
 
 namespace

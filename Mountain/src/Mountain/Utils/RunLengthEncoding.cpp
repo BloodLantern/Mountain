@@ -1,4 +1,7 @@
-#include "Mountain/Utils/RunLengthEncoding.hpp"
+module Mountain:Utils_RunLengthEncoding;
+
+import std;
+import :Core_Types;
 
 using namespace Mountain;
 

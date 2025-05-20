@@ -5,7 +5,7 @@
 
 #include "Mountain/Audio/Audio.hpp"
 #include "Mountain/Audio/AudioContext.hpp"
-#include "Mountain/Resource/AudioTrack.hpp"
+#include "Mountain/Resource/AudioTrack.ixx"
 #include "Mountain/Utils/Logger.hpp"
 
 using namespace Mountain;

@@ -4,12 +4,12 @@
 
 #include <ImGui/imgui_stdlib.h>
 
-#include "Mountain/Input/Time.hpp"
+#include "Mountain/Input/Time.ixx"
 #include "Mountain/Rendering/Draw.hpp"
-#include "Mountain/Rendering/Renderer.hpp"
-#include "Mountain/Resource/ResourceManager.hpp"
-#include "Mountain/Utils/ImGuiUtils.hpp"
-#include "Mountain/Utils/Random.hpp"
+#include "Mountain/Rendering/Renderer.ixx"
+#include "Mountain/Resource/ResourceManager.ixx"
+#include "Mountain/Utils/ImGuiUtils.ixx"
+#include "Mountain/Utils/Random.ixx"
 
 using namespace Mountain;
 

@@ -2,7 +2,7 @@
 
 #include "Mountain/Core.hpp"
 
-export module Mountain.Utils:TsQueue;
+export module Mountain:Utils_TsQueue;
 
 import std;
 

@@ -2,7 +2,7 @@
 
 #include "Mountain/Core.hpp"
 
-#include "Mountain/Utils/Color.hpp"
+#include "Mountain/Utils/Color.ixx"
 
 namespace Mountain
 {

@@ -1,10 +1,10 @@
-﻿#include "Mountain/Resource/ShaderBase.hpp"
+﻿#include "Mountain/Resource/ShaderBase.ixx"
 
 #include <glad/glad.h>
 
 #include <Maths/math.hpp>
 
-#include "Mountain/FileSystem/FileManager.hpp"
+#include "Mountain/FileSystem/FileManager.ixx"
 #include "Mountain/Utils/Logger.hpp"
 
 using namespace Mountain;

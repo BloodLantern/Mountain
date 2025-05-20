@@ -9,7 +9,7 @@
 #include "Mountain/Audio/Audio.hpp"
 #include "Mountain/Audio/AudioContext.hpp"
 #include "Mountain/Ecs/Entity.hpp"
-#include "Mountain/Input/Time.hpp"
+#include "Mountain/Input/Time.ixx"
 
 using namespace Mountain;
 

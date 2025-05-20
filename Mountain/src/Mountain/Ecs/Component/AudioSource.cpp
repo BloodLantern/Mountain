@@ -8,8 +8,8 @@
 #include "Mountain/Audio/AudioContext.hpp"
 #include "Mountain/Ecs/Entity.hpp"
 #include "Mountain/Ecs/Component/AudioListener.hpp"
-#include "Mountain/Input/Input.hpp"
-#include "Mountain/Input/Time.hpp"
+#include "Mountain/Input/Input.ixx"
+#include "Mountain/Input/Time.ixx"
 #include "Mountain/Utils/Logger.hpp"
 
 using namespace Mountain;
