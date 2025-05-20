@@ -9,7 +9,7 @@
 #include "Mountain/Resource/Shader.hpp"
 #include "Mountain/Resource/Texture.hpp"
 
-#include "Mountain/BinaryResources/ResourceHolder.hpp"
+#include "Mountain/BinaryResources/resource_holder.hpp"
 
 namespace rh
 {
