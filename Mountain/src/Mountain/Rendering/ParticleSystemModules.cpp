@@ -123,8 +123,8 @@ void Shape::RenderDebug(const ParticleSystem& system, const Vector2 renderTarget
     switch (type)
     {
         case ShapeType::Circle:
-            Draw::Circle(center, circle.radius, actualScale, DrawColor);
-            Draw::Circle(center, circle.radius - circle.radius * circle.radiusThickness, actualScale, DrawColor);
+            Draw::Circle(center, circle.radius, 1.f, actualScale, DrawColor);
+            Draw::Circle(center, circle.radius - circle.radius * circle.radiusThickness, 1.f, actualScale, DrawColor);
             break;
 
         case ShapeType::Line:
