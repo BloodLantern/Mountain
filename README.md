@@ -26,7 +26,7 @@ You can choose between two ways of using this framework for your projects.
 In a directory of your choice within your project, run `git submodule add --recurse-submodule https://github.com/BloodLantern/Mountain.git`
 
 Add the `Mountain/Mountain.vcxproj` project to your solution and set it as a reference to your project using `Add > Reference...`.
-In your project configuration, add the `Mountain/src`, `Mountain/externals/src` and 'MathToolbox/src' folders to your include path.
+In your project configuration, add the `Mountain/src`, `Mountain/externals/src` and `MathToolbox/src` folders to your include path.
 
 ### 2. Build from source
 
@@ -38,6 +38,6 @@ All the binaries can be found in the `x64/(Debug|Release)` folder.
 Additionally, copy the header files from `Mountain/src`.
 As the library changes, you might also need to get some header files from `Mountain/externals/src`.
 In the current state, you need the `ImGui` and `magic_enum` folders.
-You also need the math headers, which are located in 'MathToolbox/src'.
+You also need the math headers, which are located in `MathToolbox/src`.
 
 To then use the library in any of your projects, do as you would usually: include the necessary headers, compile by statically linking against the corresponding `Mountain.lib` (`Debug` or `Release`) and add the correct `Mountain.dll` to your executable file directory.
