@@ -109,10 +109,6 @@
     <ClInclude Include="externals\src\RapidXML\rapidxml_utils.hpp" />
     <ClInclude Include="externals\src\stb_image.h" />
     <ClInclude Include="externals\src\stb_vorbis.h" />
-    <ClInclude Include="src\Mountain\Audio\Audio.hpp" />
-    <ClInclude Include="src\Mountain\Audio\AudioBuffer.hpp" />
-    <ClInclude Include="src\Mountain\Audio\AudioContext.hpp" />
-    <ClInclude Include="src\Mountain\Audio\AudioDevice.hpp" />
     <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_10097982125490285052.hpp" />
     <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_10235447509522868634.hpp" />
     <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_10365144974679509061.hpp" />
@@ -189,43 +185,56 @@
     <ClInclude Include="src\Mountain\BinaryResources\Resource.hpp" />
     <ClInclude Include="src\Mountain\BinaryResources\ResourceHolder.hpp" />
     <ClInclude Include="src\Mountain\BinaryResources\Span.hpp" />
-    <ClInclude Include="src\Mountain\Collision\Circle.hpp" />
-    <ClInclude Include="src\Mountain\Collision\Collider.hpp" />
-    <ClInclude Include="src\Mountain\Collision\ColliderList.hpp" />
-    <ClInclude Include="src\Mountain\Collision\Collision.hpp" />
-    <ClInclude Include="src\Mountain\Collision\Grid.hpp" />
-    <ClInclude Include="src\Mountain\Collision\Hitbox.hpp" />
     <ClInclude Include="src\Mountain\Core.hpp" />
-    <ClInclude Include="src\Mountain\Rendering\Draw.hpp" />
-    <ClInclude Include="src\Mountain\Rendering\Effect.hpp" />
-    <ClInclude Include="src\Mountain\Rendering\GpuBuffer.hpp" />
-    <ClInclude Include="src\Mountain\Rendering\GpuTexture.hpp" />
-    <ClInclude Include="src\Mountain\Rendering\GpuVertexArray.hpp" />
-    <ClInclude Include="src\Mountain\Rendering\Graphics.hpp" />
-    <ClInclude Include="src\Mountain\Rendering\LightSource.hpp" />
-    <ClInclude Include="src\Mountain\Rendering\ParticleSystem.hpp" />
-    <ClInclude Include="src\Mountain\Rendering\ParticleSystemModules.hpp" />
-    <ClInclude Include="src\Mountain\Ecs\Component\AudioListener.hpp" />
-    <ClInclude Include="src\Mountain\Ecs\Component\AudioSource.hpp" />
-    <ClInclude Include="src\Mountain\Ecs\Component\Component.hpp" />
-    <ClInclude Include="src\Mountain\Ecs\Component\Sprite.hpp" />
-    <ClInclude Include="src\Mountain\Ecs\Component\StateMachine.hpp" />
-    <ClInclude Include="src\Mountain\Ecs\Entity.hpp" />
     <ClInclude Include="src\Mountain\Utils\Windows.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Mountain\Ecs\Component\AudioListener.ixx" />
+    <ClCompile Include="src\Mountain\Ecs\Component\AudioSource.ixx" />
+    <ClCompile Include="src\Mountain\Ecs\Component\Component.ixx" />
+    <ClCompile Include="src\Mountain\Ecs\Component\ModuleEcsComponent.ixx" />
+    <ClCompile Include="src\Mountain\Ecs\Component\Sprite.ixx" />
+    <ClCompile Include="src\Mountain\Ecs\Component\StateMachine.ixx" />
+    <ClCompile Include="src\Mountain\Ecs\Entity.ixx" />
+    <ClCompile Include="src\Mountain\Ecs\ModuleEcs.ixx" />
+    <ClCompile Include="src\Mountain\Rendering\Draw.ixx" />
+    <ClCompile Include="src\Mountain\Rendering\Effect.ixx" />
+    <ClCompile Include="src\Mountain\Rendering\GpuBuffer.ixx" />
+    <ClCompile Include="src\Mountain\Rendering\GpuTexture.ixx" />
+    <ClCompile Include="src\Mountain\Rendering\GpuVertexArray.ixx" />
+    <ClCompile Include="src\Mountain\Rendering\LightSource.ixx" />
+    <ClCompile Include="src\Mountain\Rendering\ModuleRendering.ixx" />
+    <ClCompile Include="src\Mountain\Rendering\ParticleSystem.ixx" />
+    <ClCompile Include="src\Mountain\Rendering\ParticleSystemModules.ixx" />
+    <ClCompile Include="src\Mountain\Collision\Circle.ixx" />
+    <ClCompile Include="src\Mountain\Collision\Collider.ixx" />
+    <ClCompile Include="src\Mountain\Collision\ColliderList.ixx" />
+    <ClCompile Include="src\Mountain\Collision\Collision.ixx" />
+    <ClCompile Include="src\Mountain\Collision\Grid.ixx" />
+    <ClCompile Include="src\Mountain\Collision\Hitbox.ixx" />
+    <ClCompile Include="src\Mountain\Audio\Audio.ixx" />
+    <ClCompile Include="src\Mountain\Audio\AudioBuffer.ixx" />
+    <ClCompile Include="src\Mountain\Audio\AudioContext.ixx" />
+    <ClCompile Include="src\Mountain\Audio\AudioDevice.ixx" />
+    <ClCompile Include="src\Mountain\Audio\ModuleAudio.ixx" />
+    <ClCompile Include="src\Mountain\Collision\ModuleCollision.ixx" />
+    <ClCompile Include="src\Mountain\FileSystem\ModuleFileSystem.ixx" />
+    <ClCompile Include="src\Mountain\Rendering\Graphics.ixx" />
+    <ClCompile Include="src\Mountain\Core\ModuleCore.ixx" />
     <ClCompile Include="src\Mountain\FileSystem\Directory.ixx" />
     <ClCompile Include="src\Mountain\FileSystem\Entry.ixx" />
     <ClCompile Include="src\Mountain\FileSystem\File.ixx" />
     <ClCompile Include="src\Mountain\FileSystem\FileManager.ixx" />
     <ClCompile Include="src\Mountain\Resource\ComputeShader.ixx" />
     <ClCompile Include="src\Mountain\Resource\Font.ixx" />
+    <ClCompile Include="src\Mountain\Resource\ModuleResource.ixx" />
     <ClCompile Include="src\Mountain\Resource\Resource.ixx" />
     <ClCompile Include="src\Mountain\Resource\ResourceManager.ixx" />
     <ClCompile Include="src\Mountain\Resource\Shader.ixx" />
     <ClCompile Include="src\Mountain\Resource\ShaderBase.ixx" />
     <ClCompile Include="src\Mountain\Resource\Texture.ixx" />
     <ClCompile Include="src\Mountain\Resource\AudioTrack.ixx" />
+    <ClCompile Include="src\Mountain\Utils\ModuleUtils.ixx" />
     <ClCompile Include="src\Mountain\Utils\Stopwatch.ixx" />
     <ClCompile Include="src\Mountain\Utils\RunLengthEncoding.ixx" />
     <ClCompile Include="src\Mountain\Utils\Rectangle.ixx" />
@@ -248,7 +257,7 @@
     <ClCompile Include="src\Mountain\Input\KeyboardInput.ixx" />
     <ClCompile Include="src\Mountain\Input\MouseInput.ixx" />
     <ClCompile Include="src\Mountain\Input\Time.ixx" />
-    <ClCompile Include="src\Mountain\Input\Module.ixx" />
+    <ClCompile Include="src\Mountain\Input\ModuleInput.ixx" />
     <ClCompile Include="src\Mountain\Rendering\Screen.cpp" />
     <ClCompile Include="src\Mountain\Rendering\Screen.ixx" />
     <ClCompile Include="src\Mountain\Rendering\Window.cpp" />
@@ -259,13 +268,12 @@
     <ClCompile Include="src\Mountain\Utils\Formatter.ixx" />
     <ClCompile Include="externals\src\Math\Calc.ixx" />
     <ClCompile Include="externals\src\Math\Easing.ixx" />
-    <ClCompile Include="externals\src\Math\Forward.ixx" />
     <ClCompile Include="externals\src\Math\Matrix.ixx" />
     <ClCompile Include="externals\src\Math\Matrix2.ixx" />
     <ClCompile Include="externals\src\Math\Matrix3.ixx" />
-    <ClCompile Include="externals\src\Math\Module.ixx" />
+    <ClCompile Include="externals\src\Math\MathModule.ixx" />
     <ClCompile Include="externals\src\Math\Quaternion.ixx" />
-    <ClCompile Include="externals\src\Math\Types.ixx" />
+    <ClCompile Include="externals\src\Math\MathTypes.ixx" />
     <ClCompile Include="externals\src\Math\Vector2.ixx" />
     <ClCompile Include="externals\src\Math\Vector2i.ixx" />
     <ClCompile Include="src\Mountain\Utils\Concepts.ixx" />
@@ -386,12 +394,6 @@
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="Mountain.natvis" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\MathToolbox\MathToolbox\MathToolbox.vcxproj">
-      <Project>{c5c03599-2a6c-4a2d-ba9f-a644a49294cb}</Project>
-      <Name>MathToolbox</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

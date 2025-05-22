@@ -1,27 +1,17 @@
-#pragma once
+export module Mountain:Audio_Audio;
 
-#include <functional>
+import <AL/alc.h>;
 
-#include "Mountain/Core.hpp"
-#include "Mountain/Audio/AudioBuffer.hpp"
-#include "Mountain/Audio/AudioDevice.hpp"
-#include "Mountain/Utils/List.ixx"
+import "Mountain/Core.hpp";
 
-// OpenAL type forward declaration
-
-// ReSharper disable once CppEnforceTypeAliasCodeStyle
-// ReSharper disable once CppInconsistentNaming
-typedef char ALCchar;
-// ReSharper disable once CppEnforceTypeAliasCodeStyle
-// ReSharper disable once CppInconsistentNaming
-typedef int ALCsizei;
-// ReSharper disable once CppEnforceTypeAliasCodeStyle
-// ReSharper disable once CppInconsistentNaming
-typedef int ALCenum;
+import std;
+export import :Audio_AudioBuffer;
+import :Audio_AudioContext;
+export import :Audio_AudioDevice;
 
 // TODO - Add an Audio::Play function
 
-namespace Mountain
+export namespace Mountain
 {
     class Audio
     {

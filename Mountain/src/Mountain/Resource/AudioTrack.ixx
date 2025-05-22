@@ -3,9 +3,9 @@ export module Mountain:Resource_AudioTrack;
 import "Mountain/Core.hpp";
 
 import std;
-import Mountain.Core;
-export import Mountain.Audio;
-export import :Resource;
+export import :Core;
+export import :Resource_Resource;
+export import :Audio_AudioBuffer;
 
 export namespace Mountain
 {

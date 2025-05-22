@@ -1,8 +1,6 @@
-﻿module;
+﻿export module Mountain:Utils_TsQueue;
 
-#include "Mountain/Core.hpp"
-
-export module Mountain:Utils_TsQueue;
+import "Mountain/Core.hpp";
 
 import std;
 

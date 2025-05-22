@@ -1,7 +1,8 @@
 module Mountain:Utils_TimeSpan;
+import :Utils_TimeSpan;
 
 import std;
-import :Core_Types;
+import :Core;
 
 namespace Mountain
 {

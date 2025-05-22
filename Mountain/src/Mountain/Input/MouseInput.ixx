@@ -1,6 +1,6 @@
 export module Mountain:Input_MouseInput;
 
-import Mountain.Core;
+import :Core;
 
 /// @file MouseInput.ixx
 /// @brief Defines enumerators related to mouse input

@@ -1,12 +1,10 @@
-﻿module;
+﻿export module Mountain:Input_Time;
 
-#include "Mountain/Core.hpp"
-
-export module Mountain:Input_Time;
+import "Mountain/Core.hpp";
 
 import std;
-import Mountain.Core;
-import Mountain.Utils;
+export import :Core;
+import :Utils_Stopwatch;
 
 /// @file Time.ixx
 /// @brief Defines the Mountain::Time static class.

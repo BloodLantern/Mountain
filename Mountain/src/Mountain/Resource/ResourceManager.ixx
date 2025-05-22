@@ -3,9 +3,9 @@
 import "Mountain/Core.hpp";
 
 import std;
-export import Mountain.FileSystem;
-export import Mountain.Utils;
-export import :Resource;
+export import :FileSystem;
+export import :Utils;
+export import :Resource_Resource;
 
 /// @file ResourceManager.ixx
 /// @brief Defines the Mountain::ResourceManager class.
@@ -163,12 +163,8 @@ export namespace Mountain
 
 // Start of ResourceManager.inl
 
-#include <ranges>
-
-#include "Mountain/FileSystem/FileManager.ixx"
-#include "Mountain/Resource/ComputeShader.ixx"
-#include "Mountain/Resource/Shader.ixx"
-#include "Mountain/Utils/Formatter.ixx"
+import :Resource_ComputeShader;
+import :Resource_Shader;
 
 namespace Mountain
 {

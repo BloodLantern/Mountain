@@ -1,16 +1,10 @@
-#include "Mountain/FileSystem/File.ixx"
+module Mountain:FileSystem_File;
+import :FileSystem_File;
 
-#include <fstream>
-#include <ranges>
-
-#include "Mountain/FileSystem/FileManager.ixx"
-#include "Mountain/Resource/AudioTrack.ixx"
-#include "Mountain/Resource/Font.ixx"
-#include "Mountain/Resource/Resource.ixx"
-#include "Mountain/Resource/ResourceManager.ixx"
-#include "Mountain/Resource/Shader.ixx"
-#include "Mountain/Resource/Texture.ixx"
-#include "Mountain/Utils/Logger.hpp"
+import std;
+import :Resource;
+import :Utils;
+import :FileSystem_FileManager;
 
 using namespace Mountain;
 
@@ -96,7 +90,7 @@ void File::Delete() const
         ResourceManager::Unload(resource);
 }
 
-bool_t File::Exists()
+bool_t File::Exists() const
 {
     return exists(m_Path);
 }

@@ -1,14 +1,12 @@
-#pragma once
+export module Mountain:Ecs_Entity;
 
-#include "Mountain/Core.hpp"
+import "Mountain/Core.hpp";
 
-#include <Maths/vector2.hpp>
+import :Core;
+import :Utils;
+import :Collision_Collider;
 
-#include "Mountain/Collision/Collider.hpp"
-#include "Mountain/Utils/Concepts.hpp"
-#include "Mountain/Utils/List.ixx"
-
-namespace Mountain
+export namespace Mountain
 {
     class Entity
     {

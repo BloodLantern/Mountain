@@ -1,11 +1,13 @@
-﻿#include "Mountain/Resource/ShaderBase.ixx"
+﻿module;
 
 #include <glad/glad.h>
 
-#include <Maths/math.hpp>
+module Mountain:Resource_ShaderBase;
+import :Resource_ShaderBase;
 
-#include "Mountain/FileSystem/FileManager.ixx"
-#include "Mountain/Utils/Logger.hpp"
+import :Core;
+import :FileSystem;
+import :Utils;
 
 using namespace Mountain;
 

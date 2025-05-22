@@ -1,10 +1,10 @@
-#pragma once
+export module Mountain:Collision_Circle;
 
-#include "Mountain/Core.hpp"
+import "Mountain/Core.hpp";
 
-#include "Mountain/Collision/Collider.hpp"
+export import :Collision_Collider;
 
-namespace Mountain
+export namespace Mountain
 {
     class MOUNTAIN_API Circle : public Collider
     {

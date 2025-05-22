@@ -1,12 +1,10 @@
-module;
-
-#include <magic_enum/magic_enum.hpp>
-
-#include "Mountain/Core.hpp"
-
 export module Mountain:Input_GamepadInput;
 
-import Mountain.Core;
+import <magic_enum/magic_enum.hpp>;
+
+import "Mountain/Core.hpp";
+
+import :Core;
 
 /// @file GamepadInput.ixx
 /// @brief Defines gamepad input types and enumerations.

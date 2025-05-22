@@ -1,15 +1,16 @@
-#include "Mountain/Ecs/Component/AudioListener.hpp"
-
-#include <array>
+module;
 
 #include <AL/al.h>
 
-#include <ImGui/imgui.h>
+module Mountain:Ecs_Component_AudioListener;
+import :Ecs_Component_AudioListener;
 
-#include "Mountain/Audio/Audio.hpp"
-#include "Mountain/Audio/AudioContext.hpp"
-#include "Mountain/Ecs/Entity.hpp"
-#include "Mountain/Input/Time.ixx"
+import <ImGui/imgui.h>;
+
+import std;
+import :Audio;
+import :Input;
+import :Ecs_Entity;
 
 using namespace Mountain;
 

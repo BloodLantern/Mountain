@@ -1,15 +1,13 @@
-﻿#pragma once
+﻿export module Mountain:Ecs_Component_StateMachine;
 
-#include "Mountain/Core.hpp"
+import "Mountain/Core.hpp";
 
-#include <magic_enum/magic_enum.hpp>
+import <magic_enum/magic_enum.hpp>;
 
-#include "Mountain/Ecs/Component/Component.hpp"
-#include "Mountain/Utils/Concepts.hpp"
-#include "Mountain/Utils/Coroutine.ixx"
-#include "Mountain/Utils/MetaProgramming.ixx"
+import :Utils;
+import :Ecs_Component_Component;
 
-namespace Mountain
+export namespace Mountain
 {
     struct StateMachineCallbacks
     {
@@ -95,8 +93,6 @@ namespace Mountain
 }
 
 // Start of StateMachine.inl
-
-#include "Mountain/Utils/Utils.ixx"
 
 namespace Mountain
 {

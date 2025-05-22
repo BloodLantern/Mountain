@@ -1,21 +1,17 @@
-﻿#pragma once
+﻿export module Mountain:Rendering_ParticleSystem;
 
-#include <Maths/vector2.hpp>
+import <glad/glad.h>;
 
-#include "Mountain/Core.hpp"
-#include "Mountain/Rendering/GpuBuffer.hpp"
-#include "Mountain/Rendering/GpuVertexArray.hpp"
-#include "Mountain/Rendering/ParticleSystemModules.hpp"
-#include "Mountain/Resource/ComputeShader.ixx"
-#include "Mountain/Resource/Shader.ixx"
-#include "Mountain/Utils/Color.ixx"
-#include "Mountain/Utils/List.ixx"
+import "Mountain/Core.hpp";
 
-// OpenGL type forward declaration
-// ReSharper disable once CppInconsistentNaming
-struct __GLsync;  // NOLINT(clang-diagnostic-reserved-identifier, bugprone-reserved-identifier)
+import :Utils;
+import :Resource_ComputeShader;
+import :Resource_Shader;
+import :Rendering_GpuBuffer;
+import :Rendering_GpuVertexArray;
+export import :Rendering_ParticleSystemModules;
 
-namespace Mountain
+export namespace Mountain
 {
     struct ParticleSystemBurst
     {
@@ -92,7 +88,7 @@ namespace Mountain
     private:
         uint32_t m_MaxParticles = 0;
         int32_t* m_LiveParticles = nullptr;
-        __GLsync* m_SyncObject = nullptr;
+        GLsync m_SyncObject = nullptr;
 
         float_t m_PlaybackTime = 0.f; // System lifetime
         float_t m_LastPlaybackTime = 0.f;

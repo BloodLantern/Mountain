@@ -2,8 +2,8 @@
 
 import "Mountain/Core.hpp";
 
-import std;
-import :ReferenceCounter;
+export import :Core;
+import :Utils_ReferenceCounter; // Internal type
 
 /// @file Pointer.ixx
 /// @brief Defines the Mountain::Pointer class

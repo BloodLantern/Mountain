@@ -1,16 +1,19 @@
-#include "Mountain/Resource/Font.ixx"
-
-#include <algorithm>
-#include <ranges>
+module;
 
 #include <glad/glad.h>
 
 #include <ft2build.h>
-
-#include "Mountain/Rendering/Renderer.ixx"
-#include "Mountain/Utils/Logger.hpp"
-
 #include FT_FREETYPE_H
+
+module Mountain:Resource_Font;
+import :Resource_Font;
+
+import std;
+import :Utils;
+import :FileSystem;
+import :Rendering_Renderer;
+import :Rendering_GpuTexture;
+import :Resource_Resource;
 
 using namespace Mountain;
 

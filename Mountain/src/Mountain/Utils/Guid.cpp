@@ -5,9 +5,10 @@ module;
 #include "Mountain/Utils/Windows.hpp"
 
 module Mountain:Utils_Guid;
+import :Utils_Guid;
 
-import Mountain.Core;
-import :Logger;
+import :Core;
+import :Utils_Logger;
 
 using namespace Mountain;
 

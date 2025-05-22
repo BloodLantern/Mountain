@@ -3,13 +3,15 @@
 #include <GLFW/glfw3.h>
 
 module Mountain:Input_Input;
+import :Input_Input;
 
 import std;
-import Mountain.Core;
-import Mountain.Utils;
-import :GamepadInput;
-import :KeyboardInput;
-import :MouseInput;
+import :Core;
+import :Utils;
+import :Rendering_Window;
+import :Input_GamepadInput;
+import :Input_KeyboardInput;
+import :Input_MouseInput;
 
 using namespace Mountain;
 

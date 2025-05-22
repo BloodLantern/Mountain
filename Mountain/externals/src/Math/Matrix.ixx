@@ -1,16 +1,14 @@
-module;
-
-#include "Math/Core.hpp"
-
 export module Math:Matrix;
 
+import "Math/Core.hpp";
+
 import std;
-import :Types;
-import :Vector2;
-import :Vector3;
-import :Vector4;
-import :Matrix3;
-import :Quaternion;
+export import :Types;
+export import :Vector2;
+export import :Vector3;
+export import :Vector4;
+export import :Matrix3;
+export import :Quaternion;
 import :Calc;
 
 /// @file Matrix.ixx

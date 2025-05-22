@@ -1,7 +1,8 @@
 module Mountain:Utils_RunLengthEncoding;
+import :Utils_RunLengthEncoding;
 
 import std;
-import :Core_Types;
+import :Core;
 
 using namespace Mountain;
 

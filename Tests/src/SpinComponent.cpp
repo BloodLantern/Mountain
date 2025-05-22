@@ -1,9 +1,9 @@
 ﻿#include "SpinComponent.hpp"
 
-#include "Mountain/Ecs/Entity.hpp"
-#include "Mountain/Ecs/Component/AudioSource.hpp"
+#include "Mountain/Ecs/Entity.ixx"
+#include "Mountain/Ecs/Component/AudioSource.ixx"
 #include "Mountain/Input/Time.ixx"
-#include "Mountain/Rendering/Draw.hpp"
+#include "Mountain/Rendering/Draw.ixx"
 #include "Mountain/Resource/ResourceManager.ixx"
 
 #include "TestGame.hpp"

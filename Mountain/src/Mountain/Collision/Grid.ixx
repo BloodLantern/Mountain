@@ -1,12 +1,11 @@
-#pragma once
+export module Mountain:Collision_Grid;
 
-#include "Mountain/Collision/Collider.hpp"
+import "Mountain/Core.hpp";
 
-#include <Maths/vector2i.hpp>
+export import :Collision_Collider;
+export import :Utils_List;
 
-#include "Mountain/Utils/List.ixx"
-
-namespace Mountain
+export namespace Mountain
 {
     // TODO - Add a template type instead of bool_t
 
@@ -24,18 +23,18 @@ namespace Mountain
         MOUNTAIN_API Grid(Vector2i size, Vector2 tileSize);
         MOUNTAIN_API Grid(Vector2i size, Vector2 tileSize, Vector2 off);
 
-    // Inherited via Collider
-    MOUNTAIN_API void RenderDebug(const Color& color) const override;
-    [[nodiscard]]
-    MOUNTAIN_API bool_t CheckCollision(Vector2 point) const override;
-    [[nodiscard]]
-    MOUNTAIN_API bool_t CheckCollision(const Hitbox& hitbox) const override;
-    [[nodiscard]]
-    MOUNTAIN_API bool_t CheckCollision(const Circle& circle) const override;
-    [[nodiscard]]
-    MOUNTAIN_API bool_t CheckCollision(const Grid& grid) const override;
-    [[nodiscard]]
-    MOUNTAIN_API bool_t CheckCollision(const ColliderList& list) const override;
+        // Inherited via Collider
+        MOUNTAIN_API void RenderDebug(const Color& color) const override;
+        [[nodiscard]]
+        MOUNTAIN_API bool_t CheckCollision(Vector2 point) const override;
+        [[nodiscard]]
+        MOUNTAIN_API bool_t CheckCollision(const Hitbox& hitbox) const override;
+        [[nodiscard]]
+        MOUNTAIN_API bool_t CheckCollision(const Circle& circle) const override;
+        [[nodiscard]]
+        MOUNTAIN_API bool_t CheckCollision(const Grid& grid) const override;
+        [[nodiscard]]
+        MOUNTAIN_API bool_t CheckCollision(const ColliderList& list) const override;
 
         [[nodiscard]]
         MOUNTAIN_API float_t Left() const override;

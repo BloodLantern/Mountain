@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Mountain/Ecs/Entity.hpp"
+#include "Mountain/Ecs/Entity.ixx"
 
 class TestEntity : public Mountain::Entity
 {

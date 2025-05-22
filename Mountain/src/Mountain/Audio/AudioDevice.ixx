@@ -1,13 +1,13 @@
-#pragma once
+export module Mountain:Audio_AudioDevice;
 
-#include <string>
+import <AL/alc.h>;
 
-#include "Mountain/Core.hpp"
+import "Mountain/Core.hpp";
 
-// ReSharper disable once CppInconsistentNaming
-struct ALCdevice;
+import std;
+export import :Core;
 
-namespace Mountain
+export namespace Mountain
 {
     class AudioDevice
     {

@@ -1,17 +1,16 @@
-﻿#pragma once
+﻿export module Mountain:Rendering_Graphics;
 
-#include "Mountain/Core.hpp"
+import "Mountain/Core.hpp";
 
-#include <magic_enum/magic_enum.hpp>
+import <magic_enum/magic_enum.hpp>;
 
-#include "Mountain/Utils/MetaProgramming.ixx"
-#include "Mountain/Utils/Utils.ixx"
+export import :Utils;
 
 /// @namespace Mountain::Graphics
 /// @brief Low-level graphics API
 ///
 /// You should only use this if you know what you are doing and/or have experience with graphics APIs such as OpenGL.
-namespace Mountain::Graphics
+export namespace Mountain::Graphics
 {
     struct GpuVertexArray;
     struct GpuBuffer;

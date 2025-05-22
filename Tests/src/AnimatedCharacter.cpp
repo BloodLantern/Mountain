@@ -1,7 +1,7 @@
 ﻿#include "AnimatedCharacter.hpp"
 
-#include "Mountain/Ecs/Component/Sprite.hpp"
-#include "Mountain/Rendering/Draw.hpp"
+#include "Mountain/Ecs/Component/Sprite.ixx"
+#include "Mountain/Rendering/Draw.ixx"
 
 AnimatedCharacter::AnimatedCharacter(const Vector2 pos)
     : Entity(pos)

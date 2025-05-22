@@ -1,9 +1,10 @@
-#include "Mountain/Collision/ColliderList.hpp"
+module Mountain:Collision_ColliderList;
+import :Collision_ColliderList;
 
-#include "Mountain/Collision/Circle.hpp"
-#include "Mountain/Collision/Grid.hpp"
-#include "Mountain/Collision/Hitbox.hpp"
-#include "Mountain/Rendering/Draw.hpp"
+import :Collision_Circle;
+import :Collision_Grid;
+import :Collision_Hitbox;
+import :Rendering;
 
 using namespace Mountain;
 

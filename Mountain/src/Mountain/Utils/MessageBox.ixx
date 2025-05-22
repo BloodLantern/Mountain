@@ -3,7 +3,7 @@ export module Mountain:Utils_MessageBox;
 import "Mountain/Core.hpp";
 
 import std;
-import Mountain.Core;
+export import :Core;
 
 /// @file MessageBox.ixx
 /// @brief Defines the MessageBox namespace containing utility functions to inform the user of something while blocking the program execution.

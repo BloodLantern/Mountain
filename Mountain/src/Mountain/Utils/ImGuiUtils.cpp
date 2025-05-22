@@ -1,24 +1,28 @@
+module;
+
+#include "Mountain/Utils/Windows.hpp"
+
+// Needs to be included after Windows.hpp
+#include <psapi.h>
+
+#include <magic_enum/magic_enum.hpp>
+
+#include <ImGui/imgui_stdlib.h>
+
 module Mountain:Utils_ImGuiUtils;
-
-import <magic_enum/magic_enum.hpp>;
-
-import <ImGui/imgui_stdlib.h>;
-
-import "Mountain/Utils/Windows.hpp";
-
-// Needs to be included after windows.hpp
-import <psapi.h>;
+import :Utils_ImGuiUtils;
 
 import std;
-import Mountain.Core;
-import Mountain.Input;
-import Mountain.Resource;
-import Mountain.Rendering;
-import :Utils;
-import :Color;
-import :Pointer;
-import :List;
-import :Windows;
+import :Core;
+import :Input;
+import :FileSystem;
+import :Resource;
+import :Rendering;
+import :Utils_Pointer;
+import :Utils_Utils;
+import :Utils_Color;
+import :Utils_List;
+import :Utils_Windows;
 
 using namespace Mountain;
 

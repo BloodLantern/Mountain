@@ -3,9 +3,10 @@
 #include "Mountain/Utils/Windows.hpp"
 
 module Mountain:Utils_Windows;
+import :Utils_Windows;
 
 import std;
-import :Core_Types;
+import :Core;
 import :Utils_Logger;
 
 namespace Mountain::Windows

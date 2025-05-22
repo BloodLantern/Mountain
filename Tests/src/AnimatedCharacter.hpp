@@ -1,7 +1,7 @@
 ﻿#pragma once
 
-#include "Mountain/Ecs/Entity.hpp"
-#include "Mountain/Ecs/Component/Sprite.hpp"
+#include "Mountain/Ecs/Entity.ixx"
+#include "Mountain/Ecs/Component/Sprite.ixx"
 
 class AnimatedCharacter : public Mountain::Entity
 {

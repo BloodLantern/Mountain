@@ -1,9 +1,18 @@
 module Mountain:Core_Game;
+import :Core_Game;
 
 import std;
 import :Core_Types;
 import :Utils_Logger;
 import :Utils_Coroutine;
+import :Utils_MessageBox;
+import :Utils_Formatter;
+import :Audio_Audio;
+import :Input_Input;
+import :Input_Time;
+import :Resource_ResourceManager;
+import :Rendering_Renderer;
+import :Rendering_Window;
 
 namespace Mountain
 {

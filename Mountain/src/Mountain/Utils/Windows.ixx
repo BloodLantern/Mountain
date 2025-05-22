@@ -1,11 +1,9 @@
-﻿module;
+﻿export module Mountain:Utils_Windows;
 
-#include "Mountain/Core.hpp"
-
-export module Mountain:Utils_Windows;
+import "Mountain/Core.hpp";
 
 import std;
-import :Core_Types;
+export import :Core;
 
 export namespace Mountain::Windows
 {

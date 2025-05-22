@@ -1,7 +1,9 @@
-﻿#include "Mountain/FileSystem/Entry.ixx"
+﻿module Mountain:FileSystem_Entry;
+import :FileSystem_Entry;
 
-#include "Mountain/FileSystem/Directory.ixx"
-#include "Mountain/FileSystem/FileManager.ixx"
+import std;
+import :FileSystem_Directory;
+import :FileSystem_FileManager;
 
 using namespace Mountain;
 
@@ -9,6 +11,10 @@ Entry::Entry(std::filesystem::path&& path)
     : m_Path(std::move(path))
 {
     Entry::UpdateUtilityValues();
+}
+
+Entry::~Entry()
+{
 }
 
 bool_t Entry::Reload()

@@ -3,14 +3,17 @@ export module Mountain:FileSystem_File;
 import "Mountain/Core.hpp";
 
 import std;
-import :Entry;
-import Mountain.Utils;
+export import :Core;
+export import :Utils;
+export import :FileSystem_Entry;
 
 /// @file File.ixx
 /// @brief Defines the Mountain::File class.
 
-namespace Mountain
+export namespace Mountain
 {
+    class Resource;
+
     /// @brief Defines a file on the filesystem.
     ///
     /// This is meant to be used with @ref Mountain::Pointer "Pointers" and with the FileManager.
@@ -65,7 +68,7 @@ namespace Mountain
         MOUNTAIN_API void Delete() const;
 
         /// @brief Get whether this file exists on the file system or is just a virtual file representation
-        MOUNTAIN_API bool_t Exists();
+        MOUNTAIN_API bool_t Exists() const;
 
         /// @brief Returns the name of this File without the file extension.
         [[nodiscard]]
@@ -119,7 +122,7 @@ namespace Mountain
         /// fonts of different sizes
         Pointer<Resource> m_Resource;
 
-        // We need this in order to set m_Resource from the ResourceManager
+        // We need this to set m_Resource from the ResourceManager
         // which is the only class that needs to modify this field
         friend class ResourceManager;
     };

@@ -7,9 +7,9 @@ module;
 export module Mountain:Rendering_Window;
 
 import std;
-import Mountain.Core;
-import Mountain.Utils;
-import :Renderer;
+export import :Utils;
+import :Rendering_Renderer;
+export import :Resource_Texture;
 
 /// @file Window.ixx
 /// @brief Defines the @c Mountain::Window class.

@@ -1,16 +1,14 @@
-﻿module;
+﻿export module Mountain:Input_Input;
 
-#include <GLFW/glfw3.h>
+import <GLFW/glfw3.h>;
 
-#include "Mountain/Core.hpp"
-
-export module Mountain:Input_Input;
+import "Mountain/Core.hpp";
 
 import std;
-import Mountain.Core;
-import :GamepadInput;
-import :KeyboardInput;
-import :MouseInput;
+import :Core;
+import :Input_GamepadInput;
+import :Input_KeyboardInput;
+import :Input_MouseInput;
 
 /// @file Input.ixx
 /// @brief Defines the Mountain::Input static class.

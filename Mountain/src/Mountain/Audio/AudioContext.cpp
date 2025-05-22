@@ -1,12 +1,15 @@
-#include "Mountain/Audio/AudioContext.hpp"
+module;
 
 #include <AL/al.h>
 #include <AL/alc.h>
 
-#include <magic_enum/magic_enum.hpp>
+module Mountain:Audio_AudioContext;
+import :Audio_AudioContext;
 
-#include "Mountain/Audio/AudioDevice.hpp"
-#include "Mountain/Utils/Logger.hpp"
+import <magic_enum/magic_enum.hpp>;
+
+import :Audio_AudioDevice;
+import :Utils_Logger;
 
 using namespace Mountain;
 
@@ -19,7 +22,7 @@ AudioContext::AudioContext(AudioDevice& device)
         Logger::LogError("Unable to create audio context for device {}", device.GetName());
         return;
     }
-    
+
     MakeCurrent();
 
     // Get the context attribute values
@@ -54,7 +57,7 @@ bool_t AudioContext::CheckError()
 int32_t AudioContext::GetMaxSourceCount(const AudioSourceType sourceType) const
 {
     int32_t result = 0;
-    
+
     for (size_t i = 0; i < m_Attributes.GetSize(); i++)
     {
         if ((sourceType == AudioSourceType::Mono && m_Attributes[i] == ALC_MONO_SOURCES) || (sourceType == AudioSourceType::Stereo && m_Attributes[i] == ALC_STEREO_SOURCES))
@@ -67,11 +70,11 @@ int32_t AudioContext::GetMaxSourceCount(const AudioSourceType sourceType) const
 uint32_t AudioContext::GetSource(const AudioSourceType type)
 {
     List<uint32_t>& sources = type == AudioSourceType::Mono ? m_SourcesMono : m_SourcesStereo;
-    
+
     List<int32_t> states(sources.GetSize());
 
     MakeCurrent();
-    
+
     sources.Iterate(
         [&] (const uint32_t* const s) -> void
         {

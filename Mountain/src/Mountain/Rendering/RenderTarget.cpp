@@ -1,12 +1,14 @@
-﻿#include "Mountain/Rendering/RenderTarget.ixx"
-
-#include <array>
+﻿module;
 
 #include <glad/glad.h>
 
-#include "Mountain/Window.ixx"
-#include "Mountain/Rendering/Draw.hpp"
-#include "Mountain/Utils/Logger.hpp"
+module Mountain:Rendering_RenderTarget;
+import :Rendering_RenderTarget;
+
+import std;
+import :Utils;
+import :Rendering_Window;
+import :Rendering_Draw;
 
 using namespace Mountain;
 

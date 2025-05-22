@@ -4,7 +4,7 @@ import <GLFW/glfw3.h>;
 
 import "Mountain/Core.hpp";
 
-import Math;
+export import :Core_Types;
 
 /// @file Screen.ixx
 /// @brief Defines the @c Mountain::Screen class.

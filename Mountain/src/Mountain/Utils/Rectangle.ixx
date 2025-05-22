@@ -2,7 +2,7 @@
 
 import "Mountain/Core.hpp";
 
-import :Core_Types;
+export import :Core;
 
 export namespace Mountain
 {

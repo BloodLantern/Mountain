@@ -3,7 +3,7 @@ export module Mountain:Utils_Random;
 import "Mountain/Core.hpp";
 
 import std;
-import :Core_Types;
+export import :Core;
 export import :Utils_Color;
 
 export namespace Mountain::Random

@@ -1,12 +1,16 @@
-module Mountain:Resource_AudioTrack;
+module;
 
-import <minimp3.h>;
-import <minimp3_ex.h>;
-import <stb_vorbis.h>;
+#include <minimp3.h>
+#include <minimp3_ex.h>
+
+#include <stb_vorbis.h>
+
+module Mountain:Resource_AudioTrack;
+import :Resource_AudioTrack;
 
 import std;
-import Mountain.Audio;
-import Mountain.Utils;
+import :Audio;
+import :Utils;
 
 using namespace Mountain;
 

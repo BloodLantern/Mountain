@@ -3,16 +3,15 @@
 import "Mountain/Core.hpp";
 
 import std;
-import Mountain.Utils;
+export import :Utils;
+export import :FileSystem_File;
 
 /// @file Resource.ixx
 /// @brief Defines the Mountain::Resource class
 
 export namespace Mountain
 {
-    class File;
-
-    /// @brief Interface for resources, which encapsulates most objects used in the framework that come from a file
+    /// @brief Abstract class for resources, which encapsulates most objects used in the framework that come from a file
     ///
     /// A Resource is loaded in two steps:
     /// - @code SetSourceData(const Pointer<File>&)@endcode or @code SetSourceData(const uint8_t*, int64_t)@endcode
@@ -120,10 +119,8 @@ export namespace Mountain
 
         Pointer<File> m_File;
 
-        // We need this in order to set m_File from the ResourceManager
+        // We need this to set m_File from the ResourceManager
         // which is the only class that needs to modify this field
         friend class ResourceManager;
     };
 }
-
-export import Mountain.FileSystem;

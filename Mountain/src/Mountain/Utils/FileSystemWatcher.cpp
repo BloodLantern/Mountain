@@ -1,11 +1,14 @@
-module Mountain:Utils_FileSystemWatcher;
+module;
 
-import "Mountain/Utils/Windows.hpp";
+#include "Mountain/Utils/Windows.hpp"
+
+module Mountain:Utils_FileSystemWatcher;
+import :Utils_FileSystemWatcher;
 
 import std;
-import Mountain.Core;
-import :Utils;
-import :Windows;
+import :Core;
+import :Utils_Utils;
+import :Utils_Windows;
 
 using namespace Mountain;
 

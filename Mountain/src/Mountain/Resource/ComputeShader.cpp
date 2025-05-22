@@ -1,12 +1,15 @@
-﻿module Mountain:Resource_ComputeShader;
+﻿module;
 
-import <glad/glad.h>;
+#include <glad/glad.h>
+
+module Mountain:Resource_ComputeShader;
+import :Resource_ComputeShader;
 
 import std;
-import Mountain.Core;
-import Mountain.Utils;
-import Mountain.FileSystem;
-import :ResourceManager;
+import :Core;
+import :Utils;
+import :FileSystem;
+import :Resource_ResourceManager;
 
 using namespace Mountain;
 
@@ -73,9 +76,7 @@ void ComputeShader::Load()
         glDeleteShader(id);
     }
 
-    CheckLinkError();
-
-    m_Loaded = true;
+    m_Loaded = !CheckLinkError();
 }
 
 void ComputeShader::Unload()

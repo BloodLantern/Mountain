@@ -1,8 +1,8 @@
-﻿#pragma once
+﻿export module Mountain:Ecs_Component_Component;
 
-#include "Mountain/Core.hpp"
+import "Mountain/Core.hpp";
 
-namespace Mountain
+export namespace Mountain
 {
     class Entity;
 

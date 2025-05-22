@@ -1,4 +1,5 @@
-#include "Mountain/Collision/Collision.hpp"
+module Mountain:Collision_Collision;
+import :Collision_Collision;
 
 using namespace Mountain;
 

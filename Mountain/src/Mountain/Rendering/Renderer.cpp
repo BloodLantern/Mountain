@@ -1,6 +1,9 @@
-#include "Mountain/Rendering/Renderer.ixx"
+module;
 
 #include <glad/glad.h>
+
+#include <ft2build.h>
+#include FT_FREETYPE_H
 
 #include <GLFW/glfw3.h>
 
@@ -8,18 +11,16 @@
 #include <ImGui/imgui_impl_glfw.h>
 #include <ImGui/imgui_impl_opengl3.h>
 
-#include <ft2build.h>
+module Mountain:Rendering_Renderer;
+import :Rendering_Renderer;
 
-#include "Mountain/Globals.ixx"
-
-#include FT_FREETYPE_H
-
-#include "Mountain/Screen.ixx"
-#include "Mountain/Window.ixx"
-#include "Mountain/FileSystem/FileManager.ixx"
-#include "Mountain/Rendering/Draw.hpp"
-#include "Mountain/Resource/ResourceManager.ixx"
-#include "Mountain/Utils/Logger.hpp"
+import :Core;
+import :Rendering_Screen;
+import :Rendering_Window;
+import :FileSystem_FileManager;
+import :Rendering_Draw;
+import :Resource_ResourceManager;
+import :Utils;
 
 namespace
 {
@@ -282,16 +283,16 @@ void Mountain::Renderer::PostFrame()
     }
 
     Draw::Flush();
-    
+
     // End ImGui frame
     ImGui::Render();
-    
+
     Vector2i framebufferSize;
     glfwGetFramebufferSize(Window::GetHandle(), &framebufferSize.x, &framebufferSize.y);
     Graphics::SetViewport(0, 0, framebufferSize.x, framebufferSize.y);
-    
+
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-    
+
     if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
     {
         ImGui::UpdatePlatformWindows();
@@ -303,17 +304,17 @@ void Mountain::Renderer::PostFrame()
 void Mountain::Renderer::Shutdown()
 {
     Logger::LogVerbose("Shutting down renderer");
-    
+
     // Cleanup
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplGlfw_Shutdown();
 	ImGui::DestroyPlatformWindows();
 	ImGui::DestroyContext();
-    
+
     Draw::Shutdown();
     FT_Done_FreeType(m_Freetype);
 
     delete m_RenderTarget;
-    
+
     Window::Shutdown();
 }

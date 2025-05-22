@@ -3,9 +3,10 @@ export module Mountain:Resource_Font;
 import "Mountain/Core.hpp";
 
 import std;
-import Mountain.Core;
-import Mountain.Rendering;
-import :Resource;
+export import :Core;
+import :Rendering_Graphics;
+import :Rendering_GpuTexture;
+export import :Resource_Resource;
 
 export namespace Mountain
 {

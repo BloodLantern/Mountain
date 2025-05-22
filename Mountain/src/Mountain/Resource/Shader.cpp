@@ -1,11 +1,15 @@
-#include "Mountain/Resource/Shader.ixx"
+module;
 
 #include <glad/glad.h>
 
-#include <magic_enum/magic_enum.hpp>
+module Mountain:Resource_Shader;
+import :Resource_Shader;
 
-#include "Mountain/Resource/ResourceManager.ixx"
-#include "Mountain/Utils/Logger.hpp"
+import <magic_enum/magic_enum.hpp>;
+
+import :Utils;
+import :Resource_ResourceManager;
+import :Resource_ShaderBase;
 
 using namespace Mountain;
 

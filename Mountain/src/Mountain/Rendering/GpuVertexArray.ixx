@@ -1,10 +1,10 @@
-﻿#pragma once
+﻿export module Mountain:Rendering_GpuVertexArray;
 
-#include <string_view>
+import "Mountain/Core.hpp";
 
-#include "Mountain/Core.hpp"
+import :Core;
 
-namespace Mountain::Graphics
+export namespace Mountain::Graphics
 {
     /// @brief Low-level interface for OpenGL vertex arrays
     struct MOUNTAIN_API GpuVertexArray

@@ -5,10 +5,10 @@ import <magic_enum/magic_enum.hpp>;
 import "Mountain/Core.hpp";
 
 import std;
-import Mountain.Utils;
-export import Mountain.FileSystem;
-export import Mountain.Rendering;
-export import :ShaderBase;
+export import :Utils;
+export import :FileSystem;
+export import :Rendering_Graphics;
+export import :Resource_ShaderBase;
 
 /// @file Shader.ixx
 /// @brief Defines the Mountain::Shader class

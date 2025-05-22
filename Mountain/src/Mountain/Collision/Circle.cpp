@@ -1,9 +1,10 @@
-#include "Mountain/Collision/Circle.hpp"
+module Mountain:Collision_Circle;
+import :Collision_Circle;
 
-#include "Mountain/Collision/ColliderList.hpp"
-#include "Mountain/Collision/Grid.hpp"
-#include "Mountain/Collision/Hitbox.hpp"
-#include "Mountain/Rendering/Draw.hpp"
+import :Collision_ColliderList;
+import :Collision_Grid;
+import :Collision_Hitbox;
+import :Rendering;
 
 using namespace Mountain;
 
@@ -25,7 +26,7 @@ void Circle::RenderDebug(const Color& color) const
 
 bool Circle::CheckCollision(const Vector2 point) const
 {
-    return (point - GetActualPosition()).SquaredLength() <= SQ(radius);
+    return (point - GetActualPosition()).SquaredLength() <= radius * radius;
 }
 
 bool Circle::CheckCollision(const Hitbox& hitbox) const
@@ -36,7 +37,8 @@ bool Circle::CheckCollision(const Hitbox& hitbox) const
 
 bool Circle::CheckCollision(const Circle& circle) const
 {
-    return (circle.GetActualPosition() - GetActualPosition()).SquaredLength() < SQ(radius + circle.radius);
+    const float_t actualRadius = radius + circle.radius;
+    return (circle.GetActualPosition() - GetActualPosition()).SquaredLength() < actualRadius * actualRadius;
 }
 
 bool Circle::CheckCollision(const Grid &grid) const
@@ -62,7 +64,7 @@ bool Circle::Intersect(const Vector2 p1, const Vector2 p2) const
     const float yConstant = p1.y - position.y;
     const float a = xLinear * xLinear + yLinear * yLinear;
     const float halfB = xLinear * xConstant + yLinear * yConstant;
-    const float c = xConstant * xConstant + yConstant * yConstant - SQ(radius);
+    const float c = xConstant * xConstant + yConstant * yConstant - radius * radius;
 
     return (
         halfB * halfB >= a * c &&

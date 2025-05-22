@@ -1,6 +1,7 @@
-#include "Mountain/Ecs/Entity.hpp"
+module Mountain:Ecs_Entity;
+import :Ecs_Entity;
 
-#include "Mountain/Ecs/Component/Component.hpp"
+import :Ecs_Component_Component;
 
 using namespace Mountain;
 

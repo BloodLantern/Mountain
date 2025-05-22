@@ -1,8 +1,10 @@
 ﻿module Mountain:Rendering_Screen;
+import :Rendering_Screen;
 
 import <GLFW/glfw3.h>;
 
-import Mountain.Core;
+import :Core;
+import :Rendering_Window;
 
 using namespace Mountain;
 

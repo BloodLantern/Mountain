@@ -1,9 +1,12 @@
-﻿module Mountain:Utils_Stopwatch;
+﻿module;
 
-import "Mountain/Utils/Windows.hpp";
+#include "Mountain/Utils/Windows.hpp"
+
+module Mountain:Utils_Stopwatch;
+import :Utils_Stopwatch;
 
 import std;
-import :Core_Types;
+import :Core;
 
 using namespace Mountain;
 

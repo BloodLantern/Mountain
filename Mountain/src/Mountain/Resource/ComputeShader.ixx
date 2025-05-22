@@ -2,10 +2,10 @@
 
 import "Mountain/Core.hpp";
 
-import Mountain.Core;
-export import :ShaderBase;
+import :Core;
+export import :Resource_ShaderBase;
 
-namespace Mountain
+export namespace Mountain
 {
 	class ComputeShader : public ShaderBase
 	{

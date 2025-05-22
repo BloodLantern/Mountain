@@ -1,15 +1,16 @@
 ﻿export module Mountain:FileSystem_Directory;
 
-#include <filesystem>
+import "Mountain/Core.hpp";
 
-#include "Mountain/Core.hpp"
-#include "Mountain/FileSystem/Entry.ixx"
-#include "Mountain/Utils/Pointer.ixx"
+import std;
+export import :Core;
+export import :Utils;
+export import :FileSystem_Entry;
 
 /// @file Directory.ixx
 /// @brief Defines the Mountain::Directory class.
 
-namespace Mountain
+export namespace Mountain
 {
     class File;
 
@@ -24,7 +25,7 @@ namespace Mountain
         MOUNTAIN_API explicit Directory(std::filesystem::path&& filepath);
 
         /// @brief Default Directory destruction.
-        MOUNTAIN_API ~Directory() override = default;
+        MOUNTAIN_API ~Directory() override;
 
         DEFAULT_COPY_MOVE_OPERATIONS(Directory)
 
@@ -76,6 +77,3 @@ namespace Mountain
         std::vector<Pointer<Directory>> m_ChildDirectories;
     };
 }
-
-// Voluntary include after the class definition because using Pointer<File> means we need to include File at some point
-#include "Mountain/FileSystem/File.ixx"

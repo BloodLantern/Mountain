@@ -3,9 +3,10 @@ export module Mountain:Resource_Texture;
 import "Mountain/Core.hpp";
 
 import std;
-import Mountain.Core;
-import Mountain.Rendering;
-import :Resource;
+export import :Core;
+export import :Rendering_Graphics;
+export import :Rendering_GpuTexture;
+export import :Resource_Resource;
 
 /// @file Texture.ixx
 /// @brief Defines the Mountain::Texture class

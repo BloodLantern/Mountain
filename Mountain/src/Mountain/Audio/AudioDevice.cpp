@@ -1,9 +1,11 @@
-#include "Mountain/Audio/AudioDevice.hpp"
+module;
 
-#include <AL/alc.h>
 #include <AL/alext.h>
 
-#include "Mountain/Utils/Logger.hpp"
+module Mountain:Audio_AudioDevice;
+import :Audio_AudioDevice;
+
+import :Utils_Logger;
 
 using namespace Mountain;
 

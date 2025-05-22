@@ -1,6 +1,6 @@
 export module Mountain:Input_KeyboardInput;
 
-import Mountain.Core;
+import :Core;
 
 /// @file KeyboardInput.ixx
 /// @brief Defines enumerators related to keyboard input

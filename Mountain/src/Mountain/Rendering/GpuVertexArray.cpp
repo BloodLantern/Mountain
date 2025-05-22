@@ -1,6 +1,9 @@
-﻿#include "Mountain/Rendering/GpuVertexArray.hpp"
+﻿module;
 
 #include <glad/glad.h>
+
+module Mountain:Rendering_GpuVertexArray;
+import :Rendering_GpuVertexArray;
 
 using namespace Mountain::Graphics;
 

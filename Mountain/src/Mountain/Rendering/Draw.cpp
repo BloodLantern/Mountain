@@ -1,9 +1,8 @@
-#include "Mountain/Rendering/Draw.hpp"
+module Mountain:Rendering_Draw;
+import :Rendering_Draw;
 
-#include "Mountain/Globals.ixx"
-#include "Mountain/Resource/Font.ixx"
-#include "Mountain/Resource/ResourceManager.ixx"
-#include "Mountain/Resource/Shader.ixx"
+import :Core;
+import :Resource;
 
 using namespace Mountain;
 

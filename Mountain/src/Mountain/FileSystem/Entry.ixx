@@ -3,7 +3,8 @@
 import "Mountain/Core.hpp";
 
 import std;
-import Mountain.Utils;
+export import :Core;
+export import :Utils;
 
 /// @file Entry.ixx
 /// @brief Defines the Mountain::Entry class.
@@ -21,7 +22,7 @@ export namespace Mountain
         MOUNTAIN_API explicit Entry(std::filesystem::path&& path);
 
         /// @brief Default Entry destruction.
-        MOUNTAIN_API virtual ~Entry() = default;
+        MOUNTAIN_API virtual ~Entry();
 
         DEFAULT_COPY_MOVE_OPERATIONS(Entry)
 
@@ -91,8 +92,3 @@ export namespace Mountain
         virtual void UpdateUtilityValues();
     };
 }
-
-// We cannot include directory.hpp above the class declaration, as the Directory class inherits from Entry.
-// However, we also need to include this in every file in which we include entry.hpp, as the Entry class contains a Pointer<Directory>
-// which needs the Directory class to be defined at some point so its destructor is defined as well
-export import :Directory;

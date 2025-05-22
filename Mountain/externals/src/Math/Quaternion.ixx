@@ -1,13 +1,11 @@
-module;
-
-#include "Math/Core.hpp"
-
 export module Math:Quaternion;
 
+import "Math/Core.hpp";
+
 import std;
-import :Types;
-import :Vector3;
-import :Vector4;
+export import :Types;
+export import :Vector3;
+export import :Vector4;
 import :Calc;
 
 /// @file Quaternion.ixx

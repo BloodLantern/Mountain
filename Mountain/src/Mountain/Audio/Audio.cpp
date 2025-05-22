@@ -1,21 +1,23 @@
-#include "Mountain/Audio/Audio.hpp"
+module;
 
-#include <set>
-
-#include <AL/alc.h>
 #include <AL/alext.h>
 
-#include <ImGui/imgui.h>
+module Mountain:Audio_Audio;
+import :Audio_Audio;
 
-#include "Mountain/Audio/AudioContext.hpp"
-#include "Mountain/Utils/Logger.hpp"
+import std;
+
+import <ImGui/imgui.h>;
+
+import :Audio_AudioContext;
+import :Utils_Logger;
 
 using namespace Mountain;
 
 bool_t Audio::Initialize()
 {
     Logger::LogVerbose("Initializing audio");
-    
+
     m_CurrentDevice = new AudioDevice(alcGetString(nullptr, ALC_DEFAULT_ALL_DEVICES_SPECIFIER));
 
     constexpr std::array enabledEvents = {
@@ -23,7 +25,7 @@ bool_t Audio::Initialize()
     };
     alcEventControlSOFT(static_cast<ALCsizei>(enabledEvents.size()), enabledEvents.data(), ALC_TRUE);
     alcEventCallbackSOFT(EventCallback, nullptr);
-    
+
     m_CurrentContext = new AudioContext(*m_CurrentDevice);
 
     return true;
@@ -47,10 +49,10 @@ void Audio::Update()
         return;
 
     const std::string defaultDevice = alcGetString(nullptr, ALC_DEFAULT_ALL_DEVICES_SPECIFIER);
-        
+
     if (m_CurrentDevice->GetName() == defaultDevice)
         return;
-        
+
     m_CurrentDevice->Reopen(defaultDevice);
     m_DefaultDeviceChanged = false;
 }

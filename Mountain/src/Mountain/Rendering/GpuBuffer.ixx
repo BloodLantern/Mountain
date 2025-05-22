@@ -1,12 +1,12 @@
-﻿#pragma once
+﻿export module Mountain:Rendering_GpuBuffer;
 
-#include <Maths/vector2i.hpp>
+import "Mountain/Core.hpp";
 
-#include "Mountain/Core.hpp"
-#include "Mountain/Rendering/Graphics.hpp"
-#include "Mountain/Utils/Utils.ixx"
+import :Core;
+import :Rendering_Graphics;
+import :Utils_Utils;
 
-namespace Mountain::Graphics
+export namespace Mountain::Graphics
 {
     /// @brief Low-level interface for OpenGL buffers
     struct MOUNTAIN_API GpuBuffer

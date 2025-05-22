@@ -1,13 +1,14 @@
-﻿#include "Mountain/Rendering/Graphics.hpp"
-
-#include <stdexcept>
+﻿module;
 
 #include <glad/glad.h>
 
-#include "Mountain/Rendering/GpuBuffer.hpp"
-#include "Mountain/Rendering/GpuTexture.hpp"
-#include "Mountain/Rendering/GpuVertexArray.hpp"
-#include "Mountain/Utils/Utils.ixx"
+module Mountain:Rendering_Graphics;
+
+import std;
+import :Utils;
+import :Rendering_GpuBuffer;
+import :Rendering_GpuTexture;
+import :Rendering_GpuVertexArray;
 
 using namespace Mountain;
 

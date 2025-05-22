@@ -1,14 +1,17 @@
+module;
+
+#include "Mountain/Utils/Windows.hpp"
+
 export module Mountain:Utils_FileSystemWatcher;
 
 import <magic_enum/magic_enum.hpp>;
 
 import "Mountain/Core.hpp";
-import "Mountain/Utils/Windows.hpp";
 
 import std;
-import Mountain.Core;
-export import :Event;
-export import :List;
+export import :Core;
+export import :Utils_Event;
+export import :Utils_List;
 
 export namespace Mountain
 {

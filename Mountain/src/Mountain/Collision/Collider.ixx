@@ -1,12 +1,11 @@
-#pragma once
+export module Mountain:Collision_Collider;
 
-#include "Mountain/Core.hpp"
+import "Mountain/Core.hpp";
 
-#include <Maths/vector2.hpp>
+export import :Core;
+export import :Utils_Color;
 
-#include "Mountain/Utils/Color.ixx"
-
-namespace Mountain
+export namespace Mountain
 {
     enum class ColliderType : uint8_t
     {

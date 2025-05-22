@@ -1,12 +1,18 @@
-﻿#include "Mountain/FileSystem/Directory.ixx"
+﻿module Mountain:FileSystem_Directory;
+import :FileSystem_Directory;
 
-#include "Mountain/FileSystem/FileManager.ixx"
-#include "Mountain/Utils/Formatter.ixx"
+import std;
+import :Utils;
+import :FileSystem_FileManager;
 
 using namespace Mountain;
 
 Directory::Directory(std::filesystem::path&& filepath)
     : Entry(std::move(filepath))
+{
+}
+
+Directory::~Directory()
 {
 }
 

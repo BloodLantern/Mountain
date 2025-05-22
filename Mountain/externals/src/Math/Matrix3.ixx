@@ -1,13 +1,11 @@
-module;
-
-#include "Math/Core.hpp"
-
 export module Math:Matrix3;
 
+import "Math/Core.hpp";
+
 import std;
-import :Types;
-import :Vector3;
-import :Quaternion;
+export import :Types;
+export import :Vector3;
+export import :Quaternion;
 
 /// @file Matrix3.ixx
 /// @brief Defines the Matrix3 struct.

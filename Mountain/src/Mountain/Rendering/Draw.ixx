@@ -1,22 +1,19 @@
-#pragma once
+export module Mountain:Rendering_Draw;
 
-#include "Mountain/Core.hpp"
+import <magic_enum/magic_enum.hpp>;
 
-#include <magic_enum/magic_enum.hpp>
+import "Mountain/Core.hpp";
 
-#include <Maths/vector2.hpp>
+import std;
+export import :Core;
+export import :Utils;
+import :Rendering_GpuBuffer;
+import :Rendering_GpuVertexArray;
+export import :Rendering_RenderTarget;
+import :Resource_Shader;
+export import :Resource_Texture;
 
-#include "Mountain/Rendering/GpuBuffer.hpp"
-#include "Mountain/Rendering/GpuVertexArray.hpp"
-#include "Mountain/Rendering/RenderTarget.ixx"
-#include "Mountain/Resource/Shader.ixx"
-#include "Mountain/Resource/Texture.ixx"
-#include "Mountain/Utils/Color.ixx"
-#include "Mountain/Utils/List.ixx"
-#include "Mountain/Utils/MetaProgramming.ixx"
-#include "Mountain/Utils/Rectangle.ixx"
-
-namespace Mountain
+export namespace Mountain
 {
     enum class DrawTextureFlipping : uint8_t
     {

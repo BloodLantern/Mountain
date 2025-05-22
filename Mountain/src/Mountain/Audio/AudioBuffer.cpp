@@ -1,12 +1,15 @@
-﻿#include "Mountain/Audio/AudioBuffer.hpp"
+﻿module;
 
-#include <AL/al.h>
 #include <AL/alext.h>
 
-#include "Mountain/Audio/Audio.hpp"
-#include "Mountain/Audio/AudioContext.hpp"
-#include "Mountain/Resource/AudioTrack.ixx"
-#include "Mountain/Utils/Logger.hpp"
+module Mountain:Audio_AudioBuffer;
+import :Audio_AudioBuffer;
+
+import :Audio_Audio;
+import :Audio_AudioContext;
+import :Audio_AudioDevice;
+import :Utils_Logger;
+import :Resource_AudioTrack;
 
 using namespace Mountain;
 

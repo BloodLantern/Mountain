@@ -1,4 +1,5 @@
-#include "Mountain/FileSystem/FileManager.ixx"
+module Mountain:FileSystem_FileManager;
+import :FileSystem_FileManager;
 
 using namespace Mountain;
 

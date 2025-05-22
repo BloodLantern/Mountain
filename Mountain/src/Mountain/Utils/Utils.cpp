@@ -1,13 +1,15 @@
 ﻿module;
 
-#include <ImGui/imgui.h>
-
 #include "Mountain/Utils/Windows.hpp"
 
 module Mountain:Utils_Utils;
+import :Utils_Utils;
+
+import <ImGui/imgui.h>;
 
 import std;
-import :Core_Types;
+import :Core;
+import :Utils_Windows;
 
 namespace Mountain::Utils
 {

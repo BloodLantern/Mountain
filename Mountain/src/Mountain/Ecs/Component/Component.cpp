@@ -1,4 +1,5 @@
-﻿#include "Mountain/Ecs/Component/Component.hpp"
+﻿module Mountain:Ecs_Component_Component;
+import :Ecs_Component_Component;
 
 using namespace Mountain;
 

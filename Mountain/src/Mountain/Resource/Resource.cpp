@@ -1,9 +1,10 @@
-﻿#include "Mountain/Resource/Resource.ixx"
+﻿module Mountain:Resource_Resource;
+import :Resource_Resource;
 
-#include "Mountain/FileSystem/File.ixx"
-#include "Mountain/FileSystem/FileManager.ixx"
-#include "Mountain/Resource/ResourceManager.ixx"
-#include "Mountain/Utils/Formatter.hpp"
+import std;
+import :FileSystem;
+import :Utils;
+import :Resource_ResourceManager;
 
 using namespace Mountain;
 

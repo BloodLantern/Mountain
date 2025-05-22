@@ -1,12 +1,11 @@
-#pragma once
+export module Mountain:Ecs_Component_AudioListener;
 
-#include "Mountain/Core.hpp"
+import "Mountain/Core.hpp";
 
-#include <Maths/vector3.hpp>
+import :Core;
+import :Ecs_Component_Component;
 
-#include "Mountain/Ecs/Component/Component.hpp"
-
-namespace Mountain
+export namespace Mountain
 {
     class MOUNTAIN_API AudioListener : public Component
     {

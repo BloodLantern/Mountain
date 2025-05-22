@@ -3,7 +3,7 @@ export module Mountain:Utils_Guid;
 import "Mountain/Core.hpp";
 
 import std;
-import Mountain.Core;
+export import :Core;
 
 /// @file Guid.ixx
 /// @brief Defines the Mountain::Guid struct.

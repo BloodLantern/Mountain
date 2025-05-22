@@ -3,7 +3,7 @@ export module Mountain:Utils_List;
 import "Mountain/Core.hpp";
 
 import std;
-import Mountain.Core;
+export import :Core;
 
 /// @file List.ixx
 /// @brief Defines the Mountain::List class.

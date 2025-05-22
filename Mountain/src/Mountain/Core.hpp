@@ -130,7 +130,10 @@ using stdstring = std::string;
 
 // TODO - Add comparison operators for enum flags
 
-/// @brief Defines global definitions that make OpenGL use the dedicated GPU instead of the integrated one
+/// @brief Defines global definitions that make OpenGL use the dedicated GPU instead of the integrated one.
+///
+/// This must be used in the same file as the @c main() entry point.
+///
 /// Source: https://www.reddit.com/r/opengl/comments/unc3fy/comment/i8728y3/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
 #define USE_DEDICATED_GPU                                                       \
     extern "C"                                                                  \

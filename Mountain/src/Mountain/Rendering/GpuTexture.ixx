@@ -1,12 +1,12 @@
-﻿#pragma once
+﻿export module Mountain:Rendering_GpuTexture;
 
-#include <Maths/vector2i.hpp>
+import "Mountain/Core.hpp";
 
-#include "Mountain/Core.hpp"
-#include "Mountain/Rendering/Graphics.hpp"
-#include "Mountain/Utils/Color.ixx"
+import :Core;
+import :Utils_Color;
+import :Rendering_Graphics;
 
-namespace Mountain::Graphics
+export namespace Mountain::Graphics
 {
     /// @brief Low-level interface for OpenGL textures
     struct MOUNTAIN_API GpuTexture

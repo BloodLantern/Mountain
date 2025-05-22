@@ -1,6 +1,9 @@
-﻿#include "Mountain/Rendering/GpuBuffer.hpp"
+﻿module;
 
 #include <glad/glad.h>
+
+module Mountain:Rendering_GpuBuffer;
+import :Rendering_GpuBuffer;
 
 using namespace Mountain::Graphics;
 

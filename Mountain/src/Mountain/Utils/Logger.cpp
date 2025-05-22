@@ -1,8 +1,11 @@
 ﻿module Mountain:Utils_Logger;
+import :Utils_Logger;
 
 import std;
-import :Core_Types;
+import :Core;
+import :Utils_Logger;
 import :Utils_Formatter;
+import :Utils_Utils;
 
 #define ANSI_COLOR_GRAY     "\x1b[38;5;242m"
 #define ANSI_COLOR_GREEN    "\x1b[0;32m"

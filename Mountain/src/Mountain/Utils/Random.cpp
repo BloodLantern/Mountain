@@ -1,8 +1,9 @@
 module Mountain:Utils_Random;
+import :Utils_Random;
 
 import std;
-import Mountain.Core;
-import :Color;
+import :Core;
+import :Utils_Color;
 
 using namespace Mountain;
 

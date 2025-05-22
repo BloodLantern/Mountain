@@ -1,16 +1,15 @@
-﻿#pragma once
+﻿export module Mountain:Rendering_ParticleSystemModules;
 
-#include "Mountain/Core.hpp"
-#include "Mountain/Resource/ComputeShader.ixx"
-#include "Mountain/Utils/Color.ixx"
-#include "Mountain/Utils/Utils.ixx"
+import "Mountain/Core.hpp";
 
-namespace Mountain
+export import :Resource_ComputeShader;
+
+export namespace Mountain
 {
     class ParticleSystem;
 }
 
-namespace Mountain::ParticleSystemModules
+export namespace Mountain::ParticleSystemModules
 {
     enum class MOUNTAIN_API Types : uint32_t // We might as well use an uint as it is the minimum amount of data we can transfer to the shader
     {

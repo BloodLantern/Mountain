@@ -1,8 +1,8 @@
 ﻿#pragma once
 
-#include "Mountain/Ecs/Entity.hpp"
-#include "Mountain/Ecs/Component/Sprite.hpp"
-#include "Mountain/Rendering/LightSource.hpp"
+#include "Mountain/Ecs/Entity.ixx"
+#include "Mountain/Ecs/Component/Sprite.ixx"
+#include "Mountain/Rendering/LightSource.ixx"
 #include "Mountain/Utils/Pointer.ixx"
 
 class Player : public Mountain::Entity

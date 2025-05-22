@@ -1,14 +1,11 @@
-module;
-
-#include "Math/Core.hpp"
-
 export module Math:Vector4;
 
+import "Math/Core.hpp";
+
 import std;
-import :Types;
-import :Forward;
-import :Vector2;
-import :Vector3;
+export import :Types;
+export import :Vector2;
+export import :Vector3;
 
 /// @file Vector4.ixx
 /// @brief Defines the Vector4 struct.

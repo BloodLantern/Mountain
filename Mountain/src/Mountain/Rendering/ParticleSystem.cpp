@@ -1,15 +1,17 @@
-﻿#include "Mountain/Rendering/ParticleSystem.hpp"
+﻿module;
 
 #include <glad/glad.h>
 
 #include <ImGui/imgui_stdlib.h>
 
-#include "Mountain/Input/Time.ixx"
-#include "Mountain/Rendering/Draw.hpp"
-#include "Mountain/Rendering/Renderer.ixx"
-#include "Mountain/Resource/ResourceManager.ixx"
-#include "Mountain/Utils/ImGuiUtils.ixx"
-#include "Mountain/Utils/Random.ixx"
+module Mountain:Rendering_ParticleSystem;
+import :Rendering_ParticleSystem;
+
+import :Resource;
+import :Input;
+import :Rendering_Renderer;
+import :Rendering_Draw;
+import :Resource_ShaderBase;
 
 using namespace Mountain;
 

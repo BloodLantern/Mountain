@@ -1,6 +1,7 @@
-#include "Mountain/Collision/Collider.hpp"
+module Mountain:Collision_Collider;
+import :Collision_Collider;
 
-#include "Mountain/Ecs/Entity.hpp"
+import :Ecs_Entity;
 
 Mountain::Collider::Collider(const ColliderType type)
     : type(type)

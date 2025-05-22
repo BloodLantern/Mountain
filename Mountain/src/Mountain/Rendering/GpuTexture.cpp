@@ -1,6 +1,9 @@
-﻿#include "Mountain/Rendering/GpuTexture.hpp"
+﻿module;
 
 #include <glad/glad.h>
+
+module Mountain:Rendering_GpuTexture;
+import :Rendering_GpuTexture;
 
 using namespace Mountain::Graphics;
 

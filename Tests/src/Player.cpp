@@ -1,9 +1,9 @@
 ﻿#include "Player.hpp"
 
-#include "Mountain/Ecs/Component/AudioListener.hpp"
+#include "Mountain/Ecs/Component/AudioListener.ixx"
 #include "Mountain/Input/Input.ixx"
 #include "Mountain/Input/Time.ixx"
-#include "Mountain/Rendering/Draw.hpp"
+#include "Mountain/Rendering/Draw.ixx"
 
 Player::Player(const Vector2& pos, Mountain::LightSource& lightSource)
     : Entity(pos)

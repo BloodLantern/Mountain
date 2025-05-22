@@ -1,11 +1,9 @@
-module;
-
-#include "Mountain/Core.hpp"
-
 export module Mountain:Utils_TimeSpan;
 
+import "Mountain/Core.hpp";
+
 import std;
-import :Core_Types;
+export import :Core;
 
 export namespace Mountain
 {

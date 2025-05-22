@@ -7,8 +7,8 @@ import <ImGui/imgui.h>;
 import "Mountain/Core.hpp";
 
 import std;
-import Mountain.Core;
-import :Concepts;
+export import :Core;
+export import :Utils_Concepts;
 
 namespace Mountain::ImGuiUtils
 {

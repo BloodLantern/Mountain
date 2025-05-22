@@ -1,16 +1,18 @@
-module;
-
-#include "Math/Core.hpp"
-
 export module Math:Calc;
 
+import "Math/Core.hpp";
+
 import std;
-import :Types;
-import :Forward;
-import :Vector2;
-import :Vector3;
-import :Vector4;
-import :Easing;
+export import :Types;
+export import :Vector2;
+export import :Vector3;
+export import :Vector4;
+export import :Easing;
+
+export struct Matrix;
+export struct Matrix2;
+export struct Matrix3;
+export struct Quaternion;
 
 /// @file Calc.ixx
 /// @brief A collection of general-use constants and useful functions.

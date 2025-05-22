@@ -3,7 +3,7 @@
 export module Mountain:Utils_Formatter;
 
 import std;
-import :Concepts;
+export import :Utils_Concepts;
 
 /// @file Formatter.ixx
 /// @brief Defines template specializations of @c std::formatter for external types.
@@ -20,7 +20,7 @@ import :Concepts;
 /// @brief @c std::formatter template specialization for the @c std::filesystem::path type.
 ///
 /// @see <a href="https://en.cppreference.com/w/cpp/filesystem/path">std::filesystem::path</a>
-export template <>
+template <>
 struct std::formatter<std::filesystem::path>
 {
     /// @brief Parses the input formatting options.
@@ -52,7 +52,7 @@ struct std::formatter<std::filesystem::path>
 /// @brief @c std::formatter template specialization for the @c std::exception type.
 ///
 /// @see <a href="https://en.cppreference.com/w/cpp/error/exception">std::exception</a>
-export template <Mountain::Concepts::ExceptionT Exception>
+template <Mountain::Concepts::ExceptionT Exception>
 struct std::formatter<Exception>
 {
     /// @brief Parses the input formatting options.

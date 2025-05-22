@@ -1,9 +1,11 @@
-#pragma once
+export module Mountain:Collision_Hitbox;
 
-#include "Mountain/Collision/Collider.hpp"
-#include "Mountain/Utils/Rectangle.ixx"
+import "Mountain/Core.hpp";
 
-namespace Mountain
+export import :Collision_Collider;
+export import :Utils_Rectangle;
+
+export namespace Mountain
 {
     class MOUNTAIN_API Hitbox : public Collider
     {

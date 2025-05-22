@@ -1,8 +1,10 @@
-﻿#pragma once
+﻿export module Mountain:Audio_AudioBuffer;
 
-#include "Mountain/Core.hpp"
+import "Mountain/Core.hpp";
 
-namespace Mountain
+export import :Core;
+
+export namespace Mountain
 {
     class AudioTrack;
     class AudioContext;

@@ -1,11 +1,11 @@
-﻿#pragma once
+﻿export module Mountain:Rendering_Effect;
 
-#include "Mountain/Core.hpp"
-#include "Mountain/Rendering/RenderTarget.ixx"
-#include "Mountain/Resource/ComputeShader.ixx"
-#include "Mountain/Resource/Texture.ixx"
+import "Mountain/Core.hpp";
 
-namespace Mountain
+export import :Rendering_Graphics;
+import :Resource_ComputeShader;
+
+export namespace Mountain
 {
     class Effect
     {

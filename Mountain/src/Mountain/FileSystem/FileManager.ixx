@@ -1,19 +1,17 @@
 export module Mountain:FileSystem_FileManager;
 
-#include <filesystem>
-#include <map>
+import "Mountain/Core.hpp";
 
-#include "Mountain/Core.hpp"
-#include "Mountain/FileSystem/Directory.ixx"
-#include "Mountain/FileSystem/File.ixx"
-#include "Mountain/Utils/List.ixx"
-#include "Mountain/Utils/Logger.hpp"
-#include "Mountain/Utils/Pointer.ixx"
+import std;
+import :Utils;
+import :FileSystem_Entry;
+import :FileSystem_Directory;
+import :FileSystem_File;
 
 /// @file FileManager.ixx
 /// @brief Defines the Mountain::FileManager class.
 
-namespace Mountain
+export namespace Mountain
 {
     /// @brief Static class used to add, load, get, or unload @ref File "Files" and @ref Directory "Directories".
     ///
@@ -119,10 +117,6 @@ namespace Mountain
 }
 
 // Start of FileManager.inl
-
-#include <ranges>
-
-#include "Mountain/Utils/Formatter.ixx"
 
 namespace Mountain
 {

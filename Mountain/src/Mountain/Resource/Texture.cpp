@@ -1,8 +1,13 @@
-#include "Mountain/Resource/Texture.ixx"
+module;
 
 #include <stb_image.h>
 
-#include "Mountain/Utils/Logger.hpp"
+module Mountain:Resource_Texture;
+import :Resource_Texture;
+
+import :Utils;
+import :Rendering_Graphics;
+import :Rendering_GpuTexture;
 
 using namespace Mountain;
 

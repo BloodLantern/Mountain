@@ -1,10 +1,10 @@
-﻿#pragma once
+﻿export module Mountain:Rendering_LightSource;
 
-#include "Mountain/Core.hpp"
+import "Mountain/Core.hpp";
 
-#include "Mountain/Utils/Color.ixx"
+import :Utils_Color;
 
-namespace Mountain
+export namespace Mountain
 {
     struct MOUNTAIN_API LightSource
     {

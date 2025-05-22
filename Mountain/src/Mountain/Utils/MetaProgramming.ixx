@@ -1,15 +1,15 @@
 ﻿// ReSharper disable CppInconsistentNaming
 export module Mountain:Utils_MetaProgramming;
 
-/// @file MetaProgramming.ixx
-///
-/// @brief Defines utilities for meta-programming and template manipulation
-
 import "Mountain/Core.hpp";
 
 import std;
-import Mountain.Core;
-import :Concepts;
+export import :Core;
+export import :Utils_Concepts;
+
+/// @file MetaProgramming.ixx
+///
+/// @brief Defines utilities for meta-programming and template manipulation
 
 export namespace Mountain
 {

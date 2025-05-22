@@ -1,11 +1,10 @@
-module;
-
-#include <magic_enum/magic_enum.hpp>
-
 module Mountain:Input_GamepadInput;
+import :Input_GamepadInput;
+
+import <magic_enum/magic_enum.hpp>;
 
 import std;
-import Mountain.Core;
+import :Core;
 
 namespace Mountain
 {

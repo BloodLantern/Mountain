@@ -3,7 +3,7 @@ export module Mountain:Utils_Coroutine;
 import "Mountain/Core.hpp";
 
 import std;
-import :Core_Types;
+import :Core;
 export import :Utils_Guid;
 
 /// @file Coroutine.ixx

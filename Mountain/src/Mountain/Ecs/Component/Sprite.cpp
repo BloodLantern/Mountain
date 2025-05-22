@@ -1,8 +1,9 @@
-﻿#include "Mountain/Ecs/Component/Sprite.hpp"
+﻿module Mountain:Ecs_Component_Sprite;
+import :Ecs_Component_Sprite;
 
-#include "Mountain/Ecs/Entity.hpp"
-#include "Mountain/Input/Time.ixx"
-#include "Mountain/Resource/ResourceManager.ixx"
+import :Ecs_Entity;
+import :Input_Time;
+import :Resource_ResourceManager;
 
 using namespace Mountain;
 

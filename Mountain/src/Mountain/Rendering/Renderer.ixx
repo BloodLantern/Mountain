@@ -1,22 +1,21 @@
+module;
+
+#include <ft2build.h>
+#include FT_FREETYPE_H
+
 export module Mountain:Rendering_Renderer;
+
+import <GLFW/glfw3.h>;
 
 import "Mountain/Core.hpp";
 
 import std;
-import Mountain.Core;
-import Mountain.Utils;
-import :RenderTarget;
+export import :Core;
+export import :Utils;
+export import :Rendering_RenderTarget;
+import :Resource_Font;
 
-// ReSharper disable once CppInconsistentNaming
-struct GLFWwindow;
-
-// ReSharper disable once CppInconsistentNaming
-struct FT_LibraryRec_;
-// ReSharper disable once CppEnforceTypeAliasCodeStyle
-// ReSharper disable once CppInconsistentNaming
-typedef FT_LibraryRec_* FT_Library;
-
-namespace Mountain
+export namespace Mountain
 {
     struct OpenGlVersion
     {

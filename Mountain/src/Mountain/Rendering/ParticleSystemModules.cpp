@@ -1,10 +1,11 @@
-﻿#include "Mountain/Rendering/ParticleSystemModules.hpp"
+﻿module Mountain:Rendering_ParticleSystemModules;
+import :Rendering_ParticleSystemModules;
 
-#include <ImGui/imgui.h>
+import <ImGui/imgui.h>;
 
-#include "Mountain/Rendering/Draw.hpp"
-#include "Mountain/Rendering/ParticleSystem.hpp"
-#include "Mountain/Utils/ImGuiUtils.ixx"
+import :Utils;
+import :Rendering_Draw;
+import :Rendering_ParticleSystem;
 
 using namespace Mountain::ParticleSystemModules;
 

@@ -1,13 +1,13 @@
-#pragma once
+export module Mountain:Ecs_Component_AudioSource;
 
-#include "Mountain/Core.hpp"
+import "Mountain/Core.hpp";
 
-#include <Maths/vector2.hpp>
+import :Core;
+import :Ecs_Component_Component;
+import :Resource_AudioTrack;
+import :Audio_AudioBuffer;
 
-#include "Mountain/Ecs/Component/Component.hpp"
-#include "Mountain/Resource/AudioTrack.ixx"
-
-namespace Mountain
+export namespace Mountain
 {
     class AudioSource : public Component
     {

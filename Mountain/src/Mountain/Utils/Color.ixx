@@ -5,7 +5,7 @@ import <ImGui/imgui.h>;
 import "Mountain/Core.hpp";
 
 import std;
-import :Core_Types;
+export import :Core;
 
 /// @file Color.ixx
 /// @brief Defines multiple color structs.

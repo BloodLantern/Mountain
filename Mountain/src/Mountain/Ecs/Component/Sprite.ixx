@@ -1,13 +1,13 @@
-﻿#pragma once
+﻿export module Mountain:Ecs_Component_Sprite;
 
-#include <string>
+import "Mountain/Core.hpp";
 
-#include "Mountain/Core.hpp"
-#include "Mountain/Ecs/Component/Component.hpp"
-#include "Mountain/Resource/Texture.ixx"
-#include "Mountain/Utils/List.ixx"
+import std;
+import :Ecs_Component_Component;
+import :Resource_Texture;
+import :Utils;
 
-namespace Mountain
+export namespace Mountain
 {
     class Sprite : public Component
     {

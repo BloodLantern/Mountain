@@ -2,9 +2,11 @@
 
 import "Mountain/Core.hpp";
 
-import Mountain.Core;
-import Mountain.Utils;
-import :Graphics;
+export import :Core;
+export import :Utils;
+export import :Rendering_LightSource;
+export import :Rendering_Graphics;
+export import :Rendering_GpuTexture;
 
 export namespace Mountain
 {

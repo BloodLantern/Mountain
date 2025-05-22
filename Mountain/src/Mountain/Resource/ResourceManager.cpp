@@ -1,15 +1,19 @@
-﻿#include "Mountain/Resource/ResourceManager.ixx"
-
-#include <array>
-#include <execution>
-
-#include "Mountain/FileSystem/FileManager.ixx"
-#include "Mountain/Resource/AudioTrack.ixx"
-#include "Mountain/Resource/Font.ixx"
-#include "Mountain/Resource/Shader.ixx"
-#include "Mountain/Resource/Texture.ixx"
+﻿module;
 
 #include "Mountain/BinaryResources/ResourceHolder.hpp"
+
+module Mountain:Resource_ResourceManager;
+import :Resource_ResourceManager;
+
+import std;
+import :FileSystem;
+import :Utils;
+import :Resource_ComputeShader;
+import :Resource_Resource;
+import :Resource_AudioTrack;
+import :Resource_Font;
+import :Resource_Shader;
+import :Resource_Texture;
 
 namespace rh
 {
