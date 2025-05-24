@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include <Maths/vector2.hpp>
+#include <Math/vector2.hpp>
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Rendering/GpuBuffer.hpp"

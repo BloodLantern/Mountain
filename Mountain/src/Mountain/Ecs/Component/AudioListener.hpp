@@ -2,7 +2,7 @@
 
 #include "Mountain/Core.hpp"
 
-#include <Maths/vector3.hpp>
+#include <Math/vector3.hpp>
 
 #include "Mountain/Ecs/Component/Component.hpp"
 

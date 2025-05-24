@@ -2,7 +2,7 @@
 
 #include "Mountain/Core.hpp"
 
-#include <Maths/vector2i.hpp>
+#include <Math/vector2i.hpp>
 
 /// @file screen.hpp
 /// @brief Defines the Mountain::Screen class.

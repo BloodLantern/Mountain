@@ -2,7 +2,7 @@
 
 #include "Mountain/Core.hpp"
 
-#include <Maths/vector2i.hpp>
+#include <Math/vector2i.hpp>
 
 namespace Mountain
 {

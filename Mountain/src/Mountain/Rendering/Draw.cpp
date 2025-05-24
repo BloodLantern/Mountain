@@ -93,20 +93,38 @@ void Draw::RectangleFilled(const Mountain::Rectangle& rectangle, const Color& co
     m_DrawList.AddCommand(DrawDataType::RectangleFilled);
 }
 
-void Draw::Circle(const Vector2 center, const float_t radius, const Vector2 scale, const Color& color) { CircleInternal(center, radius, false, scale, color); }
+void Draw::Circle(
+    const Vector2 center,
+    const float_t radius,
+    const float_t thickness,
+    const Vector2 scale,
+    const Color& color
+)
+{
+    CircleInternal(center, radius, thickness, false, scale, color);
+}
 
-void Draw::CircleFilled(const Vector2 center, const float_t radius, const Vector2 scale, const Color& color) { CircleInternal(center, radius, true, scale, color); }
+void Draw::CircleFilled(
+    const Vector2 center,
+    const float_t radius,
+    const Vector2 scale,
+    const Color& color
+)
+{
+    CircleInternal(center, radius, 1.f, true, scale, color);
+}
 
 void Draw::Arc(
     const Vector2 center,
     const float_t radius,
     const float_t startingAngle,
     const float_t deltaAngle,
+    const float_t thickness,
     const Vector2 scale,
     const Color& color
 )
 {
-    ArcInternal(center, radius, startingAngle, deltaAngle, false, scale, color);
+    ArcInternal(center, radius, startingAngle, deltaAngle, thickness, false, scale, color);
 }
 
 void Draw::ArcFilled(
@@ -118,7 +136,7 @@ void Draw::ArcFilled(
     const Color& color
 )
 {
-    ArcInternal(center, radius, startingAngle, deltaAngle, true, scale, color);
+    ArcInternal(center, radius, startingAngle, deltaAngle, 1.f, true, scale, color);
 }
 
 void Draw::Texture(
@@ -139,8 +157,8 @@ void Draw::Texture(
     if (origin.x < 0.f || origin.x > 1.f || origin.y < 0.f || origin.y > 1.f)
         throw std::invalid_argument{ "Origin must be in the range [{ 0, 0 }, { 1, 1 }]" };
 
-    Vector2 uvDiff = uv1 - uv0;
-    Vector2 lowerUv = uv0;
+    const Vector2 uvDiff = uv1 - uv0;
+    const Vector2 lowerUv = uv0;
 
     if (flipFlags & DrawTextureFlipping::Horizontal)
         scale.x *= -1.f;
@@ -622,6 +640,8 @@ void Draw::InitializeCircleBuffers()
     Graphics::SetVertexAttribute(++index, 2, sizeof(CircleData), offset += sizeof(Vector4), 1);
     // Radius
     Graphics::SetVertexAttribute(++index, 1, sizeof(CircleData), offset += sizeof(Vector2), 1);
+    // Thickness
+    Graphics::SetVertexAttribute(++index, 1, sizeof(CircleData), offset += sizeof(float_t), 1);
     // Scale
     Graphics::SetVertexAttribute(++index, 2, sizeof(CircleData), offset += sizeof(float_t), 1);
     // Color
@@ -658,6 +678,8 @@ void Draw::InitializeArcBuffers()
     // Starting angle
     Graphics::SetVertexAttribute(++index, 1, sizeof(ArcData), offset += sizeof(float_t), 1);
     // Delta angle
+    Graphics::SetVertexAttribute(++index, 1, sizeof(ArcData), offset += sizeof(float_t), 1);
+    // Thickness
     Graphics::SetVertexAttribute(++index, 1, sizeof(ArcData), offset += sizeof(float_t), 1);
     // Scale
     Graphics::SetVertexAttribute(++index, 2, sizeof(ArcData), offset += sizeof(float_t), 1);
@@ -776,13 +798,26 @@ void Draw::UpdateShaderMatrices()
     m_ArcShader->SetUniform("cameraScale", m_CameraScale);
 }
 
-void Draw::CircleInternal(const Vector2 center, const float_t radius, const bool_t filled, const Vector2 scale, const Color& color)
+void Draw::CircleInternal(const Vector2 center, const float_t radius, const float_t thickness, const bool_t filled, const Vector2 scale, const Color& color)
 {
+    const float_t actualThickness = thickness - 1.f; // When thickness == 0, the circle line is 1 pixel wide
+
     m_DrawList.circle.Emplace(
-        Matrix::Translation(static_cast<Vector3>(center - scale * radius * m_CameraScale))
-            * Matrix::Scaling({ radius * scale.x * 2.f * m_CameraScale.x, radius * scale.y * 2.f * m_CameraScale.y, 1.f }),
+        Matrix::Translation(
+            static_cast<Vector3>(
+                center - scale * radius * m_CameraScale - Vector2::One() * actualThickness
+            )
+        )
+        * Matrix::Scaling(
+            {
+                radius * 2.f * scale.x * m_CameraScale.x + actualThickness * 2.f,
+                radius * 2.f * scale.y * m_CameraScale.y + actualThickness * 2.f,
+                1.f
+            }
+        ),
         center,
         radius,
+        actualThickness,
         scale / m_CameraScale,
         color,
         filled
@@ -795,18 +830,32 @@ void Draw::ArcInternal(
     float_t radius,
     float_t startingAngle,
     float_t deltaAngle,
+    const float_t thickness,
     bool_t filled,
-    Vector2 scale,
+    const Vector2 scale,
     const Color& color
 )
 {
+    const float_t actualThickness = thickness - 1.f; // When thickness == 0, the circle line is 1 pixel wide
+
     m_DrawList.arc.Emplace(
-        Matrix::Translation(static_cast<Vector3>(center - scale * radius * m_CameraScale))
-            * Matrix::Scaling({ radius * scale.x * 2.f * m_CameraScale.x, radius * scale.y * 2.f * m_CameraScale.y, 1.f }),
+        Matrix::Translation(
+            static_cast<Vector3>(
+                center - scale * radius * m_CameraScale - Vector2::One() * actualThickness
+            )
+        )
+        * Matrix::Scaling(
+            {
+                radius * 2.f * scale.x * m_CameraScale.x + actualThickness * 2.f,
+                radius * 2.f * scale.y * m_CameraScale.y + actualThickness * 2.f,
+                1.f
+            }
+        ),
         center,
         radius,
         startingAngle,
         deltaAngle,
+        thickness,
         scale / m_CameraScale,
         color,
         filled

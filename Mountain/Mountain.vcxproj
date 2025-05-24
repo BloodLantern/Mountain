@@ -15,7 +15,82 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\MathToolbox\src\Math\calc.hpp" />
+    <ClInclude Include="..\MathToolbox\src\Math\core.hpp" />
+    <ClInclude Include="..\MathToolbox\src\Math\easing.hpp" />
+    <ClInclude Include="..\MathToolbox\src\Math\math.hpp" />
+    <ClInclude Include="..\MathToolbox\src\Math\matrix.hpp" />
+    <ClInclude Include="..\MathToolbox\src\Math\matrix2.hpp" />
+    <ClInclude Include="..\MathToolbox\src\Math\matrix3.hpp" />
+    <ClInclude Include="..\MathToolbox\src\Math\quaternion.hpp" />
+    <ClInclude Include="..\MathToolbox\src\Math\vector2.hpp" />
+    <ClInclude Include="..\MathToolbox\src\Math\vector2i.hpp" />
+    <ClInclude Include="..\MathToolbox\src\Math\vector3.hpp" />
+    <ClInclude Include="..\MathToolbox\src\Math\vector4.hpp" />
+    <ClInclude Include="externals\src\AL\al.h" />
+    <ClInclude Include="externals\src\AL\alc.h" />
+    <ClInclude Include="externals\src\AL\alext.h" />
+    <ClInclude Include="externals\src\AL\efx-creative.h" />
+    <ClInclude Include="externals\src\AL\efx-presets.h" />
+    <ClInclude Include="externals\src\AL\efx.h" />
+    <ClInclude Include="externals\src\freetype\config\ftconfig.h" />
+    <ClInclude Include="externals\src\freetype\config\ftheader.h" />
+    <ClInclude Include="externals\src\freetype\config\ftmodule.h" />
+    <ClInclude Include="externals\src\freetype\config\ftoption.h" />
+    <ClInclude Include="externals\src\freetype\config\ftstdlib.h" />
+    <ClInclude Include="externals\src\freetype\config\integer-types.h" />
+    <ClInclude Include="externals\src\freetype\config\mac-support.h" />
+    <ClInclude Include="externals\src\freetype\config\public-macros.h" />
+    <ClInclude Include="externals\src\freetype\freetype.h" />
+    <ClInclude Include="externals\src\freetype\ftadvanc.h" />
+    <ClInclude Include="externals\src\freetype\ftbbox.h" />
+    <ClInclude Include="externals\src\freetype\ftbdf.h" />
+    <ClInclude Include="externals\src\freetype\ftbitmap.h" />
+    <ClInclude Include="externals\src\freetype\ftbzip2.h" />
+    <ClInclude Include="externals\src\freetype\ftcache.h" />
+    <ClInclude Include="externals\src\freetype\ftchapters.h" />
+    <ClInclude Include="externals\src\freetype\ftcid.h" />
+    <ClInclude Include="externals\src\freetype\ftcolor.h" />
+    <ClInclude Include="externals\src\freetype\ftdriver.h" />
+    <ClInclude Include="externals\src\freetype\fterrdef.h" />
+    <ClInclude Include="externals\src\freetype\fterrors.h" />
+    <ClInclude Include="externals\src\freetype\ftfntfmt.h" />
+    <ClInclude Include="externals\src\freetype\ftgasp.h" />
+    <ClInclude Include="externals\src\freetype\ftglyph.h" />
+    <ClInclude Include="externals\src\freetype\ftgxval.h" />
+    <ClInclude Include="externals\src\freetype\ftgzip.h" />
+    <ClInclude Include="externals\src\freetype\ftimage.h" />
+    <ClInclude Include="externals\src\freetype\ftincrem.h" />
+    <ClInclude Include="externals\src\freetype\ftlcdfil.h" />
+    <ClInclude Include="externals\src\freetype\ftlist.h" />
+    <ClInclude Include="externals\src\freetype\ftlogging.h" />
+    <ClInclude Include="externals\src\freetype\ftlzw.h" />
+    <ClInclude Include="externals\src\freetype\ftmac.h" />
+    <ClInclude Include="externals\src\freetype\ftmm.h" />
+    <ClInclude Include="externals\src\freetype\ftmodapi.h" />
+    <ClInclude Include="externals\src\freetype\ftmoderr.h" />
+    <ClInclude Include="externals\src\freetype\ftotval.h" />
+    <ClInclude Include="externals\src\freetype\ftoutln.h" />
+    <ClInclude Include="externals\src\freetype\ftparams.h" />
+    <ClInclude Include="externals\src\freetype\ftpfr.h" />
+    <ClInclude Include="externals\src\freetype\ftrender.h" />
+    <ClInclude Include="externals\src\freetype\ftsizes.h" />
+    <ClInclude Include="externals\src\freetype\ftsnames.h" />
+    <ClInclude Include="externals\src\freetype\ftstroke.h" />
+    <ClInclude Include="externals\src\freetype\ftsynth.h" />
+    <ClInclude Include="externals\src\freetype\ftsystem.h" />
+    <ClInclude Include="externals\src\freetype\fttrigon.h" />
+    <ClInclude Include="externals\src\freetype\fttypes.h" />
+    <ClInclude Include="externals\src\freetype\ftwinfnt.h" />
+    <ClInclude Include="externals\src\freetype\otsvg.h" />
+    <ClInclude Include="externals\src\freetype\t1tables.h" />
+    <ClInclude Include="externals\src\freetype\ttnameid.h" />
+    <ClInclude Include="externals\src\freetype\tttables.h" />
+    <ClInclude Include="externals\src\freetype\tttags.h" />
     <ClInclude Include="externals\src\ft2build.h" />
+    <ClInclude Include="externals\src\glad\glad.h" />
+    <ClInclude Include="externals\src\GLFW\glfw3.h" />
+    <ClInclude Include="externals\src\GLFW\glfw3native.h" />
     <ClInclude Include="externals\src\ImGui\imconfig.h" />
     <ClInclude Include="externals\src\ImGui\imgui.h" />
     <ClInclude Include="externals\src\ImGui\imgui_impl_glfw.h" />
@@ -26,90 +101,67 @@
     <ClInclude Include="externals\src\ImGui\imstb_rectpack.h" />
     <ClInclude Include="externals\src\ImGui\imstb_textedit.h" />
     <ClInclude Include="externals\src\ImGui\imstb_truetype.h" />
+    <ClInclude Include="externals\src\KHR\khrplatform.h" />
+    <ClInclude Include="externals\src\magic_enum\magic_enum.hpp" />
+    <ClInclude Include="externals\src\magic_enum\magic_enum_all.hpp" />
+    <ClInclude Include="externals\src\magic_enum\magic_enum_containers.hpp" />
+    <ClInclude Include="externals\src\magic_enum\magic_enum_flags.hpp" />
+    <ClInclude Include="externals\src\magic_enum\magic_enum_format.hpp" />
+    <ClInclude Include="externals\src\magic_enum\magic_enum_fuse.hpp" />
+    <ClInclude Include="externals\src\magic_enum\magic_enum_iostream.hpp" />
+    <ClInclude Include="externals\src\magic_enum\magic_enum_switch.hpp" />
+    <ClInclude Include="externals\src\magic_enum\magic_enum_utility.hpp" />
     <ClInclude Include="externals\src\minimp3.h" />
     <ClInclude Include="externals\src\minimp3_ex.h" />
+    <ClInclude Include="externals\src\RapidXML\rapidxml.hpp" />
+    <ClInclude Include="externals\src\RapidXML\RapidXMLSTD.hpp" />
+    <ClInclude Include="externals\src\RapidXML\rapidxml_iterators.hpp" />
+    <ClInclude Include="externals\src\RapidXML\rapidxml_print.hpp" />
+    <ClInclude Include="externals\src\RapidXML\rapidxml_utils.hpp" />
     <ClInclude Include="externals\src\stb_image.h" />
     <ClInclude Include="externals\src\stb_vorbis.h" />
     <ClInclude Include="src\Mountain\Audio\Audio.hpp" />
     <ClInclude Include="src\Mountain\Audio\AudioBuffer.hpp" />
     <ClInclude Include="src\Mountain\Audio\AudioContext.hpp" />
     <ClInclude Include="src\Mountain\Audio\AudioDevice.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_10097982125490285052.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_10235447509522868634.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_10365144974679509061.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_10560615441756428011.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_10604039599264331763.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_1074902542281558043.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_11431338934652808651.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_11501491796742299978.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_11774202807359543870.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_11952871429675989627.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_12442680368039291515.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_12877864912023894619.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_13041558764341956120.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_13070826838953012323.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_13130013495108453755.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_13177006652388307822.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_13201333105802786858.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_14121575893409695288.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_14338357782030755284.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_14381367057370009788.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_14453285260017552316.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_1453103019202383270.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_14872559788622701886.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_15258004472844539140.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_15348241983609311137.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_15961880810884371948.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_16164542811870570708.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_16311089013737800627.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_16451689749247673836.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_1659229443278887099.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_1682259173912325418.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_16982112266611754363.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_17139022876316836076.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_17163117651341958810.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_17404448839198764618.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_17880426697011385839.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_18011218881129316092.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_18057388384952284287.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_2150870677491156252.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_2544377574110585068.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_2626201325449173172.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_2796969501947431915.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_2814762831895809774.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_310597202658876699.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_3126981312599726777.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_3518102179013777611.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_3973114521874297071.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_4319606583867259020.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_5083911923489940364.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_5284316122615694636.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_5290845577426867131.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_5513601353699197311.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_6050031692327083212.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_6180361286818081308.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_6423258116736183732.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_6733528840531529029.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_6826460111274356971.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_7274049609931843182.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_7344767717205508100.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_7556603881106790027.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_7628522083754332555.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_7715564942897090726.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_7736256087137476443.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_8397852258098769587.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_8414638717441225796.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_8915932256763674668.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_908422867440665036.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_9273770047666001763.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_9467723258334487283.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_9508759643910089710.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_9550955058371070276.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_9582143994837232440.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\EmbeddedResources\resource_9914516617300152348.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\Resource.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\ResourceHolder.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\Span.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_10604039599264331763.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_11431338934652808651.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_11774202807359543870.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_11952871429675989627.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_12442680368039291515.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_13070826838953012323.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_13177006652388307822.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_14338357782030755284.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_14381367057370009788.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_1453103019202383270.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_15258004472844539140.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_15961880810884371948.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_16311089013737800627.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_16451689749247673836.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_1659229443278887099.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_1682259173912325418.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_17163117651341958810.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_17404448839198764618.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_17880426697011385839.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_18011218881129316092.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_310597202658876699.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_3126981312599726777.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_4319606583867259020.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_5284316122615694636.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_5513601353699197311.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_6180361286818081308.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_6423258116736183732.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_6733528840531529029.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_6826460111274356971.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_7556603881106790027.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_7736256087137476443.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_908422867440665036.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_9508759643910089710.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_9550955058371070276.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_9582143994837232440.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\resource.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\resource_holder.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\span.hpp" />
     <ClInclude Include="src\Mountain\Collision\Circle.hpp" />
     <ClInclude Include="src\Mountain\Collision\Collider.hpp" />
     <ClInclude Include="src\Mountain\Collision\ColliderList.hpp" />
@@ -183,6 +235,16 @@
     <ClInclude Include="src\Mountain\Window.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\MathToolbox\src\Math\calc.cpp" />
+    <ClCompile Include="..\MathToolbox\src\Math\easing.cpp" />
+    <ClCompile Include="..\MathToolbox\src\Math\matrix.cpp" />
+    <ClCompile Include="..\MathToolbox\src\Math\matrix2.cpp" />
+    <ClCompile Include="..\MathToolbox\src\Math\matrix3.cpp" />
+    <ClCompile Include="..\MathToolbox\src\Math\quaternion.cpp" />
+    <ClCompile Include="..\MathToolbox\src\Math\vector2.cpp" />
+    <ClCompile Include="..\MathToolbox\src\Math\vector2i.cpp" />
+    <ClCompile Include="..\MathToolbox\src\Math\vector3.cpp" />
+    <ClCompile Include="..\MathToolbox\src\Math\vector4.cpp" />
     <ClCompile Include="externals\src\glad.c" />
     <ClCompile Include="externals\src\ImGui\imgui.cpp" />
     <ClCompile Include="externals\src\ImGui\imgui_demo.cpp" />
@@ -200,7 +262,7 @@
     <ClCompile Include="src\Mountain\Audio\AudioBuffer.cpp" />
     <ClCompile Include="src\Mountain\Audio\AudioContext.cpp" />
     <ClCompile Include="src\Mountain\Audio\AudioDevice.cpp" />
-    <ClCompile Include="src\Mountain\BinaryResources\ResourceHolder.cpp" />
+    <ClCompile Include="src\Mountain\BinaryResources\resource_holder.cpp" />
     <ClCompile Include="src\Mountain\Collision\Circle.cpp" />
     <ClCompile Include="src\Mountain\Collision\Collider.cpp" />
     <ClCompile Include="src\Mountain\Collision\ColliderList.cpp" />
@@ -342,11 +404,11 @@
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);MOUNTAIN_EXPORT;MATH_TOOLBOX_DLL_EXPORT;MATH_DEFINE_FORMATTER;IMGUI_EXPORT;RAPID_XML_EXPORT;AL_ALEXT_PROTOTYPES</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);MOUNTAIN_EXPORT;MATH_EXPORT;MATH_DEFINE_FORMATTER;IMGUI_EXPORT;RAPID_XML_EXPORT;AL_ALEXT_PROTOTYPES</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>src;binary_resources;externals\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;binary_resources;externals\src;..\MathToolbox\src</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <AdditionalOptions>/Gw %(AdditionalOptions)</AdditionalOptions>
@@ -355,8 +417,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
       <AdditionalLibraryDirectories>externals/libs/static/$(Configuration)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>toolbox.lib;glfw3.lib;freetype.lib;OpenAL32.lib;soft_oal.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalOptions>/WHOLEARCHIVE:toolbox.lib</AdditionalOptions>
+      <AdditionalDependencies>glfw3.lib;freetype.lib;OpenAL32.lib;soft_oal.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <CreateHotPatchableImage>Enabled</CreateHotPatchableImage>
       <OptimizeReferences>false</OptimizeReferences>
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
@@ -375,11 +436,11 @@
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);MOUNTAIN_EXPORT;MATH_TOOLBOX_DLL_EXPORT;MATH_DEFINE_FORMATTER;IMGUI_EXPORT;RAPID_XML_EXPORT;AL_ALEXT_PROTOTYPES</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);MOUNTAIN_EXPORT;MATH_EXPORT;MATH_DEFINE_FORMATTER;IMGUI_EXPORT;RAPID_XML_EXPORT;AL_ALEXT_PROTOTYPES</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>src;binary_resources;externals\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;binary_resources;externals\src;..\MathToolbox\src</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <AssemblerOutput>AssemblyAndSourceCode</AssemblerOutput>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -389,8 +450,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
       <AdditionalLibraryDirectories>externals/libs/static/$(Configuration)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>toolbox.lib;glfw3.lib;freetype.lib;OpenAL32.lib;soft_oal.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalOptions>/WHOLEARCHIVE:toolbox.lib</AdditionalOptions>
+      <AdditionalDependencies>glfw3.lib;freetype.lib;OpenAL32.lib;soft_oal.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <CreateHotPatchableImage>Enabled</CreateHotPatchableImage>
       <OptimizeReferences>false</OptimizeReferences>
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
@@ -411,12 +471,12 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);MOUNTAIN_EXPORT;MATH_TOOLBOX_DLL_EXPORT;MATH_DEFINE_FORMATTER;IMGUI_EXPORT;RAPID_XML_EXPORT;AL_ALEXT_PROTOTYPES</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);MOUNTAIN_EXPORT;MATH_EXPORT;MATH_DEFINE_FORMATTER;IMGUI_EXPORT;RAPID_XML_EXPORT;AL_ALEXT_PROTOTYPES</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <EnableModules>false</EnableModules>
-      <AdditionalIncludeDirectories>src;binary_resources;externals\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;binary_resources;externals\src;..\MathToolbox\src</AdditionalIncludeDirectories>
       <AdditionalOptions>/Gw %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -424,9 +484,8 @@
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
       <OptimizeReferences>false</OptimizeReferences>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
-      <AdditionalDependencies>toolbox.lib;glfw3.lib;freetype.lib;OpenAL32.lib;soft_oal.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;freetype.lib;OpenAL32.lib;soft_oal.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>externals/libs/static/$(Configuration)</AdditionalLibraryDirectories>
-      <AdditionalOptions>/WHOLEARCHIVE:toolbox.lib</AdditionalOptions>
       <CreateHotPatchableImage>Enabled</CreateHotPatchableImage>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>

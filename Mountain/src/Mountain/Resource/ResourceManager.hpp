@@ -8,7 +8,7 @@
 #include "Mountain/Utils/Logger.hpp"
 #include "Mountain/Utils/Pointer.hpp"
 
-/// @file resource_manager.hpp
+/// @file ResourceManager.hpp
 /// @brief Defines the Mountain::ResourceManager class.
 
 namespace Mountain

@@ -1,6 +1,8 @@
 ﻿#pragma once
 
-#include <Maths/matrix.hpp>
+#include <Math/matrix.hpp>
+
+// TODO - Add Camera utility functions
 
 class Camera
 {

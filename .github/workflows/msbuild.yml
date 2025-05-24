@@ -29,11 +29,19 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+      with:
+        submodules: recursive
+
 
     - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@v1.0.2
       with:
         msbuild-architecture: x64
+
+    # Restore NuGet packages in the solution
+    # We need this for Google Tests projects
+    - name: Restore
+      run: msbuild -t:restore -p:RestorePackagesConfig=true
 
     - name: Build
       working-directory: ${{env.GITHUB_WORKSPACE}}

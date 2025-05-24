@@ -2,7 +2,7 @@
 
 #include "Mountain/Collision/Collider.hpp"
 
-#include <Maths/vector2i.hpp>
+#include <Math/vector2i.hpp>
 
 #include "Mountain/Containers/List.hpp"
 

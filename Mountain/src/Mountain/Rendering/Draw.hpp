@@ -4,7 +4,7 @@
 
 #include <magic_enum/magic_enum.hpp>
 
-#include <Maths/vector2.hpp>
+#include <Math/vector2.hpp>
 
 #include "Mountain/Rendering/GpuBuffer.hpp"
 #include "Mountain/Rendering/GpuVertexArray.hpp"
@@ -103,9 +103,10 @@ namespace Mountain
         /// @brief Draw a hollow circle
         /// @param center The center position of the circle
         /// @param radius The radius of the circle
+        /// @param thickness The thickness of the circle
         /// @param scale The scale of the circle
         /// @param color The color of the circle
-        MOUNTAIN_API static void Circle(Vector2 center, float_t radius, Vector2 scale = Vector2::One(), const Color& color = Color::White());
+        MOUNTAIN_API static void Circle(Vector2 center, float_t radius, float_t thickness = 1.f, Vector2 scale = Vector2::One(), const Color& color = Color::White());
 
         /// @brief Draw a filled circle
         /// @param center The center position of the circle
@@ -119,9 +120,10 @@ namespace Mountain
         /// @param radius The radius of the arc
         /// @param startingAngle The starting angle of the arc
         /// @param deltaAngle The delta angle of the arc, e.g. the ending angle is @code startingAngle + deltaAngle@endcode
+        /// @param thickness The thickness of the circle
         /// @param scale The scale of the arc
         /// @param color The color of the arc
-        MOUNTAIN_API static void Arc(Vector2 center, float_t radius, float_t startingAngle, float_t deltaAngle, Vector2 scale = Vector2::One(), const Color& color = Color::White());
+        MOUNTAIN_API static void Arc(Vector2 center, float_t radius, float_t startingAngle, float_t deltaAngle, float_t thickness = 1.f, Vector2 scale = Vector2::One(), const Color& color = Color::White());
 
         /// @brief Draw a filled arc
         /// @param center The center position of the arc
@@ -231,6 +233,7 @@ namespace Mountain
             Matrix transformation;
             Vector2 center;
             float_t radius;
+            float_t thickness;
             Vector2 scale;
             Color color;
             int32_t filled; // 32-bit boolean for GLSL
@@ -243,6 +246,7 @@ namespace Mountain
             float_t radius;
             float_t startingAngle;
             float_t deltaAngle;
+            float_t thickness;
             Vector2 scale;
             Color color;
             int32_t filled; // 32-bit boolean for GLSL
@@ -361,8 +365,8 @@ namespace Mountain
         static void SetCamera(const Matrix& newCameraMatrix, Vector2 newCameraScale);
         static void UpdateShaderMatrices();
 
-        static void CircleInternal(Vector2 center, float_t radius, bool_t filled, Vector2 scale, const Color& color);
-        static void ArcInternal(Vector2 center, float_t radius, float_t startingAngle, float_t deltaAngle, bool_t filled, Vector2 scale, const Color& color);
+        static void CircleInternal(Vector2 center, float_t radius, float_t thickness, bool_t filled, Vector2 scale, const Color& color);
+        static void ArcInternal(Vector2 center, float_t radius, float_t startingAngle, float_t deltaAngle, float_t thickness, bool_t filled, Vector2 scale, const Color& color);
 
         static void RenderPointData(const List<PointData>& points, size_t index, size_t count);
         static void RenderLineData(const List<LineData>& lines, size_t index, size_t count);

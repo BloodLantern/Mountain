@@ -4,8 +4,8 @@
 #include <cmath>
 #include <string>
 
-#include <Maths/vector2.hpp>
-#include <Maths/vector2i.hpp>
+#include <Math/vector2.hpp>
+#include <Math/vector2i.hpp>
 
 #include <magic_enum/magic_enum.hpp>
 

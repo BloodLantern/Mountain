@@ -3,9 +3,9 @@
 #include <format>
 #include <sstream>
 
-#include <Maths/easing.hpp>
-#include <Maths/vector3.hpp>
-#include <Maths/vector4.hpp>
+#include <Math/easing.hpp>
+#include <Math/vector3.hpp>
+#include <Math/vector4.hpp>
 
 #include <ImGui/imgui.h>
 
@@ -891,7 +891,7 @@ namespace Calc
 
 #include <algorithm>
 
-#include "Maths/calc.hpp"
+#include "Math/calc.hpp"
 
 namespace Mountain
 {

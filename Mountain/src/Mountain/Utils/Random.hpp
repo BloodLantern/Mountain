@@ -5,7 +5,7 @@
 #include <limits>
 #include <random>
 
-#include <Maths/vector2.hpp>
+#include <Math/vector2.hpp>
 
 #include "Mountain/Utils/Color.hpp"
 

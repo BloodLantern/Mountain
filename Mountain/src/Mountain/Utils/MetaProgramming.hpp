@@ -11,9 +11,9 @@
 #include <map>
 #include <type_traits>
 
-#include <Maths/quaternion.hpp>
-#include <Maths/vector2.hpp>
-#include <Maths/vector3.hpp>
+#include <Math/quaternion.hpp>
+#include <Math/vector2.hpp>
+#include <Math/vector3.hpp>
 
 #include "Mountain/Utils/Concepts.hpp"
 

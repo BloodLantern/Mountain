@@ -2,7 +2,7 @@
 
 #include "Mountain/Core.hpp"
 
-#include <Maths/vector2.hpp>
+#include <Math/vector2.hpp>
 
 #include "Mountain/Ecs/Component/Component.hpp"
 #include "Mountain/Resource/AudioTrack.hpp"

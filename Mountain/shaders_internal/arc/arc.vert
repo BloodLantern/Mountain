@@ -6,9 +6,10 @@ layout (location = 5) in vec2 instanceCenter;
 layout (location = 6) in float instanceRadius;
 layout (location = 7) in float instanceStartingAngle;
 layout (location = 8) in float instanceDeltaAngle;
-layout (location = 9) in vec2 instanceScale;
-layout (location = 10) in vec4 instanceColor;
-layout (location = 11) in int instanceFilled;
+layout (location = 9) in float instanceThickness;
+layout (location = 10) in vec2 instanceScale;
+layout (location = 11) in vec4 instanceColor;
+layout (location = 12) in int instanceFilled;
 
 uniform mat4 projection;
 uniform mat4 camera;
@@ -17,6 +18,7 @@ out vec2 center;
 out vec2 size;
 out vec2 scale;
 out vec2 angles; // startingAngle, deltaAngle
+out float thickness;
 out vec4 color;
 out int filled;
 
@@ -26,6 +28,7 @@ void main()
     size = instanceRadius * instanceScale;
     scale = instanceScale;
     angles = vec2(instanceStartingAngle, instanceDeltaAngle);
+    thickness = instanceThickness;
     color = instanceColor;
     filled = instanceFilled;
 

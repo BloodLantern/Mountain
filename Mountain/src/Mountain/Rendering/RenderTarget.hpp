@@ -2,8 +2,8 @@
 
 #include "Mountain/Core.hpp"
 
-#include <Maths/matrix.hpp>
-#include <Maths/vector2i.hpp>
+#include <Math/matrix.hpp>
+#include <Math/vector2i.hpp>
 
 #include "Mountain/Rendering/GpuTexture.hpp"
 #include "Mountain/Rendering/Graphics.hpp"
