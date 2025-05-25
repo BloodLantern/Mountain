@@ -195,3 +195,5 @@ using stdstring = std::string;
 #define interface struct __declspec(novtable)
 
 #define DEFAULT_VIRTUAL_DESTRUCTOR(type) virtual ~type() = default;
+
+#define DECLARE_DEFAULT_EXCEPTION(name, parent) class name : public parent { using parent::parent; };

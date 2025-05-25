@@ -155,12 +155,12 @@ bool_t Grid::CheckCollision(const Hitbox& hitbox) const
 
 bool_t Grid::CheckCollision(const Circle&) const
 {
-    throw std::runtime_error("Cannot check collision between grid and circle.");
+    THROW NotImplementedException{"Currently cannot check collision between grid and circle (should be implemented at some point)"};
 }
 
 bool_t Grid::CheckCollision(const Grid&) const
 {
-    throw std::runtime_error("Cannot check collision between grids.");
+    THROW InvalidOperationException{"Cannot check collision between grids"};
 }
 
 bool_t Grid::CheckCollision(const ColliderList& list) const { return list.CheckCollision(*this); }

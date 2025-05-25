@@ -143,7 +143,9 @@ Mountain::RenderTarget& Mountain::Renderer::PopRenderTarget()
 Mountain::RenderTarget& Mountain::Renderer::GetCurrentRenderTarget()
 {
     if (m_RenderTargets.empty())
-        throw std::logic_error("Cannot get the current RenderTarget outside of the Game::Render() function");
+    {
+        THROW InvalidOperationException{"Cannot get the current RenderTarget outside of the Game::Render() function"};
+    }
 
     return *m_RenderTargets.top();
 }
@@ -208,7 +210,9 @@ bool_t Mountain::Renderer::Initialize(const std::string& windowTitle, const Vect
     if (NoBinaryResources)
     {
         if (BuiltinShadersPath.empty() || BuiltinAssetsPath.empty())
+        {
             throw std::runtime_error("NoBinaryResources is true but at least one of BuiltinShadersPath and BuiltinAssetsPath hasn't been specified");
+        }
 
         FileManager::LoadDirectory(BuiltinShadersPath);
         FileManager::LoadDirectory(BuiltinAssetsPath);
@@ -263,7 +267,9 @@ void Mountain::Renderer::PostFrame()
     PopRenderTarget();
 
     if (!m_RenderTargets.empty())
-        throw std::logic_error{ "RenderTarget push/pop mismatch, e.g. a RenderTarget that was pushed hasn't been popped" };
+    {
+        THROW InvalidOperationException{"RenderTarget push/pop mismatch, e.g. a RenderTarget that was pushed hasn't been popped"};
+    }
 
     Draw::RenderTarget(*m_RenderTarget);
 
@@ -282,16 +288,16 @@ void Mountain::Renderer::PostFrame()
     }
 
     Draw::Flush();
-    
+
     // End ImGui frame
     ImGui::Render();
-    
+
     Vector2i framebufferSize;
     glfwGetFramebufferSize(Window::GetHandle(), &framebufferSize.x, &framebufferSize.y);
     Graphics::SetViewport(0, 0, framebufferSize.x, framebufferSize.y);
-    
+
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-    
+
     if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
     {
         ImGui::UpdatePlatformWindows();
@@ -303,17 +309,17 @@ void Mountain::Renderer::PostFrame()
 void Mountain::Renderer::Shutdown()
 {
     Logger::LogVerbose("Shutting down renderer");
-    
+
     // Cleanup
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplGlfw_Shutdown();
 	ImGui::DestroyPlatformWindows();
 	ImGui::DestroyContext();
-    
+
     Draw::Shutdown();
     FT_Done_FreeType(m_Freetype);
 
     delete m_RenderTarget;
-    
+
     Window::Shutdown();
 }

@@ -7,7 +7,7 @@
 
 #include "Mountain/Containers/Enumerable.hpp"
 #include "Mountain/Containers/Enumerator.hpp"
-#include "Mountain/Exceptions/ConcurrentModificationException.hpp"
+#include "Mountain/Exceptions/ThrowHelper.hpp"
 
 /// @file List.hpp
 /// @brief Defines the Mountain::List class.
@@ -494,7 +494,9 @@ namespace Mountain
     bool List<T>::Enumerator::MoveNextRare()
     {
         if (m_Version != m_List->m_Version)
-            throw ConcurrentModificationException{};
+        {
+            THROW ThrowHelper::ContainerModifiedException();
+        }
 
         m_NextIndex = m_List->GetSize() + 1;
         m_Current = nullptr;

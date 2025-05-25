@@ -31,7 +31,7 @@ bool_t Mountain::Collider::CheckCollision(const Collider& collider) const
             return CheckCollision(reinterpret_cast<const ColliderList&>(collider));
     }
 
-    throw std::runtime_error("Invalid collider type");
+    THROW InvalidOperationException{"Invalid collider type for collision check"};
 }
 
 Vector2 Mountain::Collider::Center() const { return offset + Size() * 0.5f; }
