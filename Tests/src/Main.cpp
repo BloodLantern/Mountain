@@ -52,6 +52,8 @@ int32_t main(int32_t, char_t**)
 	game->LoadResources();
 	game->Initialize();
 
+	game->Start();
+
 	// run the main loop
 	while (game->NextFrame())
 	{

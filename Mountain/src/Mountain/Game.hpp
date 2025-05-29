@@ -51,6 +51,9 @@ namespace Mountain
         /// necessary functions of the game.
         void MainLoop();
 
+        /// @brief Called once before the first @c NextFrame() call.
+        void Start();
+
         /// @brief Runs a single frame. Automatically called in @c MainLoop().
         bool_t NextFrame();
 

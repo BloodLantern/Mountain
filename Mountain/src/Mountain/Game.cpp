@@ -81,12 +81,18 @@ void Game::Play()
 
 void Game::MainLoop()
 {
+    Start();
+
+    while (NextFrame()) {}
+}
+
+// ReSharper disable once CppMemberFunctionMayBeStatic
+void Game::Start()
+{
     // Start the time now
     Time::Initialize();
 
     Window::SetVisible(true);
-
-    while (NextFrame()) {}
 }
 
 bool_t Game::NextFrame()
