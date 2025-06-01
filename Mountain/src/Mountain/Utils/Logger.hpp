@@ -111,7 +111,7 @@ namespace Mountain
             MOUNTAIN_API bool_t operator==(const LogEntry& other) const;
         };
 
-        // We thought about using std::list here instead but because the allocations are made on the logger thread anyway we can make it a std::vector
+        // We thought about using std::list here instead, but because the allocations are made on the logger thread anyway, we can make it a std::vector
         MOUNTAIN_API static inline std::vector<std::shared_ptr<LogEntry>> m_Logs;
 
     public:
@@ -119,16 +119,21 @@ namespace Mountain
         ///
         /// Defaults to LogLevel::Debug in a debug build, or LogLevel::Info otherwise.
         MOUNTAIN_API static inline LogLevel minimumConsoleLevel =
-    #ifdef _DEBUG
+#ifdef _DEBUG
             LogLevel::Debug;
-    #else
+#else
             LogLevel::Info;
-    #endif
+#endif
 
         /// @brief The minimum necessary LogLevel for a log to be printed in the log file.
         ///
         /// Defaults to LogLevel::Info.
-        MOUNTAIN_API static inline LogLevel minimumFileLevel = LogLevel::Info;
+        MOUNTAIN_API static inline LogLevel minimumFileLevel =
+#ifdef _DEBUG
+            LogLevel::Info;
+#else
+            LogLevel::Warning;
+#endif
 
         /// @brief Logs a message using the specified format string, arguments and LogLevel.
         ///

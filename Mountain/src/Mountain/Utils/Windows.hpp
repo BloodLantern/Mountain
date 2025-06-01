@@ -10,6 +10,7 @@
 #undef APIENTRY
 // ReSharper disable once CppInconsistentNaming
 #define XMLDocument XMLDocument_dont_care
+#define NOMINMAX
 #include <Windows.h>
 
 #include <ShlObj_core.h>
@@ -17,8 +18,6 @@
 
 #undef near
 #undef far
-#undef min
-#undef max
 #undef MessageBox
 
 namespace Mountain::Windows
