@@ -41,7 +41,7 @@ namespace Mountain::ImGuiUtils
     MOUNTAIN_API void PopCollapsingHeader();
 
     /// @brief Set the next item width to be the available width
-    /// Shorthand for writing @code ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x);@endcode
+    /// Shorthand for writing @code ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x); @endcode
     MOUNTAIN_API void SetNextItemWidthAvail();
 
     MOUNTAIN_API void ShowPerformanceMonitoring();

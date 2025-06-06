@@ -50,9 +50,9 @@ namespace Mountain
 
         /// @brief Get the target delta time.
         ///
-        /// This is either @code 1.f / GetTargetFps()@endcode
-        /// if @code GetTargetFps().has_value()@endcode is @c true,
-        /// otherwise @code 1.f / Screen::GetRefreshRate()@endcode
+        /// This is either @code 1.f / GetTargetFps() @endcode
+        /// if @code GetTargetFps().has_value() @endcode is @c true,
+        /// otherwise @code 1.f / Screen::GetRefreshRate() @endcode
         /// if Window::GetVSync() is @c true,
         /// or @c 0.f if both are @c false.
         ///
@@ -63,14 +63,16 @@ namespace Mountain
         STATIC_GETTER(float_t, LastFrameDuration, m_LastFrameDuration)
 
         /// @brief Returns @c true on the given time interval
-        /// @details This is a shorthand for writing @code Calc::OnInterval(Time::GetTotalTime(), Time::GetLastTotalTime(), interval)@endcode
+        /// @details This is a shorthand for writing @code Calc::OnInterval(Time::GetTotalTime(),
+        /// Time::GetLastTotalTime(), interval) @endcode
         /// @param interval The time interval between each @c true result
         /// @return @c true if the interval has passed, @c false otherwise
         [[nodiscard]]
         MOUNTAIN_API static bool_t OnInterval(float_t interval);
 
         /// @brief Returns @c true on the given time interval
-        /// @details This is a shorthand for writing @code Calc::OnInterval(Time::GetTotalTimeUnscaled(), Time::GetLastTotalTimeUnscaled(), interval)@endcode
+        /// @details This is a shorthand for writing @code Calc::OnInterval(Time::GetTotalTimeUnscaled(),
+        /// Time::GetLastTotalTimeUnscaled(), interval) @endcode
         /// @param interval The time interval between each @c true result
         /// @return @c true if the interval has passed, @c false otherwise
         [[nodiscard]]
