@@ -13,7 +13,7 @@ Sample projects are available in the [Samples](https://github.com/BloodLantern/M
 
 ## Documentation
 
-The Doxygen documentation can be found [online](https://codedocs.xyz/BloodLantern/Mountain/index.html) or manually generated using the `Doxyfile`.
+The Doxygen documentation can be manually generated using the `Doxyfile`.
 
 Most types and functions have documentation in their respective header files so you can always check them if needed.
 
