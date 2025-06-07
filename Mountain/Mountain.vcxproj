@@ -168,6 +168,7 @@
     <ClInclude Include="src\Mountain\Collision\Collision.hpp" />
     <ClInclude Include="src\Mountain\Collision\Grid.hpp" />
     <ClInclude Include="src\Mountain\Collision\Hitbox.hpp" />
+    <ClInclude Include="src\Mountain\Containers\Allocator.hpp" />
     <ClInclude Include="src\Mountain\Containers\Enumerable.hpp" />
     <ClInclude Include="src\Mountain\Containers\Enumerator.hpp" />
     <ClInclude Include="src\Mountain\Containers\List.hpp" />
@@ -476,7 +477,6 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <EnableModules>false</EnableModules>
       <AdditionalIncludeDirectories>src;binary_resources;externals\src;..\MathToolbox\src</AdditionalIncludeDirectories>
       <AdditionalOptions>/Gw %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>

@@ -4,6 +4,7 @@
 #include <sstream>
 
 #include "Mountain/Core.hpp"
+#include "Mountain/Exceptions/ThrowHelper.hpp"
 
 namespace Mountain
 {
@@ -153,7 +154,7 @@ struct std::formatter<Mountain::TimeSpan>
             return it;
 
         if (*it != '}')
-            throw std::format_error("Invalid format args for Mountain::TimeSpan");
+            THROW(Mountain::FormatException{"Invalid format args for Mountain::TimeSpan"});
 
         return it;
     }
@@ -203,8 +204,6 @@ struct std::formatter<Mountain::TimeSpan>
 
 // Start of TimeSpan.inl
 
-#include <stdexcept>
-
 namespace Mountain
 {
     constexpr TimeSpan TimeSpan::Zero() { return TimeSpan{0}; }
@@ -218,7 +217,7 @@ namespace Mountain
         const int64_t totalSeconds = static_cast<int64_t>(hours) * 3600 + static_cast<int64_t>(minutes) * 60 + static_cast<int64_t>(seconds);
 
         if (totalSeconds > MaxSeconds || totalSeconds < MinSeconds)
-            throw std::out_of_range{"Invalid TimeSpan values"};
+            THROW(ArgumentOutOfRangeException{"Invalid TimeSpan values"});
 
         m_Ticks = totalSeconds * TicksPerSecond;
     }
@@ -237,7 +236,7 @@ namespace Mountain
                                           microseconds;
 
         if (totalMicroseconds > MaxMicroSeconds || totalMicroseconds < MinMicroSeconds)
-            throw std::out_of_range{"Invalid TimeSpan values"};
+            THROW(ArgumentOutOfRangeException{"Invalid TimeSpan values"});
 
         m_Ticks = totalMicroseconds * TicksPerMicrosecond;
     }

@@ -35,7 +35,7 @@ struct std::formatter<std::filesystem::path>
             return it;
 
         if (*it != '}')
-            throw std::format_error("Invalid format args for std::filesystem::path");
+            THROW(Mountain::FormatException{"Invalid format args for std::filesystem::path"});
 
         return it;
     }
@@ -67,7 +67,7 @@ struct std::formatter<Exception>
             return it;
 
         if (*it != '}')
-            throw std::format_error("Invalid format args for std::exception");
+            THROW(Mountain::FormatException{"Invalid format args for std::exception"});
 
         return it;
     }

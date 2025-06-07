@@ -10,6 +10,7 @@
 #include <ImGui/imgui.h>
 
 #include "Mountain/Core.hpp"
+#include "Mountain/Exceptions/ThrowHelper.hpp"
 
 // Undef windows min and max macros in case they were defined
 #undef min
@@ -822,7 +823,7 @@ struct std::formatter<Mountain::Color>
             return it;
 
         if (*it != '}')
-            throw std::format_error("Invalid format args for Color");
+            THROW(Mountain::FormatException{"Invalid format args for Color"});
 
         return it;
     }
@@ -853,7 +854,7 @@ struct std::formatter<Mountain::ColorHsva>
             return it;
 
         if (*it != '}')
-            throw std::format_error("Invalid format args for ColorHsva");
+            THROW(Mountain::FormatException{"Invalid format args for ColorHsva"});
 
         return it;
     }

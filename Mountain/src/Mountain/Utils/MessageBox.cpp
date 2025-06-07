@@ -2,13 +2,14 @@
 
 #include <stdexcept>
 
+#include "Mountain/Exceptions/ThrowHelper.hpp"
 #include "Mountain/Utils/Windows.hpp"
 
 using namespace Mountain;
 
-MessageBox::Result MessageBox::Show(const std::string_view title, const std::string_view text, const Type type, const Icon icon, const DefaultButton defaultButton)
+MessageBox::Result MessageBox::Show(const char_t* title, const char_t* text, const Type type, const Icon icon, const DefaultButton defaultButton)
 {
-    return Call(text.data(), title.data(), type, icon, defaultButton);
+    return Call(text, title, type, icon, defaultButton);
 }
 
 uint32_t MessageBox::TypeToWindows(const Type type)
@@ -23,7 +24,7 @@ uint32_t MessageBox::TypeToWindows(const Type type)
         case Type::CancelTryContinue: return MB_CANCELTRYCONTINUE;
     }
 
-    throw std::runtime_error("Invalid MessageBox Type");
+    THROW(ArgumentOutOfRangeException{});
 }
 
 uint32_t MessageBox::IconToWindows(const Icon icon)
@@ -36,7 +37,7 @@ uint32_t MessageBox::IconToWindows(const Icon icon)
         case Icon::Information: return MB_ICONINFORMATION;
     }
 
-    throw std::runtime_error("Invalid MessageBox Icon");
+    THROW(ArgumentOutOfRangeException{});
 }
 
 uint32_t MessageBox::DefaultButtonToWindows(const DefaultButton defaultButton)
@@ -48,7 +49,7 @@ uint32_t MessageBox::DefaultButtonToWindows(const DefaultButton defaultButton)
         case DefaultButton::Third: return MB_DEFBUTTON3;
     }
 
-    throw std::runtime_error("Invalid MessageBox DefaultButton");
+    THROW(ArgumentOutOfRangeException{});
 }
 
 MessageBox::Result MessageBox::ParseResult(const int32_t windowsResult)
@@ -64,7 +65,7 @@ MessageBox::Result MessageBox::ParseResult(const int32_t windowsResult)
         case IDTRYAGAIN: return Result::Try;
         case IDCONTINUE: return Result::Continue;
 
-        default: throw std::runtime_error("Invalid MessageBox Windows result");
+        default: THROW(ArgumentOutOfRangeException{});
     }
 }
 

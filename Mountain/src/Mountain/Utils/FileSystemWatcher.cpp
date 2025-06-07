@@ -55,11 +55,11 @@ void FileSystemWatcher::SetPath(const std::filesystem::path& newPath)
         std::smatch results;
         const std::string pathStr = newPath.string();
         if (!std::regex_match(pathStr.cbegin(), pathStr.cend(), results, Regex))
-            throw std::runtime_error("Invalid path");
+            THROW(ArgumentException{"Invalid path", "newPath"});
 
         // Its parent directory must also exist
         if (!exists(newPath.parent_path()))
-            throw std::runtime_error("Parent directory of given path does not exist");
+            THROW(ArgumentException{"Parent directory of given path does not exist", "newPath"});
     }
 
     m_IsDirectory = is_directory(newPath);

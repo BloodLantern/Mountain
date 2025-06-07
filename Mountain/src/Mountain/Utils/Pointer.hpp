@@ -418,7 +418,7 @@ namespace Mountain
     T& Pointer<T>::operator*()
     {
         if (!m_ReferenceCounter)
-            throw std::runtime_error("Cannot dereference a null Pointer");
+            THROW(ArgumentNullException{"Cannot dereference a null Pointer"});
         return *m_ReferenceCounter->GetPointer();
     }
 
@@ -426,7 +426,7 @@ namespace Mountain
     const T& Pointer<T>::operator*() const
     {
         if (!m_ReferenceCounter)
-            throw std::runtime_error("Cannot dereference a null Pointer");
+            THROW(ArgumentNullException{"Cannot dereference a null Pointer"});
         return *m_ReferenceCounter->GetPointer();
     }
 
@@ -434,7 +434,7 @@ namespace Mountain
     T* Pointer<T>::operator->()
     {
         if (!m_ReferenceCounter)
-            throw std::runtime_error("Cannot dereference a null Pointer");
+            THROW(ArgumentNullException{"Cannot dereference a null Pointer"});
         return m_ReferenceCounter->GetPointer();
     }
 
@@ -442,7 +442,7 @@ namespace Mountain
     const T* Pointer<T>::operator->() const
     {
         if (!m_ReferenceCounter)
-            throw std::runtime_error("Cannot dereference a null Pointer");
+            THROW(ArgumentNullException{"Cannot dereference a null Pointer"});
         return m_ReferenceCounter->GetPointer();
     }
 
@@ -565,7 +565,7 @@ struct std::formatter<Mountain::Pointer<T>>  // NOLINT(cert-dcl58-cpp)
             return it;
 
         if (*it != '}')
-            throw std::format_error("Invalid format args for Mountain::Pointer");
+            THROW(Mountain::FormatException{"Invalid format args for Mountain::Pointer"});
 
         return it;
     }

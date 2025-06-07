@@ -74,7 +74,7 @@ struct std::formatter<Mountain::Stopwatch>
             return it;
 
         if (*it != '}')
-            throw std::format_error("Invalid format args for Mountain::Stopwatch");
+            THROW(Mountain::FormatException{"Invalid format args for Mountain::Stopwatch"});
 
         return it;
     }

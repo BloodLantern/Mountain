@@ -57,4 +57,8 @@ namespace Mountain
     DECLARE_DEFAULT_EXCEPTION(NotImplementedException, Exception)
 
     DECLARE_DEFAULT_EXCEPTION(RuntimeError, Exception)
+
+    DECLARE_DEFAULT_EXCEPTION(FormatException, Exception)
+
+    DECLARE_DEFAULT_EXCEPTION(OverflowException, Exception)
 }

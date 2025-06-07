@@ -62,7 +62,7 @@ Vector2i Texture::GetSize() const { return m_Size; }
 void Texture::SetSize(const Vector2i newSize)
 {
     if (m_Loaded)
-        throw std::logic_error{ "Texture::SetSize cannot be called once the Texture has been loaded" };
+        THROW(InvalidOperationException{"Texture::SetSize() cannot be called once the Texture has been loaded"});
     m_Size = newSize;
 }
 

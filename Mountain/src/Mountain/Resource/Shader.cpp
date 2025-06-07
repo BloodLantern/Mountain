@@ -18,7 +18,7 @@ Graphics::ShaderType Shader::FileExtensionToType(const std::string& extension)
         return Graphics::ShaderType::Fragment;
 
     Logger::LogError("Invalid file extension for shader : {}", extension);
-    THROW((ArgumentException{"Invalid file extension for shader", "extension"}));
+    THROW(ArgumentException{"Invalid file extension for shader", "extension"});
 }
 
 bool_t Shader::SetSourceData(const Pointer<File>& shader)

@@ -19,7 +19,7 @@ AudioContext::AudioContext(AudioDevice& device)
         Logger::LogError("Unable to create audio context for device {}", device.GetName());
         return;
     }
-    
+
     MakeCurrent();
 
     // Get the context attribute values
@@ -54,7 +54,7 @@ bool_t AudioContext::CheckError()
 int32_t AudioContext::GetMaxSourceCount(const AudioSourceType sourceType) const
 {
     int32_t result = 0;
-    
+
     for (size_t i = 0; i < m_Attributes.GetSize(); i++)
     {
         if ((sourceType == AudioSourceType::Mono && m_Attributes[i] == ALC_MONO_SOURCES) || (sourceType == AudioSourceType::Stereo && m_Attributes[i] == ALC_STEREO_SOURCES))
@@ -67,11 +67,11 @@ int32_t AudioContext::GetMaxSourceCount(const AudioSourceType sourceType) const
 uint32_t AudioContext::GetSource(const AudioSourceType type)
 {
     List<uint32_t>& sources = type == AudioSourceType::Mono ? m_SourcesMono : m_SourcesStereo;
-    
+
     List<int32_t> states(sources.GetSize());
 
     MakeCurrent();
-    
+
     sources.Iterate(
         [&] (const uint32_t* const s) -> void
         {
@@ -124,7 +124,7 @@ uint32_t AudioContext::GetSource(const AudioSourceType type)
     alGenSources(1, &source);
 
     if (CheckError())
-        throw std::runtime_error("Cannot generate audio source");
+        THROW(RuntimeError{"Cannot generate audio source"});
 
     sources.Add(source);
 

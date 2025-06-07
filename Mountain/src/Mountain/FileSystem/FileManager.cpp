@@ -142,7 +142,7 @@ Pointer<Directory> FileManager::LoadDirectory(std::filesystem::path path)
     if (!directory->Load())
     {
         m_Entries.erase(p);
-        throw std::runtime_error("An error occured while loading directory");
+        THROW(RuntimeError{"An error occured while loading directory"});
     }
 
     // Make sure to return a weak reference

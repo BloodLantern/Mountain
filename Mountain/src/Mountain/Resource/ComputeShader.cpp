@@ -103,7 +103,7 @@ bool_t ComputeShader::Reload(const bool_t reloadInBackend)
 void ComputeShader::Dispatch(const uint32_t groupsX, const uint32_t groupsY, const uint32_t groupsZ) const
 {
     if (groupsX == 0 || groupsY == 0 || groupsZ == 0)
-        throw std::invalid_argument{ "ComputeShader::Dispatch needs all dimension arguments to be at least 1" };
+        THROW(ArgumentException{"ComputeShader::Dispatch needs all dimension arguments to be at least 1"});
 
     glUseProgram(m_Id);
     glDispatchCompute(groupsX, groupsY, groupsZ);

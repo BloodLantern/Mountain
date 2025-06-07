@@ -1,8 +1,8 @@
 ﻿#pragma once
 
 #include "Mountain/Core.hpp"
-#include "Mountain/Exceptions/Exception.hpp"
 #include "Mountain/Exceptions/ArgumentException.hpp"
+#include "Mountain/Exceptions/Exception.hpp"
 #include "Mountain/Utils/MetaProgramming.hpp"
 
 /// @brief Macro used to throw Mountain Exceptions.
@@ -10,10 +10,6 @@
 /// This macro should be used in the following way:
 /// @code
 /// THROW(Exception{"Message"});
-/// @endcode
-/// Or, in case of an exception that requires multiple parameters, add surrounding parentheses:
-/// @code
-/// THROW((ArgumentException{"Message", parameter}));
 /// @endcode
 /// You can use any exception type,
 /// but it is recommended to only use exceptions that inherit from @c Mountain::Exception.
@@ -23,10 +19,10 @@
 /// - @c ArgumentException
 /// - @c ArgumentNullException
 /// - @c ArgumentOutOfRangeException
-#define THROW(exception) \
+#define THROW(...) \
     do \
     { \
-        const auto ex = exception; \
+        const auto ex = __VA_ARGS__; \
         static_assert(::Mountain::Meta::IsException<decltype(ex)>); \
         ::Mountain::currentException = {__FUNCTION__, __FILE__, __LINE__}; \
         throw ex; \
@@ -38,7 +34,7 @@
     { \
         static_assert(::Mountain::Meta::IsPointer<decltype(pointerParameter)>); \
         if (!(pointerParameter)) \
-            THROW((ArgumentNullException{"Parameter " #pointerParameter " cannot be null", #pointerParameter})); \
+            THROW(ArgumentNullException{"Parameter " #pointerParameter " cannot be null", #pointerParameter}); \
     } \
     while (false)
 

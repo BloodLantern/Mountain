@@ -17,7 +17,7 @@ RenderTarget::~RenderTarget() { Reset(); }
 void RenderTarget::Use() const
 {
     if (!m_Initialized)
-        throw std::logic_error("Cannot use an uninitialized RenderTarget");
+        THROW(InvalidOperationException{"Cannot use an uninitialized RenderTarget"});
 
     glBindFramebuffer(GL_FRAMEBUFFER, m_Framebuffer);
     glViewport(0, 0, m_Size.x, m_Size.y);
@@ -152,7 +152,7 @@ Vector2i RenderTarget::GetSize() const { return m_Size; }
 void RenderTarget::SetSize(const Vector2i newSize)
 {
     if (!m_Initialized)
-        throw std::logic_error("Cannot set the size of an uninitialized RenderTarget");
+        THROW(InvalidOperationException{"Cannot set the size of an uninitialized RenderTarget"});
 
     m_Texture.SetData(Graphics::InternalFormat::RedGreenBlueAlpha32Float, newSize, Graphics::Format::RedGreenBlueAlpha, Graphics::DataType::UnsignedByte, nullptr);
 
@@ -172,7 +172,7 @@ Graphics::MagnificationFilter RenderTarget::GetFilter() const
 void RenderTarget::SetFilter(const Graphics::MagnificationFilter newFilter)
 {
     if (!m_Initialized)
-        throw std::logic_error("Cannot set the magnification filter of an uninitialized RenderTarget");
+        THROW(InvalidOperationException{"Cannot set the magnification filter of an uninitialized RenderTarget"});
 
     m_Texture.SetMinFilter(newFilter);
     m_Texture.SetMagFilter(newFilter);
