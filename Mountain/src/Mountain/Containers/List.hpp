@@ -494,9 +494,7 @@ namespace Mountain
     bool List<T>::Enumerator::MoveNextRare()
     {
         if (m_Version != m_List->m_Version)
-        {
-            THROW ThrowHelper::ContainerModifiedException();
-        }
+            THROW(ThrowHelper::ContainerModifiedException());
 
         m_NextIndex = m_List->GetSize() + 1;
         m_Current = nullptr;

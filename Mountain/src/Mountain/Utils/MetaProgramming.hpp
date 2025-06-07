@@ -15,6 +15,7 @@
 #include <Math/vector2.hpp>
 #include <Math/vector3.hpp>
 
+#include "Mountain/Exceptions/Exception.hpp"
 #include "Mountain/Utils/Concepts.hpp"
 
 namespace Mountain
@@ -147,9 +148,14 @@ namespace Mountain
         template <typename>
         constexpr bool_t IsMountainPointer = false;
 
-        /// @private
         template <typename T>
         constexpr bool_t IsMountainPointer<Pointer<T>> = true;
+
+        template <typename T>
+        constexpr bool_t IsException = IsBaseOf<std::exception, T>;
+
+        template <typename T>
+        constexpr bool_t IsMountainException = IsBaseOf<Exception, T>;
 
         /// @brief Checks if T is a native type.
         ///
