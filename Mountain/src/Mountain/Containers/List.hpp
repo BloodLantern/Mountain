@@ -423,9 +423,6 @@ namespace Mountain
 
 // Start of List.inl
 
-// ReSharper disable CppClangTidyCppcoreguidelinesRvalueReferenceParamNotMoved
-// ReSharper disable CppClangTidyCppcoreguidelinesMissingStdForward
-
 #include <algorithm>
 #include <ranges>
 
@@ -595,7 +592,7 @@ namespace Mountain
     template <typename T>
     void List<T>::Add(T&& element)
     {
-        m_Vector.emplace_back(std::forward<T>(element));
+        m_Vector.emplace_back(std::move(element));
     }
 
     template <typename T>
@@ -626,7 +623,7 @@ namespace Mountain
     void List<T>::Fill(T&& value)
     {
         for (size_t i = 0; i < m_Vector.size(); i++)
-            m_Vector[i] = value;
+            m_Vector[i] = std::move(value);
     }
 
     template <typename T>
@@ -657,7 +654,7 @@ namespace Mountain
     template <typename T>
     void List<T>::Insert(T&& element, const size_t index)
     {
-        m_Vector.insert(m_Vector.begin() + index, std::forward<T>(element));
+        m_Vector.insert(m_Vector.begin() + index, std::move(element));
     }
 
     template <typename T>
