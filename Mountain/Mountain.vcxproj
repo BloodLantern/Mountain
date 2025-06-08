@@ -214,7 +214,6 @@
     <ClInclude Include="src\Mountain\Ecs\Entity.hpp" />
     <ClInclude Include="src\Mountain\Screen.hpp" />
     <ClInclude Include="src\Mountain\Utils\Color.hpp" />
-    <ClInclude Include="src\Mountain\Utils\Concepts.hpp" />
     <ClInclude Include="src\Mountain\Utils\Coroutine.hpp" />
     <ClInclude Include="src\Mountain\Utils\Event.hpp" />
     <ClInclude Include="src\Mountain\Utils\FileSystemWatcher.hpp" />
@@ -271,6 +270,7 @@
     <ClCompile Include="src\Mountain\Collision\Collision.cpp" />
     <ClCompile Include="src\Mountain\Collision\Grid.cpp" />
     <ClCompile Include="src\Mountain\Collision\Hitbox.cpp" />
+    <ClCompile Include="src\Mountain\Containers\Allocator.cpp" />
     <ClCompile Include="src\Mountain\Exceptions\ArgumentException.cpp" />
     <ClCompile Include="src\Mountain\Exceptions\Exception.cpp" />
     <ClCompile Include="src\Mountain\FileSystem\Directory.cpp" />

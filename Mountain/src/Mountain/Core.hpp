@@ -173,12 +173,12 @@ using stdstring = std::string;
 #define PUBLIC_GLOBAL(varType, varName, defaultValue) MOUNTAIN_API varType varName;
 #endif
 
-#define GETTER(type, name, internalName) [[nodiscard]] type Get##name() const { return internalName; }
-#define SETTER(type, name, internalName) void Set##name(const type new##name) { internalName = new##name; }
+#define GETTER(type, name, internalName) [[nodiscard]] type Get##name() const noexcept { return internalName; }
+#define SETTER(type, name, internalName) void Set##name(const type new##name) noexcept { internalName = new##name; }
 #define GETTER_SETTER(type, name, internalName) GETTER(type, name, internalName) SETTER(type, name, internalName)
 
-#define STATIC_GETTER(type, name, internalName) [[nodiscard]] static type Get##name() { return internalName; }
-#define STATIC_SETTER(type, name, internalName) static void Set##name(const type new##name) { internalName = new##name; }
+#define STATIC_GETTER(type, name, internalName) [[nodiscard]] static type Get##name() noexcept { return internalName; }
+#define STATIC_SETTER(type, name, internalName) static void Set##name(const type new##name) noexcept { internalName = new##name; }
 #define STATIC_GETTER_SETTER(type, name, internalName) STATIC_GETTER(type, name, internalName) STATIC_SETTER(type, name, internalName)
 
 // Undefine any Windows interface macro
@@ -195,5 +195,3 @@ using stdstring = std::string;
 #define interface struct __declspec(novtable)
 
 #define DEFAULT_VIRTUAL_DESTRUCTOR(type) virtual ~type() = default;
-
-#define DECLARE_DEFAULT_EXCEPTION(name, parent) class name : public parent { using parent::parent; };

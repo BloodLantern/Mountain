@@ -154,7 +154,7 @@ struct std::formatter<Mountain::TimeSpan>
             return it;
 
         if (*it != '}')
-            THROW(Mountain::FormatException{"Invalid format args for Mountain::TimeSpan"});
+            throw Mountain::FormatException{"Invalid format args for Mountain::TimeSpan"};
 
         return it;
     }

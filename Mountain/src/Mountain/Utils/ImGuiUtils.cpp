@@ -362,7 +362,7 @@ namespace
         }
     }
 
-    template <Concepts::ResourceT T>
+    template <Concepts::Resource T>
     void DisplayResourceType(
         const std::string_view typeName,
         const std::string_view resourceNameFilter,

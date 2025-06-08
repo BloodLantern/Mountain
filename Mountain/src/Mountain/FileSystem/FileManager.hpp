@@ -46,7 +46,7 @@ namespace Mountain
         /// @tparam T The type of Entry to get.
         /// @param path The system path to get the Entry of.
         /// @return The Entry corresponding to the given @p path, or nullptr if it hasn't been added yet.
-        template <Concepts::EntryT T = File>
+        template <Concepts::Entry T = File>
         [[nodiscard]]
         static Pointer<T> Get(const std::filesystem::path& path);
 
@@ -65,7 +65,7 @@ namespace Mountain
         /// @brief Finds the first Entry of type @p T.
         /// @tparam T The type of Entry to find.
         /// @return The first Entry of type @p T.
-        template <Concepts::EntryT T = File>
+        template <Concepts::Entry T = File>
         [[nodiscard]]
         static Pointer<T> Find();
 
@@ -75,19 +75,19 @@ namespace Mountain
         /// called for each stored Entry.
         /// @return The first Entry for which the @p predicate returned @c true. If every Entry
         /// returned @c false, instead return a null Pointer.
-        template <Concepts::EntryT T = File>
+        template <Concepts::Entry T = File>
         [[nodiscard]]
         static Pointer<T> Find(std::function<bool_t(Pointer<T>)>&& predicate);
 
         /// @brief Finds all @ref Entry "Entries" of type @p T.
         /// @tparam T The type of Entry to find.
         /// @return All stored @ref Entry "Entries" of type @p T.
-        template <Concepts::EntryT T = File>
+        template <Concepts::Entry T = File>
         [[nodiscard]]
         static std::vector<Pointer<T>> FindAll();
 
         /// @see FileManager::FindAll()
-        template <Concepts::EntryT T = File>
+        template <Concepts::Entry T = File>
         static void FindAll(List<Pointer<T>>* result);
 
         /// @brief Finds a list of Entry "Entries" based on a predicate.
@@ -96,12 +96,12 @@ namespace Mountain
         /// called for each stored Entry.
         /// @return The first Entry for which the @p predicate returned @c true. If every Entry
         /// returned @c false, instead return a null Pointer.
-        template <Concepts::EntryT T = File>
+        template <Concepts::Entry T = File>
         [[nodiscard]]
         static List<Pointer<T>> FindAll(std::function<bool_t(Pointer<T>)>&& predicate);
 
         /// @see FileManager::FindAll(std::function<bool(Pointer<T>)>&&)
-        template <Concepts::EntryT T = File>
+        template <Concepts::Entry T = File>
         static void FindAll(std::function<bool_t(Pointer<T>)>&& predicate, List<Pointer<T>>* result);
 
         /// @brief Unloads the Entry corresponding to the given path.
@@ -126,7 +126,7 @@ namespace Mountain
 
 namespace Mountain
 {
-    template <Concepts::EntryT T>
+    template <Concepts::Entry T>
     Pointer<T> FileManager::Get(const std::filesystem::path& path)
     {
         if (!Contains(path))
@@ -138,7 +138,7 @@ namespace Mountain
         return static_cast<Pointer<T>>(m_Entries.at(path));
     }
 
-    template <Concepts::EntryT T>
+    template <Concepts::Entry T>
     Pointer<T> FileManager::Find()
     {
         for (auto& entry : m_Entries | std::views::values)
@@ -152,7 +152,7 @@ namespace Mountain
         return nullptr;
     }
 
-    template <Concepts::EntryT T>
+    template <Concepts::Entry T>
     Pointer<T> FileManager::Find(std::function<bool_t(Pointer<T>)>&& predicate)
     {
         for (auto& entry : m_Entries | std::views::values)
@@ -166,7 +166,7 @@ namespace Mountain
         return nullptr;
     }
 
-    template <Concepts::EntryT T>
+    template <Concepts::Entry T>
     std::vector<Pointer<T>> FileManager::FindAll()
     {
         std::vector<Pointer<T>> result;
@@ -174,7 +174,7 @@ namespace Mountain
         return result;
     }
 
-    template <Concepts::EntryT T>
+    template <Concepts::Entry T>
     void FileManager::FindAll(List<Pointer<T>>* result)
     {
         result->Clear();
@@ -188,7 +188,7 @@ namespace Mountain
         }
     }
 
-    template <Concepts::EntryT T>
+    template <Concepts::Entry T>
     List<Pointer<T>> FileManager::FindAll(std::function<bool_t(Pointer<T>)>&& predicate)
     {
         List<Pointer<T>> result;
@@ -196,7 +196,7 @@ namespace Mountain
         return result;
     }
 
-    template <Concepts::EntryT T>
+    template <Concepts::Entry T>
     void FileManager::FindAll(std::function<bool_t(Pointer<T>)>&& predicate, List<Pointer<T>>* result)
     {
         result->Clear();

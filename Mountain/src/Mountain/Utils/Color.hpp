@@ -823,7 +823,7 @@ struct std::formatter<Mountain::Color>
             return it;
 
         if (*it != '}')
-            THROW(Mountain::FormatException{"Invalid format args for Color"});
+            throw Mountain::FormatException{"Invalid format args for Color"};
 
         return it;
     }
@@ -854,7 +854,7 @@ struct std::formatter<Mountain::ColorHsva>
             return it;
 
         if (*it != '}')
-            THROW(Mountain::FormatException{"Invalid format args for ColorHsva"});
+            throw Mountain::FormatException{"Invalid format args for ColorHsva"};
 
         return it;
     }

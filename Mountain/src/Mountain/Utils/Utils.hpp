@@ -12,7 +12,6 @@
 
 #include "Mountain/Core.hpp"
 
-#include "Mountain/Utils/Concepts.hpp"
 #include "Mountain/Utils/MetaProgramming.hpp"
 #include "Mountain/Utils/Pointer.hpp"
 
@@ -45,7 +44,7 @@ namespace Mountain::Utils
     /// @tparam IntT Type of the number, must be integral
     /// @param number Number to convert
     /// @return Pointer representation of the number
-    template <typename PtrT, Concepts::IntegralT IntT>
+    template <typename PtrT, Concepts::Integral IntT>
     [[nodiscard]]
     constexpr PtrT* IntToPointer(IntT number);
 
@@ -232,7 +231,7 @@ namespace Mountain::Utils
     template <uint64_t Offset, uint64_t Count>
     constexpr uint64_t GetBits(const uint64_t value);
 
-    template <Concepts::EnumT T>
+    template <Concepts::Enum T>
     constexpr Meta::Flags<T> ToFlags(T enumValue);
 }
 
@@ -292,7 +291,7 @@ ENUM_FLAGS(Mountain::Utils::TrimOptions)
 
 namespace Mountain
 {
-    template <typename PtrT, Concepts::IntegralT IntT>
+    template <typename PtrT, Concepts::Integral IntT>
     constexpr PtrT* Utils::IntToPointer(const IntT number) { return reinterpret_cast<PtrT*>(reinterpret_cast<uint8_t*>(1) + static_cast<const size_t>(number) - 1); }
 
     constexpr std::string Utils::RemoveNamespaces(const std::string& str)
@@ -403,6 +402,6 @@ namespace Mountain
         return value >> Offset & mask;
     }
 
-    template <Concepts::EnumT T>
+    template <Concepts::Enum T>
     constexpr Meta::Flags<T> Utils::ToFlags(T enumValue){ return static_cast<Meta::Flags<T>>(enumValue); }
 }

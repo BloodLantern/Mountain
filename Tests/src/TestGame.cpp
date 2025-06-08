@@ -31,7 +31,7 @@ GameExample::GameExample(const char_t* const windowTitle)
 {
 }
 
-template <Concepts::EffectT T>
+template <Concepts::Effect T>
 struct PostProcessingEffect
 {
     bool_t enabled;
@@ -52,7 +52,7 @@ namespace
     PostProcessingEffect<Vignette> vignette;
     PostProcessingEffect<FilmGrain> filmGrain;
 
-    template <Concepts::EffectT T>
+    template <Concepts::Effect T>
     void ShowEffect(
         const std::string& name,
         PostProcessingEffect<T>& effect,

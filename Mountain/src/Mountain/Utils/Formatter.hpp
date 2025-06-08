@@ -6,7 +6,7 @@
 #include <format>
 #include <sstream>
 
-#include "Mountain/Utils/Concepts.hpp"
+#include "Mountain/Utils/MetaProgramming.hpp"
 
 /// @file Formatter.hpp
 /// @brief Defines template specializations of @c std::formatter for external types.
@@ -21,7 +21,6 @@
 // These definitions must be in the std namespace
 
 /// @brief @c std::formatter template specialization for the @c std::filesystem::path type.
-///
 /// @see <a href="https://en.cppreference.com/w/cpp/filesystem/path">std::filesystem::path</a>
 template <>
 struct std::formatter<std::filesystem::path>
@@ -35,7 +34,7 @@ struct std::formatter<std::filesystem::path>
             return it;
 
         if (*it != '}')
-            THROW(Mountain::FormatException{"Invalid format args for std::filesystem::path"});
+            throw Mountain::FormatException{"Invalid format arguments for std::filesystem::path"};
 
         return it;
     }
@@ -53,10 +52,10 @@ struct std::formatter<std::filesystem::path>
 };
 
 /// @brief @c std::formatter template specialization for the @c std::exception type.
-///
+/// @note This is a different specialization than the one for @c Mountain::Exception.
 /// @see <a href="https://en.cppreference.com/w/cpp/error/exception">std::exception</a>
-template <Mountain::Concepts::ExceptionT Exception>
-struct std::formatter<Exception>
+template <Mountain::Concepts::StdException ExceptionT>
+struct std::formatter<ExceptionT>
 {
     /// @brief Parses the input formatting options.
     template <class ParseContext>
@@ -67,14 +66,14 @@ struct std::formatter<Exception>
             return it;
 
         if (*it != '}')
-            THROW(Mountain::FormatException{"Invalid format args for std::exception"});
+            throw Mountain::FormatException{"Invalid format arguments for std::exception"};
 
         return it;
     }
 
     /// @brief Formats a string using the given instance of @c std::exception, according to the given options in the parse function.
     template <class FormatContext>
-    typename FormatContext::iterator format(const Exception& ex, FormatContext& ctx) const
+    typename FormatContext::iterator format(const ExceptionT& ex, FormatContext& ctx) const
     {
         std::ostringstream out;
 

@@ -19,7 +19,7 @@ namespace Mountain
         CoroutineFunction<> coroutine{};
     };
 
-    template <Concepts::EnumT T>
+    template <Concepts::Enum T>
     class StateMachine : public Component
     {
     public:
@@ -100,10 +100,10 @@ namespace Mountain
 
 namespace Mountain
 {
-    template <Concepts::EnumT T>
+    template <Concepts::Enum T>
     StateMachine<T>::~StateMachine() { m_CurrentCoroutine.DestroySafe(); }
 
-    template <Concepts::EnumT T>
+    template <Concepts::Enum T>
     StateMachine<T>::StateMachine(StateMachine&& other) noexcept
     {
         m_Begins = std::move(other.m_Begins);
@@ -118,7 +118,7 @@ namespace Mountain
         m_StateChanged = other.m_StateChanged;
     }
 
-    template <Concepts::EnumT T>
+    template <Concepts::Enum T>
     StateMachine<T>& StateMachine<T>::operator=(StateMachine&& other) noexcept
     {
         m_Begins = std::move(other.m_Begins);
@@ -135,7 +135,7 @@ namespace Mountain
         return *this;
     }
 
-    template <Concepts::EnumT T>
+    template <Concepts::Enum T>
     void StateMachine<T>::SetCallbacks(T state, StateMachineCallbacks&& callbacks)  // NOLINT(cppcoreguidelines-rvalue-reference-param-not-moved)
     {
         const UnderlyingType index = magic_enum::enum_integer(state);
@@ -146,7 +146,7 @@ namespace Mountain
         m_Coroutines[index] = std::move(callbacks.coroutine);
     }
 
-    template <Concepts::EnumT T>
+    template <Concepts::Enum T>
     void StateMachine<T>::Update()
     {
         if (m_StateChanged)
@@ -174,13 +174,13 @@ namespace Mountain
         }
     }
 
-    template <Concepts::EnumT T>
+    template <Concepts::Enum T>
     T StateMachine<T>::GetState() const { return m_State; }
 
-    template <Concepts::EnumT T>
+    template <Concepts::Enum T>
     typename StateMachine<T>::UnderlyingType StateMachine<T>::GetStateIntegral() const { return magic_enum::enum_integer(m_State); }
 
-    template <Concepts::EnumT T>
+    template <Concepts::Enum T>
     void StateMachine<T>::SetState(T newState)
     {
         if (locked)
@@ -189,7 +189,7 @@ namespace Mountain
         ForceState(newState);
     }
 
-    template <Concepts::EnumT T>
+    template <Concepts::Enum T>
     void StateMachine<T>::ForceState(T newState)
     {
         m_PreviousState = m_State;
@@ -197,7 +197,7 @@ namespace Mountain
         m_State = newState;
     }
 
-    template <Concepts::EnumT T>
+    template <Concepts::Enum T>
     StateMachine<T>& StateMachine<T>::operator=(T newState)
     {
         SetState(newState);
@@ -205,15 +205,15 @@ namespace Mountain
         return *this;
     }
 
-    template <Concepts::EnumT T>
+    template <Concepts::Enum T>
     T StateMachine<T>::GetPreviousState() const { return m_PreviousState; }
 
-    template <Concepts::EnumT T>
+    template <Concepts::Enum T>
     typename StateMachine<T>::UnderlyingType StateMachine<T>::GetPreviousStateIntegral() const { return magic_enum::enum_integer(m_PreviousState); }
 
-    template <Concepts::EnumT T>
+    template <Concepts::Enum T>
     bool_t StateMachine<T>::GetStateChanged() const { return m_StateChanged; }
 
-    template <Concepts::EnumT T>
+    template <Concepts::Enum T>
     StateMachine<T>::operator T() { return m_State; }
 }

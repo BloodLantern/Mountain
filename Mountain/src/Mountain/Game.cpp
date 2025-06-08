@@ -31,9 +31,16 @@ Game::Game(const std::string& windowTitle, const Vector2i windowSize)
                 Logger::LogInfo("Exiting without exception");
                 Logger::Stop();
             }
+            catch (const Exception& e)
+            {
+                const char_t* t = e.GetName();
+                Logger::LogFatal("Uncaught exception of type {} occurred at {}: {}", t, e.GetState(), e);
+                Logger::Stop();
+                MessageBox::Show(std::format("Unhandled exception of type {}", t).c_str(), std::format("{}", e).c_str(), MessageBox::Type::Ok, MessageBox::Icon::Error);
+            }
             catch (const std::exception& e)
             {
-                const char_t* const t = typeid(e).name();
+                const char_t* t = typeid(e).name();
                 Logger::LogFatal("Uncaught exception of type {}: {}", t, e);
                 Logger::Stop();
                 MessageBox::Show(std::format("Unhandled exception of type {}", t).c_str(), std::format("{}", e).c_str(), MessageBox::Type::Ok, MessageBox::Icon::Error);

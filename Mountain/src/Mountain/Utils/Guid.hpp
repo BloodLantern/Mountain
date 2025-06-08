@@ -7,6 +7,7 @@
 #include <string>
 
 #include "Mountain/Core.hpp"
+#include "Mountain/Exceptions/Exception.hpp"
 
 /// @file guid.hpp
 /// @brief Defines the Mountain::Guid class.
@@ -92,7 +93,7 @@ struct std::hash<Mountain::Guid>
     }
 };
 
-/// @brief @c std::formatter template specialization for the Mountain::Guid type.
+/// @brief @c std::formatter template specialization for the @c Mountain::Guid type.
 template <>
 struct std::formatter<Mountain::Guid>
 {
@@ -105,13 +106,13 @@ struct std::formatter<Mountain::Guid>
             return it;
 
         if (*it != '}')
-            THROW(Mountain::FormatException{"Invalid format args for Mountain::Guid"});
+            throw Mountain::FormatException{"Invalid format args for Mountain::Guid"};
 
         return it;
     }
 
     // ReSharper disable once CppMemberFunctionMayBeStatic
-	/// @brief Formats a string using the given instance of Mountain::Guid, according to the given options in the parse function.
+	/// @brief Formats a string using the given instance of @c Mountain::Guid, according to the given options in the @c parse() function.
     template <class FormatContext>
     typename FormatContext::iterator format(const Mountain::Guid& guid, FormatContext& ctx) const
     {
