@@ -51,6 +51,9 @@ namespace Mountain
     public:
         /// @brief Returns an @c InvalidOperationException with the message: "The container has been modified while iterating over it."
         THROW_HELPER_FUNC(ContainerModified, InvalidOperationException, "The container has been modified while iterating over it.")
+
+        /// @brief Returns an @c InvalidOperationException with the message: "Couldn't find allocation block for pointer."
+        THROW_HELPER_FUNC(AllocatorBlockNotFound, InvalidOperationException, "Couldn't find allocation block for pointer.")
     };
 }
 

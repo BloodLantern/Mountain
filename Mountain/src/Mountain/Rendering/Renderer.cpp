@@ -180,7 +180,7 @@ bool_t Mountain::Renderer::Initialize(const std::string& windowTitle, const Vect
 
     // Setup GLAD: load all OpenGL function pointers
     if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress)))  // NOLINT(clang-diagnostic-cast-function-type-strict)
-        THROW(RuntimeError{"Failed to initialize GLAD"});
+        THROW(InvalidOperationException{"Failed to initialize GLAD"});
 
     glEnable(GL_DEBUG_OUTPUT);
     glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);

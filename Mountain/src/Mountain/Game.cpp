@@ -57,7 +57,7 @@ Game::Game(const std::string& windowTitle, const Vector2i windowSize)
     Logger::LogInfo("Initializing Mountain Framework");
 
     if (!Renderer::Initialize(windowTitle, windowSize))
-        THROW(RuntimeError{"Failed to initialize renderer"});
+        THROW(InvalidOperationException{"Failed to initialize renderer"});
 
     if (!Audio::Initialize())
         Logger::LogError("Failed to initialize audio {}", windowSize);

@@ -124,7 +124,7 @@ uint32_t AudioContext::GetSource(const AudioSourceType type)
     alGenSources(1, &source);
 
     if (CheckError())
-        THROW(RuntimeError{"Cannot generate audio source"});
+        THROW(InvalidOperationException{"Cannot generate audio source"});
 
     sources.Add(source);
 

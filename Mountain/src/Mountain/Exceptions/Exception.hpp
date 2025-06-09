@@ -72,8 +72,6 @@ namespace Mountain
     /// @brief The exception that is thrown when a requested method or operation is not implemented.
     DECLARE_DEFAULT_EXCEPTION(NotImplementedException, Exception);
 
-    DECLARE_DEFAULT_EXCEPTION(RuntimeError, Exception);
-
     DECLARE_DEFAULT_EXCEPTION(FormatException, Exception);
 
     DECLARE_DEFAULT_EXCEPTION(OverflowException, Exception);

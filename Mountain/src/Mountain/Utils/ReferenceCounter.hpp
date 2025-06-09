@@ -113,7 +113,7 @@ namespace Mountain
         const auto&& it = std::find(m_WeakReferenceOwners.begin(), m_WeakReferenceOwners.end(), weakReferenceOwner);
 
         if (it == m_WeakReferenceOwners.end())
-            THROW(RuntimeError{"Tried to decrement the weak reference count of a smart pointer with one that wasn't registered"});
+            THROW(InvalidOperationException{"Tried to decrement the weak reference count of a smart pointer with one that wasn't registered"});
 
         m_WeakReferenceOwners.erase(it);
     }

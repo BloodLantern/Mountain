@@ -54,7 +54,7 @@ namespace Mountain
         /// @brief The number @c Block allocated objects.
         MOUNTAIN_API static inline uint64_t m_BlockCount = 0;
 
-        MOUNTAIN_API static inline Block* m_FirstBlock = nullptr;
+        MOUNTAIN_API static inline Block* m_FirstBlock = nullptr; // FIXME - Not initialized to nullptr for some reason ????
 
         MOUNTAIN_API static inline Block* m_LastBlock = nullptr;
 
@@ -80,7 +80,7 @@ namespace Mountain
         MOUNTAIN_API static void RemoveBlock(const Block* block) noexcept;
 
         [[nodiscard]]
-        MOUNTAIN_API static Block* FindBlock(const void* pointer) noexcept;
+        MOUNTAIN_API static Block* FindBlock(const void* pointer);
     };
 }
 
@@ -90,6 +90,7 @@ namespace Mountain
 
 namespace Mountain
 {
+    /// @brief Same as doing @c sizeof(T) except that it returns a size of @c 1 for @c void.
     template <typename T>
     constexpr uint64_t Sizeof = sizeof(T);
 
@@ -155,10 +156,6 @@ namespace Mountain
             std::scoped_lock lock{m_Mutex};
 
             const Block* block = FindBlock(pointer);
-
-            if (block->next == nullptr && block->pointer != pointer)
-                THROW(RuntimeError{"Couldn't find allocation block for pointer"});
-
             m_AllocatedSize -= block->size;
             RemoveBlock(block);
         }
@@ -214,28 +211,28 @@ namespace Mountain
     }
 }
 
-// ReSharper disable once CppNonInlineFunctionDefinitionInHeaderFile
-// ReSharper disable once CppParameterNamesMismatch
-void* operator new(const std::size_t count)
+// ReSharper disable CppNonInlineFunctionDefinitionInHeaderFile
+// ReSharper disable CppParameterNamesMismatch
+
+/*void* operator new(const std::size_t count)
 {
     return Mountain::Allocator::Allocate<void>(count);
 }
 
-// ReSharper disable once CppNonInlineFunctionDefinitionInHeaderFile
 void operator delete(const void* ptr) noexcept
 {
     Mountain::Allocator::Deallocate(ptr);
 }
 
-// ReSharper disable once CppNonInlineFunctionDefinitionInHeaderFile
-// ReSharper disable once CppParameterNamesMismatch
 void* operator new[](const std::size_t count)
 {
     return Mountain::Allocator::Allocate<void>(count);
 }
 
-// ReSharper disable once CppNonInlineFunctionDefinitionInHeaderFile
 void operator delete[](const void* ptr) noexcept
 {
     Mountain::Allocator::Deallocate(ptr);
-}
+}*/
+
+// ReSharper enable CppNonInlineFunctionDefinitionInHeaderFile
+// ReSharper enable CppParameterNamesMismatch

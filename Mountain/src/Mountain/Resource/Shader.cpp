@@ -107,7 +107,7 @@ void Shader::Load()
     }
 
     if (CheckLinkError())
-        THROW(RuntimeError{"A Shader failed to link after compiling successfully"});
+        THROW(InvalidOperationException{"A Shader failed to link after compiling successfully"});
 
     m_Loaded = true;
 }

@@ -14,19 +14,12 @@ void Allocator::Deallocate(const void* pointer)
         std::scoped_lock lock{m_Mutex};
 
         const Block* block = FindBlock(pointer);
-
-        if (block->next == nullptr && block->pointer != pointer)
-            THROW(RuntimeError{"Couldn't find allocation block for pointer"});
-
         m_AllocatedSize -= block->size;
         RemoveBlock(block);
     }
 }
 
-uint64_t Allocator::GetTotalAllocatedSize() noexcept
-{
-    return m_AllocatedSize + m_BlockCount * Sizeof<Block>;
-}
+uint64_t Allocator::GetTotalAllocatedSize() noexcept { return m_AllocatedSize + m_BlockCount * Sizeof<Block>; }
 
 void Allocator::Free(const void* pointer) noexcept
 {
@@ -46,9 +39,13 @@ void Allocator::RemoveBlock(const Block* block) noexcept
     Free(block);
 }
 
-Allocator::Block* Allocator::FindBlock(const void* pointer) noexcept
+Allocator::Block* Allocator::FindBlock(const void* pointer)
 {
     Block* block = m_FirstBlock;
     while (block->next != nullptr && block->next != pointer) block = block->next;
+
+    if (block->next == nullptr && block->pointer != pointer)
+        THROW(ThrowHelper::AllocatorBlockNotFoundException());
+
     return block;
 }

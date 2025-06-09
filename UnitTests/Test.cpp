@@ -15,6 +15,9 @@ TEST(Allocator, Allocate)
     EXPECT_NE(array, nullptr);
     EXPECT_EQ(Allocator::GetAllocatedSize() - previousAllocatedBytes, arraySize * sizeof(int));
 
+    Allocator::Deallocate(Allocator::Allocate<int>(arraySize));
+    EXPECT_EQ(Allocator::GetAllocatedSize() - previousAllocatedBytes, arraySize * sizeof(int));
+
     array[0] = 1;
     array[9] = 10;
 
@@ -30,6 +33,9 @@ TEST(Allocator, Construct)
     int* value = Allocator::Construct<int>(17);
 
     EXPECT_NE(value, nullptr);
+    EXPECT_EQ(Allocator::GetAllocatedSize() - previousAllocatedBytes, sizeof(int));
+
+    Allocator::Destroy(Allocator::Construct<int>(15));
     EXPECT_EQ(Allocator::GetAllocatedSize() - previousAllocatedBytes, sizeof(int));
 
     EXPECT_EQ(*value, 17);
