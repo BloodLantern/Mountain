@@ -112,6 +112,11 @@ double_t Stopwatch::GetElapsedSeconds() const
     return static_cast<double_t>(GetElapsedDateTimeTicks()) / TicksPerSecond;
 }
 
+std::string Stopwatch::ToString() const
+{
+    return GetElapsed().ToString();
+}
+
 std::ostream& Mountain::operator<<(std::ostream& out, const Stopwatch& stopwatch) { return out << std::format("{}", stopwatch); }
 
 int64_t Stopwatch::GetRawElapsedTicks() const

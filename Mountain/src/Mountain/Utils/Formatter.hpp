@@ -18,8 +18,6 @@
 /// @see <a href="https://en.cppreference.com/w/cpp/utility/format/formatter">std::formatter</a>
 /// @see <a href="https://en.cppreference.com/w/cpp/utility/format/formattable">std::formattable</a>
 
-// These definitions must be in the std namespace
-
 /// @brief @c std::formatter template specialization for the @c std::filesystem::path type.
 /// @see <a href="https://en.cppreference.com/w/cpp/filesystem/path">std::filesystem::path</a>
 template <>

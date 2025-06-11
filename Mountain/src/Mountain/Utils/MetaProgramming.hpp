@@ -28,6 +28,8 @@ namespace Mountain
     class Pointer;
     template <typename>
     class List;
+    struct IStringConvertible;
+    struct IHashable;
 
     /// @namespace Meta
     /// @brief Defines utilities for meta-programming and template manipulation.
@@ -321,6 +323,15 @@ namespace Mountain
 
         template <class T>
         concept Effect = Meta::IsBaseOf<Effect, T>;
+
+        template <class T>
+        concept StringConvertible = requires(const T& value)
+        {
+            ToString(value);
+        };
+
+        template <class T>
+        concept Hashable = Meta::IsBaseOf<IHashable, T>;
 
         /// @brief An allocator type is any non-const, non-volatile, non-function, non-reference type.
         template <typename T>

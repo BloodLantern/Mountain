@@ -19,7 +19,7 @@ Game::Game(const std::string& windowTitle, const Vector2i windowSize)
     Logger::Start();
     Logger::OpenDefaultFile();
 
-    mi_version();
+    (void) mi_version(); // Make sure mimalloc is correctly initialized
 
     std::set_terminate(
         []

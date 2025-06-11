@@ -65,8 +65,6 @@ namespace Mountain
 
 // Start of ReferenceCounter.inl
 
-#include <stdexcept>
-
 namespace Mountain
 {
     template <typename T>
@@ -101,7 +99,10 @@ namespace Mountain
     template <typename T>
     bool ReferenceCounter<T>::DecStrong()
     {
-        if (m_Strong == 0 || --m_Strong == 0)
+        if (m_Strong == 0)
+            return true;
+
+        if (--m_Strong == 0)
             return true;
 
         return false;
@@ -110,7 +111,7 @@ namespace Mountain
     template <typename T>
     void ReferenceCounter<T>::DecWeak(const Pointer<T>* const weakReferenceOwner)
     {
-        const auto&& it = std::find(m_WeakReferenceOwners.begin(), m_WeakReferenceOwners.end(), weakReferenceOwner);
+        const auto&& it = std::ranges::find(m_WeakReferenceOwners, weakReferenceOwner);
 
         if (it == m_WeakReferenceOwners.end())
             THROW(InvalidOperationException{"Tried to decrement the weak reference count of a smart pointer with one that wasn't registered"});

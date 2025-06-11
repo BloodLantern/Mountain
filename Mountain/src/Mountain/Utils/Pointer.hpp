@@ -6,6 +6,8 @@
 #include <utility>
 
 #include "Mountain/Core.hpp"
+#include "Mountain/Utils/IHashable.hpp"
+#include "Mountain/Utils/IStringConvertible.hpp"
 #include "Mountain/Utils/ReferenceCounter.hpp"
 
 /// @file Pointer.hpp
@@ -16,12 +18,10 @@ namespace Mountain
     /// @brief Custom Mountain smart pointer.
     ///        Represents both a @c std::shared_ptr and a @c std::weak_ptr.
     ///
-    /// ### Reason
     /// While using @c std::weak_ptr, we realized that it was not very practical because a @c std::shared_ptr needs to be
-    /// constructed from the former for the pointed type to be used. The Pointer type is meant to fix this issue
-    /// by being both a strong and a weak shared pointer.
+    /// constructed from the former for the pointed type to be used.
+    /// The @c Pointer type is meant to fix this issue by being both a strong and a weak shared pointer.
     ///
-    /// ### Usage
     /// The simplest way to create a Pointer to wrap your type is by using the forwarding variadic template function
     /// which allows you to do the following:
     /// @code
@@ -31,24 +31,24 @@ namespace Mountain
     /// @endcode
     /// ... and 7 will be forwarded as a parameter to the @c Type(int) constructor.
     ///
-    /// There are 3 other ways of initializing a Pointer:
+    /// There are three other ways of initializing a Pointer:
     /// @code
-    /// // 1 - Default initialize the Pointer: this wraps a nullptr
+    /// // 1 - Default initialization of the Pointer: this wraps a nullptr
     /// Pointer<Type> ptr;
     ///
-    /// // 2 - Default initialize the wrapped value: this effectively calls the wrapped type's default constructor
+    /// // 2 - Default initialization of the wrapped value: this effectively calls the wrapped type's default constructor
     /// Pointer<Type> ptr = Pointer<Type>::New();
     ///
     /// // 3 - Manually set the Pointer to nullptr: this is actually the same as default initializing it
     /// Pointer<Type> ptr = nullptr;
     /// @endcode
     ///
-    /// ### Weak and Strong References
     /// By default, creating a Pointer with constructor arguments from the pointed type allocates this type on the heap.
     /// Copying this instance of Pointer creates a new weak reference by default, meaning that the copy won't keep the raw
-    /// pointer alive. When all the strong references go out of scope or are destroyed, the underlying pointed type is freed.
-    /// A strong reference can still be created if needed, by calling either Pointer::CreateStrongReference(),
-    /// Pointer::ToStrongReference(), or by creating a copy using @ref Pointer::Pointer(const Pointer&, bool) "the copy constructor"
+    /// pointer alive.
+    /// When all the strong references go out of scope or are destroyed, the underlying pointed type is freed.
+    /// A strong reference can still be created if needed, by calling either @c Pointer::CreateStrongReference(),
+    /// @c Pointer::ToStrongReference(), or by creating a copy using the copy constructor
     /// and giving a @c true value to the second argument.
     ///
     /// @tparam T The type to point to. Most of the time, this shouldn't be a pointer type.
@@ -57,7 +57,7 @@ namespace Mountain
     /// @see <a href="https://en.cppreference.com/w/cpp/memory/shared_ptr">std::shared_ptr</a>
     /// @see <a href="https://en.cppreference.com/w/cpp/memory/weak_ptr">std::weak_ptr</a>
     template <typename T>
-    class Pointer final
+    class Pointer final : IStringConvertible, IHashable
     {
     public:
         /// @brief The type of ReferenceCounter, and therefore the type this Pointer is pointing to.
@@ -98,7 +98,7 @@ namespace Mountain
         explicit Pointer(Pointer<U>&& other) noexcept;
 
         /// @brief Destroys this Pointer, deallocating any memory if this is the last strong reference.
-        ~Pointer();
+        virtual ~Pointer();
 
         /// @brief Creates a new strong reference to this pointer.
         [[nodiscard]]
@@ -186,6 +186,16 @@ namespace Mountain
         /// @brief Dereferences this @c const Pointer, which gives a @c const reference to the underlying Type.
         [[nodiscard]]
         const T* operator->() const;
+
+        // IHashable implementation
+
+        [[nodiscard]]
+        size_t GetHashCode() const override;
+
+        // IStringConvertible implementation
+
+        [[nodiscard]]
+        std::string ToString() const override;
 
     private:
         ReferenceCounter<T>* m_ReferenceCounter = nullptr;
@@ -447,6 +457,20 @@ namespace Mountain
     }
 
     template <typename T>
+    size_t Pointer<T>::GetHashCode() const
+    {
+        const size_t h1 = std::hash<ReferenceCounter<T>*>{}(const_cast<ReferenceCounter<T>*>(m_ReferenceCounter));
+        const size_t h2 = std::hash<bool_t>{}(m_IsStrongReference);
+        return h1 ^ (h2 << 1);
+    }
+
+    template <typename T>
+    std::string Pointer<T>::ToString() const
+    {
+        return m_ReferenceCounter ? std::format("0x{}", std::bit_cast<size_t>(m_ReferenceCounter->GetPointer())) : "null";
+    }
+
+    template <typename T>
     bool_t Pointer<T>::IsValid() const { return m_ReferenceCounter != nullptr; }
 
     template <typename T>
@@ -546,52 +570,4 @@ namespace Mountain
     /// @brief Checks if a @ref Pointer is not null.
     template <typename T>
     bool_t operator!=(const Pointer<T>& a, const nullptr_t) { return a.IsValid(); }
-
-    /// @brief Prints the given Pointer to an output stream according to the @ref Mountain::Pointer<T>::operator stdstring() const "Pointer to string conversion".
-    template <typename T>
-    std::ostream& operator<<(std::ostream& stream, const Pointer<T>& ptr) { return stream << static_cast<std::string>(ptr); }
 }
-
-/// @brief @c std::formatter template specialization for the Mountain::Pointer type.
-template <typename T>
-struct std::formatter<Mountain::Pointer<T>>  // NOLINT(cert-dcl58-cpp)
-{
-    /// @brief Parses the input formatting options.
-    template <class ParseContext>
-    constexpr typename ParseContext::iterator parse(ParseContext& ctx)
-    {
-        auto it = ctx.begin();
-        if (it == ctx.end())
-            return it;
-
-        if (*it != '}')
-            THROW(Mountain::FormatException{"Invalid format args for Mountain::Pointer"});
-
-        return it;
-    }
-
-    // ReSharper disable once CppMemberFunctionMayBeStatic
-    /// @brief Formats a string using the given instance of Mountain::Pointer, according to the given options in the parse function.
-    template <class FormatContext>
-    typename FormatContext::iterator format(const Mountain::Pointer<T>& pointer, FormatContext& ctx) const
-    {
-        std::ostringstream out;
-
-        out << "0x" << static_cast<const T*>(pointer);
-
-        return std::ranges::copy(std::move(out).str(), ctx.out()).out;
-    }
-};
-
-/// @brief @c std::hash template specialization for the Mountain::Pointer type.
-template<typename T>
-struct std::hash<Mountain::Pointer<T>>  // NOLINT(cert-dcl58-cpp)
-{
-    /// @brief Hashes the given Mountain::Pointer.
-    std::size_t operator()(const Mountain::Pointer<T>& p) const noexcept
-    {
-        const std::size_t h1 = std::hash<decltype(p.GetReferenceCounter())>{}(const_cast<decltype(p.GetReferenceCounter())>(p.GetReferenceCounter()));
-        const std::size_t h2 = std::hash<bool_t>{}(p.GetIsStrongReference());
-        return h1 ^ (h2 << 1);
-    }
-};

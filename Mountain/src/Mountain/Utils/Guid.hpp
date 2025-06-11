@@ -8,19 +8,23 @@
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Exceptions/Exception.hpp"
+#include "Mountain/Utils/IHashable.hpp"
+#include "Mountain/Utils/IStringConvertible.hpp"
 
 /// @file guid.hpp
 /// @brief Defines the Mountain::Guid class.
 
 namespace Mountain
 {
-    /// @brief Stands for Global Unique Identifier, it represents a unique ID that's used to link pointers during serialization and deserialization
-    class MOUNTAIN_API Guid final
+    /// @brief Stands for Global Unique Identifier, it represents a unique ID.
+    class MOUNTAIN_API Guid final : IStringConvertible, IHashable
     {
         static constexpr size_t Data4Size = 8;
 
     public:
         constexpr Guid() = default;
+        DEFAULT_VIRTUAL_DESTRUCTOR(Guid)
+        DEFAULT_COPY_MOVE_OPERATIONS(Guid)
 
         /// @brief Empty guid
         static constexpr Guid Empty() { return Guid(); }
@@ -58,68 +62,20 @@ namespace Mountain
         [[nodiscard]]
         bool_t operator!=(const Guid& other) const;
 
-        /// @brief Converts a @ref Guid to a string representation
-        explicit operator std::string() const;
+        // IStringConvertible implementation
+
+        [[nodiscard]]
+        std::string ToString() const override;
+
+        // IHashable implementation
+
+        [[nodiscard]]
+        size_t GetHashCode() const override;
 
     private:
         uint32_t m_Data1 = 0;
         uint16_t m_Data2 = 0;
         uint16_t m_Data3 = 0;
         std::array<uint8_t, Data4Size> m_Data4 = {};
-
-        friend struct std::hash<Guid>;
     };
 }
-
-/// @brief @c std::hash template specialization for the Mountain::Guid type.
-template <>
-struct std::hash<Mountain::Guid>
-{
-    static constexpr size_t RandomValue = 0x9E3779B9;
-
-    size_t operator()(const Mountain::Guid& guid) const noexcept
-    {
-        size_t result = 0;
-        result ^= std::hash<decltype(guid.m_Data1)>()(guid.m_Data1) + RandomValue;
-        result ^= std::hash<decltype(guid.m_Data2)>()(guid.m_Data2) + RandomValue + (result << 6) + (result >> 2);
-        result ^= std::hash<decltype(guid.m_Data3)>()(guid.m_Data3) + RandomValue + (result << 6) + (result >> 2);
-
-        for (size_t i = 0; i < Mountain::Guid::Data4Size; i++)
-        {
-            result ^= std::hash<std::remove_cvref_t<decltype(guid.m_Data4[i])>>()(guid.m_Data4[i]) + RandomValue + (result << 6) + (result >> 2);
-        }
-
-        return result;
-    }
-};
-
-/// @brief @c std::formatter template specialization for the @c Mountain::Guid type.
-template <>
-struct std::formatter<Mountain::Guid>
-{
-    /// @brief Parses the input formatting options.
-    template <class ParseContext>
-    constexpr typename ParseContext::iterator parse(ParseContext& ctx)
-    {
-        auto it = ctx.begin();
-        if (it == ctx.end())
-            return it;
-
-        if (*it != '}')
-            throw Mountain::FormatException{"Invalid format args for Mountain::Guid"};
-
-        return it;
-    }
-
-    // ReSharper disable once CppMemberFunctionMayBeStatic
-	/// @brief Formats a string using the given instance of @c Mountain::Guid, according to the given options in the @c parse() function.
-    template <class FormatContext>
-    typename FormatContext::iterator format(const Mountain::Guid& guid, FormatContext& ctx) const
-    {
-        std::ostringstream out;
-
-        out << static_cast<std::string>(guid);
-
-        return std::ranges::copy(std::move(out).str(), ctx.out()).out;
-    }
-};

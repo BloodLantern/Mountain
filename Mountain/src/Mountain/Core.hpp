@@ -29,7 +29,7 @@ typedef char char_t;
 // ReSharper disable once CppEnforceTypeAliasCodeStyle
 /// @brief Equivalent to <c>bool</c>.
 ///
-/// @see char_t for reason.
+/// @see char_t for the reason.
 typedef bool bool_t;
 
 using Action = std::function<void()>;
@@ -49,7 +49,6 @@ namespace Mountain {}
 
 /// @brief Creates default copy and move operations for a given @p type.
 ///
-/// ### Usage
 /// This macro should be used for any type that defines at least one of:
 /// - A non-default destructor (this includes @code = default @endcode implementations),
 /// - A non-default copy constructor
@@ -105,7 +104,7 @@ namespace Mountain {}
     type& operator=(const type& other) = delete;   \
     type& operator=(type&& other) = delete;
 
-/// @brief Macro used to declare a static class, e.g. a class that cannot be instantiated.
+/// @brief Macro used to declare a static class, e.g., a class that cannot be instantiated.
 ///
 /// For consistency, this should be the first statement inside the class definition:
 /// @code

@@ -39,14 +39,17 @@ namespace Mountain::Utils
     template <typename T>
     constexpr ProjectionFunc<T> Identity = [](T t) { return t; };
 
-    /// @brief Converts a integral number to a valid pointer without illegal size operations
+    /// @brief Converts an integral number to a valid pointer without illegal size operations
     /// @tparam PtrT Type of the pointer
-    /// @tparam IntT Type of the number, must be integral
+    /// @tparam IntT Type of the number. Must be integral
     /// @param number Number to convert
     /// @return Pointer representation of the number
     template <typename PtrT, Concepts::Integral IntT>
     [[nodiscard]]
     constexpr PtrT* IntToPointer(IntT number);
+
+    [[nodiscard]]
+    constexpr size_t PointerToInt(const void* pointer);
 
     /// @brief Gets the hash code of a specified type
     /// @tparam T Type
@@ -293,6 +296,8 @@ namespace Mountain
 {
     template <typename PtrT, Concepts::Integral IntT>
     constexpr PtrT* Utils::IntToPointer(const IntT number) { return reinterpret_cast<PtrT*>(reinterpret_cast<uint8_t*>(1) + static_cast<const size_t>(number) - 1); }
+
+    constexpr size_t Utils::PointerToInt(const void* pointer) { return std::bit_cast<size_t>(pointer); }
 
     constexpr std::string Utils::RemoveNamespaces(const std::string& str)
     {

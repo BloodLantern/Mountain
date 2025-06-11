@@ -129,7 +129,44 @@ TimeSpan& Mountain::operator*=(TimeSpan& v, const double_t factor) { return v = 
 
 TimeSpan& Mountain::operator/=(TimeSpan& v, const double_t divisor) { return v = v / divisor; }
 
-std::ostream& Mountain::operator<<(std::ostream& out, const TimeSpan& timeSpan) { return out << std::format("{}", timeSpan); }
+std::string TimeSpan::ToString() const
+{
+    std::string result;
+
+    const bool_t daysCheck = GetDays() > 0;
+    const bool_t hoursCheck = GetHours() > 0;
+    const bool_t minutesCheck = GetMinutes() > 0;
+
+    if (daysCheck)
+        result += std::format("{}.", GetDays());
+
+    if (daysCheck || hoursCheck)
+        result += std::format("{:2}:", GetHours());
+
+    if (daysCheck || hoursCheck || minutesCheck)
+        result += std::format("{:2}:", GetMinutes());
+
+    result += std::format("{}", GetSeconds());
+
+    const bool_t millisecondsCheck = GetMilliseconds() > 0;
+    const bool_t microsecondsCheck = GetMicroseconds() > 0;
+    const bool_t nanosecondsCheck = GetNanoseconds() > 0;
+
+    if (nanosecondsCheck || microsecondsCheck)
+        result += std::format(".{:03}", GetMilliseconds());
+    else if (millisecondsCheck)
+        result += std::format(".{}", GetMilliseconds());
+
+    if (nanosecondsCheck || microsecondsCheck)
+        result += std::format("{:03}", GetMicroseconds());
+    else if (microsecondsCheck)
+        result += std::format(".{}", GetMilliseconds());
+
+    if (nanosecondsCheck)
+        result += std::format("{}", GetNanoseconds());
+
+    return result;
+}
 
 TimeSpan TimeSpan::Interval(const double_t ticks, const double_t scale)
 {

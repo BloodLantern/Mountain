@@ -11,7 +11,7 @@ namespace Mountain
     /// @brief C++ reimplementation of the .NET Stopwatch class
     /// @details Provides a set of methods that can be used to accurately measure elapsed time.
     /// @see Source: https://github.com/dotnet/runtime/blob/release/8.0/src/libraries/System.Private.CoreLib/src/System/Diagnostics/Stopwatch.cs
-    class MOUNTAIN_API Stopwatch
+    class MOUNTAIN_API Stopwatch : IStringConvertible
     {
     public:
         [[nodiscard]]
@@ -25,6 +25,10 @@ namespace Mountain
         static TimeSpan GetElapsedTime(int64_t startingTimestamp);
         [[nodiscard]]
         static TimeSpan GetElapsedTime(int64_t startingTimestamp, int64_t endingTimestamp);
+
+        Stopwatch() = default;
+        DEFAULT_VIRTUAL_DESTRUCTOR(Stopwatch)
+        DEFAULT_COPY_MOVE_OPERATIONS(Stopwatch)
 
         void Start();
         void Stop();
@@ -42,8 +46,6 @@ namespace Mountain
         [[nodiscard]]
         double_t GetElapsedSeconds() const;
 
-        friend std::ostream& operator<<(std::ostream& out, const Stopwatch& stopwatch);
-
     private:
         static constexpr int64_t TicksPerMillisecond = 10000;
         static constexpr int64_t TicksPerSecond = TicksPerMillisecond * 1000;
@@ -59,35 +61,8 @@ namespace Mountain
         [[nodiscard]]
         int64_t GetElapsedDateTimeTicks() const;
     };
+
+    template <>
+    [[nodiscard]]
+    std::string ToString(const Stopwatch& value);
 }
-
-/// @brief @c std::formatter template specialization for the Mountain::Stopwatch type.
-template <>
-struct std::formatter<Mountain::Stopwatch>
-{
-    /// @brief Parses the input formatting options.
-    template <class ParseContext>
-    constexpr typename ParseContext::iterator parse(ParseContext& ctx)
-    {
-        auto it = ctx.begin();
-        if (it == ctx.end())
-            return it;
-
-        if (*it != '}')
-            THROW(Mountain::FormatException{"Invalid format args for Mountain::Stopwatch"});
-
-        return it;
-    }
-
-    // ReSharper disable once CppMemberFunctionMayBeStatic
-    /// @brief Formats a string using the given instance of Mountain::Stopwatch, according to the given options in the parse function.
-    template <class FormatContext>
-    typename FormatContext::iterator format(const Mountain::Stopwatch& stopwatch, FormatContext& ctx) const
-    {
-        std::ostringstream out;
-
-        out << stopwatch.GetElapsed();
-
-        return std::ranges::copy(std::move(out).str(), ctx.out()).out;
-    }
-};
