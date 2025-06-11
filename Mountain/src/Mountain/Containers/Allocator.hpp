@@ -54,7 +54,7 @@ namespace Mountain
         /// @brief The number @c Block allocated objects.
         MOUNTAIN_API static inline uint64_t m_BlockCount = 0;
 
-        MOUNTAIN_API static inline Block* m_FirstBlock = nullptr; // FIXME - Not initialized to nullptr for some reason ????
+        MOUNTAIN_API static inline Block* m_FirstBlock = nullptr;
 
         MOUNTAIN_API static inline Block* m_LastBlock = nullptr;
 

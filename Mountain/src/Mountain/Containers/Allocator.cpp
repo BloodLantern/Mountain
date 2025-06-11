@@ -34,6 +34,11 @@ void Allocator::RemoveBlock(const Block* block) noexcept
     if (block->next)
         block->next->previous = block->previous;
 
+    if (block == m_FirstBlock)
+        m_FirstBlock = block->next;
+    if (block == m_LastBlock)
+        m_LastBlock = block->previous;
+
     m_BlockCount--;
 
     Free(block);
