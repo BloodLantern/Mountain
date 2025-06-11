@@ -5,10 +5,6 @@
       <Configuration>Debug</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Generate Assembly|x64">
-      <Configuration>Generate Assembly</Configuration>
-      <Platform>x64</Platform>
-    </ProjectConfiguration>
     <ProjectConfiguration Include="Release|x64">
       <Configuration>Release</Configuration>
       <Platform>x64</Platform>
@@ -111,6 +107,15 @@
     <ClInclude Include="externals\src\magic_enum\magic_enum_iostream.hpp" />
     <ClInclude Include="externals\src\magic_enum\magic_enum_switch.hpp" />
     <ClInclude Include="externals\src\magic_enum\magic_enum_utility.hpp" />
+    <ClInclude Include="externals\src\mimalloc-new-delete.h" />
+    <ClInclude Include="externals\src\mimalloc-override.h" />
+    <ClInclude Include="externals\src\mimalloc-stats.h" />
+    <ClInclude Include="externals\src\mimalloc.h" />
+    <ClInclude Include="externals\src\mimalloc\atomic.h" />
+    <ClInclude Include="externals\src\mimalloc\internal.h" />
+    <ClInclude Include="externals\src\mimalloc\prim.h" />
+    <ClInclude Include="externals\src\mimalloc\track.h" />
+    <ClInclude Include="externals\src\mimalloc\types.h" />
     <ClInclude Include="externals\src\minimp3.h" />
     <ClInclude Include="externals\src\minimp3_ex.h" />
     <ClInclude Include="externals\src\RapidXML\rapidxml.hpp" />
@@ -168,7 +173,6 @@
     <ClInclude Include="src\Mountain\Collision\Collision.hpp" />
     <ClInclude Include="src\Mountain\Collision\Grid.hpp" />
     <ClInclude Include="src\Mountain\Collision\Hitbox.hpp" />
-    <ClInclude Include="src\Mountain\Containers\Allocator.hpp" />
     <ClInclude Include="src\Mountain\Containers\Enumerable.hpp" />
     <ClInclude Include="src\Mountain\Containers\Enumerator.hpp" />
     <ClInclude Include="src\Mountain\Containers\List.hpp" />
@@ -255,6 +259,7 @@
     <ClCompile Include="externals\src\ImGui\imgui_stdlib.cpp" />
     <ClCompile Include="externals\src\ImGui\imgui_tables.cpp" />
     <ClCompile Include="externals\src\ImGui\imgui_widgets.cpp" />
+    <ClCompile Include="externals\src\mimalloc-new-delete.cpp" />
     <ClCompile Include="externals\src\minimp3.c" />
     <ClCompile Include="externals\src\RapidXMLSTD.cpp" />
     <ClCompile Include="externals\src\stb_image.c" />
@@ -270,7 +275,6 @@
     <ClCompile Include="src\Mountain\Collision\Collision.cpp" />
     <ClCompile Include="src\Mountain\Collision\Grid.cpp" />
     <ClCompile Include="src\Mountain\Collision\Hitbox.cpp" />
-    <ClCompile Include="src\Mountain\Containers\Allocator.cpp" />
     <ClCompile Include="src\Mountain\Exceptions\ArgumentException.cpp" />
     <ClCompile Include="src\Mountain\Exceptions\Exception.cpp" />
     <ClCompile Include="src\Mountain\FileSystem\Directory.cpp" />
@@ -375,12 +379,6 @@
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Generate Assembly|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
@@ -395,9 +393,6 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Generate Assembly|x64'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
@@ -410,7 +405,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>src;binary_resources;externals\src;..\MathToolbox\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;externals\src;..\MathToolbox\src</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <AdditionalOptions>/Gw %(AdditionalOptions)</AdditionalOptions>
@@ -418,41 +413,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>externals/libs/static/$(Configuration)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;freetype.lib;OpenAL32.lib;soft_oal.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
-      <CreateHotPatchableImage>Enabled</CreateHotPatchableImage>
-      <OptimizeReferences>false</OptimizeReferences>
-      <EnableCOMDATFolding>false</EnableCOMDATFolding>
-    </Link>
-    <Lib>
       <AdditionalLibraryDirectories>externals/libs/static/$(Configuration);externals/libs/static/Common</AdditionalLibraryDirectories>
-      <AdditionalDependencies>toolbox.lib;opengl32.lib;glfw3.lib;freetype.lib;OpenAL32.lib</AdditionalDependencies>
-      <TreatLibWarningAsErrors>true</TreatLibWarningAsErrors>
-      <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
-    </Lib>
-    <ProjectReference>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-    </ProjectReference>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Generate Assembly|x64'">
-    <ClCompile>
-      <WarningLevel>Level4</WarningLevel>
-      <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);MOUNTAIN_EXPORT;MATH_EXPORT;MATH_DEFINE_FORMATTER;IMGUI_EXPORT;RAPID_XML_EXPORT;AL_ALEXT_PROTOTYPES</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>src;binary_resources;externals\src;..\MathToolbox\src</AdditionalIncludeDirectories>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <AssemblerOutput>AssemblyAndSourceCode</AssemblerOutput>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <AdditionalOptions>/Gw %(AdditionalOptions)</AdditionalOptions>
-    </ClCompile>
-    <Link>
-      <SubSystem>Console</SubSystem>
-      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>externals/libs/static/$(Configuration)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;freetype.lib;OpenAL32.lib;soft_oal.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>mimalloc.dll.lib;mimalloc-redirect.lib;glfw3.lib;freetype.lib;OpenAL32.lib;soft_oal.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <CreateHotPatchableImage>Enabled</CreateHotPatchableImage>
       <OptimizeReferences>false</OptimizeReferences>
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
@@ -477,7 +439,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>src;binary_resources;externals\src;..\MathToolbox\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;externals\src;..\MathToolbox\src</AdditionalIncludeDirectories>
       <AdditionalOptions>/Gw %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -485,8 +447,8 @@
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
       <OptimizeReferences>false</OptimizeReferences>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
-      <AdditionalDependencies>glfw3.lib;freetype.lib;OpenAL32.lib;soft_oal.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>externals/libs/static/$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>mimalloc.dll.lib;mimalloc-redirect.lib;glfw3.lib;freetype.lib;OpenAL32.lib;soft_oal.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>externals/libs/static/$(Configuration);externals/libs/static/Common</AdditionalLibraryDirectories>
       <CreateHotPatchableImage>Enabled</CreateHotPatchableImage>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
@@ -506,6 +468,7 @@
   <Target Name="CopyDynamicExternals" AfterTargets="Build">
     <ItemGroup>
       <DynamicExternals Include="$(ProjectDir)externals\libs\dynamic\$(Configuration)\*" />
+      <DynamicExternals Include="$(ProjectDir)externals\libs\dynamic\Common\*" />
     </ItemGroup>
     <Copy SourceFiles="@(DynamicExternals)" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" Condition="'%(Identity)' != '.gitkeep'" />
     <Message Text="Copy external DLLs to output directory" Importance="high" />

@@ -1,5 +1,7 @@
 #include "Mountain/Game.hpp"
 
+#include <mimalloc.h>
+
 #include "Mountain/Window.hpp"
 #include "Mountain/Audio/Audio.hpp"
 #include "Mountain/Input/Input.hpp"
@@ -16,6 +18,8 @@ Game::Game(const std::string& windowTitle, const Vector2i windowSize)
 {
     Logger::Start();
     Logger::OpenDefaultFile();
+
+    mi_version();
 
     std::set_terminate(
         []
