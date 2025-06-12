@@ -23,6 +23,14 @@
     <DisplayString>{{Position = {position}, Size = {size}}}</DisplayString>
   </Type>
 
+  <!--Containers-->
+  <Type Name="Mountain::List&lt;*&gt;">
+    <DisplayString>{{Size = {GetSize()}}}</DisplayString>
+    <Expand>
+      <ExpandedItem>m_Vector</ExpandedItem>
+    </Expand>
+  </Type>
+
   <!--FileSystem-->
   <Type Name="Mountain::Entry">
     <DisplayString>{{Path = {m_Path}}}</DisplayString>
@@ -52,12 +60,6 @@
   </Type>
   <Type Name="Mountain::FileSystemWatcher">
     <DisplayString>{{Path = {m_Path}}}</DisplayString>
-  </Type>
-  <Type Name="Mountain::List&lt;*&gt;">
-    <DisplayString>{{Size = {m_Vector.size()}}}</DisplayString>
-    <Expand>
-      <ExpandedItem>m_Vector</ExpandedItem>
-    </Expand>
   </Type>
   <Type Name="Mountain::Pointer&lt;*&gt;">
     <DisplayString Condition="m_ReferenceCounter == nullptr">{{Null}}</DisplayString>

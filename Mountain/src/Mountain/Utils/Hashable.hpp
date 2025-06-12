@@ -1,7 +1,15 @@
 ﻿#pragma once
 
 #include "Mountain/Core.hpp"
-#include "Mountain/Utils/MetaProgramming.hpp"
+
+namespace Mountain::Concepts
+{
+    template <class T>
+    concept Hashable = requires(const T& value)
+    {
+        value.GetHashCode();
+    };
+}
 
 /// @brief @c std::hash template specialization for the types that support @c GetHashCode().
 /// @details The real goal of this formatter specialization is to allow any type that provides a member function @c GetHashCode()

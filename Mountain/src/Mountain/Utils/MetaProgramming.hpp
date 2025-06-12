@@ -324,18 +324,6 @@ namespace Mountain
         template <class T>
         concept Effect = Meta::IsBaseOf<Effect, T>;
 
-        template <class T>
-        concept StringConvertible = requires(const T& value)
-        {
-            value.ToString();
-        };
-
-        template <class T>
-        concept Hashable = requires(const T& value)
-        {
-            value.GetHashCode();
-        };
-
         /// @brief An allocator type is any non-const, non-volatile, non-function, non-reference type.
         template <typename T>
         concept AllocatorType = !Meta::IsConstVolatileQualified<T> && !Meta::IsStdFunction<T> && !Meta::IsReference<T>;

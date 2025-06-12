@@ -1,10 +1,17 @@
 ﻿#pragma once
 
-#include <string>
-
 #include "Mountain/Core.hpp"
 #include "Mountain/Exceptions/Exception.hpp"
-#include "Mountain/Utils/MetaProgramming.hpp"
+
+namespace Mountain::Concepts
+{
+    /// @brief Requires a type to have a member @c ToString() function.
+    template <class T>
+    concept StringConvertible = requires(const T& value)
+    {
+        value.ToString();
+    };
+}
 
 // ReSharper disable CppMemberFunctionMayBeStatic
 // ReSharper disable CppClangTidyCertDcl58Cpp
