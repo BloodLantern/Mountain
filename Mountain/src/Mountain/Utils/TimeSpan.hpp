@@ -5,14 +5,15 @@
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Exceptions/ThrowHelper.hpp"
-#include "Mountain/Utils/IStringConvertible.hpp"
+#include "Mountain/Utils/Hashable.hpp"
+#include "Mountain/Utils/StringConvertible.hpp"
 
 namespace Mountain
 {
     /// @brief C++ reimplementation of the .NET TimeSpan struct
     /// @details Represents a time interval.
     /// @see Source: https://github.com/dotnet/runtime/blob/release/8.0/src/libraries/System.Private.CoreLib/src/System/TimeSpan.cs
-    struct MOUNTAIN_API TimeSpan : IStringConvertible
+    struct MOUNTAIN_API TimeSpan
     {
         /// @brief Represents the number of nanoseconds per tick
         static constexpr int64_t NanosecondsPerTick = 100;
@@ -54,8 +55,6 @@ namespace Mountain
         explicit constexpr TimeSpan(int64_t ticks);
         constexpr TimeSpan(int32_t hours, int32_t minutes, int32_t seconds);
         constexpr TimeSpan(int32_t days, int32_t hours, int32_t minutes, int32_t seconds, int32_t milliseconds = 0, int32_t microseconds = 0);
-        DEFAULT_COPY_MOVE_OPERATIONS(TimeSpan)
-        DEFAULT_VIRTUAL_DESTRUCTOR(TimeSpan)
 
         GETTER(int64_t, Ticks, m_Ticks)
 
@@ -108,10 +107,11 @@ namespace Mountain
         friend TimeSpan& operator*=(TimeSpan& v, double_t factor);
         friend TimeSpan& operator/=(TimeSpan& v, double_t divisor);
 
-        // IStringConvertible implementation
+        [[nodiscard]]
+        std::string ToString() const;
 
         [[nodiscard]]
-        std::string ToString() const override;
+        size_t GetHashCode() const;
 
     private:
         static constexpr int64_t MaxSeconds = std::numeric_limits<int64_t>::max() / TicksPerSecond;
@@ -133,16 +133,6 @@ namespace Mountain
         int64_t m_Ticks = 0;
     };
 }
-
-/// @brief @c std::hash template specialization for the Mountain::TimeSpan type.
-template <>
-struct std::hash<Mountain::TimeSpan>
-{
-    size_t operator()(const Mountain::TimeSpan& timeSpan) const noexcept
-    {
-        return timeSpan.GetTicks() ^ (timeSpan.GetTicks() >> 32);
-    }
-};
 
 // Start of TimeSpan.inl
 

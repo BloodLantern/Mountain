@@ -8,8 +8,8 @@
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Exceptions/Exception.hpp"
-#include "Mountain/Utils/IHashable.hpp"
-#include "Mountain/Utils/IStringConvertible.hpp"
+#include "Mountain/Utils/Hashable.hpp"
+#include "Mountain/Utils/StringConvertible.hpp"
 
 /// @file guid.hpp
 /// @brief Defines the Mountain::Guid class.
@@ -17,17 +17,14 @@
 namespace Mountain
 {
     /// @brief Stands for Global Unique Identifier, it represents a unique ID.
-    class MOUNTAIN_API Guid final : IStringConvertible, IHashable
+    struct MOUNTAIN_API Guid final
     {
+    private:
         static constexpr size_t Data4Size = 8;
 
     public:
-        constexpr Guid() = default;
-        DEFAULT_VIRTUAL_DESTRUCTOR(Guid)
-        DEFAULT_COPY_MOVE_OPERATIONS(Guid)
-
         /// @brief Empty guid
-        static constexpr Guid Empty() { return Guid(); }
+        static constexpr Guid Empty();
 
         /// @brief Creates a new @ref Guid
         /// @return New guid
@@ -62,20 +59,23 @@ namespace Mountain
         [[nodiscard]]
         bool_t operator!=(const Guid& other) const;
 
-        // IStringConvertible implementation
+        [[nodiscard]]
+        std::string ToString() const;
 
         [[nodiscard]]
-        std::string ToString() const override;
-
-        // IHashable implementation
-
-        [[nodiscard]]
-        size_t GetHashCode() const override;
+        size_t GetHashCode() const;
 
     private:
         uint32_t m_Data1 = 0;
         uint16_t m_Data2 = 0;
         uint16_t m_Data3 = 0;
-        std::array<uint8_t, Data4Size> m_Data4 = {};
+        std::array<uint8_t, Data4Size> m_Data4{};
     };
+}
+
+// Start of Guid.inl
+
+namespace Mountain
+{
+    constexpr Guid Guid::Empty() { return {}; }
 }

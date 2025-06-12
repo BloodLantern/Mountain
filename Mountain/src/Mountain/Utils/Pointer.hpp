@@ -1,14 +1,13 @@
 ﻿#pragma once
 
 #include <format>
-#include <ostream>
 #include <sstream>
 #include <utility>
 
 #include "Mountain/Core.hpp"
-#include "Mountain/Utils/IHashable.hpp"
-#include "Mountain/Utils/IStringConvertible.hpp"
+#include "Mountain/Utils/Hashable.hpp"
 #include "Mountain/Utils/ReferenceCounter.hpp"
+#include "Mountain/Utils/StringConvertible.hpp"
 
 /// @file Pointer.hpp
 /// @brief Defines the Mountain::Pointer class
@@ -57,9 +56,8 @@ namespace Mountain
     /// @see <a href="https://en.cppreference.com/w/cpp/memory/shared_ptr">std::shared_ptr</a>
     /// @see <a href="https://en.cppreference.com/w/cpp/memory/weak_ptr">std::weak_ptr</a>
     template <typename T>
-    class Pointer final : IStringConvertible, IHashable
+    struct Pointer final
     {
-    public:
         /// @brief The type of ReferenceCounter, and therefore the type this Pointer is pointing to.
         using Type = T;
 
@@ -98,7 +96,7 @@ namespace Mountain
         explicit Pointer(Pointer<U>&& other) noexcept;
 
         /// @brief Destroys this Pointer, deallocating any memory if this is the last strong reference.
-        virtual ~Pointer();
+        ~Pointer();
 
         /// @brief Creates a new strong reference to this pointer.
         [[nodiscard]]
@@ -187,15 +185,11 @@ namespace Mountain
         [[nodiscard]]
         const T* operator->() const;
 
-        // IHashable implementation
+        [[nodiscard]]
+        std::string ToString() const;
 
         [[nodiscard]]
-        size_t GetHashCode() const override;
-
-        // IStringConvertible implementation
-
-        [[nodiscard]]
-        std::string ToString() const override;
+        size_t GetHashCode() const;
 
     private:
         ReferenceCounter<T>* m_ReferenceCounter = nullptr;
@@ -457,17 +451,17 @@ namespace Mountain
     }
 
     template <typename T>
+    std::string Pointer<T>::ToString() const
+    {
+        return m_ReferenceCounter ? std::format("0x{}", std::bit_cast<size_t>(m_ReferenceCounter->GetPointer())) : "null";
+    }
+
+    template <typename T>
     size_t Pointer<T>::GetHashCode() const
     {
         const size_t h1 = std::hash<ReferenceCounter<T>*>{}(const_cast<ReferenceCounter<T>*>(m_ReferenceCounter));
         const size_t h2 = std::hash<bool_t>{}(m_IsStrongReference);
         return h1 ^ (h2 << 1);
-    }
-
-    template <typename T>
-    std::string Pointer<T>::ToString() const
-    {
-        return m_ReferenceCounter ? std::format("0x{}", std::bit_cast<size_t>(m_ReferenceCounter->GetPointer())) : "null";
     }
 
     template <typename T>
@@ -547,19 +541,19 @@ namespace Mountain
         }
     }
 
-    /// @brief Compares two @ref Pointer "Pointers" by checking if they point to the same address.
+    /// @brief Compares two @c Pointer by checking if they point to the same address.
     template <typename T>
     bool_t operator==(const Pointer<T>& a, const Pointer<T>& b) { return static_cast<const T*>(a) == static_cast<const T*>(b); }
 
-    /// @brief Compares two @ref Pointer "Pointers" by checking if they point to the same address.
+    /// @brief Compares two @c Pointer by checking if they point to the same address.
     template <typename T>
     bool_t operator!=(const Pointer<T>& a, const Pointer<T>& b) { return !(a == b); }
 
-    /// @brief Compares two @ref Pointer "Pointers" by checking if they point to the same address.
+    /// @brief Compares two @c Pointer by checking if they point to the same address.
     template <typename T, typename U>
     bool_t operator==(const Pointer<T>& a, const Pointer<U>& b) { return static_cast<const T*>(a) == reinterpret_cast<const T*>(static_cast<const U*>(b)); }
 
-    /// @brief Compares two @ref Pointer "Pointers" by checking if they point to the same address.
+    /// @brief Compares two @c Pointer by checking if they point to the same address.
     template <typename T, typename U>
     bool_t operator!=(const Pointer<T>& a, const Pointer<U>& b) { return !(a == b); }
 

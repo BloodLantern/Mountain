@@ -11,6 +11,7 @@
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Exceptions/ThrowHelper.hpp"
+#include "Mountain/Utils/StringConvertible.hpp"
 
 // Undef windows min and max macros in case they were defined
 #undef min
@@ -669,6 +670,9 @@ namespace Mountain
         /// @brief Converts the Color to a ImVec4
         [[nodiscard]]
         explicit operator ImVec4() const;
+
+        [[nodiscard]]
+        std::string ToString() const;
     };
 
     /// @brief The ColorHsva struct represents a color in HSVA color space.
@@ -752,16 +756,19 @@ namespace Mountain
         /// @brief Converts the ColorHsva to a Vector4
         [[nodiscard]]
         constexpr explicit operator Vector4() const;
+
+        [[nodiscard]]
+        std::string ToString() const;
     };
 
-    /// @brief Adds 2 Color, caps at @c 1.f
+    /// @brief Adds two Color, caps at @c 1.f
     /// @param c1 A
     /// @param c2 B
     /// @return A + B
     [[nodiscard]]
     constexpr Color operator+(const Color& c1, const Color& c2);
 
-    /// @brief Multiplies 2 Color
+    /// @brief Multiplies two Color
     /// @param c1 A
     /// @param c2 B
     /// @return A * B
@@ -775,14 +782,14 @@ namespace Mountain
     [[nodiscard]]
     constexpr Color operator*(Color color, float_t alphaFactor);
 
-    /// @brief Compares 2 Color component-wise
+    /// @brief Compares two Color component-wise
     /// @param c1 A
     /// @param c2 B
     /// @return A == B
     [[nodiscard]]
     constexpr bool_t operator==(const Color& c1, const Color& c2);
 
-    /// @brief Compares 2 Color component-wise
+    /// @brief Compares two Color component-wise
     /// @param c1 A
     /// @param c2 B
     /// @return A != B
@@ -796,82 +803,20 @@ namespace Mountain
     [[nodiscard]]
     constexpr ColorHsva operator*(const ColorHsva& color, float_t alphaFactor);
 
-    /// @brief Compares 2 ColorHsva component-wise
+    /// @brief Compares two ColorHsva component-wise
     /// @param c1 A
     /// @param c2 B
     /// @return A == B
     [[nodiscard]]
     constexpr bool_t operator==(const ColorHsva& c1, const ColorHsva& c2);
 
-    /// @brief Compares 2 ColorHsva component-wise
+    /// @brief Compares two ColorHsva component-wise
     /// @param c1 A
     /// @param c2 B
     /// @return A != B
     [[nodiscard]]
     constexpr bool_t operator!=(const ColorHsva& c1, const ColorHsva& c2);
 }
-
-/// @private
-template <>
-struct std::formatter<Mountain::Color>
-{
-    template <class ParseContext>
-    constexpr typename ParseContext::iterator parse(ParseContext& ctx)
-    {
-        auto it = ctx.begin();
-        if (it == ctx.end())
-            return it;
-
-        if (*it != '}')
-            throw Mountain::FormatException{"Invalid format args for Color"};
-
-        return it;
-    }
-
-    template <class FmtContext>
-    typename FmtContext::iterator format(Mountain::Color c, FmtContext& ctx) const
-    {
-        std::ostringstream out;
-
-        out << std::vformat("{:" + m_Format + "} ; {:" + m_Format + "} ; {:" + m_Format + "} ; {:" + m_Format + '}', std::make_format_args(c.r, c.g, c.b, c.a));
-
-        return std::ranges::copy(std::move(out).str(), ctx.out()).out;
-    }
-
-private:
-    std::string m_Format;
-};
-
-/// @private
-template <>
-struct std::formatter<Mountain::ColorHsva>
-{
-    template <class ParseContext>
-    constexpr typename ParseContext::iterator parse(ParseContext& ctx)
-    {
-        auto it = ctx.begin();
-        if (it == ctx.end())
-            return it;
-
-        if (*it != '}')
-            throw Mountain::FormatException{"Invalid format args for ColorHsva"};
-
-        return it;
-    }
-
-    template <class FmtContext>
-    typename FmtContext::iterator format(Mountain::ColorHsva c, FmtContext& ctx) const
-    {
-        std::ostringstream out;
-
-        out << std::vformat("{:" + m_Format + "} ; {:" + m_Format + "} ; {:" + m_Format + "} ; {:" + m_Format + '}', std::make_format_args(c.h, c.s, c.v, c.a));
-
-        return std::ranges::copy(std::move(out).str(), ctx.out()).out;
-    }
-
-private:
-    std::string m_Format;
-};
 
 namespace Calc
 {

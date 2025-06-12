@@ -6,23 +6,11 @@
 #include "Mountain/Exceptions/Exception.hpp"
 #include "Mountain/Utils/MetaProgramming.hpp"
 
-namespace Mountain
-{
-    /// @brief Returns a string that represents the given object.
-    template <typename T>
-    [[nodiscard]]
-    std::string ToString(const T&)
-    {
-        // ReSharper disable once CppStaticAssertFailure
-        static_assert(false, "The ToString() function hasn't been specialized for this type");
-    }
-}
-
 // ReSharper disable CppMemberFunctionMayBeStatic
 // ReSharper disable CppClangTidyCertDcl58Cpp
 
-/// @brief @c std::formatter template specialization for the @c Mountain::IStringConvertible interface.
-/// @details The real goal of this formatter specialization is to allow any class that implements @c Mountain::IStringConvertible
+/// @brief @c std::formatter template specialization for the types that support @c ToString().
+/// @details The real goal of this formatter specialization is to allow any type that provides a member function @c ToString()
 /// to be used in a call to @c std::format().
 template <Mountain::Concepts::StringConvertible StringConvertibleT>
 struct std::formatter<StringConvertibleT>
@@ -36,12 +24,12 @@ struct std::formatter<StringConvertibleT>
             return it;
 
         if (*it != '}')
-            throw Mountain::FormatException{"Invalid format arguments for Mountain::IStringConvertible"};
+            throw Mountain::FormatException{"Invalid format arguments for Mountain::ToString()"};
 
         return it;
     }
 
-    /// @brief Formats a string using the given instance of @c Mountain::IStringConvertible, according to the given options in the parse function.
+    /// @brief Formats a string using the given type supporting @c ToString(), according to the given options in the parse function.
     template <class FormatContextT>
     typename FormatContextT::iterator format(const StringConvertibleT& sc, FormatContextT& ctx) const
     {

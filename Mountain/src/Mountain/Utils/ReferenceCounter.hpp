@@ -8,8 +8,8 @@
 
 namespace Mountain
 {
-    template <typename T>
-    class Pointer;
+    template <typename>
+    struct Pointer;
 
     /// @private
     template <typename T>

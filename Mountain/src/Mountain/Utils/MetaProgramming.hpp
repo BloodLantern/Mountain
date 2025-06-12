@@ -25,7 +25,7 @@ namespace Mountain
     struct ColorHsva;
     class Effect;
     template <typename>
-    class Pointer;
+    struct Pointer;
     template <typename>
     class List;
     struct IStringConvertible;
@@ -327,11 +327,14 @@ namespace Mountain
         template <class T>
         concept StringConvertible = requires(const T& value)
         {
-            ToString(value);
+            value.ToString();
         };
 
         template <class T>
-        concept Hashable = Meta::IsBaseOf<IHashable, T>;
+        concept Hashable = requires(const T& value)
+        {
+            value.GetHashCode();
+        };
 
         /// @brief An allocator type is any non-const, non-volatile, non-function, non-reference type.
         template <typename T>

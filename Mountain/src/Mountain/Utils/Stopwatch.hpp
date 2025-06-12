@@ -11,7 +11,7 @@ namespace Mountain
     /// @brief C++ reimplementation of the .NET Stopwatch class
     /// @details Provides a set of methods that can be used to accurately measure elapsed time.
     /// @see Source: https://github.com/dotnet/runtime/blob/release/8.0/src/libraries/System.Private.CoreLib/src/System/Diagnostics/Stopwatch.cs
-    class MOUNTAIN_API Stopwatch : IStringConvertible
+    class MOUNTAIN_API Stopwatch
     {
     public:
         [[nodiscard]]
@@ -25,10 +25,6 @@ namespace Mountain
         static TimeSpan GetElapsedTime(int64_t startingTimestamp);
         [[nodiscard]]
         static TimeSpan GetElapsedTime(int64_t startingTimestamp, int64_t endingTimestamp);
-
-        Stopwatch() = default;
-        DEFAULT_VIRTUAL_DESTRUCTOR(Stopwatch)
-        DEFAULT_COPY_MOVE_OPERATIONS(Stopwatch)
 
         void Start();
         void Stop();
@@ -46,6 +42,9 @@ namespace Mountain
         [[nodiscard]]
         double_t GetElapsedSeconds() const;
 
+        [[nodiscard]]
+        std::string ToString() const;
+
     private:
         static constexpr int64_t TicksPerMillisecond = 10000;
         static constexpr int64_t TicksPerSecond = TicksPerMillisecond * 1000;
@@ -61,8 +60,4 @@ namespace Mountain
         [[nodiscard]]
         int64_t GetElapsedDateTimeTicks() const;
     };
-
-    template <>
-    [[nodiscard]]
-    std::string ToString(const Stopwatch& value);
 }

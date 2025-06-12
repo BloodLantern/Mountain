@@ -168,6 +168,11 @@ std::string TimeSpan::ToString() const
     return result;
 }
 
+size_t TimeSpan::GetHashCode() const
+{
+    return m_Ticks ^ (m_Ticks >> 32);
+}
+
 TimeSpan TimeSpan::Interval(const double_t ticks, const double_t scale)
 {
     if (std::isnan(ticks))
