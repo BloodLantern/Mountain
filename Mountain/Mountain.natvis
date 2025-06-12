@@ -23,7 +23,7 @@
     <DisplayString>{{Position = {position}, Size = {size}}}</DisplayString>
   </Type>
 
-  <!--File-->
+  <!--FileSystem-->
   <Type Name="Mountain::Entry">
     <DisplayString>{{Path = {m_Path}}}</DisplayString>
   </Type>
@@ -38,7 +38,7 @@
     <DisplayString>{{Name = {m_Name}}}</DisplayString>
   </Type>
 
-  <!--Scene-->
+  <!--Ecs-->
   <Type Name="Mountain::Component">
     <DisplayString>{{Entity = {m_Entity}}}</DisplayString>
   </Type>
@@ -76,7 +76,7 @@
     </Expand>
   </Type>
   <Type Name="Mountain::Stopwatch">
-    <DisplayString>{{{GetElapsed()} (IsRunning = {m_IsRunning})}}</DisplayString>
+    <DisplayString>{{{GetElapsed().ToString()} (IsRunning = {m_IsRunning})}}</DisplayString>
     <Expand>
       <ExpandedItem>GetElapsed()</ExpandedItem>
     </Expand>
