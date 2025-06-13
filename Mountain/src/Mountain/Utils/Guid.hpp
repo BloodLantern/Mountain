@@ -70,6 +70,9 @@ namespace Mountain
         uint16_t m_Data2 = 0;
         uint16_t m_Data3 = 0;
         std::array<uint8_t, Data4Size> m_Data4{};
+
+        CHECK_REQUIREMENT(Guid, Requirements::StringConvertible);
+        CHECK_REQUIREMENT(Guid, Requirements::Hashable);
     };
 }
 

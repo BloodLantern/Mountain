@@ -5,8 +5,7 @@
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Exceptions/ThrowHelper.hpp"
-#include "Mountain/Utils/Hashable.hpp"
-#include "Mountain/Utils/StringConvertible.hpp"
+#include "Mountain/Utils/Requirements.hpp"
 
 namespace Mountain
 {
@@ -131,6 +130,9 @@ namespace Mountain
         static TimeSpan IntervalFromDoubleTicks(double_t ticks);
 
         int64_t m_Ticks = 0;
+
+        CHECK_REQUIREMENT(TimeSpan, Requirements::StringConvertible);
+        CHECK_REQUIREMENT(TimeSpan, Requirements::Hashable);
     };
 }
 

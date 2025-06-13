@@ -28,13 +28,19 @@ namespace Mountain
     struct Pointer;
     template <typename>
     class List;
-    struct IStringConvertible;
-    struct IHashable;
 
     /// @namespace Meta
     /// @brief Defines utilities for meta-programming and template manipulation.
     namespace Meta
     {
+        /// @brief Result of a logical AND (@c &&) between all the given conditions.
+        template <bool_t... Conditions>
+        constexpr bool_t LogicalAnd = (Conditions && ...);
+
+        /// @brief Result of a logical OR (@c ||) between all the given conditions.
+        template <bool_t... Conditions>
+        constexpr bool_t LogicalOr = (Conditions || ...);
+
         /// @brief Checks whether @p Derived is a derived class of @p Base.
         /// @tparam Base Base class
         /// @tparam Derived Derived class
@@ -51,7 +57,13 @@ namespace Mountain
         /// @tparam T Type
         /// @tparam Other Other types
         template <typename T, typename... Other>
-        constexpr bool_t IsAny = (std::is_same_v<T, Other> || ...);
+        constexpr bool_t AllSame = LogicalAnd<IsSame<T, Other>...>;
+
+        /// @brief Checks whether @p T is any of the provided types in @p Other.
+        /// @tparam T Type
+        /// @tparam Other Other types
+        template <typename T, typename... Other>
+        constexpr bool_t IsAny = LogicalOr<IsSame<T, Other>...>;
 
         /// @brief Checks whether @p T is an array.
         /// @tparam T Type
@@ -246,6 +258,12 @@ namespace Mountain
 
         template <typename From, typename To>
         constexpr bool_t IsConvertibleTo = std::is_convertible_v<From, To>;
+
+        template <typename T>
+        constexpr bool_t IsMountainContainer = requires(T& v)
+        {
+            v.GetSize();
+        };
     }
 
     /// @namespace Concepts
@@ -275,17 +293,6 @@ namespace Mountain
         /// @brief Concept that forces a type to be a child of @c Entity
         template <class T>
         concept Entity = Meta::IsBaseOf<Entity, T>;
-
-        /// @brief The Formattable concept requires a type to be formattable.
-        ///
-        /// A type @p T is considered formattable if a template specialization of @c std::formatter exists for @p T.
-        ///
-        /// @tparam T The type to require to be formattable.
-        template<typename T>
-        concept Formattable = requires(T& v, std::format_context ctx)
-        {
-            std::formatter<std::remove_cvref_t<T>>().format(v, ctx);
-        };
 
         /// @brief A class satisfies the Exception concept if it is derived from @c std::exception.
         template<typename T>

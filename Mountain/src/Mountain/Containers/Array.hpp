@@ -3,9 +3,11 @@
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Exceptions/ThrowHelper.hpp"
+#include "Mountain/Utils/Requirements.hpp"
 
 namespace Mountain
 {
+    /// @brief Wrapper around a C array.
     template <typename T, size_t Size>
     struct MOUNTAIN_API Array
     {
@@ -33,7 +35,13 @@ namespace Mountain
 
         [[nodiscard]]
         constexpr T* end() const noexcept;
+
+        CHECK_REQUIREMENT(Array, Requirements::Container);
+        CHECK_REQUIREMENT(Array, Requirements::Enumerable);
     };
+
+    template <class T, class... Other>
+    explicit Array(T, Other...) -> Array<T, 1 + sizeof...(Other)> requires Meta::AllSame<T, Other...>;
 }
 
 // Start of Array.inl

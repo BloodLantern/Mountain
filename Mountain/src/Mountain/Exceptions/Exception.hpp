@@ -1,7 +1,6 @@
 ﻿#pragma once
 
 #include <exception>
-#include <string>
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Utils/MetaProgramming.hpp"

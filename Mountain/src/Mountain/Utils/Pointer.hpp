@@ -5,9 +5,8 @@
 #include <utility>
 
 #include "Mountain/Core.hpp"
-#include "Mountain/Utils/Hashable.hpp"
 #include "Mountain/Utils/ReferenceCounter.hpp"
-#include "Mountain/Utils/StringConvertible.hpp"
+#include "Mountain/Utils/Requirements.hpp"
 
 /// @file Pointer.hpp
 /// @brief Defines the Mountain::Pointer class
@@ -201,6 +200,9 @@ namespace Mountain
         void SetReferenceCounter(ReferenceCounter<T>* newReferenceCounter);
 
         void CheckReferenceCounterValid();
+
+        CHECK_REQUIREMENT(Pointer, Requirements::StringConvertible);
+        CHECK_REQUIREMENT(Pointer, Requirements::Hashable);
     };
 }
 

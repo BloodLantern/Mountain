@@ -10,8 +10,7 @@
 #include <ImGui/imgui.h>
 
 #include "Mountain/Core.hpp"
-#include "Mountain/Exceptions/ThrowHelper.hpp"
-#include "Mountain/Utils/StringConvertible.hpp"
+#include "Mountain/Utils/Requirements.hpp"
 
 // Undef windows min and max macros in case they were defined
 #undef min
@@ -31,6 +30,7 @@ namespace Mountain
     {
         // Constants taken from https://github.com/MonoGame/MonoGame/blob/develop/MonoGame.Framework/Color.cs
 
+#pragma region Constants
         /// @brief Constant for Transparent.
         /// @return The Transparent color.
         static constexpr Color Transparent();
@@ -598,6 +598,7 @@ namespace Mountain
         /// @brief Constant for Yellow Green.
         /// @return The Yellow Green color.
         static constexpr Color YellowGreen();
+#pragma endregion
 
         /// @brief Red component
         float_t r = 0.f;
@@ -673,6 +674,8 @@ namespace Mountain
 
         [[nodiscard]]
         std::string ToString() const;
+
+        CHECK_REQUIREMENT(Color, Requirements::StringConvertible);
     };
 
     /// @brief The ColorHsva struct represents a color in HSVA color space.
@@ -759,6 +762,8 @@ namespace Mountain
 
         [[nodiscard]]
         std::string ToString() const;
+
+        CHECK_REQUIREMENT(ColorHsva, Requirements::StringConvertible);
     };
 
     /// @brief Adds two Color, caps at @c 1.f
@@ -845,6 +850,7 @@ namespace Mountain
     static constexpr float_t HueCircleOver3 = HueCircle / 3.f;
     static constexpr float_t HueCircleOver6 = HueCircle / 6.f;
 
+#pragma region ConstantsImplemetation
     constexpr Color Color::Transparent() { return Color(0.f, 0.f, 0.f, 0.f); }
     constexpr Color Color::AliceBlue() { return Color(0xf0 / 255.f, 0xf8 / 255.f, 0xff / 255.f); }
     constexpr Color Color::AntiqueWhite() { return Color(0xfa / 255.f, 0xeb / 255.f, 0xd7 / 255.f); }
@@ -987,6 +993,7 @@ namespace Mountain
     constexpr Color Color::WhiteSmoke() { return Color(0xf5 / 255.f, 0xf5 / 255.f, 0xf5 / 255.f); }
     constexpr Color Color::Yellow() { return Color(0xff / 255.f, 0xff / 255.f, 0x00 / 255.f); }
     constexpr Color Color::YellowGreen() { return Color(0x9a / 255.f, 0xcd / 255.f, 0x32 / 255.f); }
+#pragma endregion
 
     constexpr Color::Color(const float_t rgb, const float_t a): r(rgb), g(rgb), b(rgb), a(a) {}
 
