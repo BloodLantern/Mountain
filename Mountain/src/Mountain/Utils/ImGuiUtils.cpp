@@ -562,6 +562,7 @@ void ImGuiUtils::ShowPerformanceMonitoring()
         frameDurationLeft = Time::GetTargetDeltaTime() == 0.f ? 0.f : (Time::GetTargetDeltaTime() - frameDuration);
         screenSize = Screen::GetSize();
 
+        // TODO - Instead get the memory amount from mimalloc
         PROCESS_MEMORY_COUNTERS_EX2 memoryCounter;
         GetProcessMemoryInfo(GetCurrentProcess(), reinterpret_cast<PPROCESS_MEMORY_COUNTERS>(&memoryCounter), sizeof(memoryCounter));
         Windows::CheckError();

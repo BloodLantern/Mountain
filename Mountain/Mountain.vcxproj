@@ -175,8 +175,7 @@
     <ClInclude Include="src\Mountain\Collision\Hitbox.hpp" />
     <ClInclude Include="src\Mountain\Configuration.hpp" />
     <ClInclude Include="src\Mountain\Containers\Array.hpp" />
-    <ClInclude Include="src\Mountain\Containers\Enumerable.hpp" />
-    <ClInclude Include="src\Mountain\Containers\Enumerator.hpp" />
+    <ClInclude Include="src\Mountain\Containers\ContiguousIterator.hpp" />
     <ClInclude Include="src\Mountain\Containers\List.hpp" />
     <ClInclude Include="src\Mountain\Core.hpp" />
     <ClInclude Include="src\Mountain\Exceptions\ArgumentException.hpp" />

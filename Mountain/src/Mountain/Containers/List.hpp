@@ -1,12 +1,7 @@
 #pragma once
 
-#include <functional>
-#include <vector>
-
 #include "Mountain/Core.hpp"
-
-#include "Mountain/Containers/Enumerable.hpp"
-#include "Mountain/Containers/Enumerator.hpp"
+#include "Mountain/Containers/ContiguousIterator.hpp"
 #include "Mountain/Exceptions/ThrowHelper.hpp"
 
 /// @file List.hpp
@@ -25,54 +20,43 @@ namespace Mountain
     /// @see <a href="https://en.cppreference.com/w/cpp/container/vector">std::vector</a>
     /// @see <a href="https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1">C# List</a>
     template <typename T>
-    class List : IEnumerable<T>
+    class List
     {
-        static constexpr size_t DefaultCapacity = 0;
-
     public:
-        struct Enumerator : IEnumerator<T>
-        {
-            explicit Enumerator(List& list);
-            virtual ~Enumerator() = default;
-            DEFAULT_COPY_MOVE_OPERATIONS(Enumerator)
-
-            // IEnumeratorBase implementation
-
-            [[nodiscard]]
-            T* GetCurrent() const override;
-            bool MoveNext() override;
-            void Reset() override;
-            [[nodiscard]]
-            T* operator->() const override;
-            IEnumerator<T>& operator++() override;
-            const IEnumerator<T>& operator++(int) override;
-
-            // IEnumerator implementation
-
-            [[nodiscard]]
-            T& operator*() const override;
-
-        private:
-            List* m_List = nullptr;
-            size_t m_NextIndex = 0;
-            T* m_Current = nullptr;
-            uint32_t m_Version;
-
-            bool MoveNextRare();
-        };
-
-
-        // IEnumerable implementation
-
-        [[nodiscard]]
-        std::shared_ptr<IEnumerator<T>> GetEnumerator() override;
-
-
         /// @brief The type of the List<T>. Refers to T.
         using Type = T;
+        using Iterator = ContiguousIterator<T>;
+
+        /// @brief Get the element at the given index with bounds checking.
+        [[nodiscard]]
+        constexpr T& At(size_t index) const;
+
+        /// @brief Get the size of the array. Returns @c Size.
+        [[nodiscard]]
+        constexpr size_t GetSize() const noexcept;
+
+        [[nodiscard]]
+        constexpr T* GetData() const noexcept;
+
+        /// @brief Get the element at the given index without bounds checking.
+        [[nodiscard]]
+        constexpr T& operator[](size_t index) const noexcept;
+
+        [[nodiscard]]
+        constexpr Iterator GetBeginIterator() const noexcept;
+
+        [[nodiscard]]
+        constexpr Iterator GetEndIterator() const noexcept;
+
+        [[nodiscard]]
+        constexpr Iterator begin() const noexcept;
+
+        [[nodiscard]]
+        constexpr Iterator end() const noexcept;
 
     private:
-        uint32_t m_Version = 0;
+        T* m_Data = nullptr;
+        size_t m_Size = 0;
     };
 }
 
@@ -80,79 +64,5 @@ namespace Mountain
 
 namespace Mountain
 {
-    template <typename T>
-    List<T>::Enumerator::Enumerator(List& list)
-        : m_List(&list)
-        , m_Version(list.m_Version)
-    {
-    }
 
-    template <typename T>
-    bool List<T>::Enumerator::MoveNext()
-    {
-        if (m_Version == m_List->m_Version && m_NextIndex < m_List->GetSize())
-        {
-            //m_Current = &m_List->operator[](m_NextIndex); FIXME
-            m_NextIndex++;
-            return true;
-        }
-
-        return MoveNextRare();
-    }
-
-    template <typename T>
-    void List<T>::Enumerator::Reset()
-    {
-        m_NextIndex = 0;
-        m_Current = nullptr;
-    }
-
-    template <typename T>
-    IEnumerator<T>& List<T>::Enumerator::operator++()
-    {
-        MoveNext();
-        return *this;
-    }
-
-    template <typename T>
-    const IEnumerator<T>& List<T>::Enumerator::operator++(int)
-    {
-        MoveNext();
-        return *this;
-    }
-
-    template <typename T>
-    T* List<T>::Enumerator::GetCurrent() const
-    {
-        return m_Current;
-    }
-
-    template <typename T>
-    T& List<T>::Enumerator::operator*() const
-    {
-        return *GetCurrent();
-    }
-
-    template <typename T>
-    T* List<T>::Enumerator::operator->() const
-    {
-        return GetCurrent();
-    }
-
-    template <typename T>
-    bool List<T>::Enumerator::MoveNextRare()
-    {
-        if (m_Version != m_List->m_Version)
-            THROW(ThrowHelper::ContainerModifiedException());
-
-        m_NextIndex = m_List->GetSize() + 1;
-        m_Current = nullptr;
-        return false;
-    }
-
-    template <typename T>
-    std::shared_ptr<IEnumerator<T>> List<T>::GetEnumerator()
-    {
-        return std::make_shared<Enumerator>(*this);
-    }
 }

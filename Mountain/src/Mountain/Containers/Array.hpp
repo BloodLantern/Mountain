@@ -2,16 +2,18 @@
 #pragma once
 
 #include "Mountain/Core.hpp"
+#include "Mountain/Containers/ContiguousIterator.hpp"
 #include "Mountain/Exceptions/ThrowHelper.hpp"
 #include "Mountain/Utils/Requirements.hpp"
 
 namespace Mountain
 {
     /// @brief Wrapper around a C array.
-    template <typename T, size_t Size>
+    template <Concepts::ContainerType T, size_t Size>
     struct MOUNTAIN_API Array
     {
         using Type = T;
+        using Iterator = ContiguousIterator<T>;
 
         T data[Size];
 
@@ -31,10 +33,16 @@ namespace Mountain
         constexpr T& operator[](size_t index) const noexcept;
 
         [[nodiscard]]
-        constexpr T* begin() const noexcept;
+        constexpr Iterator GetBeginIterator() const noexcept;
 
         [[nodiscard]]
-        constexpr T* end() const noexcept;
+        constexpr Iterator GetEndIterator() const noexcept;
+
+        [[nodiscard]]
+        constexpr Iterator begin() const noexcept;
+
+        [[nodiscard]]
+        constexpr Iterator end() const noexcept;
 
         CHECK_REQUIREMENT(Array, Requirements::Container);
         CHECK_REQUIREMENT(Array, Requirements::Enumerable);
@@ -48,7 +56,7 @@ namespace Mountain
 
 namespace Mountain
 {
-    template <typename T, size_t Size>
+    template <Concepts::ContainerType T, size_t Size>
     constexpr T& Array<T, Size>::At(size_t index) const
     {
         if (index >= Size)
@@ -56,18 +64,24 @@ namespace Mountain
         return data[index];
     }
 
-    template <typename T, size_t Size>
+    template <Concepts::ContainerType T, size_t Size>
     constexpr size_t Array<T, Size>::GetSize() const noexcept { return Size; }
 
-    template <typename T, size_t Size>
+    template <Concepts::ContainerType T, size_t Size>
     constexpr T* Array<T, Size>::GetData() const noexcept { return data; }
 
-    template <typename T, size_t Size>
+    template <Concepts::ContainerType T, size_t Size>
     constexpr T& Array<T, Size>::operator[](size_t index) const noexcept { return data[index]; }
 
-    template <typename T, size_t Size>
-    constexpr T* Array<T, Size>::begin() const noexcept { return data; }
+    template <Concepts::ContainerType T, size_t Size>
+    constexpr typename Array<T, Size>::Iterator Array<T, Size>::GetBeginIterator() const noexcept { return { .m_FirstElement = data, .m_ContainerSize = Size }; }
 
-    template <typename T, size_t Size>
-    constexpr T* Array<T, Size>::end() const noexcept { return data + Size; }
+    template <Concepts::ContainerType T, size_t Size>
+    constexpr typename Array<T, Size>::Iterator Array<T, Size>::GetEndIterator() const noexcept { return { .m_FirstElement = data, .m_Index = Size, .m_ContainerSize = Size }; }
+
+    template <Concepts::ContainerType T, size_t Size>
+    constexpr typename Array<T, Size>::Iterator Array<T, Size>::begin() const noexcept { return GetBeginIterator(); }
+
+    template <Concepts::ContainerType T, size_t Size>
+    constexpr typename Array<T, Size>::Iterator Array<T, Size>::end() const noexcept { return GetEndIterator(); }
 }

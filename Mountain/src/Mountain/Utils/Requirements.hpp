@@ -2,14 +2,21 @@
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Exceptions/Exception.hpp"
-#include "Mountain/Utils/MetaProgramming.hpp"
+
+// ReSharper disable CppClangTidyBugproneMacroParentheses
 
 #define CHECK_REQUIREMENT(type, requirement) \
-    static_assert(requirement<type>, "Type " #type " doesn't match the requirements of " #requirement)  // NOLINT(bugprone-macro-parentheses)
+    static_assert(requirement<type>, "Type " #type " doesn't match the requirements of " #requirement)
 
-#define REQUIRES_FUNCTION_RETURN_TYPE(value, function, expectedReturnType) \
-    value.function(); \
-    { value.function() } -> expectedReturnType  // NOLINT(bugprone-macro-parentheses)
+#define REQUIRES_FUNCTION(value, function, expectedReturnType, ...) \
+    value.function(__VA_ARGS__); \
+    { value.function(__VA_ARGS__) } -> expectedReturnType
+
+#define REQUIRES_OPERATOR(value, operator, expectedReturnType, otherValue) \
+    value operator otherValue; \
+    { value operator otherValue } -> expectedReturnType
+
+// ReSharper enable CppClangTidyBugproneMacroParentheses
 
 namespace Mountain::Requirements
 {
@@ -25,38 +32,54 @@ namespace Mountain::Requirements
     template <typename T>
     concept StringConvertible = requires (const T& cv)
     {
-        REQUIRES_FUNCTION_RETURN_TYPE(cv, ToString, std::string);
+        REQUIRES_FUNCTION(cv, ToString, std::string);
     };
 
     /// @brief Requires a type to have a member @c GetHashCode() function that returns a @c size_t.
     template <typename T>
     concept Hashable = requires (const T& cv)
     {
-        REQUIRES_FUNCTION_RETURN_TYPE(cv, GetHashCode, size_t);
+        REQUIRES_FUNCTION(cv, GetHashCode, size_t);
     };
 
     template <typename T>
     concept Container = requires (T& v, const T& cv)
     {
-        REQUIRES_FUNCTION_RETURN_TYPE(cv, GetSize, size_t);
+        typename T::Type;
+        requires Concepts::ContainerType<typename T::Type>;
+        REQUIRES_FUNCTION(cv, GetSize, size_t);
     };
 
     template <typename T>
-    concept Enumerator = requires (T& v, const T& cv)
+    concept Iterator = requires (T& v, const T& cv)
     {
+        typename T::Type;
+        requires Concepts::ContainerType<typename T::Type>;
+        REQUIRES_FUNCTION(cv, GetCurrent, typename T::Type*);
+        REQUIRES_FUNCTION(v, MoveNext, bool_t);
+        REQUIRES_FUNCTION(v, Reset, void);
+        REQUIRES_FUNCTION(cv, operator*, typename T::Type&);
+        REQUIRES_FUNCTION(cv, operator->, typename T::Type*);
+        // We don't care about the return type of both operator++
+        ++v;
+        v++;
+        REQUIRES_OPERATOR(cv, ==, bool_t, cv);
+        REQUIRES_OPERATOR(cv, !=, bool_t, cv);
+        REQUIRES_OPERATOR(cv, <, bool_t, cv);
+        REQUIRES_OPERATOR(cv, >, bool_t, cv);
+        REQUIRES_OPERATOR(cv, <=, bool_t, cv);
+        REQUIRES_OPERATOR(cv, >=, bool_t, cv);
     };
 
     template <typename T>
     concept Enumerable = requires (T& v, const T& cv)
     {
-        typename T::Enumerator;
-        requires Enumerator<typename T::Enumerator>;
-        REQUIRES_FUNCTION_RETURN_TYPE(v, GetEnumerator, std::shared_ptr<typename T::Enumerator>);
-        REQUIRES_FUNCTION_RETURN_TYPE(cv, GetEnumerator, std::shared_ptr<const typename T::Enumerator>);
-        REQUIRES_FUNCTION_RETURN_TYPE(v, begin, decltype(v.GetEnumerator()));
-        REQUIRES_FUNCTION_RETURN_TYPE(cv, begin, decltype(v.GetEnumerator()));
-        REQUIRES_FUNCTION_RETURN_TYPE(v, end, decltype(v.GetEnumerator()));
-        REQUIRES_FUNCTION_RETURN_TYPE(cv, end, decltype(v.GetEnumerator()));
+        typename T::Iterator;
+        requires Iterator<typename T::Iterator>;
+        REQUIRES_FUNCTION(cv, GetBeginIterator, typename T::Iterator);
+        REQUIRES_FUNCTION(cv, GetEndIterator, typename T::Iterator);
+        REQUIRES_FUNCTION(cv, begin, typename T::Iterator);
+        REQUIRES_FUNCTION(cv, end, typename T::Iterator);
     };
 }
 

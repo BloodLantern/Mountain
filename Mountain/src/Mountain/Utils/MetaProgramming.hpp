@@ -298,7 +298,7 @@ namespace Mountain
         template<typename T>
         concept Exception = Meta::IsException<T>;
 
-        /// @brief A class satisfies the Exception concept if it is derived from @c Exception.
+        /// @brief A class satisfies the Exception concept if it is derived from @c Mountain::Exception.
         template<typename T>
         concept MountainException = Meta::IsMountainException<T>;
 
@@ -331,9 +331,9 @@ namespace Mountain
         template <class T>
         concept Effect = Meta::IsBaseOf<Effect, T>;
 
-        /// @brief An allocator type is any non-const, non-volatile, non-function, non-reference type.
+        /// @brief A container type is any non-const, non-function, non-reference type.
         template <typename T>
-        concept AllocatorType = !Meta::IsConstVolatileQualified<T> && !Meta::IsStdFunction<T> && !Meta::IsReference<T>;
+        concept ContainerType = !Meta::IsConst<T> && !Meta::IsStdFunction<T> && !Meta::IsReference<T>;
     }
 
     namespace Meta
