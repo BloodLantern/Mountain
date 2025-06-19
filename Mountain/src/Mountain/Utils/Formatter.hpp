@@ -52,7 +52,7 @@ struct std::formatter<std::filesystem::path>
 /// @brief @c std::formatter template specialization for the @c std::exception type.
 /// @note This is a different specialization than the one for @c Mountain::Exception.
 /// @see <a href="https://en.cppreference.com/w/cpp/error/exception">std::exception</a>
-template <Mountain::Concepts::StdException ExceptionT>
+template <Mountain::Concepts::StandardException ExceptionT>
 struct std::formatter<ExceptionT>
 {
     /// @brief Parses the input formatting options.
