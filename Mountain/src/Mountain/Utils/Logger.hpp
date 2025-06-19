@@ -6,7 +6,7 @@
 #include <thread>
 
 #include "Mountain/Core.hpp"
-#include "Mountain/Utils/MetaProgramming.hpp"
+#include "Mountain/Utils/Requirements.hpp"
 #include "Mountain/Utils/TsQueue.hpp"
 
 /// @file logger.hpp
@@ -35,7 +35,7 @@ namespace Mountain
     /// of the log. Shortcuts are also available through the use of @c Logger::LogDebug, @c Logger::LogVerbose, @c Logger::LogInfo, @c Logger::LogWarning, @c Logger::LogError and @c Logger::LogFatal.
     /// Those functions take a format string and format parameters to follow the usage of <a href="https://en.cppreference.com/w/cpp/utility/format/format">std::format</a>.
     /// This means that any new parameter type that is directly printed must satisfy the requirements of the <a href="https://en.cppreference.com/w/cpp/utility/format/formattable">std::formattable</a>
-    /// concept (defined a Concepts::Formattable in the Mountain namespace), and therefore needs to implement its own version of the <a href="https://en.cppreference.com/w/cpp/utility/format/formatter">std::formatter</a> struct.
+    /// concept (defined a Requirements::Formattable in the Mountain namespace), and therefore needs to implement its own version of the <a href="https://en.cppreference.com/w/cpp/utility/format/formatter">std::formatter</a> struct.
     ///
     /// ### Example
     /// All logs are preceded by their timestamp (the exact time at which the @c Logger::Log function was called) and a string representation of their LogLevel.
@@ -132,13 +132,13 @@ namespace Mountain
 
         /// @brief Logs a message using the specified format string, arguments and LogLevel.
         ///
-        /// @tparam Args The format arguments types. These are generally automatically deducted by the compiler and often don't need to be manually specified. Also, they must satisfy the Concepts::Formattable concept requirements.
+        /// @tparam Args The format arguments types. These are generally automatically deducted by the compiler and often don't need to be manually specified. Also, they must satisfy the Requirements::Formattable concept requirements.
         /// @param level The log severity.
         /// @param format The format string to log.
         /// @param args The arguments to replace the format string with.
         ///
         /// @see <a href="https://en.cppreference.com/w/cpp/utility/format/spec">The standard format specification</a>
-        template <Concepts::Formattable... Args>
+        template <Requirements::Formattable... Args>
         static void Log(LogLevel level, const std::string& format, Args&&... args);
 
         /// @brief Logs a temporary debug message using the current file, line, specified format string and arguments.
@@ -147,37 +147,37 @@ namespace Mountain
         ///
         /// @see Log
         /// @see LogLevel::Debug
-        template <Concepts::Formattable... Args>
+        template <Requirements::Formattable... Args>
         static void LogDebug(const std::string& format, const char_t* file, int32_t line, Args&&... args);
 
         /// @brief Logs a debug message using the specified format string and arguments.
         ///
         /// @see Log
-        template <Concepts::Formattable... Args>
+        template <Requirements::Formattable... Args>
         static void LogVerbose(const std::string& format, Args&&... args);
 
         /// @brief Logs an information message using the specified format string and arguments.
         ///
         /// @see Log
-        template <Concepts::Formattable... Args>
+        template <Requirements::Formattable... Args>
         static void LogInfo(const std::string& format, Args&&... args);
 
         /// @brief Logs a warning message using the specified format string and arguments.
         ///
         /// @see Log
-        template <Concepts::Formattable... Args>
+        template <Requirements::Formattable... Args>
         static void LogWarning(const std::string& format, Args&&... args);
 
         /// @brief Logs an error message using the specified format string and arguments.
         ///
         /// @see Log
-        template <Concepts::Formattable... Args>
+        template <Requirements::Formattable... Args>
         static void LogError(const std::string& format, Args&&... args);
 
         /// @brief Logs a fatal error message using the specified format string and arguments.
         ///
         /// @see Log
-        template <Concepts::Formattable... Args>
+        template <Requirements::Formattable... Args>
         static void LogFatal(const std::string& format, Args&&... args);
 
         /// @brief Opens a file for logging.
@@ -268,7 +268,7 @@ namespace Mountain
 
 namespace Mountain
 {
-    template <Concepts::Formattable... Args>
+    template <Requirements::Formattable... Args>
     void Logger::Log(const LogLevel level, const std::string& format, Args&&... args)
     {
         if (level < minimumConsoleLevel && level < minimumFileLevel)
@@ -277,7 +277,7 @@ namespace Mountain
         PushLog(std::make_shared<LogEntry>(std::vformat(format, std::make_format_args(args...)), level));
     }
 
-    template <Concepts::Formattable ... Args>
+    template <Requirements::Formattable ... Args>
     void Logger::LogDebug(const std::string& format, const char_t* file, const int32_t line, Args&&... args)
     {
         if (LogLevel::Debug < minimumConsoleLevel && LogLevel::Debug < minimumFileLevel)
@@ -286,31 +286,31 @@ namespace Mountain
         PushLog(std::make_shared<LogEntry>(std::vformat(format, std::make_format_args(args...)), LogLevel::Debug, file, line));
     }
 
-    template <Concepts::Formattable... Args>
+    template <Requirements::Formattable... Args>
     void Logger::LogVerbose(const std::string& format, Args&&... args)
     {
         Logger::Log(LogLevel::Verbose, format, std::forward<Args>(args)...);
     }
 
-    template <Concepts::Formattable... Args>
+    template <Requirements::Formattable... Args>
     void Logger::LogInfo(const std::string& format, Args&&... args)
     {
         Logger::Log(LogLevel::Info, format, std::forward<Args>(args)...);
     }
 
-    template <Concepts::Formattable... Args>
+    template <Requirements::Formattable... Args>
     void Logger::LogWarning(const std::string& format, Args&&... args)
     {
         Logger::Log(LogLevel::Warning, format, std::forward<Args>(args)...);
     }
 
-    template <Concepts::Formattable... Args>
+    template <Requirements::Formattable... Args>
     void Logger::LogError(const std::string& format, Args&&... args)
     {
         Logger::Log(LogLevel::Error, format, std::forward<Args>(args)...);
     }
 
-    template <Concepts::Formattable... Args>
+    template <Requirements::Formattable... Args>
     void Logger::LogFatal(const std::string& format, Args&&... args)
     {
         Logger::Log(LogLevel::Fatal, format, std::forward<Args>(args)...);

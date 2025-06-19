@@ -100,7 +100,7 @@ namespace Mountain
         template <typename T>
         constexpr bool_t IsAbstract = std::is_abstract_v<T>;
 
-        /// @brief Checks whether @p T is default constructible (has a public constructor, with no parameters).
+        /// @brief Checks whether @p T is default-constructible (has a public constructor, with no parameters).
         /// @tparam T Type
         template <typename T>
         constexpr bool_t IsDefaultConstructible = std::is_default_constructible_v<T>;
@@ -135,24 +135,31 @@ namespace Mountain
 
         /// @brief Removes the array specification from @p T
         ///
-        /// e.g. if @p T was @c int[4], then @c RemoveArraySpecifier<T> will be @c int
+        /// e.g., if @p T was @c int[4], then @c RemoveArraySpecifier<T> will be @c int
         ///
         template <typename T>
         using RemoveArraySpecifier = std::remove_extent_t<T>;
 
         /// @brief Removes the pointer specification from @p T
         ///
-        /// e.g. if @p T was @c int*, then @c RemovePointerSpecifier<T> will be @c int
+        /// e.g., if @p T was @c int*, then @c RemovePointerSpecifier<T> will be @c int
         ///
         template <typename T>
         using RemovePointerSpecifier = std::remove_pointer_t<T>;
 
         /// @brief Removes the const specification from @p T
         ///
-        /// e.g. if @p T was @c const int, then @c RemoveConstSpecifier<T> will be @c int
+        /// e.g., if @p T was @c const int, then @c RemoveConstSpecifier<T> will be @c int
         ///
         template <typename T>
         using RemoveConstSpecifier = std::remove_const_t<T>;
+
+        /// @brief Removes the reference specification from @p T
+        ///
+        /// e.g., if @p T was @c int& or @c int&&, then @c RemoveReferenceSpecifier<T> will be @c int
+        ///
+        template <typename T>
+        using RemoveReferenceSpecifier = std::remove_reference_t<T>;
 
         /// @brief Checks whether the type is a @c std::vector
         template <typename>

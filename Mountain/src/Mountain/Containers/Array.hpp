@@ -74,10 +74,16 @@ namespace Mountain
     constexpr T& Array<T, Size>::operator[](size_t index) const noexcept { return data[index]; }
 
     template <Concepts::ContainerType T, size_t Size>
-    constexpr typename Array<T, Size>::Iterator Array<T, Size>::GetBeginIterator() const noexcept { return { .m_FirstElement = data, .m_ContainerSize = Size }; }
+    constexpr typename Array<T, Size>::Iterator Array<T, Size>::GetBeginIterator() const noexcept
+    {
+        return { .m_FirstElement = data, .m_ContainerSize = Size };
+    }
 
     template <Concepts::ContainerType T, size_t Size>
-    constexpr typename Array<T, Size>::Iterator Array<T, Size>::GetEndIterator() const noexcept { return { .m_FirstElement = data, .m_Index = Size, .m_ContainerSize = Size }; }
+    constexpr typename Array<T, Size>::Iterator Array<T, Size>::GetEndIterator() const noexcept
+    {
+        return { .m_FirstElement = data, .m_Index = Size, .m_ContainerSize = Size };
+    }
 
     template <Concepts::ContainerType T, size_t Size>
     constexpr typename Array<T, Size>::Iterator Array<T, Size>::begin() const noexcept { return GetBeginIterator(); }
