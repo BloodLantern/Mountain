@@ -43,13 +43,13 @@ namespace Mountain
 
         [[nodiscard]]
         constexpr Iterator end() const noexcept;
-
-        CHECK_REQUIREMENT(Array, Requirements::Container);
-        CHECK_REQUIREMENT(Array, Requirements::Enumerable);
     };
 
     template <class T, class... Other>
     explicit Array(T, Other...) -> Array<T, 1 + sizeof...(Other)> requires Meta::AllSame<T, Other...>;
+
+    CHECK_REQUIREMENT(Requirements::MountainContainer, Array<Requirements::DefaultType, Requirements::DefaultSize>);
+    CHECK_REQUIREMENT(Requirements::Enumerable, Array<Requirements::DefaultType, Requirements::DefaultSize>);
 }
 
 // Start of Array.inl

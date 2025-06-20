@@ -49,11 +49,8 @@ namespace Mountain
         STATIC_CLASS(ThrowHelper)
 
     public:
-        /// @brief Returns an @c InvalidOperationException with the message: "The container has been modified while iterating over it."
-        THROW_HELPER_FUNC(ContainerModified, InvalidOperationException, "The container has been modified while iterating over it.")
-
-        /// @brief Returns an @c InvalidOperationException with the message: "Couldn't find allocation block for pointer."
-        THROW_HELPER_FUNC(AllocatorBlockNotFound, InvalidOperationException, "Couldn't find allocation block for pointer.")
+        /// @brief Returns an @c InvalidOperationException with the message: "The given iterator is invalid for this container."
+        THROW_HELPER_FUNC(InvalidIterator, InvalidOperationException, "The given iterator is invalid for this container.")
     };
 }
 

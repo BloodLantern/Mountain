@@ -292,7 +292,7 @@ namespace Mountain
 
         /// @brief A container type is any non-const, non-function, non-reference type.
         template <typename T>
-        concept ContainerType = !Meta::IsConst<T> && !Meta::IsStandardFunction<T> && !Meta::IsReference<T>;
+        concept ContainerType = !Meta::IsConst<T> && !Meta::IsFunction<T> && !Meta::IsReference<T>;
 
         /// @brief A container type is any non-const, non-function, non-reference type that can be default, copy and move constructed.
         template <typename T>
@@ -300,6 +300,18 @@ namespace Mountain
 
         template <typename T>
         concept StandardIterator = std::forward_iterator<T>;
+
+        template <StandardIterator T>
+        using StandardIteratorType = typename T::value_type;
+
+        template <typename T>
+        concept StandardContainer = std::ranges::input_range<T>;
+
+        template <StandardContainer T>
+        using StandardContainerType = typename T::value_type;
+
+        template <StandardContainer T>
+        using StandardContainerIteratorType = typename T::iterator;
     }
 
     namespace Meta

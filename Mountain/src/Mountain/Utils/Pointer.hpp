@@ -200,10 +200,10 @@ namespace Mountain
         void SetReferenceCounter(ReferenceCounter<T>* newReferenceCounter);
 
         void CheckReferenceCounterValid();
-
-        CHECK_REQUIREMENT(Pointer, Requirements::StringConvertible);
-        CHECK_REQUIREMENT(Pointer, Requirements::Hashable);
     };
+
+    CHECK_REQUIREMENT(Requirements::StringConvertible, Pointer<Requirements::DefaultType>);
+    CHECK_REQUIREMENT(Requirements::Hashable, Pointer<Requirements::DefaultType>);
 }
 
 // Start of Pointer.inl

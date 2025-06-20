@@ -130,10 +130,10 @@ namespace Mountain
         static TimeSpan IntervalFromDoubleTicks(double_t ticks);
 
         int64_t m_Ticks = 0;
-
-        CHECK_REQUIREMENT(TimeSpan, Requirements::StringConvertible);
-        CHECK_REQUIREMENT(TimeSpan, Requirements::Hashable);
     };
+
+    CHECK_REQUIREMENT(Requirements::StringConvertible, TimeSpan);
+    CHECK_REQUIREMENT(Requirements::Hashable, TimeSpan);
 }
 
 // Start of TimeSpan.inl

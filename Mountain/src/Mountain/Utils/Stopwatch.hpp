@@ -59,7 +59,7 @@ namespace Mountain
         int64_t GetRawElapsedTicks() const;
         [[nodiscard]]
         int64_t GetElapsedDateTimeTicks() const;
-
-        CHECK_REQUIREMENT(Stopwatch, Requirements::StringConvertible);
     };
+
+    CHECK_REQUIREMENT(Requirements::StringConvertible, Stopwatch);
 }

@@ -371,13 +371,7 @@ namespace Mountain
     template <std::ranges::input_range Container>
     bool_t Utils::StringArrayContains(const Container& container, const std::string& element)
     {
-        for (const std::string& elem : container)
-        {
-            if (StringEqualsIgnoreCase(elem, element))
-                return true;
-        }
-
-        return false;
+        return std::ranges::any_of(container, [&](const std::string& elem) { return StringEqualsIgnoreCase(elem, element); });
     }
 
     template <typename Ret, typename... Args>

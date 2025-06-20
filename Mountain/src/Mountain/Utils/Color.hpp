@@ -674,9 +674,9 @@ namespace Mountain
 
         [[nodiscard]]
         std::string ToString() const;
-
-        CHECK_REQUIREMENT(Color, Requirements::StringConvertible);
     };
+
+    CHECK_REQUIREMENT(Requirements::StringConvertible, Color);
 
     /// @brief The ColorHsva struct represents a color in HSVA color space.
     ///
@@ -762,9 +762,9 @@ namespace Mountain
 
         [[nodiscard]]
         std::string ToString() const;
-
-        CHECK_REQUIREMENT(ColorHsva, Requirements::StringConvertible);
     };
+
+    CHECK_REQUIREMENT(Requirements::StringConvertible, ColorHsva);
 
     /// @brief Adds two Color, caps at @c 1.f
     /// @param c1 A

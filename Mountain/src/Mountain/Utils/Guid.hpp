@@ -1,15 +1,9 @@
 #pragma once
 
-#include <array>
-#include <cstdint>
-#include <format>
-#include <sstream>
-#include <string>
 
 #include "Mountain/Core.hpp"
-#include "Mountain/Exceptions/Exception.hpp"
-#include "Mountain/Utils/Hashable.hpp"
-#include "Mountain/Utils/StringConvertible.hpp"
+#include "Mountain/Containers/Array.hpp"
+#include "Mountain/Utils/Requirements.hpp"
 
 /// @file guid.hpp
 /// @brief Defines the Mountain::Guid class.
@@ -69,11 +63,11 @@ namespace Mountain
         uint32_t m_Data1 = 0;
         uint16_t m_Data2 = 0;
         uint16_t m_Data3 = 0;
-        std::array<uint8_t, Data4Size> m_Data4{};
-
-        CHECK_REQUIREMENT(Guid, Requirements::StringConvertible);
-        CHECK_REQUIREMENT(Guid, Requirements::Hashable);
+        Array<uint8_t, Data4Size> m_Data4{};
     };
+
+    CHECK_REQUIREMENT(Requirements::StringConvertible, Guid);
+    CHECK_REQUIREMENT(Requirements::Hashable, Guid);
 }
 
 // Start of Guid.inl

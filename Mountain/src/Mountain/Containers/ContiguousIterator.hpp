@@ -12,6 +12,8 @@ namespace Mountain
     {
         using Type = T;
 
+        ContiguousIterator(T* firstElement, size_t index, size_t containerSize) noexcept;
+
         /// @brief Gets the element in the container at the current position of the iterator.
         [[nodiscard]]
         constexpr T* GetCurrent() const noexcept;
@@ -71,6 +73,9 @@ namespace Mountain
         constexpr auto operator<=>(const ContiguousIterator&) const noexcept = default;
 
         [[nodiscard]]
+        constexpr T* GetFirstElement() const noexcept;
+
+        [[nodiscard]]
         constexpr size_t GetIndex() const noexcept;
 
         [[nodiscard]]
@@ -80,15 +85,21 @@ namespace Mountain
         T* m_FirstElement = nullptr;
         size_t m_Index = 0;
         size_t m_ContainerSize = 0;
-
-        CHECK_REQUIREMENT(ContiguousIterator, Requirements::Iterator);
     };
+
+    CHECK_REQUIREMENT(Requirements::MountainIterator, ContiguousIterator<int>);
 }
 
 // Start of ContiguousIterator.inl
 
 namespace Mountain
 {
+    template <typename T>
+    ContiguousIterator<T>::ContiguousIterator(T* firstElement, const size_t index, const size_t containerSize) noexcept
+        : m_FirstElement(firstElement), m_Index(index), m_ContainerSize(containerSize)
+    {
+    }
+
     template <typename T>
     constexpr T* ContiguousIterator<T>::GetCurrent() const noexcept { return m_FirstElement + m_Index; }
 
@@ -149,6 +160,9 @@ namespace Mountain
         m_Index--;
         return *this;
     }
+
+    template <typename T>
+    constexpr T* ContiguousIterator<T>::GetFirstElement() const noexcept { return m_FirstElement; }
 
     template <typename T>
     constexpr size_t ContiguousIterator<T>::GetIndex() const noexcept { return m_Index; }

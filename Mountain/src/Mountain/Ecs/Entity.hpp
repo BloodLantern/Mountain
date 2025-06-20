@@ -90,7 +90,7 @@ namespace Mountain
     template <Concepts::Component T>
     void Entity::RemoveComponent()
     {
-        for (decltype(m_Components)::ConstIterator it = m_Components.CBegin(); it != m_Components.CEnd(); it++)
+        for (decltype(m_Components)::Iterator it = m_Components.GetBeginIterator(); it != m_Components.GetEndIterator(); it++)
         {
             const T* const t = dynamic_cast<T*>(*it);
 

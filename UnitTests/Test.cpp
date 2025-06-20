@@ -5,6 +5,7 @@
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Containers/Array.hpp"
+#include "Mountain/Containers/List.hpp"
 
 using namespace Mountain;
 
@@ -32,7 +33,7 @@ TEST(Array, RandomAccess)
     EXPECT_EQ(array.GetSize(), arrayStd.size());
     EXPECT_THROW(array.At(3), ArgumentOutOfRangeException);
 
-    for (int i = 0; i < array.GetSize(); ++i)
+    for (size_t i = 0; i < array.GetSize(); ++i)
     {
         EXPECT_EQ(array.At(i), arrayStd.at(i));
         EXPECT_EQ(array[i], arrayStd[i]);
@@ -48,6 +49,22 @@ TEST(Array, Iterator)
     auto itStd = arrayStd.begin();
     for (; it != array.end(); it++, itStd++)
         EXPECT_EQ(*it, *itStd);
+}
+
+TEST(List, DefaultInitialization)
+{
+    constexpr List<int> defaultInitialized{};
+    constexpr std::vector<int> defaultInitializedStd{};
+
+    //EXPECT_EQ(defaultInitialized, defaultInitializedStd);
+}
+
+TEST(List, ListInitialization)
+{
+    constexpr List listInitialized{1, 2, 3};
+    constexpr std::vector listInitializedStd{1, 2, 3};
+
+    //EXPECT_EQ(listInitialized, listInitializedStd);
 }
 
 // TODO - Unit tests

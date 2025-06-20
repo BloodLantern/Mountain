@@ -196,7 +196,7 @@ void Draw::Texture(
 
     m_DrawList.texture.Emplace(transformation, uvProjection, color);
 
-    if (!m_DrawList.textureId.Empty() && m_DrawList.textureId.Back() == texture.GetId())
+    if (!m_DrawList.textureId.IsEmpty() && m_DrawList.textureId.Back() == texture.GetId())
     {
         auto& lastCommand = m_DrawList.commands.Back();
         if (lastCommand.type == DrawDataType::Texture)

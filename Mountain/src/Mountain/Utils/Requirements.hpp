@@ -5,21 +5,27 @@
 
 // ReSharper disable CppClangTidyBugproneMacroParentheses
 
-#define CHECK_REQUIREMENT(type, requirement) \
-    static_assert(requirement<type>, "Type " #type " doesn't match the requirements of " #requirement)
+#define CHECK_REQUIREMENT(requirement, ...) \
+    static_assert(requirement<__VA_ARGS__>, "Type " #__VA_ARGS__ " doesn't match the requirements of " #requirement)
 
 #define REQUIRES_FUNCTION(value, function, expectedReturnType, ...) \
     value.function(__VA_ARGS__); \
-    { value.function(__VA_ARGS__) } -> expectedReturnType
+    { value.function(__VA_ARGS__) } -> ::Mountain::Concepts::ConvertibleTo<expectedReturnType>
 
 #define REQUIRES_OPERATOR(value, operator, expectedReturnType, otherValue) \
     value operator otherValue; \
-    { value operator otherValue } -> expectedReturnType
+    { value operator otherValue } -> ::Mountain::Concepts::ConvertibleTo<expectedReturnType>
 
 // ReSharper enable CppClangTidyBugproneMacroParentheses
 
 namespace Mountain::Requirements
 {
+    /// @brief Default type for template instantiation in the @c CHECK_REQUIREMENT() macro.
+    using DefaultType = int;
+
+    /// @brief Default size for template instantiation in the @c CHECK_REQUIREMENT() macro.
+    constexpr size_t DefaultSize = 1;
+
     /// @brief Requires a type to be formattable.
     /// @details A type @p T is considered formattable if a template specialization of @c std::formatter exists for @p T.
     template<typename T>
@@ -43,15 +49,16 @@ namespace Mountain::Requirements
     };
 
     template <typename T>
-    concept Container = requires (T& v, const T& cv)
+    concept MountainContainer = requires (T& v, const T& cv)
     {
         typename T::Type;
         requires Concepts::ContainerType<typename T::Type>;
         REQUIRES_FUNCTION(cv, GetSize, size_t);
+        REQUIRES_FUNCTION(cv, IsEmpty, bool_t);
     };
 
     template <typename T>
-    concept Iterator = requires (T& v, const T& cv)
+    concept MountainIterator = requires (T& v, const T& cv)
     {
         typename T::Type;
         requires Concepts::ContainerType<typename T::Type>;
@@ -75,12 +82,48 @@ namespace Mountain::Requirements
     concept Enumerable = requires (T& v, const T& cv)
     {
         typename T::Iterator;
-        requires Iterator<typename T::Iterator>;
+        requires MountainIterator<typename T::Iterator>;
         REQUIRES_FUNCTION(cv, GetBeginIterator, typename T::Iterator);
         REQUIRES_FUNCTION(cv, GetEndIterator, typename T::Iterator);
         REQUIRES_FUNCTION(cv, begin, typename T::Iterator);
         REQUIRES_FUNCTION(cv, end, typename T::Iterator);
     };
+
+    template <typename T>
+    concept EnumerableContainer = MountainContainer<T> && Enumerable<T>;
+}
+
+namespace Mountain::Concepts
+{
+    template <Requirements::MountainIterator T>
+    using MountainIteratorType = typename T::Type;
+
+    template <Requirements::MountainContainer T>
+    using MountainContainerType = typename T::Type;
+
+    template <Requirements::Enumerable T>
+    using EnumerableType = typename T::Type;
+
+    template <Requirements::Enumerable T>
+    using EnumerableIteratorType = typename T::Iterator;
+
+    template <typename T>
+    concept Iterator = StandardIterator<T> || Requirements::MountainIterator<T>;
+
+    template <typename T>
+    concept Container = StandardContainer<T> || Requirements::MountainContainer<T>;
+
+    template <Iterator T>
+    using IteratorType = typename T::value_type;
+
+    template <Container T>
+    using ContainerType = typename T::value_type; // TODO
+
+    template <Container T>
+    using ContainerType = typename T::value_type;
+
+    template <Container T>
+    using ContainerIteratorType = typename T::iterator;
 }
 
 // ReSharper disable CppMemberFunctionMayBeStatic
