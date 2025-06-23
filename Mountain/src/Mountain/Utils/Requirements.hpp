@@ -95,6 +95,15 @@ namespace Mountain::Requirements
 
 namespace Mountain::Concepts
 {
+    template <typename T>
+    concept Iterator = StandardIterator<T> || Requirements::MountainIterator<T>;
+
+    template <typename T>
+    concept Container = StandardContainer<T> || Requirements::MountainContainer<T>;
+}
+
+namespace Mountain::Meta
+{
     template <Requirements::MountainIterator T>
     using MountainIteratorType = typename T::Type;
 
@@ -102,35 +111,39 @@ namespace Mountain::Concepts
     using MountainContainerType = typename T::Type;
 
     template <Requirements::Enumerable T>
-    using EnumerableType = typename T::Type;
+    using EnumerableType = typename T::Iterator::Type;
 
     template <Requirements::Enumerable T>
     using EnumerableIteratorType = typename T::Iterator;
 
-    template <typename T>
-    concept Iterator = StandardIterator<T> || Requirements::MountainIterator<T>;
+    template <Concepts::Iterator T>
+    // ReSharper disable once CppStaticAssertFailure
+    struct IteratorTypeS { static_assert(false); };
 
-    template <typename T>
-    concept Container = StandardContainer<T> || Requirements::MountainContainer<T>;
+    template <Concepts::StandardIterator T>
+    struct IteratorTypeS<T> { using Type = typename T::value_type; };
 
-    template <Iterator T>
-    using IteratorType = typename T::value_type;
+    template <Requirements::MountainIterator T>
+    struct IteratorTypeS<T> { using Type = typename T::Type; };
 
-    template <Container T>
-    using ContainerType = typename T::value_type; // TODO
+    template <Concepts::Iterator T>
+    using IteratorType = typename IteratorTypeS<T>::Type;
 
-    template <Container T>
+    template <Concepts::Container T>
     using ContainerType = typename T::value_type;
 
-    template <Container T>
-    using ContainerIteratorType = typename T::iterator;
+    template <Concepts::Container T>
+    using EnumerableType = typename T::value_type;
+
+    template <Concepts::Container T>
+    using EnumerableIteratorType = typename T::iterator;
 }
 
 // ReSharper disable CppMemberFunctionMayBeStatic
 // ReSharper disable CppClangTidyCertDcl58Cpp
 
-/// @brief @c std::formatter template specialization for the types that support @c ToString().
-/// @details The real goal of this formatter specialization is to allow any type that provides a member function @c ToString()
+/// @brief @c std::formatter template specialization for the types that support @c Mountain::Requirements::StringConvertible.
+/// @details The goal of this formatter specialization is to allow any type that provides a member function @c ToString()
 /// to be used in a call to @c std::format().
 template <Mountain::Requirements::StringConvertible StringConvertibleT>
 struct std::formatter<StringConvertibleT>
