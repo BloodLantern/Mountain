@@ -70,18 +70,20 @@ void ResourceManager::LoadAll()
 
     const size_t oldResourceCount = m_Resources.size();
 
+    std::vector<Pointer<File>> filesVec{files.begin(), files.end(), {}};
+
     // Preload resource data asynchronously
     std::for_each(
         std::execution::par,
-        files.begin(),
-        files.end(),
+        filesVec.begin(),
+        filesVec.end(),
         [](const Pointer<File>& file) -> void
         {
             std::string&& extension = file->GetExtension();
 
-            if (std::ranges::contains(Texture::FileExtensions, extension))
+            if (Mountain::Contains(Texture::FileExtensions, extension))
                 Load<Texture>(file, false);
-            else if (std::ranges::contains(AudioTrack::FileExtensions, extension))
+            else if (Mountain::Contains(AudioTrack::FileExtensions, extension))
                 Load<AudioTrack>(file, false);
         }
     );
@@ -89,11 +91,11 @@ void ResourceManager::LoadAll()
     List<Pointer<Shader>> shadersToLoad;
 
     // Do interface stuff synchronously (OpenGL/OpenAL/FreeType)
-    for (Pointer<File>& file : files)
+    for (Pointer<File>& file : filesVec)
     {
         std::string&& extension = file->GetExtension();
 
-        if (std::ranges::contains(Shader::VertexFileExtensions, extension) || std::ranges::contains(Shader::FragmentFileExtensions, extension))
+        if (Mountain::Contains(Shader::VertexFileExtensions, extension) || Mountain::Contains(Shader::FragmentFileExtensions, extension))
         {
             Pointer<Shader> shader;
 
@@ -106,14 +108,14 @@ void ResourceManager::LoadAll()
             shader->SetSourceData(file);
             shadersToLoad.Add(shader);
         }
-        else if (std::ranges::contains(ComputeShader::FileExtensions, extension))
+        else if (Mountain::Contains(ComputeShader::FileExtensions, extension))
         {
             const std::string& filenameNoExtension = file->GetPathString();
             Pointer<ComputeShader> shader = Add<ComputeShader>(filenameNoExtension);
             shader->SetSourceData(file);
             shader->Load();
         }
-        else if (std::ranges::contains(Font::FileExtensions, extension))
+        else if (Mountain::Contains(Font::FileExtensions, extension))
         {
             LoadFont(file, 12);
         }
@@ -180,7 +182,7 @@ void ResourceManager::LoadAllBinaries()
             entry->SetParent(FileManager::AddDirectory(entry->GetPath().parent_path()));
         }
 
-        if (std::ranges::contains(Shader::VertexFileExtensions, extension) || std::ranges::contains(Shader::FragmentFileExtensions, extension))
+        if (Mountain::Contains(Shader::VertexFileExtensions, extension) || Mountain::Contains(Shader::FragmentFileExtensions, extension))
         {
             Pointer<Shader> shader;
 
@@ -193,14 +195,14 @@ void ResourceManager::LoadAllBinaries()
             shader->SetSourceData(file);
             shadersToLoad.Add(shader);
         }
-        else if (std::ranges::contains(ComputeShader::FileExtensions, extension))
+        else if (Mountain::Contains(ComputeShader::FileExtensions, extension))
         {
             const std::string& filenameNoExtension = path.generic_string();
             Pointer<ComputeShader> shader = Add<ComputeShader>(filenameNoExtension);
             shader->SetSourceData(file);
             shader->Load();
         }
-        else if (std::ranges::contains(Font::FileExtensions, extension))
+        else if (Mountain::Contains(Font::FileExtensions, extension))
         {
             LoadFont(file, 12);
         }

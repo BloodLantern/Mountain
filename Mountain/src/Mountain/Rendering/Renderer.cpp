@@ -153,19 +153,19 @@ Mountain::RenderTarget& Mountain::Renderer::GetDefaultRenderTarget() { return *m
 void Mountain::Renderer::DebugString(std::string str, const float_t duration, const Color& color)
 {
     m_DebugStrings.Insert(
+        0,
         {
             .str = std::move(str),
             .time = std::chrono::system_clock::now(),
             .color = color,
             .duration = duration
-        },
-        0
+        }
     );
 }
 
 void Mountain::Renderer::DebugString(DebugStringData data)
 {
-    m_DebugStrings.Insert(std::move(data), 0);
+    m_DebugStrings.Insert(0, std::move(data));
 }
 
 Mountain::OpenGlVersion& Mountain::Renderer::GetOpenGlVersion() { return m_GlVersion; }

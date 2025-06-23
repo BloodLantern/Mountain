@@ -174,14 +174,19 @@ namespace Mountain::Utils
     MOUNTAIN_API void OpenFile(const std::filesystem::path& filepath);
 
     /// @brief Returns whether an array contains an element
-    template <std::ranges::input_range Container, typename T>
+    template <Concepts::StandardContainer ContainerT, typename T>
     [[nodiscard]]
-    bool_t ArrayContains(const Container& container, T element);
+    bool_t ArrayContains(const ContainerT& container, T element);
 
     /// @brief Returns whether a string array contains an element using Utils::StringEqualsIgnoreCase.
-    template <std::ranges::input_range Container>
+    template <Concepts::StandardContainer ContainerT>
     [[nodiscard]]
-    bool_t StringArrayContains(const Container& container, const std::string& element);
+    bool_t StringArrayContains(const ContainerT& container, const std::string& element);
+
+    /// @brief Returns whether a string enumerable contains an element using Utils::StringEqualsIgnoreCase.
+    template <Requirements::MountainEnumerable EnumerableT>
+    [[nodiscard]]
+    bool_t StringEnumerableContains(const EnumerableT& enumerable, const std::string& element);
 
     /// @brief Checks if two strings are equal, case-insensitive.
     [[nodiscard]]
@@ -362,16 +367,22 @@ namespace Mountain
         return nullptr;
     }
 
-    template <std::ranges::input_range Container, typename T>
+    template <Concepts::StandardContainer Container, typename T>
     bool_t Utils::ArrayContains(const Container& container, T element)
     {
         return std::ranges::find(container, element) != container.end();
     }
 
-    template <std::ranges::input_range Container>
+    template <Concepts::StandardContainer Container>
     bool_t Utils::StringArrayContains(const Container& container, const std::string& element)
     {
         return std::ranges::any_of(container, [&](const std::string& elem) { return StringEqualsIgnoreCase(elem, element); });
+    }
+
+    template <Requirements::MountainEnumerable EnumerableT>
+    bool_t Utils::StringEnumerableContains(const EnumerableT& enumerable, const std::string& element)
+    {
+        return Any(enumerable, [&](const std::string& elem) { return StringEqualsIgnoreCase(elem, element); });
     }
 
     template <typename Ret, typename... Args>

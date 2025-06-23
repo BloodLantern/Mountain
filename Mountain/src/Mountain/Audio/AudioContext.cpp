@@ -6,6 +6,7 @@
 #include <magic_enum/magic_enum.hpp>
 
 #include "Mountain/Audio/AudioDevice.hpp"
+#include "Mountain/Containers/EnumerableExt.hpp"
 #include "Mountain/Utils/Logger.hpp"
 
 using namespace Mountain;
@@ -72,11 +73,11 @@ uint32_t AudioContext::GetSource(const AudioSourceType type)
 
     MakeCurrent();
 
-    sources.Iterate(
-        [&] (const uint32_t* const s) -> void
+    ForEach(sources,
+        [&] (const uint32_t& s)
         {
             int32_t value = 0;
-            alGetSourcei(*s, AL_SOURCE_STATE, &value);
+            alGetSourcei(s, AL_SOURCE_STATE, &value);
             states.Add(value);
         }
     );

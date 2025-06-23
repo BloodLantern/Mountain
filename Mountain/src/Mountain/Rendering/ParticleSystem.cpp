@@ -160,7 +160,7 @@ void ParticleSystem::RenderImGui()
     ImGui::Text("Bursts: %llu", emissionBursts.GetSize());
     ImGui::SameLine();
     if (ImGui::Button("-"))
-        emissionBursts.PopBack();
+        emissionBursts.RemoveLast();
     ImGui::SameLine();
     if (ImGui::Button("+"))
         emissionBursts.Emplace();
@@ -355,7 +355,7 @@ void ParticleSystem::SpawnNewParticles()
         overDistanceCount = static_cast<uint32_t>(Calc::Round(lastFrameDistance * emissionRateOverDistance));
     }
 
-    if (!emissionBursts.Empty() && !m_GuiParticleBurstTimeHeld)
+    if (!emissionBursts.IsEmpty() && !m_GuiParticleBurstTimeHeld)
     {
         emissionBursts.Sort(
             [](const ParticleSystemBurst& left, const ParticleSystemBurst& right) -> bool_t

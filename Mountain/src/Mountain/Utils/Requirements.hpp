@@ -62,7 +62,7 @@ namespace Mountain::Requirements
     {
         typename T::Type;
         requires Concepts::ContainerType<typename T::Type>;
-        REQUIRES_FUNCTION(cv, GetCurrent, typename T::Type*);
+        REQUIRES_FUNCTION(cv, GetCurrent, typename T::Type*); // TODO * not const
         REQUIRES_FUNCTION(v, MoveNext, bool_t);
         REQUIRES_FUNCTION(v, Reset, void);
         REQUIRES_FUNCTION(cv, operator*, typename T::Type&);
@@ -79,18 +79,24 @@ namespace Mountain::Requirements
     };
 
     template <typename T>
-    concept Enumerable = requires (T& v, const T& cv)
+    concept MountainEnumerable = requires (T& v, const T& cv)
     {
         typename T::Iterator;
         requires MountainIterator<typename T::Iterator>;
-        REQUIRES_FUNCTION(cv, GetBeginIterator, typename T::Iterator);
-        REQUIRES_FUNCTION(cv, GetEndIterator, typename T::Iterator);
-        REQUIRES_FUNCTION(cv, begin, typename T::Iterator);
-        REQUIRES_FUNCTION(cv, end, typename T::Iterator);
+        REQUIRES_FUNCTION(v, GetBeginIterator, typename T::Iterator);
+        REQUIRES_FUNCTION(v, GetEndIterator, typename T::Iterator);
+        REQUIRES_FUNCTION(v, begin, typename T::Iterator);
+        REQUIRES_FUNCTION(v, end, typename T::Iterator);
+        typename T::ConstIterator;
+        requires MountainIterator<typename T::ConstIterator>;
+        REQUIRES_FUNCTION(cv, GetBeginConstIterator, typename T::ConstIterator);
+        REQUIRES_FUNCTION(cv, GetEndConstIterator, typename T::ConstIterator);
+        REQUIRES_FUNCTION(cv, cbegin, typename T::ConstIterator);
+        REQUIRES_FUNCTION(cv, cend, typename T::ConstIterator);
     };
 
     template <typename T>
-    concept EnumerableContainer = MountainContainer<T> && Enumerable<T>;
+    concept MountainEnumerableContainer = MountainContainer<T> && MountainEnumerable<T>;
 }
 
 namespace Mountain::Concepts
@@ -100,6 +106,9 @@ namespace Mountain::Concepts
 
     template <typename T>
     concept Container = StandardContainer<T> || Requirements::MountainContainer<T>;
+
+    template <typename T>
+    concept Enumerable = StandardContainer<T> || Requirements::MountainEnumerable<T>;
 }
 
 namespace Mountain::Meta
@@ -110,33 +119,63 @@ namespace Mountain::Meta
     template <Requirements::MountainContainer T>
     using MountainContainerType = typename T::Type;
 
-    template <Requirements::Enumerable T>
-    using EnumerableType = typename T::Iterator::Type;
+    template <Requirements::MountainEnumerable T>
+    using MountainEnumerableType = typename T::Iterator::Type;
 
-    template <Requirements::Enumerable T>
-    using EnumerableIteratorType = typename T::Iterator;
+    template <Requirements::MountainEnumerable T>
+    using MountainEnumerableIteratorType = typename T::Iterator;
 
-    template <Concepts::Iterator T>
     // ReSharper disable once CppStaticAssertFailure
+    template <Concepts::Iterator>
     struct IteratorTypeS { static_assert(false); };
 
     template <Concepts::StandardIterator T>
-    struct IteratorTypeS<T> { using Type = typename T::value_type; };
+    struct IteratorTypeS<T> { using Type = StandardIteratorType<T>; };
 
     template <Requirements::MountainIterator T>
-    struct IteratorTypeS<T> { using Type = typename T::Type; };
+    struct IteratorTypeS<T> { using Type = MountainIteratorType<T>; };
 
     template <Concepts::Iterator T>
     using IteratorType = typename IteratorTypeS<T>::Type;
 
-    template <Concepts::Container T>
-    using ContainerType = typename T::value_type;
+    // ReSharper disable once CppStaticAssertFailure
+    template <Concepts::Container>
+    struct ContainerTypeS { static_assert(false); };
+
+    template <Concepts::StandardContainer T>
+    struct ContainerTypeS<T> { using Type = StandardContainerType<T>; };
+
+    template <Requirements::MountainContainer T>
+    struct ContainerTypeS<T> { using Type = MountainContainerType<T>; };
 
     template <Concepts::Container T>
-    using EnumerableType = typename T::value_type;
+    using ContainerType = typename ContainerTypeS<T>::Type;
 
-    template <Concepts::Container T>
-    using EnumerableIteratorType = typename T::iterator;
+    // ReSharper disable once CppStaticAssertFailure
+    template <Concepts::Enumerable>
+    struct EnumerableTypeS { static_assert(false); };
+
+    template <Concepts::StandardContainer T>
+    struct EnumerableTypeS<T> { using Type = StandardContainerType<T>; };
+
+    template <Requirements::MountainEnumerable T>
+    struct EnumerableTypeS<T> { using Type = MountainEnumerableType<T>; };
+
+    template <Concepts::Enumerable T>
+    using EnumerableType = typename EnumerableTypeS<T>::Type;
+
+    // ReSharper disable once CppStaticAssertFailure
+    template <Concepts::Enumerable>
+    struct EnumerableIteratorTypeS { static_assert(false); };
+
+    template <Concepts::StandardContainer T>
+    struct EnumerableIteratorTypeS<T> { using Type = StandardContainerIteratorType<T>; };
+
+    template <Requirements::MountainEnumerable T>
+    struct EnumerableIteratorTypeS<T> { using Type = MountainEnumerableIteratorType<T>; };
+
+    template <Concepts::Enumerable T>
+    using EnumerableIteratorType = typename EnumerableIteratorTypeS<T>::Type;
 }
 
 // ReSharper disable CppMemberFunctionMayBeStatic

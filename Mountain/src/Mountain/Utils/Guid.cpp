@@ -45,7 +45,7 @@ uint16_t Guid::GetData2() const { return m_Data2; }
 
 uint16_t Guid::GetData3() const { return m_Data3; }
 
-const std::array<uint8_t, Guid::Data4Size>& Guid::GetData4() const { return m_Data4; }
+const Array<uint8_t, Guid::Data4Size>& Guid::GetData4() const { return m_Data4; }
 
 bool_t Guid::operator==(const Guid& other) const
 {

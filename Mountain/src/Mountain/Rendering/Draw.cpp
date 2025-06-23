@@ -1,6 +1,7 @@
 #include "Mountain/Rendering/Draw.hpp"
 
 #include "Mountain/Globals.hpp"
+#include "Mountain/Containers/EnumerableExt.hpp"
 #include "Mountain/Resource/Font.hpp"
 #include "Mountain/Resource/ResourceManager.hpp"
 #include "Mountain/Resource/Shader.hpp"
@@ -196,9 +197,9 @@ void Draw::Texture(
 
     m_DrawList.texture.Emplace(transformation, uvProjection, color);
 
-    if (!m_DrawList.textureId.IsEmpty() && m_DrawList.textureId.Back() == texture.GetId())
+    if (!m_DrawList.textureId.IsEmpty() && Last(m_DrawList.textureId) == texture.GetId())
     {
-        auto& lastCommand = m_DrawList.commands.Back();
+        auto& lastCommand = Last(m_DrawList.commands);
         if (lastCommand.type == DrawDataType::Texture)
         {
             lastCommand.count++;
@@ -372,9 +373,9 @@ void Draw::Flush()
 
 void Draw::DrawList::AddCommand(DrawDataType type)
 {
-    if (!commands.Empty())
+    if (!commands.IsEmpty())
     {
-        CommandData& lastCommand = commands.Back();
+        CommandData& lastCommand = Last(commands);
         if (lastCommand.type == type)
         {
             lastCommand.count++;
@@ -871,7 +872,7 @@ void Draw::ArcInternal(
 
 void Draw::RenderPointData(const List<PointData>& points, const size_t index, const size_t count)
 {
-    if (points.Empty())
+    if (points.IsEmpty())
         return;
 
     m_Vbo.SetData(static_cast<int64_t>(sizeof(PointData) * count), &points[index], Graphics::BufferUsage::StreamDraw);
@@ -887,7 +888,7 @@ void Draw::RenderPointData(const List<PointData>& points, const size_t index, co
 
 void Draw::RenderLineData(const List<LineData>& lines, const size_t index, const size_t count)
 {
-    if (lines.Empty())
+    if (lines.IsEmpty())
         return;
 
     m_Vbo.SetData(static_cast<int64_t>(sizeof(LineData) * count), &lines[index], Graphics::BufferUsage::StreamDraw);
@@ -903,7 +904,7 @@ void Draw::RenderLineData(const List<LineData>& lines, const size_t index, const
 
 void Draw::RenderLineColoredData(const List<LineColoredData>& linesColored, const size_t index, const size_t count)
 {
-    if (linesColored.Empty())
+    if (linesColored.IsEmpty())
         return;
 
     m_Vbo.SetData(static_cast<int64_t>(sizeof(LineColoredData) * count), &linesColored[index], Graphics::BufferUsage::StreamDraw);
@@ -919,7 +920,7 @@ void Draw::RenderLineColoredData(const List<LineColoredData>& linesColored, cons
 
 void Draw::RenderTriangleData(const List<TriangleData>& triangles, const bool_t filled, const size_t index, const size_t count)
 {
-    if (triangles.Empty())
+    if (triangles.IsEmpty())
         return;
 
     m_Vbo.SetData(static_cast<int64_t>(sizeof(TriangleData) * count), &triangles[index], Graphics::BufferUsage::StreamDraw);
@@ -935,7 +936,7 @@ void Draw::RenderTriangleData(const List<TriangleData>& triangles, const bool_t 
 
 void Draw::RenderTriangleColoredData(const List<TriangleColoredData>& trianglesColored, const bool_t filled, const size_t index, const size_t count)
 {
-    if (trianglesColored.Empty())
+    if (trianglesColored.IsEmpty())
         return;
 
     m_Vbo.SetData(static_cast<int64_t>(sizeof(TriangleColoredData) * count), &trianglesColored[index], Graphics::BufferUsage::StreamDraw);
@@ -951,7 +952,7 @@ void Draw::RenderTriangleColoredData(const List<TriangleColoredData>& trianglesC
 
 void Draw::RenderRectangleData(const List<RectangleData>& rectangles, const bool_t filled, const size_t index, const size_t count)
 {
-    if (rectangles.Empty())
+    if (rectangles.IsEmpty())
         return;
 
     m_Vbo.SetData(static_cast<int64_t>(sizeof(RectangleData) * count), &rectangles[index], Graphics::BufferUsage::StreamDraw);
@@ -970,7 +971,7 @@ void Draw::RenderRectangleData(const List<RectangleData>& rectangles, const bool
 
 void Draw::RenderCircleData(const List<CircleData>& circles, const size_t index, const size_t count)
 {
-    if (circles.Empty())
+    if (circles.IsEmpty())
         return;
 
     m_Vbo.SetData(static_cast<int64_t>(sizeof(CircleData) * count), &circles[index], Graphics::BufferUsage::StreamDraw);
@@ -986,7 +987,7 @@ void Draw::RenderCircleData(const List<CircleData>& circles, const size_t index,
 
 void Draw::RenderArcData(const List<ArcData>& arcs, const size_t index, const size_t count)
 {
-    if (arcs.Empty())
+    if (arcs.IsEmpty())
         return;
 
     m_Vbo.SetData(static_cast<int64_t>(sizeof(ArcData) * count), &arcs[index], Graphics::BufferUsage::StreamDraw);
@@ -1002,7 +1003,7 @@ void Draw::RenderArcData(const List<ArcData>& arcs, const size_t index, const si
 
 void Draw::RenderTextureData(const List<TextureData>& textures, const uint32_t textureId, const size_t index, const size_t count)
 {
-    if (textures.Empty())
+    if (textures.IsEmpty())
         return;
 
     m_Vbo.SetData(static_cast<int64_t>(sizeof(TextureData) * count), &textures[index], Graphics::BufferUsage::StreamDraw);

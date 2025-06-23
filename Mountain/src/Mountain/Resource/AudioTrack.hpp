@@ -17,7 +17,7 @@ namespace Mountain
     {
     public:
         /// @brief Allowed extensions for audio files
-        MOUNTAIN_API static constexpr std::array FileExtensions
+        MOUNTAIN_API static constexpr Array FileExtensions
         {
             ".wav",
             ".wave",

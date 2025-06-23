@@ -3,6 +3,7 @@
 #include "Mountain/Collision/Circle.hpp"
 #include "Mountain/Collision/Grid.hpp"
 #include "Mountain/Collision/Hitbox.hpp"
+#include "Mountain/Containers/EnumerableExt.hpp"
 #include "Mountain/Rendering/Draw.hpp"
 
 using namespace Mountain;
@@ -43,27 +44,27 @@ void ColliderList::RenderDebug(const Color& color) const
 
 bool_t ColliderList::CheckCollision(const Vector2 point) const
 {
-    return std::ranges::any_of(list, [&] (const Collider* const c) -> bool_t { return c->CheckCollision(point - GetActualPosition()); });
+    return Any(list, [&] (const Collider* c) -> bool_t { return c->CheckCollision(point - GetActualPosition()); });
 }
 
 bool_t ColliderList::CheckCollision(const Hitbox& hitbox) const
 {
-    return std::ranges::any_of(list, [&] (const Collider* const c) -> bool_t { return c->CheckCollision(hitbox); });
+    return Any(list, [&] (const Collider* c) -> bool_t { return c->CheckCollision(hitbox); });
 }
 
 bool_t ColliderList::CheckCollision(const Circle& circle) const
 {
-    return std::ranges::any_of(list, [&] (const Collider* const c) -> bool_t { return c->CheckCollision(circle); });
+    return Any(list, [&] (const Collider* c) -> bool_t { return c->CheckCollision(circle); });
 }
 
 bool_t ColliderList::CheckCollision(const Grid& grid) const
 {
-    return std::ranges::any_of(list, [&] (const Collider* const c) -> bool_t { return c->CheckCollision(grid); });
+    return Any(list, [&] (const Collider* c) -> bool_t { return c->CheckCollision(grid); });
 }
 
 bool_t ColliderList::CheckCollision(const ColliderList& otherList) const
 {
-    return std::ranges::any_of(list, [&] (const Collider* const c) -> bool_t { return c->CheckCollision(otherList); });
+    return Any(list, [&] (const Collider* c) -> bool_t { return c->CheckCollision(otherList); });
 }
 
 float_t ColliderList::Left() const

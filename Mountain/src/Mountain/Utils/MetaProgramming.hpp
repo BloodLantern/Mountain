@@ -31,6 +31,10 @@ namespace Mountain
     /// @brief Defines utilities for meta-programming and template manipulation.
     namespace Meta
     {
+        /// @brief Equivalent to @p T with the exception that it won't participate in template argument deduction.
+        template <typename T>
+        using Identity = std::type_identity_t<T>;
+
         /// @brief Result of a logical AND (@c &&) between all the given conditions.
         template <bool_t... Conditions>
         constexpr bool_t LogicalAnd = (Conditions && ...);
@@ -227,6 +231,12 @@ namespace Mountain
 
         template <typename From, typename To>
         constexpr bool_t IsConvertibleTo = std::is_convertible_v<From, To>;
+
+        template <typename T>
+        constexpr bool_t IsEqualityComparable = std::equality_comparable<T>;
+
+        template <typename T, typename U>
+        constexpr bool_t IsEqualityComparableWith = std::equality_comparable_with<T, U>;
     }
 
     /// @namespace Concepts
@@ -301,17 +311,8 @@ namespace Mountain
         template <typename T>
         concept StandardIterator = std::forward_iterator<T>;
 
-        template <StandardIterator T>
-        using StandardIteratorType = typename T::value_type;
-
         template <typename T>
         concept StandardContainer = std::ranges::input_range<T>;
-
-        template <StandardContainer T>
-        using StandardContainerType = typename T::value_type;
-
-        template <StandardContainer T>
-        using StandardContainerIteratorType = typename T::iterator;
     }
 
     namespace Meta
@@ -321,5 +322,14 @@ namespace Mountain
 
         template <Concepts::Enum T>
         using Flags = UnderlyingEnumType<T>;
+
+        template <Concepts::StandardIterator T>
+        using StandardIteratorType = typename T::value_type;
+
+        template <Concepts::StandardContainer T>
+        using StandardContainerType = typename T::value_type;
+
+        template <Concepts::StandardContainer T>
+        using StandardContainerIteratorType = typename T::iterator;
     }
 };

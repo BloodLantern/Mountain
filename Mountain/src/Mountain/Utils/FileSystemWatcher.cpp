@@ -131,10 +131,10 @@ void FileSystemWatcher::Run()
 
                     // If we don't check recursively, make sure it is a file and is within the watched directory
                     if (!recursive)
-                        validFile &= !is_directory(path) && equivalent(path.parent_path(), watchedPath);
+                        validFile = validFile && !is_directory(path) && equivalent(path.parent_path(), watchedPath);
 
-                    if (!fileExtensions.Empty())
-                        validFile &= Utils::StringArrayContains(fileExtensions, path.extension().string());
+                    if (!fileExtensions.IsEmpty())
+                        validFile = validFile && Utils::StringEnumerableContains(fileExtensions, path.extension().string());
                 }
                 else
                 {

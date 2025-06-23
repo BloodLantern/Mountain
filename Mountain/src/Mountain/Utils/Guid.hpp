@@ -39,7 +39,7 @@ namespace Mountain
         uint16_t GetData3() const;
 
         [[nodiscard]]
-        const std::array<uint8_t, Data4Size>& GetData4() const;
+        const Array<uint8_t, Data4Size>& GetData4() const;
 
         /// @brief Compares 2 @ref Guid
         /// @param other Other guid

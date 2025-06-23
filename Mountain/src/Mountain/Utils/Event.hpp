@@ -63,9 +63,9 @@ namespace Mountain
     template <typename... Args>
     void Event<Args...>::Invoke(Args... args) const
     {
-        m_Functions.Iterate([&args...](const StdFunctionT* f) -> void
+        ForEach(m_Functions, [&](const StdFunctionT& f) -> void
         {
-            (*f)(std::forward<Args>(args)...);
+            f(std::forward<Args>(args)...);
         });
     }
 

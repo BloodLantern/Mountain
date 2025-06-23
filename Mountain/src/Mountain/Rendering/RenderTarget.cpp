@@ -112,7 +112,7 @@ void RenderTarget::Reset(const Vector2i newSize, const Graphics::MagnificationFi
 LightSource& RenderTarget::NewLightSource()
 {
     m_LightSources.Emplace();
-    return m_LightSources.Back();
+    return Last(m_LightSources);
 }
 
 void RenderTarget::DeleteLightSource(const LightSource& lightSource)

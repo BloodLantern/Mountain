@@ -28,7 +28,7 @@ namespace Mountain
 	{
 	public:
 		/// @brief Allowed extensions for vertex shaders
-		MOUNTAIN_API static constexpr std::array VertexFileExtensions
+		MOUNTAIN_API static constexpr Array VertexFileExtensions
 		{
 			".vert",
 			".vertex",
@@ -36,7 +36,7 @@ namespace Mountain
 		};
 
 		/// @brief Allowed extensions for fragment shaders
-		MOUNTAIN_API static constexpr std::array FragmentFileExtensions
+		MOUNTAIN_API static constexpr Array FragmentFileExtensions
 		{
 			".frag",
 			".fragment",
@@ -79,16 +79,16 @@ namespace Mountain
 		MOUNTAIN_API bool_t Reload(const Pointer<File>& file, bool_t reloadInBackend = true) override;
 
 		[[nodiscard]]
-		MOUNTAIN_API std::array<Pointer<File>, magic_enum::enum_count<Graphics::ShaderType>()>& GetFiles();
+		MOUNTAIN_API Array<Pointer<File>, magic_enum::enum_count<Graphics::ShaderType>()>& GetFiles();
 
 		[[nodiscard]]
-		MOUNTAIN_API const std::array<Pointer<File>, magic_enum::enum_count<Graphics::ShaderType>()>& GetFiles() const;
+		MOUNTAIN_API const Array<Pointer<File>, magic_enum::enum_count<Graphics::ShaderType>()>& GetFiles() const;
 
 		[[nodiscard]]
-		MOUNTAIN_API std::array<ShaderCode, magic_enum::enum_count<Graphics::ShaderType>()>& GetCode();
+		MOUNTAIN_API Array<ShaderCode, magic_enum::enum_count<Graphics::ShaderType>()>& GetCode();
 
 		[[nodiscard]]
-		MOUNTAIN_API const std::array<ShaderCode, magic_enum::enum_count<Graphics::ShaderType>()>& GetCode() const;
+		MOUNTAIN_API const Array<ShaderCode, magic_enum::enum_count<Graphics::ShaderType>()>& GetCode() const;
 
 		/// @brief Binds the shader for use
 		MOUNTAIN_API void Use() const;
@@ -97,8 +97,8 @@ namespace Mountain
 		MOUNTAIN_API void Unuse() const;
 
 	private:
-		std::array<Pointer<File>, magic_enum::enum_count<Graphics::ShaderType>()> m_Files;
-		std::array<ShaderCode, magic_enum::enum_count<Graphics::ShaderType>()> m_Code;
+		Array<Pointer<File>, magic_enum::enum_count<Graphics::ShaderType>()> m_Files;
+		Array<ShaderCode, magic_enum::enum_count<Graphics::ShaderType>()> m_Code;
 
 		bool_t CheckCompileError(uint32_t id, Graphics::ShaderType type) const;  // NOLINT(modernize-use-nodiscard)
 	};
