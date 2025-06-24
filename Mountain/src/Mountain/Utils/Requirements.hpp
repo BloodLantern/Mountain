@@ -61,8 +61,7 @@ namespace Mountain::Requirements
     concept MountainIterator = requires (T& v, const T& cv)
     {
         typename T::Type;
-        requires Concepts::ContainerType<typename T::Type>;
-        REQUIRES_FUNCTION(cv, GetCurrent, typename T::Type*); // TODO * not const
+        REQUIRES_FUNCTION(cv, GetCurrent, typename T::Type*);
         REQUIRES_FUNCTION(v, MoveNext, bool_t);
         REQUIRES_FUNCTION(v, Reset, void);
         REQUIRES_FUNCTION(cv, operator*, typename T::Type&);
@@ -87,12 +86,18 @@ namespace Mountain::Requirements
         REQUIRES_FUNCTION(v, GetEndIterator, typename T::Iterator);
         REQUIRES_FUNCTION(v, begin, typename T::Iterator);
         REQUIRES_FUNCTION(v, end, typename T::Iterator);
+
         typename T::ConstIterator;
         requires MountainIterator<typename T::ConstIterator>;
         REQUIRES_FUNCTION(cv, GetBeginConstIterator, typename T::ConstIterator);
         REQUIRES_FUNCTION(cv, GetEndConstIterator, typename T::ConstIterator);
         REQUIRES_FUNCTION(cv, cbegin, typename T::ConstIterator);
         REQUIRES_FUNCTION(cv, cend, typename T::ConstIterator);
+
+        REQUIRES_FUNCTION(cv, GetBeginIterator, typename T::ConstIterator);
+        REQUIRES_FUNCTION(cv, GetEndIterator, typename T::ConstIterator);
+        REQUIRES_FUNCTION(cv, begin, typename T::ConstIterator);
+        REQUIRES_FUNCTION(cv, end, typename T::ConstIterator);
     };
 
     template <typename T>

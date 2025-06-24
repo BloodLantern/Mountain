@@ -10,7 +10,7 @@ namespace Mountain
 {
     /// @brief Wrapper around a C array.
     template <Concepts::ContainerType T, size_t Size>
-    struct MOUNTAIN_API Array
+    struct Array
     {
         using Type = T;
         using Iterator = ContiguousIterator<T>;
@@ -58,6 +58,18 @@ namespace Mountain
 
         [[nodiscard]]
         constexpr Iterator end() noexcept;
+
+        [[nodiscard]]
+        constexpr ConstIterator GetBeginIterator() const noexcept;
+
+        [[nodiscard]]
+        constexpr ConstIterator GetEndIterator() const noexcept;
+
+        [[nodiscard]]
+        constexpr ConstIterator begin() const noexcept;
+
+        [[nodiscard]]
+        constexpr ConstIterator end() const noexcept;
 
         [[nodiscard]]
         constexpr ConstIterator GetBeginConstIterator() const noexcept;
@@ -131,6 +143,18 @@ namespace Mountain
 
     template <Concepts::ContainerType T, size_t Size>
     constexpr typename Array<T, Size>::Iterator Array<T, Size>::end() noexcept { return GetEndIterator(); }
+
+    template <Concepts::ContainerType T, size_t Size>
+    constexpr typename Array<T, Size>::ConstIterator Array<T, Size>::GetBeginIterator() const noexcept { return GetBeginConstIterator(); }
+
+    template <Concepts::ContainerType T, size_t Size>
+    constexpr typename Array<T, Size>::ConstIterator Array<T, Size>::GetEndIterator() const noexcept { return GetEndConstIterator(); }
+
+    template <Concepts::ContainerType T, size_t Size>
+    constexpr typename Array<T, Size>::ConstIterator Array<T, Size>::begin() const noexcept { return GetBeginConstIterator(); }
+
+    template <Concepts::ContainerType T, size_t Size>
+    constexpr typename Array<T, Size>::ConstIterator Array<T, Size>::end() const noexcept { return GetEndConstIterator(); }
 
     template <Concepts::ContainerType T, size_t Size>
     constexpr typename Array<T, Size>::ConstIterator Array<T, Size>::GetBeginConstIterator() const noexcept { return ConstIterator{data, 0, Size}; }
