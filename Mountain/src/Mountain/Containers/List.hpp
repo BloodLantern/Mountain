@@ -3,7 +3,6 @@
 #include "Mountain/Core.hpp"
 #include "Mountain/Containers/Array.hpp"
 #include "Mountain/Containers/ContiguousIterator.hpp"
-#include "Mountain/Containers/EnumerableExt.hpp"
 #include "Mountain/Exceptions/ThrowHelper.hpp"
 #include "Mountain/Utils/Utils.hpp"
 
@@ -801,7 +800,7 @@ namespace Mountain
     T& List<T>::At(const size_t index) const
     {
         if (index >= m_Size)
-            THROW(ArgumentOutOfRangeException{"Cannot get the element at index >= m_Size", "index"});
+            THROW(ThrowHelper::IndexOutOfRangeException("index"));
         return m_Data[index];
     }
 

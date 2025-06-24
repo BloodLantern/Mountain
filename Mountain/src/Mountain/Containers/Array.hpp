@@ -39,6 +39,10 @@ namespace Mountain
 
         void Fill(const T& value) noexcept;
 
+        void Sort();
+
+        void Sort(Comparer<T> comparer);
+
         /// @brief Get the element at the given index without bounds checking.
         [[nodiscard]]
         constexpr T& operator[](size_t index) noexcept;
@@ -98,7 +102,7 @@ namespace Mountain
     constexpr T& Array<T, Size>::At(size_t index)
     {
         if (index >= Size)
-            THROW(ArgumentOutOfRangeException{"Cannot get the element at index >= Size", "index"});
+            THROW(ThrowHelper::IndexOutOfRangeException("index"));
         return data[index];
     }
 
@@ -106,7 +110,7 @@ namespace Mountain
     constexpr const T& Array<T, Size>::At(size_t index) const
     {
         if (index >= Size)
-            THROW(ArgumentOutOfRangeException{"Cannot get the element at index >= Size", "index"});
+            THROW(ThrowHelper::IndexOutOfRangeException("index"));
         return data[index];
     }
 

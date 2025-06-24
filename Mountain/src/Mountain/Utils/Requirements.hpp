@@ -9,11 +9,9 @@
     static_assert(requirement<__VA_ARGS__>, "Type " #__VA_ARGS__ " doesn't match the requirements of " #requirement)
 
 #define REQUIRES_FUNCTION(value, function, expectedReturnType, ...) \
-    value.function(__VA_ARGS__); \
     { value.function(__VA_ARGS__) } -> ::Mountain::Concepts::ConvertibleTo<expectedReturnType>
 
 #define REQUIRES_OPERATOR(value, operator, expectedReturnType, otherValue) \
-    value operator otherValue; \
     { value operator otherValue } -> ::Mountain::Concepts::ConvertibleTo<expectedReturnType>
 
 // ReSharper enable CppClangTidyBugproneMacroParentheses
@@ -181,6 +179,28 @@ namespace Mountain::Meta
 
     template <Concepts::Enumerable T>
     using EnumerableIteratorType = typename EnumerableIteratorTypeS<T>::Type;
+}
+
+namespace Mountain
+{
+    template <typename T>
+    using Predicate = std::function<bool_t(const T& element)>;
+
+    template <Requirements::MountainEnumerable T>
+    using EnumerablePredicate = Predicate<Meta::MountainEnumerableType<T>>;
+
+    template <typename T>
+    using Operation = std::function<void(T& element)>;
+
+    template <Requirements::MountainEnumerable T>
+    using EnumerableOperation = Operation<Meta::MountainEnumerableType<T>>;
+
+    /// @brief Comparer function that returns @c true if @p lhs is considered less than @p rhs.
+    template <typename T>
+    using Comparer = std::function<bool_t(const T& lhs, const T& rhs)>;
+
+    template <Requirements::MountainEnumerable T>
+    using EnumerableComparer = Comparer<Meta::MountainEnumerableType<T>>;
 }
 
 // ReSharper disable CppMemberFunctionMayBeStatic

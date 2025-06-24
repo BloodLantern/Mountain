@@ -7,25 +7,6 @@
 
 namespace Mountain
 {
-    template <typename T>
-    using Predicate = std::function<bool_t(const T& element)>;
-
-    template <Requirements::MountainEnumerable T>
-    using EnumerablePredicate = Predicate<Meta::MountainEnumerableType<T>>;
-
-    template <typename T>
-    using Operation = std::function<void(T& element)>;
-
-    template <Requirements::MountainEnumerable T>
-    using EnumerableOperation = Operation<Meta::MountainEnumerableType<T>>;
-
-    /// @brief Comparer function that returns @c true if @p lhs is considered less than @p rhs.
-    template <typename T>
-    using Comparer = std::function<bool_t(const T& lhs, const T& rhs)>;
-
-    template <Requirements::MountainEnumerable T>
-    using EnumerableComparer = Comparer<Meta::MountainEnumerableType<T>>;
-
     /// @brief Determines whether all elements of a sequence satisfy a condition.
     template <Requirements::MountainEnumerable EnumerableT>
     [[nodiscard]]
@@ -35,11 +16,6 @@ namespace Mountain
     template <Requirements::MountainEnumerable EnumerableT>
     [[nodiscard]]
     bool_t Any(const EnumerableT& enumerable, EnumerablePredicate<Meta::Identity<EnumerableT>> predicate);
-
-    /// @brief Determines whether a sequence contains any elements.
-    template <Requirements::MountainEnumerable EnumerableT>
-    [[nodiscard]]
-    bool_t Any(const EnumerableT& enumerable);
 
     template
     <
@@ -54,18 +30,121 @@ namespace Mountain
     [[nodiscard]]
     EnumerableT FindAll(const EnumerableT& enumerable, EnumerablePredicate<Meta::Identity<EnumerableT>> predicate);
 
+    /// @brief Returns the first element of a sequence.
     template <Requirements::MountainEnumerable EnumerableT>
     [[nodiscard]]
     Meta::MountainEnumerableType<EnumerableT>& First(const EnumerableT& enumerable);
 
+    /// @brief Returns the last element of a sequence.
     template <Requirements::MountainEnumerable EnumerableT>
     [[nodiscard]]
     Meta::MountainEnumerableType<EnumerableT>& Last(const EnumerableT& enumerable);
 
+    /// @brief Returns the only element of a sequence, and throws an exception if there is not exactly one element in the sequence.
     template <Requirements::MountainEnumerable EnumerableT>
     [[nodiscard]]
     Meta::MountainEnumerableType<EnumerableT>& Single(const EnumerableT& enumerable);
 
     template <Requirements::MountainEnumerable EnumerableT>
     void ForEach(const EnumerableT& enumerable, EnumerableOperation<Meta::Identity<EnumerableT>> operation);
+}
+
+// Start of EnumerableExt.inl
+
+#include "Mountain/Containers/List.hpp"
+
+namespace Mountain
+{
+    template <Requirements::MountainEnumerable EnumerableT>
+    bool_t All(const EnumerableT& enumerable, EnumerablePredicate<Meta::Identity<EnumerableT>> predicate)
+    {
+        for (const auto& e : enumerable)
+        {
+            if (!predicate(e))
+                return false;
+        }
+
+        return true;
+    }
+
+    template <Requirements::MountainEnumerable EnumerableT>
+    bool_t Any(const EnumerableT& enumerable, EnumerablePredicate<Meta::Identity<EnumerableT>> predicate)
+    {
+        for (const auto& e : enumerable)
+        {
+            if (predicate(e))
+                return true;
+        }
+
+        return false;
+    }
+
+    template <Requirements::MountainEnumerable EnumerableT, typename T, typename>
+    bool_t Contains(const EnumerableT& enumerable, const T& element)
+    {
+        for (const auto& e : enumerable)
+        {
+            if (e == element)
+                return true;
+        }
+
+        return false;
+    }
+
+    template <Requirements::MountainEnumerable EnumerableT>
+    size_t GetSize(const EnumerableT& enumerable)
+    {
+        return enumerable.GetEndConstIterator() - enumerable.GetBeginConstIterator();
+    }
+
+    template <Requirements::MountainEnumerable EnumerableT>
+    bool_t IsEmpty(const EnumerableT& enumerable)
+    {
+        return GetSize(enumerable) != 0;
+    }
+
+    template <Requirements::MountainEnumerable EnumerableT>
+    EnumerableT FindAll(const EnumerableT& enumerable, EnumerablePredicate<Meta::Identity<EnumerableT>> predicate)
+    {
+        List<Meta::EnumerableType<EnumerableT>> result;
+
+        for (const auto& e : enumerable)
+        {
+            if (predicate(e))
+                result.Add(e);
+        }
+
+        return std::move(result); // TODO - Maybe remove the std::move
+    }
+
+    template <Requirements::MountainEnumerable EnumerableT>
+    Meta::MountainEnumerableType<EnumerableT>& First(const EnumerableT& enumerable)
+    {
+        if (IsEmpty(enumerable))
+            THROW(InvalidOperationException{"Cannot get the first element of an empty enumerable."});
+        return *enumerable.GetBeginIterator();
+    }
+
+    template <Requirements::MountainEnumerable EnumerableT>
+    Meta::MountainEnumerableType<EnumerableT>& Last(const EnumerableT& enumerable)
+    {
+        if (IsEmpty(enumerable))
+            THROW(InvalidOperationException{"Cannot get the last element of an empty enumerable."});
+        return *(enumerable.GetLastIterator() - 1);
+    }
+
+    template <Requirements::MountainEnumerable EnumerableT>
+    Meta::MountainEnumerableType<EnumerableT>& Single(const EnumerableT& enumerable)
+    {
+        if (GetSize(enumerable) != 1)
+            THROW(InvalidOperationException{"Cannot get the only element of an enumerable that doesn't have only one element."});
+        return *enumerable.GetLastIterator();
+    }
+
+    template <Requirements::MountainEnumerable EnumerableT>
+    void ForEach(const EnumerableT& enumerable, EnumerableOperation<Meta::Identity<EnumerableT>> operation)
+    {
+        for (auto& e : enumerable)
+            operation(e);
+    }
 }
