@@ -11,7 +11,7 @@
 #include <Math/vector3.hpp>
 
 #include "Mountain/Core.hpp"
-
+#include "Mountain/Containers/EnumerableExt.hpp"
 #include "Mountain/Utils/MetaProgramming.hpp"
 #include "Mountain/Utils/Pointer.hpp"
 

@@ -56,23 +56,32 @@ namespace Mountain::Requirements
     };
 
     template <typename T>
-    concept MountainIterator = requires (T& v, const T& cv)
+    concept MountainIteratorBase = requires (T& v, const T& cv)
     {
         typename T::Type;
-        REQUIRES_FUNCTION(cv, GetCurrent, typename T::Type*);
-        REQUIRES_FUNCTION(v, MoveNext, bool_t);
+        cv.GetCurrent();
         REQUIRES_FUNCTION(v, Reset, void);
-        REQUIRES_FUNCTION(cv, operator*, typename T::Type&);
-        REQUIRES_FUNCTION(cv, operator->, typename T::Type*);
-        // We don't care about the return type of both operator++
+        *cv;
+        cv.operator->();
         ++v;
         v++;
-        REQUIRES_OPERATOR(cv, ==, bool_t, cv);
-        REQUIRES_OPERATOR(cv, !=, bool_t, cv);
-        REQUIRES_OPERATOR(cv, <, bool_t, cv);
-        REQUIRES_OPERATOR(cv, >, bool_t, cv);
-        REQUIRES_OPERATOR(cv, <=, bool_t, cv);
-        REQUIRES_OPERATOR(cv, >=, bool_t, cv);
+        REQUIRES_OPERATOR(cv, <=>, std::strong_ordering, cv);
+    };
+
+    template <typename T>
+    concept MountainConstIterator = MountainIteratorBase<T> && requires (T& v, const T& cv)
+    {
+        REQUIRES_FUNCTION(cv, GetCurrent, const typename T::Type*);
+        REQUIRES_FUNCTION(cv, operator*, const typename T::Type&);
+        REQUIRES_FUNCTION(cv, operator->, const typename T::Type*);
+    };
+
+    template <typename T>
+    concept MountainIterator = MountainIteratorBase<T> && requires (T& v, const T& cv)
+    {
+        REQUIRES_FUNCTION(cv, GetCurrent, typename T::Type*);
+        REQUIRES_FUNCTION(cv, operator*, typename T::Type&);
+        REQUIRES_FUNCTION(cv, operator->, typename T::Type*);
     };
 
     template <typename T>
@@ -86,7 +95,7 @@ namespace Mountain::Requirements
         REQUIRES_FUNCTION(v, end, typename T::Iterator);
 
         typename T::ConstIterator;
-        requires MountainIterator<typename T::ConstIterator>;
+        requires MountainConstIterator<typename T::ConstIterator>;
         REQUIRES_FUNCTION(cv, GetBeginConstIterator, typename T::ConstIterator);
         REQUIRES_FUNCTION(cv, GetEndConstIterator, typename T::ConstIterator);
         REQUIRES_FUNCTION(cv, cbegin, typename T::ConstIterator);
@@ -100,6 +109,13 @@ namespace Mountain::Requirements
 
     template <typename T>
     concept MountainEnumerableContainer = MountainContainer<T> && MountainEnumerable<T>;
+
+    template <typename T, typename U = T>
+    concept Swappable = requires (T&& t, U&& u)
+    {
+        swap(std::forward<T>(t), std::forward<U>(u));
+        swap(std::forward<U>(u), std::forward<T>(t));
+    };
 }
 
 namespace Mountain::Concepts
@@ -183,6 +199,8 @@ namespace Mountain::Meta
 
 namespace Mountain
 {
+    // TODO - Maybe move these declarations elsewhere
+
     template <typename T>
     using Predicate = std::function<bool_t(const T& element)>;
 

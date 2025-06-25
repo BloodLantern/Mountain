@@ -282,6 +282,9 @@ namespace Mountain
         template <typename From, typename To>
         concept ConvertibleTo = Meta::IsConvertibleTo<From, To>;
 
+        template <typename T, typename U>
+        concept SameAs = Meta::IsSame<T, U>;
+
         /// @brief Concept that forces a type to be a color, e.g., either @c Color or @c ColorHsva
         template <class T>
         concept Color = Meta::IsColorType<T>;

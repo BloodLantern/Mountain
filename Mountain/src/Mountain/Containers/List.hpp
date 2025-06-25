@@ -4,7 +4,6 @@
 #include "Mountain/Containers/Array.hpp"
 #include "Mountain/Containers/ContiguousIterator.hpp"
 #include "Mountain/Exceptions/ThrowHelper.hpp"
-#include "Mountain/Utils/Utils.hpp"
 
 /// @file List.hpp
 /// @brief Defines the Mountain::List class.
@@ -30,7 +29,7 @@ namespace Mountain
         /// @brief The type of the List. Refers to T.
         using Type = T;
         using Iterator = ContiguousIterator<T>;
-        using ConstIterator = ContiguousIterator<const T>;
+        using ConstIterator = ContiguousConstIterator<T>;
 
         List() noexcept;
 
@@ -216,10 +215,6 @@ namespace Mountain
 
         void RemoveLast();
 
-        void Sort();
-
-        void Sort(Comparer<T> comparer);
-
         /// @brief Get the element at the given index with bounds checking.
         [[nodiscard]]
         T& At(size_t index) const;
@@ -401,7 +396,7 @@ namespace Mountain
     template <Concepts::DynamicContainerType T>
     bool_t List<T>::CheckIterator(Iterator iterator) const
     {
-        return iterator.GetFirstElement() == m_Data && iterator.GetContainerSize() == m_Size && iterator.GetIndex() < m_Size;
+        return iterator.GetFirstElement() == m_Data && iterator.GetIndex() < m_Size;
     }
 
     template <Concepts::DynamicContainerType T>
@@ -821,10 +816,10 @@ namespace Mountain
     T& List<T>::operator[](const size_t index) const noexcept { return m_Data[index]; }
 
     template <Concepts::DynamicContainerType T>
-    typename List<T>::Iterator List<T>::GetBeginIterator() noexcept { return Iterator{m_Data, 0, m_Size}; }
+    typename List<T>::Iterator List<T>::GetBeginIterator() noexcept { return Iterator{m_Data, 0}; }
 
     template <Concepts::DynamicContainerType T>
-    typename List<T>::Iterator List<T>::GetEndIterator() noexcept { return Iterator{m_Data, m_Size, m_Size}; }
+    typename List<T>::Iterator List<T>::GetEndIterator() noexcept { return Iterator{m_Data, m_Size}; }
 
     template <Concepts::DynamicContainerType T>
     typename List<T>::Iterator List<T>::begin() noexcept { return GetBeginIterator(); }
@@ -845,10 +840,10 @@ namespace Mountain
     typename List<T>::ConstIterator List<T>::end() const noexcept { return GetEndConstIterator(); }
 
     template <Concepts::DynamicContainerType T>
-    typename List<T>::ConstIterator List<T>::GetBeginConstIterator() const noexcept { return ConstIterator{m_Data, 0, m_Size}; }
+    typename List<T>::ConstIterator List<T>::GetBeginConstIterator() const noexcept { return ConstIterator{m_Data, 0}; }
 
     template <Concepts::DynamicContainerType T>
-    typename List<T>::ConstIterator List<T>::GetEndConstIterator() const noexcept { return ConstIterator{m_Data, m_Size, m_Size}; }
+    typename List<T>::ConstIterator List<T>::GetEndConstIterator() const noexcept { return ConstIterator{m_Data, m_Size}; }
 
     template <Concepts::DynamicContainerType T>
     typename List<T>::ConstIterator List<T>::cbegin() const noexcept { return GetBeginConstIterator(); }

@@ -3,6 +3,7 @@
 #include <functional>
 
 #include "Mountain/Core.hpp"
+#include "Mountain/Containers/List.hpp"
 #include "Mountain/Utils/Requirements.hpp"
 
 namespace Mountain
@@ -21,14 +22,14 @@ namespace Mountain
     <
         Requirements::MountainEnumerable EnumerableT,
         typename T,
-        typename = Meta::EnableIf<Meta::IsEqualityComparableWith<T, Meta::EnumerableType<EnumerableT>>>
+        typename = Meta::EnableIf<Meta::IsEqualityComparableWith<T, Meta::MountainEnumerableType<EnumerableT>>>
     >
     [[nodiscard]]
     bool_t Contains(const EnumerableT& enumerable, const T& element);
 
     template <Requirements::MountainEnumerable EnumerableT>
     [[nodiscard]]
-    EnumerableT FindAll(const EnumerableT& enumerable, EnumerablePredicate<Meta::Identity<EnumerableT>> predicate);
+    List<Meta::MountainEnumerableType<EnumerableT>>&& FindAll(const EnumerableT& enumerable, EnumerablePredicate<Meta::Identity<EnumerableT>> predicate);
 
     /// @brief Returns the first element of a sequence.
     template <Requirements::MountainEnumerable EnumerableT>
@@ -47,11 +48,15 @@ namespace Mountain
 
     template <Requirements::MountainEnumerable EnumerableT>
     void ForEach(const EnumerableT& enumerable, EnumerableOperation<Meta::Identity<EnumerableT>> operation);
+
+    template <Requirements::MountainEnumerable EnumerableT, typename = Meta::EnableIf<Requirements::Swappable<Meta::MountainEnumerableType<EnumerableT>>>>
+    void Sort();
+
+    template <Requirements::MountainEnumerable EnumerableT, typename = Meta::EnableIf<Requirements::Swappable<Meta::MountainEnumerableType<EnumerableT>>>>
+    void Sort(EnumerableComparer<EnumerableT> comparer);
 }
 
 // Start of EnumerableExt.inl
-
-#include "Mountain/Containers/List.hpp"
 
 namespace Mountain
 {
@@ -104,9 +109,9 @@ namespace Mountain
     }
 
     template <Requirements::MountainEnumerable EnumerableT>
-    EnumerableT FindAll(const EnumerableT& enumerable, EnumerablePredicate<Meta::Identity<EnumerableT>> predicate)
+    List<Meta::MountainEnumerableType<EnumerableT>>&& FindAll(const EnumerableT& enumerable, EnumerablePredicate<Meta::Identity<EnumerableT>> predicate)
     {
-        List<Meta::EnumerableType<EnumerableT>> result;
+        List<Meta::MountainEnumerableType<EnumerableT>> result;
 
         for (const auto& e : enumerable)
         {
@@ -114,7 +119,7 @@ namespace Mountain
                 result.Add(e);
         }
 
-        return std::move(result); // TODO - Maybe remove the std::move
+        return std::move(result);
     }
 
     template <Requirements::MountainEnumerable EnumerableT>
@@ -130,7 +135,7 @@ namespace Mountain
     {
         if (IsEmpty(enumerable))
             THROW(InvalidOperationException{"Cannot get the last element of an empty enumerable."});
-        return *(enumerable.GetLastIterator() - 1);
+        return *(enumerable.GetEndIterator() - 1);
     }
 
     template <Requirements::MountainEnumerable EnumerableT>
@@ -138,7 +143,7 @@ namespace Mountain
     {
         if (GetSize(enumerable) != 1)
             THROW(InvalidOperationException{"Cannot get the only element of an enumerable that doesn't have only one element."});
-        return *enumerable.GetLastIterator();
+        return *enumerable.GetEndIterator();
     }
 
     template <Requirements::MountainEnumerable EnumerableT>

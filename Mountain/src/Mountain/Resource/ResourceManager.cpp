@@ -1,6 +1,5 @@
 ﻿#include "Mountain/Resource/ResourceManager.hpp"
 
-#include <array>
 #include <execution>
 
 #include "Mountain/FileSystem/FileManager.hpp"
@@ -10,6 +9,7 @@
 #include "Mountain/Resource/Texture.hpp"
 
 #include "Mountain/BinaryResources/resource_holder.hpp"
+#include "Mountain/Containers/EnumerableExt.hpp"
 
 namespace rh
 {
@@ -70,13 +70,11 @@ void ResourceManager::LoadAll()
 
     const size_t oldResourceCount = m_Resources.size();
 
-    std::vector<Pointer<File>> filesVec{files.begin(), files.end(), {}};
-
     // Preload resource data asynchronously
     std::for_each(
         std::execution::par,
-        filesVec.begin(),
-        filesVec.end(),
+        files.begin(),
+        files.end(),
         [](const Pointer<File>& file) -> void
         {
             std::string&& extension = file->GetExtension();
@@ -91,7 +89,7 @@ void ResourceManager::LoadAll()
     List<Pointer<Shader>> shadersToLoad;
 
     // Do interface stuff synchronously (OpenGL/OpenAL/FreeType)
-    for (Pointer<File>& file : filesVec)
+    for (Pointer<File>& file : files)
     {
         std::string&& extension = file->GetExtension();
 

@@ -14,7 +14,7 @@ namespace Mountain
     {
         using Type = T;
         using Iterator = ContiguousIterator<T>;
-        using ConstIterator = ContiguousIterator<const T>;
+        using ConstIterator = ContiguousConstIterator<T>;
 
         T data[Size];
 
@@ -137,10 +137,10 @@ namespace Mountain
     constexpr const T& Array<T, Size>::operator[](size_t index) const noexcept { return data[index]; }
 
     template <Concepts::ContainerType T, size_t Size>
-    constexpr typename Array<T, Size>::Iterator Array<T, Size>::GetBeginIterator() noexcept { return Iterator{data, 0, Size}; }
+    constexpr typename Array<T, Size>::Iterator Array<T, Size>::GetBeginIterator() noexcept { return Iterator{data, 0}; }
 
     template <Concepts::ContainerType T, size_t Size>
-    constexpr typename Array<T, Size>::Iterator Array<T, Size>::GetEndIterator() noexcept { return Iterator{data, Size, Size}; }
+    constexpr typename Array<T, Size>::Iterator Array<T, Size>::GetEndIterator() noexcept { return Iterator{data, Size}; }
 
     template <Concepts::ContainerType T, size_t Size>
     constexpr typename Array<T, Size>::Iterator Array<T, Size>::begin() noexcept { return GetBeginIterator(); }
@@ -161,10 +161,10 @@ namespace Mountain
     constexpr typename Array<T, Size>::ConstIterator Array<T, Size>::end() const noexcept { return GetEndConstIterator(); }
 
     template <Concepts::ContainerType T, size_t Size>
-    constexpr typename Array<T, Size>::ConstIterator Array<T, Size>::GetBeginConstIterator() const noexcept { return ConstIterator{data, 0, Size}; }
+    constexpr typename Array<T, Size>::ConstIterator Array<T, Size>::GetBeginConstIterator() const noexcept { return ConstIterator{data, 0}; }
 
     template <Concepts::ContainerType T, size_t Size>
-    constexpr typename Array<T, Size>::ConstIterator Array<T, Size>::GetEndConstIterator() const noexcept { return ConstIterator{data, Size, Size}; }
+    constexpr typename Array<T, Size>::ConstIterator Array<T, Size>::GetEndConstIterator() const noexcept { return ConstIterator{data, Size}; }
 
     template <Concepts::ContainerType T, size_t Size>
     constexpr typename Array<T, Size>::ConstIterator Array<T, Size>::cbegin() const noexcept { return GetBeginConstIterator(); }

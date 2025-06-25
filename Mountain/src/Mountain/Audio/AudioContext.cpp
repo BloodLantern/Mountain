@@ -74,7 +74,7 @@ uint32_t AudioContext::GetSource(const AudioSourceType type)
     MakeCurrent();
 
     ForEach(sources,
-        [&] (const uint32_t& s)
+        [&] (const uint32_t s)
         {
             int32_t value = 0;
             alGetSourcei(s, AL_SOURCE_STATE, &value);
