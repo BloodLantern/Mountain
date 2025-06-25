@@ -63,7 +63,7 @@ void ResourceManager::LoadAll()
 {
     Logger::LogInfo("Loading all resources from FileManager");
 
-    auto&& start = std::chrono::system_clock::now();
+    const auto start = std::chrono::system_clock::now();
 
     List<Pointer<File>> files;
     FileManager::FindAll<File>([](Pointer<File> file) { return file->GetResource() == nullptr && !IsBinary(file->GetPathString()); }, &files);

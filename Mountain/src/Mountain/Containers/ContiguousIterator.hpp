@@ -17,7 +17,7 @@ namespace Mountain
 
         ContiguousConstIterator() = default;
 
-        ContiguousConstIterator(T* firstElement, size_t index) noexcept;
+        ContiguousConstIterator(const T* firstElement, size_t index) noexcept;
 
         /// @brief Gets the element in the container at the current position of the iterator.
         [[nodiscard]]
@@ -84,7 +84,7 @@ namespace Mountain
         friend constexpr bool_t CheckCompatible(const ContiguousConstIterator& lhs, const ContiguousConstIterator& rhs) noexcept;
 
     protected:
-        T* m_FirstElement = nullptr;
+        const T* m_FirstElement = nullptr;
         size_t m_Index = 0;
     };
 
@@ -170,7 +170,7 @@ namespace Mountain
 namespace Mountain
 {
     template <typename T>
-    ContiguousConstIterator<T>::ContiguousConstIterator(T* firstElement, const size_t index) noexcept
+    ContiguousConstIterator<T>::ContiguousConstIterator(const T* firstElement, const size_t index) noexcept
         : m_FirstElement(firstElement), m_Index(index)
     {
     }
