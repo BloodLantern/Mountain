@@ -24,14 +24,12 @@ namespace Mountain
     class List
     {
     public:
-        static constexpr size_t InitialCapacity = 2;
-
         /// @brief The type of the List. Refers to T.
         using Type = T;
         using Iterator = ContiguousIterator<T>;
         using ConstIterator = ContiguousConstIterator<T>;
 
-        List() noexcept;
+        List() noexcept = default;
 
         List(std::initializer_list<T> initializer) noexcept;
 
@@ -290,12 +288,6 @@ namespace Mountain
 
 namespace Mountain
 {
-    template <Concepts::DynamicContainerType T>
-    List<T>::List() noexcept
-    {
-        Reallocate(InitialCapacity);
-    }
-
     template <Concepts::DynamicContainerType T>
     List<T>::List(std::initializer_list<T> initializer) noexcept
     {

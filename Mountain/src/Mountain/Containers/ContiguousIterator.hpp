@@ -68,10 +68,10 @@ namespace Mountain
         friend constexpr ContiguousConstIterator& operator-=(ContiguousConstIterator& lhs, ptrdiff_t rhs) noexcept;
 
         [[nodiscard]]
-        constexpr bool_t operator==(const ContiguousConstIterator& other) const noexcept;
+        constexpr bool_t operator==(const ContiguousConstIterator& other) const;
 
         [[nodiscard]]
-        constexpr std::strong_ordering operator<=>(const ContiguousConstIterator&) const noexcept;
+        constexpr std::strong_ordering operator<=>(const ContiguousConstIterator&) const;
 
         [[nodiscard]]
         constexpr T* GetFirstElement() const noexcept;
@@ -143,7 +143,7 @@ namespace Mountain
         friend constexpr ContiguousIterator& operator+=(ContiguousIterator& lhs, ptrdiff_t rhs) noexcept;
 
         [[nodiscard]]
-        friend constexpr ptrdiff_t operator-(const ContiguousIterator& lhs, const ContiguousIterator& rhs) noexcept;
+        friend constexpr ptrdiff_t operator-(const ContiguousIterator& lhs, const ContiguousIterator& rhs);
 
         [[nodiscard]]
         friend constexpr ContiguousIterator operator-(ContiguousIterator lhs, ptrdiff_t rhs) noexcept;
@@ -221,14 +221,14 @@ namespace Mountain
     }
 
     template <typename T>
-    constexpr bool_t ContiguousConstIterator<T>::operator==(const ContiguousConstIterator& other) const noexcept
+    constexpr bool_t ContiguousConstIterator<T>::operator==(const ContiguousConstIterator& other) const
     {
         CheckCompatibleThrow(*this, other);
         return m_Index == other.m_Index;
     }
 
     template <typename T>
-    constexpr std::strong_ordering ContiguousConstIterator<T>::operator<=>(const ContiguousConstIterator& other) const noexcept
+    constexpr std::strong_ordering ContiguousConstIterator<T>::operator<=>(const ContiguousConstIterator& other) const
     {
         CheckCompatibleThrow(*this, other);
         return m_Index <=> other.m_Index;
@@ -254,7 +254,7 @@ namespace Mountain
     }
 
     template <typename T>
-    constexpr ptrdiff_t operator-(const ContiguousConstIterator<T>& lhs, const ContiguousConstIterator<T>& rhs) noexcept
+    constexpr ptrdiff_t operator-(const ContiguousConstIterator<T>& lhs, const ContiguousConstIterator<T>& rhs)
     {
         CheckCompatibleThrow(lhs, rhs);
         return lhs.m_Index - rhs.m_Index;
@@ -351,7 +351,7 @@ namespace Mountain
     }
 
     template <typename T>
-    constexpr ptrdiff_t operator-(const ContiguousIterator<T>& lhs, const ContiguousIterator<T>& rhs) noexcept
+    constexpr ptrdiff_t operator-(const ContiguousIterator<T>& lhs, const ContiguousIterator<T>& rhs)
     {
         CheckCompatibleThrow(lhs, rhs);
         return lhs.m_Index - rhs.m_Index;

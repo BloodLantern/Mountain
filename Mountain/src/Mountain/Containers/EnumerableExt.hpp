@@ -27,7 +27,7 @@ namespace Mountain
     template <Requirements::MountainEnumerable EnumerableT,
         typename T = Meta::MountainEnumerableType<EnumerableT>>
     [[nodiscard]]
-    List<T>&& FindAll(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate);
+    List<T> FindAll(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate);
 
     /// @brief Returns the first element of a sequence.
     template <Requirements::MountainEnumerable EnumerableT,
@@ -131,7 +131,7 @@ namespace Mountain
     }
 
     template <Requirements::MountainEnumerable EnumerableT, typename T>
-    List<T>&& FindAll(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate)
+    List<T> FindAll(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate)
     {
         List<T> result;
 
@@ -141,7 +141,7 @@ namespace Mountain
                 result.Add(e);
         }
 
-        return std::move(result); // FIXME - Warning C4172 : returning address of local variable or temporary : result
+        return result;
     }
 
     template <Requirements::MountainEnumerable EnumerableT, typename T>
