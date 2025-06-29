@@ -51,4 +51,4 @@ jobs:
 
     - name: Run UnitTests
       working-directory: ${{env.GITHUB_WORKSPACE}}
-      run: x64/Debug/UnitTests.exe
+      run: x64/Release/UnitTests.exe
