@@ -110,7 +110,7 @@ namespace
                 t = "Unknown";
         }
 
-        if (Mountain::BreakOnGraphicsError)
+        if (Mountain::BreakOnGraphicsError && level == Mountain::Logger::LogLevel::Error)
             __debugbreak();
 
         Mountain::Logger::Log(level, "[OpenGL] Log of type {} received from {}: {}", t, src, std::string_view(message, length));
@@ -282,16 +282,16 @@ void Mountain::Renderer::PostFrame()
     }
 
     Draw::Flush();
-    
+
     // End ImGui frame
     ImGui::Render();
-    
+
     Vector2i framebufferSize;
     glfwGetFramebufferSize(Window::GetHandle(), &framebufferSize.x, &framebufferSize.y);
     Graphics::SetViewport(0, 0, framebufferSize.x, framebufferSize.y);
-    
+
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-    
+
     if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
     {
         ImGui::UpdatePlatformWindows();
@@ -303,17 +303,17 @@ void Mountain::Renderer::PostFrame()
 void Mountain::Renderer::Shutdown()
 {
     Logger::LogVerbose("Shutting down renderer");
-    
+
     // Cleanup
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplGlfw_Shutdown();
 	ImGui::DestroyPlatformWindows();
 	ImGui::DestroyContext();
-    
+
     Draw::Shutdown();
     FT_Done_FreeType(m_Freetype);
 
     delete m_RenderTarget;
-    
+
     Window::Shutdown();
 }
