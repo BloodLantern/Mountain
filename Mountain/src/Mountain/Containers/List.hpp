@@ -3,6 +3,7 @@
 #include "Mountain/Core.hpp"
 #include "Mountain/Containers/Array.hpp"
 #include "Mountain/Containers/ContiguousIterator.hpp"
+#include "Mountain/Containers/EnumerableExt.hpp"
 #include "Mountain/Exceptions/ThrowHelper.hpp"
 
 /// @file List.hpp
@@ -80,6 +81,7 @@ namespace Mountain
         void Add(const T& element);
 
         /// @brief Adds a range of elements to the end of the List.
+        template <typename = Meta::EnableIf<Meta::IsTriviallyCopyable<T>>>
         void AddRange(const T* data, size_t count);
 
         /// @brief Adds a range of elements to the end of the List.
@@ -268,6 +270,8 @@ namespace Mountain
         [[nodiscard]]
         ConstIterator cend() const noexcept;
 
+        ENUMERABLE_EXTENSIONS_DEFINITIONS(List)
+
     private:
         T* m_Data = nullptr;
         size_t m_Size = 0;
@@ -408,6 +412,7 @@ namespace Mountain
     }
 
     template <Concepts::DynamicContainerType T>
+    template <typename>
     void List<T>::AddRange(const T* data, const size_t count)
     {
         Reserve(m_Size + count);

@@ -197,21 +197,6 @@ namespace Mountain::Meta
     using EnumerableIteratorType = typename EnumerableIteratorTypeS<T>::Type;
 }
 
-namespace Mountain
-{
-    // TODO - Maybe move these declarations elsewhere
-
-    template <typename T>
-    using Predicate = std::function<bool_t(const T& element)>;
-
-    template <typename T>
-    using Operation = std::function<void(T& element)>;
-
-    /// @brief Comparer function that returns @c true if @p lhs is considered less than @p rhs.
-    template <typename T>
-    using Comparer = std::function<bool_t(const T& lhs, const T& rhs)>;
-}
-
 // ReSharper disable CppMemberFunctionMayBeStatic
 // ReSharper disable CppClangTidyCertDcl58Cpp
 

@@ -226,8 +226,8 @@ void GameExample::Render()
 
     Draw::RenderTarget(renderTarget, Vector2::Zero(), Window::GetSize() / renderTarget.GetSize());
 
-    vignette.effect.imageBindings.Emplace(Renderer::GetCurrentRenderTarget().GetTextureId(), 0, Graphics::ImageShaderAccess::WriteOnly);
-    filmGrain.effect.imageBindings.Emplace(Renderer::GetCurrentRenderTarget().GetTextureId(), 0, Graphics::ImageShaderAccess::WriteOnly);
+    vignette.effect.imageBindings.Emplace(Renderer::GetCurrentRenderTarget().GetTextureId(), 0u, Graphics::ImageShaderAccess::WriteOnly);
+    filmGrain.effect.imageBindings.Emplace(Renderer::GetCurrentRenderTarget().GetTextureId(), 0u, Graphics::ImageShaderAccess::WriteOnly);
     if (vignette.enabled)
         vignette.effect.Apply(Renderer::GetCurrentRenderTarget().GetSize(), false);
     if (filmGrain.enabled)

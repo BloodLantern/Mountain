@@ -56,6 +56,8 @@ TEST(List, DefaultInitialization)
     constexpr List<int> defaultInitialized{};
     constexpr std::vector<int> defaultInitializedStd{};
 
+    std::ranges::sort(defaultInitializedStd);
+
     //EXPECT_EQ(defaultInitialized, defaultInitializedStd);
 }
 

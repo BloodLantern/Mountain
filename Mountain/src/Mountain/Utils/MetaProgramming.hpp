@@ -97,13 +97,49 @@ namespace Mountain
         template <typename T>
         constexpr bool_t IsDefaultConstructible = std::is_default_constructible_v<T>;
 
-        /// @brief Checks whether @p T can be copied.
+        /// @brief Checks whether @p T can be assigned a copied value.
         template <typename T>
         constexpr bool_t IsCopyAssignable = std::is_copy_assignable_v<T>;
 
-        /// @brief Checks whether @p T can be moved.
+        /// @brief Checks whether @p T can be assigned a moved value.
         template <typename T>
         constexpr bool_t IsMoveAssignable = std::is_move_assignable_v<T>;
+
+        /// @brief Checks whether @p T is trivially copyable.
+        template <typename T>
+        constexpr bool_t IsTriviallyCopyable = std::is_trivially_copyable_v<T>;
+
+        /// @brief Checks whether @p From is trivially assignable to @p T.
+        template <typename To, typename From>
+        constexpr bool_t IsTriviallyAssignable = std::is_trivially_assignable_v<To, From>;
+
+        /// @brief Checks whether @p T is trivially constructible.
+        template <typename T>
+        constexpr bool_t IsTriviallyConstructible = std::is_trivially_constructible_v<T>;
+
+        /// @brief Checks whether @p T is trivially copy assignable.
+        template <typename T>
+        constexpr bool_t IsTriviallyCopyAssignable = std::is_trivially_copy_assignable_v<T>;
+
+        /// @brief Checks whether @p T is trivially copy constructible.
+        template <typename T>
+        constexpr bool_t IsTriviallyCopyConstructible = std::is_trivially_copy_constructible_v<T>;
+
+        /// @brief Checks whether @p T is trivially default constructible.
+        template <typename T>
+        constexpr bool_t IsTriviallyDefaultConstructible = std::is_trivially_default_constructible_v<T>;
+
+        /// @brief Checks whether @p T is trivially destructible.
+        template <typename T>
+        constexpr bool_t IsTriviallyDestructible = std::is_trivially_destructible_v<T>;
+
+        /// @brief Checks whether @p T is trivially move assignable.
+        template <typename T>
+        constexpr bool_t IsTriviallyMoveAssignable = std::is_trivially_move_assignable_v<T>;
+
+        /// @brief Checks whether @p T is trivially move constructible.
+        template <typename T>
+        constexpr bool_t IsTriviallyMoveConstructible = std::is_trivially_move_constructible_v<T>;
 
         /// @brief Checks whether @p T is a @c const type.
         template <typename T>
@@ -121,8 +157,16 @@ namespace Mountain
         template <typename T>
         constexpr bool_t IsReference = std::is_reference_v<T>;
 
-        template <bool_t Test>
-        using EnableIf = std::enable_if_t<Test>;
+        /// @brief Checks whether @p T is invocable with the given argument types.
+        template <typename T, typename... Args>
+        constexpr bool_t IsInvocable = std::is_invocable_v<T, Args...>;
+
+        /// @brief Checks whether @p T is sortable.
+        template <typename Iterator, typename Comparer, typename Projection = Mountain::Identity<>>
+        constexpr bool_t IsSortable = std::sortable<Iterator, Comparer, Projection>;
+
+        template <bool_t Condition>
+        using EnableIf = std::enable_if_t<Condition>;
 
         /// @brief Removes the array specification from @p T
         ///

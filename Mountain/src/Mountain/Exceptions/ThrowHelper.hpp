@@ -36,13 +36,13 @@
         if (!(pointerParameter)) \
             THROW(ArgumentNullException{"Parameter " #pointerParameter " cannot be null", #pointerParameter}); \
     } \
-while (false)
+    while (false)
 
 #define THROW_HELPER_FUNC(functionName, exceptionType, message) \
-static exceptionType functionName##Exception() { return exceptionType{message}; }  // NOLINT(bugprone-macro-parentheses)
+    static exceptionType functionName##Exception() { return exceptionType{message}; }  // NOLINT(bugprone-macro-parentheses)
 
 #define THROW_HELPER_FUNC_ARG(functionName, argumentExceptionType, message) \
-static argumentExceptionType functionName##Exception(const char_t* argumentName) { return argumentExceptionType{message, argumentName}; }  // NOLINT(bugprone-macro-parentheses)
+    static argumentExceptionType functionName##Exception(const char_t* argumentName) { return argumentExceptionType{message, argumentName}; }  // NOLINT(bugprone-macro-parentheses)
 
 namespace Mountain
 {

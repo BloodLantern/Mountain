@@ -33,12 +33,6 @@ namespace Mountain::Utils
         Both    = Start | End
     };
 
-    template <typename T>
-    using ProjectionFunc = T(*)(T);
-
-    template <typename T>
-    constexpr ProjectionFunc<T> Identity = [](T t) { return t; };
-
     /// @brief Converts an integral number to a valid pointer without illegal size operations
     /// @tparam PtrT Type of the pointer
     /// @tparam IntT Type of the number. Must be integral
