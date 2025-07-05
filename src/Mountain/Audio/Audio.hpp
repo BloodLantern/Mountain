@@ -2,9 +2,10 @@
 
 #include <functional>
 
-#include "Mountain/Core.hpp"
+#include "AL/alc.h"
 #include "Mountain/Audio/AudioBuffer.hpp"
 #include "Mountain/Audio/AudioDevice.hpp"
+#include "Mountain/Core.hpp"
 #include "Mountain/Utils/List.hpp"
 
 // OpenAL type forward declaration
@@ -62,7 +63,7 @@ namespace Mountain
 
         MOUNTAIN_API static inline bool_t m_DefaultDeviceChanged = false;
 
-        static void EventCallback(ALCenum eventType, ALCenum deviceType, ALCdevice* device, ALCsizei length, const ALCchar* message, void* userParam);
+        static void EventCallback(ALCenum eventType, ALCenum deviceType, ALCdevice* device, ALCsizei length, const ALCchar* message, void* userParam) noexcept;
 
         /// @brief Iterates over an OpenAL string list, applying the given lambda on each string.
         ///

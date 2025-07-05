@@ -42,8 +42,6 @@ namespace Mountain
         [[nodiscard]]
         double_t GetElapsedSeconds() const;
 
-        friend std::ostream& operator<<(std::ostream& out, const Stopwatch& stopwatch);
-
     private:
         static constexpr int64_t TicksPerMillisecond = 10000;
         static constexpr int64_t TicksPerSecond = TicksPerMillisecond * 1000;
@@ -59,6 +57,8 @@ namespace Mountain
         [[nodiscard]]
         int64_t GetElapsedDateTimeTicks() const;
     };
+
+    std::ostream& operator<<(std::ostream& out, const Stopwatch& stopwatch);
 }
 
 /// @brief @c std::formatter template specialization for the Mountain::Stopwatch type.

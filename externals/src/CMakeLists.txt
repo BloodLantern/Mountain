@@ -2,13 +2,12 @@ cmake_minimum_required(VERSION 3.14)
 
 project(MountainExternals LANGUAGES CXX C)
 
+
 include_directories(".")
 
-file(GLOB_RECURSE SOURCE_FILES "*.cpp")
-file(GLOB_RECURSE SOURCE_FILES "*.c")
-file(GLOB_RECURSE SOURCE_FILES "*.cc")
-file(GLOB_RECURSE SOURCE_FILES "*.cxx")
+file(GLOB_RECURSE SOURCE_FILES "*.cpp" "*.c" "*.cc" "*.cxx")
+file(GLOB_RECURSE STATIC_LIBS "*.lib")
 
-add_library(Externals STATIC ${SOURCE_FILES})
+add_library(MountainExternals STATIC ${SOURCE_FILES})
 
-target_link_libraries(Externals Math)
+target_link_libraries(MountainExternals Math ${OpenGL_LIBRARIES} ${STATIC_LIBS})

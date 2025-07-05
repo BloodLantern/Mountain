@@ -7,6 +7,19 @@
 
 namespace Mountain
 {
+    struct TimeSpan;
+}
+
+Mountain::TimeSpan operator+(Mountain::TimeSpan a, Mountain::TimeSpan b);
+Mountain::TimeSpan operator-(Mountain::TimeSpan v);
+Mountain::TimeSpan operator-(Mountain::TimeSpan a, Mountain::TimeSpan b);
+Mountain::TimeSpan operator*(Mountain::TimeSpan v, double_t factor);
+Mountain::TimeSpan operator*(double_t factor, Mountain::TimeSpan v);
+Mountain::TimeSpan operator/(Mountain::TimeSpan v, double_t divisor);
+double_t operator/(Mountain::TimeSpan a, Mountain::TimeSpan b);
+
+namespace Mountain
+{
     /// @brief C++ reimplementation of the .NET TimeSpan struct
     /// @details Represents a time interval.
     /// @see Source: https://github.com/dotnet/runtime/blob/release/8.0/src/libraries/System.Private.CoreLib/src/System/TimeSpan.cs
@@ -94,20 +107,13 @@ namespace Mountain
         [[nodiscard]]
         friend auto operator<=>(TimeSpan, TimeSpan) = default;
 
-        friend TimeSpan operator+(TimeSpan a, TimeSpan b);
-        friend TimeSpan operator-(TimeSpan v);
-        friend TimeSpan operator-(TimeSpan a, TimeSpan b);
-        friend TimeSpan operator*(TimeSpan v, double_t factor);
-        friend TimeSpan operator*(double_t factor, TimeSpan v);
-        friend TimeSpan operator/(TimeSpan v, double_t divisor);
-        friend double_t operator/(TimeSpan a, TimeSpan b);
-
-        friend TimeSpan& operator+=(TimeSpan& a, TimeSpan b);
-        friend TimeSpan& operator-=(TimeSpan& a, TimeSpan b);
-        friend TimeSpan& operator*=(TimeSpan& v, double_t factor);
-        friend TimeSpan& operator/=(TimeSpan& v, double_t divisor);
-
-        friend std::ostream& operator<<(std::ostream& out, const TimeSpan& timeSpan);
+        friend TimeSpan (::operator+(TimeSpan a, TimeSpan b));
+        friend TimeSpan (::operator-(TimeSpan v));
+        friend TimeSpan (::operator-(TimeSpan a, TimeSpan b));
+        friend TimeSpan (::operator*(TimeSpan v, double_t factor));
+        friend TimeSpan (::operator*(double_t factor, TimeSpan v));
+        friend TimeSpan (::operator/(TimeSpan v, double_t divisor));
+        friend double_t (::operator/(TimeSpan a, TimeSpan b));
 
     private:
         static constexpr int64_t MaxSeconds = std::numeric_limits<int64_t>::max() / TicksPerSecond;
@@ -128,6 +134,13 @@ namespace Mountain
 
         int64_t m_Ticks;
     };
+
+    TimeSpan& operator+=(TimeSpan& a, TimeSpan b);
+    TimeSpan& operator-=(TimeSpan& a, TimeSpan b);
+    TimeSpan& operator*=(TimeSpan& v, double_t factor);
+    TimeSpan& operator/=(TimeSpan& v, double_t divisor);
+
+    std::ostream& operator<<(std::ostream& out, const TimeSpan& timeSpan);
 }
 
 /// @brief @c std::hash template specialization for the Mountain::TimeSpan type.
@@ -159,7 +172,7 @@ struct std::formatter<Mountain::TimeSpan>
     }
 
     // ReSharper disable once CppMemberFunctionMayBeStatic
-    /// @brief Formats a string using the given instance of Mountain::TimeSpan, according to the given options in the parse function.
+    /// @brief Formats a string using the given instance of @c Mountain::TimeSpan, according to the given options in the parse function.
     template <class FormatContext>
     typename FormatContext::iterator format(const Mountain::TimeSpan& timeSpan, FormatContext& ctx) const
     {
@@ -191,7 +204,7 @@ struct std::formatter<Mountain::TimeSpan>
 
         if (nanosecondsCheck || microsecondsCheck)
             out << std::format("{:03}", timeSpan.GetMicroseconds());
-        else if (microsecondsCheck)
+        else if (millisecondsCheck)
             out << std::format(".{}", timeSpan.GetMilliseconds());
 
         if (nanosecondsCheck)

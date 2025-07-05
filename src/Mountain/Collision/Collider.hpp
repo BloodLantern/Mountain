@@ -21,6 +21,8 @@ namespace Mountain
     class Grid;
     class ColliderList;
 
+    class Entity;
+
     class MOUNTAIN_API Collider
     {
         friend class Entity;

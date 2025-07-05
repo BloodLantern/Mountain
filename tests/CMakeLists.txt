@@ -9,6 +9,24 @@ include_directories(SYSTEM ${MathLibrary_SOURCE_DIR} ${MountainExternals_SOURCE_
 
 file(GLOB_RECURSE SOURCE_FILES "*.cpp")
 
-add_executable(Tests ${SOURCE_FILES})
+add_executable(MountainTests ${SOURCE_FILES})
 
-target_link_libraries(Tests Mountain)
+target_link_libraries(MountainTests Mountain)
+
+if (WIN32)
+    if (MATH_BUILD_SHARED_LIBS)
+        add_custom_command(TARGET MountainTests POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            $<TARGET_FILE:Math>
+            $<TARGET_FILE_DIR:MountainTests>
+            COMMENT "Copy Math shared library to MountainTests output directory"
+        )
+    endif ()
+
+    add_custom_command(TARGET MountainTests POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        $<TARGET_FILE:Mountain>
+        $<TARGET_FILE_DIR:MountainTests>
+        COMMENT "Copy Mountain shared library to MountainTests output directory"
+    )
+endif ()

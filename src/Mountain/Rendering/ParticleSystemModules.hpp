@@ -12,7 +12,7 @@ namespace Mountain
 
 namespace Mountain::ParticleSystemModules
 {
-    enum class MOUNTAIN_API Types : uint32_t // We might as well use an uint as it is the minimum amount of data we can transfer to the shader
+    enum class Types : uint32_t // We might as well use an uint as it is the minimum amount of data we can transfer to the shader
     {
         None = 0,
 

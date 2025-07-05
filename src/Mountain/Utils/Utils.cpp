@@ -107,23 +107,23 @@ Vector3 Utils::GetQuaternionEulerAngles(const Quaternion& rot)
 
     if (test > 0.4995f * unit)
     { // singularity at north pole
-        v.y = 2.f * std::atan2f(rot.Y(), rot.X());
+        v.y = 2.f * std::atan2(rot.Y(), rot.X());
         v.x = Calc::PiOver2;
         v.z = 0;
         return NormalizeAngles(v);
     }
     if (test < -0.4995f * unit)
     { // singularity at south pole
-        v.y = -2.f * std::atan2f(rot.Y(), rot.X());
+        v.y = -2.f * std::atan2(rot.Y(), rot.X());
         v.x = -Calc::PiOver2;
         v.z = 0;
         return NormalizeAngles(v);
     }
 
     Quaternion q = Quaternion(rot.Z(), rot.X(), rot.Y(), rot.W());
-    v.y = std::atan2f(2.f * q.X() * q.W() + 2.f * q.Y() * q.Z(), 1 - 2.f * (q.Z() * q.Z() + q.W() * q.W()));    // Yaw
-    v.x = std::asinf(2.f * (q.X() * q.Z() - q.W() * q.Y()));                                                    // Pitch
-    v.z = std::atan2f(2.f * q.X() * q.Y() + 2.f * q.Z() * q.W(), 1 - 2.f * (q.Y() * q.Y() + q.Z() * q.Z()));    // Roll
+    v.y = std::atan2(2.f * q.X() * q.W() + 2.f * q.Y() * q.Z(), 1 - 2.f * (q.Z() * q.Z() + q.W() * q.W()));  // Yaw
+    v.x = std::asin(2.f * (q.X() * q.Z() - q.W() * q.Y()));                                                    // Pitch
+    v.z = std::atan2(2.f * q.X() * q.Y() + 2.f * q.Z() * q.W(), 1 - 2.f * (q.Y() * q.Y() + q.Z() * q.Z()));  // Roll
     return NormalizeAngles(v);
 }
 

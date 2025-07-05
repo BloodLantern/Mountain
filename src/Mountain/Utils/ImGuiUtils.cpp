@@ -14,9 +14,6 @@
 #include "Mountain/Utils/FileSystemWatcher.hpp"
 #include "Mountain/Utils/Windows.hpp"
 
-// Needs to be included after windows.hpp
-#include <psapi.h>
-
 using namespace Mountain;
 
 void ImGuiUtils::GridPlotting(const std::string_view label, Vector2* const value, const float_t min, const float_t max)
@@ -541,7 +538,9 @@ void ImGuiUtils::ShowPerformanceMonitoring()
     ImGui::SeparatorText("Statistics");
 
     static float_t fps = 0.f;
+#ifdef WINDOWS_PROCESS_MEMORY_COUNTERS_EX2_AVAILABLE
     static double_t memoryCpuOnly = 0.f;
+#endif
     static double_t memoryTotal = 0.f;
     static float_t deltaTime = 0.f;
     static float_t frameDuration = 0.f;
@@ -562,11 +561,17 @@ void ImGuiUtils::ShowPerformanceMonitoring()
         frameDurationLeft = Time::GetTargetDeltaTime() == 0.f ? 0.f : (Time::GetTargetDeltaTime() - frameDuration);
         screenSize = Screen::GetSize();
 
+#ifdef WINDOWS_PROCESS_MEMORY_COUNTERS_EX2_AVAILABLE
         PROCESS_MEMORY_COUNTERS_EX2 memoryCounter;
+#else
+        PROCESS_MEMORY_COUNTERS_EX memoryCounter;
+#endif
         GetProcessMemoryInfo(GetCurrentProcess(), reinterpret_cast<PPROCESS_MEMORY_COUNTERS>(&memoryCounter), sizeof(memoryCounter));
         Windows::CheckError();
 
+#ifdef WINDOWS_PROCESS_MEMORY_COUNTERS_EX2_AVAILABLE
         memoryCpuOnly = static_cast<double_t>(memoryCounter.PrivateWorkingSetSize) * 1e-6; // Convert to MB
+#endif
         memoryTotal = static_cast<double_t>(memoryCounter.PrivateUsage) * 1e-6; // Convert to MB
 
         lastUpdateTime = updateTime;
@@ -583,7 +588,11 @@ void ImGuiUtils::ShowPerformanceMonitoring()
         fpsColor = Color::Red();
     ImGui::TextColored(static_cast<ImVec4>(fpsColor), "%.0f FPS (%.1fms)", fps, deltaTime * 1000.f);
     ImGui::Text("CPU: %.1fms (%.1fms left)", frameDuration * 1000.f, frameDurationLeft * 1000.f);
+#ifdef WINDOWS_PROCESS_MEMORY_COUNTERS_EX2_AVAILABLE
     ImGui::Text("Memory: %.2fMB (%.2fMB including GPU)", memoryCpuOnly, memoryTotal);
+#else
+    ImGui::Text("Memory: %.2fMB (including GPU)", memoryTotal);
+#endif
     ImGui::Text("Screen: %dx%d", screenSize.x, screenSize.y);
     ImGui::Unindent();
 

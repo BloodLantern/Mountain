@@ -1,5 +1,7 @@
 #include "Mountain/FileSystem/FileManager.hpp"
 
+#include <chrono>
+
 using namespace Mountain;
 
 Pointer<File> FileManager::Add(std::filesystem::path path)

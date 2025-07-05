@@ -9,6 +9,7 @@
 #include "Mountain/Utils/List.hpp"
 #include "Mountain/Utils/Logger.hpp"
 #include "Mountain/Utils/Pointer.hpp"
+#include "Mountain/Utils/Utils.hpp"
 
 /// @file FileManager.hpp
 /// @brief Defines the Mountain::FileManager class.

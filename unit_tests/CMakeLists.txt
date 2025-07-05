@@ -22,31 +22,40 @@ FetchContent_MakeAvailable(googletest)
 enable_testing()
 
 add_executable(
-    UnitTests
+    MountainUnitTests
     test.cpp
 )
 
 target_link_libraries(
-    UnitTests
+    MountainUnitTests
     GTest::gtest_main
     Mountain
 )
 
 if (WIN32)
-    add_custom_command(TARGET UnitTests POST_BUILD
+    if (MATH_BUILD_SHARED_LIBS)
+        add_custom_command(TARGET MountainUnitTests POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            $<TARGET_FILE:Math>
+            $<TARGET_FILE_DIR:MountainUnitTests>
+            COMMENT "Copy Math shared library to MountainUnitTests output directory"
+        )
+    endif ()
+
+    add_custom_command(TARGET MountainUnitTests POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_if_different
         $<TARGET_FILE:Mountain>
-        $<TARGET_FILE_DIR:UnitTests>
-        COMMENT "Copy Mountain shared library to tests output directory"
+        $<TARGET_FILE_DIR:MountainUnitTests>
+        COMMENT "Copy Mountain shared library to MountainUnitTests output directory"
     )
 
     add_custom_command(
-        TARGET UnitTests POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_RUNTIME_DLLS:UnitTests> $<TARGET_FILE_DIR:UnitTests>
+        TARGET MountainUnitTests POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_RUNTIME_DLLS:MountainUnitTests> $<TARGET_FILE_DIR:MountainUnitTests>
         COMMAND_EXPAND_LISTS
-        COMMENT "Copy GTest shared library to tests output directory"
+        COMMENT "Copy GTest shared library to MountainUnitTests output directory"
     )
 endif ()
 
 include(GoogleTest)
-gtest_discover_tests(UnitTests)
+gtest_discover_tests(MountainUnitTests)

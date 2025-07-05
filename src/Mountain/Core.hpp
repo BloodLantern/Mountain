@@ -5,42 +5,52 @@
 #include <cstdint>
 #include <functional>
 
+#include <Math/core.hpp>
+
 /// @file Core.hpp
 /// @brief This file is meant to be included by every single other header file of this project.
 ///
 /// It includes the standard headers @c \<cmath> and @c \<cstdint> so that types such as
-/// @c int8_t or @c float_t are defined. It also defines typedefs for char_t and
-/// bool_t, as they aren't defined by those standard headers.
+/// @c int8_t or @c float_t are defined. It also defines typedefs for @c char_t and
+/// @c bool_t, as they aren't defined by those standard headers.
 ///
-/// Apart from typedefs, this file declares macros ranging from necessary (MOUNTAIN_API)
-/// to useful and of general-use (DEFAULT_COPY_MOVE_OPERATIONS).
+/// Apart from typedefs, this file declares macros ranging from necessary (@c MOUNTAIN_API)
+/// to useful and of general-use (@c DEFAULT_COPY_MOVE_OPERATIONS).
 
 // ReSharper disable once CppEnforceTypeAliasCodeStyle
-/// @brief Equivalent to <c>char</c>.
+/// @brief Equivalent to @c char.
 ///
 /// ### Reason
 /// We use a typedef here instead of a type alias for consistency
-/// with how the other integral types are defined in the <c>cstdint</c> header.
+/// with how the other integral types are defined in the @c cstdint header.
 /// Also, we need to manually add this type because it is considered
-/// different to <c>int8_t</c> as the latter is the equivalent of <c>signed char</c>
-/// and not <c>char</c>.
+/// different to @c int8_t as the latter is the equivalent of @c signedr</c>
+/// and not @c char.
 typedef char char_t;
 
 // ReSharper disable once CppEnforceTypeAliasCodeStyle
-/// @brief Equivalent to <c>bool</c>.
+/// @brief Equivalent to @c bool.
 ///
 /// @see char_t for reason.
 typedef bool bool_t;
 
 using Action = std::function<void()>;
 
-/// @brief Macro used for DLL export/import.
+/// @brief Macro used for shared library export/import.
 ///
 /// This macro should be used at the beginning of static member variable and non-inline function declarations.
-#ifdef MOUNTAIN_EXPORT
-#define MOUNTAIN_API __declspec(dllexport)
+#ifdef ENVIRONMENT_WINDOWS
+    #ifdef MATH_EXPORT
+        #define MOUNTAIN_API COMPILER_ATTRIBUTE(dllexport)
+    #else
+        #define MOUNTAIN_API COMPILER_ATTRIBUTE(dllimport)
+    #endif
 #else
-#define MOUNTAIN_API __declspec(dllimport)
+    #if __GNUC__ >= 4
+        #define MOUNTAIN_API COMPILER_ATTRIBUTE(visibility("default"))
+    #else
+        #define MOUNTAIN_API
+    #endif
 #endif
 
 /// @namespace Mountain

@@ -1,5 +1,6 @@
 #include "Mountain/FileSystem/File.hpp"
 
+#include <cstring>
 #include <fstream>
 #include <ranges>
 

@@ -11,4 +11,4 @@ file(GLOB_RECURSE SOURCE_FILES "*.cpp")
 
 add_library(Mountain SHARED ${SOURCE_FILES})
 
-target_link_libraries(Mountain Math Externals)
+target_link_libraries(Mountain Math MountainExternals)

@@ -11,6 +11,8 @@
 /// @file Pointer.hpp
 /// @brief Defines the Mountain::Pointer class
 
+using nullptr_t = decltype(nullptr);
+
 namespace Mountain
 {
     /// @brief Custom Mountain smart pointer.
@@ -81,7 +83,7 @@ namespace Mountain
 
         // ReSharper disable once CppNonExplicitConvertingConstructor
         /// @brief Creates a Pointer from a @c nullptr.
-        Pointer(nullptr_t);
+        Pointer(nullptr_t null) noexcept;
 
         /// @brief Creates a copy of an existing Pointer of a different Type, specifying whether it is a strong reference.
         ///
@@ -249,7 +251,7 @@ namespace Mountain
     }
 
     template <typename T>
-    Pointer<T>::Pointer(nullptr_t)
+    Pointer<T>::Pointer(nullptr_t) noexcept
     {
     }
 

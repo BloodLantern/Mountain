@@ -6,7 +6,7 @@
 
 namespace Mountain
 {
-    enum class MOUNTAIN_API AudioTrackFormat : uint8_t
+    enum class AudioTrackFormat : uint8_t
     {
         Wavefront,
         OggVorbis,

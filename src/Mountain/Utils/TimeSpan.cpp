@@ -64,7 +64,7 @@ TimeSpan TimeSpan::Duration() const
     return TimeSpan{m_Ticks >= 0 ? m_Ticks : -m_Ticks};
 }
 
-TimeSpan Mountain::operator+(const TimeSpan a, const TimeSpan b)
+TimeSpan operator+(const TimeSpan a, const TimeSpan b)
 {
     const int64_t result = a.m_Ticks + b.m_Ticks;
 
@@ -77,14 +77,14 @@ TimeSpan Mountain::operator+(const TimeSpan a, const TimeSpan b)
     return TimeSpan{result};
 }
 
-TimeSpan Mountain::operator-(const TimeSpan v)
+TimeSpan operator-(const TimeSpan v)
 {
     if (v.m_Ticks == TimeSpan::MinValue().m_Ticks)
         throw std::overflow_error{"Cannot negate the MinValue TimeSpan because of Two's Complement"};
     return TimeSpan{-v.m_Ticks};
 }
 
-TimeSpan Mountain::operator-(const TimeSpan a, const TimeSpan b)
+TimeSpan operator-(const TimeSpan a, const TimeSpan b)
 {
     const int64_t result = a.m_Ticks + b.m_Ticks;
 
@@ -97,7 +97,7 @@ TimeSpan Mountain::operator-(const TimeSpan a, const TimeSpan b)
     return TimeSpan{result};
 }
 
-TimeSpan Mountain::operator*(const TimeSpan v, const double_t factor)
+TimeSpan operator*(const TimeSpan v, const double_t factor)
 {
     if (std::isnan(factor))
         throw std::invalid_argument{"Cannot multiply a TimeSpan by a NaN factor"};
@@ -106,9 +106,9 @@ TimeSpan Mountain::operator*(const TimeSpan v, const double_t factor)
     return TimeSpan::IntervalFromDoubleTicks(ticks);
 }
 
-TimeSpan Mountain::operator*(const double_t factor, const TimeSpan v) { return v * factor; }
+TimeSpan operator*(const double_t factor, const TimeSpan v) { return v * factor; }
 
-TimeSpan Mountain::operator/(const TimeSpan v, const double_t divisor)
+TimeSpan operator/(const TimeSpan v, const double_t divisor)
 {
     if (std::isnan(divisor))
         throw std::invalid_argument{"Cannot divide a TimeSpan by a NaN divisor"};
@@ -117,17 +117,7 @@ TimeSpan Mountain::operator/(const TimeSpan v, const double_t divisor)
     return TimeSpan::IntervalFromDoubleTicks(ticks);
 }
 
-double_t Mountain::operator/(const TimeSpan a, const TimeSpan b) { return static_cast<double_t>(a.m_Ticks) / static_cast<double_t>(b.m_Ticks); }
-
-TimeSpan& Mountain::operator+=(TimeSpan& a, const TimeSpan b) { return a = a + b; }
-
-TimeSpan& Mountain::operator-=(TimeSpan& a, const TimeSpan b) { return a = a - b; }
-
-TimeSpan& Mountain::operator*=(TimeSpan& v, const double_t factor) { return v = v * factor; }
-
-TimeSpan& Mountain::operator/=(TimeSpan& v, const double_t divisor) { return v = v / divisor; }
-
-std::ostream& Mountain::operator<<(std::ostream& out, const TimeSpan& timeSpan) { return out << std::format("{}", timeSpan); }
+double_t operator/(const TimeSpan a, const TimeSpan b) { return static_cast<double_t>(a.m_Ticks) / static_cast<double_t>(b.m_Ticks); }
 
 TimeSpan TimeSpan::Interval(const double_t ticks, const double_t scale)
 {
@@ -146,3 +136,13 @@ TimeSpan TimeSpan::IntervalFromDoubleTicks(const double_t ticks)
 }
 
 std::ostream& operator<<(std::ostream& out, const TimeSpan& timeSpan) { return out << std::format("{}", timeSpan); }
+
+TimeSpan& Mountain::operator+=(TimeSpan& a, const TimeSpan b) { return a = a + b; }
+
+TimeSpan& Mountain::operator-=(TimeSpan& a, const TimeSpan b) { return a = a - b; }
+
+TimeSpan& Mountain::operator*=(TimeSpan& v, const double_t factor) { return v = v * factor; }
+
+TimeSpan& Mountain::operator/=(TimeSpan& v, const double_t divisor) { return v = v / divisor; }
+
+std::ostream& Mountain::operator<<(std::ostream& out, const TimeSpan& timeSpan) { return out << std::format("{}", timeSpan); }

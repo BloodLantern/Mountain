@@ -1,8 +1,10 @@
 ﻿#include "Mountain/Utils/Logger.hpp"
 
+#include <chrono>
 #include <iostream>
 
 #include "Mountain/Utils/Formatter.hpp"
+#include "Utils.hpp"
 
 #define ANSI_COLOR_GRAY     "\x1b[38;5;242m"
 #define ANSI_COLOR_GREEN    "\x1b[0;32m"

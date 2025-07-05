@@ -86,7 +86,7 @@ void Audio::EventCallback(
     ALCsizei,
     const ALCchar*,
     void*
-)
+) noexcept
 {
     // We cannot use OpenAL calls on this thread, so we need to update a flag instead
     if (eventType == ALC_EVENT_TYPE_DEFAULT_DEVICE_CHANGED_SOFT)

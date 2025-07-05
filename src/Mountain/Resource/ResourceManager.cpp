@@ -1,6 +1,7 @@
 ﻿#include "Mountain/Resource/ResourceManager.hpp"
 
 #include <array>
+#include <chrono>
 #include <execution>
 
 #include "Mountain/FileSystem/FileManager.hpp"

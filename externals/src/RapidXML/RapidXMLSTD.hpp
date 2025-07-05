@@ -5,9 +5,10 @@
 // Version 1.16
 // Revision $DateTime: 2023/09/19 23:27:00 $
 
+#include <cstdint>
+#include <string>
 #include "rapidxml.hpp"
 #include "rapidxml_utils.hpp"
-#include <string>
 
 #define XML_XSI_TYPE	"xsi:type"
 #define XML_XMLNS_XSI	"xmlns:xsi"

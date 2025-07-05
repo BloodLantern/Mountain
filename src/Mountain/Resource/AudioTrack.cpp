@@ -1,5 +1,6 @@
 #include "Mountain/Resource/AudioTrack.hpp"
 
+#include <cstring>
 #include <minimp3.h>
 #include <minimp3_ex.h>
 #include <stb_vorbis.h>
