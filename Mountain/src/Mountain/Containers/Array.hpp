@@ -17,6 +17,8 @@ namespace Mountain
         using Iterator = ContiguousIterator<T>;
         using ConstIterator = ContiguousConstIterator<T>;
 
+        static constexpr size_t MySize = Size;
+
         T data[Size];
 
         /// @brief Get the element at the given index with bounds checking.

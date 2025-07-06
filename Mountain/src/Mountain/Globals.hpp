@@ -23,6 +23,4 @@ namespace Mountain
     PUBLIC_GLOBAL(std::string, BuiltinAssetsPath, "");
     /// @brief Whether to debug break when an OpenGL error is reported.
     PUBLIC_GLOBAL(bool_t, BreakOnGraphicsError, false);
-    /// @brief Whether to debug memory allocations done using the custom allocator.
-    PUBLIC_GLOBAL(bool_t, DebugMemoryAllocations, true);
 }

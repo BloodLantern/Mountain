@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <AutoVisualizer xmlns="http://schemas.microsoft.com/vstudio/debugger/natvis/2010">
+  <!--TODO - Fix debugger visualization-->
 
   <!--Audio-->
   <Type Name="Mountain::AudioDevice">
@@ -14,7 +15,7 @@
     <DisplayString>{{Position = {position}}}</DisplayString>
   </Type>
   <Type Name="Mountain::ColliderList">
-    <DisplayString>{{Position = {position}, List size = {list.m_Vector.size()}}}</DisplayString>
+    <DisplayString>{{Position = {position}, List size = {list.GetSize()}}}</DisplayString>
   </Type>
   <Type Name="Mountain::Grid">
     <DisplayString>{{Position = {position}, Size = {gridSize}, Tile size = {tileSize}}}</DisplayString>
@@ -24,10 +25,23 @@
   </Type>
 
   <!--Containers-->
-  <Type Name="Mountain::List&lt;*&gt;">
-    <DisplayString>{{Size = {GetSize()}}}</DisplayString>
+  <Type Name="Mountain::Array&lt;*&gt;">
+    <DisplayString>{{Size = {MySize}}}</DisplayString>
     <Expand>
-      <ExpandedItem>m_Vector</ExpandedItem>
+      <ArrayItems>
+        <Size>MySize</Size>
+        <ValuePointer>data</ValuePointer>
+      </ArrayItems>
+    </Expand>
+  </Type>
+  <Type Name="Mountain::List&lt;*&gt;">
+    <DisplayString>{{Size = {m_Size}}}</DisplayString>
+    <Expand>
+      <Item Name="[Capacity]">m_Capacity</Item>
+      <ArrayItems>
+        <Size>m_Size</Size>
+        <ValuePointer>m_Data</ValuePointer>
+      </ArrayItems>
     </Expand>
   </Type>
 
@@ -51,12 +65,12 @@
     <DisplayString>{{Entity = {m_Entity}}}</DisplayString>
   </Type>
   <Type Name="Mountain::Entity" Inheritable="false">
-    <DisplayString>{{Position = {position}, Collider = {m_Collider}, Component count = {m_Components.m_Vector.size()}}}</DisplayString>
+    <DisplayString>{{Position = {position}, Collider = {m_Collider}, Component count = {m_Components.m_Size}}}</DisplayString>
   </Type>
 
   <!--Utils-->
   <Type Name="Mountain::Event&lt;*&gt;">
-    <DisplayString>{{Registered functions = {m_Functions.m_Vector.size()}}}</DisplayString>
+    <DisplayString>{{Registered functions = {m_Functions.m_Size}}}</DisplayString>
   </Type>
   <Type Name="Mountain::FileSystemWatcher">
     <DisplayString>{{Path = {m_Path}}}</DisplayString>

@@ -296,8 +296,11 @@ namespace Mountain
     List<T>::List(std::initializer_list<T> initializer) noexcept
     {
         Reserve(initializer.size());
+
         for (int i = 0; i < initializer.size(); i++)
             m_Data[i] = initializer.begin()[i];
+
+        m_Size = initializer.size();
     }
 
     template <Concepts::DynamicContainerType T>

@@ -1,6 +1,7 @@
 # Mountain
 
 A (currently) Windows-only C++ Framework for making 2D games.
+It will certainly become available for Linux as well at some point.
 
 ## Language version and architecture
 
@@ -15,7 +16,7 @@ Sample projects are available in the [Samples](https://github.com/BloodLantern/M
 
 The Doxygen documentation can be manually generated using the `Doxyfile`.
 
-Most types and functions have documentation in their respective header files so you can always check them if needed.
+Most types and functions have documentation in their respective header files, so you can always check them if needed.
 
 ## How to use this library
 
@@ -32,12 +33,55 @@ In your project configuration, add the `Mountain/src`, `Mountain/externals/src` 
 
 Clone the project using `git clone https://github.com/BloodLantern/Mountain.git`.
 Open the Visual Studio solution file found in the root directory.
-After opening it, the only thing you have to do is to build the library (Mountain project) in `Debug` and then in `Release` mode.
+After opening it, the only thing you have to do is to build the framework (Mountain project) in `Debug` and then in `Release` mode.
 
 All the binaries can be found in the `x64/(Debug|Release)` folder.
 Additionally, copy the header files from `Mountain/src`.
-As the library changes, you might also need to get some header files from `Mountain/externals/src`.
-In the current state, you need the `ImGui` and `magic_enum` folders.
+As the framework changes, you might also need to get some header files from `Mountain/externals/src`.
+In its current state, you need the `ImGui` and `magic_enum` folders.
 You also need the math headers, which are located in `MathToolbox/src`.
 
-To then use the library in any of your projects, do as you would usually: include the necessary headers, compile by statically linking against the corresponding `Mountain.lib` (`Debug` or `Release`) and add the correct `Mountain.dll` to your executable file directory.
+To then use the framework in any of your projects, do as you would usually: include the necessary headers,
+compile by statically linking against the corresponding `Mountain.lib`
+(`Debug` or `Release`) and add the correct `Mountain.dll` to your executable file directory.
+
+## Roadmap
+
+- ~~GPU instancing for `Draw` API~~
+- ~~`Stopwatch` class from .NET~~
+- ~~`TimeSpan` class from .NET~~
+- ~~Performance monitoring `ImGui` window~~
+- ~~File manager `ImGui` window~~
+- ~~Resource manager `ImGui` window~~
+- ~~Inputs `ImGui` window~~
+- ~~RNG utility function~~
+- \[WIP] Particle system
+- Separate thread for the rendering
+- \[WIP] Custom containers
+  - ~~`Array`~~
+  - ~~`List`~~
+  - `Map`
+  - `Stack`
+  - `Queue`
+  - `LinkedList`
+- \[WIP] Common utility functions for all containers
+- Thread-safe versions of all custom containers
+- \[WIP] Built-in effects to apply on textures
+  - ~~Film grain~~
+  - ~~Vignette~~
+  - Chromatic aberration
+  - Blur
+- Make gamepad input work for both Xbox, PS and Switch controllers
+- Low-level audio API
+- `Audio::Play()` static function
+- \[WIP] Low-level graphics API
+- `Scene` class
+- Linux support
+- ~~Automatic `std::formatter` implementation for all classes that define a `ToString()` function~~
+- ~~Automatic `std::hash` implementation for all classes that define a `GetHashCode()` function~~
+- Gamepad rumble support
+- Gamepad gyro support
+- ~~`Coroutine` class~~
+- ~~Compute shader API~~
+- ~~Custom exceptions~~
+- Built-in shader hot-reloading
