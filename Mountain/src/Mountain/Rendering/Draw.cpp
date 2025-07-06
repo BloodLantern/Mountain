@@ -843,7 +843,7 @@ void Draw::ArcInternal(
     const Color& color
 )
 {
-    const float_t actualThickness = thickness - 1.f; // When thickness == 0, the circle line is 1 pixel wide
+    const float_t actualThickness = thickness - 1.f; // When thickness == 1, the circle line is 1 pixel wide
 
     m_DrawList.arc.Emplace(
         Matrix::Translation(
@@ -862,7 +862,7 @@ void Draw::ArcInternal(
         radius,
         startingAngle,
         deltaAngle,
-        thickness,
+        actualThickness,
         scale / m_CameraScale,
         color,
         filled

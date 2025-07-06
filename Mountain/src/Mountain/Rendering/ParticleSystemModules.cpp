@@ -8,11 +8,11 @@
 
 using namespace Mountain::ParticleSystemModules;
 
-void Base::RenderDebug(const ParticleSystem&, const Vector2) const
+void ModuleBase::RenderDebug(const ParticleSystem&, const Vector2) const
 {
 }
 
-bool_t Base::BeginImGui(uint32_t* const enabledModulesInt, const Types type) const
+bool_t ModuleBase::BeginImGui(uint32_t* const enabledModulesInt, const Types type) const
 {
     ImGui::PushID(this);
 
@@ -27,7 +27,7 @@ bool_t Base::BeginImGui(uint32_t* const enabledModulesInt, const Types type) con
 }
 
 // ReSharper disable once CppMemberFunctionMayBeStatic
-void Base::EndImGui() const
+void ModuleBase::EndImGui() const
 {
     ImGui::TreePop();
 
@@ -123,8 +123,8 @@ void Shape::RenderDebug(const ParticleSystem& system, const Vector2 renderTarget
     switch (type)
     {
         case ShapeType::Circle:
-            Draw::Circle(center, circle.radius, 1.f, actualScale, DrawColor);
-            Draw::Circle(center, circle.radius - circle.radius * circle.radiusThickness, 1.f, actualScale, DrawColor);
+            Draw::Arc(center, circle.radius, rotation, circle.arcAngle, 1.f, actualScale, DrawColor);
+            Draw::Arc(center, circle.radius - circle.radius * circle.radiusThickness, rotation, circle.arcAngle, 1.f, actualScale, DrawColor);
             break;
 
         case ShapeType::Line:

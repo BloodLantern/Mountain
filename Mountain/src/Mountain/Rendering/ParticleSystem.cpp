@@ -293,7 +293,7 @@ void ParticleSystem::SetMaxParticles(const uint32_t newMaxParticles)
     List<uint8_t> emptyData(GpuParticleStructSize * newMaxParticles);
     for (size_t i = 0; i < emptyData.GetSize(); i += GpuParticleStructSize)
     {
-        float_t& lifetime = *reinterpret_cast<float_t*>(&emptyData[i]);
+        float_t& lifetime = reinterpret_cast<float_t&>(emptyData[i]);
         lifetime = -std::numeric_limits<float_t>::infinity(); // Set the negative infinity flag for the GPU
     }
     m_ParticleSsbo.SetData(static_cast<int64_t>(GpuParticleStructSize * newMaxParticles), emptyData.GetData(), Graphics::BufferUsage::DynamicCopy);

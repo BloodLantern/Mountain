@@ -30,12 +30,12 @@ namespace Mountain::ParticleSystemModules
         All = 0xFFFFFFFF
     };
 
-    class MOUNTAIN_API Base
+    class MOUNTAIN_API ModuleBase
     {
     public:
-        Base() = default;
-        virtual ~Base() = default;
-        DEFAULT_COPY_MOVE_OPERATIONS(Base)
+        ModuleBase() = default;
+        virtual ~ModuleBase() = default;
+        DEFAULT_COPY_MOVE_OPERATIONS(ModuleBase)
 
         virtual void SetComputeShaderUniforms(const ComputeShader& computeShader, Types enabledModules) const = 0;
         virtual void RenderImGui(uint32_t* enabledModulesInt) = 0;
@@ -89,9 +89,11 @@ namespace Mountain::ParticleSystemModules
         Vector2 scaleThickness = Vector2::One();
     };
 
-    class Shape : public Base
+    class Shape : public ModuleBase
     {
     public:
+        using Base = ModuleBase;
+
         ShapeType type = ShapeType::Circle;
 
         ShapeCircle circle;
@@ -113,18 +115,22 @@ namespace Mountain::ParticleSystemModules
         MOUNTAIN_API void RenderDebug(const ParticleSystem& system, Vector2 renderTargetSizeDiff) const override;
     };
 
-    class MOUNTAIN_API ColorOverLifetime : public Base
+    class MOUNTAIN_API ColorOverLifetime : public ModuleBase
     {
     public:
+        using Base = ModuleBase;
+
         Color target = Color::Transparent();
 
         void SetComputeShaderUniforms(const ComputeShader& computeShader, Types enabledModules) const override;
         void RenderImGui(uint32_t* enabledModulesInt) override;
     };
 
-    class MOUNTAIN_API ForceOverLifetime : public Base
+    class MOUNTAIN_API ForceOverLifetime : public ModuleBase
     {
     public:
+        using Base = ModuleBase;
+
         Vector2 force;
 
         void SetComputeShaderUniforms(const ComputeShader& computeShader, Types enabledModules) const override;

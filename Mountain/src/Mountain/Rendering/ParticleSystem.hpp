@@ -21,7 +21,7 @@ namespace Mountain
     {
         /// @brief The time at which the burst should occur
         float_t time = 0.f;
-        /// @brief The number of particle to spawn in the burst
+        /// @brief The number of particles to spawn in the burst
         uint32_t count = 30;
         /// @brief How many times the burst should repeat
         uint32_t cycles = 1;
@@ -57,7 +57,7 @@ namespace Mountain
 
         // Modules
 
-        List<std::shared_ptr<ParticleSystemModules::Base>> modules;
+        List<std::shared_ptr<ParticleSystemModules::ModuleBase>> modules;
         ParticleSystemModules::Types enabledModules = ParticleSystemModules::Types::Default;
 
         MOUNTAIN_API ParticleSystem() = default;
