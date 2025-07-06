@@ -85,3 +85,4 @@ compile by statically linking against the corresponding `Mountain.lib`
 - ~~Compute shader API~~
 - ~~Custom exceptions~~
 - Built-in shader hot-reloading
+- Real unit tests

@@ -3,6 +3,7 @@
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Containers/ContiguousIterator.hpp"
+#include "Mountain/Containers/EnumerableExt.hpp"
 #include "Mountain/Containers/FunctionTypes.hpp"
 #include "Mountain/Exceptions/ThrowHelper.hpp"
 #include "Mountain/Utils/Requirements.hpp"
@@ -41,10 +42,6 @@ namespace Mountain
         constexpr T* GetData() const noexcept;
 
         void Fill(const T& value) noexcept;
-
-        void Sort();
-
-        void Sort(Comparer<T> comparer);
 
         /// @brief Get the element at the given index without bounds checking.
         [[nodiscard]]
@@ -89,6 +86,8 @@ namespace Mountain
 
         [[nodiscard]]
         constexpr ConstIterator cend() const noexcept;
+
+        ENUMERABLE_EXTENSIONS_DEFINITIONS(Array)
     };
 
     template <class T, class... Other>

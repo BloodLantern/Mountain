@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Mountain/Core.hpp"
-#include "Mountain/Containers/Array.hpp"
 #include "Mountain/Containers/ContiguousIterator.hpp"
 #include "Mountain/Containers/EnumerableExt.hpp"
 #include "Mountain/Exceptions/ThrowHelper.hpp"
@@ -11,6 +10,9 @@
 
 namespace Mountain
 {
+    template <Concepts::ContainerType T, size_t Size>
+    struct Array;
+
     // ReSharper disable once CppPolymorphicClassWithNonVirtualPublicDestructor
     /// @brief A dynamic array implementation.
     ///
@@ -76,9 +78,9 @@ namespace Mountain
         [[nodiscard]]
         bool_t CheckIterator(Iterator iterator) const;
 
-        void Add(T&& element);
+        T& Add(T&& element);
 
-        void Add(const T& element);
+        T& Add(const T& element);
 
         /// @brief Adds a range of elements to the end of the List.
         template <typename = Meta::EnableIf<Meta::IsTriviallyCopyable<T>>>
@@ -127,13 +129,13 @@ namespace Mountain
         template <typename... Args>
         T& Emplace(Iterator iterator, Args&&... args);
 
-        void Insert(size_t index, T&& element);
+        T& Insert(size_t index, T&& element);
 
-        void Insert(size_t index, const T& element);
+        T& Insert(size_t index, const T& element);
 
-        void Insert(Iterator iterator, T&& element);
+        T& Insert(Iterator iterator, T&& element);
 
-        void Insert(Iterator iterator, const T& element);
+        T& Insert(Iterator iterator, const T& element);
 
         /// @brief Inserts a range of elements at the given position.
         void InsertRange(size_t index, const T* data, size_t count);
@@ -281,6 +283,7 @@ namespace Mountain
         void IncreaseCapacity();
         void IncreaseCapacityIfFull();
         void DestroyElements(size_t first, size_t last);
+        /// @brief Shift all elements in the range [@p first, @p last) by @p amount elements.
         void ShiftElements(ptrdiff_t amount, size_t first, size_t last);
         void CheckIteratorThrow(Iterator iterator);
     };
@@ -289,6 +292,8 @@ namespace Mountain
 }
 
 // Start of List.inl
+
+#include "Mountain/Containers/Array.hpp"
 
 namespace Mountain
 {
@@ -353,7 +358,7 @@ namespace Mountain
     List<T>::~List() noexcept
     {
         DestroyElements(0, m_Size);
-        std::free(m_Data);
+        std::free(static_cast<void*>(m_Data));
     }
 
     template <Concepts::DynamicContainerType T>
@@ -399,21 +404,19 @@ namespace Mountain
     }
 
     template <Concepts::DynamicContainerType T>
-    void List<T>::Add(T&& element)
+    T& List<T>::Add(T&& element)
     {
         IncreaseCapacityIfFull();
 
-        new (m_Data + m_Size) T{std::move(element)};
-        m_Size++;
+        return *new (static_cast<void*>(m_Data + m_Size++)) T{std::move(element)};
     }
 
     template <Concepts::DynamicContainerType T>
-    void List<T>::Add(const T& element)
+    T& List<T>::Add(const T& element)
     {
         IncreaseCapacityIfFull();
 
-        new (m_Data + m_Size) T{element};
-        m_Size++;
+        return *new (static_cast<void*>(m_Data + m_Size++)) T{element};
     }
 
     template <Concepts::DynamicContainerType T>
@@ -424,7 +427,7 @@ namespace Mountain
 
         if constexpr (Meta::IsTriviallyCopyConstructible<T>)
         {
-            std::memcpy(m_Data + m_Size, data, count * sizeof(T));
+            std::memcpy(static_cast<void*>(m_Data + m_Size), static_cast<void*>(data), count * sizeof(T));  // NOLINT(bugprone-sizeof-expression)
         }
         else
         {
@@ -442,12 +445,15 @@ namespace Mountain
         static_assert(Meta::IsSame<Meta::IteratorType<InputIterator>, T>, "List::AddRange() needs the type of the iterator to be the same as the List");
 
         const size_t additionalSize = last - first;
+
         Reserve(m_Size + additionalSize);
+
         for (InputIterator it = first; it != last; it++)
         {
             const size_t index = it - first;
-            new (m_Data + m_Size + index) T{*it};
+            new (static_cast<void*>(m_Data + m_Size + index)) T{*it};
         }
+
         m_Size += additionalSize;
     }
 
@@ -506,7 +512,7 @@ namespace Mountain
     {
         IncreaseCapacityIfFull();
 
-        return m_Data[m_Size++] = T{std::forward<Args>(args)...};
+        return *new (static_cast<void*>(m_Data + m_Size++)) T{std::forward<Args>(args)...};
     }
 
     template <Concepts::DynamicContainerType T>
@@ -521,11 +527,9 @@ namespace Mountain
 
         IncreaseCapacityIfFull();
 
-        T&& newElement = T{std::forward<Args>(args)...};
-
         ShiftElements(1, index, m_Size++);
 
-        return m_Data[index] = std::move(newElement);
+        return *new (static_cast<void*>(m_Data + index)) T{std::forward<Args>(args)...};
     }
 
     template <Concepts::DynamicContainerType T>
@@ -537,52 +541,46 @@ namespace Mountain
     }
 
     template <Concepts::DynamicContainerType T>
-    void List<T>::Insert(const size_t index, T&& element)
+    T& List<T>::Insert(const size_t index, T&& element)
     {
         if (index > m_Size)
             THROW(ArgumentOutOfRangeException{"Cannot insert element at index > m_Size", "index"});
 
         if (index == m_Size)
-        {
-            Add(std::move(element));
-            return;
-        }
+            return Add(std::move(element));
 
         IncreaseCapacityIfFull();
 
         ShiftElements(1, index, m_Size++);
 
-        m_Data[index] = std::move(element);
+        return *new (static_cast<void*>(m_Data + index)) T{std::move(element)};
     }
 
     template <Concepts::DynamicContainerType T>
-    void List<T>::Insert(const size_t index, const T& element)
+    T& List<T>::Insert(const size_t index, const T& element)
     {
         if (index > m_Size)
             THROW(ArgumentOutOfRangeException{"Cannot insert element at index > m_Size", "index"});
 
         if (index == m_Size)
-        {
-            Add(element);
-            return;
-        }
+            return Add(element);
 
         IncreaseCapacityIfFull();
 
         ShiftElements(1, index, m_Size++);
 
-        m_Data[index] = element;
+        return *new (static_cast<void*>(m_Data + index)) T{element};
     }
 
     template <Concepts::DynamicContainerType T>
-    void List<T>::Insert(Iterator iterator, T&& element)
+    T& List<T>::Insert(Iterator iterator, T&& element)
     {
         CheckIteratorThrow(iterator);
         return Insert(iterator.GetIndex(), std::move(element));
     }
 
     template <Concepts::DynamicContainerType T>
-    void List<T>::Insert(Iterator iterator, const T& element)
+    T& List<T>::Insert(Iterator iterator, const T& element)
     {
         CheckIteratorThrow(iterator);
         return Insert(iterator.GetIndex(), element);
@@ -602,7 +600,18 @@ namespace Mountain
 
         Reserve(m_Size + count);
         ShiftElements(count, index, m_Size);
-        std::memcpy(m_Data + index, data, count * sizeof(T));
+
+        if constexpr (Meta::IsTriviallyCopyConstructible<T>)
+        {
+            std::memcpy(static_cast<void*>(m_Data + index), static_cast<void*>(data), count * sizeof(T));  // NOLINT(bugprone-sizeof-expression)
+        }
+        else
+        {
+            for (size_t i = 0; i < count; i++)
+                new (index + i) T{data[i]};
+        }
+
+        m_Size += count;
     }
 
     template <Concepts::DynamicContainerType T>
@@ -612,13 +621,16 @@ namespace Mountain
         static_assert(Meta::IsSame<Meta::IteratorType<InputIterator>, T>, "List::InsertRange() needs the type of the iterator to be the same as the List");
 
         const size_t additionalSize = last - first;
+
         Reserve(m_Size + additionalSize);
         ShiftElements(additionalSize, index, m_Size);
+
         for (InputIterator it = first; it != last; it++)
         {
             const size_t i = it - first;
-            m_Data[index + i] = *it;
+            new (static_cast<void*>(m_Data + index + i)) T{*it};
         }
+
         m_Size += additionalSize;
     }
 
@@ -628,40 +640,40 @@ namespace Mountain
     {
         static_assert(Meta::IsSame<Meta::EnumerableType<EnumerableT>, T>, "List::InsertRange() needs the type of the enumerable to be the same as the List");
 
-        InsertRange(index, enumerable.begin(), enumerable.end());
+        return InsertRange(index, enumerable.begin(), enumerable.end());
     }
 
     template <Concepts::DynamicContainerType T>
     void List<T>::InsertRange(const size_t index, const std::initializer_list<T>& values)
     {
-        InsertRange(index, values.begin(), values.size());
+        return InsertRange(index, values.begin(), values.size());
     }
 
     template <Concepts::DynamicContainerType T>
     template <size_t Size>
     void List<T>::InsertRange(const size_t index, const std::array<T, Size>& array)
     {
-        InsertRange(index, array.data(), Size);
+        return InsertRange(index, array.data(), Size);
     }
 
     template <Concepts::DynamicContainerType T>
     template <size_t Size>
     void List<T>::InsertRange(const size_t index, const Array<T, Size>& array)
     {
-        InsertRange(index, array.GetData(), Size);
+        return InsertRange(index, array.GetData(), Size);
     }
 
     template <Concepts::DynamicContainerType T>
     void List<T>::InsertRange(const size_t index, const std::vector<T>& vector)
     {
-        InsertRange(index, vector.data(), vector.size());
+        return InsertRange(index, vector.data(), vector.size());
     }
 
     template <Concepts::DynamicContainerType T>
     void List<T>::InsertRange(const Iterator iterator, const T* data, size_t count)
     {
         CheckIteratorThrow(iterator);
-        InsertRange(iterator.GetIndex(), data, count);
+        return InsertRange(iterator.GetIndex(), data, count);
     }
 
     template <Concepts::DynamicContainerType T>
@@ -669,40 +681,40 @@ namespace Mountain
     void List<T>::InsertRange(Iterator iterator, InputIterator first, InputIterator last)
     {
         CheckIteratorThrow(iterator);
-        InsertRange(iterator.GetIndex(), first, last);
+        return InsertRange(iterator.GetIndex(), first, last);
     }
 
     template <Concepts::DynamicContainerType T>
     template <Concepts::Enumerable EnumerableT>
     void List<T>::InsertRange(Iterator iterator, EnumerableT enumerable)
     {
-        InsertRange(iterator, enumerable.begin(), enumerable.end());
+        return InsertRange(iterator, enumerable.begin(), enumerable.end());
     }
 
     template <Concepts::DynamicContainerType T>
     void List<T>::InsertRange(const Iterator iterator, const std::initializer_list<T>& values)
     {
-        InsertRange(iterator, values.begin(), values.size());
+        return InsertRange(iterator, values.begin(), values.size());
     }
 
     template <Concepts::DynamicContainerType T>
     template <size_t Size>
     void List<T>::InsertRange(const Iterator iterator, const std::array<T, Size>& array)
     {
-        InsertRange(iterator, array.data(), Size);
+        return InsertRange(iterator, array.data(), Size);
     }
 
     template <Concepts::DynamicContainerType T>
     template <size_t Size>
     void List<T>::InsertRange(const Iterator iterator, const Array<T, Size>& array)
     {
-        InsertRange(iterator, array.GetData(), Size);
+        return InsertRange(iterator, array.GetData(), Size);
     }
 
     template <Concepts::DynamicContainerType T>
     void List<T>::InsertRange(const Iterator iterator, const std::vector<T>& vector)
     {
-        InsertRange(iterator, vector.data(), vector.size());
+        return InsertRange(iterator, vector.data(), vector.size());
     }
 
     template <Concepts::DynamicContainerType T>
@@ -719,14 +731,14 @@ namespace Mountain
             // Container size is decreasing, we need to destroy elements
             DestroyElements(newSize, m_Size);
         }
-        else // m_Size < newSize
+        else //if (m_Size < newSize)
         {
             Reserve(newSize); // Make sure we have enough allocated storage
 
             // Container size is increasing, we need to emplace the new elements
             const size_t difference = newSize - m_Size;
             for (size_t i = 0; i < difference; i++)
-                m_Data[m_Size + i] = newElementsValue;
+                new (static_cast<void*>(m_Data + m_Size + i)) T{newElementsValue};
         }
 
         m_Size = newSize;
@@ -867,17 +879,19 @@ namespace Mountain
     template <Concepts::DynamicContainerType T>
     void List<T>::Reallocate(const size_t targetCapacity)
     {
-        const size_t targetCapacityBytes = targetCapacity * sizeof(T);
+        const size_t targetCapacityBytes = targetCapacity * sizeof(T);  // NOLINT(bugprone-sizeof-expression)
 
         if constexpr (Meta::IsTriviallyMoveConstructible<T>)
         {
-            m_Data = static_cast<T*>(std::realloc(m_Data, targetCapacityBytes));
+            m_Data = static_cast<T*>(std::realloc(static_cast<void*>(m_Data), targetCapacityBytes));
         }
         else
         {
             T* newData = static_cast<T*>(std::malloc(targetCapacityBytes));
             for (size_t i = 0; i < m_Size; i++)
                 new (newData + i) T{std::move(m_Data[i])};
+
+            std::free(m_Data);
             m_Data = newData;
         }
 
@@ -911,7 +925,7 @@ namespace Mountain
 
         if constexpr (Meta::IsTriviallyMoveConstructible<T>)
         {
-            std::memmove(destination, source, amountToShift * sizeof(T));
+            std::memmove(static_cast<void*>(destination), static_cast<void*>(source), amountToShift * sizeof(T));  // NOLINT(bugprone-sizeof-expression)
         }
         else
         {

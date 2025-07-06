@@ -4,48 +4,6 @@
 #include "Mountain/Containers/FunctionTypes.hpp"
 #include "Mountain/Utils/Requirements.hpp"
 
-#define ENUMERABLE_EXTENSIONS_DECLARATIONS(type) \
-    [[nodiscard]] \
-    bool_t All(const Predicate<Type>& predicate) const; \
-    \
-    [[nodiscard]] \
-    bool_t Any(const Predicate<Type>& predicate) const; \
-    \
-    template <typename T, typename = Meta::EnableIf<Meta::IsEqualityComparableWith<T, Type>>> \
-    [[nodiscard]] \
-    bool_t Contains(const T& element) const; \
-    \
-    [[nodiscard]] \
-    List<Type> FindAll(const Predicate<Type>& predicate) const; \
-    \
-    [[nodiscard]] \
-    Type& First(); \
-    \
-    [[nodiscard]] \
-    const Type& First() const; \
-    \
-    [[nodiscard]] \
-    Type& Last(); \
-    \
-    [[nodiscard]] \
-    const Type& Last() const; \
-    \
-    [[nodiscard]] \
-    Type& Single(); \
-    \
-    [[nodiscard]] \
-    const Type& Single() const; \
-    \
-    void ForEach(const Operation<Type>& operation); \
-    \
-    void ForEach(const Operation<const Type>& operation) const; \
-    \
-    template <typename = Meta::EnableIf<Requirements::Swappable<T>>> \
-    void Sort(); \
-    \
-    template <typename = Meta::EnableIf<Requirements::Swappable<T>>> \
-    void Sort(const Comparer<Type>& comparer);
-
 #define ENUMERABLE_EXTENSIONS_DEFINITIONS(type) \
     [[nodiscard]] \
     bool_t All(const Predicate<Type>& predicate) const { return ::Mountain::All(*this, predicate); } \
