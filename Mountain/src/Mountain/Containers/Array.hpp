@@ -3,6 +3,7 @@
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Containers/ContiguousIterator.hpp"
+#include "Mountain/Containers/FunctionTypes.hpp"
 #include "Mountain/Exceptions/ThrowHelper.hpp"
 #include "Mountain/Utils/Requirements.hpp"
 

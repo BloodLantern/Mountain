@@ -10,6 +10,7 @@
 
 #include "Mountain/BinaryResources/resource_holder.hpp"
 #include "Mountain/Containers/EnumerableExt.hpp"
+#include "Mountain/Utils/Stopwatch.hpp"
 
 namespace rh
 {
@@ -63,7 +64,7 @@ void ResourceManager::LoadAll()
 {
     Logger::LogInfo("Loading all resources from FileManager");
 
-    const auto start = std::chrono::system_clock::now();
+    const Stopwatch stopwatch = Stopwatch::StartNew();
 
     List<Pointer<File>> files;
     FileManager::FindAll<File>([](Pointer<File> file) { return file->GetResource() == nullptr && !IsBinary(file->GetPathString()); }, &files);
@@ -131,7 +132,7 @@ void ResourceManager::LoadAll()
         "Successfully loaded {} files in {} resources. Took {}",
         files.GetSize(),
         m_Resources.size() - oldResourceCount,
-        std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - start)
+        stopwatch
     );
 }
 

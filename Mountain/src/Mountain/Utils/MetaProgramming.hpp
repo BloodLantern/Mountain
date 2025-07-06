@@ -13,6 +13,8 @@
 #include <Math/vector2.hpp>
 #include <Math/vector3.hpp>
 
+#include "Mountain/Containers/FunctionTypes.hpp"
+
 namespace Mountain
 {
     class Entity;
@@ -161,38 +163,36 @@ namespace Mountain
         template <typename T, typename... Args>
         constexpr bool_t IsInvocable = std::is_invocable_v<T, Args...>;
 
-        /// @brief Checks whether @p T is sortable.
-        template <typename Iterator, typename Comparer, typename Projection = Mountain::Identity<>>
-        constexpr bool_t IsSortable = std::sortable<Iterator, Comparer, Projection>;
-
         template <bool_t Condition>
         using EnableIf = std::enable_if_t<Condition>;
 
         /// @brief Removes the array specification from @p T
-        ///
-        /// e.g., if @p T is @code int[4]@endcode, then @c RemoveArraySpecifier<T> will be @c int
-        ///
+        /// @details e.g., if @p T is @code int[4]@endcode, then @c RemoveArraySpecifier<T> will be @c int
         template <typename T>
         using RemoveArraySpecifier = std::remove_extent_t<T>;
 
         /// @brief Removes the pointer specification from @p T
-        ///
-        /// e.g., if @p T is @c int*, then @c RemovePointerSpecifier<T> will be @c int
-        ///
+        /// @details e.g., if @p T is @c int*, then @c RemovePointerSpecifier<T> will be @c int
         template <typename T>
         using RemovePointerSpecifier = std::remove_pointer_t<T>;
 
         /// @brief Removes the const specification from @p T
-        ///
-        /// e.g., if @p T is @code const int@endcode, then @c RemoveConstSpecifier<T> will be @c int
-        ///
+        /// @details e.g., if @p T is @code const int@endcode, then @c RemoveConstSpecifier<T> will be @c int
         template <typename T>
         using RemoveConstSpecifier = std::remove_const_t<T>;
 
+        /// @brief Removes the volatile specification from @p T
+        /// @details e.g., if @p T is @code volatile int@endcode, then @c RemoveVolatileSpecifier<T> will be @c int
+        template <typename T>
+        using RemoveVolatileSpecifier = std::remove_volatile_t<T>;
+
+        /// @brief Removes any const and volatile specifications from @p T
+        /// @details e.g., if @p T is @code const volatile int@endcode, then @c RemoveConstVolatileSpecifier<T> will be @c int
+        template <typename T>
+        using RemoveConstVolatileSpecifier = RemoveVolatileSpecifier<RemoveConstSpecifier<T>>;
+
         /// @brief Removes the reference specification from @p T
-        ///
-        /// e.g., if @p T is @c int& or @c int&&, then @c RemoveReferenceSpecifier<T> will be @c int
-        ///
+        /// @details e.g., if @p T is @c int& or @c int&&, then @c RemoveReferenceSpecifier<T> will be @c int
         template <typename T>
         using RemoveReferenceSpecifier = std::remove_reference_t<T>;
 
@@ -356,7 +356,7 @@ namespace Mountain
         concept DynamicContainerType = ContainerType<T> && Meta::IsDefaultConstructible<T> && Meta::IsCopyAssignable<T>;
 
         template <typename T>
-        concept StandardIterator = std::forward_iterator<T>;
+        concept StandardIterator = std::forward_iterator<T> && !Pointer<T>;
 
         template <typename T>
         concept StandardContainer = std::ranges::input_range<T>;

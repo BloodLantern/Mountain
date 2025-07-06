@@ -21,5 +21,5 @@ namespace Mountain
     using Projection = std::function<T(T)>;
 
     template <typename T>
-    constexpr Projection<T> Identity = [](const T& t) -> T { return t; };
+    constexpr T Identity(T t) { return t; };
 }

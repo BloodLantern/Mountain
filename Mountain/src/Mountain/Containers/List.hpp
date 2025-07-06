@@ -400,7 +400,8 @@ namespace Mountain
     {
         IncreaseCapacityIfFull();
 
-        m_Data[m_Size++] = std::move(element);
+        new (m_Data + m_Size) T{std::move(element)};
+        m_Size++;
     }
 
     template <Concepts::DynamicContainerType T>
@@ -408,7 +409,8 @@ namespace Mountain
     {
         IncreaseCapacityIfFull();
 
-        m_Data[m_Size++] = element;
+        new (m_Data + m_Size) T{element};
+        m_Size++;
     }
 
     template <Concepts::DynamicContainerType T>
@@ -416,7 +418,18 @@ namespace Mountain
     void List<T>::AddRange(const T* data, const size_t count)
     {
         Reserve(m_Size + count);
-        std::memcpy(m_Data + m_Size, data, count * sizeof(T));
+
+        if constexpr (Meta::IsTriviallyCopyConstructible<T>)
+        {
+            std::memcpy(m_Data + m_Size, data, count * sizeof(T));
+        }
+        else
+        {
+            for (size_t i = 0; i < count; i++)
+                new (m_Size + i) T{data[i]};
+        }
+
+        m_Size += count;
     }
 
     template <Concepts::DynamicContainerType T>
@@ -430,7 +443,7 @@ namespace Mountain
         for (InputIterator it = first; it != last; it++)
         {
             const size_t index = it - first;
-            m_Data[m_Size + index] = *it;
+            new (m_Data + m_Size + index) T{*it};
         }
         m_Size += additionalSize;
     }
@@ -447,7 +460,7 @@ namespace Mountain
     template <Concepts::DynamicContainerType T>
     void List<T>::AddRange(const std::initializer_list<T>& values)
     {
-        AddRange(values.begin(), values.size());
+        AddRange(values.begin(), values.end());
     }
 
     template <Concepts::DynamicContainerType T>
@@ -851,12 +864,25 @@ namespace Mountain
     template <Concepts::DynamicContainerType T>
     void List<T>::Reallocate(const size_t targetCapacity)
     {
-        m_Data = static_cast<T*>(std::realloc(m_Data, targetCapacity * sizeof(T)));
+        const size_t targetCapacityBytes = targetCapacity * sizeof(T);
+
+        if constexpr (Meta::IsTriviallyMoveConstructible<T>)
+        {
+            m_Data = static_cast<T*>(std::realloc(m_Data, targetCapacityBytes));
+        }
+        else
+        {
+            T* newData = static_cast<T*>(std::malloc(targetCapacityBytes));
+            for (size_t i = 0; i < m_Size; i++)
+                new (newData + i) T{std::move(m_Data[i])};
+            m_Data = newData;
+        }
+
         m_Capacity = targetCapacity;
     }
 
     template <Concepts::DynamicContainerType T>
-    void List<T>::IncreaseCapacity() { Reserve(m_Capacity * 2); }
+    void List<T>::IncreaseCapacity() { Reserve(std::max(m_Capacity * 2, 2ull)); }
 
     template <Concepts::DynamicContainerType T>
     void List<T>::IncreaseCapacityIfFull()
@@ -876,7 +902,19 @@ namespace Mountain
     template <Concepts::DynamicContainerType T>
     void List<T>::ShiftElements(const ptrdiff_t amount, const size_t first, const size_t last)
     {
-        std::memmove(m_Data + first + amount, m_Data + first, last - first);
+        T* source = m_Data + first;
+        T* destination = source + amount;
+        const size_t amountToShift = last - first;
+
+        if constexpr (Meta::IsTriviallyMoveConstructible<T>)
+        {
+            std::memmove(destination, source, amountToShift * sizeof(T));
+        }
+        else
+        {
+            for (size_t i = 0; i < amountToShift; i++)
+                new (destination + i) T{std::move(source[i])};
+        }
     }
 
     template <Concepts::DynamicContainerType T>

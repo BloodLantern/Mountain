@@ -240,7 +240,7 @@ namespace Mountain
     template <typename T>
     Pointer<T>::Pointer(Pointer&& other) noexcept
         : m_ReferenceCounter(std::move(other.m_ReferenceCounter))
-        , m_IsStrongReference(std::move(other.m_IsStrongReference))
+        , m_IsStrongReference(other.m_IsStrongReference)
     {
         if (!m_ReferenceCounter)
             return;
@@ -343,7 +343,7 @@ namespace Mountain
             return *this;
 
         SetReferenceCounter(std::move(other.m_ReferenceCounter));
-        m_IsStrongReference = std::move(other.m_IsStrongReference);
+        m_IsStrongReference = other.m_IsStrongReference;
 
         if (m_ReferenceCounter && !m_IsStrongReference)
         {

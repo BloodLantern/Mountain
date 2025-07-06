@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include "Mountain/Core.hpp"
+#include "Mountain/Containers/FunctionTypes.hpp"
 #include "Mountain/Utils/Requirements.hpp"
 
 #define ENUMERABLE_EXTENSIONS_DECLARATIONS(type) \
@@ -81,10 +82,10 @@
     \
     void ForEach(const Operation<const Type>& operation) const { return ::Mountain::ForEach(*this, operation); } \
     \
-    template <typename = Meta::EnableIf<Requirements::Swappable<T>>> \
+    template <typename = Meta::EnableIf<Meta::IsSortable<Iterator, Comparer<T>, Projection<T>>>> \
     void Sort() { return ::Mountain::Sort(*this); } \
     \
-    template <typename = Meta::EnableIf<Requirements::Swappable<T>>> \
+    template <typename = Meta::EnableIf<Meta::IsSortable<Iterator, Comparer<T>, Projection<T>>>> \
     void Sort(const Comparer<Type>& comparer) { return ::Mountain::Sort(*this, comparer); }
 
 namespace Mountain
@@ -114,6 +115,26 @@ namespace Mountain
         typename T = Meta::MountainEnumerableType<EnumerableT>>
     [[nodiscard]]
     List<T> FindAll(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate);
+
+    template <Requirements::MountainEnumerable EnumerableT,
+        typename T = Meta::MountainEnumerableType<EnumerableT>>
+    [[nodiscard]]
+    std::optional<T&> FindFirst(EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate);
+
+    template <Requirements::MountainEnumerable EnumerableT,
+        typename T = Meta::MountainEnumerableType<EnumerableT>>
+    [[nodiscard]]
+    std::optional<const T&> FindFirst(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate);
+
+    template <Requirements::MountainEnumerable EnumerableT,
+        typename T = Meta::MountainEnumerableType<EnumerableT>>
+    [[nodiscard]]
+    std::optional<T&> FindLast(EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate);
+
+    template <Requirements::MountainEnumerable EnumerableT,
+        typename T = Meta::MountainEnumerableType<EnumerableT>>
+    [[nodiscard]]
+    std::optional<const T&> FindLast(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate);
 
     /// @brief Returns the first element of a sequence.
     template <Requirements::MountainEnumerable EnumerableT,
@@ -215,7 +236,7 @@ namespace Mountain
     template <Requirements::MountainEnumerable EnumerableT>
     bool_t IsEmpty(const EnumerableT& enumerable)
     {
-        return GetSize(enumerable) != 0;
+        return GetSize(enumerable) == 0;
     }
 
     template <Requirements::MountainEnumerable EnumerableT, typename T>
@@ -230,6 +251,56 @@ namespace Mountain
         }
 
         return result;
+    }
+
+    template <Requirements::MountainEnumerable EnumerableT, typename T>
+    std::optional<T&> FindFirst(EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate)
+    {
+        for (T& e : enumerable)
+        {
+            if (predicate(e))
+                return e;
+        }
+
+        return {};
+    }
+
+    template <Requirements::MountainEnumerable EnumerableT, typename T>
+    std::optional<const T&> FindFirst(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate)
+    {
+        for (const T& e : enumerable)
+        {
+            if (predicate(e))
+                return e;
+        }
+
+        return {};
+    }
+
+    template <Requirements::MountainEnumerable EnumerableT, typename T>
+    std::optional<T&> FindLast(EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate)
+    {
+        for (typename EnumerableT::Iterator it = enumerable.GetEndIterator() - 1; it + 1 != enumerable.GetBeginIterator(); it--)
+        {
+            T& value = *it;
+            if (predicate(value))
+                return value;
+        }
+
+        return {};
+    }
+
+    template <Requirements::MountainEnumerable EnumerableT, typename T>
+    std::optional<const T&> FindLast(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate)
+    {
+        for (typename EnumerableT::ConstIterator it = enumerable.GetEndConstIterator() - 1; it + 1 != enumerable.GetBeginConstIterator(); it--)
+        {
+            const T& value = *it;
+            if (predicate(value))
+                return value;
+        }
+
+        return {};
     }
 
     template <Requirements::MountainEnumerable EnumerableT, typename T>
@@ -286,5 +357,17 @@ namespace Mountain
     {
         for (const T& e : enumerable)
             operation(e);
+    }
+
+    template <Requirements::MountainEnumerable EnumerableT, typename T, typename>
+    void Sort(EnumerableT& enumerable)
+    {
+        return Sort(enumerable, CompareLess);
+    }
+
+    template <Requirements::MountainEnumerable EnumerableT, typename T, typename>
+    void Sort(EnumerableT& enumerable, const Comparer<Meta::Identity<T>>& comparer)
+    {
+        std::ranges::sort(enumerable, comparer);
     }
 }

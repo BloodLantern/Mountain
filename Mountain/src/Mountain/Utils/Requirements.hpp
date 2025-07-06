@@ -121,7 +121,7 @@ namespace Mountain::Requirements
 namespace Mountain::Concepts
 {
     template <typename T>
-    concept Iterator = StandardIterator<T> || Requirements::MountainIterator<T>;
+    concept Iterator = Pointer<T> || StandardIterator<T> || Requirements::MountainIterator<T>;
 
     template <typename T>
     concept Container = StandardContainer<T> || Requirements::MountainContainer<T>;
@@ -147,6 +147,9 @@ namespace Mountain::Meta
     // ReSharper disable once CppStaticAssertFailure
     template <Concepts::Iterator>
     struct IteratorTypeS { static_assert(false); };
+
+    template <Concepts::Pointer T>
+    struct IteratorTypeS<T> { using Type = RemoveConstVolatileSpecifier<RemovePointerSpecifier<T>>; };
 
     template <Concepts::StandardIterator T>
     struct IteratorTypeS<T> { using Type = StandardIteratorType<T>; };
@@ -195,6 +198,10 @@ namespace Mountain::Meta
 
     template <Concepts::Enumerable T>
     using EnumerableIteratorType = typename EnumerableIteratorTypeS<T>::Type;
+
+    /// @brief Checks whether @p T is sortable.
+    template <Concepts::Iterator Iterator, typename Comparer, typename Projection = decltype(Mountain::Identity<IteratorType<Iterator>>)>
+    constexpr bool_t IsSortable = std::sortable<Iterator, Comparer, Projection>;
 }
 
 // ReSharper disable CppMemberFunctionMayBeStatic
