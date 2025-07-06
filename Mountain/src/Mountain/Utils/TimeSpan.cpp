@@ -1,5 +1,7 @@
 #include "Mountain/Utils/TimeSpan.hpp"
 
+#include "Mountain/Exceptions/ThrowHelper.hpp"
+
 using namespace Mountain;
 
 // ReSharper disable CppClangTidyReadabilitySuspiciousCallArgument
@@ -60,7 +62,7 @@ double_t TimeSpan::GetTotalNanoseconds() const { return static_cast<double_t>(m_
 TimeSpan TimeSpan::Duration() const
 {
     if (m_Ticks == MinValue().m_Ticks)
-        throw std::overflow_error{"TimeSpan Duration overflow"};
+        THROW(OverflowException{"TimeSpan Duration overflow"});
     return TimeSpan{m_Ticks >= 0 ? m_Ticks : -m_Ticks};
 }
 
@@ -72,7 +74,7 @@ TimeSpan Mountain::operator+(const TimeSpan a, const TimeSpan b)
     // sign was opposite.
     // >> 63 gives the sign bit (either 64 1's or 64 0's).
     if ((a.m_Ticks >> 63 == b.m_Ticks >> 63) && (a.m_Ticks >> 63 != result >> 63))
-        throw std::overflow_error{"TimeSpan sum overflow"};
+        THROW(OverflowException{"TimeSpan sum overflow"});
 
     return TimeSpan{result};
 }
@@ -80,7 +82,7 @@ TimeSpan Mountain::operator+(const TimeSpan a, const TimeSpan b)
 TimeSpan Mountain::operator-(const TimeSpan v)
 {
     if (v.m_Ticks == TimeSpan::MinValue().m_Ticks)
-        throw std::overflow_error{"Cannot negate the MinValue TimeSpan because of Two's Complement"};
+        THROW(OverflowException{"Cannot negate the MinValue TimeSpan because of Two's Complement"});
     return TimeSpan{-v.m_Ticks};
 }
 
@@ -92,7 +94,7 @@ TimeSpan Mountain::operator-(const TimeSpan a, const TimeSpan b)
     // sign was opposite.
     // >> 63 gives the sign bit (either 64 1's or 64 0's).
     if ((a.m_Ticks >> 63 != b.m_Ticks >> 63) && (a.m_Ticks >> 63 != result >> 63))
-        throw std::overflow_error{"TimeSpan difference underflow"};
+        THROW(OverflowException{"TimeSpan difference underflow"});
 
     return TimeSpan{result};
 }
@@ -100,7 +102,7 @@ TimeSpan Mountain::operator-(const TimeSpan a, const TimeSpan b)
 TimeSpan Mountain::operator*(const TimeSpan v, const double_t factor)
 {
     if (std::isnan(factor))
-        throw std::invalid_argument{"Cannot multiply a TimeSpan by a NaN factor"};
+        THROW(ArgumentException{"Cannot multiply a TimeSpan by a NaN factor", "factor"});
 
     const double_t ticks = std::round(static_cast<double_t>(v.m_Ticks) * factor);
     return TimeSpan::IntervalFromDoubleTicks(ticks);
@@ -111,7 +113,7 @@ TimeSpan Mountain::operator*(const double_t factor, const TimeSpan v) { return v
 TimeSpan Mountain::operator/(const TimeSpan v, const double_t divisor)
 {
     if (std::isnan(divisor))
-        throw std::invalid_argument{"Cannot divide a TimeSpan by a NaN divisor"};
+        THROW(ArgumentException{"Cannot divide a TimeSpan by a NaN divisor", "divisor"});
 
     const double_t ticks = std::round(static_cast<double_t>(v.m_Ticks) / divisor);
     return TimeSpan::IntervalFromDoubleTicks(ticks);
@@ -127,22 +129,62 @@ TimeSpan& Mountain::operator*=(TimeSpan& v, const double_t factor) { return v = 
 
 TimeSpan& Mountain::operator/=(TimeSpan& v, const double_t divisor) { return v = v / divisor; }
 
-std::ostream& Mountain::operator<<(std::ostream& out, const TimeSpan& timeSpan) { return out << std::format("{}", timeSpan); }
+std::string TimeSpan::ToString() const
+{
+    std::string result;
+
+    const bool_t daysCheck = GetDays() > 0;
+    const bool_t hoursCheck = GetHours() > 0;
+    const bool_t minutesCheck = GetMinutes() > 0;
+
+    if (daysCheck)
+        result += std::format("{}.", GetDays());
+
+    if (daysCheck || hoursCheck)
+        result += std::format("{:2}:", GetHours());
+
+    if (daysCheck || hoursCheck || minutesCheck)
+        result += std::format("{:2}:", GetMinutes());
+
+    result += std::format("{}", GetSeconds());
+
+    const bool_t millisecondsCheck = GetMilliseconds() > 0;
+    const bool_t microsecondsCheck = GetMicroseconds() > 0;
+    const bool_t nanosecondsCheck = GetNanoseconds() > 0;
+
+    if (nanosecondsCheck || microsecondsCheck)
+        result += std::format(".{:03}", GetMilliseconds());
+    else if (millisecondsCheck)
+        result += std::format(".{}", GetMilliseconds());
+
+    if (nanosecondsCheck || microsecondsCheck)
+        result += std::format("{:03}", GetMicroseconds());
+    else if (microsecondsCheck)
+        result += std::format(".{}", GetMilliseconds());
+
+    if (nanosecondsCheck)
+        result += std::format("{}", GetNanoseconds());
+
+    return result;
+}
+
+size_t TimeSpan::GetHashCode() const
+{
+    return m_Ticks ^ (m_Ticks >> 32);
+}
 
 TimeSpan TimeSpan::Interval(const double_t ticks, const double_t scale)
 {
     if (std::isnan(ticks))
-        throw std::invalid_argument{"Cannot create an interval from a NaN amount of ticks"};
+        THROW(ArgumentException{"Cannot create an interval from a NaN amount of ticks", "ticks"});
     return IntervalFromDoubleTicks(ticks * scale);
 }
 
 TimeSpan TimeSpan::IntervalFromDoubleTicks(const double_t ticks)
 {
     if (ticks > static_cast<double_t>(std::numeric_limits<int64_t>::max()) || ticks < static_cast<double_t>(std::numeric_limits<int64_t>::min()) || std::isnan(ticks))
-        throw std::overflow_error{"Invalid TimeSpan ticks"};
+        THROW(OverflowException{"Invalid TimeSpan ticks"});
     if (ticks == static_cast<double_t>(std::numeric_limits<int64_t>::max()))
         return MaxValue();
     return TimeSpan{static_cast<int64_t>(ticks)};
 }
-
-std::ostream& operator<<(std::ostream& out, const TimeSpan& timeSpan) { return out << std::format("{}", timeSpan); }

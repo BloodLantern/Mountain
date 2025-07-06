@@ -11,8 +11,7 @@
 #include <Math/vector3.hpp>
 
 #include "Mountain/Core.hpp"
-
-#include "Mountain/Utils/Concepts.hpp"
+#include "Mountain/Containers/EnumerableExt.hpp"
 #include "Mountain/Utils/MetaProgramming.hpp"
 #include "Mountain/Utils/Pointer.hpp"
 
@@ -34,20 +33,17 @@ namespace Mountain::Utils
         Both    = Start | End
     };
 
-    template <typename T>
-    using ProjectionFunc = T(*)(T);
-
-    template <typename T>
-    constexpr ProjectionFunc<T> Identity = [](T t) { return t; };
-
-    /// @brief Converts a integral number to a valid pointer without illegal size operations
+    /// @brief Converts an integral number to a valid pointer without illegal size operations
     /// @tparam PtrT Type of the pointer
-    /// @tparam IntT Type of the number, must be integral
+    /// @tparam IntT Type of the number. Must be integral
     /// @param number Number to convert
     /// @return Pointer representation of the number
-    template <typename PtrT, Concepts::IntegralT IntT>
+    template <typename PtrT, Concepts::Integral IntT>
     [[nodiscard]]
     constexpr PtrT* IntToPointer(IntT number);
+
+    [[nodiscard]]
+    constexpr size_t PointerToInt(const void* pointer);
 
     /// @brief Gets the hash code of a specified type
     /// @tparam T Type
@@ -172,14 +168,19 @@ namespace Mountain::Utils
     MOUNTAIN_API void OpenFile(const std::filesystem::path& filepath);
 
     /// @brief Returns whether an array contains an element
-    template <std::ranges::input_range Container, typename T>
+    template <Concepts::StandardContainer ContainerT, typename T>
     [[nodiscard]]
-    bool_t ArrayContains(const Container& container, T element);
+    bool_t ArrayContains(const ContainerT& container, T element);
 
     /// @brief Returns whether a string array contains an element using Utils::StringEqualsIgnoreCase.
-    template <std::ranges::input_range Container>
+    template <Concepts::StandardContainer ContainerT>
     [[nodiscard]]
-    bool_t StringArrayContains(const Container& container, const std::string& element);
+    bool_t StringArrayContains(const ContainerT& container, const std::string& element);
+
+    /// @brief Returns whether a string enumerable contains an element using Utils::StringEqualsIgnoreCase.
+    template <Requirements::MountainEnumerable EnumerableT>
+    [[nodiscard]]
+    bool_t StringEnumerableContains(const EnumerableT& enumerable, const std::string& element);
 
     /// @brief Checks if two strings are equal, case-insensitive.
     [[nodiscard]]
@@ -232,7 +233,7 @@ namespace Mountain::Utils
     template <uint64_t Offset, uint64_t Count>
     constexpr uint64_t GetBits(const uint64_t value);
 
-    template <Concepts::EnumT T>
+    template <Concepts::Enum T>
     constexpr Meta::Flags<T> ToFlags(T enumValue);
 }
 
@@ -292,8 +293,10 @@ ENUM_FLAGS(Mountain::Utils::TrimOptions)
 
 namespace Mountain
 {
-    template <typename PtrT, Concepts::IntegralT IntT>
+    template <typename PtrT, Concepts::Integral IntT>
     constexpr PtrT* Utils::IntToPointer(const IntT number) { return reinterpret_cast<PtrT*>(reinterpret_cast<uint8_t*>(1) + static_cast<const size_t>(number) - 1); }
+
+    constexpr size_t Utils::PointerToInt(const void* pointer) { return std::bit_cast<size_t>(pointer); }
 
     constexpr std::string Utils::RemoveNamespaces(const std::string& str)
     {
@@ -358,22 +361,22 @@ namespace Mountain
         return nullptr;
     }
 
-    template <std::ranges::input_range Container, typename T>
+    template <Concepts::StandardContainer Container, typename T>
     bool_t Utils::ArrayContains(const Container& container, T element)
     {
         return std::ranges::find(container, element) != container.end();
     }
 
-    template <std::ranges::input_range Container>
+    template <Concepts::StandardContainer Container>
     bool_t Utils::StringArrayContains(const Container& container, const std::string& element)
     {
-        for (const std::string& elem : container)
-        {
-            if (StringEqualsIgnoreCase(elem, element))
-                return true;
-        }
+        return std::ranges::any_of(container, [&](const std::string& elem) { return StringEqualsIgnoreCase(elem, element); });
+    }
 
-        return false;
+    template <Requirements::MountainEnumerable EnumerableT>
+    bool_t Utils::StringEnumerableContains(const EnumerableT& enumerable, const std::string& element)
+    {
+        return Any(enumerable, [&](const std::string& elem) { return StringEqualsIgnoreCase(elem, element); });
     }
 
     template <typename Ret, typename... Args>
@@ -403,6 +406,6 @@ namespace Mountain
         return value >> Offset & mask;
     }
 
-    template <Concepts::EnumT T>
+    template <Concepts::Enum T>
     constexpr Meta::Flags<T> Utils::ToFlags(T enumValue){ return static_cast<Meta::Flags<T>>(enumValue); }
 }

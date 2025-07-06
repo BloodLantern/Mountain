@@ -15,619 +15,661 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="externals\include\AL\al.h">
+    <ClInclude Include="..\MathToolbox\src\Math\calc.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\AL\alc.h">
+    <ClInclude Include="..\MathToolbox\src\Math\core.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\AL\alext.h">
+    <ClInclude Include="..\MathToolbox\src\Math\easing.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\AL\efx-creative.h">
+    <ClInclude Include="..\MathToolbox\src\Math\math.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\AL\efx-presets.h">
+    <ClInclude Include="..\MathToolbox\src\Math\matrix.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\AL\efx.h">
+    <ClInclude Include="..\MathToolbox\src\Math\matrix2.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\freetype\config\ftconfig.h">
+    <ClInclude Include="..\MathToolbox\src\Math\matrix3.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\freetype\config\ftheader.h">
+    <ClInclude Include="..\MathToolbox\src\Math\quaternion.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\freetype\config\ftmodule.h">
+    <ClInclude Include="..\MathToolbox\src\Math\vector2.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\freetype\config\ftoption.h">
+    <ClInclude Include="..\MathToolbox\src\Math\vector2i.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\freetype\config\ftstdlib.h">
+    <ClInclude Include="..\MathToolbox\src\Math\vector3.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\freetype\config\integer-types.h">
+    <ClInclude Include="..\MathToolbox\src\Math\vector4.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\freetype\config\mac-support.h">
+    <ClInclude Include="externals\src\AL\al.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\freetype\config\public-macros.h">
+    <ClInclude Include="externals\src\AL\alc.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\freetype\freetype.h">
+    <ClInclude Include="externals\src\AL\alext.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\freetype\ftadvanc.h">
+    <ClInclude Include="externals\src\AL\efx-creative.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\freetype\ftbbox.h">
+    <ClInclude Include="externals\src\AL\efx-presets.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\freetype\ftbdf.h">
+    <ClInclude Include="externals\src\AL\efx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\freetype\ftbitmap.h">
+    <ClInclude Include="externals\src\freetype\config\ftconfig.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\freetype\ftbzip2.h">
+    <ClInclude Include="externals\src\freetype\config\ftheader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\freetype\ftcache.h">
+    <ClInclude Include="externals\src\freetype\config\ftmodule.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\freetype\ftchapters.h">
+    <ClInclude Include="externals\src\freetype\config\ftoption.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\freetype\ftcid.h">
+    <ClInclude Include="externals\src\freetype\config\ftstdlib.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\freetype\ftcolor.h">
+    <ClInclude Include="externals\src\freetype\config\integer-types.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\freetype\ftdriver.h">
+    <ClInclude Include="externals\src\freetype\config\mac-support.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\freetype\fterrdef.h">
+    <ClInclude Include="externals\src\freetype\config\public-macros.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\freetype\fterrors.h">
+    <ClInclude Include="externals\src\freetype\freetype.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\freetype\ftfntfmt.h">
+    <ClInclude Include="externals\src\freetype\ftadvanc.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\freetype\ftgasp.h">
+    <ClInclude Include="externals\src\freetype\ftbbox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\freetype\ftglyph.h">
+    <ClInclude Include="externals\src\freetype\ftbdf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\freetype\ftgxval.h">
+    <ClInclude Include="externals\src\freetype\ftbitmap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\freetype\ftgzip.h">
+    <ClInclude Include="externals\src\freetype\ftbzip2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\freetype\ftimage.h">
+    <ClInclude Include="externals\src\freetype\ftcache.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\freetype\ftincrem.h">
+    <ClInclude Include="externals\src\freetype\ftchapters.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\freetype\ftlcdfil.h">
+    <ClInclude Include="externals\src\freetype\ftcid.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\freetype\ftlist.h">
+    <ClInclude Include="externals\src\freetype\ftcolor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\freetype\ftlogging.h">
+    <ClInclude Include="externals\src\freetype\ftdriver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\freetype\ftlzw.h">
+    <ClInclude Include="externals\src\freetype\fterrdef.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\freetype\ftmac.h">
+    <ClInclude Include="externals\src\freetype\fterrors.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\freetype\ftmm.h">
+    <ClInclude Include="externals\src\freetype\ftfntfmt.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\freetype\ftmodapi.h">
+    <ClInclude Include="externals\src\freetype\ftgasp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\freetype\ftmoderr.h">
+    <ClInclude Include="externals\src\freetype\ftglyph.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\freetype\ftotval.h">
+    <ClInclude Include="externals\src\freetype\ftgxval.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\freetype\ftoutln.h">
+    <ClInclude Include="externals\src\freetype\ftgzip.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\freetype\ftparams.h">
+    <ClInclude Include="externals\src\freetype\ftimage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\freetype\ftpfr.h">
+    <ClInclude Include="externals\src\freetype\ftincrem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\freetype\ftrender.h">
+    <ClInclude Include="externals\src\freetype\ftlcdfil.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\freetype\ftsizes.h">
+    <ClInclude Include="externals\src\freetype\ftlist.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\freetype\ftsnames.h">
+    <ClInclude Include="externals\src\freetype\ftlogging.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\freetype\ftstroke.h">
+    <ClInclude Include="externals\src\freetype\ftlzw.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\freetype\ftsynth.h">
+    <ClInclude Include="externals\src\freetype\ftmac.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\freetype\ftsystem.h">
+    <ClInclude Include="externals\src\freetype\ftmm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\freetype\fttrigon.h">
+    <ClInclude Include="externals\src\freetype\ftmodapi.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\freetype\fttypes.h">
+    <ClInclude Include="externals\src\freetype\ftmoderr.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\freetype\ftwinfnt.h">
+    <ClInclude Include="externals\src\freetype\ftotval.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\freetype\otsvg.h">
+    <ClInclude Include="externals\src\freetype\ftoutln.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\freetype\t1tables.h">
+    <ClInclude Include="externals\src\freetype\ftparams.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\freetype\ttnameid.h">
+    <ClInclude Include="externals\src\freetype\ftpfr.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\freetype\tttables.h">
+    <ClInclude Include="externals\src\freetype\ftrender.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\freetype\tttags.h">
+    <ClInclude Include="externals\src\freetype\ftsizes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\ft2build.h">
+    <ClInclude Include="externals\src\freetype\ftsnames.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\glad\glad.h">
+    <ClInclude Include="externals\src\freetype\ftstroke.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\GLFW\glfw3.h">
+    <ClInclude Include="externals\src\freetype\ftsynth.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\GLFW\glfw3native.h">
+    <ClInclude Include="externals\src\freetype\ftsystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\ImGui\imconfig.h">
+    <ClInclude Include="externals\src\freetype\fttrigon.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\ImGui\imgui.h">
+    <ClInclude Include="externals\src\freetype\fttypes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\ImGui\imgui_impl_glfw.h">
+    <ClInclude Include="externals\src\freetype\ftwinfnt.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\ImGui\imgui_impl_opengl3.h">
+    <ClInclude Include="externals\src\freetype\otsvg.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\ImGui\imgui_impl_opengl3_loader.h">
+    <ClInclude Include="externals\src\freetype\t1tables.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\ImGui\imgui_internal.h">
+    <ClInclude Include="externals\src\freetype\ttnameid.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\ImGui\imgui_stdlib.h">
+    <ClInclude Include="externals\src\freetype\tttables.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\ImGui\imstb_rectpack.h">
+    <ClInclude Include="externals\src\freetype\tttags.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\ImGui\imstb_textedit.h">
+    <ClInclude Include="externals\src\ft2build.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\ImGui\imstb_truetype.h">
+    <ClInclude Include="externals\src\glad\glad.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\KHR\khrplatform.h">
+    <ClInclude Include="externals\src\GLFW\glfw3.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\magic_enum\magic_enum.hpp">
+    <ClInclude Include="externals\src\GLFW\glfw3native.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\magic_enum\magic_enum_all.hpp">
+    <ClInclude Include="externals\src\ImGui\imconfig.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\magic_enum\magic_enum_containers.hpp">
+    <ClInclude Include="externals\src\ImGui\imgui.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\magic_enum\magic_enum_flags.hpp">
+    <ClInclude Include="externals\src\ImGui\imgui_impl_glfw.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\magic_enum\magic_enum_format.hpp">
+    <ClInclude Include="externals\src\ImGui\imgui_impl_opengl3.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\magic_enum\magic_enum_fuse.hpp">
+    <ClInclude Include="externals\src\ImGui\imgui_impl_opengl3_loader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\magic_enum\magic_enum_iostream.hpp">
+    <ClInclude Include="externals\src\ImGui\imgui_internal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\magic_enum\magic_enum_switch.hpp">
+    <ClInclude Include="externals\src\ImGui\imgui_stdlib.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\magic_enum\magic_enum_utility.hpp">
+    <ClInclude Include="externals\src\ImGui\imstb_rectpack.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\Maths\calc.hpp">
+    <ClInclude Include="externals\src\ImGui\imstb_textedit.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\Maths\definitions.hpp">
+    <ClInclude Include="externals\src\ImGui\imstb_truetype.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\Maths\easing.hpp">
+    <ClInclude Include="externals\src\KHR\khrplatform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\Maths\math.hpp">
+    <ClInclude Include="externals\src\magic_enum\magic_enum.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\Maths\matrix.hpp">
+    <ClInclude Include="externals\src\magic_enum\magic_enum_all.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\Maths\matrix3.hpp">
+    <ClInclude Include="externals\src\magic_enum\magic_enum_containers.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\Maths\quaternion.hpp">
+    <ClInclude Include="externals\src\magic_enum\magic_enum_flags.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\Maths\vector2.hpp">
+    <ClInclude Include="externals\src\magic_enum\magic_enum_format.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\Maths\vector2i.hpp">
+    <ClInclude Include="externals\src\magic_enum\magic_enum_fuse.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\Maths\vector3.hpp">
+    <ClInclude Include="externals\src\magic_enum\magic_enum_iostream.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\Maths\vector4.hpp">
+    <ClInclude Include="externals\src\magic_enum\magic_enum_switch.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\minimp3.h">
+    <ClInclude Include="externals\src\magic_enum\magic_enum_utility.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\minimp3_ex.h">
+    <ClInclude Include="externals\src\minimp3.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\RapidXML\rapidxml.hpp">
+    <ClInclude Include="externals\src\minimp3_ex.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\RapidXML\RapidXMLSTD.hpp">
+    <ClInclude Include="externals\src\RapidXML\rapidxml.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\RapidXML\rapidxml_iterators.hpp">
+    <ClInclude Include="externals\src\RapidXML\RapidXMLSTD.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\RapidXML\rapidxml_print.hpp">
+    <ClInclude Include="externals\src\RapidXML\rapidxml_iterators.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\RapidXML\rapidxml_utils.hpp">
+    <ClInclude Include="externals\src\RapidXML\rapidxml_print.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\stb_image.h">
+    <ClInclude Include="externals\src\RapidXML\rapidxml_utils.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\stb_vorbis.h">
+    <ClInclude Include="externals\src\stb_image.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\Maths\core.hpp">
+    <ClInclude Include="externals\src\stb_vorbis.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="externals\include\Maths\matrix2.hpp">
+    <ClInclude Include="src\Mountain\Audio\Audio.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\audio\audio.hpp">
+    <ClInclude Include="src\Mountain\Audio\AudioBuffer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\audio\audio_buffer.hpp">
+    <ClInclude Include="src\Mountain\Audio\AudioContext.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\audio\audio_context.hpp">
+    <ClInclude Include="src\Mountain\Audio\AudioDevice.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\audio\audio_device.hpp">
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_10604039599264331763.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_10097982125490285052.hpp">
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_11431338934652808651.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_10560615441756428011.hpp">
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_11774202807359543870.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_1074902542281558043.hpp">
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_11952871429675989627.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_13130013495108453755.hpp">
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_12442680368039291515.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_16982112266611754363.hpp">
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_13070826838953012323.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_17139022876316836076.hpp">
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_13177006652388307822.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_2544377574110585068.hpp">
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_14338357782030755284.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_2626201325449173172.hpp">
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_14381367057370009788.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_3518102179013777611.hpp">
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_1453103019202383270.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_5083911923489940364.hpp">
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_15258004472844539140.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_5290845577426867131.hpp">
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_15961880810884371948.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_7344767717205508100.hpp">
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_16311089013737800627.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_8397852258098769587.hpp">
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_16451689749247673836.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_8414638717441225796.hpp">
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_1659229443278887099.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_8915932256763674668.hpp">
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_1682259173912325418.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_9273770047666001763.hpp">
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_17163117651341958810.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_9467723258334487283.hpp">
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_17404448839198764618.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_9914516617300152348.hpp">
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_17880426697011385839.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\binary_resources\resource.hpp">
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_18011218881129316092.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\binary_resources\resource_holder.hpp">
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_310597202658876699.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\binary_resources\span.hpp">
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_3126981312599726777.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\collision\circle.hpp">
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_4319606583867259020.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\collision\collide.hpp">
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_5284316122615694636.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\collision\collider.hpp">
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_5513601353699197311.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\collision\collider_list.hpp">
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_6180361286818081308.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\collision\grid.hpp">
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_6423258116736183732.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\collision\hitbox.hpp">
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_6733528840531529029.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\core.hpp">
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_6826460111274356971.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\file\directory.hpp">
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_7556603881106790027.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\file\entry.hpp">
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_7736256087137476443.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\file\file.hpp">
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_908422867440665036.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\file\file_manager.hpp">
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_9508759643910089710.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\game.hpp">
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_9550955058371070276.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\input\gamepad_input.hpp">
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_9582143994837232440.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\input\input.hpp">
+    <ClInclude Include="src\Mountain\BinaryResources\resource.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\input\keyboard_input.hpp">
+    <ClInclude Include="src\Mountain\BinaryResources\resource_holder.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\input\mouse_input.hpp">
+    <ClInclude Include="src\Mountain\BinaryResources\span.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\input\time.hpp">
+    <ClInclude Include="src\Mountain\Collision\Circle.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\rendering\draw.hpp">
+    <ClInclude Include="src\Mountain\Collision\Collider.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\rendering\renderer.hpp">
+    <ClInclude Include="src\Mountain\Collision\ColliderList.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\rendering\render_target.hpp">
+    <ClInclude Include="src\Mountain\Collision\Collision.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\resource\audio_track.hpp">
+    <ClInclude Include="src\Mountain\Collision\Grid.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\resource\font.hpp">
+    <ClInclude Include="src\Mountain\Collision\Hitbox.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\resource\resource.hpp">
+    <ClInclude Include="src\Mountain\Containers\Allocator.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\resource\resource_manager.hpp">
+    <ClInclude Include="src\Mountain\Containers\Enumerable.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\resource\shader.hpp">
+    <ClInclude Include="src\Mountain\Containers\Enumerator.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\resource\texture.hpp">
+    <ClInclude Include="src\Mountain\Containers\List.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\scene\component\audio_listener.hpp">
+    <ClInclude Include="src\Mountain\Core.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\scene\component\audio_source.hpp">
+    <ClInclude Include="src\Mountain\Exceptions\ArgumentException.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\scene\component\component.hpp">
+    <ClInclude Include="src\Mountain\Exceptions\Exception.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\scene\component\light_source.hpp">
+    <ClInclude Include="src\Mountain\Exceptions\ThrowHelper.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\scene\component\sprite.hpp">
+    <ClInclude Include="src\Mountain\FileSystem\Directory.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\scene\component\state_machine.hpp">
+    <ClInclude Include="src\Mountain\FileSystem\Entry.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\scene\entity.hpp">
+    <ClInclude Include="src\Mountain\FileSystem\File.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\screen.hpp">
+    <ClInclude Include="src\Mountain\FileSystem\FileManager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\utils\color.hpp">
+    <ClInclude Include="src\Mountain\Game.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\utils\concepts.hpp">
+    <ClInclude Include="src\Mountain\Globals.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\utils\coroutine.hpp">
+    <ClInclude Include="src\Mountain\Input\GamepadInput.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\utils\event.hpp">
+    <ClInclude Include="src\Mountain\Input\Input.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\utils\file_system_watcher.hpp">
+    <ClInclude Include="src\Mountain\Input\KeyboardInput.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\utils\formatter.hpp">
+    <ClInclude Include="src\Mountain\Input\MouseInput.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\utils\guid.hpp">
+    <ClInclude Include="src\Mountain\Input\Time.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\utils\imgui_utils.hpp">
+    <ClInclude Include="src\Mountain\Rendering\Draw.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\utils\list.hpp">
+    <ClInclude Include="src\Mountain\Rendering\Effect.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\utils\logger.hpp">
+    <ClInclude Include="src\Mountain\Rendering\GpuBuffer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\utils\message_box.hpp">
+    <ClInclude Include="src\Mountain\Rendering\GpuTexture.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\utils\meta_programming.hpp">
+    <ClInclude Include="src\Mountain\Rendering\GpuVertexArray.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\utils\pointer.hpp">
+    <ClInclude Include="src\Mountain\Rendering\Graphics.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\utils\random.hpp">
+    <ClInclude Include="src\Mountain\Rendering\LightSource.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\utils\rectangle.hpp">
+    <ClInclude Include="src\Mountain\Rendering\ParticleSystem.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\utils\reference_counter.hpp">
+    <ClInclude Include="src\Mountain\Rendering\ParticleSystemModules.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\utils\run_length_encoding.hpp">
+    <ClInclude Include="src\Mountain\Rendering\Renderer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\utils\ts_queue.hpp">
+    <ClInclude Include="src\Mountain\Rendering\RenderTarget.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\utils\utils.hpp">
+    <ClInclude Include="src\Mountain\Resource\AudioTrack.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\utils\windows.hpp">
+    <ClInclude Include="src\Mountain\Resource\ComputeShader.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\window.hpp">
+    <ClInclude Include="src\Mountain\Resource\Font.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inline\Mountain\collision\hitbox.inl">
+    <ClInclude Include="src\Mountain\Resource\Resource.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inline\Mountain\file\file.inl">
+    <ClInclude Include="src\Mountain\Resource\ResourceManager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inline\Mountain\file\file_manager.inl">
+    <ClInclude Include="src\Mountain\Resource\Shader.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inline\Mountain\resource\audio_track.inl">
+    <ClInclude Include="src\Mountain\Resource\ShaderBase.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inline\Mountain\resource\resource_manager.inl">
+    <ClInclude Include="src\Mountain\Resource\Texture.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inline\Mountain\resource\texture.inl">
+    <ClInclude Include="src\Mountain\Ecs\Component\AudioListener.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inline\Mountain\scene\component\state_machine.inl">
+    <ClInclude Include="src\Mountain\Ecs\Component\AudioSource.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inline\Mountain\scene\entity.inl">
+    <ClInclude Include="src\Mountain\Ecs\Component\Component.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inline\Mountain\utils\color.inl">
+    <ClInclude Include="src\Mountain\Ecs\Component\Sprite.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inline\Mountain\utils\event.inl">
+    <ClInclude Include="src\Mountain\Ecs\Component\StateMachine.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inline\Mountain\utils\imgui_utils.inl">
+    <ClInclude Include="src\Mountain\Ecs\Entity.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inline\Mountain\utils\list.inl">
+    <ClInclude Include="src\Mountain\Screen.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inline\Mountain\utils\logger.inl">
+    <ClInclude Include="src\Mountain\Utils\Color.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inline\Mountain\utils\pointer.inl">
+    <ClInclude Include="src\Mountain\Utils\Coroutine.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inline\Mountain\utils\rectangle.inl">
+    <ClInclude Include="src\Mountain\Utils\Event.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inline\Mountain\utils\reference_counter.inl">
+    <ClInclude Include="src\Mountain\Utils\FileSystemWatcher.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inline\Mountain\utils\ts_queue.inl">
+    <ClInclude Include="src\Mountain\Utils\Formatter.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inline\Mountain\utils\utils.inl">
+    <ClInclude Include="src\Mountain\Utils\Guid.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mountain\rendering\particle_system.hpp">
+    <ClInclude Include="src\Mountain\Utils\ImGuiUtils.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mountain\Utils\Logger.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mountain\Utils\MessageBox.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mountain\Utils\MetaProgramming.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mountain\Utils\Pointer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mountain\Utils\Random.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mountain\Utils\Rectangle.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mountain\Utils\ReferenceCounter.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mountain\Utils\RunLengthEncoding.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mountain\Utils\Stopwatch.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mountain\Utils\TimeSpan.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mountain\Utils\TsQueue.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mountain\Utils\Utils.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mountain\Utils\Windows.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mountain\Window.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -674,28 +716,10 @@
     <ClCompile Include="src\Mountain\audio\audio.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Mountain\audio\audio_buffer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Mountain\audio\audio_context.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Mountain\audio\audio_device.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Mountain\binary_resources\resource_holder.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Mountain\collision\circle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Mountain\collision\collide.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Mountain\collision\collider.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Mountain\collision\collider_list.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Mountain\collision\grid.cpp">
@@ -704,22 +728,7 @@
     <ClCompile Include="src\Mountain\collision\hitbox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Mountain\file\directory.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Mountain\file\entry.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Mountain\file\file.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Mountain\file\file_manager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Mountain\game.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Mountain\input\gamepad_input.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Mountain\input\input.cpp">
@@ -734,46 +743,16 @@
     <ClCompile Include="src\Mountain\rendering\renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Mountain\rendering\render_target.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Mountain\resource\audio_track.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Mountain\resource\font.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Mountain\resource\resource.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Mountain\resource\resource_manager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Mountain\resource\shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Mountain\resource\texture.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Mountain\scene\component\audio_listener.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Mountain\scene\component\audio_source.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Mountain\scene\component\component.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Mountain\scene\component\light_source.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Mountain\scene\component\sprite.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Mountain\scene\component\state_machine.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Mountain\scene\entity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Mountain\screen.cpp">
@@ -785,25 +764,13 @@
     <ClCompile Include="src\Mountain\utils\coroutine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Mountain\utils\file_system_watcher.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Mountain\utils\guid.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Mountain\utils\imgui_utils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Mountain\utils\logger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Mountain\utils\message_box.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Mountain\utils\random.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Mountain\utils\run_length_encoding.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Mountain\utils\utils.cpp">
@@ -815,7 +782,145 @@
     <ClCompile Include="src\Mountain\window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Mountain\rendering\particle_system.cpp">
+    <ClCompile Include="..\MathToolbox\src\Math\calc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MathToolbox\src\Math\easing.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MathToolbox\src\Math\matrix.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MathToolbox\src\Math\matrix2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MathToolbox\src\Math\matrix3.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MathToolbox\src\Math\quaternion.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MathToolbox\src\Math\vector2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MathToolbox\src\Math\vector2i.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MathToolbox\src\Math\vector3.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MathToolbox\src\Math\vector4.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mountain\Audio\AudioBuffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mountain\Audio\AudioContext.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mountain\Audio\AudioDevice.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mountain\BinaryResources\resource_holder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mountain\Collision\ColliderList.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mountain\Collision\Collision.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mountain\Exceptions\ArgumentException.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mountain\Exceptions\Exception.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mountain\FileSystem\Directory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mountain\FileSystem\Entry.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mountain\FileSystem\File.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mountain\FileSystem\FileManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mountain\Input\GamepadInput.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mountain\Rendering\Effect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mountain\Rendering\GpuBuffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mountain\Rendering\GpuTexture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mountain\Rendering\GpuVertexArray.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mountain\Rendering\Graphics.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mountain\Rendering\ParticleSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mountain\Rendering\ParticleSystemModules.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mountain\Rendering\RenderTarget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mountain\Resource\AudioTrack.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mountain\Resource\ComputeShader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mountain\Resource\ResourceManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mountain\Resource\ShaderBase.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mountain\Ecs\Component\AudioListener.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mountain\Ecs\Component\AudioSource.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mountain\Ecs\Component\Component.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mountain\Ecs\Component\Sprite.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mountain\Ecs\Entity.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mountain\Utils\FileSystemWatcher.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mountain\Utils\ImGuiUtils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mountain\Utils\MessageBox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mountain\Utils\RunLengthEncoding.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mountain\Utils\Stopwatch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mountain\Utils\TimeSpan.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mountain\Containers\Allocator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -79,7 +79,7 @@ namespace Mountain
         };
 
         /// @brief Shows a MessageBox with the given options.
-        static Result Show(std::string_view title, std::string_view text, Type type, Icon icon = Icon::None, DefaultButton defaultButton = DefaultButton::First);
+        static Result Show(const char_t* title, const char_t* text, Type type, Icon icon = Icon::None, DefaultButton defaultButton = DefaultButton::First);
 
     private:
         static uint32_t TypeToWindows(Type type);

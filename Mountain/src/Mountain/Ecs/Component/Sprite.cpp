@@ -50,7 +50,7 @@ void Sprite::SetupTextures()
         &m_Textures
     );
 
-    std::ranges::sort(m_Textures, [](auto&& a, auto&& b) -> bool_t { return a->GetName() < b->GetName(); });
+    m_Textures.Sort([](auto&& a, auto&& b) -> bool_t { return a->GetName() < b->GetName(); });
 
     m_UpdateTimer = m_FrameDuration;
 }

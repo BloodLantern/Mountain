@@ -1,6 +1,5 @@
 ﻿#include "Mountain/Resource/ResourceManager.hpp"
 
-#include <array>
 #include <execution>
 
 #include "Mountain/FileSystem/FileManager.hpp"
@@ -10,6 +9,8 @@
 #include "Mountain/Resource/Texture.hpp"
 
 #include "Mountain/BinaryResources/resource_holder.hpp"
+#include "Mountain/Containers/EnumerableExt.hpp"
+#include "Mountain/Utils/Stopwatch.hpp"
 
 namespace rh
 {
@@ -63,7 +64,7 @@ void ResourceManager::LoadAll()
 {
     Logger::LogInfo("Loading all resources from FileManager");
 
-    auto&& start = std::chrono::system_clock::now();
+    const Stopwatch stopwatch = Stopwatch::StartNew();
 
     List<Pointer<File>> files;
     FileManager::FindAll<File>([](Pointer<File> file) { return file->GetResource() == nullptr && !IsBinary(file->GetPathString()); }, &files);
@@ -79,9 +80,9 @@ void ResourceManager::LoadAll()
         {
             std::string&& extension = file->GetExtension();
 
-            if (std::ranges::contains(Texture::FileExtensions, extension))
+            if (Mountain::Contains(Texture::FileExtensions, extension))
                 Load<Texture>(file, false);
-            else if (std::ranges::contains(AudioTrack::FileExtensions, extension))
+            else if (Mountain::Contains(AudioTrack::FileExtensions, extension))
                 Load<AudioTrack>(file, false);
         }
     );
@@ -93,7 +94,7 @@ void ResourceManager::LoadAll()
     {
         std::string&& extension = file->GetExtension();
 
-        if (std::ranges::contains(Shader::VertexFileExtensions, extension) || std::ranges::contains(Shader::FragmentFileExtensions, extension))
+        if (Mountain::Contains(Shader::VertexFileExtensions, extension) || Mountain::Contains(Shader::FragmentFileExtensions, extension))
         {
             Pointer<Shader> shader;
 
@@ -106,14 +107,14 @@ void ResourceManager::LoadAll()
             shader->SetSourceData(file);
             shadersToLoad.Add(shader);
         }
-        else if (std::ranges::contains(ComputeShader::FileExtensions, extension))
+        else if (Mountain::Contains(ComputeShader::FileExtensions, extension))
         {
             const std::string& filenameNoExtension = file->GetPathString();
             Pointer<ComputeShader> shader = Add<ComputeShader>(filenameNoExtension);
             shader->SetSourceData(file);
             shader->Load();
         }
-        else if (std::ranges::contains(Font::FileExtensions, extension))
+        else if (Mountain::Contains(Font::FileExtensions, extension))
         {
             LoadFont(file, 12);
         }
@@ -131,7 +132,7 @@ void ResourceManager::LoadAll()
         "Successfully loaded {} files in {} resources. Took {}",
         files.GetSize(),
         m_Resources.size() - oldResourceCount,
-        std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - start)
+        stopwatch
     );
 }
 
@@ -180,7 +181,7 @@ void ResourceManager::LoadAllBinaries()
             entry->SetParent(FileManager::AddDirectory(entry->GetPath().parent_path()));
         }
 
-        if (std::ranges::contains(Shader::VertexFileExtensions, extension) || std::ranges::contains(Shader::FragmentFileExtensions, extension))
+        if (Mountain::Contains(Shader::VertexFileExtensions, extension) || Mountain::Contains(Shader::FragmentFileExtensions, extension))
         {
             Pointer<Shader> shader;
 
@@ -193,14 +194,14 @@ void ResourceManager::LoadAllBinaries()
             shader->SetSourceData(file);
             shadersToLoad.Add(shader);
         }
-        else if (std::ranges::contains(ComputeShader::FileExtensions, extension))
+        else if (Mountain::Contains(ComputeShader::FileExtensions, extension))
         {
             const std::string& filenameNoExtension = path.generic_string();
             Pointer<ComputeShader> shader = Add<ComputeShader>(filenameNoExtension);
             shader->SetSourceData(file);
             shader->Load();
         }
-        else if (std::ranges::contains(Font::FileExtensions, extension))
+        else if (Mountain::Contains(Font::FileExtensions, extension))
         {
             LoadFont(file, 12);
         }

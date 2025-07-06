@@ -1,5 +1,7 @@
 #include "Mountain/Game.hpp"
 
+#include <mimalloc.h>
+
 #include "Mountain/Window.hpp"
 #include "Mountain/Audio/Audio.hpp"
 #include "Mountain/Input/Input.hpp"
@@ -17,6 +19,8 @@ Game::Game(const std::string& windowTitle, const Vector2i windowSize)
     Logger::Start();
     Logger::OpenDefaultFile();
 
+    (void) mi_version(); // Make sure mimalloc is correctly initialized
+
     std::set_terminate(
         []
         {
@@ -31,12 +35,19 @@ Game::Game(const std::string& windowTitle, const Vector2i windowSize)
                 Logger::LogInfo("Exiting without exception");
                 Logger::Stop();
             }
+            catch (const Exception& e)
+            {
+                const char_t* t = e.GetName();
+                Logger::LogFatal("Uncaught exception of type {} occurred at {}: {}", t, e.GetState(), e);
+                Logger::Stop();
+                MessageBox::Show(std::format("Unhandled exception of type {}", t).c_str(), std::format("{}", e).c_str(), MessageBox::Type::Ok, MessageBox::Icon::Error);
+            }
             catch (const std::exception& e)
             {
-                const char_t* const t = typeid(e).name();
+                const char_t* t = typeid(e).name();
                 Logger::LogFatal("Uncaught exception of type {}: {}", t, e);
                 Logger::Stop();
-                MessageBox::Show(std::format("Unhandled exception of type {}", t), std::format("{}", e), MessageBox::Type::Ok, MessageBox::Icon::Error);
+                MessageBox::Show(std::format("Unhandled exception of type {}", t).c_str(), std::format("{}", e).c_str(), MessageBox::Type::Ok, MessageBox::Icon::Error);
             }
 
 #ifdef _DEBUG
@@ -50,7 +61,7 @@ Game::Game(const std::string& windowTitle, const Vector2i windowSize)
     Logger::LogInfo("Initializing Mountain Framework");
 
     if (!Renderer::Initialize(windowTitle, windowSize))
-        throw std::runtime_error("Failed to initialize renderer");
+        THROW(InvalidOperationException{"Failed to initialize renderer"});
 
     if (!Audio::Initialize())
         Logger::LogError("Failed to initialize audio {}", windowSize);

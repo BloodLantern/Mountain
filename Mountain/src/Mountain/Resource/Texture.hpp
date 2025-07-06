@@ -19,7 +19,7 @@ namespace Mountain
     {
     public:
         /// @brief Allowed extensions for texture files
-        MOUNTAIN_API static constexpr std::array FileExtensions
+        MOUNTAIN_API static constexpr Array FileExtensions
         {
             ".jpg",
             ".jpeg",

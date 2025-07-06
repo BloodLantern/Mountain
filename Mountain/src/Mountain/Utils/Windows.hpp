@@ -2,12 +2,11 @@
 
 #include <string>
 
-#include "Mountain/Core.hpp"
-
 /// @file windows.hpp
 /// @brief A way to include the @c <Windows.h> header without some of its conflicting macros.
 
 #undef APIENTRY
+#undef interface
 // ReSharper disable once CppInconsistentNaming
 #define XMLDocument XMLDocument_dont_care
 #define NOMINMAX
@@ -19,6 +18,8 @@
 #undef near
 #undef far
 #undef MessageBox
+
+#include "Mountain/Core.hpp"
 
 namespace Mountain::Windows
 {

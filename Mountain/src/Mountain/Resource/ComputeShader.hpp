@@ -3,6 +3,7 @@
 #include <Math/math.hpp>
 
 #include "Mountain/Core.hpp"
+#include "Mountain/Containers/Array.hpp"
 #include "Mountain/Resource/ShaderBase.hpp"
 
 namespace Mountain
@@ -11,7 +12,7 @@ namespace Mountain
 	{
 	public:
 	    /// @brief Allowed extensions for compute shaders
-	    MOUNTAIN_API static constexpr std::array FileExtensions
+	    MOUNTAIN_API static constexpr Array FileExtensions
 	    {
 	        ".comp",
 	        ".compute"

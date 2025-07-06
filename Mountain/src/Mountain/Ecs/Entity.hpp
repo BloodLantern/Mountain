@@ -5,8 +5,8 @@
 #include <Math/vector2.hpp>
 
 #include "Mountain/Collision/Collider.hpp"
-#include "Mountain/Utils/Concepts.hpp"
-#include "Mountain/Utils/List.hpp"
+#include "Mountain/Containers/List.hpp"
+#include "Mountain/Utils/MetaProgramming.hpp"
 
 namespace Mountain
 {
@@ -31,10 +31,10 @@ namespace Mountain
 
         MOUNTAIN_API void AddComponent(Component* component);
 
-        template <Concepts::ComponentT T, typename... Args>
+        template <Concepts::Component T, typename... Args>
         T* AddComponent(Args&&... args);
 
-        template <Concepts::ComponentT T>
+        template <Concepts::Component T>
         [[nodiscard]]
         T* GetComponent() const;
 
@@ -46,7 +46,7 @@ namespace Mountain
 
         MOUNTAIN_API void RemoveComponent(Component* component);
 
-        template <Concepts::ComponentT T>
+        template <Concepts::Component T>
         void RemoveComponent();
 
         MOUNTAIN_API const Collider* GetCollider() const;
@@ -65,7 +65,7 @@ namespace Mountain
 
 namespace Mountain
 {
-    template <Concepts::ComponentT T, typename... Args>
+    template <Concepts::Component T, typename... Args>
     T* Entity::AddComponent(Args&&... args)
     {
         T* t = new T(std::forward<Args>(args)...);
@@ -73,7 +73,7 @@ namespace Mountain
         return t;
     }
 
-    template <Concepts::ComponentT T>
+    template <Concepts::Component T>
     T* Entity::GetComponent() const
     {
         for (auto&& component : m_Components)
@@ -87,10 +87,10 @@ namespace Mountain
         return nullptr;
     }
 
-    template <Concepts::ComponentT T>
+    template <Concepts::Component T>
     void Entity::RemoveComponent()
     {
-        for (decltype(m_Components)::ConstIterator it = m_Components.CBegin(); it != m_Components.CEnd(); it++)
+        for (decltype(m_Components)::Iterator it = m_Components.GetBeginIterator(); it != m_Components.GetEndIterator(); it++)
         {
             const T* const t = dynamic_cast<T*>(*it);
 

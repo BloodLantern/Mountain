@@ -12,7 +12,7 @@
 #include "Mountain/Resource/Shader.hpp"
 #include "Mountain/Resource/Texture.hpp"
 #include "Mountain/Utils/Color.hpp"
-#include "Mountain/Utils/List.hpp"
+#include "Mountain/Containers/List.hpp"
 #include "Mountain/Utils/MetaProgramming.hpp"
 #include "Mountain/Utils/Rectangle.hpp"
 
@@ -144,7 +144,7 @@ namespace Mountain
         /// @param uv1 The second texture UV position
         /// @param color The tint color of the texture. Use white for default colors
         /// @param flipFlags Flip flags from the @c DrawTextureFlipping enum
-        /// @throws std::invalid_argument If @p uv0 is greater than @p uv1
+        /// @throws ArgumentException If @p uv0 is greater than @p uv1
         MOUNTAIN_API static void Texture(
             const Texture& texture,
             Vector2 position,
@@ -174,7 +174,7 @@ namespace Mountain
         /// @param uv1 The second texture UV position
         /// @param color The color of the RenderTarget
         /// @param flipFlags Flip flags from the @c DrawTextureFlipping enum
-        /// @throws std::invalid_argument If @p uv0 is greater than @p uv1
+        /// @throws ArgumentException If @p uv0 is greater than @p uv1
         MOUNTAIN_API static void RenderTarget(
             const RenderTarget& renderTarget,
             Vector2 position = Vector2::Zero(),

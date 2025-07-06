@@ -107,6 +107,15 @@
     <ClInclude Include="externals\src\magic_enum\magic_enum_iostream.hpp" />
     <ClInclude Include="externals\src\magic_enum\magic_enum_switch.hpp" />
     <ClInclude Include="externals\src\magic_enum\magic_enum_utility.hpp" />
+    <ClInclude Include="externals\src\mimalloc-new-delete.h" />
+    <ClInclude Include="externals\src\mimalloc-override.h" />
+    <ClInclude Include="externals\src\mimalloc-stats.h" />
+    <ClInclude Include="externals\src\mimalloc.h" />
+    <ClInclude Include="externals\src\mimalloc\atomic.h" />
+    <ClInclude Include="externals\src\mimalloc\internal.h" />
+    <ClInclude Include="externals\src\mimalloc\prim.h" />
+    <ClInclude Include="externals\src\mimalloc\track.h" />
+    <ClInclude Include="externals\src\mimalloc\types.h" />
     <ClInclude Include="externals\src\minimp3.h" />
     <ClInclude Include="externals\src\minimp3_ex.h" />
     <ClInclude Include="externals\src\RapidXML\rapidxml.hpp" />
@@ -164,7 +173,16 @@
     <ClInclude Include="src\Mountain\Collision\Collision.hpp" />
     <ClInclude Include="src\Mountain\Collision\Grid.hpp" />
     <ClInclude Include="src\Mountain\Collision\Hitbox.hpp" />
+    <ClInclude Include="src\Mountain\Configuration.hpp" />
+    <ClInclude Include="src\Mountain\Containers\Array.hpp" />
+    <ClInclude Include="src\Mountain\Containers\ContiguousIterator.hpp" />
+    <ClInclude Include="src\Mountain\Containers\EnumerableExt.hpp" />
+    <ClInclude Include="src\Mountain\Containers\FunctionTypes.hpp" />
+    <ClInclude Include="src\Mountain\Containers\List.hpp" />
     <ClInclude Include="src\Mountain\Core.hpp" />
+    <ClInclude Include="src\Mountain\Exceptions\ArgumentException.hpp" />
+    <ClInclude Include="src\Mountain\Exceptions\Exception.hpp" />
+    <ClInclude Include="src\Mountain\Exceptions\ThrowHelper.hpp" />
     <ClInclude Include="src\Mountain\FileSystem\Directory.hpp" />
     <ClInclude Include="src\Mountain\FileSystem\Entry.hpp" />
     <ClInclude Include="src\Mountain\FileSystem\File.hpp" />
@@ -203,14 +221,13 @@
     <ClInclude Include="src\Mountain\Ecs\Entity.hpp" />
     <ClInclude Include="src\Mountain\Screen.hpp" />
     <ClInclude Include="src\Mountain\Utils\Color.hpp" />
-    <ClInclude Include="src\Mountain\Utils\Concepts.hpp" />
     <ClInclude Include="src\Mountain\Utils\Coroutine.hpp" />
     <ClInclude Include="src\Mountain\Utils\Event.hpp" />
     <ClInclude Include="src\Mountain\Utils\FileSystemWatcher.hpp" />
     <ClInclude Include="src\Mountain\Utils\Formatter.hpp" />
     <ClInclude Include="src\Mountain\Utils\Guid.hpp" />
     <ClInclude Include="src\Mountain\Utils\ImGuiUtils.hpp" />
-    <ClInclude Include="src\Mountain\Utils\List.hpp" />
+    <ClInclude Include="src\Mountain\Utils\Requirements.hpp" />
     <ClInclude Include="src\Mountain\Utils\Logger.hpp" />
     <ClInclude Include="src\Mountain\Utils\MessageBox.hpp" />
     <ClInclude Include="src\Mountain\Utils\MetaProgramming.hpp" />
@@ -246,6 +263,7 @@
     <ClCompile Include="externals\src\ImGui\imgui_stdlib.cpp" />
     <ClCompile Include="externals\src\ImGui\imgui_tables.cpp" />
     <ClCompile Include="externals\src\ImGui\imgui_widgets.cpp" />
+    <ClCompile Include="externals\src\mimalloc-new-delete.cpp" />
     <ClCompile Include="externals\src\minimp3.c" />
     <ClCompile Include="externals\src\RapidXMLSTD.cpp" />
     <ClCompile Include="externals\src\stb_image.c" />
@@ -261,6 +279,8 @@
     <ClCompile Include="src\Mountain\Collision\Collision.cpp" />
     <ClCompile Include="src\Mountain\Collision\Grid.cpp" />
     <ClCompile Include="src\Mountain\Collision\Hitbox.cpp" />
+    <ClCompile Include="src\Mountain\Exceptions\ArgumentException.cpp" />
+    <ClCompile Include="src\Mountain\Exceptions\Exception.cpp" />
     <ClCompile Include="src\Mountain\FileSystem\Directory.cpp" />
     <ClCompile Include="src\Mountain\FileSystem\Entry.cpp" />
     <ClCompile Include="src\Mountain\FileSystem\File.cpp" />
@@ -389,7 +409,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>src;binary_resources;externals\src;..\MathToolbox\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;externals\src;..\MathToolbox\src</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <AdditionalOptions>/Gw %(AdditionalOptions)</AdditionalOptions>
@@ -397,8 +417,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>externals/libs/static/$(Configuration)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;freetype.lib;OpenAL32.lib;soft_oal.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>externals/libs/static/$(Configuration);externals/libs/static/Common</AdditionalLibraryDirectories>
+      <AdditionalDependencies>mimalloc.dll.lib;mimalloc-redirect.lib;glfw3.lib;freetype.lib;OpenAL32.lib;soft_oal.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <CreateHotPatchableImage>Enabled</CreateHotPatchableImage>
       <OptimizeReferences>false</OptimizeReferences>
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
@@ -423,8 +443,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <EnableModules>false</EnableModules>
-      <AdditionalIncludeDirectories>src;binary_resources;externals\src;..\MathToolbox\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;externals\src;..\MathToolbox\src</AdditionalIncludeDirectories>
       <AdditionalOptions>/Gw %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -432,8 +451,8 @@
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
       <OptimizeReferences>false</OptimizeReferences>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
-      <AdditionalDependencies>glfw3.lib;freetype.lib;OpenAL32.lib;soft_oal.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>externals/libs/static/$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>mimalloc.dll.lib;mimalloc-redirect.lib;glfw3.lib;freetype.lib;OpenAL32.lib;soft_oal.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>externals/libs/static/$(Configuration);externals/libs/static/Common</AdditionalLibraryDirectories>
       <CreateHotPatchableImage>Enabled</CreateHotPatchableImage>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
@@ -453,6 +472,7 @@
   <Target Name="CopyDynamicExternals" AfterTargets="Build">
     <ItemGroup>
       <DynamicExternals Include="$(ProjectDir)externals\libs\dynamic\$(Configuration)\*" />
+      <DynamicExternals Include="$(ProjectDir)externals\libs\dynamic\Common\*" />
     </ItemGroup>
     <Copy SourceFiles="@(DynamicExternals)" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" Condition="'%(Identity)' != '.gitkeep'" />
     <Message Text="Copy external DLLs to output directory" Importance="high" />

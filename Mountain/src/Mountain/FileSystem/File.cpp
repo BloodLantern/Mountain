@@ -143,20 +143,20 @@ void File::UpdateUtilityValues()
     m_Extension = m_Path.extension().generic_string();
     m_PathNoExtension = path.replace_extension().generic_string();
 
-    // Update file type from extension
-    if (Utils::StringArrayContains(AudioTrack::FileExtensions, m_Extension))
+    // Update the file type from the extension
+    if (Utils::StringEnumerableContains(AudioTrack::FileExtensions, m_Extension))
         m_Type = Type::AudioTrack;
-    else if (Utils::StringArrayContains(Texture::FileExtensions, m_Extension))
+    else if (Utils::StringEnumerableContains(Texture::FileExtensions, m_Extension))
         m_Type = Type::Texture;
-    else if (Utils::StringArrayContains(Font::FileExtensions, m_Extension))
+    else if (Utils::StringEnumerableContains(Font::FileExtensions, m_Extension))
         m_Type = Type::Font;
     else if (Utils::StringEqualsIgnoreCase(m_Extension, ".xml"))
         m_Type = Type::Xml;
-    else if (Utils::StringArrayContains(Shader::VertexFileExtensions, m_Extension))
+    else if (Utils::StringEnumerableContains(Shader::VertexFileExtensions, m_Extension))
         m_Type = Type::VertexShader;
-    else if (Utils::StringArrayContains(Shader::FragmentFileExtensions, m_Extension))
+    else if (Utils::StringEnumerableContains(Shader::FragmentFileExtensions, m_Extension))
         m_Type = Type::FragmentShader;
-    else if (Utils::StringArrayContains(ComputeShader::FileExtensions, m_Extension))
+    else if (Utils::StringEnumerableContains(ComputeShader::FileExtensions, m_Extension))
         m_Type = Type::ComputeShader;
     else if (Utils::StringEqualsIgnoreCase(m_Extension, ".glsl"))
         m_Type = Type::Glsl;

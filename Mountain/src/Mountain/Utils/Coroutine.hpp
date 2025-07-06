@@ -197,7 +197,7 @@ namespace Mountain
         MOUNTAIN_API bool_t Valid() const;
 
         /// @brief Resets the Coroutine.
-        /// @warning THIS DOES NOT RELEASE THE ALLOCATED MEMORY, make sure to call @c Destroy() beforehand.
+        /// @warning <b>This does not release the allocated memory</b>, make sure to call @c Destroy() beforehand.
         MOUNTAIN_API void Reset();
 
         /// @brief Returns the Guid of this Coroutine.

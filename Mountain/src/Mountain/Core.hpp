@@ -29,7 +29,7 @@ typedef char char_t;
 // ReSharper disable once CppEnforceTypeAliasCodeStyle
 /// @brief Equivalent to <c>bool</c>.
 ///
-/// @see char_t for reason.
+/// @see char_t for the reason.
 typedef bool bool_t;
 
 using Action = std::function<void()>;
@@ -49,7 +49,6 @@ namespace Mountain {}
 
 /// @brief Creates default copy and move operations for a given @p type.
 ///
-/// ### Usage
 /// This macro should be used for any type that defines at least one of:
 /// - A non-default destructor (this includes @code = default @endcode implementations),
 /// - A non-default copy constructor
@@ -105,7 +104,7 @@ namespace Mountain {}
     type& operator=(const type& other) = delete;   \
     type& operator=(type&& other) = delete;
 
-/// @brief Macro used to declare a static class, e.g. a class that cannot be instantiated.
+/// @brief Macro used to declare a static class, e.g., a class that cannot be instantiated.
 ///
 /// For consistency, this should be the first statement inside the class definition:
 /// @code
@@ -173,10 +172,25 @@ using stdstring = std::string;
 #define PUBLIC_GLOBAL(varType, varName, defaultValue) MOUNTAIN_API varType varName;
 #endif
 
-#define GETTER(type, name, internalName) [[nodiscard]] type Get##name() const { return internalName; }
-#define SETTER(type, name, internalName) void Set##name(const type new##name) { internalName = new##name; }
+#define GETTER(type, name, internalName) [[nodiscard]] type Get##name() const noexcept { return internalName; }
+#define SETTER(type, name, internalName) void Set##name(const type new##name) noexcept { internalName = new##name; }
 #define GETTER_SETTER(type, name, internalName) GETTER(type, name, internalName) SETTER(type, name, internalName)
 
-#define STATIC_GETTER(type, name, internalName) [[nodiscard]] static type Get##name() { return internalName; }
-#define STATIC_SETTER(type, name, internalName) static void Set##name(const type new##name) { internalName = new##name; }
+#define STATIC_GETTER(type, name, internalName) [[nodiscard]] static type Get##name() noexcept { return internalName; }
+#define STATIC_SETTER(type, name, internalName) static void Set##name(const type new##name) noexcept { internalName = new##name; }
 #define STATIC_GETTER_SETTER(type, name, internalName) STATIC_GETTER(type, name, internalName) STATIC_SETTER(type, name, internalName)
+
+// Undefine any Windows interface macro
+#undef interface
+
+/// @brief Defines an interface; that is a class that only has public pure virtual member functions.
+///
+/// This is only a struct under the hood because it declares public members by default and allows for
+/// operators to be defined, whereas the @c __interface Microsoft extension doesn't.
+/// Also, because an interface isn't supposed to provide implementations for any of the functions it
+/// declares, it has the @c novtable specification.
+///
+/// @see https://learn.microsoft.com/en-us/cpp/cpp/novtable
+#define interface struct __declspec(novtable)
+
+#define DEFAULT_VIRTUAL_DESTRUCTOR(type) virtual ~type() = default;

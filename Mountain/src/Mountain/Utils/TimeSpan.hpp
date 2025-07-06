@@ -4,6 +4,8 @@
 #include <sstream>
 
 #include "Mountain/Core.hpp"
+#include "Mountain/Exceptions/ThrowHelper.hpp"
+#include "Mountain/Utils/Requirements.hpp"
 
 namespace Mountain
 {
@@ -49,11 +51,8 @@ namespace Mountain
         [[nodiscard]]
         static TimeSpan FromTicks(int64_t ticks);
 
-        [[nodiscard]]
         explicit constexpr TimeSpan(int64_t ticks);
-        [[nodiscard]]
         constexpr TimeSpan(int32_t hours, int32_t minutes, int32_t seconds);
-        [[nodiscard]]
         constexpr TimeSpan(int32_t days, int32_t hours, int32_t minutes, int32_t seconds, int32_t milliseconds = 0, int32_t microseconds = 0);
 
         GETTER(int64_t, Ticks, m_Ticks)
@@ -107,7 +106,11 @@ namespace Mountain
         friend TimeSpan& operator*=(TimeSpan& v, double_t factor);
         friend TimeSpan& operator/=(TimeSpan& v, double_t divisor);
 
-        friend std::ostream& operator<<(std::ostream& out, const TimeSpan& timeSpan);
+        [[nodiscard]]
+        std::string ToString() const;
+
+        [[nodiscard]]
+        size_t GetHashCode() const;
 
     private:
         static constexpr int64_t MaxSeconds = std::numeric_limits<int64_t>::max() / TicksPerSecond;
@@ -126,84 +129,14 @@ namespace Mountain
         [[nodiscard]]
         static TimeSpan IntervalFromDoubleTicks(double_t ticks);
 
-        int64_t m_Ticks;
+        int64_t m_Ticks = 0;
     };
+
+    CHECK_REQUIREMENT(Requirements::StringConvertible, TimeSpan);
+    CHECK_REQUIREMENT(Requirements::Hashable, TimeSpan);
 }
 
-/// @brief @c std::hash template specialization for the Mountain::TimeSpan type.
-template <>
-struct std::hash<Mountain::TimeSpan>
-{
-    size_t operator()(const Mountain::TimeSpan& timeSpan) const noexcept
-    {
-        return timeSpan.GetTicks() ^ (timeSpan.GetTicks() >> 32);
-    }
-};
-
-/// @brief @c std::formatter template specialization for the Mountain::TimeSpan type.
-template <>
-struct std::formatter<Mountain::TimeSpan>
-{
-    /// @brief Parses the input formatting options.
-    template <class ParseContext>
-    constexpr typename ParseContext::iterator parse(ParseContext& ctx)
-    {
-        auto it = ctx.begin();
-        if (it == ctx.end())
-            return it;
-
-        if (*it != '}')
-            throw std::format_error("Invalid format args for Mountain::TimeSpan");
-
-        return it;
-    }
-
-    // ReSharper disable once CppMemberFunctionMayBeStatic
-    /// @brief Formats a string using the given instance of Mountain::TimeSpan, according to the given options in the parse function.
-    template <class FormatContext>
-    typename FormatContext::iterator format(const Mountain::TimeSpan& timeSpan, FormatContext& ctx) const
-    {
-        std::ostringstream out;
-
-        const bool_t daysCheck = timeSpan.GetDays() > 0;
-        const bool_t hoursCheck = timeSpan.GetHours() > 0;
-        const bool_t minutesCheck = timeSpan.GetMinutes() > 0;
-
-        if (daysCheck)
-            out << timeSpan.GetDays() << '.';
-
-        if (daysCheck || hoursCheck)
-            out << std::format("{:2}:", timeSpan.GetHours());
-
-        if (daysCheck || hoursCheck || minutesCheck)
-            out << std::format("{:2}:", timeSpan.GetMinutes());
-
-        out << timeSpan.GetSeconds();
-
-        const bool_t millisecondsCheck = timeSpan.GetMilliseconds() > 0;
-        const bool_t microsecondsCheck = timeSpan.GetMicroseconds() > 0;
-        const bool_t nanosecondsCheck = timeSpan.GetNanoseconds() > 0;
-
-        if (nanosecondsCheck || microsecondsCheck)
-            out << std::format(".{:03}", timeSpan.GetMilliseconds());
-        else if (millisecondsCheck)
-            out << std::format(".{}", timeSpan.GetMilliseconds());
-
-        if (nanosecondsCheck || microsecondsCheck)
-            out << std::format("{:03}", timeSpan.GetMicroseconds());
-        else if (microsecondsCheck)
-            out << std::format(".{}", timeSpan.GetMilliseconds());
-
-        if (nanosecondsCheck)
-            out << std::format("{}", timeSpan.GetNanoseconds());
-
-        return std::ranges::copy(std::move(out).str(), ctx.out()).out;
-    }
-};
-
 // Start of TimeSpan.inl
-
-#include <stdexcept>
 
 namespace Mountain
 {
@@ -218,7 +151,7 @@ namespace Mountain
         const int64_t totalSeconds = static_cast<int64_t>(hours) * 3600 + static_cast<int64_t>(minutes) * 60 + static_cast<int64_t>(seconds);
 
         if (totalSeconds > MaxSeconds || totalSeconds < MinSeconds)
-            throw std::out_of_range{"Invalid TimeSpan values"};
+            THROW(ArgumentOutOfRangeException{"Invalid TimeSpan values"});
 
         m_Ticks = totalSeconds * TicksPerSecond;
     }
@@ -237,7 +170,7 @@ namespace Mountain
                                           microseconds;
 
         if (totalMicroseconds > MaxMicroSeconds || totalMicroseconds < MinMicroSeconds)
-            throw std::out_of_range{"Invalid TimeSpan values"};
+            THROW(ArgumentOutOfRangeException{"Invalid TimeSpan values"});
 
         m_Ticks = totalMicroseconds * TicksPerMicrosecond;
     }

@@ -1,3 +1,4 @@
 [submodule "MathToolbox"]
 	path = MathToolbox
 	url = https://github.com/BloodLantern/MathToolbox.git
+	branch = master

@@ -31,7 +31,7 @@ GameExample::GameExample(const char_t* const windowTitle)
 {
 }
 
-template <Concepts::EffectT T>
+template <Concepts::Effect T>
 struct PostProcessingEffect
 {
     bool_t enabled;
@@ -52,7 +52,7 @@ namespace
     PostProcessingEffect<Vignette> vignette;
     PostProcessingEffect<FilmGrain> filmGrain;
 
-    template <Concepts::EffectT T>
+    template <Concepts::Effect T>
     void ShowEffect(
         const std::string& name,
         PostProcessingEffect<T>& effect,
@@ -226,8 +226,8 @@ void GameExample::Render()
 
     Draw::RenderTarget(renderTarget, Vector2::Zero(), Window::GetSize() / renderTarget.GetSize());
 
-    vignette.effect.imageBindings.Emplace(Renderer::GetCurrentRenderTarget().GetTextureId(), 0, Graphics::ImageShaderAccess::WriteOnly);
-    filmGrain.effect.imageBindings.Emplace(Renderer::GetCurrentRenderTarget().GetTextureId(), 0, Graphics::ImageShaderAccess::WriteOnly);
+    vignette.effect.imageBindings.Emplace(Renderer::GetCurrentRenderTarget().GetTextureId(), 0u, Graphics::ImageShaderAccess::WriteOnly);
+    filmGrain.effect.imageBindings.Emplace(Renderer::GetCurrentRenderTarget().GetTextureId(), 0u, Graphics::ImageShaderAccess::WriteOnly);
     if (vignette.enabled)
         vignette.effect.Apply(Renderer::GetCurrentRenderTarget().GetSize(), false);
     if (filmGrain.enabled)

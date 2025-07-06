@@ -4,7 +4,7 @@
 
 #include "Mountain/FileSystem/File.hpp"
 #include "Mountain/Resource/Resource.hpp"
-#include "Mountain/Utils/List.hpp"
+#include "Mountain/Containers/List.hpp"
 #include "Mountain/Utils/Logger.hpp"
 #include "Mountain/Utils/Pointer.hpp"
 
@@ -23,15 +23,15 @@ namespace Mountain
 
     public:
         /// @brief Creates the Resource corresponding to the given @p name without loading it.
-        template <Concepts::LoadableResourceT T>
+        template <Concepts::LoadableResource T>
         static Pointer<T> Add(const std::string& name);
 
         /// @brief Creates the Resource corresponding to the given @p file without loading it.
-        template <Concepts::LoadableResourceT T>
+        template <Concepts::LoadableResource T>
         static Pointer<T> Add(const Pointer<File>& file);
 
         /// @brief Creates the Resource corresponding to the given @p file and loads it.
-        template <Concepts::LoadableResourceT T>
+        template <Concepts::LoadableResource T>
         static Pointer<T> Load(const Pointer<File>& file, bool_t loadInInterface = true);
 
         /// @brief Creates the Font corresponding to the given @p file and loads it with the given @p size.
@@ -61,12 +61,12 @@ namespace Mountain
         MOUNTAIN_API static bool_t IsBinary(const std::string& name);
 
         /// @brief Returns the Resource that was either added or loaded using the given @p name.
-        template <Concepts::ResourceT T = Resource>
+        template <Concepts::Resource T = Resource>
         [[nodiscard]]
         static Pointer<T> Get(const std::string& name);
 
         /// @brief Returns the Resource that was either added or loaded using the given file name.
-        template <Concepts::ResourceT T = Resource>
+        template <Concepts::Resource T = Resource>
         [[nodiscard]]
         static Pointer<T> Get(const Pointer<File>& file);
 
@@ -79,7 +79,7 @@ namespace Mountain
         MOUNTAIN_API static Pointer<Font> GetFont(const Pointer<File>& file, uint32_t size);
 
         /// @brief Returns the Resource that was either added or loaded using the given file name.
-        template <Concepts::ResourceT T = Resource>
+        template <Concepts::Resource T = Resource>
         [[nodiscard]]
         static Pointer<T> Get(const Guid& guid);
 
@@ -98,12 +98,12 @@ namespace Mountain
         /// @brief Finds all Resource of type @p T.
         /// @tparam T The type of Resource to find.
         /// @return All stored Resource of type @p T.
-        template <Concepts::ResourceT T>
+        template <Concepts::Resource T>
         [[nodiscard]]
         static List<Pointer<T>> FindAll();
 
         /// @see ResourceManager::FindAll()
-        template <Concepts::ResourceT T>
+        template <Concepts::Resource T>
         static void FindAll(List<Pointer<T>>* result);
 
         /// @brief Finds a specific Resource based on a predicate.
@@ -112,7 +112,7 @@ namespace Mountain
         /// called for each stored Resource.
         /// @return The first Resource for which the @p predicate returned @c true. If every Resource
         /// returned @c false, instead return a null @ref Pointer.
-        template <Concepts::ResourceT T = Resource>
+        template <Concepts::Resource T = Resource>
         [[nodiscard]]
         static Pointer<T> Find(const std::function<bool_t(Pointer<T>)>& predicate);
 
@@ -122,16 +122,16 @@ namespace Mountain
         /// called for each stored Resource.
         /// @return The first Resource for which the @p predicate returned @c true. If every Resource
         /// returned @c false, instead return a null @ref Pointer.
-        template <Concepts::ResourceT T = Resource>
+        template <Concepts::Resource T = Resource>
         [[nodiscard]]
         static List<Pointer<T>> FindAll(const std::function<bool_t(Pointer<T>)>& predicate);
 
         /// @see @ref FileManager::FindAll(std::function<bool_t(Pointer<T>)>&&)
-        template <Concepts::ResourceT T>
+        template <Concepts::Resource T>
         static void FindAll(const std::function<bool_t(Pointer<T>)>& predicate, List<Pointer<T>>* result);
 
         /// @brief Checks whether the given @p name corresponds to a Resource of type @p T.
-        template <Concepts::ResourceT T>
+        template <Concepts::Resource T>
         [[nodiscard]]
         static bool_t IsResourceOfType(const std::string& name);
 
@@ -139,7 +139,7 @@ namespace Mountain
         MOUNTAIN_API static void Unload(const std::string& name);
 
         /// @brief Unloads the given @p resource.
-        template <Concepts::ResourceT T>
+        template <Concepts::Resource T>
         static void Unload(const Pointer<T>& resource);
 
         /// @brief Unloads all stored @ref Mountain::Resource "Resources".
@@ -150,13 +150,13 @@ namespace Mountain
         MOUNTAIN_API static inline std::mutex m_ResourcesMutex;
         MOUNTAIN_API static inline std::unordered_map<Guid, std::string> m_GuidMap;
 
-        template <Concepts::ResourceT T>
+        template <Concepts::Resource T>
         static Pointer<T> AddNoCheck(std::string name);
 
-        template <Concepts::ResourceT T>
+        template <Concepts::Resource T>
         static Pointer<T> LoadNoCheck(Pointer<File> file, bool_t loadInRhi = true);
 
-        template <Concepts::ResourceT T>
+        template <Concepts::Resource T>
         [[nodiscard]]
         static Pointer<T> GetNoCheck(const std::string& name);
     };
@@ -173,7 +173,7 @@ namespace Mountain
 
 namespace Mountain
 {
-    template <Concepts::LoadableResourceT T>
+    template <Concepts::LoadableResource T>
     Pointer<T> ResourceManager::Add(const std::string& name)
     {
         Logger::LogVerbose("Adding resource {}", name);
@@ -189,13 +189,13 @@ namespace Mountain
         return result;
     }
 
-    template <Concepts::LoadableResourceT T>
+    template <Concepts::LoadableResource T>
     Pointer<T> ResourceManager::Add(const Pointer<File>& file)
     {
         return Add<T>(file->GetPathString());
     }
 
-    template <Concepts::LoadableResourceT T>
+    template <Concepts::LoadableResource T>
     Pointer<T> ResourceManager::Load(const Pointer<File>& file, const bool_t loadInInterface)
     {
         Logger::LogVerbose("Loading resource {}", file->GetPath());
@@ -219,7 +219,7 @@ namespace Mountain
         return LoadNoCheck<T>(file, loadInInterface);
     }
 
-    template <Concepts::ResourceT T>
+    template <Concepts::Resource T>
     Pointer<T> ResourceManager::Get(const std::string& name)
     {
         if (!Contains(name))
@@ -231,13 +231,13 @@ namespace Mountain
         return GetNoCheck<T>(name);
     }
 
-    template <Concepts::ResourceT T>
+    template <Concepts::Resource T>
     Pointer<T> ResourceManager::Get(const Pointer<File>& file)
     {
         return Get<T>(file->GetPathString());
     }
 
-    template <Concepts::ResourceT T>
+    template <Concepts::Resource T>
     Pointer<T> ResourceManager::Get(const Guid& guid)
     {
         auto&& it = m_GuidMap.find(guid);
@@ -248,7 +248,7 @@ namespace Mountain
         return Utils::DynamicPointerCast<T>(GetNoCheck<T>(it->second));
     }
 
-    template <Concepts::ResourceT T>
+    template <Concepts::Resource T>
     List<Pointer<T>> ResourceManager::FindAll()
     {
         List<Pointer<T>> result;
@@ -256,7 +256,7 @@ namespace Mountain
         return result;
     }
 
-    template <Concepts::ResourceT T>
+    template <Concepts::Resource T>
     void ResourceManager::FindAll(List<Pointer<T>>* result)
     {
         result->Clear();
@@ -270,7 +270,7 @@ namespace Mountain
         }
     }
 
-    template <Concepts::ResourceT T>
+    template <Concepts::Resource T>
     Pointer<T> ResourceManager::Find(const std::function<bool_t(Pointer<T>)>& predicate)
     {
         for (const auto& val : m_Resources | std::views::values)
@@ -285,7 +285,7 @@ namespace Mountain
         return nullptr;
     }
 
-    template <Concepts::ResourceT T>
+    template <Concepts::Resource T>
     List<Pointer<T>> ResourceManager::FindAll(const std::function<bool_t(Pointer<T>)>& predicate)
     {
         List<Pointer<T>> result;
@@ -293,7 +293,7 @@ namespace Mountain
         return result;
     }
 
-    template <Concepts::ResourceT T>
+    template <Concepts::Resource T>
     void ResourceManager::FindAll(const std::function<bool_t(Pointer<T>)>& predicate, List<Pointer<T>>* result)
     {
         result->Clear();
@@ -306,7 +306,7 @@ namespace Mountain
         }
     }
 
-    template <Concepts::ResourceT T>
+    template <Concepts::Resource T>
     bool_t ResourceManager::IsResourceOfType(const std::string& name)
     {
         Pointer<T> resource = Get<T>(name);
@@ -317,7 +317,7 @@ namespace Mountain
         return false;
     }
 
-    template <Concepts::ResourceT T>
+    template <Concepts::Resource T>
     void ResourceManager::Unload(const Pointer<T>& resource)
     {
         Logger::LogVerbose("Unloading resource {}", resource);
@@ -347,7 +347,7 @@ namespace Mountain
             Logger::LogWarning("Attempt to unload an unknown file entry: {}", resource);
     }
 
-    template <Concepts::ResourceT T>
+    template <Concepts::Resource T>
     Pointer<T> ResourceManager::AddNoCheck(std::string name)
     {
         Pointer<T> resource = Pointer<T>::New(std::forward<std::string>(name));
@@ -364,7 +364,7 @@ namespace Mountain
         return resource;
     }
 
-    template <Concepts::ResourceT T>
+    template <Concepts::Resource T>
     Pointer<T> ResourceManager::LoadNoCheck(Pointer<File> file, const bool_t loadInRhi)
     {
         Pointer<T> resource = Pointer<T>::New(file->GetPathString());
@@ -387,7 +387,7 @@ namespace Mountain
         return resource;
     }
 
-    template <Concepts::ResourceT T>
+    template <Concepts::Resource T>
     Pointer<T> ResourceManager::GetNoCheck(const std::string& name)
     {
         std::scoped_lock lock(m_ResourcesMutex);

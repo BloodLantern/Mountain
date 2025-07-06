@@ -42,7 +42,8 @@ namespace Mountain
         [[nodiscard]]
         double_t GetElapsedSeconds() const;
 
-        friend std::ostream& operator<<(std::ostream& out, const Stopwatch& stopwatch);
+        [[nodiscard]]
+        std::string ToString() const;
 
     private:
         static constexpr int64_t TicksPerMillisecond = 10000;
@@ -59,35 +60,6 @@ namespace Mountain
         [[nodiscard]]
         int64_t GetElapsedDateTimeTicks() const;
     };
+
+    CHECK_REQUIREMENT(Requirements::StringConvertible, Stopwatch);
 }
-
-/// @brief @c std::formatter template specialization for the Mountain::Stopwatch type.
-template <>
-struct std::formatter<Mountain::Stopwatch>
-{
-    /// @brief Parses the input formatting options.
-    template <class ParseContext>
-    constexpr typename ParseContext::iterator parse(ParseContext& ctx)
-    {
-        auto it = ctx.begin();
-        if (it == ctx.end())
-            return it;
-
-        if (*it != '}')
-            throw std::format_error("Invalid format args for Mountain::Stopwatch");
-
-        return it;
-    }
-
-    // ReSharper disable once CppMemberFunctionMayBeStatic
-    /// @brief Formats a string using the given instance of Mountain::Stopwatch, according to the given options in the parse function.
-    template <class FormatContext>
-    typename FormatContext::iterator format(const Mountain::Stopwatch& stopwatch, FormatContext& ctx) const
-    {
-        std::ostringstream out;
-
-        out << stopwatch.GetElapsed();
-
-        return std::ranges::copy(std::move(out).str(), ctx.out()).out;
-    }
-};

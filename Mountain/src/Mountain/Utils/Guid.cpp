@@ -45,7 +45,7 @@ uint16_t Guid::GetData2() const { return m_Data2; }
 
 uint16_t Guid::GetData3() const { return m_Data3; }
 
-const std::array<uint8_t, Guid::Data4Size>& Guid::GetData4() const { return m_Data4; }
+const Array<uint8_t, Guid::Data4Size>& Guid::GetData4() const { return m_Data4; }
 
 bool_t Guid::operator==(const Guid& other) const
 {
@@ -55,7 +55,7 @@ bool_t Guid::operator==(const Guid& other) const
 
 bool_t Guid::operator!=(const Guid& other) const { return !(*this == other); }
 
-Guid::operator std::string() const
+std::string Guid::ToString() const
 {
 	return std::format(
 		"{:X}-{:X}-{:X}-{:X}-{:X}-{:X}-{:X}-{:X}-{:X}-{:X}-{:X}",
@@ -71,4 +71,19 @@ Guid::operator std::string() const
 		m_Data4[6],
 		m_Data4[7]
 	);
+}
+
+size_t Guid::GetHashCode() const
+{
+	static constexpr size_t RandomValue = 0x9E3779B9;
+
+	size_t result = 0;
+	result ^= std::hash<uint32_t>{}(m_Data1) + RandomValue;
+	result ^= std::hash<uint16_t>{}(m_Data2) + RandomValue + (result << 6) + (result >> 2);
+	result ^= std::hash<uint16_t>{}(m_Data3) + RandomValue + (result << 6) + (result >> 2);
+
+	for (size_t i = 0; i < Data4Size; i++)
+		result ^= std::hash<uint8_t>{}(m_Data4[i]) + RandomValue + (result << 6) + (result >> 2);
+
+	return result;
 }

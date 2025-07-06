@@ -60,7 +60,7 @@ namespace ImGui
         ImGuiSliderFlags flags = 0
     );
 
-    template <Mountain::Concepts::EnumT T>
+    template <Mountain::Concepts::Enum T>
     bool ComboEnum(const char* label, T* v, ImGuiComboFlags flags = ImGuiComboFlags_None);
 }
 // ReSharper restore CppInconsistentNaming
@@ -113,7 +113,7 @@ namespace Mountain
 }
 
 // ReSharper disable CppInconsistentNaming
-template <Mountain::Concepts::EnumT T>
+template <Mountain::Concepts::Enum T>
 bool ImGui::ComboEnum(const char* label, T* const v, const ImGuiComboFlags flags)
 {
     bool_t result = false;

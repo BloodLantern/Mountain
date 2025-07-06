@@ -143,7 +143,7 @@ Mountain::RenderTarget& Mountain::Renderer::PopRenderTarget()
 Mountain::RenderTarget& Mountain::Renderer::GetCurrentRenderTarget()
 {
     if (m_RenderTargets.empty())
-        throw std::logic_error("Cannot get the current RenderTarget outside of the Game::Render() function");
+        THROW(InvalidOperationException{"Cannot get the current RenderTarget outside of the Game::Render() function"});
 
     return *m_RenderTargets.top();
 }
@@ -153,19 +153,19 @@ Mountain::RenderTarget& Mountain::Renderer::GetDefaultRenderTarget() { return *m
 void Mountain::Renderer::DebugString(std::string str, const float_t duration, const Color& color)
 {
     m_DebugStrings.Insert(
+        0,
         {
             .str = std::move(str),
             .time = std::chrono::system_clock::now(),
             .color = color,
             .duration = duration
-        },
-        0
+        }
     );
 }
 
 void Mountain::Renderer::DebugString(DebugStringData data)
 {
-    m_DebugStrings.Insert(std::move(data), 0);
+    m_DebugStrings.Insert(0, std::move(data));
 }
 
 Mountain::OpenGlVersion& Mountain::Renderer::GetOpenGlVersion() { return m_GlVersion; }
@@ -180,7 +180,7 @@ bool_t Mountain::Renderer::Initialize(const std::string& windowTitle, const Vect
 
     // Setup GLAD: load all OpenGL function pointers
     if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress)))  // NOLINT(clang-diagnostic-cast-function-type-strict)
-        throw std::runtime_error("Failed to initialize GLAD");
+        THROW(InvalidOperationException{"Failed to initialize GLAD"});
 
     glEnable(GL_DEBUG_OUTPUT);
     glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
@@ -208,7 +208,7 @@ bool_t Mountain::Renderer::Initialize(const std::string& windowTitle, const Vect
     if (NoBinaryResources)
     {
         if (BuiltinShadersPath.empty() || BuiltinAssetsPath.empty())
-            throw std::runtime_error("NoBinaryResources is true but at least one of BuiltinShadersPath and BuiltinAssetsPath hasn't been specified");
+            THROW(InvalidGlobalValueException{"NoBinaryResources is true but at least one of BuiltinShadersPath and BuiltinAssetsPath hasn't been specified"});
 
         FileManager::LoadDirectory(BuiltinShadersPath);
         FileManager::LoadDirectory(BuiltinAssetsPath);
@@ -263,7 +263,7 @@ void Mountain::Renderer::PostFrame()
     PopRenderTarget();
 
     if (!m_RenderTargets.empty())
-        throw std::logic_error{ "RenderTarget push/pop mismatch, e.g. a RenderTarget that was pushed hasn't been popped" };
+        THROW(InvalidOperationException{"RenderTarget push/pop mismatch, e.g. a RenderTarget that was pushed hasn't been popped"});
 
     Draw::RenderTarget(*m_RenderTarget);
 

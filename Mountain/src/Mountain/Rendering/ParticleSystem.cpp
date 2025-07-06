@@ -160,7 +160,7 @@ void ParticleSystem::RenderImGui()
     ImGui::Text("Bursts: %llu", emissionBursts.GetSize());
     ImGui::SameLine();
     if (ImGui::Button("-"))
-        emissionBursts.PopBack();
+        emissionBursts.RemoveLast();
     ImGui::SameLine();
     if (ImGui::Button("+"))
         emissionBursts.Emplace();
@@ -355,7 +355,7 @@ void ParticleSystem::SpawnNewParticles()
         overDistanceCount = static_cast<uint32_t>(Calc::Round(lastFrameDistance * emissionRateOverDistance));
     }
 
-    if (!emissionBursts.Empty() && !m_GuiParticleBurstTimeHeld)
+    if (!emissionBursts.IsEmpty() && !m_GuiParticleBurstTimeHeld)
     {
         emissionBursts.Sort(
             [](const ParticleSystemBurst& left, const ParticleSystemBurst& right) -> bool_t
@@ -367,13 +367,13 @@ void ParticleSystem::SpawnNewParticles()
         for (const ParticleSystemBurst& burst : emissionBursts)
         {
             if (burst.time > m_PlaybackTime)
-                break; // Because the list is now sorted by time, instead of continuing we can just break out of the loop
+                break; // Because the list is now sorted by time, instead of continuing, we can just break out of the loop
 
             if (burst.probability == 0.f)
                 continue;
 
             if (burst.cycles == 0 && burst.interval == 0.f)
-                throw std::logic_error{ "A ParticleSystemBurst cannot have both its cycles and interval at 0" };
+                THROW(InvalidOperationException{"A ParticleSystemBurst cannot have both its cycles and interval at 0"});
 
             const float_t cycles = burst.cycles == 0 ? std::numeric_limits<float_t>::infinity() : static_cast<float_t>(burst.cycles);
             const float_t latestCycleTime = burst.time + (cycles - 1.f) * burst.interval;

@@ -11,14 +11,13 @@ using namespace Mountain;
 
 Graphics::ShaderType Shader::FileExtensionToType(const std::string& extension)
 {
-    if (std::ranges::find(VertexFileExtensions, extension) != VertexFileExtensions.end())
+    if (Contains(VertexFileExtensions, extension))
         return Graphics::ShaderType::Vertex;
 
-    if (std::ranges::find(FragmentFileExtensions, extension) != FragmentFileExtensions.end())
+    if (Contains(FragmentFileExtensions, extension))
         return Graphics::ShaderType::Fragment;
 
-    Logger::LogError("Invalid file extension for shader : {}", extension);
-    throw std::invalid_argument("Invalid file extension for shader");
+    THROW(ArgumentException{"Invalid file extension for shader", "extension"});
 }
 
 bool_t Shader::SetSourceData(const Pointer<File>& shader)
@@ -106,7 +105,8 @@ void Shader::Load()
         }
     }
 
-    CheckLinkError();
+    if (CheckLinkError())
+        THROW(InvalidOperationException{"A Shader failed to link after compiling successfully"});
 
     m_Loaded = true;
 }
@@ -122,8 +122,8 @@ void Shader::Unload()
 
 void Shader::ResetSourceData()
 {
-    m_Files.fill(nullptr);
-    m_Code.fill({});
+    m_Files.Fill(nullptr);
+    m_Code.Fill({});
 }
 
 bool_t Shader::Reload(const bool_t reloadInBackend)
@@ -140,13 +140,13 @@ bool_t Shader::Reload(const bool_t reloadInBackend)
 
 bool_t Shader::Reload(const Pointer<File>& file, const bool_t reloadInBackend) { return Resource::Reload(file, reloadInBackend); }
 
-std::array<Pointer<File>, magic_enum::enum_count<Graphics::ShaderType>()>& Shader::GetFiles() { return m_Files; }
+Array<Pointer<File>, magic_enum::enum_count<Graphics::ShaderType>()>& Shader::GetFiles() { return m_Files; }
 
-const std::array<Pointer<File>, magic_enum::enum_count<Graphics::ShaderType>()>& Shader::GetFiles() const { return m_Files; }
+const Array<Pointer<File>, magic_enum::enum_count<Graphics::ShaderType>()>& Shader::GetFiles() const { return m_Files; }
 
-std::array<ShaderCode, magic_enum::enum_count<Graphics::ShaderType>()>& Shader::GetCode() { return m_Code; }
+Array<ShaderCode, magic_enum::enum_count<Graphics::ShaderType>()>& Shader::GetCode() { return m_Code; }
 
-const std::array<ShaderCode, magic_enum::enum_count<Graphics::ShaderType>()>& Shader::GetCode() const { return m_Code; }
+const Array<ShaderCode, magic_enum::enum_count<Graphics::ShaderType>()>& Shader::GetCode() const { return m_Code; }
 
 void Shader::Use() const { glUseProgram(m_Id); }
 

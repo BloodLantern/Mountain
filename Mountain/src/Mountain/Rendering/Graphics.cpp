@@ -1,9 +1,9 @@
 ﻿#include "Mountain/Rendering/Graphics.hpp"
 
-#include <stdexcept>
-
 #include <glad/glad.h>
 
+#include "Mountain/Exceptions/ArgumentException.hpp"
+#include "Mountain/Exceptions/ThrowHelper.hpp"
 #include "Mountain/Rendering/GpuBuffer.hpp"
 #include "Mountain/Rendering/GpuTexture.hpp"
 #include "Mountain/Rendering/GpuVertexArray.hpp"
@@ -185,7 +185,7 @@ Graphics::MagnificationFilter Graphics::FromOpenGl<Graphics::MagnificationFilter
         case GL_NEAREST: return MagnificationFilter::Nearest;
         case GL_LINEAR: return MagnificationFilter::Linear;
 
-        default: throw std::invalid_argument("Invalid magnification filter");
+        default: THROW(ArgumentOutOfRangeException{"Invalid magnification filter", "value"});
     }
 }
 
@@ -199,7 +199,7 @@ Graphics::Wrapping Graphics::FromOpenGl<Graphics::Wrapping>(const int32_t value)
         case GL_CLAMP_TO_EDGE: return Wrapping::ClampToEdge;
         case GL_CLAMP_TO_BORDER: return Wrapping::ClampToBorder;
 
-        default: throw std::invalid_argument("Invalid wrapping");
+        default: THROW(ArgumentOutOfRangeException{"Invalid wrapping", "value"});
     }
 }
 
@@ -211,7 +211,7 @@ Graphics::ShaderType Graphics::FromOpenGl<Graphics::ShaderType>(const int32_t va
         case GL_VERTEX_SHADER: return ShaderType::Vertex;
         case GL_FRAGMENT_SHADER: return ShaderType::Fragment;
 
-        default: throw std::invalid_argument("Invalid shader type");
+        default: THROW(ArgumentOutOfRangeException{"Invalid shader type", "value"});
     }
 }
 
@@ -283,7 +283,7 @@ Graphics::InternalFormat Graphics::FromOpenGl<Graphics::InternalFormat>(const in
         case GL_RGBA32I: return InternalFormat::RedGreenBlueAlpha32Int;
         case GL_RGBA32UI: return InternalFormat::RedGreenBlueAlpha32UnsignedInt;
 
-        default: throw std::invalid_argument("Invalid internal format");
+        default: THROW(ArgumentOutOfRangeException{"Invalid internal format", "value"});
     }
 }
 
@@ -299,7 +299,7 @@ Graphics::Format Graphics::FromOpenGl<Graphics::Format>(const int32_t value)
         case GL_RGBA: return Format::RedGreenBlueAlpha;
         case GL_BGRA: return Format::BlueGreenRedAlpha;
 
-        default: throw std::invalid_argument("Invalid format");
+        default: THROW(ArgumentOutOfRangeException{"Invalid format", "value"});
     }
 }
 
@@ -331,7 +331,7 @@ Graphics::DataType Graphics::FromOpenGl<Graphics::DataType>(const int32_t value)
         case GL_UNSIGNED_INT_10_10_10_2: return DataType::UnsignedInt_10_10_10_2;
         case GL_UNSIGNED_INT_2_10_10_10_REV: return DataType::UnsignedInt_2_10_10_10_Reverse;
 
-        default: throw std::invalid_argument("Invalid data type");
+        default: THROW(ArgumentOutOfRangeException{"Invalid data type", "value"});
     }
 }
 
@@ -583,7 +583,7 @@ Graphics::Constant Graphics::FromOpenGl<Graphics::Constant>(const int32_t value)
         case GL_VIEWPORT_SUBPIXEL_BITS: return Constant::ViewportSubpixelBits;
         case GL_MAX_ELEMENT_INDEX: return Constant::MaxElementIndex;
 
-        default: throw std::invalid_argument("Invalid constant");
+        default: THROW(ArgumentOutOfRangeException{"Invalid constant", "value"});
     }
 }
 
@@ -607,7 +607,7 @@ Graphics::BufferType Graphics::FromOpenGl<Graphics::BufferType>(const int32_t va
         case GL_TRANSFORM_FEEDBACK_BUFFER: return BufferType::TransformFeedbackBuffer;
         case GL_UNIFORM_BUFFER: return BufferType::UniformBuffer;
 
-        default: throw std::invalid_argument("Invalid buffer type");
+        default: THROW(ArgumentOutOfRangeException{"Invalid buffer type", "value"});
     }
 }
 
@@ -626,7 +626,7 @@ Graphics::BufferUsage Graphics::FromOpenGl<Graphics::BufferUsage>(const int32_t 
         case GL_DYNAMIC_READ: return BufferUsage::DynamicRead;
         case GL_DYNAMIC_COPY: return BufferUsage::DynamicCopy;
 
-        default: throw std::invalid_argument("Invalid buffer usage");
+        default: THROW(ArgumentOutOfRangeException{"Invalid buffer usage", "value"});
     }
 }
 
@@ -648,7 +648,7 @@ Graphics::DrawMode Graphics::FromOpenGl<Graphics::DrawMode>(const int32_t value)
         case GL_TRIANGLES_ADJACENCY: return DrawMode::TrianglesAdjacency;
         case GL_PATCHES: return DrawMode::Patches;
 
-        default: throw std::invalid_argument("Invalid draw mode");
+        default: THROW(ArgumentOutOfRangeException{"Invalid draw mode", "value"});
     }
 }
 
@@ -672,7 +672,7 @@ Graphics::BlendFunction Graphics::FromOpenGl<Graphics::BlendFunction>(const int3
         case GL_CONSTANT_ALPHA: return BlendFunction::ConstantAlpha;
         case GL_ONE_MINUS_CONSTANT_ALPHA: return BlendFunction::OneMinusConstantAlpha;
 
-        default: throw std::invalid_argument("Invalid blend function");
+        default: THROW(ArgumentOutOfRangeException{"Invalid blend function", "value"});
     }
 }
 
@@ -685,7 +685,7 @@ Graphics::FramebufferType Graphics::FromOpenGl<Graphics::FramebufferType>(const 
         case GL_READ_FRAMEBUFFER: return FramebufferType::ReadFramebuffer;
         case GL_FRAMEBUFFER: return FramebufferType::Framebuffer;
 
-        default: throw std::invalid_argument("Invalid blend function");
+        default: THROW(ArgumentOutOfRangeException{"Invalid blend function", "value"});
     }
 }
 
@@ -697,7 +697,7 @@ int32_t Graphics::ToOpenGl(const MagnificationFilter value)
         case MagnificationFilter::Linear: return GL_LINEAR;
     }
 
-    throw std::invalid_argument("Invalid magnification filter");
+    THROW(ArgumentOutOfRangeException{"Invalid magnification filter", "value"});
 }
 
 int32_t Graphics::ToOpenGl(const Wrapping value)
@@ -710,7 +710,7 @@ int32_t Graphics::ToOpenGl(const Wrapping value)
         case Wrapping::ClampToBorder: return GL_CLAMP_TO_BORDER;
     }
 
-    throw std::invalid_argument("Invalid wrapping");
+    THROW(ArgumentOutOfRangeException{"Invalid wrapping", "value"});
 }
 
 int32_t Graphics::ToOpenGl(const ShaderType value)
@@ -721,7 +721,7 @@ int32_t Graphics::ToOpenGl(const ShaderType value)
         case ShaderType::Fragment: return GL_FRAGMENT_SHADER;
     }
 
-    throw std::invalid_argument("Invalid shader type");
+    THROW(ArgumentOutOfRangeException{"Invalid shader type", "value"});
 }
 
 int32_t Graphics::ToOpenGl(const InternalFormat value)
@@ -792,7 +792,7 @@ int32_t Graphics::ToOpenGl(const InternalFormat value)
         case InternalFormat::RedGreenBlueAlpha32UnsignedInt: return GL_RGBA32UI;
     }
 
-    throw std::invalid_argument("Invalid internal format");
+    THROW(ArgumentOutOfRangeException{"Invalid internal format", "value"});
 }
 
 int32_t Graphics::ToOpenGl(const Format value)
@@ -807,7 +807,7 @@ int32_t Graphics::ToOpenGl(const Format value)
         case Format::BlueGreenRedAlpha: return GL_BGRA;
     }
 
-    throw std::invalid_argument("Invalid format");
+    THROW(ArgumentOutOfRangeException{"Invalid format", "value"});
 }
 
 int32_t Graphics::ToOpenGl(const DataType value)
@@ -838,7 +838,7 @@ int32_t Graphics::ToOpenGl(const DataType value)
         case DataType::UnsignedInt_2_10_10_10_Reverse: return GL_UNSIGNED_INT_2_10_10_10_REV;
     }
 
-    throw std::invalid_argument("Invalid data type");
+    THROW(ArgumentOutOfRangeException{"Invalid data type", "value"});
 }
 
 int32_t Graphics::ToOpenGl(const Constant value)
@@ -1089,7 +1089,7 @@ int32_t Graphics::ToOpenGl(const Constant value)
         case Constant::MaxElementIndex: return GL_MAX_ELEMENT_INDEX;
     }
 
-    throw std::invalid_argument("Invalid constant");
+    THROW(ArgumentOutOfRangeException{"Invalid constant", "value"});
 }
 
 int32_t Graphics::ToOpenGl(const BufferType value)
@@ -1112,7 +1112,7 @@ int32_t Graphics::ToOpenGl(const BufferType value)
         case BufferType::UniformBuffer: return GL_UNIFORM_BUFFER;
     }
 
-    throw std::invalid_argument("Invalid buffer type");
+    THROW(ArgumentOutOfRangeException{"Invalid buffer type", "value"});
 }
 
 int32_t Graphics::ToOpenGl(const BufferUsage value)
@@ -1130,7 +1130,7 @@ int32_t Graphics::ToOpenGl(const BufferUsage value)
         case BufferUsage::DynamicCopy: return GL_DYNAMIC_COPY;
     }
 
-    throw std::invalid_argument("Invalid buffer usage");
+    THROW(ArgumentOutOfRangeException{"Invalid buffer usage", "value"});
 }
 
 int32_t Graphics::ToOpenGl(const DrawMode value)
@@ -1151,7 +1151,7 @@ int32_t Graphics::ToOpenGl(const DrawMode value)
         case DrawMode::Patches: return GL_PATCHES;
     }
 
-    throw std::invalid_argument("Invalid draw mode");
+    THROW(ArgumentOutOfRangeException{"Invalid draw mode", "value"});
 }
 
 int32_t Graphics::ToOpenGl(const BlendFunction value)
@@ -1174,7 +1174,7 @@ int32_t Graphics::ToOpenGl(const BlendFunction value)
         case BlendFunction::OneMinusConstantAlpha: return GL_ONE_MINUS_CONSTANT_ALPHA;
     }
 
-    throw std::invalid_argument("Invalid blend function");
+    THROW(ArgumentOutOfRangeException{"Invalid blend function", "value"});
 }
 
 int32_t Graphics::ToOpenGl(const FramebufferType value)
@@ -1186,5 +1186,5 @@ int32_t Graphics::ToOpenGl(const FramebufferType value)
         case FramebufferType::Framebuffer: return GL_FRAMEBUFFER;
     }
 
-    throw std::invalid_argument("Invalid blend function");
+    THROW(ArgumentOutOfRangeException{"Invalid blend function", "value"});
 }

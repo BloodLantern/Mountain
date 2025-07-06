@@ -23,7 +23,15 @@
     <DisplayString>{{Position = {position}, Size = {size}}}</DisplayString>
   </Type>
 
-  <!--File-->
+  <!--Containers-->
+  <Type Name="Mountain::List&lt;*&gt;">
+    <DisplayString>{{Size = {GetSize()}}}</DisplayString>
+    <Expand>
+      <ExpandedItem>m_Vector</ExpandedItem>
+    </Expand>
+  </Type>
+
+  <!--FileSystem-->
   <Type Name="Mountain::Entry">
     <DisplayString>{{Path = {m_Path}}}</DisplayString>
   </Type>
@@ -38,7 +46,7 @@
     <DisplayString>{{Name = {m_Name}}}</DisplayString>
   </Type>
 
-  <!--Scene-->
+  <!--Ecs-->
   <Type Name="Mountain::Component">
     <DisplayString>{{Entity = {m_Entity}}}</DisplayString>
   </Type>
@@ -52,12 +60,6 @@
   </Type>
   <Type Name="Mountain::FileSystemWatcher">
     <DisplayString>{{Path = {m_Path}}}</DisplayString>
-  </Type>
-  <Type Name="Mountain::List&lt;*&gt;">
-    <DisplayString>{{Size = {m_Vector.size()}}}</DisplayString>
-    <Expand>
-      <ExpandedItem>m_Vector</ExpandedItem>
-    </Expand>
   </Type>
   <Type Name="Mountain::Pointer&lt;*&gt;">
     <DisplayString Condition="m_ReferenceCounter == nullptr">{{Null}}</DisplayString>
@@ -76,7 +78,7 @@
     </Expand>
   </Type>
   <Type Name="Mountain::Stopwatch">
-    <DisplayString>{{{GetElapsed()} (IsRunning = {m_IsRunning})}}</DisplayString>
+    <DisplayString>{{{GetElapsed().ToString()} (IsRunning = {m_IsRunning})}}</DisplayString>
     <Expand>
       <ExpandedItem>GetElapsed()</ExpandedItem>
     </Expand>

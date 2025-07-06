@@ -191,8 +191,8 @@ void ImGuiUtils::DirectionVector(const std::string_view label, Vector2* const va
 
 bool ImGuiUtils::ComboEaser(const std::string& label, Easing::Easer* v, const ImGuiComboFlags flags)
 {
-    static constexpr std::array Functions{
-        std::make_pair("Linear", Utils::Identity<float_t>),
+    static constexpr Array Functions{
+        std::make_pair("Linear", Mountain::Identity<float_t>),
         std::make_pair("SineIn", Easing::SineIn),
         std::make_pair("SineOut", Easing::SineOut),
         std::make_pair("SineInOut", Easing::SineInOut),
@@ -362,7 +362,7 @@ namespace
         }
     }
 
-    template <Concepts::ResourceT T>
+    template <Concepts::Resource T>
     void DisplayResourceType(
         const std::string_view typeName,
         const std::string_view resourceNameFilter,
@@ -370,7 +370,7 @@ namespace
     )
     {
         const List<Pointer<T>> resources = ResourceManager::FindAll<T>([&] (Pointer<T> r) -> bool_t { return Utils::StringContainsIgnoreCase(r->GetName(), resourceNameFilter); });
-        const List<const Pointer<T>*> packagedResources = resources.FindAll([] (const Pointer<T>* r) -> bool_t { return ResourceManager::IsBinary((*r)->GetName()); });
+        const List<Pointer<T>> packagedResources = FindAll(resources, [] (const Pointer<T>& r) -> bool_t { return ResourceManager::IsBinary(r->GetName()); });
         if (ImGui::TreeNode(std::format("{} ({}, {} packaged in binary)", typeName, resources.GetSize(), packagedResources.GetSize()).c_str()))
         {
             for (Pointer resource : resources)
@@ -399,10 +399,10 @@ namespace
     )
     {
         const List<Pointer<Shader>> shaders = ResourceManager::FindAll<Shader>([&] (Pointer<Shader> r) -> bool_t { return Utils::StringContainsIgnoreCase(r->GetName(), resourceNameFilter); });
-        const List<const Pointer<Shader>*> packagedShaders = shaders.FindAll(
-            [](const Pointer<Shader>* r) -> bool_t
+        const List<Pointer<Shader>> packagedShaders = FindAll(shaders,
+            [](const Pointer<Shader>& r) -> bool_t
             {
-                return ResourceManager::IsBinary((*r)->GetFiles()[0]->GetPathString());
+                return ResourceManager::IsBinary(First(r->GetFiles())->GetPathString());
             }
         );
 
@@ -413,19 +413,19 @@ namespace
                 if (!ImGui::TreeNode(shader->GetName().c_str()))
                     continue;
 
-                for (size_t i = 0; i < shader->GetFiles().size(); i++)
+                for (size_t i = 0; i < shader->GetFiles().GetSize(); i++)
                 {
                     Pointer<File>& shaderFile = shader->GetFiles()[i];
 
-                    if (shaderFile != nullptr)
-                    {
-                        if (ImGui::TreeNode(std::string{magic_enum::enum_name(static_cast<Graphics::ShaderType>(i))}.c_str()))
-                        {
-                            DisplayReloadOptions(*shader, *shaderFile);
+                    if (shaderFile == nullptr)
+                        continue;
 
-                            ImGui::TreePop();
-                        }
-                    }
+                    if (!ImGui::TreeNode(std::string{magic_enum::enum_name(static_cast<Graphics::ShaderType>(i))}.c_str()))
+                        continue;
+
+                    DisplayReloadOptions(*shader, *shaderFile);
+
+                    ImGui::TreePop();
                 }
 
                 additionalAction(shader);
@@ -450,7 +450,7 @@ void ImGuiUtils::ShowResourceManager()
     DisplayResourceType<AudioTrack>(
         "AudioTrack",
         filter,
-        [](const auto& audioTrack)
+        [](const Pointer<AudioTrack>& audioTrack)
         {
             const std::string_view format = magic_enum::enum_name(audioTrack->GetFormat());
             ImGui::Text("Format: %.*s", static_cast<int32_t>(format.length()), format.data());
@@ -466,7 +466,7 @@ void ImGuiUtils::ShowResourceManager()
     DisplayResourceType<Texture>(
         "Texture",
         filter,
-        [](const auto& texture)
+        [](const Pointer<Texture>& texture)
         {
             const Vector2i size = texture->GetSize();
             ImGui::Text("Size: %dx%d", size.x, size.y);
@@ -562,6 +562,7 @@ void ImGuiUtils::ShowPerformanceMonitoring()
         frameDurationLeft = Time::GetTargetDeltaTime() == 0.f ? 0.f : (Time::GetTargetDeltaTime() - frameDuration);
         screenSize = Screen::GetSize();
 
+        // TODO - Instead get the memory amount from mimalloc
         PROCESS_MEMORY_COUNTERS_EX2 memoryCounter;
         GetProcessMemoryInfo(GetCurrentProcess(), reinterpret_cast<PPROCESS_MEMORY_COUNTERS>(&memoryCounter), sizeof(memoryCounter));
         Windows::CheckError();

@@ -21,7 +21,7 @@ const GamepadInput& Input::GetGamepad(uint32_t gamepadId)
     if (gamepadId > GamepadMax)
     {
         Logger::LogError("Invalid gamepad ID {}", gamepadId);
-        throw std::invalid_argument("Invalid gamepad ID");
+        THROW(ArgumentException{"Invalid gamepad ID", "gamepadId"});
     }
 
     return m_Gamepads.at(gamepadId);

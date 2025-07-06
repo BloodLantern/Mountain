@@ -16,7 +16,7 @@ namespace Mountain
     {
     public:
         /// @brief Allowed extensions for font files
-        MOUNTAIN_API static constexpr std::array<const char_t*, 1> FileExtensions
+        MOUNTAIN_API static constexpr Array<const char_t*, 1> FileExtensions
         {
             ".ttf"
         };

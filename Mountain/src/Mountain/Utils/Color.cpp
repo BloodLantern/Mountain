@@ -14,6 +14,16 @@ uint32_t Color::GetPackedValue() const
 
 Color::operator ImVec4() const { return ImVec4{ r, g, b, a }; }
 
+std::string Color::ToString() const
+{
+    return std::format("{} ; {} ; {} ; {}", r, g, b, a);
+}
+
+std::string ColorHsva::ToString() const
+{
+    return std::format("{} ; {} ; {} ; {}", h, s, v, a);
+}
+
 Color Calc::Lerp(const Color& value, const Color& target, const float_t time)
 {
     return Color{Lerp(static_cast<Vector4>(value), static_cast<Vector4>(target), time)};
