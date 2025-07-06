@@ -5,255 +5,255 @@
       <Configuration>Debug</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Generate Assembly|x64">
-      <Configuration>Generate Assembly</Configuration>
-      <Platform>x64</Platform>
-    </ProjectConfiguration>
     <ProjectConfiguration Include="Release|x64">
       <Configuration>Release</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="externals\include\AL\al.h" />
-    <ClInclude Include="externals\include\AL\alc.h" />
-    <ClInclude Include="externals\include\AL\alext.h" />
-    <ClInclude Include="externals\include\AL\efx-creative.h" />
-    <ClInclude Include="externals\include\AL\efx-presets.h" />
-    <ClInclude Include="externals\include\AL\efx.h" />
-    <ClInclude Include="externals\include\freetype\config\ftconfig.h" />
-    <ClInclude Include="externals\include\freetype\config\ftheader.h" />
-    <ClInclude Include="externals\include\freetype\config\ftmodule.h" />
-    <ClInclude Include="externals\include\freetype\config\ftoption.h" />
-    <ClInclude Include="externals\include\freetype\config\ftstdlib.h" />
-    <ClInclude Include="externals\include\freetype\config\integer-types.h" />
-    <ClInclude Include="externals\include\freetype\config\mac-support.h" />
-    <ClInclude Include="externals\include\freetype\config\public-macros.h" />
-    <ClInclude Include="externals\include\freetype\freetype.h" />
-    <ClInclude Include="externals\include\freetype\ftadvanc.h" />
-    <ClInclude Include="externals\include\freetype\ftbbox.h" />
-    <ClInclude Include="externals\include\freetype\ftbdf.h" />
-    <ClInclude Include="externals\include\freetype\ftbitmap.h" />
-    <ClInclude Include="externals\include\freetype\ftbzip2.h" />
-    <ClInclude Include="externals\include\freetype\ftcache.h" />
-    <ClInclude Include="externals\include\freetype\ftchapters.h" />
-    <ClInclude Include="externals\include\freetype\ftcid.h" />
-    <ClInclude Include="externals\include\freetype\ftcolor.h" />
-    <ClInclude Include="externals\include\freetype\ftdriver.h" />
-    <ClInclude Include="externals\include\freetype\fterrdef.h" />
-    <ClInclude Include="externals\include\freetype\fterrors.h" />
-    <ClInclude Include="externals\include\freetype\ftfntfmt.h" />
-    <ClInclude Include="externals\include\freetype\ftgasp.h" />
-    <ClInclude Include="externals\include\freetype\ftglyph.h" />
-    <ClInclude Include="externals\include\freetype\ftgxval.h" />
-    <ClInclude Include="externals\include\freetype\ftgzip.h" />
-    <ClInclude Include="externals\include\freetype\ftimage.h" />
-    <ClInclude Include="externals\include\freetype\ftincrem.h" />
-    <ClInclude Include="externals\include\freetype\ftlcdfil.h" />
-    <ClInclude Include="externals\include\freetype\ftlist.h" />
-    <ClInclude Include="externals\include\freetype\ftlogging.h" />
-    <ClInclude Include="externals\include\freetype\ftlzw.h" />
-    <ClInclude Include="externals\include\freetype\ftmac.h" />
-    <ClInclude Include="externals\include\freetype\ftmm.h" />
-    <ClInclude Include="externals\include\freetype\ftmodapi.h" />
-    <ClInclude Include="externals\include\freetype\ftmoderr.h" />
-    <ClInclude Include="externals\include\freetype\ftotval.h" />
-    <ClInclude Include="externals\include\freetype\ftoutln.h" />
-    <ClInclude Include="externals\include\freetype\ftparams.h" />
-    <ClInclude Include="externals\include\freetype\ftpfr.h" />
-    <ClInclude Include="externals\include\freetype\ftrender.h" />
-    <ClInclude Include="externals\include\freetype\ftsizes.h" />
-    <ClInclude Include="externals\include\freetype\ftsnames.h" />
-    <ClInclude Include="externals\include\freetype\ftstroke.h" />
-    <ClInclude Include="externals\include\freetype\ftsynth.h" />
-    <ClInclude Include="externals\include\freetype\ftsystem.h" />
-    <ClInclude Include="externals\include\freetype\fttrigon.h" />
-    <ClInclude Include="externals\include\freetype\fttypes.h" />
-    <ClInclude Include="externals\include\freetype\ftwinfnt.h" />
-    <ClInclude Include="externals\include\freetype\otsvg.h" />
-    <ClInclude Include="externals\include\freetype\t1tables.h" />
-    <ClInclude Include="externals\include\freetype\ttnameid.h" />
-    <ClInclude Include="externals\include\freetype\tttables.h" />
-    <ClInclude Include="externals\include\freetype\tttags.h" />
-    <ClInclude Include="externals\include\ft2build.h" />
-    <ClInclude Include="externals\include\glad\glad.h" />
-    <ClInclude Include="externals\include\GLFW\glfw3.h" />
-    <ClInclude Include="externals\include\GLFW\glfw3native.h" />
-    <ClInclude Include="externals\include\ImGui\imconfig.h" />
-    <ClInclude Include="externals\include\ImGui\imgui.h" />
-    <ClInclude Include="externals\include\ImGui\imgui_impl_glfw.h" />
-    <ClInclude Include="externals\include\ImGui\imgui_impl_opengl3.h" />
-    <ClInclude Include="externals\include\ImGui\imgui_impl_opengl3_loader.h" />
-    <ClInclude Include="externals\include\ImGui\imgui_internal.h" />
-    <ClInclude Include="externals\include\ImGui\imgui_stdlib.h" />
-    <ClInclude Include="externals\include\ImGui\imstb_rectpack.h" />
-    <ClInclude Include="externals\include\ImGui\imstb_textedit.h" />
-    <ClInclude Include="externals\include\ImGui\imstb_truetype.h" />
-    <ClInclude Include="externals\include\KHR\khrplatform.h" />
-    <ClInclude Include="externals\include\magic_enum\magic_enum.hpp" />
-    <ClInclude Include="externals\include\magic_enum\magic_enum_all.hpp" />
-    <ClInclude Include="externals\include\magic_enum\magic_enum_containers.hpp" />
-    <ClInclude Include="externals\include\magic_enum\magic_enum_flags.hpp" />
-    <ClInclude Include="externals\include\magic_enum\magic_enum_format.hpp" />
-    <ClInclude Include="externals\include\magic_enum\magic_enum_fuse.hpp" />
-    <ClInclude Include="externals\include\magic_enum\magic_enum_iostream.hpp" />
-    <ClInclude Include="externals\include\magic_enum\magic_enum_switch.hpp" />
-    <ClInclude Include="externals\include\magic_enum\magic_enum_utility.hpp" />
-    <ClInclude Include="externals\include\Maths\calc.hpp" />
-    <ClInclude Include="externals\include\Maths\core.hpp" />
-    <ClInclude Include="externals\include\Maths\definitions.hpp" />
-    <ClInclude Include="externals\include\Maths\easing.hpp" />
-    <ClInclude Include="externals\include\Maths\math.hpp" />
-    <ClInclude Include="externals\include\Maths\matrix.hpp" />
-    <ClInclude Include="externals\include\Maths\matrix2.hpp" />
-    <ClInclude Include="externals\include\Maths\matrix3.hpp" />
-    <ClInclude Include="externals\include\Maths\quaternion.hpp" />
-    <ClInclude Include="externals\include\Maths\vector2.hpp" />
-    <ClInclude Include="externals\include\Maths\vector2i.hpp" />
-    <ClInclude Include="externals\include\Maths\vector3.hpp" />
-    <ClInclude Include="externals\include\Maths\vector4.hpp" />
-    <ClInclude Include="externals\include\minimp3.h" />
-    <ClInclude Include="externals\include\minimp3_ex.h" />
-    <ClInclude Include="externals\include\RapidXML\rapidxml.hpp" />
-    <ClInclude Include="externals\include\RapidXML\RapidXMLSTD.hpp" />
-    <ClInclude Include="externals\include\RapidXML\rapidxml_iterators.hpp" />
-    <ClInclude Include="externals\include\RapidXML\rapidxml_print.hpp" />
-    <ClInclude Include="externals\include\RapidXML\rapidxml_utils.hpp" />
-    <ClInclude Include="externals\include\stb_image.h" />
-    <ClInclude Include="externals\include\stb_vorbis.h" />
-    <ClInclude Include="include\Mountain\audio\audio.hpp" />
-    <ClInclude Include="include\Mountain\audio\audio_buffer.hpp" />
-    <ClInclude Include="include\Mountain\audio\audio_context.hpp" />
-    <ClInclude Include="include\Mountain\audio\audio_device.hpp" />
-    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_10097982125490285052.hpp" />
-    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_10235447509522868634.hpp" />
-    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_10365144974679509061.hpp" />
-    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_10560615441756428011.hpp" />
-    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_1074902542281558043.hpp" />
-    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_11501491796742299978.hpp" />
-    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_12877864912023894619.hpp" />
-    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_13041558764341956120.hpp" />
-    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_13130013495108453755.hpp" />
-    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_13201333105802786858.hpp" />
-    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_14121575893409695288.hpp" />
-    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_14453285260017552316.hpp" />
-    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_14872559788622701886.hpp" />
-    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_15348241983609311137.hpp" />
-    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_16164542811870570708.hpp" />
-    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_16982112266611754363.hpp" />
-    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_17139022876316836076.hpp" />
-    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_18057388384952284287.hpp" />
-    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_2150870677491156252.hpp" />
-    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_2544377574110585068.hpp" />
-    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_2626201325449173172.hpp" />
-    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_2796969501947431915.hpp" />
-    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_2814762831895809774.hpp" />
-    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_3518102179013777611.hpp" />
-    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_3973114521874297071.hpp" />
-    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_5083911923489940364.hpp" />
-    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_5290845577426867131.hpp" />
-    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_6050031692327083212.hpp" />
-    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_7274049609931843182.hpp" />
-    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_7344767717205508100.hpp" />
-    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_7628522083754332555.hpp" />
-    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_7715564942897090726.hpp" />
-    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_8397852258098769587.hpp" />
-    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_8414638717441225796.hpp" />
-    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_8915932256763674668.hpp" />
-    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_9273770047666001763.hpp" />
-    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_9467723258334487283.hpp" />
-    <ClInclude Include="include\Mountain\binary_resources\embedded_resources\resource_9914516617300152348.hpp" />
-    <ClInclude Include="include\Mountain\binary_resources\resource.hpp" />
-    <ClInclude Include="include\Mountain\binary_resources\resource_holder.hpp" />
-    <ClInclude Include="include\Mountain\binary_resources\span.hpp" />
-    <ClInclude Include="include\Mountain\collision\circle.hpp" />
-    <ClInclude Include="include\Mountain\collision\collision.hpp" />
-    <ClInclude Include="include\Mountain\collision\collider.hpp" />
-    <ClInclude Include="include\Mountain\collision\collider_list.hpp" />
-    <ClInclude Include="include\Mountain\collision\grid.hpp" />
-    <ClInclude Include="include\Mountain\collision\hitbox.hpp" />
-    <ClInclude Include="include\Mountain\core.hpp" />
-    <ClInclude Include="include\Mountain\file\directory.hpp" />
-    <ClInclude Include="include\Mountain\file\entry.hpp" />
-    <ClInclude Include="include\Mountain\file\file.hpp" />
-    <ClInclude Include="include\Mountain\file\file_manager.hpp" />
-    <ClInclude Include="include\Mountain\game.hpp" />
-    <ClInclude Include="include\Mountain\globals.hpp" />
-    <ClInclude Include="include\Mountain\input\gamepad_input.hpp" />
-    <ClInclude Include="include\Mountain\input\input.hpp" />
-    <ClInclude Include="include\Mountain\input\keyboard_input.hpp" />
-    <ClInclude Include="include\Mountain\input\mouse_input.hpp" />
-    <ClInclude Include="include\Mountain\input\time.hpp" />
-    <ClInclude Include="include\Mountain\rendering\draw.hpp" />
-    <ClInclude Include="include\Mountain\rendering\effect.hpp" />
-    <ClInclude Include="include\Mountain\rendering\gpu_buffer.hpp" />
-    <ClInclude Include="include\Mountain\rendering\gpu_texture.hpp" />
-    <ClInclude Include="include\Mountain\rendering\gpu_vertex_array.hpp" />
-    <ClInclude Include="include\Mountain\rendering\graphics.hpp" />
-    <ClInclude Include="include\Mountain\rendering\light_source.hpp" />
-    <ClInclude Include="include\Mountain\rendering\particle_system.hpp" />
-    <ClInclude Include="include\Mountain\rendering\particle_system_modules.hpp" />
-    <ClInclude Include="include\Mountain\rendering\renderer.hpp" />
-    <ClInclude Include="include\Mountain\rendering\render_target.hpp" />
-    <ClInclude Include="include\Mountain\resource\audio_track.hpp" />
-    <ClInclude Include="include\Mountain\resource\compute_shader.hpp" />
-    <ClInclude Include="include\Mountain\resource\font.hpp" />
-    <ClInclude Include="include\Mountain\resource\resource.hpp" />
-    <ClInclude Include="include\Mountain\resource\resource_manager.hpp" />
-    <ClInclude Include="include\Mountain\resource\shader.hpp" />
-    <ClInclude Include="include\Mountain\resource\shader_base.hpp" />
-    <ClInclude Include="include\Mountain\resource\texture.hpp" />
-    <ClInclude Include="include\Mountain\scene\component\audio_listener.hpp" />
-    <ClInclude Include="include\Mountain\scene\component\audio_source.hpp" />
-    <ClInclude Include="include\Mountain\scene\component\component.hpp" />
-    <ClInclude Include="include\Mountain\scene\component\sprite.hpp" />
-    <ClInclude Include="include\Mountain\scene\component\state_machine.hpp" />
-    <ClInclude Include="include\Mountain\scene\entity.hpp" />
-    <ClInclude Include="include\Mountain\screen.hpp" />
-    <ClInclude Include="include\Mountain\utils\color.hpp" />
-    <ClInclude Include="include\Mountain\utils\concepts.hpp" />
-    <ClInclude Include="include\Mountain\utils\coroutine.hpp" />
-    <ClInclude Include="include\Mountain\utils\event.hpp" />
-    <ClInclude Include="include\Mountain\utils\file_system_watcher.hpp" />
-    <ClInclude Include="include\Mountain\utils\formatter.hpp" />
-    <ClInclude Include="include\Mountain\utils\guid.hpp" />
-    <ClInclude Include="include\Mountain\utils\imgui_utils.hpp" />
-    <ClInclude Include="include\Mountain\utils\list.hpp" />
-    <ClInclude Include="include\Mountain\utils\logger.hpp" />
-    <ClInclude Include="include\Mountain\utils\message_box.hpp" />
-    <ClInclude Include="include\Mountain\utils\meta_programming.hpp" />
-    <ClInclude Include="include\Mountain\utils\pointer.hpp" />
-    <ClInclude Include="include\Mountain\utils\random.hpp" />
-    <ClInclude Include="include\Mountain\utils\rectangle.hpp" />
-    <ClInclude Include="include\Mountain\utils\reference_counter.hpp" />
-    <ClInclude Include="include\Mountain\utils\run_length_encoding.hpp" />
-    <ClInclude Include="include\Mountain\utils\stopwatch.hpp" />
-    <ClInclude Include="include\Mountain\utils\time_span.hpp" />
-    <ClInclude Include="include\Mountain\utils\ts_queue.hpp" />
-    <ClInclude Include="include\Mountain\utils\utils.hpp" />
-    <ClInclude Include="include\Mountain\utils\windows.hpp" />
-    <ClInclude Include="include\Mountain\window.hpp" />
-    <ClInclude Include="inline\Mountain\collision\hitbox.inl" />
-    <ClInclude Include="inline\Mountain\file\file.inl" />
-    <ClInclude Include="inline\Mountain\file\file_manager.inl" />
-    <ClInclude Include="inline\Mountain\resource\audio_track.inl" />
-    <ClInclude Include="inline\Mountain\resource\resource_manager.inl" />
-    <ClInclude Include="inline\Mountain\resource\texture.inl" />
-    <ClInclude Include="inline\Mountain\scene\component\state_machine.inl" />
-    <ClInclude Include="inline\Mountain\scene\entity.inl" />
-    <ClInclude Include="inline\Mountain\utils\color.inl" />
-    <ClInclude Include="inline\Mountain\utils\event.inl" />
-    <ClInclude Include="inline\Mountain\utils\imgui_utils.inl" />
-    <ClInclude Include="inline\Mountain\utils\list.inl" />
-    <ClInclude Include="inline\Mountain\utils\logger.inl" />
-    <ClInclude Include="inline\Mountain\utils\pointer.inl" />
-    <ClInclude Include="inline\Mountain\utils\rectangle.inl" />
-    <ClInclude Include="inline\Mountain\utils\reference_counter.inl" />
-    <ClInclude Include="inline\Mountain\utils\time_span.inl" />
-    <ClInclude Include="inline\Mountain\utils\ts_queue.inl" />
-    <ClInclude Include="inline\Mountain\utils\utils.inl" />
+    <ClInclude Include="..\MathToolbox\src\Math\calc.hpp" />
+    <ClInclude Include="..\MathToolbox\src\Math\core.hpp" />
+    <ClInclude Include="..\MathToolbox\src\Math\easing.hpp" />
+    <ClInclude Include="..\MathToolbox\src\Math\math.hpp" />
+    <ClInclude Include="..\MathToolbox\src\Math\matrix.hpp" />
+    <ClInclude Include="..\MathToolbox\src\Math\matrix2.hpp" />
+    <ClInclude Include="..\MathToolbox\src\Math\matrix3.hpp" />
+    <ClInclude Include="..\MathToolbox\src\Math\quaternion.hpp" />
+    <ClInclude Include="..\MathToolbox\src\Math\vector2.hpp" />
+    <ClInclude Include="..\MathToolbox\src\Math\vector2i.hpp" />
+    <ClInclude Include="..\MathToolbox\src\Math\vector3.hpp" />
+    <ClInclude Include="..\MathToolbox\src\Math\vector4.hpp" />
+    <ClInclude Include="externals\src\AL\al.h" />
+    <ClInclude Include="externals\src\AL\alc.h" />
+    <ClInclude Include="externals\src\AL\alext.h" />
+    <ClInclude Include="externals\src\AL\efx-creative.h" />
+    <ClInclude Include="externals\src\AL\efx-presets.h" />
+    <ClInclude Include="externals\src\AL\efx.h" />
+    <ClInclude Include="externals\src\freetype\config\ftconfig.h" />
+    <ClInclude Include="externals\src\freetype\config\ftheader.h" />
+    <ClInclude Include="externals\src\freetype\config\ftmodule.h" />
+    <ClInclude Include="externals\src\freetype\config\ftoption.h" />
+    <ClInclude Include="externals\src\freetype\config\ftstdlib.h" />
+    <ClInclude Include="externals\src\freetype\config\integer-types.h" />
+    <ClInclude Include="externals\src\freetype\config\mac-support.h" />
+    <ClInclude Include="externals\src\freetype\config\public-macros.h" />
+    <ClInclude Include="externals\src\freetype\freetype.h" />
+    <ClInclude Include="externals\src\freetype\ftadvanc.h" />
+    <ClInclude Include="externals\src\freetype\ftbbox.h" />
+    <ClInclude Include="externals\src\freetype\ftbdf.h" />
+    <ClInclude Include="externals\src\freetype\ftbitmap.h" />
+    <ClInclude Include="externals\src\freetype\ftbzip2.h" />
+    <ClInclude Include="externals\src\freetype\ftcache.h" />
+    <ClInclude Include="externals\src\freetype\ftchapters.h" />
+    <ClInclude Include="externals\src\freetype\ftcid.h" />
+    <ClInclude Include="externals\src\freetype\ftcolor.h" />
+    <ClInclude Include="externals\src\freetype\ftdriver.h" />
+    <ClInclude Include="externals\src\freetype\fterrdef.h" />
+    <ClInclude Include="externals\src\freetype\fterrors.h" />
+    <ClInclude Include="externals\src\freetype\ftfntfmt.h" />
+    <ClInclude Include="externals\src\freetype\ftgasp.h" />
+    <ClInclude Include="externals\src\freetype\ftglyph.h" />
+    <ClInclude Include="externals\src\freetype\ftgxval.h" />
+    <ClInclude Include="externals\src\freetype\ftgzip.h" />
+    <ClInclude Include="externals\src\freetype\ftimage.h" />
+    <ClInclude Include="externals\src\freetype\ftincrem.h" />
+    <ClInclude Include="externals\src\freetype\ftlcdfil.h" />
+    <ClInclude Include="externals\src\freetype\ftlist.h" />
+    <ClInclude Include="externals\src\freetype\ftlogging.h" />
+    <ClInclude Include="externals\src\freetype\ftlzw.h" />
+    <ClInclude Include="externals\src\freetype\ftmac.h" />
+    <ClInclude Include="externals\src\freetype\ftmm.h" />
+    <ClInclude Include="externals\src\freetype\ftmodapi.h" />
+    <ClInclude Include="externals\src\freetype\ftmoderr.h" />
+    <ClInclude Include="externals\src\freetype\ftotval.h" />
+    <ClInclude Include="externals\src\freetype\ftoutln.h" />
+    <ClInclude Include="externals\src\freetype\ftparams.h" />
+    <ClInclude Include="externals\src\freetype\ftpfr.h" />
+    <ClInclude Include="externals\src\freetype\ftrender.h" />
+    <ClInclude Include="externals\src\freetype\ftsizes.h" />
+    <ClInclude Include="externals\src\freetype\ftsnames.h" />
+    <ClInclude Include="externals\src\freetype\ftstroke.h" />
+    <ClInclude Include="externals\src\freetype\ftsynth.h" />
+    <ClInclude Include="externals\src\freetype\ftsystem.h" />
+    <ClInclude Include="externals\src\freetype\fttrigon.h" />
+    <ClInclude Include="externals\src\freetype\fttypes.h" />
+    <ClInclude Include="externals\src\freetype\ftwinfnt.h" />
+    <ClInclude Include="externals\src\freetype\otsvg.h" />
+    <ClInclude Include="externals\src\freetype\t1tables.h" />
+    <ClInclude Include="externals\src\freetype\ttnameid.h" />
+    <ClInclude Include="externals\src\freetype\tttables.h" />
+    <ClInclude Include="externals\src\freetype\tttags.h" />
+    <ClInclude Include="externals\src\ft2build.h" />
+    <ClInclude Include="externals\src\glad\glad.h" />
+    <ClInclude Include="externals\src\GLFW\glfw3.h" />
+    <ClInclude Include="externals\src\GLFW\glfw3native.h" />
+    <ClInclude Include="externals\src\ImGui\imconfig.h" />
+    <ClInclude Include="externals\src\ImGui\imgui.h" />
+    <ClInclude Include="externals\src\ImGui\imgui_impl_glfw.h" />
+    <ClInclude Include="externals\src\ImGui\imgui_impl_opengl3.h" />
+    <ClInclude Include="externals\src\ImGui\imgui_impl_opengl3_loader.h" />
+    <ClInclude Include="externals\src\ImGui\imgui_internal.h" />
+    <ClInclude Include="externals\src\ImGui\imgui_stdlib.h" />
+    <ClInclude Include="externals\src\ImGui\imstb_rectpack.h" />
+    <ClInclude Include="externals\src\ImGui\imstb_textedit.h" />
+    <ClInclude Include="externals\src\ImGui\imstb_truetype.h" />
+    <ClInclude Include="externals\src\KHR\khrplatform.h" />
+    <ClInclude Include="externals\src\magic_enum\magic_enum.hpp" />
+    <ClInclude Include="externals\src\magic_enum\magic_enum_all.hpp" />
+    <ClInclude Include="externals\src\magic_enum\magic_enum_containers.hpp" />
+    <ClInclude Include="externals\src\magic_enum\magic_enum_flags.hpp" />
+    <ClInclude Include="externals\src\magic_enum\magic_enum_format.hpp" />
+    <ClInclude Include="externals\src\magic_enum\magic_enum_fuse.hpp" />
+    <ClInclude Include="externals\src\magic_enum\magic_enum_iostream.hpp" />
+    <ClInclude Include="externals\src\magic_enum\magic_enum_switch.hpp" />
+    <ClInclude Include="externals\src\magic_enum\magic_enum_utility.hpp" />
+    <ClInclude Include="externals\src\mimalloc-new-delete.h" />
+    <ClInclude Include="externals\src\mimalloc-override.h" />
+    <ClInclude Include="externals\src\mimalloc-stats.h" />
+    <ClInclude Include="externals\src\mimalloc.h" />
+    <ClInclude Include="externals\src\mimalloc\atomic.h" />
+    <ClInclude Include="externals\src\mimalloc\internal.h" />
+    <ClInclude Include="externals\src\mimalloc\prim.h" />
+    <ClInclude Include="externals\src\mimalloc\track.h" />
+    <ClInclude Include="externals\src\mimalloc\types.h" />
+    <ClInclude Include="externals\src\minimp3.h" />
+    <ClInclude Include="externals\src\minimp3_ex.h" />
+    <ClInclude Include="externals\src\RapidXML\rapidxml.hpp" />
+    <ClInclude Include="externals\src\RapidXML\RapidXMLSTD.hpp" />
+    <ClInclude Include="externals\src\RapidXML\rapidxml_iterators.hpp" />
+    <ClInclude Include="externals\src\RapidXML\rapidxml_print.hpp" />
+    <ClInclude Include="externals\src\RapidXML\rapidxml_utils.hpp" />
+    <ClInclude Include="externals\src\stb_image.h" />
+    <ClInclude Include="externals\src\stb_vorbis.h" />
+    <ClInclude Include="src\Mountain\Audio\Audio.hpp" />
+    <ClInclude Include="src\Mountain\Audio\AudioBuffer.hpp" />
+    <ClInclude Include="src\Mountain\Audio\AudioContext.hpp" />
+    <ClInclude Include="src\Mountain\Audio\AudioDevice.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_10604039599264331763.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_11431338934652808651.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_11774202807359543870.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_11952871429675989627.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_12442680368039291515.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_13070826838953012323.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_13177006652388307822.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_14338357782030755284.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_14381367057370009788.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_1453103019202383270.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_15258004472844539140.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_15961880810884371948.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_16311089013737800627.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_16451689749247673836.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_1659229443278887099.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_1682259173912325418.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_17163117651341958810.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_17404448839198764618.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_17880426697011385839.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_18011218881129316092.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_310597202658876699.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_3126981312599726777.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_4319606583867259020.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_5284316122615694636.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_5513601353699197311.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_6180361286818081308.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_6423258116736183732.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_6733528840531529029.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_6826460111274356971.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_7556603881106790027.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_7736256087137476443.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_908422867440665036.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_9508759643910089710.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_9550955058371070276.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_9582143994837232440.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\resource.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\resource_holder.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\span.hpp" />
+    <ClInclude Include="src\Mountain\Collision\Circle.hpp" />
+    <ClInclude Include="src\Mountain\Collision\Collider.hpp" />
+    <ClInclude Include="src\Mountain\Collision\ColliderList.hpp" />
+    <ClInclude Include="src\Mountain\Collision\Collision.hpp" />
+    <ClInclude Include="src\Mountain\Collision\Grid.hpp" />
+    <ClInclude Include="src\Mountain\Collision\Hitbox.hpp" />
+    <ClInclude Include="src\Mountain\Configuration.hpp" />
+    <ClInclude Include="src\Mountain\Containers\Array.hpp" />
+    <ClInclude Include="src\Mountain\Containers\ContiguousIterator.hpp" />
+    <ClInclude Include="src\Mountain\Containers\EnumerableExt.hpp" />
+    <ClInclude Include="src\Mountain\Containers\FunctionTypes.hpp" />
+    <ClInclude Include="src\Mountain\Containers\List.hpp" />
+    <ClInclude Include="src\Mountain\Core.hpp" />
+    <ClInclude Include="src\Mountain\Exceptions\ArgumentException.hpp" />
+    <ClInclude Include="src\Mountain\Exceptions\Exception.hpp" />
+    <ClInclude Include="src\Mountain\Exceptions\ThrowHelper.hpp" />
+    <ClInclude Include="src\Mountain\FileSystem\Directory.hpp" />
+    <ClInclude Include="src\Mountain\FileSystem\Entry.hpp" />
+    <ClInclude Include="src\Mountain\FileSystem\File.hpp" />
+    <ClInclude Include="src\Mountain\FileSystem\FileManager.hpp" />
+    <ClInclude Include="src\Mountain\Game.hpp" />
+    <ClInclude Include="src\Mountain\Globals.hpp" />
+    <ClInclude Include="src\Mountain\Input\GamepadInput.hpp" />
+    <ClInclude Include="src\Mountain\Input\Input.hpp" />
+    <ClInclude Include="src\Mountain\Input\KeyboardInput.hpp" />
+    <ClInclude Include="src\Mountain\Input\MouseInput.hpp" />
+    <ClInclude Include="src\Mountain\Input\Time.hpp" />
+    <ClInclude Include="src\Mountain\Rendering\Draw.hpp" />
+    <ClInclude Include="src\Mountain\Rendering\Effect.hpp" />
+    <ClInclude Include="src\Mountain\Rendering\GpuBuffer.hpp" />
+    <ClInclude Include="src\Mountain\Rendering\GpuTexture.hpp" />
+    <ClInclude Include="src\Mountain\Rendering\GpuVertexArray.hpp" />
+    <ClInclude Include="src\Mountain\Rendering\Graphics.hpp" />
+    <ClInclude Include="src\Mountain\Rendering\LightSource.hpp" />
+    <ClInclude Include="src\Mountain\Rendering\ParticleSystem.hpp" />
+    <ClInclude Include="src\Mountain\Rendering\ParticleSystemModules.hpp" />
+    <ClInclude Include="src\Mountain\Rendering\Renderer.hpp" />
+    <ClInclude Include="src\Mountain\Rendering\RenderTarget.hpp" />
+    <ClInclude Include="src\Mountain\Resource\AudioTrack.hpp" />
+    <ClInclude Include="src\Mountain\Resource\ComputeShader.hpp" />
+    <ClInclude Include="src\Mountain\Resource\Font.hpp" />
+    <ClInclude Include="src\Mountain\Resource\Resource.hpp" />
+    <ClInclude Include="src\Mountain\Resource\ResourceManager.hpp" />
+    <ClInclude Include="src\Mountain\Resource\Shader.hpp" />
+    <ClInclude Include="src\Mountain\Resource\ShaderBase.hpp" />
+    <ClInclude Include="src\Mountain\Resource\Texture.hpp" />
+    <ClInclude Include="src\Mountain\Ecs\Component\AudioListener.hpp" />
+    <ClInclude Include="src\Mountain\Ecs\Component\AudioSource.hpp" />
+    <ClInclude Include="src\Mountain\Ecs\Component\Component.hpp" />
+    <ClInclude Include="src\Mountain\Ecs\Component\Sprite.hpp" />
+    <ClInclude Include="src\Mountain\Ecs\Component\StateMachine.hpp" />
+    <ClInclude Include="src\Mountain\Ecs\Entity.hpp" />
+    <ClInclude Include="src\Mountain\Screen.hpp" />
+    <ClInclude Include="src\Mountain\Utils\Color.hpp" />
+    <ClInclude Include="src\Mountain\Utils\Coroutine.hpp" />
+    <ClInclude Include="src\Mountain\Utils\Event.hpp" />
+    <ClInclude Include="src\Mountain\Utils\FileSystemWatcher.hpp" />
+    <ClInclude Include="src\Mountain\Utils\Formatter.hpp" />
+    <ClInclude Include="src\Mountain\Utils\Guid.hpp" />
+    <ClInclude Include="src\Mountain\Utils\ImGuiUtils.hpp" />
+    <ClInclude Include="src\Mountain\Utils\Requirements.hpp" />
+    <ClInclude Include="src\Mountain\Utils\Logger.hpp" />
+    <ClInclude Include="src\Mountain\Utils\MessageBox.hpp" />
+    <ClInclude Include="src\Mountain\Utils\MetaProgramming.hpp" />
+    <ClInclude Include="src\Mountain\Utils\Pointer.hpp" />
+    <ClInclude Include="src\Mountain\Utils\Random.hpp" />
+    <ClInclude Include="src\Mountain\Utils\Rectangle.hpp" />
+    <ClInclude Include="src\Mountain\Utils\ReferenceCounter.hpp" />
+    <ClInclude Include="src\Mountain\Utils\RunLengthEncoding.hpp" />
+    <ClInclude Include="src\Mountain\Utils\Stopwatch.hpp" />
+    <ClInclude Include="src\Mountain\Utils\TimeSpan.hpp" />
+    <ClInclude Include="src\Mountain\Utils\TsQueue.hpp" />
+    <ClInclude Include="src\Mountain\Utils\Utils.hpp" />
+    <ClInclude Include="src\Mountain\Utils\Windows.hpp" />
+    <ClInclude Include="src\Mountain\Window.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\MathToolbox\src\Math\calc.cpp" />
+    <ClCompile Include="..\MathToolbox\src\Math\easing.cpp" />
+    <ClCompile Include="..\MathToolbox\src\Math\matrix.cpp" />
+    <ClCompile Include="..\MathToolbox\src\Math\matrix2.cpp" />
+    <ClCompile Include="..\MathToolbox\src\Math\matrix3.cpp" />
+    <ClCompile Include="..\MathToolbox\src\Math\quaternion.cpp" />
+    <ClCompile Include="..\MathToolbox\src\Math\vector2.cpp" />
+    <ClCompile Include="..\MathToolbox\src\Math\vector2i.cpp" />
+    <ClCompile Include="..\MathToolbox\src\Math\vector3.cpp" />
+    <ClCompile Include="..\MathToolbox\src\Math\vector4.cpp" />
     <ClCompile Include="externals\src\glad.c" />
     <ClCompile Include="externals\src\ImGui\imgui.cpp" />
     <ClCompile Include="externals\src\ImGui\imgui_demo.cpp" />
@@ -263,68 +263,70 @@
     <ClCompile Include="externals\src\ImGui\imgui_stdlib.cpp" />
     <ClCompile Include="externals\src\ImGui\imgui_tables.cpp" />
     <ClCompile Include="externals\src\ImGui\imgui_widgets.cpp" />
+    <ClCompile Include="externals\src\mimalloc-new-delete.cpp" />
     <ClCompile Include="externals\src\minimp3.c" />
     <ClCompile Include="externals\src\RapidXMLSTD.cpp" />
     <ClCompile Include="externals\src\stb_image.c" />
     <ClCompile Include="externals\src\stb_vorbis.c" />
-    <ClCompile Include="src\Mountain\audio\audio.cpp" />
-    <ClCompile Include="src\Mountain\audio\audio_buffer.cpp" />
-    <ClCompile Include="src\Mountain\audio\audio_context.cpp" />
-    <ClCompile Include="src\Mountain\audio\audio_device.cpp" />
-    <ClCompile Include="src\Mountain\binary_resources\resource_holder.cpp" />
-    <ClCompile Include="src\Mountain\collision\circle.cpp" />
-    <ClCompile Include="src\Mountain\collision\collision.cpp" />
-    <ClCompile Include="src\Mountain\collision\collider.cpp" />
-    <ClCompile Include="src\Mountain\collision\collider_list.cpp" />
-    <ClCompile Include="src\Mountain\collision\grid.cpp" />
-    <ClCompile Include="src\Mountain\collision\hitbox.cpp" />
-    <ClCompile Include="src\Mountain\file\directory.cpp" />
-    <ClCompile Include="src\Mountain\file\entry.cpp" />
-    <ClCompile Include="src\Mountain\file\file.cpp" />
-    <ClCompile Include="src\Mountain\file\file_manager.cpp" />
-    <ClCompile Include="src\Mountain\game.cpp" />
-    <ClCompile Include="src\Mountain\input\gamepad_input.cpp" />
-    <ClCompile Include="src\Mountain\input\input.cpp" />
-    <ClCompile Include="src\Mountain\input\time.cpp" />
-    <ClCompile Include="src\Mountain\rendering\draw.cpp" />
-    <ClCompile Include="src\Mountain\rendering\effect.cpp"/>
-    <ClCompile Include="src\Mountain\rendering\gpu_vertex_array.cpp" />
-    <ClCompile Include="src\Mountain\rendering\gpu_buffer.cpp" />
-    <ClCompile Include="src\Mountain\rendering\gpu_texture.cpp" />
-    <ClCompile Include="src\Mountain\rendering\graphics.cpp" />
-    <ClCompile Include="src\Mountain\rendering\particle_system.cpp" />
-    <ClCompile Include="src\Mountain\rendering\particle_system_modules.cpp" />
-    <ClCompile Include="src\Mountain\rendering\renderer.cpp" />
-    <ClCompile Include="src\Mountain\rendering\render_target.cpp" />
-    <ClCompile Include="src\Mountain\resource\audio_track.cpp" />
-    <ClCompile Include="src\Mountain\resource\compute_shader.cpp" />
-    <ClCompile Include="src\Mountain\resource\font.cpp" />
-    <ClCompile Include="src\Mountain\resource\resource.cpp" />
-    <ClCompile Include="src\Mountain\resource\resource_manager.cpp" />
-    <ClCompile Include="src\Mountain\resource\shader.cpp" />
-    <ClCompile Include="src\Mountain\resource\shader_base.cpp" />
-    <ClCompile Include="src\Mountain\resource\texture.cpp" />
-    <ClCompile Include="src\Mountain\scene\component\audio_listener.cpp" />
-    <ClCompile Include="src\Mountain\scene\component\audio_source.cpp" />
-    <ClCompile Include="src\Mountain\scene\component\component.cpp" />
-    <ClCompile Include="src\Mountain\scene\component\sprite.cpp" />
-    <ClCompile Include="src\Mountain\scene\component\state_machine.cpp" />
-    <ClCompile Include="src\Mountain\scene\entity.cpp" />
-    <ClCompile Include="src\Mountain\screen.cpp" />
-    <ClCompile Include="src\Mountain\utils\color.cpp" />
-    <ClCompile Include="src\Mountain\utils\coroutine.cpp" />
-    <ClCompile Include="src\Mountain\utils\file_system_watcher.cpp" />
-    <ClCompile Include="src\Mountain\utils\guid.cpp" />
-    <ClCompile Include="src\Mountain\utils\imgui_utils.cpp" />
-    <ClCompile Include="src\Mountain\utils\logger.cpp" />
-    <ClCompile Include="src\Mountain\utils\message_box.cpp" />
-    <ClCompile Include="src\Mountain\utils\random.cpp" />
-    <ClCompile Include="src\Mountain\utils\run_length_encoding.cpp" />
-    <ClCompile Include="src\Mountain\utils\stopwatch.cpp" />
-    <ClCompile Include="src\Mountain\utils\time_span.cpp" />
-    <ClCompile Include="src\Mountain\utils\utils.cpp" />
-    <ClCompile Include="src\Mountain\utils\windows.cpp" />
-    <ClCompile Include="src\Mountain\window.cpp" />
+    <ClCompile Include="src\Mountain\Audio\Audio.cpp" />
+    <ClCompile Include="src\Mountain\Audio\AudioBuffer.cpp" />
+    <ClCompile Include="src\Mountain\Audio\AudioContext.cpp" />
+    <ClCompile Include="src\Mountain\Audio\AudioDevice.cpp" />
+    <ClCompile Include="src\Mountain\BinaryResources\resource_holder.cpp" />
+    <ClCompile Include="src\Mountain\Collision\Circle.cpp" />
+    <ClCompile Include="src\Mountain\Collision\Collider.cpp" />
+    <ClCompile Include="src\Mountain\Collision\ColliderList.cpp" />
+    <ClCompile Include="src\Mountain\Collision\Collision.cpp" />
+    <ClCompile Include="src\Mountain\Collision\Grid.cpp" />
+    <ClCompile Include="src\Mountain\Collision\Hitbox.cpp" />
+    <ClCompile Include="src\Mountain\Exceptions\ArgumentException.cpp" />
+    <ClCompile Include="src\Mountain\Exceptions\Exception.cpp" />
+    <ClCompile Include="src\Mountain\FileSystem\Directory.cpp" />
+    <ClCompile Include="src\Mountain\FileSystem\Entry.cpp" />
+    <ClCompile Include="src\Mountain\FileSystem\File.cpp" />
+    <ClCompile Include="src\Mountain\FileSystem\FileManager.cpp" />
+    <ClCompile Include="src\Mountain\Game.cpp" />
+    <ClCompile Include="src\Mountain\Input\GamepadInput.cpp" />
+    <ClCompile Include="src\Mountain\Input\Input.cpp" />
+    <ClCompile Include="src\Mountain\Input\Time.cpp" />
+    <ClCompile Include="src\Mountain\Rendering\Draw.cpp" />
+    <ClCompile Include="src\Mountain\Rendering\Effect.cpp" />
+    <ClCompile Include="src\Mountain\Rendering\GpuBuffer.cpp" />
+    <ClCompile Include="src\Mountain\Rendering\GpuTexture.cpp" />
+    <ClCompile Include="src\Mountain\Rendering\GpuVertexArray.cpp" />
+    <ClCompile Include="src\Mountain\Rendering\Graphics.cpp" />
+    <ClCompile Include="src\Mountain\Rendering\ParticleSystem.cpp" />
+    <ClCompile Include="src\Mountain\Rendering\ParticleSystemModules.cpp" />
+    <ClCompile Include="src\Mountain\Rendering\Renderer.cpp" />
+    <ClCompile Include="src\Mountain\Rendering\RenderTarget.cpp" />
+    <ClCompile Include="src\Mountain\Resource\AudioTrack.cpp" />
+    <ClCompile Include="src\Mountain\Resource\ComputeShader.cpp" />
+    <ClCompile Include="src\Mountain\Resource\Font.cpp" />
+    <ClCompile Include="src\Mountain\Resource\Resource.cpp" />
+    <ClCompile Include="src\Mountain\Resource\ResourceManager.cpp" />
+    <ClCompile Include="src\Mountain\Resource\Shader.cpp" />
+    <ClCompile Include="src\Mountain\Resource\ShaderBase.cpp" />
+    <ClCompile Include="src\Mountain\Resource\Texture.cpp" />
+    <ClCompile Include="src\Mountain\Ecs\Component\AudioListener.cpp" />
+    <ClCompile Include="src\Mountain\Ecs\Component\AudioSource.cpp" />
+    <ClCompile Include="src\Mountain\Ecs\Component\Component.cpp" />
+    <ClCompile Include="src\Mountain\Ecs\Component\Sprite.cpp" />
+    <ClCompile Include="src\Mountain\Ecs\Entity.cpp" />
+    <ClCompile Include="src\Mountain\Screen.cpp" />
+    <ClCompile Include="src\Mountain\Utils\Color.cpp" />
+    <ClCompile Include="src\Mountain\Utils\Coroutine.cpp" />
+    <ClCompile Include="src\Mountain\Utils\FileSystemWatcher.cpp" />
+    <ClCompile Include="src\Mountain\Utils\Guid.cpp" />
+    <ClCompile Include="src\Mountain\Utils\ImGuiUtils.cpp" />
+    <ClCompile Include="src\Mountain\Utils\Logger.cpp" />
+    <ClCompile Include="src\Mountain\Utils\MessageBox.cpp" />
+    <ClCompile Include="src\Mountain\Utils\Random.cpp" />
+    <ClCompile Include="src\Mountain\Utils\RunLengthEncoding.cpp" />
+    <ClCompile Include="src\Mountain\Utils\Stopwatch.cpp" />
+    <ClCompile Include="src\Mountain\Utils\TimeSpan.cpp" />
+    <ClCompile Include="src\Mountain\Utils\Utils.cpp" />
+    <ClCompile Include="src\Mountain\Utils\Windows.cpp" />
+    <ClCompile Include="src\Mountain\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets_internal\font.ttf" />
@@ -381,12 +383,6 @@
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Generate Assembly|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
@@ -401,9 +397,6 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Generate Assembly|x64'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
@@ -412,11 +405,11 @@
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);MOUNTAIN_EXPORT;MATH_TOOLBOX_DLL_EXPORT;MATH_DEFINE_FORMATTER;IMGUI_EXPORT;RAPID_XML_EXPORT;AL_ALEXT_PROTOTYPES</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);MOUNTAIN_EXPORT;MATH_EXPORT;MATH_DEFINE_FORMATTER;IMGUI_EXPORT;RAPID_XML_EXPORT;AL_ALEXT_PROTOTYPES</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>include;inline;binary_resources;externals\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;externals\src;..\MathToolbox\src</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <AdditionalOptions>/Gw %(AdditionalOptions)</AdditionalOptions>
@@ -424,43 +417,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>externals/libs/static/$(Configuration)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>toolbox.lib;glfw3.lib;freetype.lib;OpenAL32.lib;soft_oal.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalOptions>/WHOLEARCHIVE:toolbox.lib</AdditionalOptions>
-      <CreateHotPatchableImage>Enabled</CreateHotPatchableImage>
-      <OptimizeReferences>false</OptimizeReferences>
-      <EnableCOMDATFolding>false</EnableCOMDATFolding>
-    </Link>
-    <Lib>
       <AdditionalLibraryDirectories>externals/libs/static/$(Configuration);externals/libs/static/Common</AdditionalLibraryDirectories>
-      <AdditionalDependencies>toolbox.lib;opengl32.lib;glfw3.lib;freetype.lib;OpenAL32.lib</AdditionalDependencies>
-      <TreatLibWarningAsErrors>true</TreatLibWarningAsErrors>
-      <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
-    </Lib>
-    <ProjectReference>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-    </ProjectReference>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Generate Assembly|x64'">
-    <ClCompile>
-      <WarningLevel>Level4</WarningLevel>
-      <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);MOUNTAIN_EXPORT;MATH_TOOLBOX_DLL_EXPORT;MATH_DEFINE_FORMATTER;IMGUI_EXPORT;RAPID_XML_EXPORT;AL_ALEXT_PROTOTYPES</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>include;inline;binary_resources;externals\include</AdditionalIncludeDirectories>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <AssemblerOutput>AssemblyAndSourceCode</AssemblerOutput>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <AdditionalOptions>/Gw %(AdditionalOptions)</AdditionalOptions>
-    </ClCompile>
-    <Link>
-      <SubSystem>Console</SubSystem>
-      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>externals/libs/static/$(Configuration)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>toolbox.lib;glfw3.lib;freetype.lib;OpenAL32.lib;soft_oal.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalOptions>/WHOLEARCHIVE:toolbox.lib</AdditionalOptions>
+      <AdditionalDependencies>mimalloc.dll.lib;mimalloc-redirect.lib;glfw3.lib;freetype.lib;OpenAL32.lib;soft_oal.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <CreateHotPatchableImage>Enabled</CreateHotPatchableImage>
       <OptimizeReferences>false</OptimizeReferences>
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
@@ -481,12 +439,11 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);MOUNTAIN_EXPORT;MATH_TOOLBOX_DLL_EXPORT;MATH_DEFINE_FORMATTER;IMGUI_EXPORT;RAPID_XML_EXPORT;AL_ALEXT_PROTOTYPES</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);MOUNTAIN_EXPORT;MATH_EXPORT;MATH_DEFINE_FORMATTER;IMGUI_EXPORT;RAPID_XML_EXPORT;AL_ALEXT_PROTOTYPES</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <EnableModules>false</EnableModules>
-      <AdditionalIncludeDirectories>include;inline;binary_resources;externals\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;externals\src;..\MathToolbox\src</AdditionalIncludeDirectories>
       <AdditionalOptions>/Gw %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -494,9 +451,8 @@
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
       <OptimizeReferences>false</OptimizeReferences>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
-      <AdditionalDependencies>toolbox.lib;glfw3.lib;freetype.lib;OpenAL32.lib;soft_oal.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>externals/libs/static/$(Configuration)</AdditionalLibraryDirectories>
-      <AdditionalOptions>/WHOLEARCHIVE:toolbox.lib</AdditionalOptions>
+      <AdditionalDependencies>mimalloc.dll.lib;mimalloc-redirect.lib;glfw3.lib;freetype.lib;OpenAL32.lib;soft_oal.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>externals/libs/static/$(Configuration);externals/libs/static/Common</AdditionalLibraryDirectories>
       <CreateHotPatchableImage>Enabled</CreateHotPatchableImage>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
@@ -516,6 +472,7 @@
   <Target Name="CopyDynamicExternals" AfterTargets="Build">
     <ItemGroup>
       <DynamicExternals Include="$(ProjectDir)externals\libs\dynamic\$(Configuration)\*" />
+      <DynamicExternals Include="$(ProjectDir)externals\libs\dynamic\Common\*" />
     </ItemGroup>
     <Copy SourceFiles="@(DynamicExternals)" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" Condition="'%(Identity)' != '.gitkeep'" />
     <Message Text="Copy external DLLs to output directory" Importance="high" />
