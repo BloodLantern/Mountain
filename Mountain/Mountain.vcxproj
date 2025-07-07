@@ -335,6 +335,7 @@
     <Content Include="shaders_internal\circle\circle.frag" />
     <Content Include="shaders_internal\circle\circle.vert" />
     <Content Include="shaders_internal\easing.glsl" />
+    <Content Include="shaders_internal\effects\chromatic_aberration.comp" />
     <Content Include="shaders_internal\effects\film_grain.comp" />
     <Content Include="shaders_internal\line_colored\line_colored.frag" />
     <Content Include="shaders_internal\line_colored\line_colored.vert" />
@@ -382,6 +383,7 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
+    <VCToolsVersion>14.44.35207</VCToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>

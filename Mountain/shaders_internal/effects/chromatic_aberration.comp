@@ -1,0 +1,27 @@
+#version 460
+
+layout (local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
+
+layout (rgba32f, binding = 0) uniform image2D image;
+
+void main()
+{
+    ivec2 texel = ivec2(gl_GlobalInvocationID.xy);
+    vec2 texelf = vec2(texel);
+    ivec2 size = ivec2(gl_NumWorkGroups.xy);
+    vec2 sizef = vec2(size);
+
+    vec4 originalColor = imageLoad(image, texel);
+
+    vec4 newColor;
+
+    ivec2 redOffset = ivec2(texelf/sizef + vec2(-0.005, 0));
+    ivec2 blueOffset = ivec2(texelf/sizef + vec2(0.005, 0));
+
+    newColor.r = imageLoad(image, redOffset).r;
+    newColor.g = imageLoad(image, texel).g;
+    newColor.b = imageLoad(image, blueOffset).b;
+    newColor.a = originalColor.a;
+
+    imageStore(image, texel, newColor);
+}

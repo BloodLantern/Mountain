@@ -51,6 +51,7 @@ namespace
 
     PostProcessingEffect<Vignette> vignette;
     PostProcessingEffect<FilmGrain> filmGrain;
+    PostProcessingEffect<ChromaticAberration> chromaticAberration;
 
     template <Concepts::Effect T>
     void ShowEffect(
@@ -126,10 +127,13 @@ void GameExample::LoadResources()
 
     vignette.effect.LoadResources();
     filmGrain.effect.LoadResources();
+    chromaticAberration.effect.LoadResources();
 }
 
 void GameExample::Initialize()
 {
+    assetsWatcher.Start();
+
     std::string builtinShadersPath = Utils::GetBuiltinShadersPath();
     if (builtinShadersPath.ends_with('/'))
         builtinShadersPath.pop_back();
@@ -220,6 +224,8 @@ void GameExample::Render()
     static Color clearColor = Color::Black();
     Draw::Clear(clearColor);
 
+    Draw::Texture(*ResourceManager::Get<Texture>("strawberry/normal00.png"), Vector2::Zero(), Vector2::One());
+
     particleSystem.Render();
 
     Renderer::PopRenderTarget();
@@ -228,12 +234,18 @@ void GameExample::Render()
 
     vignette.effect.imageBindings.Emplace(Renderer::GetCurrentRenderTarget().GetTextureId(), 0u, Graphics::ImageShaderAccess::WriteOnly);
     filmGrain.effect.imageBindings.Emplace(Renderer::GetCurrentRenderTarget().GetTextureId(), 0u, Graphics::ImageShaderAccess::WriteOnly);
+    chromaticAberration.effect.imageBindings.Emplace(Renderer::GetCurrentRenderTarget().GetTextureId(), 0u, Graphics::ImageShaderAccess::WriteOnly);
+
     if (vignette.enabled)
         vignette.effect.Apply(Renderer::GetCurrentRenderTarget().GetSize(), false);
     if (filmGrain.enabled)
         filmGrain.effect.Apply(Renderer::GetCurrentRenderTarget().GetSize(), false);
+    if (chromaticAberration.enabled)
+        chromaticAberration.effect.Apply(Renderer::GetCurrentRenderTarget().GetSize(), false);
+
     vignette.effect.imageBindings.Clear();
     filmGrain.effect.imageBindings.Clear();
+    chromaticAberration.effect.imageBindings.Clear();
 
     if (debugRender)
     {
@@ -311,6 +323,12 @@ void GameExample::Render()
             ImGui::DragFloat("intensity", &intensity, 0.01f, 0.f, 10.f);
             e.SetIntensity(intensity);
         });
+        ShowEffect("Chromatic Aberration", chromaticAberration, [](auto& e)
+       {
+           static float_t intensity = 1.f;
+           ImGui::DragFloat("intensity", &intensity, 0.01f, 0.f, 10.f);
+           //e.SetIntensity(intensity);
+       });
 
         ImGuiUtils::PopCollapsingHeader();
     }
