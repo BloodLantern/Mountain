@@ -780,12 +780,10 @@ namespace Mountain
     {
         for (size_t i = 0; i < m_Size; i++)
         {
-            T& element = m_Data[i];
-            if (element != value)
+            if (m_Data[i] != value)
                 continue;
 
-            element.~T();
-            ShiftElements(-1, i, m_Size);
+            RemoveAt(i);
             break;
         }
     }
@@ -794,7 +792,7 @@ namespace Mountain
     void List<T>::RemoveAt(size_t index)
     {
         m_Data[index].~T();
-        ShiftElements(-1, index, m_Size);
+        ShiftElements(-1, index + 1, m_Size--);
     }
 
     template <Concepts::DynamicContainerType T>
