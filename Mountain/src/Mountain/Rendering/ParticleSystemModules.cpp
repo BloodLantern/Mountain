@@ -128,9 +128,12 @@ void Shape::RenderDebug(const ParticleSystem& system, const Vector2 renderTarget
             break;
 
         case ShapeType::Line:
-            // TODO - Take rotation into account
-            Draw::Line(center - Vector2::UnitX() * line.radius, center + Vector2::UnitX() * line.radius, DrawColor);
+        {
+            const Vector2 left = -Vector2::UnitX() * line.radius;
+            const Vector2 right = Vector2::UnitX() * line.radius;
+            Draw::Line(center + left.Rotated(rotation), center + right.Rotated(rotation), DrawColor);
             break;
+        }
 
         case ShapeType::Rectangle:
             // TODO - Take rotation into account

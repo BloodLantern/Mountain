@@ -125,6 +125,9 @@ void GameExample::LoadResources()
             r->Reload();
     };
 
+    FileManager::LoadDirectory("assets");
+    ResourceManager::LoadAll();
+
     vignette.effect.LoadResources();
     filmGrain.effect.LoadResources();
     chromaticAberration.effect.LoadResources();

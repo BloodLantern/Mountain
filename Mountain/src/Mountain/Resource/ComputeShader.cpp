@@ -69,7 +69,7 @@ void ComputeShader::Load()
         glDeleteShader(id);
     }
 
-    CheckLinkError();
+    static_cast<void>(CheckLinkError());
 
     m_Loaded = true;
 }

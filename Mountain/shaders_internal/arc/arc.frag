@@ -36,6 +36,7 @@ void main()
     if (angle < 0.f || angle > maxAngle)
         discard;
 
+    // FIXME - Scaling doesn't work with some specific arc angles
     vec2 centerToFragmentAbs = abs(centerToFragment) * cameraScaleInverse * cameraScaleInverse;
     temp = centerToFragmentAbs / scale;
     angle = atan(temp.y, temp.x);
@@ -43,13 +44,13 @@ void main()
     vec2 cosSin = vec2(c, s);
 
     float halfThickness = thickness * 0.5f;
-    vec2 circleSizeExt = (circleSize + vec2(halfThickness)) * cosSin;
-    vec2 circleSizeIn = (circleSize - vec2(halfThickness)) * cosSin;
+    vec2 circleSizeOuter = (circleSize + vec2(halfThickness)) * cosSin;
+    vec2 circleSizeInner = (circleSize - vec2(halfThickness)) * cosSin;
 
     // Discard the pixels outside the circle
     if (
-        centerToFragmentAbs.x > circleSizeExt.x &&
-        centerToFragmentAbs.y > circleSizeExt.y
+        centerToFragmentAbs.x > circleSizeOuter.x &&
+        centerToFragmentAbs.y > circleSizeOuter.y
     )
     {
         discard;
@@ -59,8 +60,8 @@ void main()
     if (filled == 0 || angles.y == 0.f)
     {
         if (
-            centerToFragmentAbs.x + 1.f < circleSizeIn.x ||
-            centerToFragmentAbs.y + 1.f < circleSizeIn.y ||
+            centerToFragmentAbs.x + 1.f < circleSizeInner.x ||
+            centerToFragmentAbs.y + 1.f < circleSizeInner.y ||
             centerToFragmentAbs == vec2(0.f)
         )
         {

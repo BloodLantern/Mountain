@@ -59,8 +59,10 @@ void ShapeInitialize(inout Particle particle)
     switch (shape.type)
     {
         case ShapeTypeCircle:
-            vec2 randomPoint = RandomPointInCircle(randomSeed, vec2(0.f), 1.f);
-            particle.offset = randomPoint * shape.circle.radius * shape.circle.radiusThickness + normalize(randomPoint) * shape.circle.radius * (1.f - shape.circle.radiusThickness);
+            vec2 randomPoint = RandomPointInArc(randomSeed, vec2(0.f), 1.f, shape.circle.arcAngle);
+            randomPoint = Rotated(randomPoint, -shape.rotation);
+            particle.offset = randomPoint * shape.circle.radius * shape.circle.radiusThickness
+                + normalize(randomPoint) * shape.circle.radius * (1.f - shape.circle.radiusThickness);
             break;
 
         case ShapeTypeLine:

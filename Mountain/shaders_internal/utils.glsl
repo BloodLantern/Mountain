@@ -13,6 +13,18 @@ const float Rad2Deg = 1.f / Deg2Rad;
 
 float SquaredLength(in vec2 value) { return value.x * value.x + value.y * value.y; }
 
+float RemapValue(in float oldValue, in vec2 oldRange, in vec2 newRange)
+{
+    return (oldValue - oldRange.x) * (newRange.y - newRange.x) / (oldRange.y - oldRange.x) + newRange.x;
+}
+
+vec2 Rotated(in vec2 value, in float c, in float s)
+{
+    return vec2(value.x * c - value.y * s, value.x * s + value.y * c);
+}
+
+vec2 Rotated(in vec2 value, in float angle) { return Rotated(value, cos(angle), sin(angle)); }
+
 // Pseudo-random generator
 // Returns a float in the range [0, 1]
 // Source: https://stackoverflow.com/a/4275343/19269811
@@ -46,15 +58,21 @@ vec2 RandomPointInCircle(in vec2 seed, in vec2 center, in float radius, in vec2 
     return RandomPointInCircle(seed, vec2(0.f), radius) * scale + center;
 }
 
+vec2 RandomPointInArc(in vec2 seed, in vec2 center, in float radius, in float arcAngle)
+{
+    vec2 pointInCircle = RandomPointInCircle(seed, vec2(0.f), 1.f);
+    float pointAngle = atan(pointInCircle.y, pointInCircle.x);
+    float newPointAngle = RemapValue(pointAngle, vec2(-Pi, Pi), vec2(0.f, arcAngle));
+    return Rotated(pointInCircle, newPointAngle - pointAngle) * vec2(1.f, -1.f) * radius + center;
+}
+
+vec2 RandomPointInArc(in vec2 seed, in vec2 center, in float radius, in float arcAngle, in vec2 scale)
+{
+    return RandomPointInArc(seed, vec2(0.f), radius, arcAngle) * scale + center;
+}
+
 vec2 RandomDirection(in vec2 seed)
 {
     float angle = RandomFloat(seed, 0.f, TwoPi);
     return vec2(cos(angle), sin(angle));
 }
-
-vec2 Rotated(in vec2 value, in float c, in float s)
-{
-    return vec2(value.x * c - value.y * s, value.x * s + value.y * c);
-}
-
-vec2 Rotated(in vec2 value, in float angle) { return Rotated(value, cos(angle), sin(angle)); }
