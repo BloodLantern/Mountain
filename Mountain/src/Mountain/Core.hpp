@@ -194,3 +194,15 @@ using stdstring = std::string;
 #define interface struct __declspec(novtable)
 
 #define DEFAULT_VIRTUAL_DESTRUCTOR(type) virtual ~type() = default;
+
+#if defined(__JETBRAINS_IDE__) || defined(__RESHARPER__)
+#define ATTRIBUTE_FORMAT(archetype, stringIndex, firstToCheck) [[jetbrains::format(archetype, stringIndex, firstToCheck)]]
+#define ATTRIBUTE_PASS_BY_VALUE [[jetbrains::pass_by_value]
+#define ATTRIBUTE_GUARD [[jetbrains::guard]]
+#define ATTRIBUTE_HAS_SIDE_EFFECTS [[jetbrains::has_side_effects]]
+#else
+#define ATTRIBUTE_FORMAT(...)
+#define ATTRIBUTE_PASS_BY_VALUE
+#define ATTRIBUTE_GUARD
+#define ATTRIBUTE_HAS_SIDE_EFFECTS
+#endif

@@ -365,15 +365,15 @@ namespace Mountain
         return *this;
     }
 
-    #ifndef DOXYGEN
+#ifndef DOXYGEN
     template <typename T>
     template <typename U>
     Pointer<T>& Pointer<T>::operator=(const Pointer<U>& other)
     {
-        if (this == &other)
+        if (reinterpret_cast<const int8_t*>(this) == reinterpret_cast<const int8_t*>(&other))
             return *this;
 
-        SetReferenceCounter(reinterpret_cast<ReferenceCounter<T>*>(other.GetReferenceCounter()));
+        SetReferenceCounter(reinterpret_cast<ReferenceCounter<T>*>(const_cast<ReferenceCounter<U>*>(other.GetReferenceCounter())));
         m_ReferenceCounter->IncWeak(this);
 
         return *this;
@@ -383,7 +383,7 @@ namespace Mountain
     template <typename U>
     Pointer<T>& Pointer<T>::operator=(Pointer<U>&& other) noexcept
     {
-        if (reinterpret_cast<int8_t*>(this) == reinterpret_cast<int8_t*>(&other))
+        if (reinterpret_cast<const int8_t*>(this) == reinterpret_cast<const int8_t*>(&other))
             return *this;
 
         SetReferenceCounter(reinterpret_cast<ReferenceCounter<T>*>(const_cast<ReferenceCounter<U>*>(other.GetReferenceCounter())));
@@ -399,7 +399,7 @@ namespace Mountain
 
         return *this;
     }
-    #endif
+#endif
 
     template <typename T>
     Pointer<T>::operator const T*() const

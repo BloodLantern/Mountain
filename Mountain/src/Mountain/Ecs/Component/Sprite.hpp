@@ -21,7 +21,7 @@ namespace Mountain
         /// and is already called in the constructor. Consider using this only when necessary, e.g. after using SetName()
         MOUNTAIN_API void SetupTextures();
 
-        MOUNTAIN_API const Pointer<Texture>& Get();
+        MOUNTAIN_API const Pointer<Texture>& Get() const;
 
         [[nodiscard]]
         MOUNTAIN_API const std::string& GetName() const;

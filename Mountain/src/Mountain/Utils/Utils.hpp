@@ -21,6 +21,8 @@
 #define TO_STRING(x) #x
 #define STRINGIFY(x) TO_STRING(x)
 
+// TODO - Cleanup functions that aren't needed anymore
+
 /// @namespace Utils
 /// @brief Namespace containing utility functions that don't belong anywhere else
 namespace Mountain::Utils

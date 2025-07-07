@@ -124,12 +124,17 @@ void GameExample::LoadResources()
             r->Reload();
     };
 
+    FileManager::LoadDirectory("assets");
+    ResourceManager::LoadAll();
+
     vignette.effect.LoadResources();
     filmGrain.effect.LoadResources();
 }
 
 void GameExample::Initialize()
 {
+    assetsWatcher.Start();
+
     std::string builtinShadersPath = Utils::GetBuiltinShadersPath();
     if (builtinShadersPath.ends_with('/'))
         builtinShadersPath.pop_back();

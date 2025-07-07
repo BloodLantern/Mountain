@@ -55,7 +55,7 @@ void Sprite::SetupTextures()
     m_UpdateTimer = m_FrameDuration;
 }
 
-const Pointer<Texture>& Sprite::Get() { return m_Textures[m_CurrentIndex]; }
+const Pointer<Texture>& Sprite::Get() const { return m_Textures[m_CurrentIndex]; }
 
 const std::string& Sprite::GetName() const { return m_Name; }
 

@@ -75,7 +75,7 @@ compile by statically linking against the corresponding `Mountain.lib`
 - Low-level audio API
 - `Audio::Play()` static function
 - \[WIP] Low-level graphics API
-- `Scene` class
+- \[WIP] `Scene` class
 - Linux support
 - ~~Automatic `std::formatter` implementation for all classes that define a `ToString()` function~~
 - ~~Automatic `std::hash` implementation for all classes that define a `GetHashCode()` function~~

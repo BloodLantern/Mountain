@@ -106,6 +106,7 @@ void ResourceManager::LoadAll()
 
             shader->SetSourceData(file);
             shadersToLoad.Add(shader);
+            file->m_Resource = shader;
         }
         else if (Mountain::Contains(ComputeShader::FileExtensions, extension))
         {
@@ -113,15 +114,20 @@ void ResourceManager::LoadAll()
             Pointer<ComputeShader> shader = Add<ComputeShader>(filenameNoExtension);
             shader->SetSourceData(file);
             shader->Load();
+            file->m_Resource = shader;
         }
         else if (Mountain::Contains(Font::FileExtensions, extension))
         {
-            LoadFont(file, 12);
+            file->m_Resource = LoadFont(file, 12);
         }
         else
         {
             if (Contains(file))
-                Get(file)->Load();
+            {
+                Pointer<Resource> resource = Get(file);
+                resource->Load();
+                file->m_Resource = resource;
+            }
         }
     }
 
@@ -193,6 +199,7 @@ void ResourceManager::LoadAllBinaries()
 
             shader->SetSourceData(file);
             shadersToLoad.Add(shader);
+            file->m_Resource = shader;
         }
         else if (Mountain::Contains(ComputeShader::FileExtensions, extension))
         {
@@ -200,15 +207,20 @@ void ResourceManager::LoadAllBinaries()
             Pointer<ComputeShader> shader = Add<ComputeShader>(filenameNoExtension);
             shader->SetSourceData(file);
             shader->Load();
+            file->m_Resource = shader;
         }
         else if (Mountain::Contains(Font::FileExtensions, extension))
         {
-            LoadFont(file, 12);
+            file->m_Resource = LoadFont(file, 12);
         }
         else if (extension != ".glsl")
         {
             if (Contains(file))
-                Get(file)->Load();
+            {
+                Pointer<Resource> resource = Get(file);
+                resource->Load();
+                file->m_Resource = resource;
+            }
         }
     }
 
