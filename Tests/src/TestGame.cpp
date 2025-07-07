@@ -227,7 +227,7 @@ void GameExample::Render()
     static Color clearColor = Color::Black();
     Draw::Clear(clearColor);
 
-    Draw::Texture(*ResourceManager::Get<Texture>("strawberry/normal00.png"), Vector2::Zero(), Vector2::One());
+    Draw::Texture(*ResourceManager::Get<Texture>("assets/strawberry/normal00.png"), Vector2::Zero(), Vector2::One());
 
     particleSystem.Render();
 
