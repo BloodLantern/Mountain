@@ -75,10 +75,15 @@ namespace Mountain
         MOUNTAIN_API void Restart();
         MOUNTAIN_API void Stop();
 
-        /// @brief Get the current alive particle count.
-        /// This can vary a lot from frame to frame because we count the particles on the CPU from the GPU memory.
+        /// @brief Get the current living particle count.
+        /// @details This can vary a lot from frame to frame because we count the particles on the CPU from the GPU memory.
         [[nodiscard]]
         MOUNTAIN_API uint32_t GetCurrentParticles();
+
+        /// @brief Get whether the system has finished playing.
+        /// @details E.g., whether it is not spawning particles anymore and @code GetCurrentParticles() == 0@endcode.
+        [[nodiscard]]
+        MOUNTAIN_API bool_t IsComplete();
 
         [[nodiscard]]
         MOUNTAIN_API uint32_t GetMaxParticles() const;
@@ -114,7 +119,7 @@ namespace Mountain
 
         /// @brief Wait for the GPU buffer to sync with the CPU. After that call, the CPU can read/write to that buffer.
         static void WaitBufferSync(__GLsync* syncObject);
-        /// @brief Lock the buffer to GPU read/write only. After that call, the CPU cannot access that buffer anymore.
+        /// @brief Lock the buffer to GPU read/write-only. After that call, the CPU cannot access that buffer anymore.
         static void LockBuffer(__GLsync*& syncObject);
     };
 }
