@@ -84,6 +84,7 @@ namespace Mountain::Requirements
         REQUIRES_FUNCTION(cv, operator->, typename T::Type*);
     };
 
+    /// @brief A type is an Enumerable if it supports iterator enumerations itself, or if it is a wrapper around another Enumerable.
     template <typename T>
     concept MountainEnumerable = requires (T& v, const T& cv)
     {
@@ -105,6 +106,16 @@ namespace Mountain::Requirements
         REQUIRES_FUNCTION(cv, GetEndIterator, typename T::ConstIterator);
         REQUIRES_FUNCTION(cv, begin, typename T::ConstIterator);
         REQUIRES_FUNCTION(cv, end, typename T::ConstIterator);
+    };
+
+    /// @brief A type is an Enumerable if it supports iterator enumerations itself, or if it is a wrapper around another Enumerable.
+    template <typename T>
+    concept MountainEnumerableWrapper = requires(T& v, const T& cv)
+    {
+        typename T::WrappedEnumerable;
+        requires MountainEnumerable<typename T::WrappedEnumerable>;
+        REQUIRES_FUNCTION(v, GetEnumerable, typename T::WrappedEnumerable&);
+        REQUIRES_FUNCTION(cv, GetEnumerable, const typename T::WrappedEnumerable&);
     };
 
     template <typename T>
@@ -137,6 +148,16 @@ namespace Mountain::Meta
 
     template <Requirements::MountainContainer T>
     using MountainContainerType = typename T::Type;
+
+    // ReSharper disable once CppStaticAssertFailure
+    template <Concepts::Iterator>
+    struct MountainEnumerableTypeS { static_assert(false); };
+
+    template <Concepts::StandardIterator T>
+    struct MountainEnumerableTypeS<T> { using Type = StandardIteratorType<T>; };
+
+    template <Requirements::MountainIterator T>
+    struct MountainEnumerableTypeS<T> { using Type = MountainIteratorType<T>; };
 
     template <Requirements::MountainEnumerable T>
     using MountainEnumerableType = typename T::Iterator::Type;
