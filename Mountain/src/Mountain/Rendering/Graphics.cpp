@@ -113,6 +113,35 @@ void Graphics::SetVertexAttributeInt(
 
 void Graphics::BindFramebuffer(const FramebufferType type, const uint32_t framebuffer) { glBindFramebuffer(ToOpenGl(type), framebuffer); }
 
+void Graphics::CopyTextureData(
+    const uint32_t sourceTextureId,
+    const int32_t sourceMipmapLevel,
+    const Vector2i sourceOffset,
+    const uint32_t destinationTextureId,
+    const int32_t destinationMipmapLevel,
+    const Vector2i destinationOffset,
+    const Vector2i size
+)
+{
+    glCopyImageSubData(
+        sourceTextureId,
+        GL_TEXTURE_2D,
+        sourceMipmapLevel,
+        sourceOffset.x,
+        sourceOffset.y,
+        0,
+        destinationTextureId,
+        GL_TEXTURE_2D,
+        destinationMipmapLevel,
+        destinationOffset.x,
+        destinationOffset.y,
+        0,
+        size.x,
+        size.y,
+        1
+    );
+}
+
 uint32_t Graphics::GetLastError() { return glGetError(); }
 
 const char_t* Graphics::GetLastErrorString() { return reinterpret_cast<const char_t*>(glGetString(glGetError())); }

@@ -93,7 +93,7 @@ namespace Mountain
 
         /// @brief Adds a range of elements to the end of the List.
         template <Concepts::Enumerable EnumerableT>
-        void AddRange(EnumerableT enumerable);
+        void AddRange(const EnumerableT& enumerable);
 
         /// @brief Adds a range of elements to the end of the List.
         void AddRange(const std::initializer_list<T>& values);
@@ -441,10 +441,10 @@ namespace Mountain
     }
 
     template <Concepts::DynamicContainerType T>
-    template <Concepts::Enumerable Enumerable>
-    void List<T>::AddRange(Enumerable enumerable)
+    template <Concepts::Enumerable EnumerableT>
+    void List<T>::AddRange(const EnumerableT& enumerable)
     {
-        static_assert(Meta::IsSame<Meta::EnumerableType<Enumerable>, T>, "List::AddRange() needs the type of the enumerable to be the same as the List");
+        static_assert(Meta::IsSame<Meta::EnumerableType<EnumerableT>, T>, "List::AddRange() needs the type of the enumerable to be the same as the List");
 
         AddRange(enumerable.begin(), enumerable.end());
     }
