@@ -227,7 +227,7 @@ void GameExample::Render()
     static Color clearColor = Color::Black();
     Draw::Clear(clearColor);
 
-    Draw::Texture(*ResourceManager::Get<Texture>("assets/strawberry/normal00.png"), Vector2::Zero(), Vector2::One());
+    Draw::Texture(*ResourceManager::Get<Texture>("assets/landscapes.jpg"), Vector2::Zero(), Vector2(0.5f));
 
     particleSystem.Render();
 
@@ -235,16 +235,25 @@ void GameExample::Render()
 
     Draw::RenderTarget(renderTarget, Vector2::Zero(), Window::GetSize() / renderTarget.GetSize());
 
+
     vignette.effect.imageBindings.Emplace(Renderer::GetCurrentRenderTarget().GetTextureId(), 0u, Graphics::ImageShaderAccess::WriteOnly);
+
     filmGrain.effect.imageBindings.Emplace(Renderer::GetCurrentRenderTarget().GetTextureId(), 0u, Graphics::ImageShaderAccess::WriteOnly);
-    chromaticAberration.effect.imageBindings.Emplace(Renderer::GetCurrentRenderTarget().GetTextureId(), 0u, Graphics::ImageShaderAccess::WriteOnly);
+
+    chromaticAberration.effect.imageBindings.Emplace(Renderer::GetCurrentRenderTarget().GetTextureId(), 1u, Graphics::ImageShaderAccess::WriteOnly);
 
     if (vignette.enabled)
         vignette.effect.Apply(Renderer::GetCurrentRenderTarget().GetSize(), false);
     if (filmGrain.enabled)
         filmGrain.effect.Apply(Renderer::GetCurrentRenderTarget().GetSize(), false);
+
+    Graphics::GpuTexture render;
+    render.Create();
+    chromaticAberration.effect.imageBindings.Emplace(render.GetId(), 0u, Graphics::ImageShaderAccess::ReadOnly);
+
     if (chromaticAberration.enabled)
         chromaticAberration.effect.Apply(Renderer::GetCurrentRenderTarget().GetSize(), false);
+
 
     vignette.effect.imageBindings.Clear();
     filmGrain.effect.imageBindings.Clear();
@@ -329,8 +338,11 @@ void GameExample::Render()
         ShowEffect("Chromatic Aberration", chromaticAberration, [](auto& e)
        {
            static float_t intensity = 1.f;
-           ImGui::DragFloat("intensity", &intensity, 0.01f, 0.f, 10.f);
-           //e.SetIntensity(intensity);
+           ImGui::DragFloat("intensity", &intensity, 0.01f, 0.f, 100.f);
+            static float angle = 0;
+           ImGui::DragAngle("angle", &angle);
+           e.SetIntensity(intensity);
+            e.SetAngle(angle);
        });
 
         ImGuiUtils::PopCollapsingHeader();

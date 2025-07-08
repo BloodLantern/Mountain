@@ -8,7 +8,6 @@ layout (rgba32f, binding = 0) uniform image2D sourceImage;
 layout (rgba32f, binding = 1) uniform image2D destinationImage;
 
 uniform float intensity;
-uniform float angle;
 
 void main()
 {
@@ -19,20 +18,21 @@ void main()
 
     vec4 originalColor = imageLoad(sourceImage, texel);
 
-    vec4 newColor;
-    vec2 direction = Rotated(vec2(1,0), angle);
-    direction = vec2(direction.x, - direction.y);
-
     vec2 UVs = texelf/sizef;
-    float offset = (0.005 * intensity);
 
-    vec2 redOffset = UVs - direction * offset;
-    vec2 blueOffset = UVs + direction * offset;
+    vec2 center = vec2(0.5, 0.5);
+    vec2 direction = normalize(uv - center);
+    float dist = length(uv - center);
+
+    float offset = intensity * dist;
+
+    vec2 redOffset = uv + direction * offset;
+    vec2 blueOffset = uv - direction * offset;
 
     newColor.r = imageLoad(sourceImage, ivec2(redOffset * sizef)).r;
     newColor.g = originalColor.g;
     newColor.b = imageLoad(sourceImage, ivec2(blueOffset * sizef)).b;
-    newColor.a = originalColor.a;
+    newColor.a = originalColor.a ;
 
     imageStore(destinationImage, texel, newColor);
 }
