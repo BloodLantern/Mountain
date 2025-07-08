@@ -13,9 +13,9 @@ namespace Mountain
 {
     struct StateMachineCallbacks
     {
-        Action update{};
-        Action begin{};
-        Action end{};
+        Action<> update{};
+        Action<> begin{};
+        Action<> end{};
         CoroutineFunction<> coroutine{};
     };
 
@@ -80,12 +80,12 @@ namespace Mountain
 
     private:
         template <typename U>
-        using Array = std::array<U, magic_enum::enum_count<T>()>;
+        using FunctionArray = Array<U, magic_enum::enum_count<T>()>;
 
-        Array<Action> m_Begins;
-        Array<Action> m_Updates;
-        Array<Action> m_Ends;
-        Array<CoroutineFunction<>> m_Coroutines;
+        FunctionArray<Action<>> m_Begins;
+        FunctionArray<Action<>> m_Updates;
+        FunctionArray<Action<>> m_Ends;
+        FunctionArray<CoroutineFunction<>> m_Coroutines;
 
         Coroutine m_CurrentCoroutine;
 

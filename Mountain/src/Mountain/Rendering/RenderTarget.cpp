@@ -134,10 +134,11 @@ const List<LightSource>& RenderTarget::GetLightSources() const { return m_LightS
 void RenderTarget::SetDebugName([[maybe_unused]] const std::string_view name) const
 {
 #ifdef _DEBUG
-    m_Texture.SetDebugName(name);
-    glObjectLabel(GL_FRAMEBUFFER, m_Framebuffer, static_cast<GLsizei>(name.length()), name.data());
-    glObjectLabel(GL_BUFFER, m_Vbo, static_cast<GLsizei>(name.length()), name.data());
-    glObjectLabel(GL_VERTEX_ARRAY, m_Vao, static_cast<GLsizei>(name.length()), name.data());
+    const std::string str{name.data(), name.length()};
+    m_Texture.SetDebugName(str + " Texture");
+    glObjectLabel(GL_FRAMEBUFFER, m_Framebuffer, 0, (str + " Framebuffer").c_str());
+    glObjectLabel(GL_BUFFER, m_Vbo, 0, (str + " VBO").c_str());
+    glObjectLabel(GL_VERTEX_ARRAY, m_Vao, 0, (str + " VAO").c_str());
 #endif
 }
 
