@@ -1,7 +1,5 @@
 ﻿#include "Mountain/Input/Time.hpp"
 
-#include <GLFW/glfw3.h>
-
 #include "Mountain/Screen.hpp"
 #include "Mountain/Window.hpp"
 #include "Mountain/Utils/Windows.hpp"
@@ -12,7 +10,7 @@ float_t Time::GetTargetDeltaTime()
 {
     if (targetFps.has_value())
         return 1.f / static_cast<float_t>(targetFps.value());
-    return Window::GetVSync() ? 1.f / static_cast<float_t>(Screen::GetRefreshRate()) : 0.f;
+    return Window::GetVSync() ? 1.f / Screen::GetRefreshRate() : 0.f;
 }
 
 bool_t Time::OnInterval(const float_t interval) { return Calc::OnInterval(m_TotalTime, m_LastTotalTime, interval); }

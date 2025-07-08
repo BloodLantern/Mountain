@@ -55,17 +55,17 @@ namespace Mountain
         MOUNTAIN_API static Vector2 GetMouseWheel();
 
     private:
-        using KeyStatuses = std::array<bool_t, magic_enum::enum_count<KeyStatus>()>;
+        using KeyStatuses = Array<bool_t, magic_enum::enum_count<KeyStatus>()>;
 
-        using MouseStatuses = std::array<bool_t, magic_enum::enum_count<MouseButtonStatus>()>;
+        using MouseStatuses = Array<bool_t, magic_enum::enum_count<MouseButtonStatus>()>;
 
         MOUNTAIN_API static inline uint32_t m_CurrentBoundWindow = 0;
 
-        MOUNTAIN_API static inline std::array<KeyStatuses, static_cast<size_t>(Key::Count)> m_Keyboard;
+        MOUNTAIN_API static inline Array<KeyStatuses, static_cast<size_t>(Key::Count)> m_Keyboard;
 
-        MOUNTAIN_API static inline std::array<MouseStatuses, magic_enum::enum_count<MouseButton>()> m_Mouse;
+        MOUNTAIN_API static inline Array<MouseStatuses, magic_enum::enum_count<MouseButton>()> m_Mouse;
 
-        MOUNTAIN_API static inline std::array<GamepadInput, GamepadMax> m_Gamepads;
+        MOUNTAIN_API static inline Array<GamepadInput, GamepadMax> m_Gamepads;
 
         MOUNTAIN_API static inline Vector2 m_LastMousePosition;
 
@@ -91,11 +91,10 @@ namespace Mountain
 
         static void HandleMouseWheel(int32_t wheelX, int32_t wheelY);
 
-        static void HandleJoyStickCallBack(int32_t jid, int32_t event);
+        static void ConnectGamepad(uint32_t id);
+        static void DisconnectGamepad(uint32_t id);
 
         static void UpdateGamepads();
-
-        static void UpdateConnectedGamepads();
 
         friend class Window;
         friend class Game;

@@ -4,8 +4,6 @@
 
 #include <SDL3/SDL.h>
 
-#include "GLFW/glfw3.h"
-
 using namespace Mountain;
 
 Vector2i Screen::GetPosition(int32_t screenIndex)

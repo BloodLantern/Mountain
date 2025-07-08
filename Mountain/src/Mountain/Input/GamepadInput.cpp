@@ -1,12 +1,11 @@
 #include "Mountain/Input/GamepadInput.hpp"
 
+#include "Mountain/Utils/Color.hpp"
+#include "Mountain/Utils/Logger.hpp"
+
 using namespace Mountain;
 
-bool_t GamepadInput::GetConnected() const { return m_IsConnected; }
-
 const std::string& GamepadInput::GetName() const { return m_Name; }
-
-const std::array<float_t, magic_enum::enum_count<GamepadAxis>()>& GamepadInput::GetAxes() const { return m_Axes; }
 
 float_t GamepadInput::GetAxis(const GamepadAxis axis) const { return m_Axes[static_cast<uint32_t>(axis)]; }
 
@@ -27,9 +26,32 @@ Vector2i GamepadInput::GetDirectionalPad() const
     };
 }
 
-const std::array<GamepadButtonStatuses, magic_enum::enum_count<GamepadButton>()>& GamepadInput::GetButtons() const { return m_Buttons; }
-
 bool_t GamepadInput::GetButton(const GamepadButton button, const GamepadButtonStatus status) const
 {
     return m_Buttons[static_cast<uint32_t>(button)][static_cast<uint32_t>(status)];
+}
+
+void GamepadInput::SetLight(const Color& color) const
+{
+    const uint8_t r = static_cast<uint8_t>(color.r * 255.f);
+    const uint8_t g = static_cast<uint8_t>(color.g * 255.f);
+    const uint8_t b = static_cast<uint8_t>(color.b * 255.f);
+
+    if (!SDL_SetGamepadLED(m_Handle, r, g, b))
+        Logger::LogError("Failed to set gamepad light : {}", SDL_GetError());
+}
+
+void GamepadInput::Rumble(const float_t lowFrequency, const float_t highFrequency, const uint32_t duration) const
+{
+    if (lowFrequency < 0.f || lowFrequency > 1.f)
+        THROW(ArgumentException("Rumble frequency value should be within [0;1]", "lowFrequency"));
+
+    if (highFrequency < 0.f || highFrequency > 1.f)
+        THROW(ArgumentException("Rumble frequency value should be within [0;1]", "highFrequency"));
+
+    const uint16_t low = static_cast<uint16_t>(lowFrequency * 0xFFFF);
+    const uint16_t high = static_cast<uint16_t>(highFrequency * 0xFFFF);
+
+    if (!SDL_RumbleGamepad(m_Handle, low, high, duration))
+        Logger::LogError("Failed to perform gamepad rumble : {}", SDL_GetError());
 }

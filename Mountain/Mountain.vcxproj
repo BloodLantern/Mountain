@@ -85,11 +85,8 @@
     <ClInclude Include="externals\src\freetype\tttags.h" />
     <ClInclude Include="externals\src\ft2build.h" />
     <ClInclude Include="externals\src\glad\glad.h" />
-    <ClInclude Include="externals\src\GLFW\glfw3.h" />
-    <ClInclude Include="externals\src\GLFW\glfw3native.h" />
     <ClInclude Include="externals\src\ImGui\imconfig.h" />
     <ClInclude Include="externals\src\ImGui\imgui.h" />
-    <ClInclude Include="externals\src\ImGui\imgui_impl_glfw.h" />
     <ClInclude Include="externals\src\ImGui\imgui_impl_opengl3.h" />
     <ClInclude Include="externals\src\ImGui\imgui_impl_opengl3_loader.h" />
     <ClInclude Include="externals\src\ImGui\imgui_impl_sdl3.h" />
@@ -346,7 +343,6 @@
     <ClCompile Include="externals\src\ImGui\imgui.cpp" />
     <ClCompile Include="externals\src\ImGui\imgui_demo.cpp" />
     <ClCompile Include="externals\src\ImGui\imgui_draw.cpp" />
-    <ClCompile Include="externals\src\ImGui\imgui_impl_glfw.cpp" />
     <ClCompile Include="externals\src\ImGui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="externals\src\ImGui\imgui_impl_sdl3.cpp" />
     <ClCompile Include="externals\src\ImGui\imgui_stdlib.cpp" />
@@ -511,14 +507,14 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
       <AdditionalLibraryDirectories>externals/libs/static/$(Configuration);externals/libs/static/Common</AdditionalLibraryDirectories>
-      <AdditionalDependencies>mimalloc.dll.lib;mimalloc-redirect.lib;glfw3.lib;freetype.lib;OpenAL32.lib;soft_oal.lib;SDL3.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>mimalloc.dll.lib;mimalloc-redirect.lib;freetype.lib;OpenAL32.lib;soft_oal.lib;SDL3.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <CreateHotPatchableImage>Enabled</CreateHotPatchableImage>
       <OptimizeReferences>false</OptimizeReferences>
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>externals/libs/static/$(Configuration);externals/libs/static/Common</AdditionalLibraryDirectories>
-      <AdditionalDependencies>toolbox.lib;opengl32.lib;glfw3.lib;freetype.lib;OpenAL32.lib</AdditionalDependencies>
+      <AdditionalDependencies>toolbox.lib;opengl32.lib;freetype.lib;OpenAL32.lib</AdditionalDependencies>
       <TreatLibWarningAsErrors>true</TreatLibWarningAsErrors>
       <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
     </Lib>
@@ -544,14 +540,14 @@
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
       <OptimizeReferences>false</OptimizeReferences>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
-      <AdditionalDependencies>mimalloc.dll.lib;mimalloc-redirect.lib;glfw3.lib;freetype.lib;OpenAL32.lib;soft_oal.lib;SDL3.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>mimalloc.dll.lib;mimalloc-redirect.lib;freetype.lib;OpenAL32.lib;soft_oal.lib;SDL3.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>externals/libs/static/$(Configuration);externals/libs/static/Common</AdditionalLibraryDirectories>
       <CreateHotPatchableImage>Enabled</CreateHotPatchableImage>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>externals/libs/static/$(Configuration);externals/libs/static/Common</AdditionalLibraryDirectories>
-      <AdditionalDependencies>toolbox.lib;opengl32.lib;glfw3.lib;freetype.lib;OpenAL32.lib</AdditionalDependencies>
+      <AdditionalDependencies>toolbox.lib;opengl32.lib;freetype.lib;OpenAL32.lib</AdditionalDependencies>
       <TreatLibWarningAsErrors>true</TreatLibWarningAsErrors>
       <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
     </Lib>

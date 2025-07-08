@@ -277,6 +277,8 @@ void ImGuiUtils::ShowInputsWindow()
         if (!gamepad.GetConnected())
             continue;
 
+        ImGui::PushID(&i + i);
+        
         if (ImGui::TreeNode(std::format("Gamepad {} - {}", i, gamepad.GetName()).c_str()))
         {
             ImGui::Text("Left stick axis: %f, %f", gamepad.GetAxis(GamepadAxis::LeftStickHorizontal), gamepad.GetAxis(GamepadAxis::LeftStickVertical));
@@ -296,11 +298,13 @@ void ImGuiUtils::ShowInputsWindow()
                 ImGui::Text("Button %u - %.*s: %d", j, static_cast<int32_t>(name.length()), name.data(), gamepad.GetButton(button));
             }
 
-            Vector2 dpad = static_cast<Vector2>(gamepad.GetDirectionalPad());
+            Vector2 dpad = static_cast<Vector2>(gamepad.GetDirectionalPad()).Normalized();
             DirectionVector("Directional pad", &dpad);
 
             ImGui::TreePop();
         }
+
+        ImGui::PopID();
     }
     ImGui::End();
 }

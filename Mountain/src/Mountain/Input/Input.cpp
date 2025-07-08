@@ -1,8 +1,8 @@
 ﻿#include "Mountain/Input/Input.hpp"
 
-#include <GLFW/glfw3.h>
-
+#include "Time.hpp"
 #include "Mountain/Utils/Logger.hpp"
+#include "SDL3/SDL_gamepad.h"
 #include "SDL3/SDL_keycode.h"
 #include "SDL3/SDL_mouse.h"
 
@@ -10,15 +10,15 @@ using namespace Mountain;
 
 bool_t Input::GetKey(const Key key, const KeyStatus status)
 {
-    return m_Keyboard.at(static_cast<size_t>(key)).at(static_cast<size_t>(status));
+    return m_Keyboard.At(static_cast<size_t>(key)).At(static_cast<size_t>(status));
 }
 
 bool_t Input::GetMouseButton(const MouseButton mouseButton, const MouseButtonStatus status)
 {
-    return m_Mouse.at(static_cast<size_t>(mouseButton)).at(static_cast<size_t>(status));
+    return m_Mouse.At(static_cast<size_t>(mouseButton)).At(static_cast<size_t>(status));
 }
 
-const GamepadInput& Input::GetGamepad(uint32_t gamepadId)
+const GamepadInput& Input::GetGamepad(const uint32_t gamepadId)
 {
     if (gamepadId > GamepadMax)
     {
@@ -26,7 +26,7 @@ const GamepadInput& Input::GetGamepad(uint32_t gamepadId)
         THROW(ArgumentException{"Invalid gamepad ID", "gamepadId"});
     }
 
-    return m_Gamepads.at(gamepadId);
+    return m_Gamepads.At(gamepadId);
 }
 
 uint32_t Input::GetGamepadsConnected()
@@ -46,43 +46,43 @@ void Input::HandleKeyboard(size_t key, const KeyAction action)
         key = key - SDLK_CAPSLOCK + static_cast<size_t>(Key::NormalEnd);
     }
 
-    if (key > m_Keyboard.size())
+    if (key > m_Keyboard.GetSize())
         return;
 
-    KeyStatuses& keyStatuses = m_Keyboard.at(key);
+    KeyStatuses& keyStatuses = m_Keyboard.At(key);
 
     switch (action)
     {
         case KeyAction::Release:
-            keyStatuses.at(static_cast<size_t>(KeyStatus::Down)) = false;
-            keyStatuses.at(static_cast<size_t>(KeyStatus::Release)) = true;
-            keyStatuses.at(static_cast<size_t>(KeyStatus::Repeat)) = false;
+            keyStatuses.At(static_cast<size_t>(KeyStatus::Down)) = false;
+            keyStatuses.At(static_cast<size_t>(KeyStatus::Release)) = true;
+            keyStatuses.At(static_cast<size_t>(KeyStatus::Repeat)) = false;
             break;
 
         case KeyAction::Press:
-            keyStatuses.at(static_cast<size_t>(KeyStatus::Pressed)) = true;
-            keyStatuses.at(static_cast<size_t>(KeyStatus::Down)) = true;
+            keyStatuses.At(static_cast<size_t>(KeyStatus::Pressed)) = true;
+            keyStatuses.At(static_cast<size_t>(KeyStatus::Down)) = true;
             break;
 
         case KeyAction::Repeat:
-            keyStatuses.at(static_cast<size_t>(KeyStatus::Repeat)) = true;
+            keyStatuses.At(static_cast<size_t>(KeyStatus::Repeat)) = true;
             break;
     }
 }
 
 void Input::HandleMouseButton(const size_t mouseButton, const bool_t pressed)
 {
-    MouseStatuses& keyStatuses = m_Mouse.at(mouseButton);
+    MouseStatuses& keyStatuses = m_Mouse.At(mouseButton);
 
     if (pressed)
     {
-        keyStatuses.at(static_cast<size_t>(MouseButtonStatus::Pressed)) = true;
-        keyStatuses.at(static_cast<size_t>(MouseButtonStatus::Down)) = true;
+        keyStatuses.At(static_cast<size_t>(MouseButtonStatus::Pressed)) = true;
+        keyStatuses.At(static_cast<size_t>(MouseButtonStatus::Down)) = true;
     }
     else
     {
-        keyStatuses.at(static_cast<size_t>(MouseButtonStatus::Down)) = false;
-        keyStatuses.at(static_cast<size_t>(MouseButtonStatus::Release)) = true;
+        keyStatuses.At(static_cast<size_t>(MouseButtonStatus::Down)) = false;
+        keyStatuses.At(static_cast<size_t>(MouseButtonStatus::Release)) = true;
     }
 }
 
@@ -91,23 +91,39 @@ void Input::HandleMouseWheel(const int32_t wheelX, const int32_t wheelY)
     m_MouseWheel += { static_cast<float_t>(wheelX), static_cast<float_t>(wheelY) };
 }
 
-void Input::HandleJoyStickCallBack(const int32_t jid, const int32_t event)
+void Input::ConnectGamepad(const uint32_t id)
 {
-    GamepadInput& gamepad = m_Gamepads[jid];
-    switch (event)
-    {
-        case GLFW_CONNECTED:
-            gamepad.m_IsConnected = true;
-            break;
+    if (id == 0)
+        return;
 
-        case GLFW_DISCONNECTED:
-            gamepad.m_IsConnected = false;
-            break;
+    GamepadInput* gamepad = FindFirst(m_Gamepads, [](const GamepadInput& g) { return !g.m_IsConnected; });
 
-        default:
-            break;
-    }
+    if (!gamepad)
+        return;
+
+    gamepad->m_Id = id;
+    gamepad->m_Handle = SDL_OpenGamepad(id);
+    gamepad->m_Name = SDL_GetGamepadName(gamepad->m_Handle);
+    gamepad->m_IsConnected = true;
+    gamepad->SetLight(Color::Black());
 }
+
+void Input::DisconnectGamepad(const uint32_t id)
+{
+    GamepadInput* gamepad = FindFirst(m_Gamepads, [id](const GamepadInput& g) { return g.m_Id == id; });
+
+    if (!gamepad)
+        return;
+
+    SDL_CloseGamepad(gamepad->m_Handle);
+    gamepad->m_Id = 0;
+    gamepad->m_Handle = nullptr;
+    gamepad->m_IsConnected = false;
+
+    gamepad->m_Axes.Fill(0.f);
+    gamepad->m_Buttons.Fill({});
+}
+
 void Input::UpdateGamepads()
 {
     for (uint32_t i = 0; i < GamepadMax; i++)
@@ -117,106 +133,75 @@ void Input::UpdateGamepads()
         if (!gamepad.m_IsConnected)
             continue;
 
-        GLFWgamepadstate state;
-
-        if (!glfwGetGamepadState(static_cast<int32_t>(i), &state))
-            return;
-
         for (uint32_t k = 0; k < magic_enum::enum_count<GamepadAxis>(); k++)
         {
-            float_t& axisValue = gamepad.m_Axes[k];
-            axisValue = Calc::MakeZero(state.axes[k], GamepadInput::nullAnalogValue);
+            const uint16_t value = SDL_GetGamepadAxis(gamepad.m_Handle, static_cast<SDL_GamepadAxis>(k));
+            const float_t floatValue = Utils::RemapValue(static_cast<float_t>(value), { -32768.f, 32767.f }, { -1, 1 });
+
+            gamepad.m_Axes[k] = Calc::MakeZero(floatValue, GamepadInput::nullAnalogValue);
 
             const GamepadAxis axis = static_cast<GamepadAxis>(k);
             if (axis == GamepadAxis::LeftTrigger || axis == GamepadAxis::RightTrigger)
-                axisValue = std::max(0.f, axisValue);
+                gamepad.m_Axes[k] = std::max(0.f, gamepad.m_Axes[k]);
         }
 
         for (uint32_t k = 0; k < magic_enum::enum_count<GamepadButton>(); k++)
         {
-            GamepadButtonStatuses& statuses = gamepad.m_Buttons.at(k);
-            const bool_t wasDown = statuses.at(static_cast<size_t>(GamepadButtonStatus::Down));
-            const bool_t wasUp = statuses.at(static_cast<size_t>(GamepadButtonStatus::Up));
+            GamepadButtonStatuses& statuses = gamepad.m_Buttons.At(k);
+            const bool_t wasDown = statuses.At(static_cast<size_t>(GamepadButtonStatus::Down));
+            const bool_t wasUp = statuses.At(static_cast<size_t>(GamepadButtonStatus::Up));
 
-            if (k < std::size(state.buttons))
+            if (k < magic_enum::enum_count<SDL_GamepadButton>())
             {
-                switch (state.buttons[k])
+                if (SDL_GetGamepadButton(gamepad.m_Handle, static_cast<SDL_GamepadButton>(k)))
                 {
-                    case GLFW_RELEASE:
-                        if (wasUp)
-                            break;
-
-                        statuses.at(static_cast<size_t>(GamepadButtonStatus::Down)) = false;
-                        statuses.at(static_cast<size_t>(GamepadButtonStatus::Up)) = true;
-                        statuses.at(static_cast<size_t>(GamepadButtonStatus::Pressed)) = false;
-                        statuses.at(static_cast<size_t>(GamepadButtonStatus::Released)) = wasDown;
-                        break;
-
-                    case GLFW_PRESS:
-                        if (wasDown)
-                            break;
-
-                        statuses.at(static_cast<size_t>(GamepadButtonStatus::Down)) = true;
-                        statuses.at(static_cast<size_t>(GamepadButtonStatus::Up)) = false;
-                        statuses.at(static_cast<size_t>(GamepadButtonStatus::Pressed)) = wasUp;
-                        statuses.at(static_cast<size_t>(GamepadButtonStatus::Released)) = false;
-                        break;
-
-                    default:
-                        break;
+                    if (!wasDown)
+                    {
+                        statuses.At(static_cast<size_t>(GamepadButtonStatus::Down)) = true;
+                        statuses.At(static_cast<size_t>(GamepadButtonStatus::Up)) = false;
+                        statuses.At(static_cast<size_t>(GamepadButtonStatus::Pressed)) = wasUp;
+                        statuses.At(static_cast<size_t>(GamepadButtonStatus::Released)) = false;
+                    }
+                }
+                else
+                {
+                    if (!wasUp)
+                    {
+                        statuses.At(static_cast<size_t>(GamepadButtonStatus::Down)) = false;
+                        statuses.At(static_cast<size_t>(GamepadButtonStatus::Up)) = true;
+                        statuses.At(static_cast<size_t>(GamepadButtonStatus::Pressed)) = false;
+                        statuses.At(static_cast<size_t>(GamepadButtonStatus::Released)) = wasDown;
+                    }
                 }
             }
-            else
+            else if (static_cast<GamepadButton>(k) == GamepadButton::LeftTrigger || static_cast<GamepadButton>(k) == GamepadButton::RightTrigger)
             {
                 // Mountain extensions
-                switch (static_cast<GamepadButton>(k))
+                const GamepadAxis trigger = static_cast<GamepadAxis>(
+                        k
+                        - static_cast<int32_t>(GamepadButton::LeftTrigger)
+                        + static_cast<int32_t>(GamepadAxis::LeftTrigger)
+                    );
+
+                const bool_t release = gamepad.m_Axes[static_cast<size_t>(trigger)] < GamepadInput::nullAnalogValue;
+
+                if (release)
                 {
-                    case GamepadButton::LeftTrigger:
-                    case GamepadButton::RightTrigger:
-                    {
-                        const GamepadAxis trigger = static_cast<GamepadAxis>(
-                                k
-                                - static_cast<int32_t>(GamepadButton::LeftTrigger)
-                                + static_cast<int32_t>(GamepadAxis::LeftTrigger)
-                            );
+                    statuses.At(static_cast<size_t>(GamepadButtonStatus::Down)) = false;
+                    statuses.At(static_cast<size_t>(GamepadButtonStatus::Up)) = true;
+                    statuses.At(static_cast<size_t>(GamepadButtonStatus::Pressed)) = false;
+                    statuses.At(static_cast<size_t>(GamepadButtonStatus::Released)) = wasDown;
+                }
+                else
+                {
 
-                        const bool_t release = gamepad.m_Axes[static_cast<size_t>(trigger)] < GamepadInput::nullAnalogValue;
-
-                        if (release)
-                        {
-                            statuses.at(static_cast<size_t>(GamepadButtonStatus::Down)) = false;
-                            statuses.at(static_cast<size_t>(GamepadButtonStatus::Up)) = true;
-                            statuses.at(static_cast<size_t>(GamepadButtonStatus::Pressed)) = false;
-                            statuses.at(static_cast<size_t>(GamepadButtonStatus::Released)) = wasDown;
-                        }
-                        else
-                        {
-
-                            statuses.at(static_cast<size_t>(GamepadButtonStatus::Down)) = true;
-                            statuses.at(static_cast<size_t>(GamepadButtonStatus::Up)) = false;
-                            statuses.at(static_cast<size_t>(GamepadButtonStatus::Pressed)) = wasUp;
-                            statuses.at(static_cast<size_t>(GamepadButtonStatus::Released)) = false;
-                        }
-                        break;
-                    }
-
-                    default:
-                        break;
+                    statuses.At(static_cast<size_t>(GamepadButtonStatus::Down)) = true;
+                    statuses.At(static_cast<size_t>(GamepadButtonStatus::Up)) = false;
+                    statuses.At(static_cast<size_t>(GamepadButtonStatus::Pressed)) = wasUp;
+                    statuses.At(static_cast<size_t>(GamepadButtonStatus::Released)) = false;
                 }
             }
         }
-
-        gamepad.m_Name = glfwGetJoystickName(static_cast<int32_t>(i));
-    }
-}
-
-void Input::UpdateConnectedGamepads()
-{
-    for (int32_t i = 0; i < static_cast<int32_t>(GamepadMax); i++)
-    {
-        const int32_t present = glfwJoystickPresent(i);
-        GamepadInput& gamepad = m_Gamepads.at(static_cast<size_t>(i));
-        gamepad.m_IsConnected = static_cast<bool_t>(present);
     }
 }
 
@@ -226,7 +211,6 @@ void Input::Update()
 
     float_t x, y;
     SDL_GetMouseState(&x, &y);
-    Logger::LogInfo("{} ; {}", x, y);
 
     m_MousePosition = { x, y };
     m_MouseDelta = m_MousePosition - m_LastMousePosition;
@@ -238,25 +222,25 @@ void Input::Reset()
 {
     for (auto& button : m_Mouse)
     {
-        button.at(static_cast<size_t>(MouseButtonStatus::Pressed)) = false;
-        button.at(static_cast<size_t>(MouseButtonStatus::Release)) = false;
+        button.At(static_cast<size_t>(MouseButtonStatus::Pressed)) = false;
+        button.At(static_cast<size_t>(MouseButtonStatus::Release)) = false;
     }
 
     m_MouseWheel = Vector2::Zero();
 
     for (auto& key : m_Keyboard)
     {
-        key.at(static_cast<size_t>(KeyStatus::Pressed)) = false;
-        key.at(static_cast<size_t>(KeyStatus::Release)) = false;
-        key.at(static_cast<size_t>(KeyStatus::Repeat)) = false;
+        key.At(static_cast<size_t>(KeyStatus::Pressed)) = false;
+        key.At(static_cast<size_t>(KeyStatus::Release)) = false;
+        key.At(static_cast<size_t>(KeyStatus::Repeat)) = false;
     }
 
     for (auto& gamepad : m_Gamepads)
     {
         for (auto& button : gamepad.m_Buttons)
         {
-            button.at(static_cast<size_t>(GamepadButtonStatus::Pressed)) = false;
-            button.at(static_cast<size_t>(GamepadButtonStatus::Released)) = false;
+            button.At(static_cast<size_t>(GamepadButtonStatus::Pressed)) = false;
+            button.At(static_cast<size_t>(GamepadButtonStatus::Released)) = false;
         }
     }
 }
@@ -272,12 +256,10 @@ void Input::Initialize()
     // glfwSetJoystickCallback(HandleJoyStickCallBack);
 
     KeyStatuses defaultKeys;
-    defaultKeys.fill(false);
-    m_Keyboard.fill(defaultKeys);
+    defaultKeys.Fill(false);
+    m_Keyboard.Fill(defaultKeys);
 
     MouseStatuses defaultMouseButtons;
-    defaultMouseButtons.fill(false);
-    m_Mouse.fill(defaultMouseButtons);
-
-    UpdateConnectedGamepads();
+    defaultMouseButtons.Fill(false);
+    m_Mouse.Fill(defaultMouseButtons);
 }

@@ -10,6 +10,8 @@
 #include <magic_enum/magic_enum.hpp>
 
 #include "Mountain/Core.hpp"
+#include "Mountain/Containers/Array.hpp"
+#include "SDL3/SDL_gamepad.h"
 
 /// @file GamepadInput.hpp
 /// @brief Defines gamepad input types and enumerations.
@@ -41,27 +43,75 @@ namespace Mountain
     /// Defines the gamepad button values according to the Xbox controller button placements.
     enum class GamepadButton : uint8_t
     {
+        /// @brief Xbox A face button
         A,
+        /// @brief Xbox B face button
         B,
+        /// @brief Xbox X face button
         X,
+        /// @brief Xbox Y face button
         Y,
-        LeftBumper,
-        RightBumper,
+        /// @brief Xbox back button (minus for Switch, share for Playstation)
         Back,
-        Start,
+        /// @brief Xbox guide button (TODO verify home for Switch, PS for Playstation)
         Guide,
+        /// @brief Xbox start button (plus for Switch, options for Playstation)
+        Start,
+        /// @brief Left stick press
         LeftStick,
+        /// @brief Right stick press
         RightStick,
+        /// @brief Left bumper
+        LeftBumper,
+        /// @brief Right bumper
+        RightBumper,
+        /// @brief D-pad up
         DirectionalPadUp,
-        DirectionalPadRight,
+        /// @brief D-pad down
         DirectionalPadDown,
+        /// @brief D-pad left
         DirectionalPadLeft,
+        /// @brief D-pad right
+        DirectionalPadRight,
 
-        // Mountain extensions, not supported by GLFW as buttons
+        /// @brief Misc. button, depends on the controller
+        Misc1,
+        /// @brief Right primary paddle
+        RightPaddle1,
+        /// @brief Left primary paddle
+        LeftPaddle1,
+        /// @brief Right secondary paddle
+        RightPaddle2,
+        /// @brief Left primary paddle
+        LeftPaddle2,
+
+        /// @brief Playstation touchpad
+        Touchpad,
+        /// @brief Misc. button
+        Misc2,
+        /// @brief Misc. button
+        Misc3,
+        /// @brief Misc. button
+        Misc4,
+        /// @brief Misc. button
+        Misc5,
+        /// @brief Misc. button
+        Misc6,
+
+        // Mountain extensions, not supported as native buttons
+        /// @brief Left trigger treated as a button press
         LeftTrigger,
+        /// @brief Right trigger treated as a button press
         RightTrigger,
 
-        None
+        None,
+
+        /// @brief Xbox series X share button, bound to @c Misc1
+        XboxXShare = Misc1,
+        /// @brief PS5 microphone button, bound to @c Misc1
+        Ps5Microphone = Misc1,
+        /// @brief Switch capture button, bound to @c Misc1
+        SwitchCapture = Misc1,
     };
 
     /// @brief Gamepad button
@@ -77,20 +127,21 @@ namespace Mountain
         Released
     };
 
-    using GamepadButtonStatuses = std::array<bool_t, magic_enum::enum_count<GamepadButtonStatus>()>;
+    using GamepadButtonStatuses = Array<bool_t, magic_enum::enum_count<GamepadButtonStatus>()>;
 
     /// @brief Information about a gamepad
     class GamepadInput
     {
     public:
+        using AxesArray = Array<float_t, magic_enum::enum_count<GamepadAxis>()>;
+        using ButtonsArray = Array<GamepadButtonStatuses, magic_enum::enum_count<GamepadButton>()>;
+        
         /// @brief Threshold that dictates that an axis analog value becomes 0
         static inline float_t nullAnalogValue = 1.5259022e-05f;
 
-        MOUNTAIN_API bool_t GetConnected() const;
+        MOUNTAIN_API GETTER(bool_t, Connected, m_IsConnected)
 
         MOUNTAIN_API const std::string& GetName() const;
-
-        MOUNTAIN_API const std::array<float_t, magic_enum::enum_count<GamepadAxis>()>& GetAxes() const;
 
         MOUNTAIN_API float_t GetAxis(GamepadAxis axis) const;
 
@@ -98,9 +149,21 @@ namespace Mountain
 
         MOUNTAIN_API Vector2i GetDirectionalPad() const;
 
-        MOUNTAIN_API const std::array<GamepadButtonStatuses, magic_enum::enum_count<GamepadButton>()>& GetButtons() const;
-
         MOUNTAIN_API bool_t GetButton(GamepadButton button, GamepadButtonStatus status = GamepadButtonStatus::Down) const;
+
+        /// @brief Sets the gamepad LED light
+        /// @param color Color
+        MOUNTAIN_API void SetLight(const Color& color) const;
+
+        /// @brief Performs a rumble
+        /// @param lowFrequency Low rumble frequency, value in [0;1]
+        /// @param highFrequency High rumble frequency, value in [0;1]
+        /// @param duration Rumble duration, in ms
+        MOUNTAIN_API void Rumble(float_t lowFrequency, float_t highFrequency, uint32_t duration) const;
+
+        MOUNTAIN_API GETTER(const ButtonsArray&, Buttons, m_Buttons)
+
+        MOUNTAIN_API GETTER(const AxesArray&, Axes, m_Axes)
 
     private:
         /// @brief Whether the gamepad is connected
@@ -108,10 +171,14 @@ namespace Mountain
         /// @brief The human-readable name of the gamepad
         std::string m_Name;
         /// @brief Array of axis analog values
-        std::array<float_t, magic_enum::enum_count<GamepadAxis>()> m_Axes{};
+        AxesArray m_Axes{};
         /// @brief Array of button statuses
-        std::array<GamepadButtonStatuses, magic_enum::enum_count<GamepadButton>()> m_Buttons{};
-
+        ButtonsArray m_Buttons{};
+        /// @brief Internal id of the gamepad
+        SDL_JoystickID m_Id;
+        /// @brief Native handle
+        SDL_Gamepad* m_Handle;
+        
         friend class Input;
     };
 }

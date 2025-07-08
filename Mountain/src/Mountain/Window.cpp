@@ -253,6 +253,14 @@ void Window::PollEvents()
                 Input::HandleMouseWheel(event.wheel.integer_x, event.wheel.integer_y);
                 break;
 
+            case SDL_EVENT_GAMEPAD_ADDED:
+                Input::ConnectGamepad(event.gdevice.which);
+                break;
+
+            case SDL_EVENT_GAMEPAD_REMOVED:
+                Input::DisconnectGamepad(event.gdevice.which);
+                break;
+
             default:
                 // Discard any other events
                 break;
