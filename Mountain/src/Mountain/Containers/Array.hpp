@@ -3,6 +3,7 @@
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Containers/ContiguousIterator.hpp"
+// ReSharper disable once CppUnusedIncludeDirective
 #include "Mountain/Containers/EnumerableExt.hpp"
 #include "Mountain/Containers/FunctionTypes.hpp"
 #include "Mountain/Exceptions/ThrowHelper.hpp"
@@ -15,6 +16,8 @@ namespace Mountain
     struct Array
     {
         using Type = T;
+        using ContainedType = Type;
+        using EnumeratedType = Type;
         using Iterator = ContiguousIterator<T>;
         using ConstIterator = ContiguousConstIterator<T>;
 
@@ -52,22 +55,10 @@ namespace Mountain
         constexpr const T& operator[](size_t index) const noexcept;
 
         [[nodiscard]]
-        constexpr Iterator GetBeginIterator() noexcept;
-
-        [[nodiscard]]
-        constexpr Iterator GetEndIterator() noexcept;
-
-        [[nodiscard]]
         constexpr Iterator begin() noexcept;
 
         [[nodiscard]]
         constexpr Iterator end() noexcept;
-
-        [[nodiscard]]
-        constexpr ConstIterator GetBeginIterator() const noexcept;
-
-        [[nodiscard]]
-        constexpr ConstIterator GetEndIterator() const noexcept;
 
         [[nodiscard]]
         constexpr ConstIterator begin() const noexcept;
@@ -76,18 +67,12 @@ namespace Mountain
         constexpr ConstIterator end() const noexcept;
 
         [[nodiscard]]
-        constexpr ConstIterator GetBeginConstIterator() const noexcept;
-
-        [[nodiscard]]
-        constexpr ConstIterator GetEndConstIterator() const noexcept;
-
-        [[nodiscard]]
         constexpr ConstIterator cbegin() const noexcept;
 
         [[nodiscard]]
         constexpr ConstIterator cend() const noexcept;
 
-        ENUMERABLE_EXTENSIONS_DEFINITIONS(Array)
+        ENUMERABLE_EXTENSIONS_IMPLEMENTATION
     };
 
     template <class T, class... Other>
@@ -139,38 +124,20 @@ namespace Mountain
     constexpr const T& Array<T, Size>::operator[](size_t index) const noexcept { return data[index]; }
 
     template <Concepts::ContainerType T, size_t Size>
-    constexpr typename Array<T, Size>::Iterator Array<T, Size>::GetBeginIterator() noexcept { return Iterator{data, 0}; }
+    constexpr typename Array<T, Size>::Iterator Array<T, Size>::begin() noexcept { return Iterator{data, 0}; }
 
     template <Concepts::ContainerType T, size_t Size>
-    constexpr typename Array<T, Size>::Iterator Array<T, Size>::GetEndIterator() noexcept { return Iterator{data, Size}; }
+    constexpr typename Array<T, Size>::Iterator Array<T, Size>::end() noexcept { return Iterator{data, Size}; }
 
     template <Concepts::ContainerType T, size_t Size>
-    constexpr typename Array<T, Size>::Iterator Array<T, Size>::begin() noexcept { return GetBeginIterator(); }
+    constexpr typename Array<T, Size>::ConstIterator Array<T, Size>::begin() const noexcept { return cbegin(); }
 
     template <Concepts::ContainerType T, size_t Size>
-    constexpr typename Array<T, Size>::Iterator Array<T, Size>::end() noexcept { return GetEndIterator(); }
+    constexpr typename Array<T, Size>::ConstIterator Array<T, Size>::end() const noexcept { return cend(); }
 
     template <Concepts::ContainerType T, size_t Size>
-    constexpr typename Array<T, Size>::ConstIterator Array<T, Size>::GetBeginIterator() const noexcept { return GetBeginConstIterator(); }
+    constexpr typename Array<T, Size>::ConstIterator Array<T, Size>::cbegin() const noexcept { return ConstIterator{data, 0}; }
 
     template <Concepts::ContainerType T, size_t Size>
-    constexpr typename Array<T, Size>::ConstIterator Array<T, Size>::GetEndIterator() const noexcept { return GetEndConstIterator(); }
-
-    template <Concepts::ContainerType T, size_t Size>
-    constexpr typename Array<T, Size>::ConstIterator Array<T, Size>::begin() const noexcept { return GetBeginConstIterator(); }
-
-    template <Concepts::ContainerType T, size_t Size>
-    constexpr typename Array<T, Size>::ConstIterator Array<T, Size>::end() const noexcept { return GetEndConstIterator(); }
-
-    template <Concepts::ContainerType T, size_t Size>
-    constexpr typename Array<T, Size>::ConstIterator Array<T, Size>::GetBeginConstIterator() const noexcept { return ConstIterator{data, 0}; }
-
-    template <Concepts::ContainerType T, size_t Size>
-    constexpr typename Array<T, Size>::ConstIterator Array<T, Size>::GetEndConstIterator() const noexcept { return ConstIterator{data, Size}; }
-
-    template <Concepts::ContainerType T, size_t Size>
-    constexpr typename Array<T, Size>::ConstIterator Array<T, Size>::cbegin() const noexcept { return GetBeginConstIterator(); }
-
-    template <Concepts::ContainerType T, size_t Size>
-    constexpr typename Array<T, Size>::ConstIterator Array<T, Size>::cend() const noexcept { return GetEndConstIterator(); }
+    constexpr typename Array<T, Size>::ConstIterator Array<T, Size>::cend() const noexcept { return ConstIterator{data, Size}; }
 }

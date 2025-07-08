@@ -683,6 +683,24 @@ namespace Mountain::Graphics
 
     MOUNTAIN_API void BindFramebuffer(FramebufferType type, uint32_t framebuffer);
 
+    /// @brief Copy data from one texture to another
+    /// @param sourceTextureId The texture ID from which the data will get copied
+    /// @param sourceMipmapLevel The mipmap level of the source texture to copy the data from
+    /// @param sourceOffset The offset in the source texture to start copying from
+    /// @param destinationTextureId The texture ID to which the data will get copied
+    /// @param destinationOffset The offset in the destination texture to start copying to
+    /// @param destinationMipmapLevel The mipmap level of the destination texture to copy the data to
+    /// @param size The amount of data to copy
+    MOUNTAIN_API void CopyTextureData(
+        uint32_t sourceTextureId,
+        int32_t sourceMipmapLevel,
+        Vector2i sourceOffset,
+        uint32_t destinationTextureId,
+        int32_t destinationMipmapLevel,
+        Vector2i destinationOffset,
+        Vector2i size
+    );
+
     MOUNTAIN_API uint32_t GetLastError();
     MOUNTAIN_API const char_t* GetLastErrorString();
 

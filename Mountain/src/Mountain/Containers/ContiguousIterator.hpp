@@ -12,6 +12,7 @@ namespace Mountain
     struct ContiguousConstIterator
     {
         using Type = T;
+        using IteratedType = Type;
         using value_type = T; // Necessary to satisfy the various std iterator concepts
         using iterator_concept = std::contiguous_iterator_tag; // Same as above
 
@@ -105,6 +106,7 @@ namespace Mountain
     {
         using Base = ContiguousConstIterator<T>;
         using Type = T;
+        using IteratedType = Type;
         using value_type = T; // Necessary to satisfy the various std iterator concepts
 
         using ContiguousConstIterator<T>::ContiguousConstIterator;

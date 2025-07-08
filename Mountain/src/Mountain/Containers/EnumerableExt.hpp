@@ -4,47 +4,51 @@
 #include "Mountain/Containers/FunctionTypes.hpp"
 #include "Mountain/Utils/Requirements.hpp"
 
-#define ENUMERABLE_EXTENSIONS_DEFINITIONS(type) \
+/// @brief Defines member functions for all enumerable extensions
+#define ENUMERABLE_EXTENSIONS_IMPLEMENTATION \
     [[nodiscard]] \
-    bool_t All(const Predicate<Type>& predicate) const { return ::Mountain::All(*this, predicate); } \
+    bool_t All(const ::Mountain::Predicate<EnumeratedType>& predicate) const { return ::Mountain::All(*this, predicate); } \
     \
     [[nodiscard]] \
-    bool_t Any(const Predicate<Type>& predicate) const { return ::Mountain::Any(*this, predicate); } \
+    bool_t Any(const ::Mountain::Predicate<EnumeratedType>& predicate) const { return ::Mountain::Any(*this, predicate); } \
     \
-    template <typename T, typename = Meta::EnableIf<Meta::IsEqualityComparableWith<T, Type>>> \
+    template <typename T, typename = ::Mountain::Meta::EnableIf<::Mountain::Meta::IsEqualityComparableWith<T, EnumeratedType>>> \
     [[nodiscard]] \
     bool_t Contains(const T& element) const { return ::Mountain::Contains(*this, element); } \
     \
     [[nodiscard]] \
-    List<Type> FindAll(const Predicate<Type>& predicate) const { return ::Mountain::FindAll(*this, predicate); } \
+    ::Mountain::List<EnumeratedType> FindAll(const ::Mountain::Predicate<EnumeratedType>& predicate) const \
+    { return ::Mountain::FindAll(*this, predicate); } \
     \
     [[nodiscard]] \
-    Type& First() { return ::Mountain::First(*this); } \
+    EnumeratedType& First() { return ::Mountain::First(*this); } \
     \
     [[nodiscard]] \
-    const Type& First() const { return ::Mountain::First(*this); } \
+    const EnumeratedType& First() const { return ::Mountain::First(*this); } \
     \
     [[nodiscard]] \
-    Type& Last() { return ::Mountain::Last(*this); } \
+    EnumeratedType& Last() { return ::Mountain::Last(*this); } \
     \
     [[nodiscard]] \
-    const Type& Last() const { return ::Mountain::Last(*this); } \
+    const EnumeratedType& Last() const { return ::Mountain::Last(*this); } \
     \
     [[nodiscard]] \
-    Type& Single() { return ::Mountain::Single(*this); } \
+    EnumeratedType& Single() { return ::Mountain::Single(*this); } \
     \
     [[nodiscard]] \
-    const Type& Single() const { return ::Mountain::Single(*this); } \
+    const EnumeratedType& Single() const { return ::Mountain::Single(*this); } \
     \
-    void ForEach(const Operation<Type>& operation) { return ::Mountain::ForEach(*this, operation); } \
+    void ForEach(const ::Mountain::Operation<EnumeratedType>& operation) { return ::Mountain::ForEach(*this, operation); } \
     \
-    void ForEach(const Operation<const Type>& operation) const { return ::Mountain::ForEach(*this, operation); } \
+    void ForEach(const ::Mountain::Operation<const EnumeratedType>& operation) const { return ::Mountain::ForEach(*this, operation); } \
     \
-    template <typename = Meta::EnableIf<Meta::IsSortable<Iterator, Comparer<T>, Projection<T>>>> \
+    template <typename = ::Mountain::Meta::EnableIf< \
+        ::Mountain::Meta::IsSortable<Iterator, ::Mountain::Comparer<EnumeratedType>, ::Mountain::Projection<EnumeratedType>>>> \
     void Sort() { return ::Mountain::Sort(*this); } \
     \
-    template <typename = Meta::EnableIf<Meta::IsSortable<Iterator, Comparer<T>, Projection<T>>>> \
-    void Sort(const Comparer<Type>& comparer) { return ::Mountain::Sort(*this, comparer); }
+    template <typename = ::Mountain::Meta::EnableIf< \
+        ::Mountain::Meta::IsSortable<Iterator, ::Mountain::Comparer<EnumeratedType>, ::Mountain::Projection<EnumeratedType>>>> \
+    void Sort(const ::Mountain::Comparer<EnumeratedType>& comparer) { return ::Mountain::Sort(*this, comparer); }
 
 namespace Mountain
 {
@@ -188,7 +192,7 @@ namespace Mountain
     template <Requirements::MountainEnumerable EnumerableT>
     size_t GetSize(const EnumerableT& enumerable)
     {
-        return enumerable.GetEndConstIterator() - enumerable.GetBeginConstIterator();
+        return enumerable.cend() - enumerable.cbegin();
     }
 
     template <Requirements::MountainEnumerable EnumerableT>
@@ -238,7 +242,7 @@ namespace Mountain
     template <Requirements::MountainEnumerable EnumerableT, typename T>
     std::optional<T&> FindLast(EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate)
     {
-        for (typename EnumerableT::Iterator it = enumerable.GetEndIterator() - 1; it + 1 != enumerable.GetBeginIterator(); it--)
+        for (typename EnumerableT::Iterator it = enumerable.end() - 1; it + 1 != enumerable.begin(); it--)
         {
             T& value = *it;
             if (predicate(value))
@@ -272,7 +276,7 @@ namespace Mountain
     {
         if (IsEmpty(enumerable))
             THROW(InvalidOperationException{"Cannot get the first element of an empty enumerable."});
-        return *enumerable.GetBeginIterator();
+        return *enumerable.begin();
     }
 
     template <Requirements::MountainEnumerable EnumerableT, typename T>
@@ -286,7 +290,7 @@ namespace Mountain
     {
         if (IsEmpty(enumerable))
             THROW(InvalidOperationException{"Cannot get the last element of an empty enumerable."});
-        return *--enumerable.GetEndIterator();
+        return *--enumerable.end();
     }
 
     template <Requirements::MountainEnumerable EnumerableT, typename T>
@@ -300,7 +304,7 @@ namespace Mountain
     {
         if (GetSize(enumerable) != 1)
             THROW(InvalidOperationException{"Cannot get the only element of an enumerable that doesn't have only one element."});
-        return *enumerable.GetBeginIterator();
+        return *enumerable.begin();
     }
 
     template <Requirements::MountainEnumerable EnumerableT, typename T>

@@ -353,7 +353,7 @@ namespace Mountain
 
         /// @brief A container type is any non-const, non-function, non-reference type that can be default, copy and move constructed.
         template <typename T>
-        concept DynamicContainerType = ContainerType<T> && Meta::IsDefaultConstructible<T> && Meta::IsCopyAssignable<T>;
+        concept DynamicContainerType = ContainerType<T>;
 
         template <typename T>
         concept StandardIterator = std::forward_iterator<T> && !Pointer<T>;
