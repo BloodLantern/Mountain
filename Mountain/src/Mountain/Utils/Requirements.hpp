@@ -14,6 +14,30 @@
 #define REQUIRES_OPERATOR(value, operator, expectedReturnType, otherValue) \
     { value operator otherValue } -> ::Mountain::Concepts::ConvertibleTo<expectedReturnType>
 
+#define ENUMERABLE_WRAPPER_IMPLEMENTATION(wrappedEnumerableField) \
+    using WrappedEnumerable = decltype(wrappedEnumerableField); \
+    using Iterator = WrappedEnumerable::Iterator; \
+    using ConstIterator = WrappedEnumerable::ConstIterator; \
+    using EnumeratedType = Iterator::Type; \
+    \
+    [[nodiscard]] \
+    Iterator begin() noexcept { return wrappedEnumerableField.begin(); } \
+    \
+    [[nodiscard]] \
+    Iterator end() noexcept { return wrappedEnumerableField.end(); } \
+    \
+    [[nodiscard]] \
+    ConstIterator begin() const noexcept { return wrappedEnumerableField.begin(); } \
+    \
+    [[nodiscard]] \
+    ConstIterator end() const noexcept { return wrappedEnumerableField.end(); } \
+    \
+    [[nodiscard]] \
+    ConstIterator cbegin() const noexcept { return wrappedEnumerableField.cbegin(); } \
+    \
+    [[nodiscard]] \
+    ConstIterator cend() const noexcept { return wrappedEnumerableField.cend(); }
+
 // ReSharper enable CppClangTidyBugproneMacroParentheses
 
 namespace Mountain::Requirements
@@ -49,8 +73,8 @@ namespace Mountain::Requirements
     template <typename T>
     concept MountainContainer = requires (T& v, const T& cv)
     {
-        typename T::Type;
-        requires Concepts::ContainerType<typename T::Type>;
+        typename T::ContainedType;
+        requires Concepts::ContainerType<typename T::ContainedType>;
         REQUIRES_FUNCTION(cv, GetSize, size_t);
         REQUIRES_FUNCTION(cv, IsEmpty, bool_t);
     };
@@ -58,7 +82,7 @@ namespace Mountain::Requirements
     template <typename T>
     concept MountainIteratorBase = requires (T& v, const T& cv)
     {
-        typename T::Type;
+        typename T::IteratedType;
         cv.GetCurrent();
         REQUIRES_FUNCTION(v, Reset, void);
         *cv;
@@ -71,40 +95,60 @@ namespace Mountain::Requirements
     template <typename T>
     concept MountainConstIterator = MountainIteratorBase<T> && requires (T& v, const T& cv)
     {
-        REQUIRES_FUNCTION(cv, GetCurrent, const typename T::Type*);
-        REQUIRES_FUNCTION(cv, operator*, const typename T::Type&);
-        REQUIRES_FUNCTION(cv, operator->, const typename T::Type*);
+        REQUIRES_FUNCTION(cv, GetCurrent, const typename T::IteratedType*);
+        REQUIRES_FUNCTION(cv, operator*, const typename T::IteratedType&);
+        REQUIRES_FUNCTION(cv, operator->, const typename T::IteratedType*);
     };
 
     template <typename T>
     concept MountainIterator = MountainIteratorBase<T> && requires (T& v, const T& cv)
     {
-        REQUIRES_FUNCTION(cv, GetCurrent, typename T::Type*);
-        REQUIRES_FUNCTION(cv, operator*, typename T::Type&);
-        REQUIRES_FUNCTION(cv, operator->, typename T::Type*);
+        REQUIRES_FUNCTION(cv, GetCurrent, typename T::IteratedType*);
+        REQUIRES_FUNCTION(cv, operator*, typename T::IteratedType&);
+        REQUIRES_FUNCTION(cv, operator->, typename T::IteratedType*);
     };
 
+    /// @brief A type is an Enumerable if it supports iterator enumerations itself, or if it is a wrapper around another Enumerable.
     template <typename T>
     concept MountainEnumerable = requires (T& v, const T& cv)
     {
+        typename T::EnumeratedType;
+
         typename T::Iterator;
         requires MountainIterator<typename T::Iterator>;
-        REQUIRES_FUNCTION(v, GetBeginIterator, typename T::Iterator);
-        REQUIRES_FUNCTION(v, GetEndIterator, typename T::Iterator);
         REQUIRES_FUNCTION(v, begin, typename T::Iterator);
         REQUIRES_FUNCTION(v, end, typename T::Iterator);
 
         typename T::ConstIterator;
         requires MountainConstIterator<typename T::ConstIterator>;
-        REQUIRES_FUNCTION(cv, GetBeginConstIterator, typename T::ConstIterator);
-        REQUIRES_FUNCTION(cv, GetEndConstIterator, typename T::ConstIterator);
         REQUIRES_FUNCTION(cv, cbegin, typename T::ConstIterator);
         REQUIRES_FUNCTION(cv, cend, typename T::ConstIterator);
 
-        REQUIRES_FUNCTION(cv, GetBeginIterator, typename T::ConstIterator);
-        REQUIRES_FUNCTION(cv, GetEndIterator, typename T::ConstIterator);
         REQUIRES_FUNCTION(cv, begin, typename T::ConstIterator);
         REQUIRES_FUNCTION(cv, end, typename T::ConstIterator);
+
+        requires Meta::AllSame<typename T::EnumeratedType, typename T::Iterator::IteratedType, typename T::ConstIterator::IteratedType>;
+    };
+
+    /// @brief A type is an Enumerable if it supports iterator enumerations itself, or if it is a wrapper around another Enumerable.
+    template <typename T>
+    concept MountainEnumerableWrapper = MountainEnumerable<T> && requires(T& v, const T& cv)
+    {
+        typename T::WrappedEnumerable;
+        requires MountainEnumerable<typename T::WrappedEnumerable>;
+
+        typename T::WrappedEnumerable::Iterator;
+        requires MountainIterator<typename T::WrappedEnumerable::Iterator>;
+        REQUIRES_FUNCTION(v, begin, typename T::WrappedEnumerable::Iterator);
+        REQUIRES_FUNCTION(v, end, typename T::WrappedEnumerable::Iterator);
+
+        typename T::WrappedEnumerable::ConstIterator;
+        requires MountainConstIterator<typename T::WrappedEnumerable::ConstIterator>;
+        REQUIRES_FUNCTION(cv, cbegin, typename T::WrappedEnumerable::ConstIterator);
+        REQUIRES_FUNCTION(cv, cend, typename T::WrappedEnumerable::ConstIterator);
+
+        REQUIRES_FUNCTION(cv, begin, typename T::WrappedEnumerable::ConstIterator);
+        REQUIRES_FUNCTION(cv, end, typename T::WrappedEnumerable::ConstIterator);
     };
 
     template <typename T>

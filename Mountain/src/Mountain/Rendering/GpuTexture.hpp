@@ -22,7 +22,7 @@ namespace Mountain::Graphics
         /// @brief Shorthand for @code Delete(); Create();@endcode
         void Recreate();
 
-        /// @brief Create the texture on the GPU from the given immutable texture
+        /// @brief Create a view texture on the GPU from the given immutable texture
         /// @param originalTextureId The texture ID whose data is to be what this texture will view
         /// @param newInternalFormat The internal format for the newly created texture.
         /// This format must be compatible with the original texture format as per this <a href="https://www.khronos.org/opengl/wiki/Template:Glapi_view_format_map">table</a>.
@@ -32,9 +32,9 @@ namespace Mountain::Graphics
         /// @see <a href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/glGenTextures.xhtml">glGenTextures()</a>
         /// <a href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/glTextureView.xhtml">glTextureView()</a>
         /// @note The original texture <b>must</b> be immutable
-        void CreateFrom(uint32_t originalTextureId, InternalFormat newInternalFormat, uint32_t minMipmapLevel, uint32_t mipmapLevels);
+        void CreateViewFrom(uint32_t originalTextureId, InternalFormat newInternalFormat, uint32_t minMipmapLevel, uint32_t mipmapLevels);
 
-        /// @brief Create the texture on the GPU from the given immutable texture
+        /// @brief Create a view texture on the GPU from the given immutable texture
         /// @param originalGpuTexture The texture whose data is to be what this texture will view
         /// @param newInternalFormat The internal format for the newly created texture.
         /// This format must be compatible with the original texture format as per this <a href="https://www.khronos.org/opengl/wiki/Template:Glapi_view_format_map">table</a>.
@@ -44,7 +44,7 @@ namespace Mountain::Graphics
         /// @see <a href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/glGenTextures.xhtml">glGenTextures()</a>
         /// <a href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/glTextureView.xhtml">glTextureView()</a>
         /// @note The original texture <b>must</b> be immutable
-        void CreateFrom(GpuTexture originalGpuTexture, InternalFormat newInternalFormat, uint32_t minMipmapLevel, uint32_t mipmapLevels);
+        void CreateViewFrom(GpuTexture originalGpuTexture, InternalFormat newInternalFormat, uint32_t minMipmapLevel, uint32_t mipmapLevels);
 
         /// @brief Initialize the immutable data storage on the GPU
         /// @param mipmapLevels The number of mipmap levels to initialize

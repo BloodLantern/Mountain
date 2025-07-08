@@ -180,6 +180,8 @@
     <ClInclude Include="src\Mountain\Containers\FunctionTypes.hpp" />
     <ClInclude Include="src\Mountain\Containers\List.hpp" />
     <ClInclude Include="src\Mountain\Core.hpp" />
+    <ClInclude Include="src\Mountain\Ecs\EntityList.hpp" />
+    <ClInclude Include="src\Mountain\Ecs\Scene.hpp" />
     <ClInclude Include="src\Mountain\Exceptions\ArgumentException.hpp" />
     <ClInclude Include="src\Mountain\Exceptions\Exception.hpp" />
     <ClInclude Include="src\Mountain\Exceptions\ThrowHelper.hpp" />
@@ -279,6 +281,8 @@
     <ClCompile Include="src\Mountain\Collision\Collision.cpp" />
     <ClCompile Include="src\Mountain\Collision\Grid.cpp" />
     <ClCompile Include="src\Mountain\Collision\Hitbox.cpp" />
+    <ClCompile Include="src\Mountain\Ecs\EntityList.cpp" />
+    <ClCompile Include="src\Mountain\Ecs\Scene.cpp" />
     <ClCompile Include="src\Mountain\Exceptions\ArgumentException.cpp" />
     <ClCompile Include="src\Mountain\Exceptions\Exception.cpp" />
     <ClCompile Include="src\Mountain\FileSystem\Directory.cpp" />
@@ -365,6 +369,8 @@
     <Content Include="shaders_internal\triangle_colored\triangle_colored.frag" />
     <Content Include="shaders_internal\triangle_colored\triangle_colored.vert" />
     <Content Include="shaders_internal\utils.glsl" />
+    <Content Include="src\Mountain\BinaryResources\README.md" />
+    <Content Include="..\README.md" />
     <Content Include="tools\generate_resources.cmd" />
   </ItemGroup>
   <ItemGroup>
