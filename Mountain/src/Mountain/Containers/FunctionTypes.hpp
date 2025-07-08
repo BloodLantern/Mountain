@@ -4,8 +4,8 @@
 
 namespace Mountain
 {
-
-    using Action = std::function<void()>;
+    template <typename... Args>
+    using Action = std::function<void(Args...)>;
 
     template <typename T>
     using Predicate = std::function<bool_t(const T& element)>;
