@@ -17,22 +17,23 @@ void main()
     vec2 sizef = vec2(size);
 
     vec4 originalColor = imageLoad(sourceImage, texel);
+    vec4 newColor;
 
     vec2 UVs = texelf/sizef;
 
     vec2 center = vec2(0.5, 0.5);
-    vec2 direction = normalize(uv - center);
-    float dist = length(uv - center);
+    vec2 direction = normalize(UVs - center);
+    float dist = length(UVs - center);
 
-    float offset = intensity * dist;
+    float offset = 0.005 * intensity * dist;
 
-    vec2 redOffset = uv + direction * offset;
-    vec2 blueOffset = uv - direction * offset;
+    vec2 redOffset = UVs + direction * offset;
+    vec2 blueOffset = UVs - direction * offset;
 
     newColor.r = imageLoad(sourceImage, ivec2(redOffset * sizef)).r;
     newColor.g = originalColor.g;
     newColor.b = imageLoad(sourceImage, ivec2(blueOffset * sizef)).b;
-    newColor.a = originalColor.a ;
+    newColor.a = originalColor.a;
 
     imageStore(destinationImage, texel, newColor);
 }

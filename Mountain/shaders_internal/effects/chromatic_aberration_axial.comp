@@ -18,8 +18,8 @@ void main()
     vec2 sizef = vec2(size);
 
     vec4 originalColor = imageLoad(sourceImage, texel);
-
     vec4 newColor;
+
     vec2 direction = Rotated(vec2(1,0), angle);
     direction = vec2(direction.x, - direction.y);
 

@@ -20,5 +20,4 @@ namespace Mountain
     private:
     };
 
-    CHECK_REQUIREMENT(Requirements::MountainEnumerableWrapper, EntityList);
 }

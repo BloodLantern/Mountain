@@ -52,6 +52,7 @@ namespace
     PostProcessingEffect<Vignette> vignette;
     PostProcessingEffect<FilmGrain> filmGrain;
     PostProcessingEffect<ChromaticAberrationAxial> chromaticAberrationAxial;
+    PostProcessingEffect<ChromaticAberrationTransverse> chromaticAberrationTransverse;
 
     template <Concepts::Effect T>
     void ShowEffect(
@@ -131,6 +132,7 @@ void GameExample::LoadResources()
     vignette.effect.LoadResources();
     filmGrain.effect.LoadResources();
     chromaticAberrationAxial.effect.LoadResources();
+    chromaticAberrationTransverse.effect.LoadResources();
 }
 
 void GameExample::Initialize()
@@ -234,13 +236,15 @@ void GameExample::Render()
     Renderer::PopRenderTarget();
 
     Draw::RenderTarget(renderTarget, Vector2::Zero(), Window::GetSize() / renderTarget.GetSize());
-
+    Draw::Flush();
 
     vignette.effect.imageBindings.Emplace(Renderer::GetCurrentRenderTarget().GetTextureId(), 0u, Graphics::ImageShaderAccess::WriteOnly);
 
     filmGrain.effect.imageBindings.Emplace(Renderer::GetCurrentRenderTarget().GetTextureId(), 0u, Graphics::ImageShaderAccess::WriteOnly);
 
     chromaticAberrationAxial.effect.imageBindings.Emplace(Renderer::GetCurrentRenderTarget().GetTextureId(), 1u, Graphics::ImageShaderAccess::WriteOnly);
+
+    chromaticAberrationTransverse.effect.imageBindings.Emplace(Renderer::GetCurrentRenderTarget().GetTextureId(), 1u, Graphics::ImageShaderAccess::WriteOnly);
 
     if (vignette.enabled)
         vignette.effect.Apply(Renderer::GetCurrentRenderTarget().GetSize(), false);
@@ -249,15 +253,29 @@ void GameExample::Render()
 
     Graphics::GpuTexture render;
     render.Create();
+    render.SetStorage(Graphics::InternalFormat::RedGreenBlueAlpha32Float, Renderer::GetCurrentRenderTarget().GetSize());
+    Graphics::CopyTextureData(Renderer::GetCurrentRenderTarget().GetTextureId(), 0, Vector2i::Zero(),
+        render.GetId(), 0, Vector2i::Zero(), Renderer::GetCurrentRenderTarget().GetSize());
+
     chromaticAberrationAxial.effect.imageBindings.Emplace(render.GetId(), 0u, Graphics::ImageShaderAccess::ReadOnly);
 
     if (chromaticAberrationAxial.enabled)
         chromaticAberrationAxial.effect.Apply(Renderer::GetCurrentRenderTarget().GetSize(), false);
 
+    Graphics::CopyTextureData(Renderer::GetCurrentRenderTarget().GetTextureId(), 0, Vector2i::Zero(),
+       render.GetId(), 0, Vector2i::Zero(), Renderer::GetCurrentRenderTarget().GetSize());
+
+    chromaticAberrationTransverse.effect.imageBindings.Emplace(render.GetId(), 0u, Graphics::ImageShaderAccess::ReadOnly);
+
+
+    if (chromaticAberrationTransverse.enabled)
+        chromaticAberrationTransverse.effect.Apply(Renderer::GetCurrentRenderTarget().GetSize(), false);
 
     vignette.effect.imageBindings.Clear();
     filmGrain.effect.imageBindings.Clear();
     chromaticAberrationAxial.effect.imageBindings.Clear();
+    chromaticAberrationTransverse.effect.imageBindings.Clear();
+    render.Delete();
 
     if (debugRender)
     {
@@ -335,15 +353,21 @@ void GameExample::Render()
             ImGui::DragFloat("intensity", &intensity, 0.01f, 0.f, 10.f);
             e.SetIntensity(intensity);
         });
-        ShowEffect("Chromatic Aberration", chromaticAberrationAxial, [](auto& e)
-       {
-           static float_t intensity = 1.f;
-           ImGui::DragFloat("intensity", &intensity, 0.01f, 0.f, 100.f);
+        ShowEffect("Chromatic Aberration Axial", chromaticAberrationAxial, [](auto& e)
+        {
+            static float_t intensity = 1.f;
+            ImGui::DragFloat("intensity", &intensity, 0.01f, 0.f, 10.f);
             static float angle = 0;
-           ImGui::DragAngle("angle", &angle);
-           e.SetIntensity(intensity);
+            ImGui::DragAngle("angle", &angle);
+            e.SetIntensity(intensity);
             e.SetAngle(angle);
-       });
+        });
+        ShowEffect("Chromatic Aberration Transverse", chromaticAberrationTransverse, [](auto& e)
+        {
+            static float_t intensity = 1.f;
+            ImGui::DragFloat("intensity", &intensity, 0.01f, 0.f, 10.f);
+            e.SetIntensity(intensity);
+        });
 
         ImGuiUtils::PopCollapsingHeader();
     }
