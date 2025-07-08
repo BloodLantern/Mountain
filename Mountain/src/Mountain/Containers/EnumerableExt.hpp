@@ -224,7 +224,7 @@ namespace Mountain
                 return &e;
         }
 
-        return {};
+        return nullptr;
     }
 
     template <Requirements::MountainEnumerable EnumerableT, typename T>
@@ -236,7 +236,7 @@ namespace Mountain
                 return &e;
         }
 
-        return {};
+        return nullptr;
     }
 
     template <Requirements::MountainEnumerable EnumerableT, typename T>
@@ -249,7 +249,7 @@ namespace Mountain
                 return &value;
         }
 
-        return {};
+        return nullptr;
     }
 
     template <Requirements::MountainEnumerable EnumerableT, typename T>
@@ -262,7 +262,7 @@ namespace Mountain
                 return &value;
         }
 
-        return {};
+        return nullptr;
     }
 
     template <Requirements::MountainEnumerable EnumerableT, typename T>

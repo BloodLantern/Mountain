@@ -13,7 +13,6 @@
 #include <Math/vector2.hpp>
 #include <Math/vector3.hpp>
 
-#include "Mountain/Containers/FunctionTypes.hpp"
 
 namespace Mountain
 {

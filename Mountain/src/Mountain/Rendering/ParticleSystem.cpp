@@ -24,12 +24,6 @@ ParticleSystem::ParticleSystem(const uint32_t maxParticles)
     m_UpdateComputeShader = ResourceManager::Get<ComputeShader>(Utils::GetBuiltinShadersPath() + "particles/update.comp");
     m_DrawShader = ResourceManager::Get<Shader>(Utils::GetBuiltinShadersPath() + "particles/draw");
 
-    modules.AddRange(
-        {
-            std::make_shared<ParticleSystemModules::Shape>(),
-        }
-    );
-
     m_LiveSsbo.Create();
     m_ParticleSsbo.Create();
     m_DrawVao.Create();

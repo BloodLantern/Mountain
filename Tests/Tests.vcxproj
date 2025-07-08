@@ -60,7 +60,7 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <EnableModules>true</EnableModules>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>include;externals\include;..\Mountain\src;..\Mountain\externals\src;..\MathToolbox\src;LivePP\API\x64</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;..\Mountain\src;..\Mountain\externals\src;..\MathToolbox\src;LivePP\API\x64</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <AdditionalOptions>/Gw %(AdditionalOptions)</AdditionalOptions>
@@ -87,7 +87,7 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <EnableModules>true</EnableModules>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>include;externals\include;..\Mountain\src;..\Mountain\externals\src;..\MathToolbox\src;LivePP\API\x64</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;..\Mountain\src;..\Mountain\externals\src;..\MathToolbox\src;LivePP\API\x64</AdditionalIncludeDirectories>
       <AdditionalOptions>/Gw %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -106,6 +106,8 @@
     <ClCompile Include="src\AnimatedCharacter.cpp" />
     <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\Player.cpp" />
+    <ClCompile Include="src\Scenes\ParticleSystemScene.cpp" />
+    <ClCompile Include="src\Scenes\TestScene.cpp" />
     <ClCompile Include="src\SpinComponent.cpp" />
     <ClCompile Include="src\TestGame.cpp" />
     <ClCompile Include="src\Main.cpp" />
@@ -121,6 +123,8 @@
     <ClInclude Include="src\AnimatedCharacter.hpp" />
     <ClInclude Include="src\Camera.hpp" />
     <ClInclude Include="src\Player.hpp" />
+    <ClInclude Include="src\Scenes\ParticleSystemScene.hpp" />
+    <ClInclude Include="src\Scenes\TestScene.hpp" />
     <ClInclude Include="src\SpinComponent.hpp" />
     <ClInclude Include="src\TestEntity.hpp" />
     <ClInclude Include="src\TestGame.hpp" />

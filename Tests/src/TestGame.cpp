@@ -4,34 +4,28 @@
 
 #include <ImGui/imgui.h>
 
-#include <magic_enum/magic_enum.hpp>
+#include <Mountain/Globals.hpp>
+#include <Mountain/Window.hpp>
+#include <Mountain/Input/Time.hpp>
+#include <Mountain/Rendering/Draw.hpp>
 
-#include "Mountain/Screen.hpp"
-#include "Mountain/Ecs/Entity.hpp"
-#include "Mountain/Ecs/Component/AudioListener.hpp"
 #include "Mountain/FileSystem/FileManager.hpp"
-#include "Mountain/Input/Input.hpp"
-#include "Mountain/Input/Time.hpp"
-#include "Mountain/Rendering/Draw.hpp"
-#include "Mountain/Rendering/Effect.hpp"
-#include "Mountain/Rendering/Graphics.hpp"
-#include "Mountain/Rendering/Renderer.hpp"
 #include "Mountain/Resource/ResourceManager.hpp"
-#include "Mountain/Utils/FileSystemWatcher.hpp"
 #include "Mountain/Utils/ImGuiUtils.hpp"
-#include "Mountain/Utils/Logger.hpp"
-#include "Mountain/Utils/Random.hpp"
+
+#include "Scenes/ParticleSystemScene.hpp"
 
 using namespace Mountain;
 
 GameExample::GameExample(const char_t* const windowTitle)
-    : Game(windowTitle)
-    , renderTarget(BaseResolution, Graphics::MagnificationFilter::Nearest)
-    , debugRenderTarget(Window::GetSize(), Graphics::MagnificationFilter::Nearest)
+    : Game(windowTitle, {1600, 900})
 {
+    m_Scenes.AddRange(
+        new ParticleSystemScene
+    );
 }
 
-template <Concepts::Effect T>
+/*template <Concepts::Effect T>
 struct PostProcessingEffect
 {
     bool_t enabled;
@@ -40,15 +34,6 @@ struct PostProcessingEffect
 
 namespace
 {
-    FileSystemWatcher assetsWatcher{ "assets" };
-    FileSystemWatcher shadersWatcher;
-    List<Pointer<ShaderBase>> shadersToReload;
-    std::mutex shadersToReloadMutex;
-
-    bool_t showInputs = false;
-    bool_t showPerformanceMonitoring = false;
-    bool_t debugRender = true;
-
     PostProcessingEffect<Vignette> vignette;
     PostProcessingEffect<FilmGrain> filmGrain;
 
@@ -68,134 +53,42 @@ namespace
             ImGui::TreePop();
         }
     }
-
-    void ReloadShader(const std::filesystem::path& path)
-    {
-        Logger::LogInfo("Reloading shader file {}", path);
-
-        const std::string extension = path.extension().string();
-
-        auto f = FileManager::Get(Utils::GetBuiltinShadersPath() + relative(path, Utils::GetBuiltinShadersPath()).generic_string());
-        if (!f)
-            return;
-        f->Reload();
-
-        for (auto& shaderBase : ResourceManager::FindAll<ShaderBase>())
-        {
-            if (shaderBase->dependentShaderFiles.contains(path))
-                shadersToReload.Add(shaderBase);
-        }
-
-        const bool_t isDrawShader = Utils::StringArrayContains(Shader::VertexFileExtensions, extension) ||
-                                    Utils::StringArrayContains(Shader::FragmentFileExtensions, extension);
-        const std::string name = isDrawShader ? path.parent_path().generic_string() : path.generic_string();
-
-        if (!ResourceManager::Contains(name))
-            return;
-
-        const Pointer s = ResourceManager::Get<ShaderBase>(name);
-
-        shadersToReload.Add(s);
-    }
-}
+}*/
 
 void GameExample::LoadResources()
 {
-    assetsWatcher.recursive = true;
-    assetsWatcher.onCreated += [](const std::filesystem::path& path)
-    {
-        if (is_directory(path))
-            return;
+    // Each scene is responsible for loading and unloading resources
+    m_Scenes.ForEach([](TestScene* scene) { scene->LoadPersistentResources(); });
 
-        FileManager::Load(path);
-        ResourceManager::LoadAll();
-    };
-    assetsWatcher.onModified += [](const std::filesystem::path& path)
-    {
-        if (is_directory(path))
-            return;
-
-        auto f = FileManager::Get<File>(path);
-        if (!f)
-            return;
-        f->Reload();
-        auto r = f->GetResource();
-        if (r)
-            r->Reload();
-    };
-
-    FileManager::LoadDirectory("assets");
-    ResourceManager::LoadAll();
-
-    vignette.effect.LoadResources();
-    filmGrain.effect.LoadResources();
+    /*vignette.effect.LoadResources();
+    filmGrain.effect.LoadResources();*/
 }
 
 void GameExample::Initialize()
 {
-    assetsWatcher.Start();
+    InitializeFileSystemWatchers();
 
-    std::string builtinShadersPath = Utils::GetBuiltinShadersPath();
-    if (builtinShadersPath.ends_with('/'))
-        builtinShadersPath.pop_back();
-    shadersWatcher.SetPath(builtinShadersPath);
-    shadersWatcher.recursive = true;
-    shadersWatcher.Start();
-    shadersWatcher.onModified += [&](const std::filesystem::path& path)
-    {
-        shadersToReloadMutex.lock();
-        if (is_directory(path))
-        {
-            for (const auto& p : std::filesystem::recursive_directory_iterator{
-                     FileManager::Get<Directory>(relative(path))->GetPath()
-                 })
-            {
-                if (p.is_directory())
-                {
-                    continue;
-                }
+    SetScene(m_Scenes.First());
 
-                ReloadShader(p);
-            }
-            shadersToReloadMutex.unlock();
-            return;
-        }
-
-        std::string pathString = path.generic_string();
-        if (pathString.ends_with('~'))
-            pathString.pop_back();
-
-        ReloadShader(relative(std::filesystem::path{ pathString }));
-        shadersToReloadMutex.unlock();
-    };
-
-    player = new Player({ 10.f, 100.f }, renderTarget.NewLightSource());
-
-    renderTarget.SetDebugName("Game RenderTarget");
-    debugRenderTarget.SetDebugName("Game Debug RenderTarget");
-
-    particleSystem.position = BaseResolution * 0.5f;//{ 250.f, 100.f };
-    particleSystem.modules.AddRange(
-        {
-            std::make_shared<ParticleSystemModules::ColorOverLifetime>(),
-            std::make_shared<ParticleSystemModules::ForceOverLifetime>(),
-        }
-    );
+    m_AssetsWatcher.Start();
+    if (!NoBinaryResources)
+        m_ShadersWatcher.Start();
 }
 
 void GameExample::Shutdown()
 {
-    for (const Entity* const entity : entities)
-        delete entity;
+    m_AssetsWatcher.Stop();
+    m_ShadersWatcher.Stop();
 
-    delete player;
+    m_Scenes.ForEach([](TestScene* scene) { scene->UnloadPersistentResources(); });
+    m_Scenes.ForEach(OperationDelete<TestScene*>);
 }
 
 void GameExample::Update()
 {
-    shadersToReloadMutex.lock();
+    m_ShadersToReloadMutex.lock();
     List<Pointer<ShaderBase>> reloadedShaders;
-    for (auto shader : shadersToReload)
+    for (auto shader : m_ShadersToReload)
     {
         if (reloadedShaders.Contains(shader))
             continue;
@@ -205,55 +98,58 @@ void GameExample::Update()
         shader->Reload();
         reloadedShaders.Add(shader);
     }
-    shadersToReload.Clear();
-    shadersToReloadMutex.unlock();
+    m_ShadersToReload.Clear();
+    m_ShadersToReloadMutex.unlock();
 
-    for (Entity* const entity : entities)
-        entity->Update();
-
-    player->Update();
-
-    particleSystem.Update();
+    if (m_ActiveScene)
+    {
+        m_ActiveScene->BeforeUpdate();
+        m_ActiveScene->Update();
+        m_ActiveScene->AfterUpdate();
+    }
 }
 
 void GameExample::Render()
 {
-    Draw::Clear(Color::Black());
+    Draw::Clear(m_ClearColor);
 
-    renderTarget.SetCameraMatrix(camera.matrix);
-    Renderer::PushRenderTarget(renderTarget);
-    static Color clearColor = Color::Black();
-    Draw::Clear(clearColor);
+    if (m_ActiveScene)
+    {
+        m_ActiveScene->BeforeRender();
+        m_ActiveScene->Render();
+        m_ActiveScene->AfterRender();
+    }
 
-    particleSystem.Render();
-
-    Renderer::PopRenderTarget();
-
-    Draw::RenderTarget(renderTarget, Vector2::Zero(), Window::GetSize() / renderTarget.GetSize());
-
-    vignette.effect.imageBindings.Emplace(Renderer::GetCurrentRenderTarget().GetTextureId(), 0u, Graphics::ImageShaderAccess::WriteOnly);
+    /*vignette.effect.imageBindings.Emplace(Renderer::GetCurrentRenderTarget().GetTextureId(), 0u, Graphics::ImageShaderAccess::WriteOnly);
     filmGrain.effect.imageBindings.Emplace(Renderer::GetCurrentRenderTarget().GetTextureId(), 0u, Graphics::ImageShaderAccess::WriteOnly);
     if (vignette.enabled)
         vignette.effect.Apply(Renderer::GetCurrentRenderTarget().GetSize(), false);
     if (filmGrain.enabled)
         filmGrain.effect.Apply(Renderer::GetCurrentRenderTarget().GetSize(), false);
     vignette.effect.imageBindings.Clear();
-    filmGrain.effect.imageBindings.Clear();
+    filmGrain.effect.imageBindings.Clear();*/
 
-    if (debugRender)
+    if (m_EnableDebugRendering)
+        RenderDebug();
+
+    RenderImGui();
+}
+
+void GameExample::RenderDebug() const
+{
+    if (m_ActiveScene)
     {
-        debugRenderTarget.SetCameraMatrix(camera.matrix);
-        Renderer::PushRenderTarget(debugRenderTarget);
-        Draw::Clear(Color::Transparent());
-
-        particleSystem.RenderDebug();
-
-        Renderer::PopRenderTarget();
-
-        Draw::RenderTarget(debugRenderTarget);
+        m_ActiveScene->BeforeRenderDebug();
+        m_ActiveScene->RenderDebug();
+        m_ActiveScene->AfterRenderDebug();
     }
+}
 
+void GameExample::RenderImGui()
+{
     ImGui::Begin("Debug");
+
+    ImGui::SeparatorText("Global settings");
 
     if (ImGuiUtils::PushCollapsingHeader("Window"))
     {
@@ -274,36 +170,9 @@ void GameExample::Render()
 
     if (ImGuiUtils::PushCollapsingHeader("Renderer"))
     {
-        static Vector2i resolution = renderTarget.GetSize();
-        ImGui::DragInt2("Game resolution", resolution.Data());
-        if (resolution != renderTarget.GetSize())
-            renderTarget.SetSize(resolution);
-        ImGui::ColorEdit4("Clear color", clearColor.Data());
+        ImGui::ColorEdit4("Clear color", m_ClearColor.Data());
 
-        ImGui::SeparatorText("Camera");
-        if (ImGui::Button("Reset"))
-        {
-            camera.position = Vector2::Zero();
-            camera.rotation = 0.f;
-            camera.scale = Vector2::One();
-        }
-        ImGui::DragFloat2("Position", camera.position.Data());
-        ImGui::DragAngle("Rotation", &camera.rotation);
-        ImGui::DragFloat2("Scale", camera.scale.Data(), 0.01f, 0.1f);
-
-        camera.UpdateMatrix();
-
-        ImGui::SeparatorText("Lighting");
-        ImGui::ColorEdit4("Ambient color", renderTarget.ambientLight.Data());
-        LightSource& lightSource = *player->light;
-        ImGui::ColorEdit4("Source color", lightSource.color.Data());
-        ImGui::DragFloat("Source intensity", &lightSource.intensity, 0.1f);
-        ImGui::DragFloat("Source radius", &lightSource.radius, 0.1f);
-        ImGui::DragAngle("Source angle min", &lightSource.angleMin);
-        ImGui::DragAngle("Source angle max", &lightSource.angleMax);
-        ImGui::Text("Source position: %.2f, %.2f", lightSource.position.x, lightSource.position.y);
-
-        ImGui::SeparatorText("Post processing effects");
+        /*ImGui::SeparatorText("Post processing effects");
         ShowEffect("Vignette", vignette, [](auto& e)
         {
             static float_t strength = 1.f;
@@ -315,60 +184,170 @@ void GameExample::Render()
             static float_t intensity = 1.f;
             ImGui::DragFloat("intensity", &intensity, 0.01f, 0.f, 10.f);
             e.SetIntensity(intensity);
-        });
+        });*/
 
         ImGuiUtils::PopCollapsingHeader();
     }
 
     static bool_t showDemoWindow = false;
     static bool_t showResourceManagerWindows = false;
+    static bool_t showInputsWindow = false;
+    static bool_t showPerformanceMonitoringWindow = false;
+
     if (ImGuiUtils::PushCollapsingHeader("Tests"))
     {
-        ImGui::Checkbox("Show inputs window", &showInputs);
-        ImGui::Checkbox("Show performance monitoring window", &showPerformanceMonitoring);
         ImGui::SliderFloat("Time scale", &Time::timeScale, 0.f, 2.f);
-        ImGui::Checkbox("Debug render", &debugRender);
+        ImGui::Checkbox("Debug render", &m_EnableDebugRendering);
 
+        ImGui::Checkbox("Show inputs window", &showInputsWindow);
+        ImGui::Checkbox("Show performance monitoring window", &showPerformanceMonitoringWindow);
         ImGui::Checkbox("Show ImGui demo window", &showDemoWindow);
-
         ImGui::Checkbox("Show File/Resource Manager windows", &showResourceManagerWindows);
 
         ImGuiUtils::PopCollapsingHeader();
     }
 
+    ImGui::SeparatorText("Scene");
+
+    const char_t* sceneComboPreview = "None";
+    if (m_ActiveScene)
+        sceneComboPreview = m_ActiveScene->GetName().c_str();
+
+    if (ImGui::BeginCombo("Active scene", sceneComboPreview))
+    {
+        for (TestScene* scene : m_Scenes)
+        {
+            if (ImGui::Selectable(scene->GetName().c_str()))
+                SetScene(scene);
+        }
+        ImGui::EndCombo();
+    }
+
+    if (m_ActiveScene)
+    {
+        m_ActiveScene->BeforeRenderImGui();
+        if (m_ActiveScene->GetImGuiHeaderOpen())
+            m_ActiveScene->RenderImGui();
+        m_ActiveScene->AfterRenderImGui();
+    }
+
+    ImGui::End();
+
     if (showDemoWindow)
         ImGui::ShowDemoWindow();
+
     if (showResourceManagerWindows)
     {
         ImGuiUtils::ShowFileManager();
         ImGuiUtils::ShowResourceManager();
     }
 
-    if (ImGuiUtils::PushCollapsingHeader("Player"))
-    {
-        ImGui::DragFloat2("Position", player->position.Data());
-        ImGui::DragFloat("Movement speed", &player->movementSpeed);
-
-        AudioListener* listener = player->GetComponent<AudioListener>();
-        float_t volume = listener->GetVolume();
-        ImGui::SliderFloat("Audio volume", &volume, 0.f, 1.f);
-        listener->SetVolume(volume);
-
-        ImGuiUtils::PopCollapsingHeader();
-    }
-
-    if (ImGuiUtils::PushCollapsingHeader("Particle system"))
-    {
-        particleSystem.RenderImGui();
-
-        ImGuiUtils::PopCollapsingHeader();
-    }
-
-    ImGui::End();
-
-    if (showInputs)
+    if (showInputsWindow)
         ImGuiUtils::ShowInputsWindow();
 
-    if (showPerformanceMonitoring)
+    if (showPerformanceMonitoringWindow)
         ImGuiUtils::ShowPerformanceMonitoring();
+}
+
+void GameExample::SetScene(TestScene* newScene)
+{
+    if (m_ActiveScene)
+        m_ActiveScene->End();
+
+    m_ActiveScene = newScene;
+
+    if (m_ActiveScene)
+        m_ActiveScene->Begin();
+}
+
+void GameExample::InitializeFileSystemWatchers()
+{
+    m_AssetsWatcher.recursive = true;
+    m_AssetsWatcher.onCreated += [](const std::filesystem::path& path)
+    {
+        if (is_directory(path))
+            return;
+
+        FileManager::Load(path);
+        ResourceManager::LoadAll();
+    };
+    m_AssetsWatcher.onModified += [](const std::filesystem::path& path)
+    {
+        if (is_directory(path))
+            return;
+
+        auto f = FileManager::Get<File>(path);
+        if (!f)
+            return;
+        f->Reload();
+        auto r = f->GetResource();
+        if (r)
+            r->Reload();
+    };
+
+    if (!NoBinaryResources)
+    {
+        // Setup shader hot reloading
+        std::string builtinShadersPath = Utils::GetBuiltinShadersPath();
+        if (builtinShadersPath.ends_with('/'))
+            builtinShadersPath.pop_back();
+        m_ShadersWatcher.SetPath(builtinShadersPath);
+        m_ShadersWatcher.recursive = true;
+        m_ShadersWatcher.onModified += [&](const std::filesystem::path& path)
+        {
+            m_ShadersToReloadMutex.lock();
+            if (is_directory(path))
+            {
+                for (const auto& p : std::filesystem::recursive_directory_iterator{
+                         FileManager::Get<Directory>(relative(path))->GetPath()
+                     })
+                {
+                    if (p.is_directory())
+                    {
+                        continue;
+                    }
+
+                    ReloadShader(p);
+                }
+                m_ShadersToReloadMutex.unlock();
+                return;
+            }
+
+            std::string pathString = path.generic_string();
+            if (pathString.ends_with('~'))
+                pathString.pop_back();
+
+            ReloadShader(relative(std::filesystem::path{ pathString }));
+            m_ShadersToReloadMutex.unlock();
+        };
+    }
+}
+
+void GameExample::ReloadShader(const std::filesystem::path& path)
+{
+    Logger::LogInfo("Reloading shader file {}", path);
+
+    const std::string extension = path.extension().string();
+
+    auto f = FileManager::Get(Utils::GetBuiltinShadersPath() + relative(path, Utils::GetBuiltinShadersPath()).generic_string());
+    if (!f)
+        return;
+    f->Reload();
+
+    for (auto& shaderBase : ResourceManager::FindAll<ShaderBase>())
+    {
+        if (shaderBase->dependentShaderFiles.contains(path))
+            m_ShadersToReload.Add(shaderBase);
+    }
+
+    const bool_t isDrawShader = Utils::StringArrayContains(Shader::VertexFileExtensions, extension) ||
+                                Utils::StringArrayContains(Shader::FragmentFileExtensions, extension);
+    const std::string name = isDrawShader ? path.parent_path().generic_string() : path.generic_string();
+
+    if (!ResourceManager::Contains(name))
+        return;
+
+    const Pointer s = ResourceManager::Get<ShaderBase>(name);
+
+    m_ShadersToReload.Add(s);
 }
