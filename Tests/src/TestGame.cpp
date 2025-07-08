@@ -14,6 +14,7 @@
 #include "Mountain/Utils/ImGuiUtils.hpp"
 
 #include "Scenes/ParticleSystemScene.hpp"
+#include "Scenes/PostProcessingEffectsScene.hpp"
 
 using namespace Mountain;
 
@@ -21,47 +22,15 @@ GameExample::GameExample(const char_t* const windowTitle)
     : Game(windowTitle, {1600, 900})
 {
     m_Scenes.AddRange(
-        new ParticleSystemScene
+        new ParticleSystemScene,
+        new PostProcessingEffectsScene
     );
 }
-
-/*template <Concepts::Effect T>
-struct PostProcessingEffect
-{
-    bool_t enabled;
-    T effect;
-};
-
-namespace
-{
-    PostProcessingEffect<Vignette> vignette;
-    PostProcessingEffect<FilmGrain> filmGrain;
-
-    template <Concepts::Effect T>
-    void ShowEffect(
-        const std::string& name,
-        PostProcessingEffect<T>& effect,
-        const std::type_identity_t<std::function<void(T& effect)>>& additionalAction = std::identity{}
-    )
-    {
-        const static std::string CheckboxLabel = "##" + name + "Enabled";
-        ImGui::Checkbox(CheckboxLabel.c_str(), &effect.enabled);
-        ImGui::SameLine();
-        if (ImGui::TreeNode(name.c_str()))
-        {
-            additionalAction(effect.effect);
-            ImGui::TreePop();
-        }
-    }
-}*/
 
 void GameExample::LoadResources()
 {
     // Each scene is responsible for loading and unloading resources
     m_Scenes.ForEach([](TestScene* scene) { scene->LoadPersistentResources(); });
-
-    /*vignette.effect.LoadResources();
-    filmGrain.effect.LoadResources();*/
 }
 
 void GameExample::Initialize()
@@ -71,7 +40,7 @@ void GameExample::Initialize()
     SetScene(m_Scenes.First());
 
     m_AssetsWatcher.Start();
-    if (!NoBinaryResources)
+    if (NoBinaryResources)
         m_ShadersWatcher.Start();
 }
 
@@ -120,15 +89,6 @@ void GameExample::Render()
         m_ActiveScene->AfterRender();
     }
 
-    /*vignette.effect.imageBindings.Emplace(Renderer::GetCurrentRenderTarget().GetTextureId(), 0u, Graphics::ImageShaderAccess::WriteOnly);
-    filmGrain.effect.imageBindings.Emplace(Renderer::GetCurrentRenderTarget().GetTextureId(), 0u, Graphics::ImageShaderAccess::WriteOnly);
-    if (vignette.enabled)
-        vignette.effect.Apply(Renderer::GetCurrentRenderTarget().GetSize(), false);
-    if (filmGrain.enabled)
-        filmGrain.effect.Apply(Renderer::GetCurrentRenderTarget().GetSize(), false);
-    vignette.effect.imageBindings.Clear();
-    filmGrain.effect.imageBindings.Clear();*/
-
     if (m_EnableDebugRendering)
         RenderDebug();
 
@@ -171,20 +131,6 @@ void GameExample::RenderImGui()
     if (ImGuiUtils::PushCollapsingHeader("Renderer"))
     {
         ImGui::ColorEdit4("Clear color", m_ClearColor.Data());
-
-        /*ImGui::SeparatorText("Post processing effects");
-        ShowEffect("Vignette", vignette, [](auto& e)
-        {
-            static float_t strength = 1.f;
-            ImGui::DragFloat("strength", &strength, 0.01f, 0.f, 10.f);
-            e.SetStrength(strength);
-        });
-        ShowEffect("Film Grain", filmGrain, [](auto& e)
-        {
-            static float_t intensity = 1.f;
-            ImGui::DragFloat("intensity", &intensity, 0.01f, 0.f, 10.f);
-            e.SetIntensity(intensity);
-        });*/
 
         ImGuiUtils::PopCollapsingHeader();
     }
@@ -285,7 +231,7 @@ void GameExample::InitializeFileSystemWatchers()
             r->Reload();
     };
 
-    if (!NoBinaryResources)
+    if (NoBinaryResources)
     {
         // Setup shader hot reloading
         std::string builtinShadersPath = Utils::GetBuiltinShadersPath();

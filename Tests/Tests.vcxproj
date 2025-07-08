@@ -107,6 +107,7 @@
     <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\Scenes\ParticleSystemScene.cpp" />
+    <ClCompile Include="src\Scenes\PostProcessingEffectsScene.cpp" />
     <ClCompile Include="src\Scenes\TestScene.cpp" />
     <ClCompile Include="src\SpinComponent.cpp" />
     <ClCompile Include="src\TestGame.cpp" />
@@ -124,6 +125,7 @@
     <ClInclude Include="src\Camera.hpp" />
     <ClInclude Include="src\Player.hpp" />
     <ClInclude Include="src\Scenes\ParticleSystemScene.hpp" />
+    <ClInclude Include="src\Scenes\PostProcessingEffectsScene.hpp" />
     <ClInclude Include="src\Scenes\TestScene.hpp" />
     <ClInclude Include="src\SpinComponent.hpp" />
     <ClInclude Include="src\TestEntity.hpp" />
@@ -137,21 +139,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets\font.ttf" />
+    <Content Include="assets\landscapes.jpg" />
     <Content Include="assets\music.mp3" />
-    <Content Include="assets\music.ogg" />
-    <Content Include="assets\music.wav" />
-    <Content Include="assets\oldlady\idle00.png" />
-    <Content Include="assets\oldlady\idle01.png" />
-    <Content Include="assets\oldlady\idle02.png" />
-    <Content Include="assets\oldlady\idle03.png" />
-    <Content Include="assets\oldlady\idle04.png" />
-    <Content Include="assets\oldlady\idle05.png" />
-    <Content Include="assets\oldlady\idle06.png" />
-    <Content Include="assets\oldlady\idle07.png" />
-    <Content Include="assets\oldlady\idle08.png" />
-    <Content Include="assets\oldlady\idle09.png" />
-    <Content Include="assets\oldlady\idle10.png" />
-    <Content Include="assets\oldlady\idle11.png" />
     <Content Include="assets\sfx.ogg" />
     <Content Include="assets\strawberry\normal00.png" />
     <Content Include="assets\strawberry\normal01.png" />

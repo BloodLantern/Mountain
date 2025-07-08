@@ -34,15 +34,7 @@ namespace Mountain
 
         MOUNTAIN_API virtual void End();
 
-        MOUNTAIN_API virtual void GainFocus();
-
-        MOUNTAIN_API virtual void LoseFocus();
-
-        GETTER(bool_t, IsFocused, m_IsFocused)
-
     private:
         EntityList m_Entities;
-
-        bool_t m_IsFocused = false;
     };
 }

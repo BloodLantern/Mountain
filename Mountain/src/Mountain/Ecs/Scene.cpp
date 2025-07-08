@@ -58,11 +58,3 @@ void Scene::End()
     for (Entity* entity : m_Entities)
         entity->SceneEnd();
 }
-
-void Scene::GainFocus()
-{
-}
-
-void Scene::LoseFocus()
-{
-}

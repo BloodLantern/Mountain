@@ -18,7 +18,7 @@ void main()
     vec4 originalColor = imageLoad(image, texel);
 
     float hash = Random(texelf / sizef);
-    float noise = (hash * 2.f - 1.f) * intensity * 10.f;
+    float noise = (hash * 2.f - 1.f) * intensity;
 
     imageStore(image, texel, originalColor - originalColor * noise);
 }

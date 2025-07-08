@@ -87,3 +87,4 @@ compile by statically linking against the corresponding `Mountain.lib`
 - Built-in shader hot-reloading
 - Real unit tests
 - Replace all `std::array` and `std::vector` usages with `Mountain::Array` and `Mountain::List`
+- True text rendering

@@ -9,8 +9,6 @@ class ParticleSystemScene : public TestScene
 public:
 	using Base = TestScene;
 
-	Mountain::ParticleSystem particleSystem{ 1000 };
-
 	ParticleSystemScene();
 
 	void Update() override;
@@ -20,4 +18,7 @@ public:
 	void RenderDebug() override;
 
 	void RenderImGui() override;
+
+private:
+	Mountain::ParticleSystem m_ParticleSystem{ 1000 };
 };

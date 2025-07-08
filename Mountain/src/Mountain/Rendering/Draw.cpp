@@ -153,14 +153,10 @@ void Draw::Texture(
 )
 {
     if (uv0.x > uv1.x || uv0.y > uv1.y)
-    {
         THROW(ArgumentException{"UV0 cannot be greater than UV1", "uv0"});
-    }
 
     if (origin.x < 0.f || origin.x > 1.f || origin.y < 0.f || origin.y > 1.f)
-    {
         THROW(ArgumentException{"Origin must be in the range [{ 0, 0 }, { 1, 1 }]", "origin"});
-    }
 
     const Vector2 uvDiff = uv1 - uv0;
     const Vector2 lowerUv = uv0;
