@@ -92,6 +92,7 @@
     <ClInclude Include="externals\src\ImGui\imgui_impl_glfw.h" />
     <ClInclude Include="externals\src\ImGui\imgui_impl_opengl3.h" />
     <ClInclude Include="externals\src\ImGui\imgui_impl_opengl3_loader.h" />
+    <ClInclude Include="externals\src\ImGui\imgui_impl_sdl3.h" />
     <ClInclude Include="externals\src\ImGui\imgui_internal.h" />
     <ClInclude Include="externals\src\ImGui\imgui_stdlib.h" />
     <ClInclude Include="externals\src\ImGui\imstb_rectpack.h" />
@@ -347,6 +348,7 @@
     <ClCompile Include="externals\src\ImGui\imgui_draw.cpp" />
     <ClCompile Include="externals\src\ImGui\imgui_impl_glfw.cpp" />
     <ClCompile Include="externals\src\ImGui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="externals\src\ImGui\imgui_impl_sdl3.cpp" />
     <ClCompile Include="externals\src\ImGui\imgui_stdlib.cpp" />
     <ClCompile Include="externals\src\ImGui\imgui_tables.cpp" />
     <ClCompile Include="externals\src\ImGui\imgui_widgets.cpp" />

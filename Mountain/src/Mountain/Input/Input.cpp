@@ -3,6 +3,8 @@
 #include <GLFW/glfw3.h>
 
 #include "Mountain/Utils/Logger.hpp"
+#include "SDL3/SDL_keycode.h"
+#include "SDL3/SDL_mouse.h"
 
 using namespace Mountain;
 
@@ -36,57 +38,55 @@ bool_t Input::IsGamepadConnected(const uint32_t index) { return m_Gamepads[index
 
 Vector2 Input::GetMousePosition() { return m_MousePosition; }
 
-void Input::HandleKeyboard(GLFWwindow*, const int32_t key, const int32_t, const int32_t action, const int32_t)
+void Input::HandleKeyboard(size_t key, const KeyAction action)
 {
-    if (static_cast<size_t>(key) > m_Keyboard.size())
+    if (key & SDLK_SCANCODE_MASK)
+    {
+        // Remap to 0, then map to enum values
+        key = key - SDLK_CAPSLOCK + static_cast<size_t>(Key::NormalEnd);
+    }
+
+    if (key > m_Keyboard.size())
         return;
 
-    KeyStatuses& keyStatuses = m_Keyboard.at(static_cast<size_t>(key));
+    KeyStatuses& keyStatuses = m_Keyboard.at(key);
 
     switch (action)
     {
-        case GLFW_RELEASE:
+        case KeyAction::Release:
             keyStatuses.at(static_cast<size_t>(KeyStatus::Down)) = false;
             keyStatuses.at(static_cast<size_t>(KeyStatus::Release)) = true;
             keyStatuses.at(static_cast<size_t>(KeyStatus::Repeat)) = false;
             break;
 
-        case GLFW_PRESS:
+        case KeyAction::Press:
             keyStatuses.at(static_cast<size_t>(KeyStatus::Pressed)) = true;
             keyStatuses.at(static_cast<size_t>(KeyStatus::Down)) = true;
             break;
 
-        case GLFW_REPEAT:
+        case KeyAction::Repeat:
             keyStatuses.at(static_cast<size_t>(KeyStatus::Repeat)) = true;
             break;
-
-        default:
-            break;
     }
 }
 
-void Input::HandleMouseButton(GLFWwindow*, const int32_t mouseButton, const int32_t action, int32_t)
+void Input::HandleMouseButton(const size_t mouseButton, const bool_t pressed)
 {
-    MouseStatuses& keyStatuses = m_Mouse.at(static_cast<size_t>(mouseButton));
+    MouseStatuses& keyStatuses = m_Mouse.at(mouseButton);
 
-    switch (action)
+    if (pressed)
     {
-        case GLFW_RELEASE:
-            keyStatuses.at(static_cast<size_t>(MouseButtonStatus::Down)) = false;
-            keyStatuses.at(static_cast<size_t>(MouseButtonStatus::Release)) = true;
-            break;
-
-        case GLFW_PRESS:
-            keyStatuses.at(static_cast<size_t>(MouseButtonStatus::Pressed)) = true;
-            keyStatuses.at(static_cast<size_t>(MouseButtonStatus::Down)) = true;
-            break;
-
-        default:
-            break;
+        keyStatuses.at(static_cast<size_t>(MouseButtonStatus::Pressed)) = true;
+        keyStatuses.at(static_cast<size_t>(MouseButtonStatus::Down)) = true;
+    }
+    else
+    {
+        keyStatuses.at(static_cast<size_t>(MouseButtonStatus::Down)) = false;
+        keyStatuses.at(static_cast<size_t>(MouseButtonStatus::Release)) = true;
     }
 }
 
-void Input::HandleMouseWheel(GLFWwindow*, const double_t wheelX, const double_t wheelY)
+void Input::HandleMouseWheel(const int32_t wheelX, const int32_t wheelY)
 {
     m_MouseWheel += { static_cast<float_t>(wheelX), static_cast<float_t>(wheelY) };
 }
@@ -224,10 +224,11 @@ void Input::Update()
 {
     m_LastMousePosition = m_MousePosition;
 
-    double_t x, y;
-    glfwGetCursorPos(Window::GetHandle(), &x, &y);
+    float_t x, y;
+    SDL_GetMouseState(&x, &y);
+    Logger::LogInfo("{} ; {}", x, y);
 
-    m_MousePosition = { static_cast<float_t>(x), static_cast<float_t>(y) };
+    m_MousePosition = { x, y };
     m_MouseDelta = m_MousePosition - m_LastMousePosition;
 
     UpdateGamepads();
@@ -268,10 +269,7 @@ void Input::Initialize()
 {
     Logger::LogVerbose("Initializing input");
 
-    glfwSetKeyCallback(Window::GetHandle(), HandleKeyboard);
-    glfwSetMouseButtonCallback(Window::GetHandle(), HandleMouseButton);
-    glfwSetScrollCallback(Window::GetHandle(), HandleMouseWheel);
-    glfwSetJoystickCallback(HandleJoyStickCallBack);
+    // glfwSetJoystickCallback(HandleJoyStickCallBack);
 
     KeyStatuses defaultKeys;
     defaultKeys.fill(false);

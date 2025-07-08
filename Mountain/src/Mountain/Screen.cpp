@@ -1,8 +1,10 @@
 ﻿#include "Mountain/Screen.hpp"
 
-#include <GLFW/glfw3.h>
-
 #include "Mountain/Window.hpp"
+
+#include <SDL3/SDL.h>
+
+#include "GLFW/glfw3.h"
 
 using namespace Mountain;
 
@@ -11,9 +13,10 @@ Vector2i Screen::GetPosition(int32_t screenIndex)
     if (screenIndex < 0)
         screenIndex = Window::GetCurrentScreen();
 
-    Vector2i result;
-    glfwGetMonitorPos(m_Monitors[screenIndex], &result.x, &result.y);
-    return result;
+    SDL_Rect rect;
+    SDL_GetDisplayBounds(m_Monitors[screenIndex], &rect);
+
+    return { rect.x, rect.y };
 }
 
 Vector2i Screen::GetSize(int32_t screenIndex)
@@ -21,25 +24,25 @@ Vector2i Screen::GetSize(int32_t screenIndex)
     if (screenIndex < 0)
         screenIndex = Window::GetCurrentScreen();
 
-    return { m_VideoModes[screenIndex]->width, m_VideoModes[screenIndex]->height };
+    return { m_VideoModes[screenIndex]->w, m_VideoModes[screenIndex]->h };
 }
 
-int32_t Screen::GetRefreshRate(int32_t screenIndex)
+float_t Screen::GetRefreshRate(int32_t screenIndex)
 {
     if (screenIndex < 0)
         screenIndex = Window::GetCurrentScreen();
 
-    return m_VideoModes[screenIndex]->refreshRate;
+    return m_VideoModes[screenIndex]->refresh_rate;
 }
 
 void Screen::Initialize()
 {
-    m_Monitors = glfwGetMonitors(&m_MonitorCount);
+    m_Monitors = SDL_GetDisplays(&m_MonitorCount);
 
-    m_VideoModes = new const GLFWvidmode*[m_MonitorCount];
+    m_VideoModes = new const SDL_DisplayMode*[m_MonitorCount];
 
     for (int32_t i = 0; i < m_MonitorCount; i++)
-        m_VideoModes[i] = glfwGetVideoMode(m_Monitors[i]);
+        m_VideoModes[i] = SDL_GetCurrentDisplayMode(m_Monitors[i]);
 }
 
 void Screen::Shutdown()

@@ -85,11 +85,11 @@ namespace Mountain
 
         MOUNTAIN_API static void Reset();
 
-        static void HandleKeyboard(GLFWwindow* window, int32_t key, int32_t scancode, int32_t action, int32_t mods);
+        static void HandleKeyboard(size_t key, KeyAction action);
 
-        static void HandleMouseButton(GLFWwindow* window, int32_t mouseButton, int32_t action, int32_t mods);
+        static void HandleMouseButton(size_t mouseButton, bool_t pressed);
 
-        static void HandleMouseWheel(GLFWwindow* window, double_t wheelX, double_t wheelY);
+        static void HandleMouseWheel(int32_t wheelX, int32_t wheelY);
 
         static void HandleJoyStickCallBack(int32_t jid, int32_t event);
 

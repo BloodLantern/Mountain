@@ -127,5 +127,5 @@ bool_t Game::NextFrame()
     Input::Reset();
     Time::WaitForNextFrame();
 
-    return !Window::GetShouldClose();
+    return !Window::shouldClose;
 }

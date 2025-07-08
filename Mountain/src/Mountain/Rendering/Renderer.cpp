@@ -2,11 +2,9 @@
 
 #include <glad/glad.h>
 
-#include <GLFW/glfw3.h>
-
 #include <ImGui/imgui.h>
-#include <ImGui/imgui_impl_glfw.h>
 #include <ImGui/imgui_impl_opengl3.h>
+#include <ImGui/imgui_impl_sdl3.h>
 
 #include <ft2build.h>
 
@@ -179,7 +177,7 @@ bool_t Mountain::Renderer::Initialize(const std::string& windowTitle, const Vect
     Window::Initialize(windowTitle, windowSize, glVersion);
 
     // Setup GLAD: load all OpenGL function pointers
-    if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress)))  // NOLINT(clang-diagnostic-cast-function-type-strict)
+    if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(SDL_GL_GetProcAddress)))  // NOLINT(clang-diagnostic-cast-function-type-strict)
         THROW(InvalidOperationException{"Failed to initialize GLAD"});
 
     glEnable(GL_DEBUG_OUTPUT);
@@ -233,7 +231,7 @@ bool_t Mountain::Renderer::Initialize(const std::string& windowTitle, const Vect
 
     ImGui::StyleColorsDark();
 
-    ImGui_ImplGlfw_InitForOpenGL(Window::GetHandle(), true);
+    ImGui_ImplSDL3_InitForOpenGL(Window::GetHandle(), Window::GetContext());
     ImGui_ImplOpenGL3_Init(glVersion.glsl);
 
     io.Fonts->AddFontDefault();
@@ -246,7 +244,7 @@ void Mountain::Renderer::PreFrame()
 {
     // Start the Dear ImGui frame
     ImGui_ImplOpenGL3_NewFrame();
-    ImGui_ImplGlfw_NewFrame();
+    ImGui_ImplSDL3_NewFrame();
     ImGui::NewFrame();
 
     Window::UpdateFields();
@@ -286,8 +284,7 @@ void Mountain::Renderer::PostFrame()
     // End ImGui frame
     ImGui::Render();
 
-    Vector2i framebufferSize;
-    glfwGetFramebufferSize(Window::GetHandle(), &framebufferSize.x, &framebufferSize.y);
+    const Vector2i framebufferSize = Window::GetFramebufferSize();
     Graphics::SetViewport(0, 0, framebufferSize.x, framebufferSize.y);
 
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -306,7 +303,7 @@ void Mountain::Renderer::Shutdown()
 
     // Cleanup
 	ImGui_ImplOpenGL3_Shutdown();
-	ImGui_ImplGlfw_Shutdown();
+    ImGui_ImplSDL3_Shutdown();
 	ImGui::DestroyPlatformWindows();
 	ImGui::DestroyContext();
 

@@ -6,12 +6,10 @@
 #include "Mountain/Rendering/Renderer.hpp"
 #include "Mountain/Resource/Texture.hpp"
 #include "Mountain/Utils/Event.hpp"
+#include "SDL3/SDL_video.h"
 
 /// @file window.hpp
 /// @brief Defines the Mountain::Window class.
-
-// ReSharper disable once CppInconsistentNaming
-struct GLFWwindow;
 
 namespace Mountain
 {
@@ -43,18 +41,20 @@ namespace Mountain
 
         MOUNTAIN_API static void SetSize(Vector2i newSize);
 
-        /// @brief Get whether the window should close
         [[nodiscard]]
-        MOUNTAIN_API static bool_t GetShouldClose();
+        MOUNTAIN_API static Vector2i GetFramebufferSize();
 
-        /// @brief Set whether the window should close
-        MOUNTAIN_API static void SetShouldClose(bool_t newShouldClose);
+        /// @brief Whether the window should close
+        MOUNTAIN_API static inline bool_t shouldClose = false;
 
         /// @brief Set the window to be the current context
         MOUNTAIN_API static void MakeContextCurrent();
 
         /// @brief Get the native handle of the window
-        STATIC_GETTER(GLFWwindow*, Handle, m_Window)
+        STATIC_GETTER(SDL_Window*, Handle, m_Window)
+
+        /// @brief Get the native handle of the window
+        STATIC_GETTER(SDL_GLContext, Context, m_Context)
 
         /// @brief Get whether the window is visible or hidden.
         STATIC_GETTER(bool_t, Visible, m_Visible)
@@ -92,7 +92,8 @@ namespace Mountain
 
     private:
         /// @brief Native window handle
-        MOUNTAIN_API static inline GLFWwindow* m_Window = nullptr;
+        MOUNTAIN_API static inline SDL_Window* m_Window = nullptr;
+        MOUNTAIN_API static inline SDL_GLContext m_Context = nullptr;
 
         MOUNTAIN_API static inline WindowMode m_WindowMode = WindowMode::Windowed;
 
@@ -119,8 +120,6 @@ namespace Mountain
         static void PollEvents();
 
         static void SwapBuffers();
-
-        static void WindowMinimizeCallback(GLFWwindow* window, int32_t minimized);
 
         // Calls Initialize, UpdateFields and Shutdown
         friend class Renderer;
