@@ -192,7 +192,7 @@ namespace Mountain
     template <Requirements::MountainEnumerable EnumerableT>
     size_t GetSize(const EnumerableT& enumerable)
     {
-        return enumerable.GetEndConstIterator() - enumerable.GetBeginConstIterator();
+        return enumerable.cend() - enumerable.cbegin();
     }
 
     template <Requirements::MountainEnumerable EnumerableT>
@@ -242,7 +242,7 @@ namespace Mountain
     template <Requirements::MountainEnumerable EnumerableT, typename T>
     std::optional<T&> FindLast(EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate)
     {
-        for (typename EnumerableT::Iterator it = enumerable.GetEndIterator() - 1; it + 1 != enumerable.GetBeginIterator(); it--)
+        for (typename EnumerableT::Iterator it = enumerable.end() - 1; it + 1 != enumerable.begin(); it--)
         {
             T& value = *it;
             if (predicate(value))
@@ -276,7 +276,7 @@ namespace Mountain
     {
         if (IsEmpty(enumerable))
             THROW(InvalidOperationException{"Cannot get the first element of an empty enumerable."});
-        return *enumerable.GetBeginIterator();
+        return *enumerable.begin();
     }
 
     template <Requirements::MountainEnumerable EnumerableT, typename T>
@@ -290,7 +290,7 @@ namespace Mountain
     {
         if (IsEmpty(enumerable))
             THROW(InvalidOperationException{"Cannot get the last element of an empty enumerable."});
-        return *--enumerable.GetEndIterator();
+        return *--enumerable.end();
     }
 
     template <Requirements::MountainEnumerable EnumerableT, typename T>
@@ -304,7 +304,7 @@ namespace Mountain
     {
         if (GetSize(enumerable) != 1)
             THROW(InvalidOperationException{"Cannot get the only element of an enumerable that doesn't have only one element."});
-        return *enumerable.GetBeginIterator();
+        return *enumerable.begin();
     }
 
     template <Requirements::MountainEnumerable EnumerableT, typename T>
