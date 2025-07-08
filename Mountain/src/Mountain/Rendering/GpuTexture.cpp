@@ -10,7 +10,7 @@ void GpuTexture::Delete() { glDeleteTextures(1, &m_Id); m_Id = 0; }
 
 void GpuTexture::Recreate() { Delete(); Create(); }
 
-void GpuTexture::CreateFrom(
+void GpuTexture::CreateViewFrom(
     const uint32_t originalTextureId,
     const InternalFormat newInternalFormat,
     const uint32_t minMipmapLevel,
@@ -21,14 +21,14 @@ void GpuTexture::CreateFrom(
     glTextureView(m_Id, GL_TEXTURE_2D, originalTextureId, ToOpenGl(newInternalFormat), minMipmapLevel, mipmapLevels, 0, 1);
 }
 
-void GpuTexture::CreateFrom(
+void GpuTexture::CreateViewFrom(
     const GpuTexture originalGpuTexture,
     const InternalFormat newInternalFormat,
     const uint32_t minMipmapLevel,
     const uint32_t mipmapLevels
 )
 {
-    CreateFrom(originalGpuTexture.m_Id, newInternalFormat, minMipmapLevel, mipmapLevels);
+    CreateViewFrom(originalGpuTexture.m_Id, newInternalFormat, minMipmapLevel, mipmapLevels);
 }
 
 void GpuTexture::SetStorage(const InternalFormat internalFormat, const Vector2i size, const int32_t mipmapLevels) const
