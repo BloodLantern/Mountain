@@ -353,7 +353,15 @@ namespace Mountain
     }
 
     template <Concepts::DynamicContainerType T>
-    List<T>::List(List&& other) noexcept : m_Data(std::move(other.m_Data)), m_Size(other.m_Size), m_Capacity(other.m_Capacity) {}
+    List<T>::List(List&& other) noexcept
+        : m_Data(std::move(other.m_Data))
+        , m_Size(other.m_Size)
+        , m_Capacity(other.m_Capacity)
+    {
+        other.m_Data = nullptr;
+        other.m_Size = 0;
+        other.m_Capacity = 0;
+    }
 
     template <Concepts::DynamicContainerType T>
     List<T>& List<T>::operator=(const List& other) noexcept
@@ -378,6 +386,10 @@ namespace Mountain
         m_Data = std::move(other.m_Data);
         m_Size = other.m_Size;
         m_Capacity = other.m_Capacity;
+
+        other.m_Data = nullptr;
+        other.m_Size = 0;
+        other.m_Capacity = 0;
 
         return *this;
     }
