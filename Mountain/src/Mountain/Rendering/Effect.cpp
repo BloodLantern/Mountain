@@ -45,12 +45,12 @@ void FilmGrain::LoadResources()
 
 void FilmGrain::SetIntensity(const float_t newIntensity) const { m_ComputeShader->SetUniform("intensity", newIntensity); }
 
-void ChromaticAberration::LoadResources()
+void ChromaticAberrationAxial::LoadResources()
 {
-    m_ComputeShader = ResourceManager::Get<ComputeShader>(Utils::GetBuiltinShadersPath() + "effects/chromatic_aberration.comp");
+    m_ComputeShader = ResourceManager::Get<ComputeShader>(Utils::GetBuiltinShadersPath() + "effects/chromatic_aberration_axial.comp");
     SetIntensity(1.f);
 }
 
-void ChromaticAberration::SetIntensity(const float_t newIntensity) const { m_ComputeShader->SetUniform("intensity", newIntensity); }
+void ChromaticAberrationAxial::SetIntensity(const float_t newIntensity) const { m_ComputeShader->SetUniform("intensity", newIntensity); }
 
-void ChromaticAberration::SetAngle(const float_t newAngle) const { m_ComputeShader->SetUniform("angle", newAngle); }
+void ChromaticAberrationAxial::SetAngle(const float_t newAngle) const { m_ComputeShader->SetUniform("angle", newAngle); }

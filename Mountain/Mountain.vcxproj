@@ -339,8 +339,8 @@
     <Content Include="shaders_internal\circle\circle.frag" />
     <Content Include="shaders_internal\circle\circle.vert" />
     <Content Include="shaders_internal\easing.glsl" />
-    <Content Include="shaders_internal\effects\chromatic_aberration.comp" />
-    <Content Include="shaders_internal\effects\chromatic_aberration._transverse.comp" />
+    <Content Include="shaders_internal\effects\chromatic_aberration_axial.comp" />
+    <Content Include="shaders_internal\effects\chromatic_aberration_transverse.comp" />
     <Content Include="shaders_internal\effects\film_grain.comp" />
     <Content Include="shaders_internal\line_colored\line_colored.frag" />
     <Content Include="shaders_internal\line_colored\line_colored.vert" />

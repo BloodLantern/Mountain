@@ -55,7 +55,7 @@ namespace Mountain
         MOUNTAIN_API void SetIntensity(float_t newIntensity) const;
     };
 
-    class ChromaticAberration : public Effect
+    class ChromaticAberrationAxial : public Effect
     {
     public:
         MOUNTAIN_API void LoadResources() override;

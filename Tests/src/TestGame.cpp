@@ -51,7 +51,7 @@ namespace
 
     PostProcessingEffect<Vignette> vignette;
     PostProcessingEffect<FilmGrain> filmGrain;
-    PostProcessingEffect<ChromaticAberration> chromaticAberration;
+    PostProcessingEffect<ChromaticAberrationAxial> chromaticAberrationAxial;
 
     template <Concepts::Effect T>
     void ShowEffect(
@@ -130,7 +130,7 @@ void GameExample::LoadResources()
 
     vignette.effect.LoadResources();
     filmGrain.effect.LoadResources();
-    chromaticAberration.effect.LoadResources();
+    chromaticAberrationAxial.effect.LoadResources();
 }
 
 void GameExample::Initialize()
@@ -240,7 +240,7 @@ void GameExample::Render()
 
     filmGrain.effect.imageBindings.Emplace(Renderer::GetCurrentRenderTarget().GetTextureId(), 0u, Graphics::ImageShaderAccess::WriteOnly);
 
-    chromaticAberration.effect.imageBindings.Emplace(Renderer::GetCurrentRenderTarget().GetTextureId(), 1u, Graphics::ImageShaderAccess::WriteOnly);
+    chromaticAberrationAxial.effect.imageBindings.Emplace(Renderer::GetCurrentRenderTarget().GetTextureId(), 1u, Graphics::ImageShaderAccess::WriteOnly);
 
     if (vignette.enabled)
         vignette.effect.Apply(Renderer::GetCurrentRenderTarget().GetSize(), false);
@@ -249,15 +249,15 @@ void GameExample::Render()
 
     Graphics::GpuTexture render;
     render.Create();
-    chromaticAberration.effect.imageBindings.Emplace(render.GetId(), 0u, Graphics::ImageShaderAccess::ReadOnly);
+    chromaticAberrationAxial.effect.imageBindings.Emplace(render.GetId(), 0u, Graphics::ImageShaderAccess::ReadOnly);
 
-    if (chromaticAberration.enabled)
-        chromaticAberration.effect.Apply(Renderer::GetCurrentRenderTarget().GetSize(), false);
+    if (chromaticAberrationAxial.enabled)
+        chromaticAberrationAxial.effect.Apply(Renderer::GetCurrentRenderTarget().GetSize(), false);
 
 
     vignette.effect.imageBindings.Clear();
     filmGrain.effect.imageBindings.Clear();
-    chromaticAberration.effect.imageBindings.Clear();
+    chromaticAberrationAxial.effect.imageBindings.Clear();
 
     if (debugRender)
     {
@@ -335,7 +335,7 @@ void GameExample::Render()
             ImGui::DragFloat("intensity", &intensity, 0.01f, 0.f, 10.f);
             e.SetIntensity(intensity);
         });
-        ShowEffect("Chromatic Aberration", chromaticAberration, [](auto& e)
+        ShowEffect("Chromatic Aberration", chromaticAberrationAxial, [](auto& e)
        {
            static float_t intensity = 1.f;
            ImGui::DragFloat("intensity", &intensity, 0.01f, 0.f, 100.f);
