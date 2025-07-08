@@ -32,8 +32,6 @@ typedef char char_t;
 /// @see char_t for the reason.
 typedef bool bool_t;
 
-using Action = std::function<void()>;
-
 /// @brief Macro used for DLL export/import.
 ///
 /// This macro should be used at the beginning of static member variable and non-inline function declarations.

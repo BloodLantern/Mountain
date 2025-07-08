@@ -33,6 +33,38 @@ void Entity::RenderDebug()
         component->DebugRender();
 }
 
+void Entity::Added(Scene& scene)
+{
+    m_Scene = &scene;
+    for (Component* component : m_Components)
+        component->EntityAdded(scene);
+}
+
+void Entity::Removed(Scene& scene)
+{
+    for (Component* component : m_Components)
+        component->EntityRemoved(scene);
+    m_Scene = nullptr;
+}
+
+void Entity::Awake()
+{
+    for (Component* component : m_Components)
+        component->EntityAwake();
+}
+
+void Entity::SceneBegin()
+{
+    for (Component* component : m_Components)
+        component->SceneBegin();
+}
+
+void Entity::SceneEnd()
+{
+    for (Component* component : m_Components)
+        component->SceneEnd();
+}
+
 void Entity::AddComponent(Component* component)
 {
     m_Components.Add(component);
