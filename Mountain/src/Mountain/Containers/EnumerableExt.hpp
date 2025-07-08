@@ -4,54 +4,57 @@
 #include "Mountain/Containers/FunctionTypes.hpp"
 #include "Mountain/Utils/Requirements.hpp"
 
-#define ENUMERABLE_EXTENSIONS_DEFINITIONS(type) \
+/// @brief Defines member functions for all enumerable extensions
+#define ENUMERABLE_EXTENSIONS_IMPLEMENTATION \
     [[nodiscard]] \
-    bool_t All(const Predicate<Type>& predicate) const { return ::Mountain::All(*this, predicate); } \
+    bool_t All(const ::Mountain::Predicate<EnumeratedType>& predicate) const { return ::Mountain::All(*this, predicate); } \
     \
     [[nodiscard]] \
-    bool_t Any(const Predicate<Type>& predicate) const { return ::Mountain::Any(*this, predicate); } \
+    bool_t Any(const ::Mountain::Predicate<EnumeratedType>& predicate) const { return ::Mountain::Any(*this, predicate); } \
     \
-    template <typename T, typename = Meta::EnableIf<Meta::IsEqualityComparableWith<T, Type>>> \
+    template <typename T, typename = ::Mountain::Meta::EnableIf<::Mountain::Meta::IsEqualityComparableWith<T, EnumeratedType>>> \
     [[nodiscard]] \
     bool_t Contains(const T& element) const { return ::Mountain::Contains(*this, element); } \
     \
     [[nodiscard]] \
-    List<Type> FindAll(const Predicate<Type>& predicate) const { return ::Mountain::FindAll(*this, predicate); } \
+    ::Mountain::List<EnumeratedType> FindAll(const ::Mountain::Predicate<EnumeratedType>& predicate) const \
+    { return ::Mountain::FindAll(*this, predicate); } \
     \
     [[nodiscard]] \
-    Type& First() { return ::Mountain::First(*this); } \
+    EnumeratedType& First() { return ::Mountain::First(*this); } \
     \
     [[nodiscard]] \
-    const Type& First() const { return ::Mountain::First(*this); } \
+    const EnumeratedType& First() const { return ::Mountain::First(*this); } \
     \
     [[nodiscard]] \
-    Type& Last() { return ::Mountain::Last(*this); } \
+    EnumeratedType& Last() { return ::Mountain::Last(*this); } \
     \
     [[nodiscard]] \
-    const Type& Last() const { return ::Mountain::Last(*this); } \
+    const EnumeratedType& Last() const { return ::Mountain::Last(*this); } \
     \
     [[nodiscard]] \
-    Type& Single() { return ::Mountain::Single(*this); } \
+    EnumeratedType& Single() { return ::Mountain::Single(*this); } \
     \
     [[nodiscard]] \
-    const Type& Single() const { return ::Mountain::Single(*this); } \
+    const EnumeratedType& Single() const { return ::Mountain::Single(*this); } \
     \
-    void ForEach(const Operation<Type>& operation) { return ::Mountain::ForEach(*this, operation); } \
+    void ForEach(const ::Mountain::Operation<EnumeratedType>& operation) { return ::Mountain::ForEach(*this, operation); } \
     \
-    void ForEach(const Operation<const Type>& operation) const { return ::Mountain::ForEach(*this, operation); } \
+    void ForEach(const ::Mountain::Operation<const EnumeratedType>& operation) const { return ::Mountain::ForEach(*this, operation); } \
     \
-    template <typename = Meta::EnableIf<Meta::IsSortable<Iterator, Comparer<T>, Projection<T>>>> \
+    template <typename = ::Mountain::Meta::EnableIf< \
+        ::Mountain::Meta::IsSortable<Iterator, ::Mountain::Comparer<EnumeratedType>, ::Mountain::Projection<EnumeratedType>>>> \
     void Sort() { return ::Mountain::Sort(*this); } \
     \
-    template <typename = Meta::EnableIf<Meta::IsSortable<Iterator, Comparer<T>, Projection<T>>>> \
-    void Sort(const Comparer<Type>& comparer) { return ::Mountain::Sort(*this, comparer); }
+    template <typename = ::Mountain::Meta::EnableIf< \
+        ::Mountain::Meta::IsSortable<Iterator, ::Mountain::Comparer<EnumeratedType>, ::Mountain::Projection<EnumeratedType>>>> \
+    void Sort(const ::Mountain::Comparer<EnumeratedType>& comparer) { return ::Mountain::Sort(*this, comparer); }
 
 namespace Mountain
 {
     template <Concepts::DynamicContainerType T>
     class List;
 
-#pragma region Enumerable
     /// @brief Determines whether all elements of a sequence satisfy a condition.
     template <Requirements::MountainEnumerable EnumerableT,
         typename T = Meta::MountainEnumerableType<EnumerableT>>
@@ -148,107 +151,6 @@ namespace Mountain
         typename T = Meta::MountainEnumerableType<EnumerableT>,
         typename = Meta::EnableIf<Meta::IsSortable<typename EnumerableT::Iterator, Comparer<T>, Projection<T>>>>
     void Sort(EnumerableT& enumerable, const Comparer<Meta::Identity<T>>& comparer);
-#pragma endregion
-
-    // TODO - EnumerableWrapper overloads
-#pragma region EnumerableWrapper
-    /// @brief Determines whether all elements of a sequence satisfy a condition.
-    template <Requirements::MountainEnumerableWrapper EnumerableT,
-        typename T = Meta::MountainEnumerableType<EnumerableT>>
-    [[nodiscard]]
-    bool_t All(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate);
-
-    /// @brief Determines whether any element of a sequence satisfies a condition.
-    template <Requirements::MountainEnumerableWrapper EnumerableT,
-        typename T = Meta::MountainEnumerableType<EnumerableT>>
-    [[nodiscard]]
-    bool_t Any(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate);
-
-    template <Requirements::MountainEnumerableWrapper EnumerableT,
-        typename T,
-        typename = Meta::EnableIf<Meta::IsEqualityComparableWith<T, Meta::MountainEnumerableType<EnumerableT>>>>
-    [[nodiscard]]
-    bool_t Contains(const EnumerableT& enumerable, const T& element);
-
-    template <Requirements::MountainEnumerableWrapper EnumerableT,
-        typename T = Meta::MountainEnumerableType<EnumerableT>>
-    [[nodiscard]]
-    List<T> FindAll(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate);
-
-    template <Requirements::MountainEnumerableWrapper EnumerableT,
-        typename T = Meta::MountainEnumerableType<EnumerableT>>
-    [[nodiscard]]
-    std::optional<T&> FindFirst(EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate);
-
-    template <Requirements::MountainEnumerableWrapper EnumerableT,
-        typename T = Meta::MountainEnumerableType<EnumerableT>>
-    [[nodiscard]]
-    std::optional<const T&> FindFirst(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate);
-
-    template <Requirements::MountainEnumerableWrapper EnumerableT,
-        typename T = Meta::MountainEnumerableType<EnumerableT>>
-    [[nodiscard]]
-    std::optional<T&> FindLast(EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate);
-
-    template <Requirements::MountainEnumerableWrapper EnumerableT,
-        typename T = Meta::MountainEnumerableType<EnumerableT>>
-    [[nodiscard]]
-    std::optional<const T&> FindLast(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate);
-
-    /// @brief Returns the first element of a sequence.
-    template <Requirements::MountainEnumerableWrapper EnumerableT,
-        typename T = Meta::MountainEnumerableType<EnumerableT>>
-    [[nodiscard]]
-    T& First(EnumerableT& enumerable);
-
-    /// @brief Returns the first element of a sequence.
-    template <Requirements::MountainEnumerableWrapper EnumerableT,
-        typename T = Meta::MountainEnumerableType<EnumerableT>>
-    [[nodiscard]]
-    const T& First(const EnumerableT& enumerable);
-
-    /// @brief Returns the last element of a sequence.
-    template <Requirements::MountainEnumerableWrapper EnumerableT,
-        typename T = Meta::MountainEnumerableType<EnumerableT>>
-    [[nodiscard]]
-    T& Last(EnumerableT& enumerable);
-
-    /// @brief Returns the last element of a sequence.
-    template <Requirements::MountainEnumerableWrapper EnumerableT,
-        typename T = Meta::MountainEnumerableType<EnumerableT>>
-    [[nodiscard]]
-    const T& Last(const EnumerableT& enumerable);
-
-    /// @brief Returns the only element of a sequence and throws an exception if there is not exactly one element in the sequence.
-    template <Requirements::MountainEnumerableWrapper EnumerableT,
-        typename T = Meta::MountainEnumerableType<EnumerableT>>
-    [[nodiscard]]
-    T& Single(EnumerableT& enumerable);
-
-    /// @brief Returns the only element of a sequence and throws an exception if there is not exactly one element in the sequence.
-    template <Requirements::MountainEnumerableWrapper EnumerableT,
-        typename T = Meta::MountainEnumerableType<EnumerableT>>
-    [[nodiscard]]
-    const T& Single(const EnumerableT& enumerable);
-
-    template <Requirements::MountainEnumerableWrapper EnumerableT,
-        typename T = Meta::MountainEnumerableType<EnumerableT>>
-    void ForEach(EnumerableT& enumerable, const Operation<Meta::Identity<T>>& operation);
-
-    template <Requirements::MountainEnumerableWrapper EnumerableT,
-        typename T = Meta::MountainEnumerableType<EnumerableT>>
-    void ForEach(const EnumerableT& enumerable, const Operation<const Meta::Identity<T>>& operation);
-
-    template <Requirements::MountainEnumerableWrapper EnumerableT,
-        typename T = Meta::MountainEnumerableType<EnumerableT>,
-        typename = Meta::EnableIf<Meta::IsSortable<typename EnumerableT::Iterator, Comparer<T>, Projection<T>>>>
-    void Sort(EnumerableT& enumerable);
-
-    template <Requirements::MountainEnumerableWrapper EnumerableT,
-        typename T = Meta::MountainEnumerableType<EnumerableT>,
-        typename = Meta::EnableIf<Meta::IsSortable<typename EnumerableT::Iterator, Comparer<T>, Projection<T>>>>
-    void Sort(EnumerableT& enumerable, const Comparer<Meta::Identity<T>>& comparer);
-#pragma endregion
 }
 
 // Start of EnumerableExt.inl

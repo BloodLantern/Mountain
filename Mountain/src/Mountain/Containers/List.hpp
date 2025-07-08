@@ -2,7 +2,6 @@
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Containers/ContiguousIterator.hpp"
-#include "Mountain/Containers/EnumerableExt.hpp"
 #include "Mountain/Exceptions/ThrowHelper.hpp"
 
 /// @file List.hpp
@@ -13,11 +12,11 @@ namespace Mountain
     template <Concepts::ContainerType T, size_t Size>
     struct Array;
 
-    // ReSharper disable once CppPolymorphicClassWithNonVirtualPublicDestructor
     /// @brief A dynamic array implementation.
     ///
-    /// A more user-friendly list than @c std::vector, based on how @c List is done in C#
-    /// The internal structure and workings are similar to how std::vector works, it uses a capacity that grows exponentially based on powers of 2
+    /// A more user-friendly list than @c std::vector, based on how @c List is in C#.
+    /// The internal structure and workings are similar to how std::vector works,
+    /// it uses a capacity that grows exponentially based on powers of 2.
     ///
     /// @tparam T Type stored
     ///
@@ -29,6 +28,8 @@ namespace Mountain
     public:
         /// @brief The type of the List. Refers to T.
         using Type = T;
+        using ContainedType = Type;
+        using EnumeratedType = Type;
         using Iterator = ContiguousIterator<T>;
         using ConstIterator = ContiguousConstIterator<T>;
 
@@ -237,22 +238,10 @@ namespace Mountain
         T& operator[](size_t index) const noexcept;
 
         [[nodiscard]]
-        Iterator GetBeginIterator() noexcept;
-
-        [[nodiscard]]
-        Iterator GetEndIterator() noexcept;
-
-        [[nodiscard]]
         Iterator begin() noexcept;
 
         [[nodiscard]]
         Iterator end() noexcept;
-
-        [[nodiscard]]
-        ConstIterator GetBeginIterator() const noexcept;
-
-        [[nodiscard]]
-        ConstIterator GetEndIterator() const noexcept;
 
         [[nodiscard]]
         ConstIterator begin() const noexcept;
@@ -261,18 +250,12 @@ namespace Mountain
         ConstIterator end() const noexcept;
 
         [[nodiscard]]
-        ConstIterator GetBeginConstIterator() const noexcept;
-
-        [[nodiscard]]
-        ConstIterator GetEndConstIterator() const noexcept;
-
-        [[nodiscard]]
         ConstIterator cbegin() const noexcept;
 
         [[nodiscard]]
         ConstIterator cend() const noexcept;
 
-        ENUMERABLE_EXTENSIONS_DEFINITIONS(List)
+        ENUMERABLE_EXTENSIONS_IMPLEMENTATION
 
     private:
         T* m_Data = nullptr;
@@ -839,40 +822,22 @@ namespace Mountain
     T& List<T>::operator[](const size_t index) const noexcept { return m_Data[index]; }
 
     template <Concepts::DynamicContainerType T>
-    typename List<T>::Iterator List<T>::GetBeginIterator() noexcept { return Iterator{m_Data, 0}; }
+    typename List<T>::Iterator List<T>::begin() noexcept { return Iterator{m_Data, 0}; }
 
     template <Concepts::DynamicContainerType T>
-    typename List<T>::Iterator List<T>::GetEndIterator() noexcept { return Iterator{m_Data, m_Size}; }
+    typename List<T>::Iterator List<T>::end() noexcept { return Iterator{m_Data, m_Size}; }
 
     template <Concepts::DynamicContainerType T>
-    typename List<T>::Iterator List<T>::begin() noexcept { return GetBeginIterator(); }
+    typename List<T>::ConstIterator List<T>::begin() const noexcept { return cbegin(); }
 
     template <Concepts::DynamicContainerType T>
-    typename List<T>::Iterator List<T>::end() noexcept { return GetEndIterator(); }
+    typename List<T>::ConstIterator List<T>::end() const noexcept { return cend(); }
 
     template <Concepts::DynamicContainerType T>
-    typename List<T>::ConstIterator List<T>::GetBeginIterator() const noexcept { return GetBeginConstIterator(); }
+    typename List<T>::ConstIterator List<T>::cbegin() const noexcept { return ConstIterator{m_Data, 0}; }
 
     template <Concepts::DynamicContainerType T>
-    typename List<T>::ConstIterator List<T>::GetEndIterator() const noexcept { return GetEndConstIterator(); }
-
-    template <Concepts::DynamicContainerType T>
-    typename List<T>::ConstIterator List<T>::begin() const noexcept { return GetBeginConstIterator(); }
-
-    template <Concepts::DynamicContainerType T>
-    typename List<T>::ConstIterator List<T>::end() const noexcept { return GetEndConstIterator(); }
-
-    template <Concepts::DynamicContainerType T>
-    typename List<T>::ConstIterator List<T>::GetBeginConstIterator() const noexcept { return ConstIterator{m_Data, 0}; }
-
-    template <Concepts::DynamicContainerType T>
-    typename List<T>::ConstIterator List<T>::GetEndConstIterator() const noexcept { return ConstIterator{m_Data, m_Size}; }
-
-    template <Concepts::DynamicContainerType T>
-    typename List<T>::ConstIterator List<T>::cbegin() const noexcept { return GetBeginConstIterator(); }
-
-    template <Concepts::DynamicContainerType T>
-    typename List<T>::ConstIterator List<T>::cend() const noexcept { return GetEndConstIterator(); }
+    typename List<T>::ConstIterator List<T>::cend() const noexcept { return ConstIterator{m_Data, m_Size}; }
 
     template <Concepts::DynamicContainerType T>
     void List<T>::Reallocate(const size_t targetCapacity)
