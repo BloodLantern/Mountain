@@ -44,3 +44,11 @@ void FilmGrain::LoadResources()
 }
 
 void FilmGrain::SetIntensity(const float_t newIntensity) const { m_ComputeShader->SetUniform("intensity", newIntensity); }
+
+void ChromaticAberration::LoadResources()
+{
+    m_ComputeShader = ResourceManager::Get<ComputeShader>(Utils::GetBuiltinShadersPath() + "effects/chromatic_aberration.comp");
+    //SetIntensity(1.f);
+}
+
+void ChromaticAberration::SetIntensity(const float_t newIntensity) const { m_ComputeShader->SetUniform("intensity", newIntensity); }

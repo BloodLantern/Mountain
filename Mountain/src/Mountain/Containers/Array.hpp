@@ -34,7 +34,7 @@ namespace Mountain
         [[nodiscard]]
         constexpr size_t GetSize() const noexcept;
 
-        /// @brief Get whether the array is empty, e.g., whether its size is 0.
+        /// @brief Get whether the array is empty, i.e., whether its size is 0.
         [[nodiscard]]
         constexpr bool_t IsEmpty() const noexcept;
 

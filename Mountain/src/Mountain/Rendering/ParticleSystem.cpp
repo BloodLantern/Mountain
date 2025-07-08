@@ -91,7 +91,8 @@ void ParticleSystem::Update()
 
 void ParticleSystem::Render()
 {
-    // TODO - Render using the Draw API as otherwise it would ignore the draw order for depth
+    Draw::Flush();
+
     m_DrawShader->SetUniform("projection", Draw::m_ProjectionMatrix * Draw::m_CameraMatrix);
 
     m_DrawShader->SetUniform("systemPosition", position);
@@ -117,12 +118,12 @@ void ParticleSystem::RenderImGui()
     ImGui::PushID(this);
 
     ImGuiUtils::PushSeparatorText("System controls");
-    const bool_t systemDead = !(looping || m_PlaybackTime - startDelay < duration) && GetCurrentParticles() == 0;
-    if (systemDead)
+    const bool_t complete = IsComplete();
+    if (complete)
         ImGui::BeginDisabled();
     if (ImGui::Button(m_Playing ? "Pause" : "Play"))
         TogglePlay();
-    if (systemDead)
+    if (complete)
         ImGui::EndDisabled();
     ImGui::SameLine();
     if (ImGui::Button("Restart"))
@@ -280,6 +281,11 @@ uint32_t ParticleSystem::GetCurrentParticles()
     LockBuffer(m_SyncObject);
 
     return currentParticles;
+}
+
+bool_t ParticleSystem::IsComplete()
+{
+    return !(looping || m_PlaybackTime - startDelay < duration) && GetCurrentParticles() == 0;
 }
 
 uint32_t ParticleSystem::GetMaxParticles() const { return m_MaxParticles; }
