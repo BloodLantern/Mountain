@@ -69,8 +69,11 @@ compile by statically linking against the corresponding `Mountain.lib`
 - \[WIP] Built-in effects to apply on textures
   - ~~Film grain~~
   - ~~Vignette~~
-  - Chromatic aberration
+  - ~~Chromatic aberration (both axial and transverse)~~
   - Blur
+  - Noise
+  - Mosaic
+  - Grayscale
 - Make gamepad input work for both Xbox, PS and Switch controllers
 - Low-level audio API
 - `Audio::Play()` static function
@@ -87,3 +90,4 @@ compile by statically linking against the corresponding `Mountain.lib`
 - Built-in shader hot-reloading
 - Real unit tests
 - Replace all `std::array` and `std::vector` usages with `Mountain::Array` and `Mountain::List`
+- True text rendering

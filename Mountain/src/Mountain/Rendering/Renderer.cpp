@@ -227,8 +227,6 @@ bool_t Mountain::Renderer::Initialize(const std::string& windowTitle, const Vect
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
     io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
 
-    io.ConfigViewportsNoTaskBarIcon = true;
-
     ImGui::StyleColorsDark();
 
     ImGui_ImplSDL3_InitForOpenGL(Window::GetHandle(), Window::GetContext());

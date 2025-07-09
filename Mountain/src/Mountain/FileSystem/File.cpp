@@ -17,9 +17,6 @@ using namespace Mountain;
 File::File(std::filesystem::path&& filepath)
     : Entry(std::move(filepath))
 {
-    if (!exists(m_Path))
-        Utils::CreateEmptyFile(m_Path);
-
     File::UpdateUtilityValues();
 }
 

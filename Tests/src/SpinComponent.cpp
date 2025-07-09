@@ -19,9 +19,9 @@ void SpinComponent::Added()
 
 void SpinComponent::Update()
 {
-    const float_t time = Mountain::Time::GetTotalTime() * 0.5f;
+    /*const float_t time = Mountain::Time::GetTotalTime() * 0.5f;
     constexpr Vector2i halfResolution(BaseResolution.x / 2, BaseResolution.y / 2);
-    m_Entity->position = { std::cos(time) * halfResolution.x + halfResolution.x, std::sin(time) * halfResolution.y + halfResolution.y };
+    m_Entity->position = { std::cos(time) * halfResolution.x + halfResolution.x, std::sin(time) * halfResolution.y + halfResolution.y };*/
 }
 
 void SpinComponent::DebugRender()

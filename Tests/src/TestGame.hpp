@@ -1,34 +1,20 @@
 #pragma once
 
+#include <Mountain/Resource/ShaderBase.hpp>
+#include <Mountain/Utils/FileSystemWatcher.hpp>
+
 #include "Mountain/Game.hpp"
-#include "Mountain/Collision/Grid.hpp"
-#include "Mountain/Rendering/ParticleSystem.hpp"
-#include "Mountain/Rendering/RenderTarget.hpp"
-#include "Mountain/Resource/Font.hpp"
-#include "Mountain/Resource/Texture.hpp"
-#include "Mountain/Utils/Color.hpp"
 #include "Mountain/Containers/List.hpp"
+#include "Mountain/Utils/Color.hpp"
 
-#include "AnimatedCharacter.hpp"
-#include "Camera.hpp"
-#include "Player.hpp"
-
-constexpr Vector2i BaseResolution = { 1280, 720 };
+#include "Scenes/TestScene.hpp"
 
 class GameExample : public Mountain::Game
 {
+	static inline GameExample* m_Instance = nullptr;
+
 public:
-    Mountain::List<Mountain::Entity*> entities;
-	Player* player = nullptr;
-	AnimatedCharacter* character = nullptr;
-	Mountain::ParticleSystem particleSystem{ 1000 };
-
-	Mountain::RenderTarget renderTarget;
-	Mountain::RenderTarget debugRenderTarget;
-
-	Camera camera{};
-
-	Mountain::Pointer<Mountain::Font> font;
+	STATIC_GETTER(GameExample&, , *m_Instance)
 
     explicit GameExample(const char_t* windowTitle);
 
@@ -38,4 +24,30 @@ public:
     void Shutdown() override;
 	void Update() override;
 	void Render() override;
+
+	void RenderDebug() const;
+
+	void RenderImGui();
+
+	GETTER(TestScene*, Scene, m_ActiveScene)
+	void SetScene(TestScene* newScene);
+
+private:
+    Mountain::List<TestScene*> m_Scenes;
+
+	TestScene* m_ActiveScene = nullptr;
+
+	Mountain::Color m_ClearColor = Mountain::Color::Black();
+
+	bool_t m_EnableDebugRendering = true;
+
+	Mountain::FileSystemWatcher m_AssetsWatcher{ "assets" };
+
+	Mountain::FileSystemWatcher m_ShadersWatcher;
+	Mountain::List<Mountain::Pointer<Mountain::ShaderBase>> m_ShadersToReload;
+	std::mutex m_ShadersToReloadMutex;
+
+	void InitializeFileSystemWatchers();
+
+    void ReloadShader(const std::filesystem::path& path);
 };

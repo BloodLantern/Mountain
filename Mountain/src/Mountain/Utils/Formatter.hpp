@@ -6,6 +6,8 @@
 #include <format>
 #include <sstream>
 
+#include <magic_enum/magic_enum.hpp>
+
 #include "Mountain/Utils/MetaProgramming.hpp"
 
 /// @file Formatter.hpp
@@ -79,4 +81,48 @@ struct std::formatter<ExceptionT>
 
         return std::ranges::copy(std::move(out).str(), ctx.out()).out;
     }
+};
+
+/// @brief @c std::formatter template specialization for any @c enum type.
+/// @details This prints the @c enum value as a string using @c magic_enum::enum_name(), or as an integer if the @c d format is used.
+template <Mountain::Concepts::Enum EnumT>
+struct std::formatter<EnumT>
+{
+    /// @brief Parses the input formatting options.
+    template <class ParseContext>
+    constexpr typename ParseContext::iterator parse(ParseContext& ctx)
+    {
+        auto it = ctx.begin();
+        if (it == ctx.end())
+            return it;
+
+        if (*it == ':')
+        {
+            it++;
+            if (*it != 'd')
+                throw Mountain::FormatException{"Invalid format arguments for enum"};
+
+            m_PrintAsInteger = true;
+            it++;
+        }
+
+        if (*it != '}')
+            throw Mountain::FormatException{"Invalid format arguments for enum"};
+
+        return it;
+    }
+
+    /// @brief Formats a string using the given @c enum value, according to the given options in the parse function.
+    template <class FormatContext>
+    typename FormatContext::iterator format(const EnumT& e, FormatContext& ctx) const
+    {
+        std::ostringstream out;
+
+        out << (m_PrintAsInteger ? static_cast<Mountain::Meta::UnderlyingEnumType<EnumT>>(e) : magic_enum::enum_name(e));
+
+        return std::ranges::copy(std::move(out).str(), ctx.out()).out;
+    }
+
+private:
+    bool_t m_PrintAsInteger = false;
 };

@@ -14,36 +14,27 @@ namespace Mountain
         /// @details This event is invoked in @c AfterUpdate() and cleared afterward.
         Event<> onEndOfCurrentFrame;
 
+        Scene() = default;
         DEFAULT_COPY_MOVE_OPERATIONS(Scene)
         DEFAULT_VIRTUAL_DESTRUCTOR(Scene)
 
         MOUNTAIN_API virtual void Begin();
 
         MOUNTAIN_API virtual void BeforeUpdate();
-
         MOUNTAIN_API virtual void Update();
-
         MOUNTAIN_API virtual void AfterUpdate();
 
         MOUNTAIN_API virtual void BeforeRender();
-
         MOUNTAIN_API virtual void Render();
-
         MOUNTAIN_API virtual void AfterRender();
 
+        MOUNTAIN_API virtual void BeforeRenderDebug();
         MOUNTAIN_API virtual void RenderDebug();
+        MOUNTAIN_API virtual void AfterRenderDebug();
 
         MOUNTAIN_API virtual void End();
 
-        MOUNTAIN_API virtual void GainFocus();
-
-        MOUNTAIN_API virtual void LoseFocus();
-
-        GETTER(bool_t, IsFocused, m_IsFocused)
-
     private:
         EntityList m_Entities;
-
-        bool_t m_IsFocused = false;
     };
 }

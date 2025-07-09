@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include "Mountain/Core.hpp"
+#include "Mountain/Containers/FunctionTypes.hpp"
 #include "Mountain/Exceptions/Exception.hpp"
 
 // ReSharper disable CppClangTidyBugproneMacroParentheses

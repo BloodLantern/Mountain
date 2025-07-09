@@ -2,6 +2,8 @@
 
 #include "Mountain/Core.hpp"
 
+#include "Mountain/Utils/MetaProgramming.hpp"
+
 namespace Mountain
 {
     template <typename... Args>
@@ -12,6 +14,9 @@ namespace Mountain
 
     template <typename T>
     using Operation = std::function<void(T& element)>;
+    /// @brief Deletes the given element
+    template <Concepts::Pointer T>
+    const Operation<T> OperationDelete = [](const T& element) { delete element; };
 
     /// @brief Comparer function that returns @c true if @p lhs is considered less than @p rhs.
     template <typename T>

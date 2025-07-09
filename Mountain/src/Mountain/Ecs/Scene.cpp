@@ -12,6 +12,7 @@ void Scene::Begin()
 
 void Scene::BeforeUpdate()
 {
+    m_Entities.UpdateLists();
 }
 
 void Scene::Update()
@@ -38,22 +39,22 @@ void Scene::AfterRender()
 {
 }
 
+void Scene::BeforeRenderDebug()
+{
+}
+
 void Scene::RenderDebug()
 {
     for (Entity* entity : m_Entities)
         entity->RenderDebug();
 }
 
+void Scene::AfterRenderDebug()
+{
+}
+
 void Scene::End()
 {
     for (Entity* entity : m_Entities)
         entity->SceneEnd();
-}
-
-void Scene::GainFocus()
-{
-}
-
-void Scene::LoseFocus()
-{
 }

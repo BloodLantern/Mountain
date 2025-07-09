@@ -34,6 +34,10 @@ namespace Mountain
         template <Concepts::LoadableResource T>
         static Pointer<T> Load(const Pointer<File>& file, bool_t loadInInterface = true);
 
+        /// @brief Creates the Resource corresponding to the given @p file and loads it.
+        template <Concepts::LoadableResource T>
+        static Pointer<T> Load(const std::string& name, bool_t loadInInterface = true);
+
         /// @brief Creates the Font corresponding to the given @p file and loads it with the given @p size.
         MOUNTAIN_API static Pointer<Font> LoadFont(const Pointer<File>& file, uint32_t size);
 
@@ -219,6 +223,12 @@ namespace Mountain
         return LoadNoCheck<T>(file, loadInInterface);
     }
 
+    template <Concepts::LoadableResource T>
+    Pointer<T> ResourceManager::Load(const std::string& name, const bool_t loadInInterface)
+    {
+        return Load<T>(FileManager::Get(name), loadInInterface);
+    }
+
     template <Concepts::Resource T>
     Pointer<T> ResourceManager::Get(const std::string& name)
     {
@@ -320,7 +330,10 @@ namespace Mountain
     template <Concepts::Resource T>
     void ResourceManager::Unload(const Pointer<T>& resource)
     {
-        Logger::LogVerbose("Unloading resource {}", resource);
+        if (!resource)
+            return;
+
+        Logger::LogVerbose("Unloading resource {}", resource->GetName());
 
         const size_t oldSize = m_Resources.size();
 
@@ -344,7 +357,7 @@ namespace Mountain
 
         // If no resources were deleted
         if (oldSize == m_Resources.size())
-            Logger::LogWarning("Attempt to unload an unknown file entry: {}", resource);
+            Logger::LogWarning("Attempt to unload an unknown file entry: {}", resource->GetName());
     }
 
     template <Concepts::Resource T>
