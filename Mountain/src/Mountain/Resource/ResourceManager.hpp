@@ -330,7 +330,10 @@ namespace Mountain
     template <Concepts::Resource T>
     void ResourceManager::Unload(const Pointer<T>& resource)
     {
-        Logger::LogVerbose("Unloading resource {}", resource);
+        if (!resource)
+            return;
+
+        Logger::LogVerbose("Unloading resource {}", resource->GetName());
 
         const size_t oldSize = m_Resources.size();
 
@@ -354,7 +357,7 @@ namespace Mountain
 
         // If no resources were deleted
         if (oldSize == m_Resources.size())
-            Logger::LogWarning("Attempt to unload an unknown file entry: {}", resource);
+            Logger::LogWarning("Attempt to unload an unknown file entry: {}", resource->GetName());
     }
 
     template <Concepts::Resource T>

@@ -75,6 +75,7 @@ void PostProcessingEffectsScene::LoadResources()
 
 void PostProcessingEffectsScene::UnloadResources()
 {
+    Mountain::Pointer<Mountain::File> file = m_LandscapeTexture->GetFile();
     Mountain::ResourceManager::Unload(m_LandscapeTexture);
-    Mountain::FileManager::Unload(m_LandscapeTexture->GetFile()->GetPath());
+    Mountain::FileManager::Unload(file->GetPath());
 }

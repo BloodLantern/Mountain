@@ -9,9 +9,6 @@
 #include "Mountain/Utils/Pointer.hpp"
 
 // ReSharper disable once CppInconsistentNaming
-struct GLFWwindow;
-
-// ReSharper disable once CppInconsistentNaming
 struct FT_LibraryRec_;
 // ReSharper disable once CppEnforceTypeAliasCodeStyle
 // ReSharper disable once CppInconsistentNaming

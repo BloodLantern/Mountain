@@ -25,6 +25,8 @@ GameExample::GameExample(const char_t* const windowTitle)
         new ParticleSystemScene,
         new PostProcessingEffectsScene
     );
+
+    m_Scenes.Sort([](const TestScene* lhs, const TestScene* rhs) { return lhs->GetName() < rhs->GetName(); });
 }
 
 void GameExample::LoadResources()
@@ -172,8 +174,7 @@ void GameExample::RenderImGui()
     if (m_ActiveScene)
     {
         m_ActiveScene->BeforeRenderImGui();
-        if (m_ActiveScene->GetImGuiHeaderOpen())
-            m_ActiveScene->RenderImGui();
+        m_ActiveScene->RenderImGui();
         m_ActiveScene->AfterRenderImGui();
     }
 

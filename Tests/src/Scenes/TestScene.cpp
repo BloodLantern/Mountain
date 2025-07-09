@@ -32,7 +32,7 @@ void TestScene::Render()
 
 void TestScene::BeforeRenderImGui()
 {
-    m_ImGuiHeaderOpen = Mountain::ImGuiUtils::PushCollapsingHeader(m_Name.c_str());
+    ImGui::PushID(this);
 }
 
 void TestScene::RenderImGui()
@@ -41,8 +41,7 @@ void TestScene::RenderImGui()
 
 void TestScene::AfterRenderImGui()
 {
-    if (m_ImGuiHeaderOpen)
-        Mountain::ImGuiUtils::PopCollapsingHeader();
+    ImGui::PopID();
 }
 
 void TestScene::End()

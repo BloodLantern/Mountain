@@ -324,7 +324,7 @@ namespace Mountain
     template <Requirements::MountainEnumerable EnumerableT, typename T, typename>
     void Sort(EnumerableT& enumerable)
     {
-        return Sort(enumerable, CompareLess);
+        return Sort(enumerable, CompareLess<T>);
     }
 
     template <Requirements::MountainEnumerable EnumerableT, typename T, typename>
