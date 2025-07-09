@@ -3,6 +3,7 @@
 #include <Mountain/Rendering/Draw.hpp>
 #include <Mountain/Rendering/Renderer.hpp>
 #include <Mountain/Resource/ResourceManager.hpp>
+#include <Mountain/Utils/ImGuiUtils.hpp>
 
 PostProcessingEffectsScene::PostProcessingEffectsScene()
     : Base{"Post Processing Effects"}
@@ -13,25 +14,37 @@ void PostProcessingEffectsScene::Begin()
 {
     TestScene::Begin();
 
-    uint32_t renderTargetTextureId = Mountain::Renderer::GetCurrentRenderTarget().GetTextureId();
+    const Mountain::RenderTarget& renderTarget = Mountain::Renderer::GetCurrentRenderTarget();
+    const uint32_t renderTargetId = renderTarget.GetTextureId();
 
-    m_Vignette.effect.imageBindings.Emplace(renderTargetTextureId, 0u, Mountain::Graphics::ImageShaderAccess::WriteOnly);
-    m_FilmGrain.effect.imageBindings.Emplace(renderTargetTextureId, 0u, Mountain::Graphics::ImageShaderAccess::WriteOnly);
+    m_IntermediateTexture.Create();
+    m_IntermediateTexture.SetStorage(Mountain::Graphics::InternalFormat::RedGreenBlueAlpha32Float, renderTarget.GetSize());
+
+    m_Vignette.effect.imageBindings.Emplace(renderTargetId, 0u, Mountain::Graphics::ImageShaderAccess::WriteOnly);
+    m_FilmGrain.effect.imageBindings.Emplace(renderTargetId, 0u, Mountain::Graphics::ImageShaderAccess::WriteOnly);
+    m_ChromaticAberrationAxial.effect.imageBindings.Emplace(renderTargetId, 1u, Mountain::Graphics::ImageShaderAccess::WriteOnly);
+    m_ChromaticAberrationTransverse.effect.imageBindings.Emplace(renderTargetId, 1u, Mountain::Graphics::ImageShaderAccess::WriteOnly);
+
+    const uint32_t intermediateTextureId = m_IntermediateTexture.GetId();
+
+    m_ChromaticAberrationAxial.effect.imageBindings.Emplace(intermediateTextureId, 0u, Mountain::Graphics::ImageShaderAccess::ReadOnly);
+    m_ChromaticAberrationTransverse.effect.imageBindings.Emplace(intermediateTextureId, 0u, Mountain::Graphics::ImageShaderAccess::ReadOnly);
 }
 
 void PostProcessingEffectsScene::Render()
 {
     TestScene::Render();
 
-    const Vector2i renderTargetSize = Mountain::Renderer::GetCurrentRenderTarget().GetSize();
+    const Mountain::RenderTarget& renderTarget = Mountain::Renderer::GetCurrentRenderTarget();
+    const Vector2i renderTargetSize = renderTarget.GetSize();
 
     Mountain::Draw::Texture(*m_LandscapeTexture, Vector2::Zero(), renderTargetSize / static_cast<Vector2>(m_LandscapeTexture->GetSize()));
     Mountain::Draw::Flush();
 
-    if (m_Vignette.enabled)
-        m_Vignette.effect.Apply(renderTargetSize, false);
-    if (m_FilmGrain.enabled)
-        m_FilmGrain.effect.Apply(renderTargetSize, false);
+    ApplyEffectIfEnabled(m_Vignette);
+    ApplyEffectIfEnabled(m_FilmGrain);
+    ApplyEffectIfEnabled(m_ChromaticAberrationAxial);
+    ApplyEffectIfEnabled(m_ChromaticAberrationTransverse);
 }
 
 void PostProcessingEffectsScene::RenderImGui()
@@ -50,12 +63,31 @@ void PostProcessingEffectsScene::RenderImGui()
         ImGui::DragFloat("intensity", &intensity, 0.01f, 0.f, 10.f);
         e.SetIntensity(intensity);
     });
+    ShowEffectImGui("Chromatic Aberration Axial", m_ChromaticAberrationAxial, [](auto& e)
+    {
+        static float_t intensity = 1.f;
+        ImGui::DragFloat("intensity", &intensity, 0.01f, 0.f, 10.f);
+        static float angle = 0;
+        ImGui::DragAngle("angle", &angle);
+        e.SetIntensity(intensity);
+        e.SetAngle(angle);
+    });
+    ShowEffectImGui("Chromatic Aberration Transverse", m_ChromaticAberrationTransverse, [](auto& e)
+    {
+        static float_t intensity = 1.f;
+        ImGui::DragFloat("intensity", &intensity, 0.01f, 0.f, 10.f);
+        e.SetIntensity(intensity);
+    });
 }
 
 void PostProcessingEffectsScene::End()
 {
     m_Vignette.effect.imageBindings.Clear();
     m_FilmGrain.effect.imageBindings.Clear();
+    m_ChromaticAberrationAxial.effect.imageBindings.Clear();
+    m_ChromaticAberrationTransverse.effect.imageBindings.Clear();
+
+    m_IntermediateTexture.Delete();
 
     TestScene::End();
 }
@@ -66,6 +98,8 @@ void PostProcessingEffectsScene::LoadPersistentResources()
 
     m_Vignette.effect.LoadResources();
     m_FilmGrain.effect.LoadResources();
+    m_ChromaticAberrationAxial.effect.LoadResources();
+    m_ChromaticAberrationTransverse.effect.LoadResources();
 }
 
 void PostProcessingEffectsScene::LoadResources()
@@ -78,4 +112,19 @@ void PostProcessingEffectsScene::UnloadResources()
     Mountain::Pointer<Mountain::File> file = m_LandscapeTexture->GetFile();
     Mountain::ResourceManager::Unload(m_LandscapeTexture);
     Mountain::FileManager::Unload(file->GetPath());
+}
+
+void PostProcessingEffectsScene::UpdateIntermediateTexture() const
+{
+    const Mountain::RenderTarget& renderTarget = Mountain::Renderer::GetCurrentRenderTarget();
+
+    Mountain::Graphics::CopyTextureData(
+        renderTarget.GetTextureId(),
+        0,
+        Vector2i::Zero(),
+        m_IntermediateTexture.GetId(),
+        0,
+        Vector2i::Zero(),
+        renderTarget.GetSize()
+    );
 }

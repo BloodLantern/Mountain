@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include <Mountain/Rendering/Effect.hpp>
+#include <Mountain/Rendering/Renderer.hpp>
 
 #include "Scenes/TestScene.hpp"
 
@@ -38,6 +39,10 @@ private:
 
 	PostProcessingEffect<Mountain::Vignette> m_Vignette{};
 	PostProcessingEffect<Mountain::FilmGrain> m_FilmGrain{};
+	PostProcessingEffect<Mountain::ChromaticAberrationAxial> m_ChromaticAberrationAxial{};
+	PostProcessingEffect<Mountain::ChromaticAberrationTransverse> m_ChromaticAberrationTransverse{};
+
+	Mountain::Graphics::GpuTexture m_IntermediateTexture;
 
 	template <Mountain::Concepts::Effect T>
 	void ShowEffectImGui(
@@ -45,6 +50,11 @@ private:
 		PostProcessingEffect<T>& effect,
 		const std::type_identity_t<std::function<void(T& effect)>>& additionalAction = std::identity{}
 	);
+
+	template <Mountain::Concepts::Effect T>
+	void ApplyEffectIfEnabled(const PostProcessingEffect<T>& effect);
+
+	void UpdateIntermediateTexture() const;
 };
 
 // Start of PostProcessingEffectsScene.inl
@@ -63,5 +73,17 @@ void PostProcessingEffectsScene::ShowEffectImGui(
 	{
 		additionalAction(effect.effect);
 		ImGui::TreePop();
+	}
+}
+
+template <Mountain::Concepts::Effect T>
+void PostProcessingEffectsScene::ApplyEffectIfEnabled(const PostProcessingEffect<T>& effect)
+{
+	if (effect.enabled)
+	{
+		if (effect.effect.imageBindings.Contains([&](const auto& binding) { return binding.textureId == m_IntermediateTexture.GetId(); }))
+			UpdateIntermediateTexture();
+
+		effect.effect.Apply(Mountain::Renderer::GetCurrentRenderTarget().GetSize(), false);
 	}
 }
