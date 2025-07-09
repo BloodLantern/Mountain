@@ -1,0 +1,40 @@
+#version 460
+
+layout (local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
+
+#include "../utils.glsl"
+
+layout (rgba32f, binding = 0) uniform image2D sourceImage;
+layout (rgba32f, binding = 1) uniform image2D destinationImage;
+
+uniform float intensity;
+
+void main()
+{
+    ivec2 texel = ivec2(gl_GlobalInvocationID.xy);
+    vec2 texelf = vec2(texel);
+    ivec2 size = ivec2(gl_NumWorkGroups.xy);
+    vec2 sizef = vec2(size);
+
+    vec4 originalColor = imageLoad(sourceImage, texel);
+    vec4 newColor;
+
+    vec2 UVs = texelf/sizef;
+
+    vec2 center = vec2(0.5, 0.5);
+    vec2 direction = normalize(UVs - center);
+    float dist = length(UVs - center);
+
+    float offset = 0.005 * intensity * dist;
+
+    vec2 redOffset = UVs + direction * offset;
+    vec2 blueOffset = UVs - direction * offset;
+
+    newColor.r = imageLoad(sourceImage, ivec2(redOffset * sizef)).r;
+    newColor.g = originalColor.g;
+    newColor.b = imageLoad(sourceImage, ivec2(blueOffset * sizef)).b;
+    newColor.a = originalColor.a;
+
+    imageStore(destinationImage, texel, newColor);
+}
+
