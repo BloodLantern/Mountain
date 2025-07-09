@@ -44,7 +44,7 @@ namespace Mountain
         /// @brief Creates the Font corresponding to the given @p name and loads it with the given @p size.
         MOUNTAIN_API static Pointer<Font> LoadFont(const std::string& name, uint32_t size);
 
-        /// @brief Creates one Resource for each @ref FileManager entry.
+        /// @brief Creates one Resource for each @c FileManager entry.
         MOUNTAIN_API static void LoadAll();
 
         /// @brief Loads all embedded binary Resources created using @c std::embed.
@@ -74,7 +74,7 @@ namespace Mountain
         [[nodiscard]]
         static Pointer<T> Get(const Pointer<File>& file);
 
-        /// @brief Returns the Font that was loaded using the given @p name and @p size.
+        /// @brief Returns the Font loaded using the given @p name and @p size.
         [[nodiscard]]
         MOUNTAIN_API static Pointer<Font> GetFont(const std::string& name, uint32_t size);
 

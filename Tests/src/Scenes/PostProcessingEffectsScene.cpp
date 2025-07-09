@@ -111,7 +111,7 @@ void PostProcessingEffectsScene::UnloadResources()
 {
     Pointer<File> file = m_LandscapeTexture->GetFile();
     ResourceManager::Unload(m_LandscapeTexture);
-    FileManager::Unload(file->GetPath());
+    FileManager::Unload(static_cast<Pointer<Entry>>(file));
 }
 
 void PostProcessingEffectsScene::UpdateIntermediateTexture() const

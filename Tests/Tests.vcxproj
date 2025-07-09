@@ -109,6 +109,7 @@
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\Scenes\ParticleSystemScene.cpp" />
     <ClCompile Include="src\Scenes\PostProcessingEffectsScene.cpp" />
+    <ClCompile Include="src\Scenes\SpriteAnimationsScene.cpp" />
     <ClCompile Include="src\Scenes\TestScene.cpp" />
     <ClCompile Include="src\SpinComponent.cpp" />
     <ClCompile Include="src\TestGame.cpp" />
@@ -127,6 +128,7 @@
     <ClInclude Include="src\Player.hpp" />
     <ClInclude Include="src\Scenes\ParticleSystemScene.hpp" />
     <ClInclude Include="src\Scenes\PostProcessingEffectsScene.hpp" />
+    <ClInclude Include="src\Scenes\SpriteAnimationsScene.hpp" />
     <ClInclude Include="src\Scenes\TestScene.hpp" />
     <ClInclude Include="src\SpinComponent.hpp" />
     <ClInclude Include="src\TestEntity.hpp" />
