@@ -2,7 +2,9 @@
 
 #include <Mountain/Ecs/Scene.hpp>
 
-class TestScene : public Mountain::Scene
+using namespace Mountain;  // NOLINT(clang-diagnostic-header-hygiene)
+
+class TestScene : public Scene
 {
 public:
 	using Base = Scene;

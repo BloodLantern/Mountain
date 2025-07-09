@@ -27,7 +27,7 @@ void TestScene::Render()
 {
     Scene::Render();
 
-    Mountain::Draw::Clear(Mountain::Color::Black());
+    Draw::Clear(Color::Black());
 }
 
 void TestScene::BeforeRenderImGui()

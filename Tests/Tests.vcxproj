@@ -140,7 +140,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets\font.ttf" />
-    <Content Include="assets\landscapes.jpg" />
+    <Content Include="assets\landscape.jpg" />
     <Content Include="assets\music.mp3" />
     <Content Include="assets\sfx.ogg" />
     <Content Include="assets\strawberry\normal00.png" />

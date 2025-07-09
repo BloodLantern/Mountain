@@ -5,7 +5,7 @@
 
 #include "Scenes/TestScene.hpp"
 
-template <Mountain::Concepts::Effect T>
+template <Concepts::Effect T>
 struct PostProcessingEffect
 {
 	bool_t enabled;
@@ -35,23 +35,23 @@ public:
 	void UnloadResources() override;
 
 private:
-	Mountain::Pointer<Mountain::Texture> m_LandscapeTexture;
+	Pointer<Texture> m_LandscapeTexture;
 
-	PostProcessingEffect<Mountain::Vignette> m_Vignette{};
-	PostProcessingEffect<Mountain::FilmGrain> m_FilmGrain{};
-	PostProcessingEffect<Mountain::ChromaticAberrationAxial> m_ChromaticAberrationAxial{};
-	PostProcessingEffect<Mountain::ChromaticAberrationTransverse> m_ChromaticAberrationTransverse{};
+	PostProcessingEffect<Vignette> m_Vignette{};
+	PostProcessingEffect<FilmGrain> m_FilmGrain{};
+	PostProcessingEffect<ChromaticAberrationAxial> m_ChromaticAberrationAxial{};
+	PostProcessingEffect<ChromaticAberrationTransverse> m_ChromaticAberrationTransverse{};
 
-	Mountain::Graphics::GpuTexture m_IntermediateTexture;
+	Graphics::GpuTexture m_IntermediateTexture;
 
-	template <Mountain::Concepts::Effect T>
+	template <Concepts::Effect T>
 	void ShowEffectImGui(
 		const std::string& name,
 		PostProcessingEffect<T>& effect,
 		const std::type_identity_t<std::function<void(T& effect)>>& additionalAction = std::identity{}
 	);
 
-	template <Mountain::Concepts::Effect T>
+	template <Concepts::Effect T>
 	void ApplyEffectIfEnabled(const PostProcessingEffect<T>& effect);
 
 	void UpdateIntermediateTexture() const;
@@ -59,7 +59,7 @@ private:
 
 // Start of PostProcessingEffectsScene.inl
 
-template <Mountain::Concepts::Effect T>
+template <Concepts::Effect T>
 void PostProcessingEffectsScene::ShowEffectImGui(
 	const std::string& name,
 	PostProcessingEffect<T>& effect,
@@ -76,7 +76,7 @@ void PostProcessingEffectsScene::ShowEffectImGui(
 	}
 }
 
-template <Mountain::Concepts::Effect T>
+template <Concepts::Effect T>
 void PostProcessingEffectsScene::ApplyEffectIfEnabled(const PostProcessingEffect<T>& effect)
 {
 	if (effect.enabled)
@@ -84,6 +84,6 @@ void PostProcessingEffectsScene::ApplyEffectIfEnabled(const PostProcessingEffect
 		if (effect.effect.imageBindings.Contains([&](const auto& binding) { return binding.textureId == m_IntermediateTexture.GetId(); }))
 			UpdateIntermediateTexture();
 
-		effect.effect.Apply(Mountain::Renderer::GetCurrentRenderTarget().GetSize(), false);
+		effect.effect.Apply(Renderer::GetCurrentRenderTarget().GetSize(), false);
 	}
 }

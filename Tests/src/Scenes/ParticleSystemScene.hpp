@@ -20,5 +20,5 @@ public:
 	void RenderImGui() override;
 
 private:
-	Mountain::ParticleSystem m_ParticleSystem{ 1000 };
+	ParticleSystem m_ParticleSystem{ 1000 };
 };
