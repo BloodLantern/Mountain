@@ -11,6 +11,7 @@
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Containers/Array.hpp"
+#include "Mountain/Utils/Color.hpp"
 #include "SDL3/SDL_gamepad.h"
 
 /// @file GamepadInput.hpp
@@ -208,10 +209,10 @@ namespace Mountain
         MOUNTAIN_API void SetLight(const Color& color) const;
 
         /// @brief Performs a rumble
-        /// @param lowFrequency Low rumble frequency, value in [0;1]
-        /// @param highFrequency High rumble frequency, value in [0;1]
-        /// @param duration Rumble duration, in ms
-        MOUNTAIN_API void Rumble(float_t lowFrequency, float_t highFrequency, uint32_t duration) const;
+        /// @param weak Low rumble frequency, value in [0;1]
+        /// @param strong High rumble frequency, value in [0;1]
+        /// @param duration Rumble duration, in seconds
+        MOUNTAIN_API void Rumble(float_t weak, float_t strong, float_t duration) const;
 
         /// @brief Checks whether the gamepad has a specified capability
         /// @param capability Capability
@@ -222,6 +223,8 @@ namespace Mountain
         MOUNTAIN_API GETTER(const ButtonsArray&, Buttons, m_Buttons)
 
         MOUNTAIN_API GETTER(const AxesArray&, Axes, m_Axes)
+
+        MOUNTAIN_API GETTER(const Color&, Light, m_ColorLight)
 
         MOUNTAIN_API GETTER(const Vector3&, Gyroscope, m_Gyroscope)
         MOUNTAIN_API GETTER(const Vector3&, Accelerometer, m_Accelerometer)
@@ -245,6 +248,8 @@ namespace Mountain
         /// @brief Gamepad capabilities
         GamepadCapabilities m_Capabilities;
 
+        /// @brief Current game pad light, if any
+        mutable Color m_ColorLight;
         /// @brief Gamepad gyroscope values, if any
         Vector3 m_Gyroscope;
         /// @brief Gamepad accelerometer values, if any

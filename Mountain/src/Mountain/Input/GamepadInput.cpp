@@ -59,6 +59,8 @@ void GamepadInput::SetLight(const Color& color) const
         Logger::LogWarning("Trying to set LED color on a controller that doesn't support it : {}", GetName());
         return;
     }
+
+    m_ColorLight = color;
     
     const uint8_t r = static_cast<uint8_t>(color.r * 255.f);
     const uint8_t g = static_cast<uint8_t>(color.g * 255.f);
@@ -68,13 +70,13 @@ void GamepadInput::SetLight(const Color& color) const
         Logger::LogError("Failed to set gamepad light : {}", SDL_GetError());
 }
 
-void GamepadInput::Rumble(const float_t lowFrequency, const float_t highFrequency, const uint32_t duration) const
+void GamepadInput::Rumble(const float_t weak, const float_t strong, const float_t duration) const
 {
-    if (lowFrequency < 0.f || lowFrequency > 1.f)
-        THROW(ArgumentException("Rumble frequency value should be within [0;1]", "lowFrequency"));
+    if (weak < 0.f || weak > 1.f)
+        THROW(ArgumentException("Rumble frequency value should be within [0;1]", "weak"));
 
-    if (highFrequency < 0.f || highFrequency > 1.f)
-        THROW(ArgumentException("Rumble frequency value should be within [0;1]", "highFrequency"));
+    if (strong < 0.f || strong > 1.f)
+        THROW(ArgumentException("Rumble frequency value should be within [0;1]", "strong"));
 
     if (!HasCapability(GamepadCapabilities::Rumble))
     {
@@ -82,14 +84,15 @@ void GamepadInput::Rumble(const float_t lowFrequency, const float_t highFrequenc
         return;
     }
 
-    const uint16_t low = static_cast<uint16_t>(lowFrequency * 0xFFFF);
-    const uint16_t high = static_cast<uint16_t>(highFrequency * 0xFFFF);
+    const uint16_t low = static_cast<uint16_t>(strong * 0xFFFF);
+    const uint16_t high = static_cast<uint16_t>(weak * 0xFFFF);
+    const uint32_t ms = static_cast<uint16_t>(duration * 1000);
 
-    if (!SDL_RumbleGamepad(m_Handle, low, high, duration))
+    if (!SDL_RumbleGamepad(m_Handle, low, high, ms))
         Logger::LogError("Failed to perform gamepad rumble : {}", SDL_GetError());
 }
 
-bool_t GamepadInput::HasCapability(GamepadCapabilities capability) const
+bool_t GamepadInput::HasCapability(const GamepadCapabilities capability) const
 {
     return m_Capabilities & capability;
 }

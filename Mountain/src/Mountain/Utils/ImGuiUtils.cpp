@@ -304,27 +304,54 @@ void ImGuiUtils::ShowInputsWindow()
             Vector2 dpad = static_cast<Vector2>(gamepad.GetDirectionalPad()).Normalized();
             DirectionVector("Directional pad", &dpad);
             ImGui::EndDisabled();
-    
-            const Vector3& gyro = gamepad.GetGyroscope();
-            const Vector3& accel = gamepad.GetAccelerometer();
-            ImGui::Text("Gyroscope: %f, %f, %f", gyro.x, gyro.y, gyro.z);
-            ImGui::Text("Accelerometer: %f, %f, %f", accel.x, accel.y, accel.z);
 
-            for (size_t j = 0; j < gamepad.GetTouchpadAmount(); j++)
+            if (gamepad.HasCapability(GamepadCapabilities::Gyroscope))
             {
-                const GamepadInput::TouchpadInfo& touchpad = gamepad.GetTouchpad(j);
+                const Vector3& gyro = gamepad.GetGyroscope();
+                ImGui::Text("Gyroscope: %f, %f, %f", gyro.x, gyro.y, gyro.z);
+            }
 
-                ImGui::Text("Touchpad %d : ", i);
-                ImGui::Text("\tMax fingers : %d", touchpad.nbrOfFingersMax);
-                for (size_t k = 0; k < touchpad.fingerLocations.GetSize(); k++)
+            if (gamepad.HasCapability(GamepadCapabilities::Accelerometer))
+            {
+                const Vector3& accel = gamepad.GetAccelerometer();
+                ImGui::Text("Accelerometer: %f, %f, %f", accel.x, accel.y, accel.z);
+            }
+
+            if (gamepad.HasCapability(GamepadCapabilities::Touchpad))
+            {
+                for (size_t j = 0; j < gamepad.GetTouchpadAmount(); j++)
                 {
-                    const Vector2& finger = touchpad.fingerLocations[k];
-                    ImGui::Text("\tFinger %d : %f, %f", k, finger.x, finger.y);
+                    const GamepadInput::TouchpadInfo& touchpad = gamepad.GetTouchpad(j);
+
+                    ImGui::Text("Touchpad %d : ", i);
+                    ImGui::Text("\tMax fingers : %d", touchpad.nbrOfFingersMax);
+                    for (size_t k = 0; k < touchpad.fingerLocations.GetSize(); k++)
+                    {
+                        const Vector2& finger = touchpad.fingerLocations[k];
+                        ImGui::Text("\tFinger %d : %f, %f", k, finger.x, finger.y);
+                    }
                 }
             }
 
             ImGui::Text("Battery level : %d%%", gamepad.GetBattery());
             ImGui::Text("Battery status : %s", magic_enum::enum_name(gamepad.GetBatteryState()).data());
+
+            if (gamepad.HasCapability(GamepadCapabilities::Rumble))
+            {
+                if (ImGui::Button("Test weak rumble"))
+                    gamepad.Rumble(1.f, 0.f, 1.f);
+
+                if (ImGui::Button("Test strong rumble"))
+                    gamepad.Rumble(0.f, 1.f, 1.f);
+            }
+
+            if (gamepad.HasCapability(GamepadCapabilities::Led))
+            {
+                Color color = gamepad.GetLight();
+
+                if (ImGui::ColorEdit3("Light", &color.r))
+                    gamepad.SetLight(color);
+            }
 
             ImGui::TreePop();
         }
