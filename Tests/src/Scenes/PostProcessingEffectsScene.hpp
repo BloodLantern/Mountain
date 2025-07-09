@@ -41,6 +41,9 @@ private:
 	PostProcessingEffect<FilmGrain> m_FilmGrain{};
 	PostProcessingEffect<ChromaticAberrationAxial> m_ChromaticAberrationAxial{};
 	PostProcessingEffect<ChromaticAberrationTransverse> m_ChromaticAberrationTransverse{};
+	PostProcessingEffect<GaussianBlurLow> m_GaussianBlurLow{};
+	PostProcessingEffect<GaussianBlurHigh> m_GaussianBlurHigh{};
+	PostProcessingEffect<BoxBlur> m_BoxBlur{};
 
 	Graphics::GpuTexture m_IntermediateTexture;
 

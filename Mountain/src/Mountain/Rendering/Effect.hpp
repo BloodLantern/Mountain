@@ -33,7 +33,7 @@ namespace Mountain
         /// This effectively means that the CPU will wait for the compute shader to finish executing before returning from this function.
         /// If this is @c false, and you want to access the modified GPU image, you need to manually synchronize the GPU data afterward using
         /// @c Graphics::SynchronizeGpuData() with @c GpuDataSynchronizationFlags::ShaderImageAccess.
-        MOUNTAIN_API void Apply(Vector2i textureSize, bool_t synchronizeImageData) const;
+        MOUNTAIN_API virtual void Apply(Vector2i textureSize, bool_t synchronizeImageData) const;
 
     protected:
         Pointer<ComputeShader> m_ComputeShader;
@@ -71,5 +71,47 @@ namespace Mountain
         MOUNTAIN_API void LoadResources() override;
 
         MOUNTAIN_API void SetIntensity(float_t newIntensity) const;
+    };
+
+    // Effect will be applied on the first texture and the second one is used as a buffer
+    class GaussianBlurLow : public Effect
+    {
+    public:
+        MOUNTAIN_API void LoadResources() override;
+
+        MOUNTAIN_API void Apply(Vector2i textureSize, bool_t synchronizeImageData) const override;
+
+    protected:
+        Pointer<ComputeShader> m_OtherComputeShader;
+
+    };
+
+    // Effect will be applied on the first texture and the second one is used as a buffer
+    class GaussianBlurHigh : public Effect
+    {
+    public:
+        MOUNTAIN_API void LoadResources() override;
+
+        MOUNTAIN_API void Apply(Vector2i textureSize, bool_t synchronizeImageData) const override;
+
+    protected:
+        Pointer<ComputeShader> m_OtherComputeShader;
+
+    };
+
+    // Effect will be applied on the first texture and the second one is used as a buffer
+    class BoxBlur : public Effect
+    {
+    public:
+        MOUNTAIN_API void LoadResources() override;
+
+        MOUNTAIN_API void Apply(Vector2i textureSize, bool_t synchronizeImageData) const override;
+
+        MOUNTAIN_API void SetRadius(int32_t newRadius) const;
+
+
+    protected:
+        Pointer<ComputeShader> m_OtherComputeShader;
+
     };
 }

@@ -339,9 +339,15 @@
     <Content Include="shaders_internal\circle\circle.frag" />
     <Content Include="shaders_internal\circle\circle.vert" />
     <Content Include="shaders_internal\easing.glsl" />
+    <Content Include="shaders_internal\effects\box_blur_horizontal.comp" />
+    <Content Include="shaders_internal\effects\box_blur_vertical.comp" />
     <Content Include="shaders_internal\effects\chromatic_aberration_axial.comp" />
     <Content Include="shaders_internal\effects\chromatic_aberration_transverse.comp" />
     <Content Include="shaders_internal\effects\film_grain.comp" />
+    <Content Include="shaders_internal\effects\gaussian_blur_horizontal_high.comp" />
+    <Content Include="shaders_internal\effects\gaussian_blur_horizontal_low.comp" />
+    <Content Include="shaders_internal\effects\gaussian_blur_vertical_high.comp" />
+    <Content Include="shaders_internal\effects\gaussian_blur_vertical_low.comp" />
     <Content Include="shaders_internal\line_colored\line_colored.frag" />
     <Content Include="shaders_internal\line_colored\line_colored.vert" />
     <Content Include="shaders_internal\particles\color_over_lifetime.glsl" />

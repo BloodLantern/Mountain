@@ -1,0 +1,30 @@
+﻿#version 460
+
+layout (local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
+
+layout (rgba32f, binding = 0) uniform restrict readonly image2D sourceImage;
+layout (rgba32f, binding = 1) uniform restrict writeonly image2D destinationImage;
+
+const int weight[3] = int[](1, 2, 1);
+
+void main()
+{
+    ivec2 texel = ivec2(gl_GlobalInvocationID.xy);
+    vec2 texelf = vec2(texel);
+    ivec2 size = ivec2(gl_NumWorkGroups.xy);
+    vec2 sizef = vec2(size);
+
+    vec4 newColor = vec4(0.0f);
+    int k = 0;
+
+    for (int i = -1; i <= 1; i++)
+    {
+        ivec2 coords = clamp(texel + ivec2(0, i), ivec2(0), size - 1);
+        int w = weight[i + 1];
+        newColor += imageLoad(sourceImage, coords) * float(w);
+        k += w;
+    }
+
+    imageStore(destinationImage, texel, newColor/float(k));
+
+}

@@ -22,13 +22,23 @@ void PostProcessingEffectsScene::Begin()
 
     m_Vignette.effect.imageBindings.Emplace(renderTargetId, 0u, Graphics::ImageShaderAccess::WriteOnly);
     m_FilmGrain.effect.imageBindings.Emplace(renderTargetId, 0u, Graphics::ImageShaderAccess::WriteOnly);
+
     m_ChromaticAberrationAxial.effect.imageBindings.Emplace(renderTargetId, 1u, Graphics::ImageShaderAccess::WriteOnly);
     m_ChromaticAberrationTransverse.effect.imageBindings.Emplace(renderTargetId, 1u, Graphics::ImageShaderAccess::WriteOnly);
+
+    m_BoxBlur.effect.imageBindings.Emplace(renderTargetId, 0u, Graphics::ImageShaderAccess::ReadWrite);
+    m_GaussianBlurLow.effect.imageBindings.Emplace(renderTargetId, 0u, Graphics::ImageShaderAccess::ReadWrite);
+    m_GaussianBlurHigh.effect.imageBindings.Emplace(renderTargetId, 0u, Graphics::ImageShaderAccess::ReadWrite);
 
     const uint32_t intermediateTextureId = m_IntermediateTexture.GetId();
 
     m_ChromaticAberrationAxial.effect.imageBindings.Emplace(intermediateTextureId, 0u, Graphics::ImageShaderAccess::ReadOnly);
     m_ChromaticAberrationTransverse.effect.imageBindings.Emplace(intermediateTextureId, 0u, Graphics::ImageShaderAccess::ReadOnly);
+
+    m_BoxBlur.effect.imageBindings.Emplace(intermediateTextureId, 1u, Graphics::ImageShaderAccess::ReadWrite);
+    m_GaussianBlurLow.effect.imageBindings.Emplace(intermediateTextureId, 1u, Graphics::ImageShaderAccess::ReadWrite);
+    m_GaussianBlurHigh.effect.imageBindings.Emplace(intermediateTextureId, 1u, Graphics::ImageShaderAccess::ReadWrite);
+
 }
 
 void PostProcessingEffectsScene::Render()
@@ -45,6 +55,9 @@ void PostProcessingEffectsScene::Render()
     ApplyEffectIfEnabled(m_FilmGrain);
     ApplyEffectIfEnabled(m_ChromaticAberrationAxial);
     ApplyEffectIfEnabled(m_ChromaticAberrationTransverse);
+    ApplyEffectIfEnabled(m_BoxBlur);
+    ApplyEffectIfEnabled(m_GaussianBlurLow);
+    ApplyEffectIfEnabled(m_GaussianBlurHigh);
 }
 
 void PostProcessingEffectsScene::RenderImGui()
@@ -78,6 +91,18 @@ void PostProcessingEffectsScene::RenderImGui()
         ImGui::DragFloat("intensity", &intensity, 0.01f, 0.f, 10.f);
         e.SetIntensity(intensity);
     });
+    ShowEffectImGui("Box Blur", m_BoxBlur, [](auto& e)
+    {
+        static int32_t radius = 1.f;
+        ImGui::DragInt("radius", &radius, 0.01f, 0.f, 10.f);
+        e.SetRadius(radius);
+    });
+    ShowEffectImGui("Gaussian Blur Low", m_GaussianBlurLow, [](auto& e)
+    {
+    });
+    ShowEffectImGui("Gaussian Blur High", m_GaussianBlurHigh, [](auto& e)
+    {
+    });
 }
 
 void PostProcessingEffectsScene::End()
@@ -86,6 +111,9 @@ void PostProcessingEffectsScene::End()
     m_FilmGrain.effect.imageBindings.Clear();
     m_ChromaticAberrationAxial.effect.imageBindings.Clear();
     m_ChromaticAberrationTransverse.effect.imageBindings.Clear();
+    m_BoxBlur.effect.imageBindings.Clear();
+    m_GaussianBlurLow.effect.imageBindings.Clear();
+    m_GaussianBlurHigh.effect.imageBindings.Clear();
 
     m_IntermediateTexture.Delete();
 
@@ -100,6 +128,9 @@ void PostProcessingEffectsScene::LoadPersistentResources()
     m_FilmGrain.effect.LoadResources();
     m_ChromaticAberrationAxial.effect.LoadResources();
     m_ChromaticAberrationTransverse.effect.LoadResources();
+    m_BoxBlur.effect.LoadResources();
+    m_GaussianBlurLow.effect.LoadResources();
+    m_GaussianBlurHigh.effect.LoadResources();
 }
 
 void PostProcessingEffectsScene::LoadResources()
