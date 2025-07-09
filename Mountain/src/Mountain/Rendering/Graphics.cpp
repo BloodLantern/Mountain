@@ -21,9 +21,9 @@ void Graphics::SetActiveTexture(const uint8_t activeTexture)
     glActiveTexture(GL_TEXTURE0 + activeTexture);
 }
 
-void Graphics::SynchronizeGpuData(const Meta::Flags<GpuDataSynchronizationFlags> flags) { glMemoryBarrier(static_cast<GLbitfield>(flags)); }
+void Graphics::SynchronizeGpuData(const GpuDataSynchronizationFlags flags) { glMemoryBarrier(static_cast<GLbitfield>(flags)); }
 
-void Graphics::MemoryBarrier(const Meta::Flags<MemoryBarrierFlags> flags) { glMemoryBarrier(static_cast<GLbitfield>(flags)); }
+void Graphics::MemoryBarrier(const MemoryBarrierFlags flags) { glMemoryBarrier(static_cast<GLbitfield>(flags)); }
 
 void Graphics::DrawArrays(const DrawMode mode, const int32_t first, const int32_t count)
 {

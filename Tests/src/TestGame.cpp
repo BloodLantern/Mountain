@@ -26,6 +26,7 @@ GameExample::GameExample(const char_t* const windowTitle)
         new PostProcessingEffectsScene
     );
 
+    // Sort the scenes alphabetically
     m_Scenes.Sort([](const TestScene* lhs, const TestScene* rhs) { return lhs->GetName() < rhs->GetName(); });
 }
 

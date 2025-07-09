@@ -654,9 +654,9 @@ namespace Mountain::Graphics
 
     MOUNTAIN_API void SetActiveTexture(uint8_t activeTexture);
 
-    MOUNTAIN_API void SynchronizeGpuData(Meta::Flags<GpuDataSynchronizationFlags> flags = Utils::ToFlags(GpuDataSynchronizationFlags::None));
+    MOUNTAIN_API void SynchronizeGpuData(GpuDataSynchronizationFlags flags = GpuDataSynchronizationFlags::None);
 
-    MOUNTAIN_API void MemoryBarrier(Meta::Flags<MemoryBarrierFlags> flags = Utils::ToFlags(MemoryBarrierFlags::None));
+    MOUNTAIN_API void MemoryBarrier(MemoryBarrierFlags flags = MemoryBarrierFlags::None);
 
     MOUNTAIN_API void DrawArrays(DrawMode mode, int32_t first, int32_t count);
     MOUNTAIN_API void DrawArraysInstanced(DrawMode mode, int32_t first, int32_t count, int32_t instanceCount);

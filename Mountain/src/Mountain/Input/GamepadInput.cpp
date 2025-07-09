@@ -35,7 +35,7 @@ const GamepadInput::TouchpadInfo& GamepadInput::GetTouchpad(const size_t index) 
 {
     if (!HasCapability(GamepadCapabilities::Touchpad))
     {
-        const std::string error = std::format("Trying to access a touchpad on a controller that doesn't have one : {}", GetName());
+        const std::string error = std::format("Trying to access a touchpad on a controller that doesn't have one: {}", GetName());
         THROW(InvalidOperationException{error.c_str()});
     }
 
@@ -56,31 +56,31 @@ void GamepadInput::SetLight(const Color& color) const
 {
     if (!HasCapability(GamepadCapabilities::Led))
     {
-        Logger::LogWarning("Trying to set LED color on a controller that doesn't support it : {}", GetName());
+        Logger::LogWarning("Trying to set LED color on a controller that doesn't support it: {}", GetName());
         return;
     }
 
     m_ColorLight = color;
-    
+
     const uint8_t r = static_cast<uint8_t>(color.r * 255.f);
     const uint8_t g = static_cast<uint8_t>(color.g * 255.f);
     const uint8_t b = static_cast<uint8_t>(color.b * 255.f);
 
     if (!SDL_SetGamepadLED(m_Handle, r, g, b))
-        Logger::LogError("Failed to set gamepad light : {}", SDL_GetError());
+        Logger::LogError("Failed to set gamepad light: {}", SDL_GetError());
 }
 
 void GamepadInput::Rumble(const float_t weak, const float_t strong, const float_t duration) const
 {
     if (weak < 0.f || weak > 1.f)
-        THROW(ArgumentException("Rumble frequency value should be within [0;1]", "weak"));
+        THROW(ArgumentException("Rumble frequency value should be in the range [0, 1]", "weak"));
 
     if (strong < 0.f || strong > 1.f)
-        THROW(ArgumentException("Rumble frequency value should be within [0;1]", "strong"));
+        THROW(ArgumentException("Rumble frequency value should be in the range [0, 1]", "strong"));
 
     if (!HasCapability(GamepadCapabilities::Rumble))
     {
-        Logger::LogWarning("Trying to use rumble on a controller that doesn't support it : {}", GetName());
+        Logger::LogWarning("Trying to use rumble on a controller that doesn't support it: {}", GetName());
         return;
     }
 
@@ -89,7 +89,7 @@ void GamepadInput::Rumble(const float_t weak, const float_t strong, const float_
     const uint32_t ms = static_cast<uint16_t>(duration * 1000);
 
     if (!SDL_RumbleGamepad(m_Handle, low, high, ms))
-        Logger::LogError("Failed to perform gamepad rumble : {}", SDL_GetError());
+        Logger::LogError("Failed to perform gamepad rumble: {}", SDL_GetError());
 }
 
 bool_t GamepadInput::HasCapability(const GamepadCapabilities capability) const

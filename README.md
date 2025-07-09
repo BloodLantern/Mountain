@@ -91,3 +91,4 @@ compile by statically linking against the corresponding `Mountain.lib`
 - Real unit tests
 - Replace all `std::array` and `std::vector` usages with `Mountain::Array` and `Mountain::List`
 - True text rendering
+- Add an instanced Random API to have both a static and instanced way or generated RNG

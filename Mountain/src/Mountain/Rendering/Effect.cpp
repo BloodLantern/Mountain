@@ -26,7 +26,7 @@ void Effect::Apply(const Vector2i textureSize, const bool_t synchronizeImageData
     m_ComputeShader->Dispatch(textureSize.x, textureSize.y);
 
     if (synchronizeImageData)
-        Graphics::SynchronizeGpuData(Utils::ToFlags(Graphics::GpuDataSynchronizationFlags::ShaderImageAccess));
+        Graphics::SynchronizeGpuData(Graphics::GpuDataSynchronizationFlags::ShaderImageAccess);
 }
 
 void Vignette::LoadResources()
@@ -62,4 +62,3 @@ void ChromaticAberrationTransverse::LoadResources()
 }
 
 void ChromaticAberrationTransverse::SetIntensity(const float_t newIntensity) const { m_ComputeShader->SetUniform("intensity", newIntensity); }
-
