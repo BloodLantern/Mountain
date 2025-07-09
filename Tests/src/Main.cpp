@@ -41,10 +41,10 @@ int32_t main(int32_t, char_t**)
 	lppAgent.EnableModule(lpp::LppGetCurrentModulePath(), lpp::LPP_MODULES_OPTION_ALL_IMPORT_MODULES, nullptr, &LppFilterModuleCallback);
 #endif
 
-	Mountain::NoBinaryResources = true;
-	Mountain::BuiltinShadersPath = "../Mountain/shaders_internal";
-	Mountain::BuiltinAssetsPath = "../Mountain/assets_internal";
-	Mountain::BreakOnGraphicsError = true;
+	NoBinaryResources = true;
+	BuiltinShadersPath = "../Mountain/shaders_internal";
+	BuiltinAssetsPath = "../Mountain/assets_internal";
+	BreakOnGraphicsError = true;
 
 	GameExample* game = new GameExample("Mountain tests");
 
