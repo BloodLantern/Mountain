@@ -127,6 +127,38 @@ namespace Mountain
         Released
     };
 
+    /// @brief Gamepad battery state
+    enum class GamepadBatteryState : uint8_t
+    {
+        /// @brief Unknown power level
+        Unknown,
+        /// @brief Not plugged in, running on the battery
+        OnBattery,
+        /// @brief Plugged in, no battery available
+        NoBattery,
+        /// @brief Plugged in, charging the battery
+        Charging,
+        /// @brief Plugged in, battery fully charged
+        Charged
+    };
+
+    /// @brief Describes the special capabilities of a gamepad
+    enum class GamepadCapabilities : uint8_t
+    {
+        /// @brief No capabilities
+        None =          0,
+        /// @brief The gamepad has a colored LED (e.g. PS4 controller)
+        Led =           1 << 0,
+        /// @brief The gamepad has rumble
+        Rumble =        1 << 1,
+        /// @brief The gamepad has a touchpad
+        Touchpad =      1 << 2,
+        /// @brief The gamepad has a gyroscope
+        Gyroscope =     1 << 3,
+        /// @brief The gamepad has an accelerometer
+        Accelerometer = 1 << 4
+    };
+
     using GamepadButtonStatuses = Array<bool_t, magic_enum::enum_count<GamepadButtonStatus>()>;
 
     /// @brief Information about a gamepad
@@ -141,17 +173,22 @@ namespace Mountain
 
         MOUNTAIN_API GETTER(bool_t, Connected, m_IsConnected)
 
+        [[nodiscard]]
         MOUNTAIN_API const std::string& GetName() const;
 
+        [[nodiscard]]
         MOUNTAIN_API float_t GetAxis(GamepadAxis axis) const;
 
+        [[nodiscard]]
         MOUNTAIN_API Vector2 GetStick(GamepadStick stick) const;
 
+        [[nodiscard]]
         MOUNTAIN_API Vector2i GetDirectionalPad() const;
 
+        [[nodiscard]]
         MOUNTAIN_API bool_t GetButton(GamepadButton button, GamepadButtonStatus status = GamepadButtonStatus::Down) const;
 
-        /// @brief Sets the gamepad LED light
+        /// @brief Sets the gamepad LED color if there's one
         /// @param color Color
         MOUNTAIN_API void SetLight(const Color& color) const;
 
@@ -161,9 +198,21 @@ namespace Mountain
         /// @param duration Rumble duration, in ms
         MOUNTAIN_API void Rumble(float_t lowFrequency, float_t highFrequency, uint32_t duration) const;
 
+        /// @brief Checks whether the gamepad has a specified capability
+        /// @param capability Capability
+        /// @return Whether the gamepad has it
+        [[nodiscard]]
+        MOUNTAIN_API bool_t HasCapability(GamepadCapabilities capability) const;
+
         MOUNTAIN_API GETTER(const ButtonsArray&, Buttons, m_Buttons)
 
         MOUNTAIN_API GETTER(const AxesArray&, Axes, m_Axes)
+
+        MOUNTAIN_API GETTER(const Vector3&, Gyroscope, m_Gyroscope);
+        MOUNTAIN_API GETTER(const Vector3&, Accelerometer, m_Accelerometer);
+        
+        MOUNTAIN_API GETTER(int8_t, Battery, m_Battery)
+        MOUNTAIN_API GETTER(GamepadBatteryState, BatteryState, m_BatteryState)
 
     private:
         /// @brief Whether the gamepad is connected
@@ -174,6 +223,18 @@ namespace Mountain
         AxesArray m_Axes{};
         /// @brief Array of button statuses
         ButtonsArray m_Buttons{};
+        /// @brief Battery level of the controller (-1 if there's no battery)
+        int8_t m_Battery;
+        /// @brief Battery state
+        GamepadBatteryState m_BatteryState;
+        /// @brief Gamepad capabilities
+        GamepadCapabilities m_Capabilities;
+
+        /// @brief Gamepad gyroscope values, if any
+        Vector3 m_Gyroscope;
+        /// @brief Gamepad accelerometer values, if any
+        Vector3 m_Accelerometer;
+
         /// @brief Internal id of the gamepad
         SDL_JoystickID m_Id;
         /// @brief Native handle
@@ -182,3 +243,5 @@ namespace Mountain
         friend class Input;
     };
 }
+
+ENUM_FLAGS(Mountain::GamepadCapabilities)

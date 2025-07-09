@@ -223,48 +223,110 @@ void Window::PollEvents()
     while (SDL_PollEvent(&event))
     {
         ImGui_ImplSDL3_ProcessEvent(&event);
-        switch (event.type)
-        {
-            case SDL_EVENT_QUIT:
-                shouldClose = true;
 
-            case SDL_EVENT_WINDOW_HIDDEN:
-                m_Minimized = true;
-                break;
+        ProcessWindowEvents(event);
+        ProcessKeyboardEvents(event);
+        ProcessMouseEvents(event);
+        ProcessGamepadEvents(event);
+    }
+}
+
+void Window::ProcessWindowEvents(const SDL_Event& event)
+{
+    switch (event.type)
+    {
+        case SDL_EVENT_QUIT:
+        case SDL_EVENT_WINDOW_CLOSE_REQUESTED:
+            shouldClose = true;
+            break;
+
+        case SDL_EVENT_WINDOW_HIDDEN:
+        case SDL_EVENT_WINDOW_MINIMIZED:
+            m_Minimized = true;
+            break;
             
-            case SDL_EVENT_WINDOW_SHOWN:
-                m_Minimized = false;
-                break;
+        case SDL_EVENT_WINDOW_SHOWN:
+        case SDL_EVENT_WINDOW_RESTORED:
+            m_Minimized = false;
+            break;
 
-            case SDL_EVENT_KEY_UP:
-            case SDL_EVENT_KEY_DOWN:
-                Input::HandleKeyboard(event.key.key,
-                    event.key.down ? KeyAction::Press :
-                    event.key.repeat ? KeyAction::Repeat : KeyAction::Release);
-                break;
+        default: break;
+    }
+}
 
-            case SDL_EVENT_MOUSE_BUTTON_UP:
-            case SDL_EVENT_MOUSE_BUTTON_DOWN:
-                // SDL doesn't have a binding for mouse button 0, so we offset everything by 1
-                Input::HandleMouseButton(event.button.button - 1, event.button.down);
-                break;
+void Window::ProcessKeyboardEvents(const SDL_Event& event)
+{
+    SDL_Keycode key = event.key.key;
+    if (key & SDLK_SCANCODE_MASK)
+    {
+        // Remap to 0, then map to enum values
+        key = key - SDLK_CAPSLOCK + static_cast<size_t>(Key::NormalEnd);
+    }
+    
+    switch (event.type)
+    {
+        case SDL_EVENT_KEY_UP:
+        case SDL_EVENT_KEY_DOWN:
+            Input::HandleKeyboard(key,
+                event.key.down ? KeyAction::Press :
+                event.key.repeat ? KeyAction::Repeat : KeyAction::Release);
+            break;
+
+        default: break;
+    }
+}
+
+void Window::ProcessMouseEvents(const SDL_Event& event)
+{
+    switch (event.type)
+    {
+        case SDL_EVENT_MOUSE_BUTTON_UP:
+        case SDL_EVENT_MOUSE_BUTTON_DOWN:
+            // SDL doesn't have a binding for mouse button 0, so we offset everything by 1
+            Input::HandleMouseButton(event.button.button - 1, event.button.down);
+            break;
+
+        case SDL_EVENT_MOUSE_MOTION:
+            Input::HandleMouseMovement({ event.motion.x, event.motion.y });
+            break;
             
-            case SDL_EVENT_MOUSE_WHEEL:
-                Input::HandleMouseWheel(event.wheel.integer_x, event.wheel.integer_y);
-                break;
+        case SDL_EVENT_MOUSE_WHEEL:
+            Input::HandleMouseWheel(event.wheel.integer_x, event.wheel.integer_y);
+            break;
 
-            case SDL_EVENT_GAMEPAD_ADDED:
-                Input::ConnectGamepad(event.gdevice.which);
-                break;
+        default: break;
+    }
+}
 
-            case SDL_EVENT_GAMEPAD_REMOVED:
-                Input::DisconnectGamepad(event.gdevice.which);
-                break;
+void Window::ProcessGamepadEvents(const SDL_Event& event)
+{
+    switch (event.type)
+    {
+        case SDL_EVENT_GAMEPAD_ADDED:
+            Input::ConnectGamepad(event.gdevice.which);
+            break;
 
-            default:
-                // Discard any other events
-                break;
-        }
+        case SDL_EVENT_GAMEPAD_REMOVED:
+            Input::DisconnectGamepad(event.gdevice.which);
+            break;
+
+        case SDL_EVENT_JOYSTICK_BATTERY_UPDATED:
+            Input::UpdateGamepadBattery(event.gdevice.which, static_cast<int8_t>(event.jbattery.percent),
+                static_cast<GamepadBatteryState>(event.jbattery.state));
+            break;
+
+        case SDL_EVENT_GAMEPAD_SENSOR_UPDATE:
+            if (event.gsensor.sensor == SDL_SENSOR_ACCEL)
+            {
+                Input::UpdateGamepadAccel(event.gsensor.which, { event.gsensor.data[0], event.gsensor.data[1], event.gsensor.data[2] });
+            }
+            else if (event.gsensor.sensor == SDL_SENSOR_GYRO)
+            {
+                Input::UpdateGamepadGyro(event.gsensor.which, { event.gsensor.data[0], event.gsensor.data[1], event.gsensor.data[2] });
+            }
+            break;
+
+        default: break;
     }
 }
 

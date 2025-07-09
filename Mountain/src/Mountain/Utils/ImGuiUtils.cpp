@@ -300,6 +300,14 @@ void ImGuiUtils::ShowInputsWindow()
 
             Vector2 dpad = static_cast<Vector2>(gamepad.GetDirectionalPad()).Normalized();
             DirectionVector("Directional pad", &dpad);
+    
+            const Vector3& gyro = gamepad.GetGyroscope();
+            const Vector3& accel = gamepad.GetAccelerometer();
+            ImGui::Text("Gyroscope: %f, %f, %f", gyro.x, gyro.y, gyro.z);
+            ImGui::Text("Accelerometer: %f, %f, %f", accel.x, accel.y, accel.z);
+
+            ImGui::Text("Battery level : %d%%", gamepad.GetBattery());
+            ImGui::Text("Battery status : %s", magic_enum::enum_name(gamepad.GetBatteryState()).data());
 
             ImGui::TreePop();
         }

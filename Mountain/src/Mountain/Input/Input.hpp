@@ -88,11 +88,14 @@ namespace Mountain
         static void HandleKeyboard(size_t key, KeyAction action);
 
         static void HandleMouseButton(size_t mouseButton, bool_t pressed);
-
+        static void HandleMouseMovement(Vector2 newPosition);
         static void HandleMouseWheel(int32_t wheelX, int32_t wheelY);
 
         static void ConnectGamepad(uint32_t id);
         static void DisconnectGamepad(uint32_t id);
+        static void UpdateGamepadBattery(uint32_t id, int8_t percent, GamepadBatteryState state);
+        static void UpdateGamepadGyro(uint32_t id, const Vector3& gyro);
+        static void UpdateGamepadAccel(uint32_t id, const Vector3& accel);
 
         static void UpdateGamepads();
 

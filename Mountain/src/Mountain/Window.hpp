@@ -6,6 +6,7 @@
 #include "Mountain/Rendering/Renderer.hpp"
 #include "Mountain/Resource/Texture.hpp"
 #include "Mountain/Utils/Event.hpp"
+#include "SDL3/SDL_events.h"
 #include "SDL3/SDL_video.h"
 
 /// @file window.hpp
@@ -118,6 +119,11 @@ namespace Mountain
         static void UpdateCurrentScreen();
 
         static void PollEvents();
+
+        static void ProcessWindowEvents(const SDL_Event& event);
+        static void ProcessKeyboardEvents(const SDL_Event& event);
+        static void ProcessMouseEvents(const SDL_Event& event);
+        static void ProcessGamepadEvents(const SDL_Event& event);
 
         static void SwapBuffers();
 

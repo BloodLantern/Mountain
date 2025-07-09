@@ -3,8 +3,6 @@
 #include "Time.hpp"
 #include "Mountain/Utils/Logger.hpp"
 #include "SDL3/SDL_gamepad.h"
-#include "SDL3/SDL_keycode.h"
-#include "SDL3/SDL_mouse.h"
 
 using namespace Mountain;
 
@@ -38,14 +36,8 @@ bool_t Input::IsGamepadConnected(const uint32_t index) { return m_Gamepads[index
 
 Vector2 Input::GetMousePosition() { return m_MousePosition; }
 
-void Input::HandleKeyboard(size_t key, const KeyAction action)
+void Input::HandleKeyboard(const size_t key, const KeyAction action)
 {
-    if (key & SDLK_SCANCODE_MASK)
-    {
-        // Remap to 0, then map to enum values
-        key = key - SDLK_CAPSLOCK + static_cast<size_t>(Key::NormalEnd);
-    }
-
     if (key > m_Keyboard.GetSize())
         return;
 
@@ -86,6 +78,14 @@ void Input::HandleMouseButton(const size_t mouseButton, const bool_t pressed)
     }
 }
 
+void Input::HandleMouseMovement(const Vector2 newPosition)
+{
+    m_LastMousePosition = m_MousePosition;
+
+    m_MousePosition = newPosition;
+    m_MouseDelta = m_MousePosition - m_LastMousePosition;
+}
+
 void Input::HandleMouseWheel(const int32_t wheelX, const int32_t wheelY)
 {
     m_MouseWheel += { static_cast<float_t>(wheelX), static_cast<float_t>(wheelY) };
@@ -105,7 +105,47 @@ void Input::ConnectGamepad(const uint32_t id)
     gamepad->m_Handle = SDL_OpenGamepad(id);
     gamepad->m_Name = SDL_GetGamepadName(gamepad->m_Handle);
     gamepad->m_IsConnected = true;
-    gamepad->SetLight(Color::Black());
+
+    // Assume there is no battery first, if there's one we should receive an event about it
+    gamepad->m_Battery = -1;
+    gamepad->m_BatteryState = GamepadBatteryState::NoBattery;
+
+    GamepadCapabilities capabilities = GamepadCapabilities::None;
+
+    const SDL_PropertiesID properties = SDL_GetGamepadProperties(gamepad->m_Handle);
+
+    if (SDL_HasProperty(properties, SDL_PROP_GAMEPAD_CAP_RGB_LED_BOOLEAN))
+    {
+        capabilities |= GamepadCapabilities::Led;
+    }
+
+    if (SDL_HasProperty(properties, SDL_PROP_GAMEPAD_CAP_RUMBLE_BOOLEAN) ||
+        SDL_HasProperty(properties, SDL_PROP_GAMEPAD_CAP_TRIGGER_RUMBLE_BOOLEAN))
+    {
+        capabilities |= GamepadCapabilities::Rumble;
+    }
+
+    if (SDL_GetNumGamepadTouchpads(gamepad->m_Handle) != 0)
+        capabilities |= GamepadCapabilities::Touchpad;
+
+    if (SDL_GamepadHasSensor(gamepad->m_Handle, SDL_SENSOR_ACCEL))
+    {
+        capabilities |= GamepadCapabilities::Accelerometer;
+        SDL_SetGamepadSensorEnabled(gamepad->m_Handle, SDL_SENSOR_ACCEL, true);
+    }
+
+    if (SDL_GamepadHasSensor(gamepad->m_Handle, SDL_SENSOR_GYRO))
+    {
+        capabilities |= GamepadCapabilities::Gyroscope;
+        SDL_SetGamepadSensorEnabled(gamepad->m_Handle, SDL_SENSOR_GYRO, true);
+    }
+    
+    gamepad->m_Capabilities = capabilities;
+
+    if (gamepad->HasCapability(GamepadCapabilities::Led))
+        gamepad->SetLight(Color::Black());
+
+    Logger::LogInfo("Connected controller : {}", gamepad->GetName());
 }
 
 void Input::DisconnectGamepad(const uint32_t id)
@@ -119,9 +159,39 @@ void Input::DisconnectGamepad(const uint32_t id)
     gamepad->m_Id = 0;
     gamepad->m_Handle = nullptr;
     gamepad->m_IsConnected = false;
-
+    gamepad->m_Battery = -1;
+    gamepad->m_BatteryState = GamepadBatteryState::Unknown;
+    gamepad->m_Capabilities = GamepadCapabilities::None;
     gamepad->m_Axes.Fill(0.f);
     gamepad->m_Buttons.Fill({});
+}
+
+void Input::UpdateGamepadBattery(const uint32_t id, const int8_t percent, const GamepadBatteryState state)
+{
+    GamepadInput* const gamepad = FindFirst(m_Gamepads, [id](const GamepadInput& g) { return g.m_Id == id; });
+    if (!gamepad)
+        return;
+    
+    gamepad->m_Battery = percent;
+    gamepad->m_BatteryState = state;
+}
+
+void Input::UpdateGamepadGyro(uint32_t id, const Vector3& gyro)
+{
+    GamepadInput* const gamepad = FindFirst(m_Gamepads, [id](const GamepadInput& g) { return g.m_Id == id; });
+    if (!gamepad)
+        return;
+    
+    gamepad->m_Gyroscope = gyro;
+}
+
+void Input::UpdateGamepadAccel(uint32_t id, const Vector3& accel)
+{
+    GamepadInput* const gamepad = FindFirst(m_Gamepads, [id](const GamepadInput& g) { return g.m_Id == id; });
+    if (!gamepad)
+        return;
+    
+    gamepad->m_Accelerometer = accel;
 }
 
 void Input::UpdateGamepads()
@@ -207,14 +277,6 @@ void Input::UpdateGamepads()
 
 void Input::Update()
 {
-    m_LastMousePosition = m_MousePosition;
-
-    float_t x, y;
-    SDL_GetMouseState(&x, &y);
-
-    m_MousePosition = { x, y };
-    m_MouseDelta = m_MousePosition - m_LastMousePosition;
-
     UpdateGamepads();
 }
 
@@ -252,8 +314,6 @@ Vector2 Input::GetMouseWheel() { return m_MouseWheel; }
 void Input::Initialize()
 {
     Logger::LogVerbose("Initializing input");
-
-    // glfwSetJoystickCallback(HandleJoyStickCallBack);
 
     KeyStatuses defaultKeys;
     defaultKeys.Fill(false);
