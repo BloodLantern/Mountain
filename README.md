@@ -70,7 +70,7 @@ compile by statically linking against the corresponding `Mountain.lib`
   - ~~Film grain~~
   - ~~Vignette~~
   - ~~Chromatic aberration (both axial and transverse)~~
-  - Blur
+  - Blur (both box and gaussian)
   - Noise
   - Mosaic
   - Grayscale
