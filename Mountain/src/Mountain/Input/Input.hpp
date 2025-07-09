@@ -75,8 +75,6 @@ namespace Mountain
 
         MOUNTAIN_API static inline Vector2 m_MouseWheel;
 
-        MOUNTAIN_API static inline GLFWwindow* m_WindowHandle = nullptr;
-
         /// @brief Initialize the input manager
         MOUNTAIN_API static void Initialize();
 

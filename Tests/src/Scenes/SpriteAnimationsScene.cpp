@@ -39,7 +39,7 @@ void SpriteAnimationsScene::LoadResources()
     for (const Pointer<File>& file : directory->GetChildFiles())
         ResourceManager::Load<Texture>(file);
 
-    m_Sprite.SetupTextures();
+    m_Sprite->SetupTextures();
 }
 
 void SpriteAnimationsScene::UnloadResources()
