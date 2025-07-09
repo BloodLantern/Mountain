@@ -208,13 +208,13 @@ void Input::UpdateGamepadButton(const uint32_t id, const GamepadButton button, c
     }
 }
 
-void Input::UpdateGamepadAxis(const uint32_t id, const GamepadAxis axis, const uint16_t value)
+void Input::UpdateGamepadAxis(const uint32_t id, const GamepadAxis axis, const int16_t value)
 {
     GamepadInput* const gamepad = FindFirst(m_Gamepads, [id](const GamepadInput& g) { return g.m_Id == id; });
 
     if (!gamepad)
         return;
-
+    
     const float_t floatValue = Utils::RemapValue(static_cast<float_t>(value), { -32768.f, 32767.f }, { -1, 1 });
     const size_t idx = static_cast<size_t>(axis);
     
