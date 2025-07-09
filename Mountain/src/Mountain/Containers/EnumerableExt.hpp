@@ -17,6 +17,9 @@
     bool_t Contains(const T& element) const { return ::Mountain::Contains(*this, element); } \
     \
     [[nodiscard]] \
+    bool_t Contains(const ::Mountain::Predicate<EnumeratedType>& predicate) const { return ::Mountain::Contains(*this, predicate); } \
+    \
+    [[nodiscard]] \
     ::Mountain::List<EnumeratedType> FindAll(const ::Mountain::Predicate<EnumeratedType>& predicate) const \
     { return ::Mountain::FindAll(*this, predicate); } \
     \
@@ -56,14 +59,12 @@ namespace Mountain
     class List;
 
     /// @brief Determines whether all elements of a sequence satisfy a condition.
-    template <Requirements::MountainEnumerable EnumerableT,
-        typename T = Meta::MountainEnumerableType<EnumerableT>>
+    template <Requirements::MountainEnumerable EnumerableT, typename T = Meta::MountainEnumerableType<EnumerableT>>
     [[nodiscard]]
     bool_t All(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate);
 
     /// @brief Determines whether any element of a sequence satisfies a condition.
-    template <Requirements::MountainEnumerable EnumerableT,
-        typename T = Meta::MountainEnumerableType<EnumerableT>>
+    template <Requirements::MountainEnumerable EnumerableT, typename T = Meta::MountainEnumerableType<EnumerableT>>
     [[nodiscard]]
     bool_t Any(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate);
 
@@ -73,73 +74,64 @@ namespace Mountain
     [[nodiscard]]
     bool_t Contains(const EnumerableT& enumerable, const T& element);
 
-    template <Requirements::MountainEnumerable EnumerableT,
-        typename T = Meta::MountainEnumerableType<EnumerableT>>
+    template <Requirements::MountainEnumerable EnumerableT, typename T = Meta::EnumerableType<EnumerableT>>
+    [[nodiscard]]
+    bool_t Contains(const EnumerableT& enumerable, const Predicate<T>& predicate);
+
+    template <Requirements::MountainEnumerable EnumerableT, typename T = Meta::MountainEnumerableType<EnumerableT>>
     [[nodiscard]]
     List<T> FindAll(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate);
 
-    template <Requirements::MountainEnumerable EnumerableT,
-        typename T = Meta::MountainEnumerableType<EnumerableT>>
+    template <Requirements::MountainEnumerable EnumerableT, typename T = Meta::MountainEnumerableType<EnumerableT>>
     [[nodiscard]]
     T* FindFirst(EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate);
 
-    template <Requirements::MountainEnumerable EnumerableT,
-        typename T = Meta::MountainEnumerableType<EnumerableT>>
+    template <Requirements::MountainEnumerable EnumerableT, typename T = Meta::MountainEnumerableType<EnumerableT>>
     [[nodiscard]]
     const T* FindFirst(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate);
 
-    template <Requirements::MountainEnumerable EnumerableT,
-        typename T = Meta::MountainEnumerableType<EnumerableT>>
+    template <Requirements::MountainEnumerable EnumerableT, typename T = Meta::MountainEnumerableType<EnumerableT>>
     [[nodiscard]]
     T* FindLast(EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate);
 
-    template <Requirements::MountainEnumerable EnumerableT,
-        typename T = Meta::MountainEnumerableType<EnumerableT>>
+    template <Requirements::MountainEnumerable EnumerableT, typename T = Meta::MountainEnumerableType<EnumerableT>>
     [[nodiscard]]
     const T* FindLast(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate);
 
     /// @brief Returns the first element of a sequence.
-    template <Requirements::MountainEnumerable EnumerableT,
-        typename T = Meta::MountainEnumerableType<EnumerableT>>
+    template <Requirements::MountainEnumerable EnumerableT, typename T = Meta::MountainEnumerableType<EnumerableT>>
     [[nodiscard]]
     T& First(EnumerableT& enumerable);
 
     /// @brief Returns the first element of a sequence.
-    template <Requirements::MountainEnumerable EnumerableT,
-        typename T = Meta::MountainEnumerableType<EnumerableT>>
+    template <Requirements::MountainEnumerable EnumerableT, typename T = Meta::MountainEnumerableType<EnumerableT>>
     [[nodiscard]]
     const T& First(const EnumerableT& enumerable);
 
     /// @brief Returns the last element of a sequence.
-    template <Requirements::MountainEnumerable EnumerableT,
-        typename T = Meta::MountainEnumerableType<EnumerableT>>
+    template <Requirements::MountainEnumerable EnumerableT, typename T = Meta::MountainEnumerableType<EnumerableT>>
     [[nodiscard]]
     T& Last(EnumerableT& enumerable);
 
     /// @brief Returns the last element of a sequence.
-    template <Requirements::MountainEnumerable EnumerableT,
-        typename T = Meta::MountainEnumerableType<EnumerableT>>
+    template <Requirements::MountainEnumerable EnumerableT, typename T = Meta::MountainEnumerableType<EnumerableT>>
     [[nodiscard]]
     const T& Last(const EnumerableT& enumerable);
 
     /// @brief Returns the only element of a sequence and throws an exception if there is not exactly one element in the sequence.
-    template <Requirements::MountainEnumerable EnumerableT,
-        typename T = Meta::MountainEnumerableType<EnumerableT>>
+    template <Requirements::MountainEnumerable EnumerableT, typename T = Meta::MountainEnumerableType<EnumerableT>>
     [[nodiscard]]
     T& Single(EnumerableT& enumerable);
 
     /// @brief Returns the only element of a sequence and throws an exception if there is not exactly one element in the sequence.
-    template <Requirements::MountainEnumerable EnumerableT,
-        typename T = Meta::MountainEnumerableType<EnumerableT>>
+    template <Requirements::MountainEnumerable EnumerableT, typename T = Meta::MountainEnumerableType<EnumerableT>>
     [[nodiscard]]
     const T& Single(const EnumerableT& enumerable);
 
-    template <Requirements::MountainEnumerable EnumerableT,
-        typename T = Meta::MountainEnumerableType<EnumerableT>>
+    template <Requirements::MountainEnumerable EnumerableT, typename T = Meta::MountainEnumerableType<EnumerableT>>
     void ForEach(EnumerableT& enumerable, const Operation<Meta::Identity<T>>& operation);
 
-    template <Requirements::MountainEnumerable EnumerableT,
-        typename T = Meta::MountainEnumerableType<EnumerableT>>
+    template <Requirements::MountainEnumerable EnumerableT, typename T = Meta::MountainEnumerableType<EnumerableT>>
     void ForEach(const EnumerableT& enumerable, const Operation<const Meta::Identity<T>>& operation);
 
     template <Requirements::MountainEnumerable EnumerableT,
@@ -187,6 +179,12 @@ namespace Mountain
     bool_t Contains(const EnumerableT& enumerable, const T& element)
     {
         return Any(enumerable, [&](const Meta::MountainEnumerableType<EnumerableT>& e) { return e == element; });
+    }
+
+    template <Requirements::MountainEnumerable EnumerableT, typename T>
+    bool_t Contains(const EnumerableT& enumerable, const Predicate<T>& predicate)
+    {
+        return FindFirst(enumerable, predicate) != nullptr;
     }
 
     template <Requirements::MountainEnumerable EnumerableT>
