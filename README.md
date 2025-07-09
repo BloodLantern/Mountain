@@ -74,7 +74,7 @@ compile by statically linking against the corresponding `Mountain.lib`
   - Noise
   - Mosaic
   - Grayscale
-- Make gamepad input work for both Xbox, PS and Switch controllers
+- ~~Make gamepad input work for both Xbox, PS and Switch controllers~~
 - Low-level audio API
 - `Audio::Play()` static function
 - \[WIP] Low-level graphics API
@@ -82,8 +82,8 @@ compile by statically linking against the corresponding `Mountain.lib`
 - Linux support
 - ~~Automatic `std::formatter` implementation for all classes that define a `ToString()` function~~
 - ~~Automatic `std::hash` implementation for all classes that define a `GetHashCode()` function~~
-- Gamepad rumble support
-- Gamepad gyro support
+- ~~Gamepad rumble support~~
+- ~~Gamepad gyro support~~
 - ~~`Coroutine` class~~
 - ~~Compute shader API~~
 - ~~Custom exceptions~~

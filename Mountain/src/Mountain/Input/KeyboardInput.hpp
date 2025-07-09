@@ -10,253 +10,334 @@ namespace Mountain
     /// @brief %List of keyboard buttons
     enum class Key : uint16_t
     {
-        /* Printable keys */
-        /// @brief Space
-        Space              = 32,
-        /// @brief '
-        Apostrophe         = 39,
-        /// @brief ,
-        Comma              = 44,
-        /// @brief -
-        Minus              = 45,
-        /// @brief .
-        Period             = 46,
-        /// @brief /
-        Slash              = 47,
-        /// @brief 0
-        Key0               = 48,
-        /// @brief 1
-        Key1               = 49,
-        /// @brief 2
-        Key2               = 50,
-        /// @brief 3
-        Key3               = 51,
-        /// @brief 4
-        Key4               = 52,
-        /// @brief 5
-        Key5               = 53,
-        /// @brief 6
-        Key6               = 54,
-        /// @brief 7
-        Key7               = 55,
-        /// @brief 8
-        Key8               = 56,
-        /// @brief 9
-        Key9               = 57,
-        /// @brief ;
-        Semicolon          = 59,
-        /// @brief =
-        Equal              = 61,
-        /// @brief A
-        A                  = 65,
-        /// @brief B
-        B                  = 66,
-        /// @brief C
-        C                  = 67,
-        /// @brief D
-        D                  = 68,
-        /// @brief E
-        E                  = 69,
-        /// @brief F
-        F                  = 70,
-        /// @brief G
-        G                  = 71,
-        /// @brief H
-        H                  = 72,
-        /// @brief I
-        I                  = 73,
-        /// @brief J
-        J                  = 74,
-        /// @brief K
-        K                  = 75,
-        /// @brief L
-        L                  = 76,
-        /// @brief M
-        M                  = 77,
-        /// @brief N
-        N                  = 78,
-        /// @brief O
-        O                  = 79,
-        /// @brief P
-        P                  = 80,
-        /// @brief Q
-        Q                  = 81,
-        /// @brief R
-        R                  = 82,
-        /// @brief S
-        S                  = 83,
-        /// @brief T
-        T                  = 84,
-        /// @brief U
-        U                  = 85,
-        /// @brief V
-        V                  = 86,
-        /// @brief W
-        W                  = 87,
-        /// @brief X
-        X                  = 88,
-        /// @brief Y
-        Y                  = 89,
-        /// @brief Z
-        Z                  = 90,
+        /// @brief '\r'
+        Return = 0x0000000du,
+        /// @brief '\x1B'
+        Escape = 0x0000001bu,
+        /// @brief '\b'
+        Backspace = 0x00000008u,
+        /// @brief '\t'
+        Tab = 0x00000009u,
+        /// @brief ' '
+        Space = 0x00000020u,
+        /// @brief '!'
+        Exclaim = 0x00000021u,
+        /// @brief '"'
+        DblApostrophe = 0x00000022u,
+        /// @brief '#'
+        Hash = 0x00000023u,
+        /// @brief '$'
+        Dollar = 0x00000024u,
+        /// @brief '%'
+        Percent = 0x00000025u,
+        /// @brief '&'
+        Ampersand = 0x00000026u,
+        /// @brief '\''
+        Apostrophe = 0x00000027u,
+        /// @brief '('
+        LeftParen = 0x00000028u,
+        /// @brief ')'
+        RightParen = 0x00000029u,
+        /// @brief '*'
+        Asterisk = 0x0000002au,
+        /// @brief '+'
+        Plus = 0x0000002bu,
+        /// @brief ','
+        Comma = 0x0000002cu,
+        /// @brief '-'
+        Minus = 0x0000002du,
+        /// @brief '.'
+        Period = 0x0000002eu,
+        /// @brief '/'
+        Slash = 0x0000002fu,
+        /// @brief '0'
+        Zero = 0x00000030u,
+        /// @brief '1'
+        One = 0x00000031u,
+        /// @brief '2'
+        Two = 0x00000032u,
+        /// @brief '3'
+        Three = 0x00000033u,
+        /// @brief '4'
+        Four = 0x00000034u,
+        /// @brief '5'
+        Five = 0x00000035u,
+        /// @brief '6'
+        Six = 0x00000036u,
+        /// @brief '7'
+        Seven = 0x00000037u,
+        /// @brief '8'
+        Eight = 0x00000038u,
+        /// @brief '9'
+        Nine = 0x00000039u,
+        /// @brief ':'
+        Colon = 0x0000003au,
+        /// @brief ';'
+        Semicolon = 0x0000003bu,
+        /// @brief '<'
+        Less = 0x0000003cu,
+        /// @brief '='
+        Equals = 0x0000003du,
+        /// @brief '>'
+        Greater = 0x0000003eu,
+        /// @brief '?'
+        Question = 0x0000003fu,
+        /// @brief '@'
+        At = 0x00000040u,
+        /// @brief '['
+        LeftBracket = 0x0000005bu,
+        /// @brief '\\'
+        Backslash = 0x0000005cu,
+        /// @brief ']'
+        RightBracket = 0x0000005du,
+        /// @brief '^'
+        Caret = 0x0000005eu,
+        /// @brief '_'
+        Underscore = 0x0000005fu,
+        /// @brief '`'
+        Grave = 0x00000060u,
+        /// @brief 'a'
+        A = 0x00000061u,
+        /// @brief 'b'
+        B = 0x00000062u,
+        /// @brief 'c'
+        C = 0x00000063u,
+        /// @brief 'd'
+        D = 0x00000064u,
+        /// @brief 'e'
+        E = 0x00000065u,
+        /// @brief 'f'
+        F = 0x00000066u,
+        /// @brief 'g'
+        G = 0x00000067u,
+        /// @brief 'h'
+        H = 0x00000068u,
+        /// @brief 'i'
+        I = 0x00000069u,
+        /// @brief 'j'
+        J = 0x0000006au,
+        /// @brief 'k'
+        K = 0x0000006bu,
+        /// @brief 'l'
+        L = 0x0000006cu,
+        /// @brief 'm'
+        M = 0x0000006du,
+        /// @brief 'n'
+        N = 0x0000006eu,
+        /// @brief 'o'
+        O = 0x0000006fu,
+        /// @brief 'p'
+        P = 0x00000070u,
+        /// @brief 'q'
+        Q = 0x00000071u,
+        /// @brief 'r'
+        R = 0x00000072u,
+        /// @brief 's'
+        S = 0x00000073u,
+        /// @brief 't'
+        T = 0x00000074u,
+        /// @brief 'u'
+        U = 0x00000075u,
+        /// @brief 'v'
+        V = 0x00000076u,
+        /// @brief 'w'
+        W = 0x00000077u,
+        /// @brief 'x'
+        X = 0x00000078u,
+        /// @brief 'y'
+        Y = 0x00000079u,
+        /// @brief 'z'
+        Z = 0x0000007au,
+        /// @brief '{'
+        LeftBrace = 0x0000007bu,
+        /// @brief '|'
+        Pipe = 0x0000007cu,
+        /// @brief '}'
+        RightBrace = 0x0000007du,
+        /// @brief '~'
+        Tilde = 0x0000007eu,
+        /// @brief '\x7F'
+        Delete = 0x0000007fu,
 
-        /// @brief [
-        LeftBracket        = 91,
-        /// @brief \ (Backslash)
-        Backslash          = 92,
-        /// @brief ]
-        RightBracket       = 93,
-        /// @brief `
-        GraveAccent        = 96,
-        /// @brief World1 non-US #1
-        World1             = 161,
-        /// @brief World2 non-US #2
-        World2             = 162,
+        NormalEnd = Delete,
 
+        /* Scancode keys */
+        
+        Capslock,
+        F1,
+        F2,
+        F3,
+        F4,
+        F5,
+        F6,
+        F7,
+        F8,
+        F9,
+        F10,
+        F11,
+        F12,
+        PrintScreen,
+        ScrollLock,
+        Pause,
+        Insert,
+        Home,
+        Pageup,
+        End,
+        Pagedown,
+        Right,
+        Left,
+        Down,
+        Up,
+        NumLockClear,
+        KpDivide,
+        KpMultiply,
+        KpMinus,
+        KpPlus,
+        KpEnter,
+        Kp1,
+        Kp2,
+        Kp3,
+        Kp4,
+        Kp5,
+        Kp6,
+        Kp7,
+        Kp8,
+        Kp9,
+        Kp0,
+        KpPeriod,
+        Application,
+        Power,
+        KpEquals,
+        F13,
+        F14,
+        F15,
+        F16,
+        F17,
+        F18,
+        F19,
+        F20,
+        F21,
+        F22,
+        F23,
+        F24,
+        Execute,
+        Help,
+        Menu,
+        Select,
+        Stop,
+        Again,
+        Undo,
+        Cut,
+        Copy,
+        Paste,
+        Find,
+        Mute,
+        VolumeUp,
+        VolumeDown,
+        KpComma,
+        KpEqualsAs400,
+        AlterAsE,
+        SysReq,
+        Cancel,
+        Clear,
+        Prior,
+        Return2,
+        Separator,
+        Out,
+        Oper,
+        ClearAgain,
+        CrSel,
+        ExSel,
+        Kp00,
+        Kp000,
+        ThousandsSeparator,
+        DecimalSeparator,
+        CurrencyUnit,
+        CurrencySubUnit,
+        KpLeftParen,
+        KpRightParen,
+        KpLeftBrace,
+        KpRightBrace,
+        KpTab,
+        KpBackspace,
+        KpA,
+        KpB,
+        KpC,
+        KpD,
+        KpE,
+        KpF,
+        KpXor,
+        KpPower,
+        KpPercent,
+        KpLess,
+        KpGreater,
+        KpAmpersand,
+        KpDblAmpersand,
+        KpVerticalBar,
+        KpDblVerticalBar,
+        KpColon,
+        KpHash,
+        KpSpace,
+        KpAt,
+        KpExclam,
+        KpMemStore,
+        KpMemRecall,
+        KpMemClear,
+        KpMemAdd,
+        KpMemSubtract,
+        KpMemMultiply,
+        KpMemDivide,
+        KpPlusMinus,
+        KpClear,
+        KpClearEntry,
+        KpBinary,
+        KpOctal,
+        KpDecimal,
+        KpHexadecimal,
+        LeftControl,
+        LeftShift,
+        LeftAlt,
+        LeftGui,
+        RightControl,
+        RightShift,
+        RightAlt,
+        RightGui,
+        Mode,
+        Sleep,
+        Wake,
+        ChannelIncrement,
+        ChannelDecrement,
+        MediaPlay,
+        MediaPause,
+        MediaRecord,
+        MediaFastForward,
+        MediaRewind,
+        MediaNextTrack,
+        MediaPreviousTrack,
+        MediaStop,
+        MediaEject,
+        MediaPlayPause,
+        MediaSelect,
+        AcNew,
+        AcOpen,
+        AcClose,
+        AcExit,
+        AcSave,
+        AcPrint,
+        AcProperties,
+        AcSearch,
+        AcHome,
+        AcBack,
+        AcForward,
+        AcStop,
+        AcRefresh,
+        AcBookmarks,
+        SoftLeft,
+        SoftRight,
+        Call,
+        EndCall,
 
-        /* Function keys */
-        /// @brief Escape
-        Escape             = 256,
-        /// @brief Enter
-        Enter              = 257,
-        /// @brief Tab
-        Tab                = 258,
-        /// @brief Backspace
-        Backspace          = 259,
-        /// @brief Insert
-        Insert             = 260,
-        /// @brief Delete
-        Delete             = 261,
-        /// @brief Right
-        Right              = 262,
-        /// @brief Left
-        Left               = 263,
-        /// @brief Down
-        Down               = 264,
-        /// @brief Up
-        Up                 = 265,
-        /// @brief PageUp
-        PageUp             = 266,
-        /// @brief PageDown
-        PageDown           = 267,
-        /// @brief Home
-        Home               = 268,
-        /// @brief End
-        End                = 269,
-        /// @brief CapsLock
-        CapsLock           = 280,
-        /// @brief ScrollLock
-        ScrollLock         = 281,
-        /// @brief NumLock
-        NumLock            = 282,
-        /// @brief PrintScreen
-        PrintScreen        = 283,
-        /// @brief Pause
-        Pause              = 284,
-        /// @brief F1
-        F1                 = 290,
-        /// @brief F2
-        F2                 = 291,
-        /// @brief F3
-        F3                 = 292,
-        /// @brief F4
-        F4                 = 293,
-        /// @brief F5
-        F5                 = 294,
-        /// @brief F6
-        F6                 = 295,
-        /// @brief F7
-        F7                 = 296,
-        /// @brief F8
-        F8                 = 297,
-        /// @brief F9
-        F9                 = 298,
-        /// @brief F10
-        F10                = 299,
-        /// @brief F11
-        F11                = 300,
-        /// @brief F12
-        F12                = 301,
-        /// @brief F13
-        F13                = 302,
-        /// @brief F14
-        F14                = 303,
-        /// @brief F15
-        F15                = 304,
-        /// @brief F16
-        F16                = 305,
-        /// @brief F17
-        F17                = 306,
-        /// @brief F18
-        F18                = 307,
-        /// @brief F19
-        F19                = 308,
-        /// @brief F20
-        F20                = 309,
-        /// @brief F21
-        F21                = 310,
-        /// @brief F22
-        F22                = 311,
-        /// @brief F23
-        F23                = 312,
-        /// @brief F24
-        F24                = 313,
-        /// @brief F25
-        F25                = 314,
-        /// @brief Keypad 0
-        Kp0                = 320,
-        /// @brief Keypad 1
-        Kp1                = 321,
-        /// @brief Keypad 2
-        Kp2                = 322,
-        /// @brief Keypad 3
-        Kp3                = 323,
-        /// @brief Keypad 4
-        Kp4                = 324,
-        /// @brief Keypad 5
-        Kp5                = 325,
-        /// @brief Keypad 6
-        Kp6                = 326,
-        /// @brief Keypad 7
-        Kp7                = 327,
-        /// @brief Keypad 8
-        Kp8                = 328,
-        /// @brief Keypad 9
-        Kp9                = 329,
-        /// @brief Keypad Decimal
-        KpDecimal          = 330,
-        /// @brief Keypad Divide
-        KpDivide           = 331,
-        /// @brief Keypad Multiply
-        KpMultiply         = 332,
-        /// @brief Keypad Subtract
-        KpSubtract         = 333,
-        /// @brief Keypad Add
-        KpAdd              = 334,
-        /// @brief Keypad Enter
-        KpEnter            = 335,
-        /// @brief Keypad Equal
-        KpEqual            = 336,
-        /// @brief LeftShift
-        LeftShift          = 340,
-        /// @brief LeftControl
-        LeftControl        = 341,
-        /// @brief LeftAlt
-        LeftAlt            = 342,
-        /// @brief LeftSuper
-        LeftSuper          = 343,
-        /// @brief RightShift
-        RightShift         = 344,
-        /// @brief RightControl
-        RightControl       = 345,
-        /// @brief RightAlt
-        RightAlt           = 346,
-        /// @brief RightSuper
-        RightSuper         = 347,
-        /// @brief Menu
-        Menu               = 348,
-
-        None = 355,
+        None,
 
         Count
     };
@@ -271,6 +352,13 @@ namespace Mountain
         /// @brief Released
         Release,
         /// @brief Repeated
+        Repeat
+    };
+
+    enum class KeyAction : uint8_t
+    {
+        Release,
+        Press,
         Repeat
     };
 }

@@ -55,17 +55,17 @@ namespace Mountain
         MOUNTAIN_API static Vector2 GetMouseWheel();
 
     private:
-        using KeyStatuses = std::array<bool_t, magic_enum::enum_count<KeyStatus>()>;
+        using KeyStatuses = Array<bool_t, magic_enum::enum_count<KeyStatus>()>;
 
-        using MouseStatuses = std::array<bool_t, magic_enum::enum_count<MouseButtonStatus>()>;
+        using MouseStatuses = Array<bool_t, magic_enum::enum_count<MouseButtonStatus>()>;
 
         MOUNTAIN_API static inline uint32_t m_CurrentBoundWindow = 0;
 
-        MOUNTAIN_API static inline std::array<KeyStatuses, static_cast<size_t>(Key::Count)> m_Keyboard;
+        MOUNTAIN_API static inline Array<KeyStatuses, static_cast<size_t>(Key::Count)> m_Keyboard;
 
-        MOUNTAIN_API static inline std::array<MouseStatuses, magic_enum::enum_count<MouseButton>()> m_Mouse;
+        MOUNTAIN_API static inline Array<MouseStatuses, magic_enum::enum_count<MouseButton>()> m_Mouse;
 
-        MOUNTAIN_API static inline std::array<GamepadInput, GamepadMax> m_Gamepads;
+        MOUNTAIN_API static inline Array<GamepadInput, GamepadMax> m_Gamepads;
 
         MOUNTAIN_API static inline Vector2 m_LastMousePosition;
 
@@ -80,22 +80,22 @@ namespace Mountain
         /// @brief Initialize the input manager
         MOUNTAIN_API static void Initialize();
 
-        /// @brief Update the input manager
-        MOUNTAIN_API static void Update();
-
         MOUNTAIN_API static void Reset();
 
-        static void HandleKeyboard(GLFWwindow* window, int32_t key, int32_t scancode, int32_t action, int32_t mods);
+        static void HandleKeyboard(size_t key, KeyAction action);
 
-        static void HandleMouseButton(GLFWwindow* window, int32_t mouseButton, int32_t action, int32_t mods);
+        static void HandleMouseButton(size_t mouseButton, bool_t pressed);
+        static void HandleMouseMovement(Vector2 newPosition);
+        static void HandleMouseWheel(int32_t wheelX, int32_t wheelY);
 
-        static void HandleMouseWheel(GLFWwindow* window, double_t wheelX, double_t wheelY);
-
-        static void HandleJoyStickCallBack(int32_t jid, int32_t event);
-
-        static void UpdateGamepads();
-
-        static void UpdateConnectedGamepads();
+        static void ConnectGamepad(uint32_t id);
+        static void DisconnectGamepad(uint32_t id);
+        static void UpdateGamepadButton(uint32_t id, GamepadButton button, bool_t down);
+        static void UpdateGamepadAxis(uint32_t id, GamepadAxis axis, int16_t value);
+        static void UpdateGamepadBattery(uint32_t id, int8_t percent, GamepadBatteryState state);
+        static void UpdateGamepadGyro(uint32_t id, const Vector3& gyro);
+        static void UpdateGamepadAccel(uint32_t id, const Vector3& accel);
+        static void UpdateGamepadTouchpad(uint32_t id, size_t touchpad, size_t finger, Vector2 location);
 
         friend class Window;
         friend class Game;

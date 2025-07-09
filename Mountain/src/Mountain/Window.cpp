@@ -1,7 +1,8 @@
 #include "Mountain/Window.hpp"
 
-#include <GLFW/glfw3.h>
+#include <SDL3/SDL.h>
 
+#include "ImGui/imgui_impl_sdl3.h"
 #include "Mountain/Screen.hpp"
 #include "Mountain/Input/Input.hpp"
 #include "Mountain/Input/Time.hpp"
@@ -11,28 +12,30 @@ using namespace Mountain;
 
 void Window::SetPosition(const Vector2i newPosition)
 {
-    glfwSetWindowPos(m_Window, newPosition.x, newPosition.y);
+    SDL_SetWindowPosition(m_Window, newPosition.x, newPosition.y);
     m_Position = newPosition;
 }
 
 void Window::SetSize(const Vector2i newSize)
 {
-    glfwSetWindowSize(m_Window, newSize.x, newSize.y);
+    SDL_SetWindowSize(m_Window, newSize.x, newSize.y);
     m_Size = newSize;
 }
 
-bool_t Window::GetShouldClose() { return glfwWindowShouldClose(m_Window); }
+Vector2i Window::GetFramebufferSize()
+{
+    // TODO Verify, or fix?
+    return m_Size;
+}
 
-void Window::SetShouldClose(const bool_t newShouldClose) { glfwSetWindowShouldClose(m_Window, newShouldClose); }
-
-void Window::MakeContextCurrent() { glfwMakeContextCurrent(m_Window); }
+void Window::MakeContextCurrent() { SDL_GL_MakeCurrent(m_Window, m_Context); }
 
 void Window::SetVisible(const bool_t newVisible)
 {
     if (newVisible)
-        glfwShowWindow(m_Window);
+        SDL_ShowWindow(m_Window);
     else
-        glfwHideWindow(m_Window);
+        SDL_HideWindow(m_Window);
 
     m_Visible = newVisible;
 }
@@ -41,29 +44,30 @@ void Window::SetIcon(const Pointer<Texture>& newIcon)
 {
     if (!newIcon)
     {
-        glfwSetWindowIcon(m_Window, 1, nullptr);
+        SDL_SetWindowIcon(m_Window, nullptr);
         return;
     }
 
     const Vector2i size = newIcon->GetSize();
 
-    const GLFWimage image
+    SDL_Surface image =
     {
-        .width = size.x,
-        .height = size.y,
+        .flags = SDL_SURFACE_PREALLOCATED,
+        .w = size.x,
+        .h = size.y,
         .pixels = Pointer(newIcon)->GetData<uint8_t>()
     };
 
-    glfwSetWindowIcon(m_Window, 1, &image);
+    SDL_SetWindowIcon(m_Window, &image);
 }
 
-void Window::SetCursorHidden(const bool_t newCursorHidden) { glfwSetInputMode(m_Window, GLFW_CURSOR, newCursorHidden ? GLFW_CURSOR_HIDDEN : GLFW_CURSOR_NORMAL); }
+void Window::SetCursorHidden(const bool_t newCursorHidden) { newCursorHidden ? SDL_HideCursor() : SDL_ShowCursor(); }
 
-void Window::SetCursorPosition(const Vector2 newPosition) { glfwSetCursorPos(m_Window, newPosition.x, newPosition.y); }
+void Window::SetCursorPosition(const Vector2 newPosition) { SDL_WarpMouseInWindow(m_Window, newPosition.x, newPosition.y); }
 
 void Window::SetVSync(const bool_t newVsync)
 {
-    glfwSwapInterval(newVsync);
+    SDL_GL_SetSwapInterval(newVsync);
     m_VSync = newVsync;
 }
 
@@ -72,89 +76,71 @@ void Window::SetWindowMode(const WindowMode newWindowMode)
     if (newWindowMode == m_WindowMode)
         return;
 
-    static Vector2i lastWindowedPosition = m_Position, lastWindowedSize = m_Size;
+    static Vector2i lastWindowedPosition = m_Position;
+    static Vector2i lastWindowedSize = m_Size;
 
-    switch (m_WindowMode)
+    if (m_WindowMode == WindowMode::Windowed)
     {
-        case WindowMode::Windowed:
-            lastWindowedPosition = m_Position;
-            lastWindowedSize = m_Size;
-            break;
-
-        case WindowMode::Borderless:
-            glfwSetWindowAttrib(m_Window, GLFW_DECORATED, true);
-            break;
-
-        default: ;
+        lastWindowedPosition = m_Position;
+        lastWindowedSize = m_Size;
     }
-
-    GLFWmonitor* monitor = nullptr;
-    Vector2i position;
-    Vector2i size;
 
     switch (newWindowMode)
     {
         case WindowMode::Windowed:
-            position = lastWindowedPosition;
-            size = lastWindowedSize;
+            SetPosition(lastWindowedPosition);
+            SetSize(lastWindowedSize);
+            SDL_SetWindowBordered(m_Window, true);
             break;
 
         case WindowMode::Borderless:
             // For a borderless fullscreen, we need to disable the window decoration.
             // This is the only difference between windowed and borderless mode.
-            size = Screen::GetSize() + Vector2i::UnitX();
-            glfwSetWindowAttrib(m_Window, GLFW_DECORATED, false);
+            SDL_SetWindowBordered(m_Window, false);
+            SetPosition(Screen::GetPosition());
+            SetSize(Screen::GetSize());
             break;
 
         case WindowMode::Fullscreen:
-            monitor = Screen::m_Monitors[m_CurrentScreen];
-            size = Screen::GetSize();
+            SetPosition(Screen::GetPosition());
+            SetSize(Screen::GetSize());
+            SDL_SetWindowFullscreenMode(m_Window, Screen::m_VideoModes[m_CurrentScreen]);
             break;
     }
-
-    glfwSetWindowMonitor(m_Window, monitor, position.x, position.y, size.x, size.y, GLFW_DONT_CARE);
 
     m_WindowMode = newWindowMode;
 }
 
-std::string_view Window::GetTitle() { return glfwGetWindowTitle(m_Window); }
+std::string_view Window::GetTitle() { return SDL_GetWindowTitle(m_Window); }
 
-void Window::SetTitle(const std::string& newTitle) { glfwSetWindowTitle(m_Window, newTitle.c_str()); }
+void Window::SetTitle(const std::string& newTitle) { SDL_SetWindowTitle(m_Window, newTitle.c_str()); }
 
 void Window::Initialize(const std::string& windowTitle, const Vector2i windowSize, const OpenGlVersion& glVersion)
 {
-    glfwSetErrorCallback(
-        [](int error, const char* description)
-        {
-            Logger::LogError("GLFW error {}: {}", error, description);
-        }
-    );
+    SDL_SetLogOutputFunction([](void* const, int32_t, const SDL_LogPriority priority, const char_t* const message)
+    {
+        if (priority == SDL_LOG_PRIORITY_ERROR)
+            Logger::LogError("SDL error: {}", message);
+    }, nullptr);
 
-    glfwInit();
+    SDL_Init(SDL_INIT_VIDEO | SDL_INIT_HAPTIC | SDL_INIT_GAMEPAD);
 
     Screen::Initialize();
-
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, glVersion.major);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, glVersion.minor);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
-    glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, glVersion.major);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, glVersion.minor);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
 #ifdef _DEBUG
-    glfwWindowHint(GLFW_CONTEXT_DEBUG, GLFW_TRUE);
+    // glfwWindowHint(GLFW_CONTEXT_DEBUG, GLFW_TRUE);
 #endif
 
+    m_Window = SDL_CreateWindow(windowTitle.c_str(), windowSize.x, windowSize.y, SDL_WINDOW_OPENGL | SDL_WINDOW_HIDDEN);
+
     const Vector2i screenSize = Screen::GetSize();
-    glfwWindowHint(GLFW_POSITION_X, screenSize.x / 2 - windowSize.x / 2);
-    glfwWindowHint(GLFW_POSITION_Y, screenSize.y / 2 - windowSize.y / 2);
+    SDL_SetWindowPosition(m_Window, screenSize.x / 2 - windowSize.x / 2, screenSize.y / 2 - windowSize.y / 2);
 
-    glfwInitHint(GLFW_JOYSTICK_HAT_BUTTONS, false);
-
-    m_Window = glfwCreateWindow(windowSize.x, windowSize.y, windowTitle.c_str(), nullptr, nullptr);
-
-    MakeContextCurrent();
-
-    glfwSetWindowIconifyCallback(m_Window, WindowMinimizeCallback);
+    m_Context = SDL_GL_CreateContext(m_Window);
 
     UpdateFields();
 
@@ -165,11 +151,12 @@ void Window::Initialize(const std::string& windowTitle, const Vector2i windowSiz
 
 void Window::Shutdown()
 {
-    glfwDestroyWindow(m_Window);
+    SDL_DestroyWindow(m_Window);
+    SDL_GL_DestroyContext(m_Context);
 
     Screen::Shutdown();
 
-    glfwTerminate();
+    SDL_Quit();
 }
 
 void Window::UpdateFields()
@@ -178,7 +165,7 @@ void Window::UpdateFields()
 
     const Vector2i oldPosition = m_Position;
 
-    glfwGetWindowPos(m_Window, &m_Position.x, &m_Position.y);
+    SDL_GetWindowPosition(m_Window, &m_Position.x, &m_Position.y);
 
     if (oldPosition != m_Position)
         onPositionChanged(m_Position);
@@ -190,7 +177,7 @@ void Window::UpdateFields()
     if (m_WindowMode != WindowMode::Windowed)
         m_Size = Screen::GetSize();
     else
-        glfwGetWindowSize(m_Window, &m_Size.x, &m_Size.y);
+        SDL_GetWindowSize(m_Window, &m_Size.x, &m_Size.y);
 
     if (oldSize != m_Size)
         onSizeChanged(m_Size);
@@ -221,15 +208,134 @@ void Window::UpdateCurrentScreen()
     }
 }
 
-void Window::PollEvents() { glfwPollEvents(); }
-
-void Window::SwapBuffers() { glfwSwapBuffers(m_Window); }
-
-// ReSharper disable once CppParameterMayBeConstPtrOrRef
-void Window::WindowMinimizeCallback(GLFWwindow* const window, const int32_t minimized)
+void Window::PollEvents()
 {
-    if (window != m_Window)
-        return;
+    SDL_Event event;
+    // Poll until all events are handled
+    while (SDL_PollEvent(&event))
+    {
+        ImGui_ImplSDL3_ProcessEvent(&event);
 
-    m_Minimized = minimized;
+        ProcessWindowEvents(event);
+        ProcessKeyboardEvents(event);
+        ProcessMouseEvents(event);
+        ProcessGamepadEvents(event);
+    }
 }
+
+void Window::ProcessWindowEvents(const SDL_Event& event)
+{
+    switch (event.type)
+    {
+        case SDL_EVENT_QUIT:
+        case SDL_EVENT_WINDOW_CLOSE_REQUESTED:
+            shouldClose = true;
+            break;
+
+        case SDL_EVENT_WINDOW_HIDDEN:
+        case SDL_EVENT_WINDOW_MINIMIZED:
+            m_Minimized = true;
+            break;
+            
+        case SDL_EVENT_WINDOW_SHOWN:
+        case SDL_EVENT_WINDOW_RESTORED:
+            m_Minimized = false;
+            break;
+
+        default: break;
+    }
+}
+
+void Window::ProcessKeyboardEvents(const SDL_Event& event)
+{
+    SDL_Keycode key = event.key.key;
+    if (key & SDLK_SCANCODE_MASK)
+    {
+        // Remap to 0, then map to enum values
+        key = key - SDLK_CAPSLOCK + static_cast<size_t>(Key::NormalEnd);
+    }
+    
+    switch (event.type)
+    {
+        case SDL_EVENT_KEY_UP:
+        case SDL_EVENT_KEY_DOWN:
+            Input::HandleKeyboard(key,
+                event.key.down ? KeyAction::Press :
+                event.key.repeat ? KeyAction::Repeat : KeyAction::Release);
+            break;
+
+        default: break;
+    }
+}
+
+void Window::ProcessMouseEvents(const SDL_Event& event)
+{
+    switch (event.type)
+    {
+        case SDL_EVENT_MOUSE_BUTTON_UP:
+        case SDL_EVENT_MOUSE_BUTTON_DOWN:
+            // SDL doesn't have a binding for mouse button 0, so we offset everything by 1
+            Input::HandleMouseButton(event.button.button - 1, event.button.down);
+            break;
+
+        case SDL_EVENT_MOUSE_MOTION:
+            Input::HandleMouseMovement({ event.motion.x, event.motion.y });
+            break;
+            
+        case SDL_EVENT_MOUSE_WHEEL:
+            Input::HandleMouseWheel(event.wheel.integer_x, event.wheel.integer_y);
+            break;
+
+        default: break;
+    }
+}
+
+void Window::ProcessGamepadEvents(const SDL_Event& event)
+{
+    switch (event.type)
+    {
+        case SDL_EVENT_GAMEPAD_ADDED:
+            Input::ConnectGamepad(event.gdevice.which);
+            break;
+
+        case SDL_EVENT_GAMEPAD_REMOVED:
+            Input::DisconnectGamepad(event.gdevice.which);
+            break;
+
+        case SDL_EVENT_GAMEPAD_AXIS_MOTION:
+            Input::UpdateGamepadAxis(event.gaxis.which, static_cast<GamepadAxis>(event.gaxis.axis), event.gaxis.value);
+            break;
+
+        case SDL_EVENT_GAMEPAD_BUTTON_DOWN:
+        case SDL_EVENT_GAMEPAD_BUTTON_UP:
+            Input::UpdateGamepadButton(event.gbutton.which, static_cast<GamepadButton>(event.gbutton.button), event.gbutton.down);
+            break;
+
+        case SDL_EVENT_JOYSTICK_BATTERY_UPDATED:
+            Input::UpdateGamepadBattery(event.gdevice.which, static_cast<int8_t>(event.jbattery.percent),
+                static_cast<GamepadBatteryState>(event.jbattery.state));
+            break;
+
+        case SDL_EVENT_GAMEPAD_SENSOR_UPDATE:
+            if (event.gsensor.sensor == SDL_SENSOR_ACCEL)
+            {
+                Input::UpdateGamepadAccel(event.gsensor.which, { event.gsensor.data[0], event.gsensor.data[1], event.gsensor.data[2] });
+            }
+            else if (event.gsensor.sensor == SDL_SENSOR_GYRO)
+            {
+                Input::UpdateGamepadGyro(event.gsensor.which, { event.gsensor.data[0], event.gsensor.data[1], event.gsensor.data[2] });
+            }
+            break;
+
+        case SDL_EVENT_GAMEPAD_TOUCHPAD_DOWN:
+        case SDL_EVENT_GAMEPAD_TOUCHPAD_MOTION:
+        case SDL_EVENT_GAMEPAD_TOUCHPAD_UP:
+            Input::UpdateGamepadTouchpad(event.gtouchpad.which, event.gtouchpad.touchpad, event.gtouchpad.finger,
+                event.type == SDL_EVENT_GAMEPAD_TOUCHPAD_UP ? Vector2{ -1, -1 } : Vector2{ event.gtouchpad.x, event.gtouchpad.y });
+            break;
+
+        default: break;
+    }
+}
+
+void Window::SwapBuffers() { SDL_GL_SwapWindow(m_Window); }
