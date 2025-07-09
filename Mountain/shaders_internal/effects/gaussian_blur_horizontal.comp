@@ -5,7 +5,11 @@ layout (local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 layout (rgba32f, binding = 0) uniform restrict readonly image2D sourceImage;
 layout (rgba32f, binding = 1) uniform restrict writeonly image2D destinationImage;
 
-const int weight[5] = int[](1, 4, 6, 4, 1);
+uniform int radius;
+layout(std430, binding = 2) coherent buffer Kernel
+{
+    float weight[];
+};
 
 void main()
 {
@@ -15,16 +19,16 @@ void main()
     vec2 sizef = vec2(size);
 
     vec4 newColor = vec4(0.0f);
-    int k = 0;
+    float k = 0;
 
-    for (int i = -2; i <= 2; i++)
+    for (int i = -radius; i <= radius; i++)
     {
-        ivec2 coords = clamp(texel + ivec2(0, i), ivec2(0), size - 1);
-        int w = weight[i + 2];
+        ivec2 coords = clamp(texel + ivec2(i, 0), ivec2(0), size - 1);
+        float w = weight[i + radius];
         newColor += imageLoad(sourceImage, coords) * float(w);
         k += w;
     }
 
-    imageStore(destinationImage, texel, newColor/float(k));
+    imageStore(destinationImage, texel, newColor/k);
 
 }

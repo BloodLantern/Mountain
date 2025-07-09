@@ -63,13 +63,33 @@ void ChromaticAberrationTransverse::LoadResources()
 
 void ChromaticAberrationTransverse::SetIntensity(const float_t newIntensity) const { m_ComputeShader->SetUniform("intensity", newIntensity); }
 
-void GaussianBlurLow::LoadResources()
+GaussianBlur::GaussianBlur()
 {
-    m_ComputeShader = ResourceManager::Get<ComputeShader>(Utils::GetBuiltinShadersPath() + "effects/gaussian_blur_horizontal_low.comp");
-    m_OtherComputeShader = ResourceManager::Get<ComputeShader>(Utils::GetBuiltinShadersPath() + "effects/gaussian_blur_vertical_low.comp");
+    m_KernelBuffer.Create();
+    m_KernelBuffer.SetDebugName("Kernel buffer SSBO");
 }
 
-void GaussianBlurLow::Apply(const Vector2i textureSize, const bool_t synchronizeImageData) const
+GaussianBlur::~GaussianBlur()
+{
+    m_KernelBuffer.Delete();
+}
+
+void GaussianBlur::LoadResources()
+{
+    m_ComputeShader = ResourceManager::Get<ComputeShader>(Utils::GetBuiltinShadersPath() + "effects/gaussian_blur_horizontal.comp");
+    m_OtherComputeShader = ResourceManager::Get<ComputeShader>(Utils::GetBuiltinShadersPath() + "effects/gaussian_blur_vertical.comp");
+
+    m_Radius = 1.f * 3.f;
+    m_ComputeShader->SetUniform("radius", static_cast<int32_t>(m_Radius));
+    m_OtherComputeShader->SetUniform("radius", static_cast<int32_t>(m_Radius));
+
+    BindBufferBase(Graphics::BufferType::ShaderStorageBuffer, 2, m_KernelBuffer);
+    const List<float_t> kernel = ComputeKernel(1.f);
+    m_KernelBuffer.SetData(kernel.GetSize(), kernel.GetData(), Graphics::BufferUsage::DynamicCopy);
+
+}
+
+void GaussianBlur::Apply(const Vector2i textureSize, const bool_t synchronizeImageData) const
 {
     Effect::Apply(textureSize, synchronizeImageData);
 
@@ -81,22 +101,38 @@ void GaussianBlurLow::Apply(const Vector2i textureSize, const bool_t synchronize
     m_OtherComputeShader->Dispatch(textureSize.x, textureSize.y);
 }
 
-void GaussianBlurHigh::LoadResources()
+void GaussianBlur::SetIntensity(const float_t newIntensity)
 {
-    m_ComputeShader = ResourceManager::Get<ComputeShader>(Utils::GetBuiltinShadersPath() + "effects/gaussian_blur_horizontal_high.comp");
-    m_OtherComputeShader = ResourceManager::Get<ComputeShader>(Utils::GetBuiltinShadersPath() + "effects/gaussian_blur_vertical_high.comp");
+    m_Radius = newIntensity * 3.f;
+    m_ComputeShader->SetUniform("radius", static_cast<int32_t>(m_Radius));
+    m_OtherComputeShader->SetUniform("radius", static_cast<int32_t>(m_Radius));
+    const List<float_t> kernel = ComputeKernel(newIntensity);
+
+    BindBufferBase(Graphics::BufferType::ShaderStorageBuffer, 2, m_KernelBuffer);
+    m_KernelBuffer.SetData(kernel.GetSize(), kernel.GetData(), Graphics::BufferUsage::DynamicCopy);
 }
 
-void GaussianBlurHigh::Apply(const Vector2i textureSize, const bool_t synchronizeImageData) const
+List<float_t> GaussianBlur::ComputeKernel(const float_t sigma) const
 {
-    Effect::Apply(textureSize, synchronizeImageData);
+    const int32_t radius = static_cast<int32_t>(Calc::Round(m_Radius));
+    const size_t size = 2 * radius + 1;
+    List<float_t> kernel;
+    kernel.Resize(size);
 
-    BindImage(imageBindings[1].textureId, 0, Graphics::ImageShaderAccess::ReadWrite);
-    BindImage(imageBindings[0].textureId, 1, Graphics::ImageShaderAccess::ReadWrite);
+    float_t k = 0.f;
 
-    Graphics::MemoryBarrier(Utils::ToFlags(Graphics::MemoryBarrierFlags::ShaderImageAccessBarrier));
+    const float_t inverseTwoSigmaSquare = 1.f / (2.f * sigma * sigma);
 
-    m_OtherComputeShader->Dispatch(textureSize.x, textureSize.y);
+    for (int32_t i = -radius; i <= radius; i++)
+    {
+        const float_t value = std::exp(-i * i * inverseTwoSigmaSquare);
+        kernel[i + radius] = value;
+        k += value;
+    }
+
+    kernel.ForEach([k](float_t& f) { f /= k; });
+
+    return kernel;
 }
 
 void BoxBlur::LoadResources()
@@ -123,5 +159,4 @@ void BoxBlur::SetRadius(const int32_t newRadius) const
 {
     m_ComputeShader->SetUniform("radius", newRadius);
     m_OtherComputeShader->SetUniform("radius", newRadius);
-
 }

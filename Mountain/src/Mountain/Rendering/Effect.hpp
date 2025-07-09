@@ -2,6 +2,7 @@
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Rendering/RenderTarget.hpp"
+#include "Mountain/Rendering/GpuBuffer.hpp"
 #include "Mountain/Resource/ComputeShader.hpp"
 #include "Mountain/Resource/Texture.hpp"
 
@@ -74,28 +75,26 @@ namespace Mountain
     };
 
     // Effect will be applied on the first texture and the second one is used as a buffer
-    class GaussianBlurLow : public Effect
+    class GaussianBlur : public Effect
     {
     public:
+        MOUNTAIN_API GaussianBlur();
+
+        MOUNTAIN_API ~GaussianBlur() override;
+
         MOUNTAIN_API void LoadResources() override;
 
         MOUNTAIN_API void Apply(Vector2i textureSize, bool_t synchronizeImageData) const override;
 
-    protected:
-        Pointer<ComputeShader> m_OtherComputeShader;
+        MOUNTAIN_API void SetIntensity(float_t newIntensity);
 
-    };
-
-    // Effect will be applied on the first texture and the second one is used as a buffer
-    class GaussianBlurHigh : public Effect
-    {
-    public:
-        MOUNTAIN_API void LoadResources() override;
-
-        MOUNTAIN_API void Apply(Vector2i textureSize, bool_t synchronizeImageData) const override;
+        MOUNTAIN_API List<float_t>ComputeKernel(float_t sigma) const;
 
     protected:
         Pointer<ComputeShader> m_OtherComputeShader;
+        Graphics::GpuBuffer m_KernelBuffer;
+
+        float_t m_Radius = 1;
 
     };
 
