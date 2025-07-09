@@ -111,7 +111,6 @@ bool_t Game::NextFrame()
     Window::PollEvents();
 
     Time::Update();
-    Input::Update();
     Audio::Update();
     Coroutine::UpdateAll();
 

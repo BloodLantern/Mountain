@@ -160,7 +160,7 @@ void Input::ConnectGamepad(const uint32_t id)
 
 void Input::DisconnectGamepad(const uint32_t id)
 {
-    GamepadInput* gamepad = FindFirst(m_Gamepads, [id](const GamepadInput& g) { return g.m_Id == id; });
+    GamepadInput* const gamepad = FindFirst(m_Gamepads, [id](const GamepadInput& g) { return g.m_Id == id; });
 
     if (!gamepad)
         return;
@@ -176,12 +176,70 @@ void Input::DisconnectGamepad(const uint32_t id)
     gamepad->m_Buttons.Fill({});
 }
 
+void Input::UpdateGamepadButton(const uint32_t id, const GamepadButton button, const bool_t down)
+{
+    GamepadInput* const gamepad = FindFirst(m_Gamepads, [id](const GamepadInput& g) { return g.m_Id == id; });
+
+    if (!gamepad)
+        return;
+
+    GamepadButtonStatuses& statuses = gamepad->m_Buttons.At(static_cast<size_t>(button));
+    const bool_t wasDown = statuses.At(static_cast<size_t>(GamepadButtonStatus::Down));
+    const bool_t wasUp = statuses.At(static_cast<size_t>(GamepadButtonStatus::Up));
+    if (down)
+    {
+        if (!wasDown)
+        {
+            statuses.At(static_cast<size_t>(GamepadButtonStatus::Down)) = true;
+            statuses.At(static_cast<size_t>(GamepadButtonStatus::Up)) = false;
+            statuses.At(static_cast<size_t>(GamepadButtonStatus::Pressed)) = wasUp;
+            statuses.At(static_cast<size_t>(GamepadButtonStatus::Released)) = false;
+        }
+    }
+    else
+    {
+        if (!wasUp)
+        {
+            statuses.At(static_cast<size_t>(GamepadButtonStatus::Down)) = false;
+            statuses.At(static_cast<size_t>(GamepadButtonStatus::Up)) = true;
+            statuses.At(static_cast<size_t>(GamepadButtonStatus::Pressed)) = false;
+            statuses.At(static_cast<size_t>(GamepadButtonStatus::Released)) = wasDown;
+        }
+    }
+}
+
+void Input::UpdateGamepadAxis(const uint32_t id, const GamepadAxis axis, const uint16_t value)
+{
+    GamepadInput* const gamepad = FindFirst(m_Gamepads, [id](const GamepadInput& g) { return g.m_Id == id; });
+
+    if (!gamepad)
+        return;
+
+    const float_t floatValue = Utils::RemapValue(static_cast<float_t>(value), { -32768.f, 32767.f }, { -1, 1 });
+    const size_t idx = static_cast<size_t>(axis);
+    
+    gamepad->m_Axes[idx] = Calc::MakeZero(floatValue, GamepadInput::nullAnalogValue);
+
+    if (axis == GamepadAxis::LeftTrigger || axis == GamepadAxis::RightTrigger)
+    {
+        gamepad->m_Axes[idx] = std::max(0.f, gamepad->m_Axes[idx]);
+        const GamepadButton button = static_cast<GamepadButton>(
+            idx
+            - static_cast<int32_t>(GamepadAxis::LeftTrigger)
+            + static_cast<int32_t>(GamepadButton::LeftTrigger)
+        );
+
+        UpdateGamepadButton(id, button, gamepad->m_Axes[idx] > GamepadInput::nullAnalogValue);
+    }
+}
+
 void Input::UpdateGamepadBattery(const uint32_t id, const int8_t percent, const GamepadBatteryState state)
 {
     GamepadInput* const gamepad = FindFirst(m_Gamepads, [id](const GamepadInput& g) { return g.m_Id == id; });
+
     if (!gamepad)
         return;
-    
+
     gamepad->m_Battery = percent;
     gamepad->m_BatteryState = state;
 }
@@ -211,92 +269,6 @@ void Input::UpdateGamepadTouchpad(const uint32_t id, const size_t touchpad, cons
         return;
     
     gamepad->m_Touchpads[touchpad].fingerLocations[finger] = location;
-}
-
-void Input::UpdateGamepads()
-{
-    for (uint32_t i = 0; i < GamepadMax; i++)
-    {
-        GamepadInput& gamepad = m_Gamepads[i];
-
-        if (!gamepad.m_IsConnected)
-            continue;
-
-        for (uint32_t k = 0; k < magic_enum::enum_count<GamepadAxis>(); k++)
-        {
-            const uint16_t value = SDL_GetGamepadAxis(gamepad.m_Handle, static_cast<SDL_GamepadAxis>(k));
-            const float_t floatValue = Utils::RemapValue(static_cast<float_t>(value), { -32768.f, 32767.f }, { -1, 1 });
-
-            gamepad.m_Axes[k] = Calc::MakeZero(floatValue, GamepadInput::nullAnalogValue);
-
-            const GamepadAxis axis = static_cast<GamepadAxis>(k);
-            if (axis == GamepadAxis::LeftTrigger || axis == GamepadAxis::RightTrigger)
-                gamepad.m_Axes[k] = std::max(0.f, gamepad.m_Axes[k]);
-        }
-
-        for (uint32_t k = 0; k < magic_enum::enum_count<GamepadButton>(); k++)
-        {
-            GamepadButtonStatuses& statuses = gamepad.m_Buttons.At(k);
-            const bool_t wasDown = statuses.At(static_cast<size_t>(GamepadButtonStatus::Down));
-            const bool_t wasUp = statuses.At(static_cast<size_t>(GamepadButtonStatus::Up));
-
-            if (k < magic_enum::enum_count<SDL_GamepadButton>())
-            {
-                if (SDL_GetGamepadButton(gamepad.m_Handle, static_cast<SDL_GamepadButton>(k)))
-                {
-                    if (!wasDown)
-                    {
-                        statuses.At(static_cast<size_t>(GamepadButtonStatus::Down)) = true;
-                        statuses.At(static_cast<size_t>(GamepadButtonStatus::Up)) = false;
-                        statuses.At(static_cast<size_t>(GamepadButtonStatus::Pressed)) = wasUp;
-                        statuses.At(static_cast<size_t>(GamepadButtonStatus::Released)) = false;
-                    }
-                }
-                else
-                {
-                    if (!wasUp)
-                    {
-                        statuses.At(static_cast<size_t>(GamepadButtonStatus::Down)) = false;
-                        statuses.At(static_cast<size_t>(GamepadButtonStatus::Up)) = true;
-                        statuses.At(static_cast<size_t>(GamepadButtonStatus::Pressed)) = false;
-                        statuses.At(static_cast<size_t>(GamepadButtonStatus::Released)) = wasDown;
-                    }
-                }
-            }
-            else if (static_cast<GamepadButton>(k) == GamepadButton::LeftTrigger || static_cast<GamepadButton>(k) == GamepadButton::RightTrigger)
-            {
-                // Mountain extensions
-                const GamepadAxis trigger = static_cast<GamepadAxis>(
-                        k
-                        - static_cast<int32_t>(GamepadButton::LeftTrigger)
-                        + static_cast<int32_t>(GamepadAxis::LeftTrigger)
-                    );
-
-                const bool_t release = gamepad.m_Axes[static_cast<size_t>(trigger)] < GamepadInput::nullAnalogValue;
-
-                if (release)
-                {
-                    statuses.At(static_cast<size_t>(GamepadButtonStatus::Down)) = false;
-                    statuses.At(static_cast<size_t>(GamepadButtonStatus::Up)) = true;
-                    statuses.At(static_cast<size_t>(GamepadButtonStatus::Pressed)) = false;
-                    statuses.At(static_cast<size_t>(GamepadButtonStatus::Released)) = wasDown;
-                }
-                else
-                {
-
-                    statuses.At(static_cast<size_t>(GamepadButtonStatus::Down)) = true;
-                    statuses.At(static_cast<size_t>(GamepadButtonStatus::Up)) = false;
-                    statuses.At(static_cast<size_t>(GamepadButtonStatus::Pressed)) = wasUp;
-                    statuses.At(static_cast<size_t>(GamepadButtonStatus::Released)) = false;
-                }
-            }
-        }
-    }
-}
-
-void Input::Update()
-{
-    UpdateGamepads();
 }
 
 void Input::Reset()

@@ -328,7 +328,7 @@ void ImGuiUtils::ShowInputsWindow()
                     for (size_t k = 0; k < touchpad.fingerLocations.GetSize(); k++)
                     {
                         const Vector2& finger = touchpad.fingerLocations[k];
-                        ImGui::Text("\tFinger %d : %f, %f", k, finger.x, finger.y);
+                        ImGui::Text("\tFinger %zu : %f, %f", k, finger.x, finger.y);
                     }
                 }
             }

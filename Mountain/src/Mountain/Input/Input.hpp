@@ -80,9 +80,6 @@ namespace Mountain
         /// @brief Initialize the input manager
         MOUNTAIN_API static void Initialize();
 
-        /// @brief Update the input manager
-        MOUNTAIN_API static void Update();
-
         MOUNTAIN_API static void Reset();
 
         static void HandleKeyboard(size_t key, KeyAction action);
@@ -93,12 +90,12 @@ namespace Mountain
 
         static void ConnectGamepad(uint32_t id);
         static void DisconnectGamepad(uint32_t id);
+        static void UpdateGamepadButton(uint32_t id, GamepadButton button, bool_t down);
+        static void UpdateGamepadAxis(uint32_t id, GamepadAxis axis, uint16_t value);
         static void UpdateGamepadBattery(uint32_t id, int8_t percent, GamepadBatteryState state);
         static void UpdateGamepadGyro(uint32_t id, const Vector3& gyro);
         static void UpdateGamepadAccel(uint32_t id, const Vector3& accel);
         static void UpdateGamepadTouchpad(uint32_t id, size_t touchpad, size_t finger, Vector2 location);
-
-        static void UpdateGamepads();
 
         friend class Window;
         friend class Game;

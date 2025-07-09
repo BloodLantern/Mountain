@@ -310,6 +310,15 @@ void Window::ProcessGamepadEvents(const SDL_Event& event)
             Input::DisconnectGamepad(event.gdevice.which);
             break;
 
+        case SDL_EVENT_GAMEPAD_AXIS_MOTION:
+            Input::UpdateGamepadAxis(event.gaxis.which, static_cast<GamepadAxis>(event.gaxis.axis), event.gaxis.value);
+            break;
+
+        case SDL_EVENT_GAMEPAD_BUTTON_DOWN:
+        case SDL_EVENT_GAMEPAD_BUTTON_UP:
+            Input::UpdateGamepadButton(event.gbutton.which, static_cast<GamepadButton>(event.gbutton.button), event.gbutton.down);
+            break;
+
         case SDL_EVENT_JOYSTICK_BATTERY_UPDATED:
             Input::UpdateGamepadBattery(event.gdevice.which, static_cast<int8_t>(event.jbattery.percent),
                 static_cast<GamepadBatteryState>(event.jbattery.state));
