@@ -31,6 +31,27 @@ bool_t GamepadInput::GetButton(const GamepadButton button, const GamepadButtonSt
     return m_Buttons[static_cast<uint32_t>(button)][static_cast<uint32_t>(status)];
 }
 
+const GamepadInput::TouchpadInfo& GamepadInput::GetTouchpad(const size_t index) const
+{
+    if (!HasCapability(GamepadCapabilities::Touchpad))
+    {
+        const std::string error = std::format("Trying to access a touchpad on a controller that doesn't have one : {}", GetName());
+        THROW(InvalidOperationException{error.c_str()});
+    }
+
+    if (index >= m_Touchpads.GetSize())
+    {
+        THROW(ArgumentOutOfRangeException{"Touchpad index out of range", "index"});
+    }
+
+    return m_Touchpads[index];
+}
+
+size_t GamepadInput::GetTouchpadAmount() const
+{
+    return m_Touchpads.GetSize();
+}
+
 void GamepadInput::SetLight(const Color& color) const
 {
     if (!HasCapability(GamepadCapabilities::Led))

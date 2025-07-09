@@ -326,6 +326,13 @@ void Window::ProcessGamepadEvents(const SDL_Event& event)
             }
             break;
 
+        case SDL_EVENT_GAMEPAD_TOUCHPAD_DOWN:
+        case SDL_EVENT_GAMEPAD_TOUCHPAD_MOTION:
+        case SDL_EVENT_GAMEPAD_TOUCHPAD_UP:
+            Input::UpdateGamepadTouchpad(event.gtouchpad.which, event.gtouchpad.touchpad, event.gtouchpad.finger,
+                event.type == SDL_EVENT_GAMEPAD_TOUCHPAD_UP ? Vector2{ -1, -1 } : Vector2{ event.gtouchpad.x, event.gtouchpad.y });
+            break;
+
         default: break;
     }
 }

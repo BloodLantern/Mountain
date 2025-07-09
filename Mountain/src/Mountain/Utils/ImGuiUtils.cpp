@@ -288,8 +288,10 @@ void ImGuiUtils::ShowInputsWindow()
             Vector2 rightStick = gamepad.GetStick(GamepadStick::Right);
             DirectionVector("Right stick", &rightStick);
 
+            ImGui::BeginDisabled();
             ImGui::Text("Left trigger axis: %f", gamepad.GetAxis(GamepadAxis::LeftTrigger));
             ImGui::Text("Right trigger axis: %f", gamepad.GetAxis(GamepadAxis::RightTrigger));
+            ImGui::EndDisabled();
 
             for (uint32_t j = 0; j < magic_enum::enum_count<GamepadButton>(); j++)
             {
@@ -298,13 +300,28 @@ void ImGuiUtils::ShowInputsWindow()
                 ImGui::Text("Button %u - %.*s: %d", j, static_cast<int32_t>(name.length()), name.data(), gamepad.GetButton(button));
             }
 
+            ImGui::BeginDisabled();
             Vector2 dpad = static_cast<Vector2>(gamepad.GetDirectionalPad()).Normalized();
             DirectionVector("Directional pad", &dpad);
+            ImGui::EndDisabled();
     
             const Vector3& gyro = gamepad.GetGyroscope();
             const Vector3& accel = gamepad.GetAccelerometer();
             ImGui::Text("Gyroscope: %f, %f, %f", gyro.x, gyro.y, gyro.z);
             ImGui::Text("Accelerometer: %f, %f, %f", accel.x, accel.y, accel.z);
+
+            for (size_t j = 0; j < gamepad.GetTouchpadAmount(); j++)
+            {
+                const GamepadInput::TouchpadInfo& touchpad = gamepad.GetTouchpad(j);
+
+                ImGui::Text("Touchpad %d : ", i);
+                ImGui::Text("\tMax fingers : %d", touchpad.nbrOfFingersMax);
+                for (size_t k = 0; k < touchpad.fingerLocations.GetSize(); k++)
+                {
+                    const Vector2& finger = touchpad.fingerLocations[k];
+                    ImGui::Text("\tFinger %d : %f, %f", k, finger.x, finger.y);
+                }
+            }
 
             ImGui::Text("Battery level : %d%%", gamepad.GetBattery());
             ImGui::Text("Battery status : %s", magic_enum::enum_name(gamepad.GetBatteryState()).data());

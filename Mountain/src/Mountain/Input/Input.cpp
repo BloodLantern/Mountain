@@ -125,8 +125,18 @@ void Input::ConnectGamepad(const uint32_t id)
         capabilities |= GamepadCapabilities::Rumble;
     }
 
-    if (SDL_GetNumGamepadTouchpads(gamepad->m_Handle) != 0)
+    const int32_t nbrTouchpads = SDL_GetNumGamepadTouchpads(gamepad->m_Handle);
+    if (nbrTouchpads != 0)
+    {
         capabilities |= GamepadCapabilities::Touchpad;
+        gamepad->m_Touchpads.Resize(nbrTouchpads);
+
+        for (int32_t i = 0; i < nbrTouchpads; i++)
+        {
+            gamepad->m_Touchpads[i].nbrOfFingersMax = static_cast<uint8_t>(SDL_GetNumGamepadTouchpadFingers(gamepad->m_Handle, i));
+            gamepad->m_Touchpads[i].fingerLocations.Fill({ -1, -1 });
+        }
+    }
 
     if (SDL_GamepadHasSensor(gamepad->m_Handle, SDL_SENSOR_ACCEL))
     {
@@ -192,6 +202,15 @@ void Input::UpdateGamepadAccel(uint32_t id, const Vector3& accel)
         return;
     
     gamepad->m_Accelerometer = accel;
+}
+
+void Input::UpdateGamepadTouchpad(const uint32_t id, const size_t touchpad, const size_t finger, const Vector2 location)
+{
+    const GamepadInput* const gamepad = FindFirst(m_Gamepads, [id](const GamepadInput& g) { return g.m_Id == id; });
+    if (!gamepad)
+        return;
+    
+    gamepad->m_Touchpads[touchpad].fingerLocations[finger] = location;
 }
 
 void Input::UpdateGamepads()

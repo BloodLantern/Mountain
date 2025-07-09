@@ -167,7 +167,16 @@ namespace Mountain
     public:
         using AxesArray = Array<float_t, magic_enum::enum_count<GamepadAxis>()>;
         using ButtonsArray = Array<GamepadButtonStatuses, magic_enum::enum_count<GamepadButton>()>;
-        
+
+        /// @brief Information about a touchpad on a gamepad
+        struct TouchpadInfo
+        {
+            /// @brief Maximum number of fingers supported on the touchpad
+            uint8_t nbrOfFingersMax;
+            /// @brief Fingers position on the touchpad, negative if none
+            Array<Vector2, 5> fingerLocations;
+        };
+
         /// @brief Threshold that dictates that an axis analog value becomes 0
         static inline float_t nullAnalogValue = 1.5259022e-05f;
 
@@ -187,6 +196,12 @@ namespace Mountain
 
         [[nodiscard]]
         MOUNTAIN_API bool_t GetButton(GamepadButton button, GamepadButtonStatus status = GamepadButtonStatus::Down) const;
+
+        [[nodiscard]]
+        MOUNTAIN_API const TouchpadInfo& GetTouchpad(size_t index) const;
+
+        [[nodiscard]]
+        MOUNTAIN_API size_t GetTouchpadAmount() const;
 
         /// @brief Sets the gamepad LED color if there's one
         /// @param color Color
@@ -208,9 +223,9 @@ namespace Mountain
 
         MOUNTAIN_API GETTER(const AxesArray&, Axes, m_Axes)
 
-        MOUNTAIN_API GETTER(const Vector3&, Gyroscope, m_Gyroscope);
-        MOUNTAIN_API GETTER(const Vector3&, Accelerometer, m_Accelerometer);
-        
+        MOUNTAIN_API GETTER(const Vector3&, Gyroscope, m_Gyroscope)
+        MOUNTAIN_API GETTER(const Vector3&, Accelerometer, m_Accelerometer)
+
         MOUNTAIN_API GETTER(int8_t, Battery, m_Battery)
         MOUNTAIN_API GETTER(GamepadBatteryState, BatteryState, m_BatteryState)
 
@@ -234,6 +249,8 @@ namespace Mountain
         Vector3 m_Gyroscope;
         /// @brief Gamepad accelerometer values, if any
         Vector3 m_Accelerometer;
+        /// @brief Touchpads info, if any
+        List<TouchpadInfo> m_Touchpads;
 
         /// @brief Internal id of the gamepad
         SDL_JoystickID m_Id;

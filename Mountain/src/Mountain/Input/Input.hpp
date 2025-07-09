@@ -96,6 +96,7 @@ namespace Mountain
         static void UpdateGamepadBattery(uint32_t id, int8_t percent, GamepadBatteryState state);
         static void UpdateGamepadGyro(uint32_t id, const Vector3& gyro);
         static void UpdateGamepadAccel(uint32_t id, const Vector3& accel);
+        static void UpdateGamepadTouchpad(uint32_t id, size_t touchpad, size_t finger, Vector2 location);
 
         static void UpdateGamepads();
 
