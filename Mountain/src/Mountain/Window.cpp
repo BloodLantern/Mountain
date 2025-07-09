@@ -76,20 +76,13 @@ void Window::SetWindowMode(const WindowMode newWindowMode)
     if (newWindowMode == m_WindowMode)
         return;
 
-    static Vector2i lastWindowedPosition = m_Position, lastWindowedSize = m_Size;
+    static Vector2i lastWindowedPosition = m_Position;
+    static Vector2i lastWindowedSize = m_Size;
 
-    switch (m_WindowMode)
+    if (m_WindowMode == WindowMode::Windowed)
     {
-        case WindowMode::Windowed:
-            lastWindowedPosition = m_Position;
-            lastWindowedSize = m_Size;
-            break;
-
-        case WindowMode::Borderless:
-            SDL_SetWindowBordered(m_Window, true);
-            break;
-
-        case WindowMode::Fullscreen: ;
+        lastWindowedPosition = m_Position;
+        lastWindowedSize = m_Size;
     }
 
     switch (newWindowMode)
@@ -97,19 +90,21 @@ void Window::SetWindowMode(const WindowMode newWindowMode)
         case WindowMode::Windowed:
             SetPosition(lastWindowedPosition);
             SetSize(lastWindowedSize);
+            SDL_SetWindowBordered(m_Window, true);
             break;
 
         case WindowMode::Borderless:
             // For a borderless fullscreen, we need to disable the window decoration.
             // This is the only difference between windowed and borderless mode.
-            SetSize(Screen::GetSize() + Vector2i::UnitX());
             SDL_SetWindowBordered(m_Window, false);
+            SetPosition(Screen::GetPosition());
+            SetSize(Screen::GetSize());
             break;
 
         case WindowMode::Fullscreen:
-            // const SDL_DisplayID monitor = Screen::m_Monitors[m_CurrentScreen];
+            SetPosition(Screen::GetPosition());
             SetSize(Screen::GetSize());
-            SDL_SetWindowFullscreen(m_Window, true);
+            SDL_SetWindowFullscreenMode(m_Window, Screen::m_VideoModes[m_CurrentScreen]);
             break;
     }
 
@@ -122,14 +117,11 @@ void Window::SetTitle(const std::string& newTitle) { SDL_SetWindowTitle(m_Window
 
 void Window::Initialize(const std::string& windowTitle, const Vector2i windowSize, const OpenGlVersion& glVersion)
 {
-    /*
-    glfwSetErrorCallback(
-        [](int error, const char* description)
-        {
-            Logger::LogError("GLFW error {}: {}", error, description);
-        }
-    );
-    */
+    SDL_SetLogOutputFunction([](void* const, int32_t, const SDL_LogPriority priority, const char_t* const message)
+    {
+        if (priority == SDL_LOG_PRIORITY_ERROR)
+            Logger::LogError("SDL error: {}", message);
+    }, nullptr);
 
     SDL_Init(SDL_INIT_VIDEO | SDL_INIT_HAPTIC | SDL_INIT_GAMEPAD);
 
