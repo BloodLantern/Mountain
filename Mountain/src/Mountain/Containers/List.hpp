@@ -37,6 +37,11 @@ namespace Mountain
 
         List() noexcept = default;
 
+        /// @brief Constructs a List from a range of elements.
+        template <Concepts::ConvertibleTo<T>... U>
+        List(U&&... values) noexcept;
+
+        /// @brief Constructs a List from a range of elements.
         List(std::initializer_list<T> initializer) noexcept;
 
         explicit List(size_t initialSize) noexcept;
@@ -96,6 +101,10 @@ namespace Mountain
         /// @brief Adds a range of elements to the end of the List.
         template <Concepts::Enumerable EnumerableT>
         void AddRange(const EnumerableT& enumerable);
+
+        /// @brief Adds a range of elements to the end of the List.
+        template <Concepts::ConvertibleTo<T>... U>
+        void AddRange(U&&... values);
 
         /// @brief Adds a range of elements to the end of the List.
         void AddRange(const std::initializer_list<T>& values);
@@ -283,6 +292,10 @@ namespace Mountain
 namespace Mountain
 {
     template <Concepts::DynamicContainerType T>
+    template <Concepts::ConvertibleTo<T> ... U>
+    List<T>::List(U&&... values) noexcept : List{{std::forward<U>(values)...}} {}
+
+    template <Concepts::DynamicContainerType T>
     List<T>::List(std::initializer_list<T> initializer) noexcept
     {
         Reserve(initializer.size());
@@ -353,7 +366,15 @@ namespace Mountain
     }
 
     template <Concepts::DynamicContainerType T>
-    List<T>::List(List&& other) noexcept : m_Data(std::move(other.m_Data)), m_Size(other.m_Size), m_Capacity(other.m_Capacity) {}
+    List<T>::List(List&& other) noexcept
+        : m_Data(std::move(other.m_Data))
+        , m_Size(other.m_Size)
+        , m_Capacity(other.m_Capacity)
+    {
+        other.m_Data = nullptr;
+        other.m_Size = 0;
+        other.m_Capacity = 0;
+    }
 
     template <Concepts::DynamicContainerType T>
     List<T>& List<T>::operator=(const List& other) noexcept
@@ -378,6 +399,10 @@ namespace Mountain
         m_Data = std::move(other.m_Data);
         m_Size = other.m_Size;
         m_Capacity = other.m_Capacity;
+
+        other.m_Data = nullptr;
+        other.m_Size = 0;
+        other.m_Capacity = 0;
 
         return *this;
     }
@@ -449,6 +474,13 @@ namespace Mountain
         static_assert(Meta::IsSame<Meta::EnumerableType<EnumerableT>, T>, "List::AddRange() needs the type of the enumerable to be the same as the List");
 
         AddRange(enumerable.begin(), enumerable.end());
+    }
+
+    template <Concepts::DynamicContainerType T>
+    template <Concepts::ConvertibleTo<T> ... U>
+    void List<T>::AddRange(U&&... values)
+    {
+        AddRange({std::forward<U>(values)...});
     }
 
     template <Concepts::DynamicContainerType T>

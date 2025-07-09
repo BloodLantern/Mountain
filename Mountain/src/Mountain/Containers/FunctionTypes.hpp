@@ -4,6 +4,9 @@
 
 namespace Mountain
 {
+    template <typename... Args>
+    using Action = std::function<void(Args...)>;
+
     template <typename T>
     using Predicate = std::function<bool_t(const T& element)>;
 
@@ -15,7 +18,7 @@ namespace Mountain
     using Comparer = std::function<bool_t(const T& lhs, const T& rhs)>;
 
     template <typename T>
-    constexpr Comparer<T> CompareLess = [](const T& lhs, const T& rhs) -> bool_t { return lhs < rhs; };
+    const Comparer<T> CompareLess = [](const T& lhs, const T& rhs) -> bool_t { return lhs < rhs; };
 
     template <typename T>
     using Projection = std::function<T(T)>;
