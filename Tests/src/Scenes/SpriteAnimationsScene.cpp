@@ -21,9 +21,13 @@ void SpriteAnimationsScene::Render()
     TestScene::Render();
 
     const Pointer<Texture>& currentTexture = m_Sprite->Get();
+    const Vector2i currentTextureSize = currentTexture->GetSize();
     const Vector2i windowSize = Window::GetSize();
-    const Vector2 drawScale = Vector2::One() * static_cast<float_t>(std::min(windowSize.x, windowSize.y)) / currentTexture->GetSize() * 0.5f;
-    Draw::Texture(*currentTexture, windowSize * 0.5f - currentTexture->GetSize() * 0.5f * drawScale, drawScale);
+
+    // FIXME - Draw scale is incorrect
+    const Vector2 drawScale = 0.5f * Vector2::One() * static_cast<float_t>(std::min(windowSize.x, windowSize.y)) / currentTextureSize;
+
+    Draw::Texture(*currentTexture, windowSize * 0.5f - currentTextureSize * 0.5f * drawScale, drawScale);
 }
 
 void SpriteAnimationsScene::RenderImGui()
@@ -51,5 +55,5 @@ void SpriteAnimationsScene::UnloadResources()
     for (const Pointer<File>& file : directory->GetChildFiles())
         ResourceManager::Unload<Texture>(Utils::DynamicPointerCast<Texture>(file->GetResource()));
 
-    FileManager::Unload(static_cast<Pointer<Entry>>(directory));
+    FileManager::Unload(directory);
 }

@@ -108,7 +108,8 @@ namespace Mountain
         MOUNTAIN_API static void Unload(const std::filesystem::path& path);
 
         /// @brief Unloads the given Entry.
-        MOUNTAIN_API static void Unload(const Pointer<Entry>& entry);
+        template <Concepts::Entry T>
+        static void Unload(const Pointer<T>& entry);
 
         /// @brief Unloads all stored entries.
         MOUNTAIN_API static void UnloadAll();
@@ -208,5 +209,28 @@ namespace Mountain
             if (t && predicate(t))
                 result->Add(t);
         }
+    }
+
+    template <Concepts::Entry T>
+    void FileManager::Unload(const Pointer<T>& entry)
+    {
+        Logger::LogVerbose("Unloading FileManager entry {}", entry);
+
+        const size_t oldSize = m_Entries.size();
+
+        for (decltype(m_Entries)::iterator it = m_Entries.begin(); it != m_Entries.end(); it++)
+        {
+            if (it->second == entry)
+            {
+                it->second->Unload();
+                it = m_Entries.erase(it);
+
+                if (it == m_Entries.end())
+                    break;
+            }
+        }
+
+        if (oldSize == m_Entries.size())
+            Logger::LogWarning("Attempt to delete an unknown FileManager entry: {}", entry);
     }
 }
