@@ -1,6 +1,5 @@
 ﻿#include "Scenes/PostProcessingEffectsScene.hpp"
 
-#include <ObjectArray.h>
 #include <Mountain/Rendering/Draw.hpp>
 #include <Mountain/Rendering/Renderer.hpp>
 #include <Mountain/Resource/ResourceManager.hpp>
@@ -111,7 +110,7 @@ void PostProcessingEffectsScene::RenderImGui()
     ShowEffectImGui("Mosaic ", m_Mosaic, [](auto& e)
     {
         static int32_t size = 1;
-        ImGui::DragInt("intensity", &size, 0.1f, 1.f, 150.f);
+        ImGui::DragInt("intensity", &size, 0.1f, 1, 150);
         e.SetBoxSize(size);
     });
     ShowEffectImGui("Greyscale", m_Greyscale, [](auto& e)
