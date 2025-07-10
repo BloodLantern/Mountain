@@ -43,6 +43,7 @@ private:
 	PostProcessingEffect<ChromaticAberrationTransverse> m_ChromaticAberrationTransverse{};
 	PostProcessingEffect<GaussianBlur> m_GaussianBlur{};
 	PostProcessingEffect<BoxBlur> m_BoxBlur{};
+	PostProcessingEffect<Mosaic> m_Mosaic{};
 
 	Graphics::GpuTexture m_IntermediateTexture;
 

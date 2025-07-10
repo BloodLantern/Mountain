@@ -429,6 +429,7 @@
     <Content Include="shaders_internal\effects\film_grain.comp" />
     <Content Include="shaders_internal\effects\gaussian_blur_horizontal.comp" />
     <Content Include="shaders_internal\effects\gaussian_blur_vertical.comp" />
+    <Content Include="shaders_internal\effects\mosaic.comp" />
     <Content Include="shaders_internal\line_colored\line_colored.frag" />
     <Content Include="shaders_internal\line_colored\line_colored.vert" />
     <Content Include="shaders_internal\particles\color_over_lifetime.glsl" />
