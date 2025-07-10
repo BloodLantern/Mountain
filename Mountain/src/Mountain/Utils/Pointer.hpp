@@ -541,25 +541,36 @@ namespace Mountain
 
     /// @brief Compares two @c Pointer by checking if they point to the same address.
     template <typename T>
-    bool_t operator==(const Pointer<T>& a, const Pointer<T>& b) { return a.Get() == b.Get(); }
+    [[nodiscard]]
+    bool_t operator==(const Pointer<T>& lhs, const Pointer<T>& rhs)
+    {
+        const bool_t lhsNull = !lhs.IsValid(), rhsNull = !rhs.IsValid();
+        if (lhsNull && rhsNull)
+            return true;
 
-    /// @brief Compares two @c Pointer by checking if they point to the same address.
-    template <typename T>
-    bool_t operator!=(const Pointer<T>& a, const Pointer<T>& b) { return !(a == b); }
+        if (lhsNull || rhsNull)
+            return false;
+
+        return lhs.Get() == rhs.Get();
+    }
 
     /// @brief Compares two @c Pointer by checking if they point to the same address.
     template <typename T, typename U>
-    bool_t operator==(const Pointer<T>& a, const Pointer<U>& b) { return a.Get() == reinterpret_cast<const T*>(b.Get()); }
+    [[nodiscard]]
+    bool_t operator==(const Pointer<T>& lhs, const Pointer<U>& rhs)
+    {
+        const bool_t lhsNull = !lhs.IsValid(), rhsNull = !rhs.IsValid();
+        if (lhsNull && rhsNull)
+            return true;
 
-    /// @brief Compares two @c Pointer by checking if they point to the same address.
-    template <typename T, typename U>
-    bool_t operator!=(const Pointer<T>& a, const Pointer<U>& b) { return !(a == b); }
+        if (lhsNull || rhsNull)
+            return false;
+
+        return lhs.Get() == reinterpret_cast<const T*>(rhs.Get());
+    }
 
     /// @brief Checks if a @ref Pointer is null.
     template <typename T>
-    bool_t operator==(const Pointer<T>& a, const nullptr_t) { return !a.IsValid(); }
-
-    /// @brief Checks if a @ref Pointer is not null.
-    template <typename T>
-    bool_t operator!=(const Pointer<T>& a, const nullptr_t) { return a.IsValid(); }
+    [[nodiscard]]
+    bool_t operator==(const Pointer<T>& lhs, const nullptr_t) { return !lhs.IsValid(); }
 }

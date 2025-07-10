@@ -340,7 +340,7 @@ namespace Mountain
         for (decltype(m_Resources)::iterator it = m_Resources.begin(); it != m_Resources.end(); it++)
         {
             Pointer<Resource>& storedResource = it->second;
-            if (storedResource == Utils::DynamicPointerCast<Resource>(resource))
+            if (storedResource == resource)
             {
                 if (storedResource->IsLoaded())
                     storedResource->Unload();
