@@ -192,7 +192,7 @@ void ImGuiUtils::DirectionVector(const std::string_view label, Vector2* const va
 bool ImGuiUtils::ComboEaser(const std::string& label, Easing::Easer* v, const ImGuiComboFlags flags)
 {
     static constexpr Array Functions{
-        std::make_pair("Linear", Mountain::Identity<float_t>),
+        std::make_pair("Linear", Easing::Linear),
         std::make_pair("SineIn", Easing::SineIn),
         std::make_pair("SineOut", Easing::SineOut),
         std::make_pair("SineInOut", Easing::SineInOut),
@@ -278,7 +278,7 @@ void ImGuiUtils::ShowInputsWindow()
             continue;
 
         ImGui::PushID(&i + i);
-        
+
         if (ImGui::TreeNode(std::format("Gamepad {} - {}", i, gamepad.GetName()).c_str()))
         {
             ImGui::Text("Left stick axis: %f, %f", gamepad.GetAxis(GamepadAxis::LeftStickHorizontal), gamepad.GetAxis(GamepadAxis::LeftStickVertical));
