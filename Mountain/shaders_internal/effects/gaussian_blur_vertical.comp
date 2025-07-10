@@ -25,7 +25,7 @@ void main()
     {
         ivec2 coords = clamp(texel + ivec2(0, i), ivec2(0), size - 1);
         float w = weight[i + radius];
-        newColor += imageLoad(sourceImage, coords) * float(w);
+        newColor += imageLoad(sourceImage, coords) * w;
         k += w;
     }
 
