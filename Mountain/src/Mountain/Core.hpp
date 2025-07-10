@@ -192,7 +192,7 @@ using stdstring = std::string;
 
 #if defined(__JETBRAINS_IDE__) || defined(__RESHARPER__)
 #define ATTRIBUTE_FORMAT(archetype, stringIndex, firstToCheck) [[jetbrains::format(archetype, stringIndex, firstToCheck)]]
-#define ATTRIBUTE_PASS_BY_VALUE [[jetbrains::pass_by_value]
+#define ATTRIBUTE_PASS_BY_VALUE [[jetbrains::pass_by_value]]
 #define ATTRIBUTE_GUARD [[jetbrains::guard]]
 #define ATTRIBUTE_HAS_SIDE_EFFECTS [[jetbrains::has_side_effects]]
 #else
