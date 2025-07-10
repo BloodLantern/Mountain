@@ -73,6 +73,7 @@ void PostProcessingEffectsScene::ShowEffectImGui(
 	const static std::string CheckboxLabel = "##" + name + "Enabled";
 	ImGui::Checkbox(CheckboxLabel.c_str(), &effect.enabled);
 	ImGui::SameLine();
+	// TODO - Check if TreeNode is empty (i.e., if additionalAction doesn't do anything)
 	if (ImGui::TreeNode(name.c_str()))
 	{
 		additionalAction(effect.effect);

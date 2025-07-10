@@ -53,7 +53,7 @@ void SpriteAnimationsScene::UnloadResources()
     const Pointer<Directory>& directory = FileManager::Get<Directory>("assets/strawberry");
 
     for (const Pointer<File>& file : directory->GetChildFiles())
-        ResourceManager::Unload<Texture>(Utils::DynamicPointerCast<Texture>(file->GetResource()));
+        ResourceManager::Unload(file->GetResource());
 
     FileManager::Unload(directory);
 }

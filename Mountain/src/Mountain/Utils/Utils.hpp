@@ -174,12 +174,12 @@ namespace Mountain::Utils
     [[nodiscard]]
     bool_t ArrayContains(const ContainerT& container, T element);
 
-    /// @brief Returns whether a string array contains an element using Utils::StringEqualsIgnoreCase.
+    /// @brief Returns whether a string array contains an element using @c Utils::StringEqualsIgnoreCase.
     template <Concepts::StandardContainer ContainerT>
     [[nodiscard]]
     bool_t StringArrayContains(const ContainerT& container, const std::string& element);
 
-    /// @brief Returns whether a string enumerable contains an element using Utils::StringEqualsIgnoreCase.
+    /// @brief Returns whether a string enumerable contains an element using @c Utils::StringEqualsIgnoreCase.
     template <Requirements::MountainEnumerable EnumerableT>
     [[nodiscard]]
     bool_t StringEnumerableContains(const EnumerableT& enumerable, const std::string& element);

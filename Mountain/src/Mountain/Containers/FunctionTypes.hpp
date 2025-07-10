@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+#include <functional>
+
 #include "Mountain/Core.hpp"
 
 #include "Mountain/Utils/MetaProgramming.hpp"
@@ -25,9 +27,9 @@ namespace Mountain
     template <typename T>
     const Comparer<T> CompareLess = [](const T& lhs, const T& rhs) -> bool_t { return lhs < rhs; };
 
-    template <typename T>
-    using Projection = std::function<T(T)>;
+    template <typename T, typename U = T>
+    using Projection = std::function<U(T)>;
 
     template <typename T>
-    constexpr T Identity(T t) { return t; };
+    const Projection<T> Identity = [](T t) -> T { return t; };
 }

@@ -166,6 +166,27 @@ namespace Mountain::Requirements
 namespace Mountain::Concepts
 {
     template <typename T>
+    concept StandardIterator = std::forward_iterator<T> && !Pointer<T> && !Requirements::MountainIterator<T>;
+
+    template <typename T>
+    concept StandardContainer = std::ranges::input_range<T> && !Requirements::MountainContainer<T>;
+}
+
+namespace Mountain::Meta
+{
+    template <Concepts::StandardIterator T>
+    using StandardIteratorType = typename T::value_type;
+
+    template <Concepts::StandardContainer T>
+    using StandardContainerType = typename T::value_type;
+
+    template <Concepts::StandardContainer T>
+    using StandardContainerIteratorType = typename T::iterator;
+}
+
+namespace Mountain::Concepts
+{
+    template <typename T>
     concept Iterator = Pointer<T> || StandardIterator<T> || Requirements::MountainIterator<T>;
 
     template <typename T>
@@ -178,13 +199,13 @@ namespace Mountain::Concepts
 namespace Mountain::Meta
 {
     template <Requirements::MountainIterator T>
-    using MountainIteratorType = typename T::Type;
+    using MountainIteratorType = typename T::IteratedType;
 
     template <Requirements::MountainContainer T>
-    using MountainContainerType = typename T::Type;
+    using MountainContainerType = typename T::ContainedType;
 
     template <Requirements::MountainEnumerable T>
-    using MountainEnumerableType = typename T::Iterator::Type;
+    using MountainEnumerableType = typename T::EnumeratedType;
 
     template <Requirements::MountainEnumerable T>
     using MountainEnumerableIteratorType = typename T::Iterator;
@@ -194,7 +215,7 @@ namespace Mountain::Meta
     struct IteratorTypeS { static_assert(false); };
 
     template <Concepts::Pointer T>
-    struct IteratorTypeS<T> { using Type = RemoveConstVolatileSpecifier<RemovePointerSpecifier<T>>; };
+    struct IteratorTypeS<T> { using Type = RemoveCvSpecifier<RemovePointerSpecifier<T>>; };
 
     template <Concepts::StandardIterator T>
     struct IteratorTypeS<T> { using Type = StandardIteratorType<T>; };

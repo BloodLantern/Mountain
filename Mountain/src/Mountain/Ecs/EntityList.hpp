@@ -47,6 +47,7 @@ namespace Mountain
         friend Scene; // The scene needs to be able to set m_Scene
     };
 
+    CHECK_REQUIREMENT(Requirements::MountainEnumerableWrapper, EntityList);
 }
 
 // Start of EntityList.inl

@@ -6,7 +6,7 @@
 
 #include "Mountain/Core.hpp"
 
-#include <map>
+#include <functional>
 #include <type_traits>
 
 #include <Math/quaternion.hpp>
@@ -186,14 +186,22 @@ namespace Mountain
         using RemoveVolatileSpecifier = std::remove_volatile_t<T>;
 
         /// @brief Removes any const and volatile specifications from @p T
-        /// @details e.g., if @p T is @code const volatile int@endcode, then @c RemoveConstVolatileSpecifier<T> will be @c int
+        /// @details e.g., if @p T is @code const volatile int@endcode, then @c RemoveCvSpecifier<T> will be @c int
         template <typename T>
-        using RemoveConstVolatileSpecifier = RemoveVolatileSpecifier<RemoveConstSpecifier<T>>;
+        using RemoveCvSpecifier = RemoveVolatileSpecifier<RemoveConstSpecifier<T>>;
 
         /// @brief Removes the reference specification from @p T
         /// @details e.g., if @p T is @c int& or @c int&&, then @c RemoveReferenceSpecifier<T> will be @c int
         template <typename T>
         using RemoveReferenceSpecifier = std::remove_reference_t<T>;
+
+        /// @brief Removes any const, volatile and reference specifications from @p T
+        template <typename T>
+        using RemoveCvRefSpecifier = RemoveCvSpecifier<RemoveReferenceSpecifier<T>>;
+
+        /// @brief Removes any const, volatile and pointer specifications from @p T
+        template <typename T>
+        using RemoveCvPointerSpecifier = RemovePointerSpecifier<RemoveCvSpecifier<T>>;
 
         /// @brief Checks whether the type is a function type
         /// <a href="https://en.cppreference.com/w/cpp/types/is_function.html">as defined in the C++ standard</a>.
@@ -319,8 +327,12 @@ namespace Mountain
         concept StandardException = Exception<T> && !MountainException<T>;
 
         /// @brief Concept that forces a type to be a function
-        template <class T>
+        template <typename T>
         concept Function = Meta::IsFunction<T>;
+
+        /// @brief Concept that forces a type to be invocable
+        template <typename T, typename... Args>
+        concept Invocable = Meta::IsInvocable<T, Args...>;
 
         template <typename From, typename To>
         concept ConvertibleTo = Meta::IsConvertibleTo<From, To>;
@@ -329,7 +341,7 @@ namespace Mountain
         concept SameAs = Meta::IsSame<T, U>;
 
         /// @brief Concept that forces a type to be a color, e.g., either @c Color or @c ColorHsva
-        template <class T>
+        template <typename T>
         concept Color = Meta::IsColorType<T>;
 
         /// @brief Concept that forces a type to be a raw pointer
@@ -353,12 +365,6 @@ namespace Mountain
         /// @brief A container type is any non-const, non-function, non-reference type that can be default, copy and move constructed.
         template <typename T>
         concept DynamicContainerType = ContainerType<T>;
-
-        template <typename T>
-        concept StandardIterator = std::forward_iterator<T> && !Pointer<T>;
-
-        template <typename T>
-        concept StandardContainer = std::ranges::input_range<T>;
     }
 
     namespace Meta
@@ -368,14 +374,5 @@ namespace Mountain
 
         template <Concepts::Enum T>
         using Flags = UnderlyingEnumType<T>;
-
-        template <Concepts::StandardIterator T>
-        using StandardIteratorType = typename T::value_type;
-
-        template <Concepts::StandardContainer T>
-        using StandardContainerType = typename T::value_type;
-
-        template <Concepts::StandardContainer T>
-        using StandardContainerIteratorType = typename T::iterator;
     }
 };

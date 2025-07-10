@@ -6,7 +6,7 @@ using namespace Mountain;
 
 namespace
 {
-    const Comparer<Entity*> EntityDepthPredicate = [](const Entity* lhs, const Entity* rhs) { return lhs->GetDepth() > rhs->GetDepth(); };
+    const Comparer<Entity*> EntityDepthComparer = [](const Entity* lhs, const Entity* rhs) { return lhs->GetDepth() > rhs->GetDepth(); };
 }
 
 void EntityList::UpdateLists()
@@ -46,7 +46,7 @@ void EntityList::UpdateLists()
     if (m_Unsorted)
     {
         m_Unsorted = false;
-        m_Entities.Sort(EntityDepthPredicate);
+        m_Entities.Sort(EntityDepthComparer);
     }
 
     if (m_ToAdd.IsEmpty())
