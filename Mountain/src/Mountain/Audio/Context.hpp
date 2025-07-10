@@ -7,34 +7,34 @@
 // ReSharper disable once CppInconsistentNaming
 struct ALCcontext;
 
-namespace Mountain
+namespace Mountain::Audio
 {
-    class AudioDevice;
+    class Device;
 
-    class AudioContext
+    class Context
     {
     public:
         [[nodiscard]]
-        MOUNTAIN_API explicit AudioContext(AudioDevice& device);
+        MOUNTAIN_API explicit Context(Device& device);
 
-        MOUNTAIN_API ~AudioContext();
+        MOUNTAIN_API ~Context();
 
-        DELETE_COPY_MOVE_OPERATIONS(AudioContext)
+        DELETE_COPY_MOVE_OPERATIONS(Context)
 
         MOUNTAIN_API void MakeCurrent() const;
 
         MOUNTAIN_API static bool_t CheckError();
 
         [[nodiscard]]
-        MOUNTAIN_API int32_t GetMaxSourceCount(Audio::SourceType sourceType) const;
+        MOUNTAIN_API int32_t GetMaxSourceCount(SourceType sourceType) const;
 
         /// @brief Returns the next available source of the given type.
         [[nodiscard]]
-        MOUNTAIN_API uint32_t GetSource(Audio::SourceType type = Audio::SourceType::Mono);
+        MOUNTAIN_API uint32_t GetSource(SourceType type = SourceType::Mono);
 
     private:
         ALCcontext* m_Handle = nullptr;
-        AudioDevice* m_Device = nullptr;
+        Device* m_Device = nullptr;
 
         List<int32_t> m_Attributes;
 

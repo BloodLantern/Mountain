@@ -94,6 +94,21 @@ void Audio::SetListenerArray(const ListenerArray type, const Array<Vector3, 2>& 
     alListenerfv(ToOpenAl(type), value.GetData()->Data());
 }
 
+ALCdevice* Audio::OpenDevice(const std::string& name)
+{
+    return alcOpenDevice(name.c_str());
+}
+
+void Audio::CloseDevice(ALCdevice* device)
+{
+    alcCloseDevice(device);
+}
+
+void Audio::ReopenDevice(ALCdevice* device, const std::string& newName)
+{
+    alcReopenDeviceSOFT(device, newName.c_str(), nullptr);
+}
+
 void Audio::GetDeviceAttributes(ALCdevice* const device, List<int32_t>& attributes)
 {
     int32_t size = 0;
@@ -137,6 +152,50 @@ Audio::ContextError Audio::GetContextError(ALCdevice* device)
 std::string_view Audio::GetContextErrorString(ALCdevice* const device, const ContextError error)
 {
     return alcGetString(device, ToOpenAl(error));
+}
+
+Audio::Format Audio::GetFormat(const uint16_t channels, const uint16_t bitDepth)
+{
+    if (channels == 1)
+    {
+        switch (bitDepth)
+        {
+            case 8: return Format::Mono8;
+            case 16: return Format::Mono16;
+            case 32: return Format::MonoFloat32;
+            case 64: return Format::MonoDouble;
+            default: return Format::Unknown;
+        }
+    }
+
+    if (channels == 2)
+    {
+        switch (bitDepth)
+        {
+            case 8: return Format::Stereo8;
+            case 16: return Format::Stereo16;
+            case 32: return Format::StereoFloat32;
+            case 64: return Format::StereoDouble;
+            default: return Format::Unknown;
+        }
+    }
+
+    return Format::Unknown;
+}
+
+ALCcontext* Audio::CreateContext(ALCdevice* device)
+{
+    return alcCreateContext(device, nullptr);
+}
+
+void Audio::DestroyContext(ALCcontext* context)
+{
+    alcDestroyContext(context);
+}
+
+void Audio::SetContext(ALCcontext* context)
+{
+    alcMakeContextCurrent(context);
 }
 
 template <>
@@ -320,6 +379,24 @@ Audio::SourceState Audio::FromOpenAl<Audio::SourceState>(const int32_t value)
     }
 }
 
+template <>
+Audio::Format Audio::FromOpenAl<Audio::Format>(const int32_t value)
+{
+    switch (value)
+    {
+        case AL_FORMAT_MONO8: return Format::Mono8;
+        case AL_FORMAT_MONO16: return Format::Mono16;
+        case AL_FORMAT_MONO_FLOAT32: return Format::MonoFloat32;
+        case AL_FORMAT_MONO_DOUBLE_EXT: return Format::MonoDouble;
+        case AL_FORMAT_STEREO8: return Format::Stereo8;
+        case AL_FORMAT_STEREO16: return Format::Stereo16;
+        case AL_FORMAT_STEREO_FLOAT32: return Format::StereoFloat32;
+        case AL_FORMAT_STEREO_DOUBLE_EXT: return Format::StereoDouble;
+
+        default: THROW(ArgumentOutOfRangeException{"Invalid audio type", "value"});
+    }
+}
+
 int32_t Audio::ToOpenAl(const EventType value)
 {
     switch (value)
@@ -486,4 +563,22 @@ int32_t Audio::ToOpenAl(const SourceState value)
     }
 
     THROW(ArgumentOutOfRangeException{"Invalid source state type", "value"});
+}
+
+int32_t Audio::ToOpenAl(const Format value)
+{
+    switch (value)
+    {
+        case Format::Unknown: return 0;
+        case Format::Mono8: return AL_FORMAT_MONO8;
+        case Format::Mono16: return AL_FORMAT_MONO16;
+        case Format::MonoFloat32: return AL_FORMAT_MONO_FLOAT32;
+        case Format::MonoDouble: return AL_FORMAT_MONO_DOUBLE_EXT;
+        case Format::Stereo8: return AL_FORMAT_STEREO8;
+        case Format::Stereo16: return AL_FORMAT_STEREO16;
+        case Format::StereoFloat32: return AL_FORMAT_STEREO_FLOAT32;
+        case Format::StereoDouble: return AL_FORMAT_STEREO_DOUBLE_EXT;
+    }
+
+    THROW(ArgumentOutOfRangeException{"Invalid audio type", "value"});
 }

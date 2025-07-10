@@ -3,21 +3,10 @@
 #include <functional>
 
 #include "Mountain/Core.hpp"
-#include "Mountain/Audio/AudioBuffer.hpp"
-#include "Mountain/Audio/AudioDevice.hpp"
+#include "Mountain/Audio/Buffer.hpp"
+#include "Mountain/Audio/Context.hpp"
+#include "Mountain/Audio/Device.hpp"
 #include "Mountain/Containers/List.hpp"
-
-// OpenAL type forward declaration
-
-// ReSharper disable once CppEnforceTypeAliasCodeStyle
-// ReSharper disable once CppInconsistentNaming
-typedef char ALCchar;
-// ReSharper disable once CppEnforceTypeAliasCodeStyle
-// ReSharper disable once CppInconsistentNaming
-typedef int ALCsizei;
-// ReSharper disable once CppEnforceTypeAliasCodeStyle
-// ReSharper disable once CppInconsistentNaming
-typedef int ALCenum;
 
 // TODO - Add an Audio::Play function
 
@@ -36,29 +25,25 @@ namespace Mountain
 
         /// @brief Returns the current device's context.
         [[nodiscard]]
-        MOUNTAIN_API static AudioContext* GetContext();
+        MOUNTAIN_API static Audio::Context* GetContext();
 
-        MOUNTAIN_API static void RegisterBuffer(AudioBuffer* buffer);
+        MOUNTAIN_API static void RegisterBuffer(Audio::Buffer* buffer);
 
-        MOUNTAIN_API static void UnregisterBuffer(AudioBuffer* buffer);
+        MOUNTAIN_API static void UnregisterBuffer(Audio::Buffer* buffer);
 
         MOUNTAIN_API static void UpdateContext();
 
-        MOUNTAIN_API static const AudioDevice* GetCurrentDevice();
+        MOUNTAIN_API static const Audio::Device* GetCurrentDevice();
 
-        MOUNTAIN_API static void SetCurrentDevice(AudioDevice* newCurrentDevice);
+        MOUNTAIN_API static void SetCurrentDevice(Audio::Device* newCurrentDevice);
 
-        MOUNTAIN_API static float_t GetDistanceFactor();
-
-        MOUNTAIN_API static void SetDistanceFactor(float_t newDistanceFactor);
+        MOUNTAIN_API static inline float_t distanceFactor = 0.2f;
 
     private:
-        MOUNTAIN_API static inline AudioDevice* m_CurrentDevice = nullptr;
-        MOUNTAIN_API static inline AudioContext* m_CurrentContext = nullptr;
+        MOUNTAIN_API static inline Audio::Device* m_CurrentDevice = nullptr;
+        MOUNTAIN_API static inline Audio::Context* m_CurrentContext = nullptr;
 
-        MOUNTAIN_API static inline List<AudioBuffer*> m_Buffers;
-
-        MOUNTAIN_API static inline float_t m_DistanceFactor = 0.2f;
+        MOUNTAIN_API static inline List<Audio::Buffer*> m_Buffers;
 
         MOUNTAIN_API static inline bool_t m_DefaultDeviceChanged = false;
     };

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Mountain/Core.hpp"
-#include "Mountain/Audio/AudioBuffer.hpp"
+#include "Mountain/Audio/Buffer.hpp"
 #include "Mountain/Resource/Resource.hpp"
 
 namespace Mountain
@@ -70,7 +70,7 @@ namespace Mountain
         MOUNTAIN_API uint16_t GetBitDepth() const;
 
         [[nodiscard]]
-        MOUNTAIN_API const AudioBuffer* GetBuffer() const;
+        MOUNTAIN_API const Audio::Buffer* GetBuffer() const;
 
         [[nodiscard]]
         MOUNTAIN_API AudioTrackFormat GetFormat() const;
@@ -87,7 +87,7 @@ namespace Mountain
         /// @brief The number of bits per sample.
         uint16_t m_BitDepth = 0;
 
-        AudioBuffer* m_Buffer = nullptr;
+        Audio::Buffer* m_Buffer = nullptr;
 
         AudioTrackFormat m_Format;
 

@@ -209,9 +209,9 @@
     <ClInclude Include="externals\src\stb_image.h" />
     <ClInclude Include="externals\src\stb_vorbis.h" />
     <ClInclude Include="src\Mountain\Audio\Audio.hpp" />
-    <ClInclude Include="src\Mountain\Audio\AudioBuffer.hpp" />
-    <ClInclude Include="src\Mountain\Audio\AudioContext.hpp" />
-    <ClInclude Include="src\Mountain\Audio\AudioDevice.hpp" />
+    <ClInclude Include="src\Mountain\Audio\Buffer.hpp" />
+    <ClInclude Include="src\Mountain\Audio\Context.hpp" />
+    <ClInclude Include="src\Mountain\Audio\Device.hpp" />
     <ClInclude Include="src\Mountain\Audio\Sound.hpp" />
     <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_10604039599264331763.hpp" />
     <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_11431338934652808651.hpp" />
@@ -356,9 +356,9 @@
     <ClCompile Include="externals\src\stb_image.c" />
     <ClCompile Include="externals\src\stb_vorbis.c" />
     <ClCompile Include="src\Mountain\Audio\Audio.cpp" />
-    <ClCompile Include="src\Mountain\Audio\AudioBuffer.cpp" />
-    <ClCompile Include="src\Mountain\Audio\AudioContext.cpp" />
-    <ClCompile Include="src\Mountain\Audio\AudioDevice.cpp" />
+    <ClCompile Include="src\Mountain\Audio\Buffer.cpp" />
+    <ClCompile Include="src\Mountain\Audio\Context.cpp" />
+    <ClCompile Include="src\Mountain\Audio\Device.cpp" />
     <ClCompile Include="src\Mountain\Audio\Sound.cpp" />
     <ClCompile Include="src\Mountain\BinaryResources\resource_holder.cpp" />
     <ClCompile Include="src\Mountain\Collision\Circle.cpp" />

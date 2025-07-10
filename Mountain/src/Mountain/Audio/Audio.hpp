@@ -11,7 +11,7 @@
 /// You should only use this if you know what you are doing and/or have experience with audio APIs such as OpenAL.
 namespace Mountain::Audio
 {
-    enum class Error : uint8_t
+    enum class MOUNTAIN_API Error : uint8_t
     {
         None,
         InvalidName,
@@ -21,7 +21,7 @@ namespace Mountain::Audio
         OutOfMemory,
     };
 
-    enum class ContextError : uint8_t
+    enum class MOUNTAIN_API ContextError : uint8_t
     {
         None,
         InvalidDevice,
@@ -31,21 +31,21 @@ namespace Mountain::Audio
         OutOfMemory
     };
     
-    enum class EventType : uint8_t
+    enum class MOUNTAIN_API EventType : uint8_t
     {
         DeviceChanged,
         DeviceAdded,
         DeviceRemoved,
     };
 
-    enum class SourceVector : uint8_t
+    enum class MOUNTAIN_API SourceVector : uint8_t
     {
         Direction,
         Position,
         Velocity
     };
 
-    enum class SourceFloat : uint8_t
+    enum class MOUNTAIN_API SourceFloat : uint8_t
     {
         ConeInnerAngle,
         ConeOuterAngle,
@@ -60,7 +60,7 @@ namespace Mountain::Audio
         SecondsOffset
     };
 
-    enum class SourceInt : uint8_t
+    enum class MOUNTAIN_API SourceInt : uint8_t
     {
         Buffer,
         ByteOffset,
@@ -68,42 +68,42 @@ namespace Mountain::Audio
         SourceType
     };
 
-    enum class SourceBool : uint8_t
+    enum class MOUNTAIN_API SourceBool : uint8_t
     {
         Looping,
         SourceRelative
     };
 
-    enum class SourcePlayType : uint8_t
+    enum class MOUNTAIN_API SourcePlayType : uint8_t
     {
         Static,
         Streaming,
         Undetermined
     };
 
-    enum class ListenerVector : uint8_t
+    enum class MOUNTAIN_API ListenerVector : uint8_t
     {
         Position,
         Velocity
     };
 
-    enum class ListenerFloat : uint8_t
+    enum class MOUNTAIN_API ListenerFloat : uint8_t
     {
         Gain
     };
 
-    enum class ListenerArray : uint8_t
+    enum class MOUNTAIN_API ListenerArray : uint8_t
     {
         Orientation
     };
 
-    enum class SourceType : uint8_t
+    enum class MOUNTAIN_API SourceType : uint8_t
     {
         Mono,
         Stereo
     };
 
-    enum class ContextAttribute : uint8_t
+    enum class MOUNTAIN_API ContextAttribute : uint8_t
     {
         Frequency,
         RefreshRate,
@@ -112,12 +112,25 @@ namespace Mountain::Audio
         StereoSourceAmount
     };
 
-    enum class SourceState : uint8_t
+    enum class MOUNTAIN_API SourceState : uint8_t
     {
         Initial,
         Playing,
         Paused,
         Stopped
+    };
+
+    enum class MOUNTAIN_API Format : uint8_t
+    {
+        Unknown,
+        Mono8,
+        Mono16,
+        MonoFloat32,
+        MonoDouble,
+        Stereo8,
+        Stereo16,
+        StereoFloat32,
+        StereoDouble,
     };
 
     template <typename T>
@@ -136,7 +149,8 @@ namespace Mountain::Audio
         ListenerArray,
         SourceType,
         ContextAttribute,
-        SourceState
+        SourceState,
+        Format
     >;
 
     /// @brief Gets the default audio device name
@@ -225,6 +239,21 @@ namespace Mountain::Audio
     template <size_t Size>
     MOUNTAIN_API void SetEventCallback(const Array<EventType, Size>& events, std::function<void(EventType, const std::string&)> callback);
 
+    /// @brief Opens an audio device
+    /// @param name Device name
+    /// @return Opened device
+    [[nodiscard]]
+    MOUNTAIN_API ALCdevice* OpenDevice(const std::string& name);
+
+    /// @brief Closes an audio device
+    /// @param device Audio device
+    MOUNTAIN_API void CloseDevice(ALCdevice* device);
+
+    /// @brief Re-pens an audio device
+    /// @param device Device
+    /// @param newName Device name
+    MOUNTAIN_API void ReopenDevice(ALCdevice* device, const std::string& newName);
+    
     /// @brief Gets the attributes of an audio device context
     /// @param device Audio device
     /// @param attributes Attributes, written to
@@ -259,6 +288,27 @@ namespace Mountain::Audio
     /// @return String
     [[nodiscard]]
     MOUNTAIN_API std::string_view GetContextErrorString(ALCdevice* device, ContextError error);
+
+    /// @brief Gets the format of an audio
+    /// @param channels Number of channels
+    /// @param bitDepth Bit depth
+    /// @return Format
+    [[nodiscard]]
+    MOUNTAIN_API Format GetFormat(uint16_t channels, uint16_t bitDepth);
+
+    /// @brief Creates an audio context
+    /// @param device Audio device
+    /// @return Context
+    [[nodiscard]]
+    MOUNTAIN_API ALCcontext* CreateContext(ALCdevice* device);
+
+    /// @brief Destroys the audio context
+    /// @param context Context
+    MOUNTAIN_API void DestroyContext(ALCcontext* context);
+    
+    /// @brief Sets the current audio context
+    /// @param context Context
+    MOUNTAIN_API void SetContext(ALCcontext* context);
 
     template <OpenAlConvertibleT T>
     // ReSharper disable once CppFunctionIsNotImplemented
@@ -303,6 +353,9 @@ namespace Mountain::Audio
     template <>
     [[nodiscard]]
     MOUNTAIN_API SourceState FromOpenAl<SourceState>(int32_t value);
+    template <>
+    [[nodiscard]]
+    MOUNTAIN_API Format FromOpenAl<Format>(int32_t value);
     
     [[nodiscard]]
     MOUNTAIN_API int32_t ToOpenAl(EventType value);
@@ -330,6 +383,8 @@ namespace Mountain::Audio
     MOUNTAIN_API int32_t ToOpenAl(ContextAttribute value);
     [[nodiscard]]
     MOUNTAIN_API int32_t ToOpenAl(SourceState value);
+    [[nodiscard]]
+    MOUNTAIN_API int32_t ToOpenAl(Format value);
 }
 
 // Start of Audio.hpp

@@ -2,12 +2,10 @@
 
 #include <set>
 
-#include <AL/alc.h>
-
 #include <ImGui/imgui.h>
 
 #include "Audio.hpp"
-#include "Mountain/Audio/AudioContext.hpp"
+#include "Mountain/Audio/Context.hpp"
 #include "Mountain/Utils/Logger.hpp"
 
 using namespace Mountain;
@@ -15,20 +13,20 @@ using namespace Mountain;
 bool_t Sound::Initialize()
 {
     Logger::LogVerbose("Initializing audio");
-    
-    m_CurrentDevice = new AudioDevice(Audio::GetDefaultDeviceName());
+
+    m_CurrentDevice = new Audio::Device(Audio::GetDefaultDeviceName());
 
     constexpr Array enabledEvents = {
         Audio::EventType::DeviceChanged
     };
-    Audio::SetEventCallback(enabledEvents, [](const Audio::EventType type, const std::string&)
+    SetEventCallback(enabledEvents, [](const Audio::EventType type, const std::string&)
     {
         // We cannot use OpenAL calls on this thread, so we need to update a flag instead
         if (type == Audio::EventType::DeviceChanged)
             m_DefaultDeviceChanged = true;
     });
 
-    m_CurrentContext = new AudioContext(*m_CurrentDevice);
+    m_CurrentContext = new Audio::Context(*m_CurrentDevice);
 
     return true;
 }
@@ -59,26 +57,22 @@ void Sound::Update()
     m_DefaultDeviceChanged = false;
 }
 
-AudioContext* Sound::GetContext() { return m_CurrentContext; }
+Audio::Context* Sound::GetContext() { return m_CurrentContext; }
 
-void Sound::RegisterBuffer(AudioBuffer* buffer) { m_Buffers.Add(buffer); }
+void Sound::RegisterBuffer(Audio::Buffer* const buffer) { m_Buffers.Add(buffer); }
 
-void Sound::UnregisterBuffer(AudioBuffer* buffer) { m_Buffers.Remove(buffer); }
+void Sound::UnregisterBuffer(Audio::Buffer* const buffer) { m_Buffers.Remove(buffer); }
 
 void Sound::UpdateContext()
 {
     delete m_CurrentContext;
-    m_CurrentContext = new AudioContext(*m_CurrentDevice);
+    m_CurrentContext = new Audio::Context(*m_CurrentDevice);
 }
 
-const AudioDevice* Sound::GetCurrentDevice() { return m_CurrentDevice; }
+const Audio::Device* Sound::GetCurrentDevice() { return m_CurrentDevice; }
 
-void Sound::SetCurrentDevice(AudioDevice* newCurrentDevice)
+void Sound::SetCurrentDevice(Audio::Device* newCurrentDevice)
 {
     m_CurrentDevice = newCurrentDevice;
     UpdateContext();
 }
-
-float_t Sound::GetDistanceFactor() { return m_DistanceFactor; }
-
-void Sound::SetDistanceFactor(const float_t newDistanceFactor) { m_DistanceFactor = newDistanceFactor; }

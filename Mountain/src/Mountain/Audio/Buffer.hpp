@@ -1,24 +1,27 @@
 ﻿#pragma once
 
 #include "Mountain/Core.hpp"
+#include "Mountain/Audio/Context.hpp"
 
 namespace Mountain
 {
     class AudioTrack;
-    class AudioContext;
+}
 
-    class MOUNTAIN_API AudioBuffer
+namespace Mountain::Audio
+{
+    class MOUNTAIN_API Buffer
     {
     public:
-        AudioBuffer();
+        Buffer();
 
-        explicit AudioBuffer(int32_t size);
+        explicit Buffer(int32_t size);
 
-        explicit AudioBuffer(const AudioTrack* track);
+        explicit Buffer(const AudioTrack* track);
 
-        ~AudioBuffer();
+        ~Buffer();
 
-        DEFAULT_COPY_MOVE_OPERATIONS(AudioBuffer)
+        DEFAULT_COPY_MOVE_OPERATIONS(Buffer)
 
         void SetData(const AudioTrack* track);
 
@@ -32,9 +35,6 @@ namespace Mountain
 
         int32_t m_Format = 0;
 
-        AudioContext* m_Context = nullptr;
-
-        [[nodiscard]]
-        static int32_t AlFormatFromData(uint16_t channels, uint16_t bitDepth);
+        Context* m_Context = nullptr;
     };
 }

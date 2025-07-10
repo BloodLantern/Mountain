@@ -32,7 +32,7 @@ bool_t AudioTrack::SetSourceData(const uint8_t* const buffer, const int64_t leng
 
 void AudioTrack::Load()
 {
-    m_Buffer = new AudioBuffer(this);
+    m_Buffer = new Audio::Buffer(this);
     Sound::RegisterBuffer(m_Buffer);
 
     m_Loaded = true;
@@ -82,7 +82,7 @@ int32_t AudioTrack::GetSampleRate() const { return m_SampleRate; }
 
 uint16_t AudioTrack::GetBitDepth() const { return m_BitDepth; }
 
-const AudioBuffer* AudioTrack::GetBuffer() const { return m_Buffer; }
+const Audio::Buffer* AudioTrack::GetBuffer() const { return m_Buffer; }
 
 AudioTrackFormat AudioTrack::GetFormat() const { return m_Format; }
 

@@ -28,7 +28,7 @@ namespace Mountain
 
         MOUNTAIN_API void Play(AudioTrack& track);
 
-        MOUNTAIN_API void SetBuffer(const AudioBuffer* buffer);
+        MOUNTAIN_API void SetBuffer(const Audio::Buffer* buffer);
 
         MOUNTAIN_API float_t GetVolume() const;
 

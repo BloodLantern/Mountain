@@ -3,7 +3,7 @@
 #include <ImGui/imgui.h>
 
 #include "Mountain/Audio/Audio.hpp"
-#include "Mountain/Audio/AudioContext.hpp"
+#include "Mountain/Audio/Context.hpp"
 #include "Mountain/Audio/Sound.hpp"
 #include "Mountain/Ecs/Entity.hpp"
 #include "Mountain/Ecs/Component/AudioListener.hpp"
@@ -17,7 +17,7 @@ AudioSource::AudioSource()
 {
     Sound::GetContext()->MakeCurrent();
     m_Handle = Audio::CreateSource();
-    AudioContext::CheckError();
+    Audio::Context::CheckError();
     SetLooping(true);
 }
 
@@ -25,7 +25,7 @@ AudioSource::~AudioSource()
 {
     Sound::GetContext()->MakeCurrent();
     Audio::DeleteSource(m_Handle);
-    AudioContext::CheckError();
+    Audio::Context::CheckError();
 }
 
 void AudioSource::Added()
@@ -46,23 +46,23 @@ void AudioSource::Update()
     
     Sound::GetContext()->MakeCurrent();
 
-    const Vector2& position = m_Entity->position * Sound::GetDistanceFactor();
+    const Vector2& position = m_Entity->position * Sound::distanceFactor;
 
     // Position
     constexpr float_t positionZ = -20.f;
-    Audio::SetSourceVector(m_Handle, Audio::SourceVector::Position, Vector3(position.x, position.y, positionZ * Sound::GetDistanceFactor()));
-    AudioContext::CheckError();
+    Audio::SetSourceVector(m_Handle, Audio::SourceVector::Position, Vector3(position.x, position.y, positionZ * Sound::distanceFactor));
+    Audio::Context::CheckError();
 
     const float_t deltaTime = Time::GetDeltaTime();
     const Vector2 velocity = deltaTime == 0.f ? Vector2::Zero() : (position - m_LastPosition) / deltaTime;
 
     // Velocity
     Audio::SetSourceVector(m_Handle, Audio::SourceVector::Velocity, static_cast<Vector3>(velocity));
-    AudioContext::CheckError();
+    Audio::Context::CheckError();
 
     // Direction
-    Audio::SetSourceVector(m_Handle, Audio::SourceVector::Direction, Vector3::UnitZ());
-    AudioContext::CheckError();
+    SetSourceVector(m_Handle, Audio::SourceVector::Direction, Vector3::UnitZ());
+    Audio::Context::CheckError();
 
     m_LastPosition = position;
 }
@@ -82,15 +82,15 @@ void AudioSource::Play(AudioTrack& track)
     Audio::RewindSource(m_Handle);
     SetBuffer(track.GetBuffer());
     Audio::PlaySource(m_Handle);
-    AudioContext::CheckError();
+    Audio::Context::CheckError();
 }
 
 // ReSharper disable once CppMemberFunctionMayBeConst
-void AudioSource::SetBuffer(const AudioBuffer* buffer)
+void AudioSource::SetBuffer(const Audio::Buffer* buffer)
 {
     Sound::GetContext()->MakeCurrent();
-    Audio::SetSourceInt(m_Handle, Audio::SourceInt::Buffer, static_cast<int32_t>(buffer->GetHandle()));
-    AudioContext::CheckError();
+    SetSourceInt(m_Handle, Audio::SourceInt::Buffer, static_cast<int32_t>(buffer->GetHandle()));
+    Audio::Context::CheckError();
 }
 
 float_t AudioSource::GetVolume() const
@@ -103,8 +103,8 @@ void AudioSource::SetVolume(const float_t newVolume)
     m_Volume = std::max(0.f, newVolume);
 
     Sound::GetContext()->MakeCurrent();
-    Audio::SetSourceFloat(m_Handle, Audio::SourceFloat::Gain, m_Volume);
-    AudioContext::CheckError();
+    SetSourceFloat(m_Handle, Audio::SourceFloat::Gain, m_Volume);
+    Audio::Context::CheckError();
 }
 
 float_t AudioSource::GetPitch() const
@@ -117,8 +117,8 @@ void AudioSource::SetPitch(const float_t newPitch)
     m_Pitch = std::max(0.f, newPitch);
 
     Sound::GetContext()->MakeCurrent();
-    Audio::SetSourceFloat(m_Handle, Audio::SourceFloat::Pitch, m_Pitch);
-    AudioContext::CheckError();
+    SetSourceFloat(m_Handle, Audio::SourceFloat::Pitch, m_Pitch);
+    Audio::Context::CheckError();
 }
 
 bool_t AudioSource::GetLooping() const
@@ -131,6 +131,6 @@ void AudioSource::SetLooping(const bool_t newLooping)
     m_Looping = newLooping;
     
     Sound::GetContext()->MakeCurrent();
-    Audio::SetSourceBool(m_Handle, Audio::SourceBool::Looping, m_Looping);
-    AudioContext::CheckError();
+    SetSourceBool(m_Handle, Audio::SourceBool::Looping, m_Looping);
+    Audio::Context::CheckError();
 }

@@ -7,30 +7,30 @@
 // ReSharper disable once CppInconsistentNaming
 struct ALCdevice;
 
-namespace Mountain
+namespace Mountain::Audio
 {
-    class AudioDevice
+    class Device
     {
     public:
-        MOUNTAIN_API static bool_t CheckError(const AudioDevice* device = nullptr);
+        MOUNTAIN_API static bool_t CheckError(const Device* device = nullptr);
 
         [[nodiscard]]
-        MOUNTAIN_API explicit AudioDevice(std::string&& name);
+        MOUNTAIN_API explicit Device(std::string&& name);
 
-        MOUNTAIN_API ~AudioDevice();
+        MOUNTAIN_API ~Device();
 
-        DELETE_COPY_MOVE_OPERATIONS(AudioDevice)
+        DELETE_COPY_MOVE_OPERATIONS(Device)
 
         MOUNTAIN_API void Reopen(const std::string& newName);
 
-        [[nodiscard]]
-        MOUNTAIN_API std::string GetName() const;
+        MOUNTAIN_API
+        GETTER(const std::string&, Name, m_Name)
 
     private:
         ALCdevice* m_Handle = nullptr;
         std::string m_Name;
 
         // AudioContext needs to access the handle of this class
-        friend class AudioContext;
+        friend class Context;
     };
 }
