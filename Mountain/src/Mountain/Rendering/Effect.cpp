@@ -79,14 +79,7 @@ void GaussianBlur::LoadResources()
     m_ComputeShader = ResourceManager::Get<ComputeShader>(Utils::GetBuiltinShadersPath() + "effects/gaussian_blur_horizontal.comp");
     m_OtherComputeShader = ResourceManager::Get<ComputeShader>(Utils::GetBuiltinShadersPath() + "effects/gaussian_blur_vertical.comp");
 
-    m_Radius = 1.f * 3.f;
-    m_ComputeShader->SetUniform("radius", static_cast<int32_t>(Calc::Round(m_Radius)));
-    m_OtherComputeShader->SetUniform("radius", static_cast<int32_t>(Calc::Round(m_Radius)));
-
-    BindBufferBase(Graphics::BufferType::ShaderStorageBuffer, 2, m_KernelBuffer);
-    const List<float_t> kernel = ComputeKernel(1.f);
-    m_KernelBuffer.SetData(kernel.GetSize(), kernel.GetData(), Graphics::BufferUsage::DynamicCopy);
-
+    SetIntensity(1.f);
 }
 
 void GaussianBlur::Apply(const Vector2i textureSize, const bool_t synchronizeImageData) const
@@ -96,7 +89,7 @@ void GaussianBlur::Apply(const Vector2i textureSize, const bool_t synchronizeIma
     BindImage(imageBindings[1].textureId, 0, Graphics::ImageShaderAccess::ReadWrite);
     BindImage(imageBindings[0].textureId, 1, Graphics::ImageShaderAccess::ReadWrite);
 
-    Graphics::MemoryBarrier(Utils::ToFlags(Graphics::MemoryBarrierFlags::ShaderImageAccessBarrier));
+    Graphics::MemoryBarrier(Graphics::MemoryBarrierFlags::ShaderImageAccessBarrier);
 
     m_OtherComputeShader->Dispatch(textureSize.x, textureSize.y);
 }
@@ -109,7 +102,7 @@ void GaussianBlur::SetIntensity(const float_t newIntensity)
     const List<float_t> kernel = ComputeKernel(newIntensity);
 
     BindBufferBase(Graphics::BufferType::ShaderStorageBuffer, 2, m_KernelBuffer);
-    m_KernelBuffer.SetData(kernel.GetSize() * sizeof(float_t), kernel.GetData(), Graphics::BufferUsage::DynamicCopy);
+    m_KernelBuffer.SetData(static_cast<int64_t>(kernel.GetSize() * sizeof(float_t)), kernel.GetData(), Graphics::BufferUsage::DynamicCopy);
 }
 
 List<float_t> GaussianBlur::ComputeKernel(const float_t sigma) const
@@ -125,7 +118,8 @@ List<float_t> GaussianBlur::ComputeKernel(const float_t sigma) const
 
     for (int32_t i = -radius; i <= radius; i++)
     {
-        const float_t value = std::exp(-i * i * inverseTwoSigmaSquare);
+        const float_t fi = static_cast<float_t>(i);
+        const float_t value = std::exp(-fi * fi * inverseTwoSigmaSquare);
         kernel[i + radius] = value;
         k += value;
     }
@@ -150,7 +144,7 @@ void BoxBlur::Apply(const Vector2i textureSize, const bool_t synchronizeImageDat
     BindImage(imageBindings[1].textureId, 0, Graphics::ImageShaderAccess::ReadWrite);
     BindImage(imageBindings[0].textureId, 1, Graphics::ImageShaderAccess::ReadWrite);
 
-    Graphics::MemoryBarrier(Utils::ToFlags(Graphics::MemoryBarrierFlags::ShaderImageAccessBarrier));
+    Graphics::MemoryBarrier(Graphics::MemoryBarrierFlags::ShaderImageAccessBarrier);
 
     m_OtherComputeShader->Dispatch(textureSize.x, textureSize.y);
 }
