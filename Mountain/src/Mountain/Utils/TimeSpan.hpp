@@ -59,26 +59,26 @@ namespace Mountain
         /// @brief Represents the number of hours in 1 day.
         static constexpr int32_t HoursPerDay = TicksPerDay / TicksPerHour;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         static constexpr TimeSpan Zero();
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         static constexpr TimeSpan MaxValue();
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         static constexpr TimeSpan MinValue();
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         static TimeSpan FromDays(double_t days);
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         static TimeSpan FromHours(double_t hours);
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         static TimeSpan FromMinutes(double_t minutes);
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         static TimeSpan FromSeconds(double_t seconds);
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         static TimeSpan FromMilliseconds(double_t milliseconds);
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         static TimeSpan FromMicroseconds(double_t microseconds);
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         static TimeSpan FromTicks(int64_t ticks);
 
         explicit constexpr TimeSpan(int64_t ticks);
@@ -87,55 +87,55 @@ namespace Mountain
 
         GETTER(int64_t, Ticks, m_Ticks)
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         int32_t GetDays() const;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         int32_t GetHours() const;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         int32_t GetMinutes() const;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         int32_t GetSeconds() const;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         int32_t GetMilliseconds() const;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         int32_t GetMicroseconds() const;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         int32_t GetNanoseconds() const;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         double_t GetTotalDays() const;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         double_t GetTotalHours() const;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         double_t GetTotalMinutes() const;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         double_t GetTotalSeconds() const;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         double_t GetTotalMilliseconds() const;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         double_t GetTotalMicroseconds() const;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         double_t GetTotalNanoseconds() const;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         TimeSpan Duration() const;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         friend std::strong_ordering operator<=>(TimeSpan, TimeSpan) = default;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         friend TimeSpan operator+(TimeSpan lhs, TimeSpan rhs);
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         friend TimeSpan operator-(TimeSpan value);
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         friend TimeSpan operator-(TimeSpan lhs, TimeSpan rhs);
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         friend TimeSpan operator*(TimeSpan lhs, double_t rhs);
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         friend TimeSpan operator*(double_t lhs, TimeSpan rhs);
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         friend TimeSpan operator/(TimeSpan lhs, double_t rhs);
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         friend double_t operator/(TimeSpan lhs, TimeSpan rhs);
 
         friend TimeSpan& operator+=(TimeSpan& lhs, TimeSpan rhs);
@@ -143,10 +143,10 @@ namespace Mountain
         friend TimeSpan& operator*=(TimeSpan& lhs, double_t rhs);
         friend TimeSpan& operator/=(TimeSpan& lhs, double_t rhs);
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         std::string ToString() const;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         size_t GetHashCode() const;
 
     private:
@@ -161,9 +161,9 @@ namespace Mountain
 
         static constexpr int64_t TicksPerTenthSecond = TicksPerMillisecond * 100;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         static TimeSpan Interval(double_t ticks, double_t scale);
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         static TimeSpan IntervalFromDoubleTicks(double_t ticks);
 
         int64_t m_Ticks = 0;

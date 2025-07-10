@@ -47,32 +47,32 @@ namespace Mountain
         /// @tparam T Type
         /// @return Data
         template <typename T = uint8_t>
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         const T* GetData() const;
 
         /// @brief Gets the raw data of the texture
         /// @tparam T Type
         /// @return Data
         template <typename T = uint8_t>
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         T* GetData();
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API int32_t GetDataSize() const;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API uint16_t GetChannels() const;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API int32_t GetSampleRate() const;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API uint16_t GetBitDepth() const;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API const AudioBuffer* GetBuffer() const;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API AudioTrackFormat GetFormat() const;
 
     private:

@@ -67,33 +67,33 @@ namespace Mountain
             int32_t microsecond
         );
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr DateTime GetDate() const;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr TimeSpan GetTimeOfDay() const;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr DayOfWeek GetDayOfWeek() const;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr int32_t GetDayOfYear() const;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr int32_t GetYear() const;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr int32_t GetMonth() const;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr int32_t GetDay() const;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr int32_t GetHour() const;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr int32_t GetMinute() const;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr int32_t GetSecond() const;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr int32_t GetMillisecond() const;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr int32_t GetMicrosecond() const;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr int32_t GetNanosecond() const;
 
         friend constexpr TimeSpan operator-(DateTime lhs, DateTime rhs);
@@ -101,16 +101,16 @@ namespace Mountain
         friend constexpr DateTime& operator+=(DateTime& lhs, TimeSpan rhs);
         friend constexpr DateTime& operator-=(DateTime& lhs, TimeSpan rhs);
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         friend constexpr std::strong_ordering operator<=>(DateTime, DateTime) = default;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         std::string ToString() const;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr size_t GetHashCode() const;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr int64_t GetTicks() const;
 
         constexpr GETTER(uint64_t, DateData, m_DateData)
@@ -168,10 +168,10 @@ namespace Mountain
         /// @brief Days between March 1 and January 1
         static constexpr int32_t March1BasedDayOfNewYear = 306;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr uint64_t GetUTicks() const;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr uint64_t GetInternalKind() const;
 
         static constexpr uint64_t DateToTicks(int32_t year, int32_t month, int32_t day);
@@ -185,9 +185,9 @@ namespace Mountain
     CHECK_REQUIREMENT(Requirements::StringConvertible, DateTime);
     CHECK_REQUIREMENT(Requirements::Hashable, DateTime);
 
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr DateTime operator+(DateTime dateTime, TimeSpan timeSpan);
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr DateTime operator-(DateTime dateTime, TimeSpan timeSpan);
 }
 

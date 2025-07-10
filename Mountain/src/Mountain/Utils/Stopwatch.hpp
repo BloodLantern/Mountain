@@ -16,16 +16,16 @@ namespace Mountain
     class MOUNTAIN_API Stopwatch
     {
     public:
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         static Stopwatch StartNew();
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         static int64_t GetFrequency();
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         static int64_t GetTimestamp();
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         static TimeSpan GetElapsedTime(int64_t startingTimestamp);
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         static TimeSpan GetElapsedTime(int64_t startingTimestamp, int64_t endingTimestamp);
 
         void Start();
@@ -35,16 +35,16 @@ namespace Mountain
 
         GETTER(bool_t, IsRunning, m_IsRunning)
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         TimeSpan GetElapsed() const;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         int64_t GetElapsedTicks() const;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         double_t GetElapsedMilliseconds() const;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         double_t GetElapsedSeconds() const;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         std::string ToString() const;
 
     private:
@@ -57,9 +57,9 @@ namespace Mountain
         int64_t m_Elapsed = 0;
         bool_t m_IsRunning = false;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         int64_t GetRawElapsedTicks() const;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         int64_t GetElapsedDateTimeTicks() const;
     };
 

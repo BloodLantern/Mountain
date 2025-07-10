@@ -35,7 +35,7 @@ namespace Mountain
         MOUNTAIN_API static void Update();
 
         /// @brief Returns the current device's context.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API static AudioContext* GetContext();
 
         MOUNTAIN_API static void RegisterBuffer(AudioBuffer* buffer);

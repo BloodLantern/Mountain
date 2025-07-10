@@ -19,7 +19,7 @@ namespace Mountain
     class AudioContext
     {
     public:
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API explicit AudioContext(AudioDevice& device);
 
         MOUNTAIN_API ~AudioContext();
@@ -30,11 +30,11 @@ namespace Mountain
 
         MOUNTAIN_API static bool_t CheckError();
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API int32_t GetMaxSourceCount(AudioSourceType sourceType) const;
 
         /// @brief Returns the next available source of the given type.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API uint32_t GetSource(AudioSourceType type = AudioSourceType::Mono);
 
     private:

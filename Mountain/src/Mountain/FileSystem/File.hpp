@@ -33,7 +33,7 @@ namespace Mountain
         };
 
         /// @brief Constructs a File corresponding to the given @p path.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API explicit File(std::filesystem::path&& filepath);
 
         /// @brief Destructs the File instance by calling PostUnload.
@@ -69,29 +69,29 @@ namespace Mountain
         MOUNTAIN_API bool_t Exists();
 
         /// @brief Returns the name of this File without the file extension.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API std::string GetNameNoExtension() const;
 
         /// @brief Returns the name of this File without the file extension.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API std::string GetPathNoExtension() const;
 
         /// @brief Returns the file extension of this File.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API std::string GetExtension() const;
 
         /// @brief Returns a @c const pointer to the raw loaded data.
         template <typename T = char_t>
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         const T* GetData() const;
 
         /// @brief Returns a pointer to the raw loaded data.
         template <typename T = char_t>
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         T* GetData();
 
         /// @brief Returns the size of the loaded data.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API int64_t GetSize() const;
 
         /// @brief Sets the name of this File.
@@ -101,7 +101,7 @@ namespace Mountain
         ///
         /// Note that a Resource doesn't need to be loaded from a File and can instead be loaded from raw data.
         /// This implies that the return value of this function can be a @c nullptr.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API Pointer<Resource> GetResource() const;
 
     protected:

@@ -39,7 +39,7 @@ namespace Mountain
         StateMachine& operator=(const StateMachine&) = delete;
 
         // Define move operations
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         StateMachine(StateMachine&& other) noexcept;
         StateMachine& operator=(StateMachine&& other) noexcept;
 
@@ -49,10 +49,10 @@ namespace Mountain
         void Update() override;
 
         /// @brief Get the current state
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         T GetState() const;
         /// @brief Get the current state as an integral type
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         UnderlyingType GetStateIntegral() const;
         /// @brief Set the new state if @c locked is not set
         void SetState(T newState);
@@ -63,17 +63,17 @@ namespace Mountain
         StateMachine& operator=(T newState) override;
 
         /// @brief Get the previous state
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         T GetPreviousState() const;
         /// @brief Get the previous state as an integral type
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         UnderlyingType GetPreviousStateIntegral() const;
 
         /// @brief Get whether the current state changed since the last update
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         bool_t GetStateChanged() const;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         // ReSharper disable once CppNonExplicitConversionOperator
         operator T();
 

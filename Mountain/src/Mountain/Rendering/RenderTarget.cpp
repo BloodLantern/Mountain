@@ -131,7 +131,7 @@ void RenderTarget::ClearLightSources() { m_LightSources.Clear(); }
 
 const List<LightSource>& RenderTarget::GetLightSources() const { return m_LightSources; }
 
-void RenderTarget::SetDebugName([[maybe_unused]] const std::string_view name) const
+void RenderTarget::SetDebugName(ATTRIBUTE_MAYBE_UNUSED const std::string_view name) const
 {
 #ifdef _DEBUG
     const std::string str{name.data(), name.length()};

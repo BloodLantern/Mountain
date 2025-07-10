@@ -52,39 +52,39 @@ namespace Mountain
         MOUNTAIN_API static void LoadAllBinaries();
 
         /// @brief Checks whether the ResourceManager contains the specified Resource name.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API static bool_t Contains(const std::string& name);
 
         /// @brief Checks whether the ResourceManager contains the specified Resource file name.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API static bool_t Contains(const Pointer<File>& file);
 
         /// @brief Checks whether the given Resource name is an embedded binary Resource.
         /// @see LoadAllBinaries()
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API static bool_t IsBinary(const std::string& name);
 
         /// @brief Returns the Resource that was either added or loaded using the given @p name.
         template <Concepts::Resource T = Resource>
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         static Pointer<T> Get(const std::string& name);
 
         /// @brief Returns the Resource that was either added or loaded using the given file name.
         template <Concepts::Resource T = Resource>
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         static Pointer<T> Get(const Pointer<File>& file);
 
         /// @brief Returns the Font loaded using the given @p name and @p size.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API static Pointer<Font> GetFont(const std::string& name, uint32_t size);
 
         /// @brief Returns the Font that was loaded using the given @p file and @p size.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API static Pointer<Font> GetFont(const Pointer<File>& file, uint32_t size);
 
         /// @brief Returns the Resource that was either added or loaded using the given file name.
         template <Concepts::Resource T = Resource>
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         static Pointer<T> Get(const Guid& guid);
 
         /// @brief Renames the Resource with the given @p name to @p newName.
@@ -103,7 +103,7 @@ namespace Mountain
         /// @tparam T The type of Resource to find.
         /// @return All stored Resource of type @p T.
         template <Concepts::Resource T>
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         static List<Pointer<T>> FindAll();
 
         /// @see ResourceManager::FindAll()
@@ -117,7 +117,7 @@ namespace Mountain
         /// @return The first Resource for which the @p predicate returned @c true. If every Resource
         /// returned @c false, instead return a null @ref Pointer.
         template <Concepts::Resource T = Resource>
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         static Pointer<T> Find(const std::function<bool_t(Pointer<T>)>& predicate);
 
         /// @brief Finds a list of Resource based on a predicate.
@@ -127,7 +127,7 @@ namespace Mountain
         /// @return The first Resource for which the @p predicate returned @c true. If every Resource
         /// returned @c false, instead return a null @ref Pointer.
         template <Concepts::Resource T = Resource>
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         static List<Pointer<T>> FindAll(const std::function<bool_t(Pointer<T>)>& predicate);
 
         /// @see @ref FileManager::FindAll(std::function<bool_t(Pointer<T>)>&&)
@@ -136,7 +136,7 @@ namespace Mountain
 
         /// @brief Checks whether the given @p name corresponds to a Resource of type @p T.
         template <Concepts::Resource T>
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         static bool_t IsResourceOfType(const std::string& name);
 
         /// @brief Unloads the Resource with the given @p name.
@@ -161,7 +161,7 @@ namespace Mountain
         static Pointer<T> LoadNoCheck(Pointer<File> file, bool_t loadInRhi = true);
 
         template <Concepts::Resource T>
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         static Pointer<T> GetNoCheck(const std::string& name);
     };
 }

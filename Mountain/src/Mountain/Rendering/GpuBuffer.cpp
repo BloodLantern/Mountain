@@ -29,7 +29,7 @@ void GpuBuffer::SetData(const int64_t size, const void* data, const BufferUsage 
     glNamedBufferData(m_Id, size, data, ToOpenGl(usage));
 }
 
-void GpuBuffer::SetDebugName([[maybe_unused]] const std::string_view name) const
+void GpuBuffer::SetDebugName(ATTRIBUTE_MAYBE_UNUSED const std::string_view name) const
 {
 #ifdef _DEBUG
     glObjectLabel(GL_BUFFER, m_Id, static_cast<GLsizei>(name.length()), name.data());

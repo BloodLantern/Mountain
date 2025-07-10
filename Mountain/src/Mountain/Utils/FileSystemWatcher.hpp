@@ -32,7 +32,7 @@ namespace Mountain
         All             = FileName | DirectoryName | Attributes | Size | LastWrite | LastAccess | Creation | Security
     };
 
-    class FileSystemWatcher
+    class ATTRIBUTE_NODISCARD FileSystemWatcher
     {
     public:
         Event<const std::filesystem::path&> onModified;
@@ -69,10 +69,12 @@ namespace Mountain
         /// @brief Forces the watcher thread wake up and update now.
         MOUNTAIN_API void Update();
 
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API std::filesystem::path GetPath() const;
 
         MOUNTAIN_API void SetPath(const std::filesystem::path& newPath);
 
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API bool_t GetRunning() const;
 
     private:

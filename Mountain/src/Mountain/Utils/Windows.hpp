@@ -29,8 +29,10 @@ namespace Mountain::Windows
 
     MOUNTAIN_API void SilenceError();
 
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API std::string GetAppdataLocalPath();
 
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API std::string GetAppdataRoamingPath();
 }
 

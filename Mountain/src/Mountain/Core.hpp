@@ -34,13 +34,13 @@ typedef char char_t;
 typedef bool bool_t;
 
 #ifdef MOUNTAIN_EXPORT
-/// @brief Macro used for DLL export/import.
-/// @details This macro should be used at the beginning of static member variable and non-inline function declarations.
-#define MOUNTAIN_API __declspec(dllexport)
+    /// @brief Macro used for DLL export/import.
+    /// @details This macro should be used at the beginning of static member variable and non-inline function declarations.
+    #define MOUNTAIN_API __declspec(dllexport)
 #else
-/// @brief Macro used for DLL export/import.
-/// @details This macro should be used at the beginning of static member variable and non-inline function declarations.
-#define MOUNTAIN_API __declspec(dllimport)
+    /// @brief Macro used for DLL export/import.
+    /// @details This macro should be used at the beginning of static member variable and non-inline function declarations.
+    #define MOUNTAIN_API __declspec(dllimport)
 #endif
 
 /// @namespace Mountain
@@ -157,10 +157,10 @@ namespace Mountain {}
         _declspec(dllexport) int32_t AmdPowerXpressRequestHighPerformance = 1; \
     }
 
-#define GETTER(type, name, internalName) [[nodiscard]] type Get##name() const noexcept { return internalName; }
+#define GETTER(type, name, internalName) ATTRIBUTE_NODISCARD type Get##name() const noexcept { return internalName; }
 #define SETTER(type, name, internalName) void Set##name(const type new##name) noexcept { internalName = new##name; }
 
-#define STATIC_GETTER(type, name, internalName) [[nodiscard]] static type Get##name() noexcept { return internalName; }
+#define STATIC_GETTER(type, name, internalName) ATTRIBUTE_NODISCARD static type Get##name() noexcept { return internalName; }
 #define STATIC_SETTER(type, name, internalName) static void Set##name(const type new##name) noexcept { internalName = new##name; }
 
 // Undefine any Windows interface macro

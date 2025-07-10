@@ -2,12 +2,13 @@
 
 #include <Math/vector2i.hpp>
 
+#include <SDL3/SDL_events.h>
+#include <SDL3/SDL_video.h>
+
 #include "Mountain/Core.hpp"
 #include "Mountain/Rendering/Renderer.hpp"
 #include "Mountain/Resource/Texture.hpp"
 #include "Mountain/Utils/Event.hpp"
-#include "SDL3/SDL_events.h"
-#include "SDL3/SDL_video.h"
 
 /// @file window.hpp
 /// @brief Defines the Mountain::Window class.
@@ -32,21 +33,23 @@ namespace Mountain
         /// @brief Event called when the window size changed. The parameter is the new size.
         MOUNTAIN_API static inline Event<Vector2i> onSizeChanged;
 
+        /// @brief Whether the window should close
+        MOUNTAIN_API static inline bool_t shouldClose = false;
+
         /// @brief Get the screen position in pixels of the window
+        ATTRIBUTE_NODISCARD
         STATIC_GETTER(Vector2i, Position, m_Position)
 
         MOUNTAIN_API static void SetPosition(Vector2i newPosition);
 
         /// @brief Get the size in pixels of the window
+        ATTRIBUTE_NODISCARD
         STATIC_GETTER(Vector2i, Size, m_Size)
 
         MOUNTAIN_API static void SetSize(Vector2i newSize);
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API static Vector2i GetFramebufferSize();
-
-        /// @brief Whether the window should close
-        MOUNTAIN_API static inline bool_t shouldClose = false;
 
         /// @brief Set the window to be the current context
         MOUNTAIN_API static void MakeContextCurrent();
@@ -84,7 +87,7 @@ namespace Mountain
         /// @brief Get the index of the screen on which this window currently is
         STATIC_GETTER(int32_t, CurrentScreen, m_CurrentScreen)
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API static std::string_view GetTitle();
 
         MOUNTAIN_API static void SetTitle(const std::string& newTitle);

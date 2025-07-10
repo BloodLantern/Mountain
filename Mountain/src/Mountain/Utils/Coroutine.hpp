@@ -85,7 +85,7 @@ namespace Mountain
             MOUNTAIN_API std::suspend_always final_suspend() noexcept;
 
             /// @brief Logs the exception and rethrows it
-            [[noreturn]]
+            ATTRIBUTE_NORETURN
             MOUNTAIN_API void unhandled_exception();
 
             /// @brief Called when @c co_return is used in a Coroutine body. Empty implementation
@@ -133,20 +133,20 @@ namespace Mountain
 
         MOUNTAIN_API static void StopAll();
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API static bool_t IsRunning(const Guid& coroutineId);
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API static bool_t IsRunningAndNotEmpty(const Guid& coroutineId);
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API static size_t GetRunningCount();
 
         MOUNTAIN_API Coroutine() = default;
 
-        // ReSharper disable once CppNonExplicitConvertingConstructor
         /// @brief Constructs a new Coroutine from the given handle.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
+        // ReSharper disable once CppNonExplicitConvertingConstructor
         MOUNTAIN_API Coroutine(HandleType handle);
 
         MOUNTAIN_API Coroutine& operator=(HandleType handle) noexcept;
@@ -158,7 +158,7 @@ namespace Mountain
         Coroutine& operator=(const Coroutine&) = delete;
 
         // Define move operations
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API Coroutine(Coroutine&& other) noexcept;
         MOUNTAIN_API Coroutine& operator=(Coroutine&& other) noexcept;
 
@@ -172,7 +172,7 @@ namespace Mountain
 
         /// @brief Returns whether the Coroutine finished its execution.
         /// @remark If @c Valid() is @c false, this is undefined behavior. Consider using @c FinishedSafe() instead.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API bool_t Finished() const;
 
         /// @brief Safely returns whether the Coroutine finished its execution by first checking if @c Valid() is @c true.
@@ -180,7 +180,7 @@ namespace Mountain
         /// If @c Valid() is @c false, returns @c false.
         ///
         /// @see @c Finished()
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API bool_t FinishedSafe() const;
 
         /// @brief Destroys the Coroutine. It can't be resumed afterward.
@@ -193,7 +193,7 @@ namespace Mountain
 
         /// @brief Gets whether the Coroutine is valid, e.g. if it hasn't been default-initialized.
         /// @remark This still returns @c true even when the Coroutine is finished.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API bool_t Valid() const;
 
         /// @brief Resets the Coroutine.
@@ -201,7 +201,7 @@ namespace Mountain
         MOUNTAIN_API void Reset();
 
         /// @brief Returns the Guid of this Coroutine.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API Guid GetId() const;
 
     private:

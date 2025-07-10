@@ -6,39 +6,39 @@
 
 /// @brief Defines member functions for all enumerable extensions
 #define ENUMERABLE_EXTENSIONS_IMPLEMENTATION \
-    [[nodiscard]] \
+    ATTRIBUTE_NODISCARD \
     bool_t All(const ::Mountain::Predicate<EnumeratedType>& predicate) const { return ::Mountain::All(*this, predicate); } \
     \
-    [[nodiscard]] \
+    ATTRIBUTE_NODISCARD \
     bool_t Any(const ::Mountain::Predicate<EnumeratedType>& predicate) const { return ::Mountain::Any(*this, predicate); } \
     \
     template <typename U, typename = ::Mountain::Meta::EnableIf<::Mountain::Meta::IsEqualityComparableWith<U, EnumeratedType>>> \
-    [[nodiscard]] \
+    ATTRIBUTE_NODISCARD \
     bool_t Contains(const U& element) const { return ::Mountain::Contains(*this, element); } \
     \
-    [[nodiscard]] \
+    ATTRIBUTE_NODISCARD \
     bool_t Contains(const ::Mountain::Predicate<EnumeratedType>& predicate) const { return ::Mountain::Contains(*this, predicate); } \
     \
-    [[nodiscard]] \
+    ATTRIBUTE_NODISCARD \
     ::Mountain::List<EnumeratedType> FindAll(const ::Mountain::Predicate<EnumeratedType>& predicate) const \
     { return ::Mountain::FindAll(*this, predicate); } \
     \
-    [[nodiscard]] \
+    ATTRIBUTE_NODISCARD \
     EnumeratedType& First() { return ::Mountain::First(*this); } \
     \
-    [[nodiscard]] \
+    ATTRIBUTE_NODISCARD \
     const EnumeratedType& First() const { return ::Mountain::First(*this); } \
     \
-    [[nodiscard]] \
+    ATTRIBUTE_NODISCARD \
     EnumeratedType& Last() { return ::Mountain::Last(*this); } \
     \
-    [[nodiscard]] \
+    ATTRIBUTE_NODISCARD \
     const EnumeratedType& Last() const { return ::Mountain::Last(*this); } \
     \
-    [[nodiscard]] \
+    ATTRIBUTE_NODISCARD \
     EnumeratedType& Single() { return ::Mountain::Single(*this); } \
     \
-    [[nodiscard]] \
+    ATTRIBUTE_NODISCARD \
     const EnumeratedType& Single() const { return ::Mountain::Single(*this); } \
     \
     void ForEach(const ::Mountain::Operation<EnumeratedType>& operation) { return ::Mountain::ForEach(*this, operation); } \
@@ -60,72 +60,72 @@ namespace Mountain
 
     /// @brief Determines whether all elements of a sequence satisfy a condition.
     template <Requirements::MountainEnumerable EnumerableT, typename T = Meta::MountainEnumerableType<EnumerableT>>
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     bool_t All(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate);
 
     /// @brief Determines whether any element of a sequence satisfies a condition.
     template <Requirements::MountainEnumerable EnumerableT, typename T = Meta::MountainEnumerableType<EnumerableT>>
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     bool_t Any(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate);
 
     template <Requirements::MountainEnumerable EnumerableT,
         typename T,
         typename = Meta::EnableIf<Meta::IsEqualityComparableWith<T, Meta::MountainEnumerableType<EnumerableT>>>>
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     bool_t Contains(const EnumerableT& enumerable, const T& element);
 
     template <Requirements::MountainEnumerable EnumerableT, typename T = Meta::EnumerableType<EnumerableT>>
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     bool_t Contains(const EnumerableT& enumerable, const Predicate<T>& predicate);
 
     template <Requirements::MountainEnumerable EnumerableT, typename T = Meta::MountainEnumerableType<EnumerableT>>
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     List<T> FindAll(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate);
 
     template <Requirements::MountainEnumerable EnumerableT, typename T = Meta::MountainEnumerableType<EnumerableT>>
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     T* FindFirst(EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate);
 
     template <Requirements::MountainEnumerable EnumerableT, typename T = Meta::MountainEnumerableType<EnumerableT>>
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     const T* FindFirst(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate);
 
     template <Requirements::MountainEnumerable EnumerableT, typename T = Meta::MountainEnumerableType<EnumerableT>>
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     T* FindLast(EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate);
 
     template <Requirements::MountainEnumerable EnumerableT, typename T = Meta::MountainEnumerableType<EnumerableT>>
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     const T* FindLast(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate);
 
     /// @brief Returns the first element of a sequence.
     template <Requirements::MountainEnumerable EnumerableT, typename T = Meta::MountainEnumerableType<EnumerableT>>
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     T& First(EnumerableT& enumerable);
 
     /// @brief Returns the first element of a sequence.
     template <Requirements::MountainEnumerable EnumerableT, typename T = Meta::MountainEnumerableType<EnumerableT>>
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     const T& First(const EnumerableT& enumerable);
 
     /// @brief Returns the last element of a sequence.
     template <Requirements::MountainEnumerable EnumerableT, typename T = Meta::MountainEnumerableType<EnumerableT>>
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     T& Last(EnumerableT& enumerable);
 
     /// @brief Returns the last element of a sequence.
     template <Requirements::MountainEnumerable EnumerableT, typename T = Meta::MountainEnumerableType<EnumerableT>>
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     const T& Last(const EnumerableT& enumerable);
 
     /// @brief Returns the only element of a sequence and throws an exception if there is not exactly one element in the sequence.
     template <Requirements::MountainEnumerable EnumerableT, typename T = Meta::MountainEnumerableType<EnumerableT>>
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     T& Single(EnumerableT& enumerable);
 
     /// @brief Returns the only element of a sequence and throws an exception if there is not exactly one element in the sequence.
     template <Requirements::MountainEnumerable EnumerableT, typename T = Meta::MountainEnumerableType<EnumerableT>>
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     const T& Single(const EnumerableT& enumerable);
 
     template <Requirements::MountainEnumerable EnumerableT, typename T = Meta::MountainEnumerableType<EnumerableT>>

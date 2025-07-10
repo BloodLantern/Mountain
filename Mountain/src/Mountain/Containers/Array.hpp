@@ -26,59 +26,59 @@ namespace Mountain
         T data[Size];
 
         /// @brief Get the element at the given index with bounds checking.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr T& At(size_t index);
 
         /// @brief Get the element at the given index with bounds checking.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr const T& At(size_t index) const;
 
         /// @brief Get the size of the array. Returns @c Size.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr size_t GetSize() const noexcept;
 
         /// @brief Get whether the array is empty, i.e., whether its size is 0.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr bool_t IsEmpty() const noexcept;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr T* GetData() noexcept;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr const T* GetData() const noexcept;
 
         void Fill(const T& value) noexcept;
 
         /// @brief Get the element at the given index without bounds checking.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr T& operator[](size_t index) noexcept;
 
         /// @brief Get the element at the given index without bounds checking.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr const T& operator[](size_t index) const noexcept;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr Iterator begin() noexcept;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr Iterator end() noexcept;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr ConstIterator begin() const noexcept;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr ConstIterator end() const noexcept;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr ConstIterator cbegin() const noexcept;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr ConstIterator cend() const noexcept;
 
         ENUMERABLE_EXTENSIONS_IMPLEMENTATION
 
         template <typename U, typename = Meta::EnableIf<Meta::IsConvertibleTo<EnumeratedType, U>>>
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         Array<U, Size> Cast() const
         {
             Array<U, Size> result;
@@ -90,7 +90,7 @@ namespace Mountain
         }
 
         template <Concepts::Invocable<EnumeratedType> ProjectionFunctionT, typename U = decltype(ProjectionFunctionT{}(EnumeratedType{}))>
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         Array<U, Size> Select(const ProjectionFunctionT& function) const
         {
             Array<U, Size> result;

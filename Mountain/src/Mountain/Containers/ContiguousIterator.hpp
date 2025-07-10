@@ -21,21 +21,21 @@ namespace Mountain
         ContiguousConstIterator(const T* firstElement, size_t index) noexcept;
 
         /// @brief Gets the element in the container at the current position of the iterator.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr const T* GetCurrent() const noexcept;
 
         /// @brief Sets the iterator to its initial position, which is on the first element in the collection.
         constexpr void Reset() noexcept;
 
         /// @brief Dereferences this iterator, returning a reference to the current object.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr const T& operator*() const noexcept;
 
         /// @brief Equivalent of @c GetCurrent().
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr const T* operator->() const noexcept;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr const T& operator[](ptrdiff_t offset) const noexcept;
 
         /// @brief Moves to the next element without bounds checking.
@@ -54,16 +54,16 @@ namespace Mountain
 
         constexpr ContiguousConstIterator& operator-=(ptrdiff_t rhs) noexcept;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr bool_t operator==(const ContiguousConstIterator& other) const;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr std::strong_ordering operator<=>(const ContiguousConstIterator&) const;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr const T* GetFirstElement() const noexcept;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr size_t GetIndex() const noexcept;
 
     protected:
@@ -72,24 +72,24 @@ namespace Mountain
     };
 
     template <typename T>
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr ContiguousConstIterator<T> operator+(ptrdiff_t lhs, ContiguousConstIterator<T> rhs) noexcept;
 
     template <typename T>
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr ContiguousConstIterator<T> operator+(ContiguousConstIterator<T> lhs, ptrdiff_t rhs) noexcept;
 
     template <typename T>
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr ptrdiff_t operator-(const ContiguousConstIterator<T>& lhs, const ContiguousConstIterator<T>& rhs);
 
     template <typename T>
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr ContiguousConstIterator<T> operator-(ContiguousConstIterator<T> lhs, ptrdiff_t rhs) noexcept;
 
     /// @brief Checks whether @p lhs is compatible with @p rhs, e.g., if both are iterating over the same enumerable.
     template <typename T>
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr bool_t CheckCompatible(const ContiguousConstIterator<T>& lhs, const ContiguousConstIterator<T>& rhs) noexcept;
 
     /// @brief Checks whether @p lhs is compatible with @p rhs and throws an exception if they aren't compatible.
@@ -112,18 +112,18 @@ namespace Mountain
         using ContiguousConstIterator<T>::ContiguousConstIterator;
 
         /// @brief Gets the element in the container at the current position of the iterator.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr T* GetCurrent() const noexcept;
 
         /// @brief Dereferences this iterator, returning a reference to the current object.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr T& operator*() const noexcept;
 
         /// @brief Equivalent of @c GetCurrent().
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr T* operator->() const noexcept;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr T& operator[](ptrdiff_t offset) const noexcept;
 
         /// @brief Moves to the next element without bounds checking.
@@ -144,24 +144,24 @@ namespace Mountain
     };
 
     template <typename T>
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr ContiguousIterator<T> operator+(ptrdiff_t lhs, ContiguousIterator<T> rhs) noexcept;
 
     template <typename T>
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr ContiguousIterator<T> operator+(ContiguousIterator<T> lhs, ptrdiff_t rhs) noexcept;
 
     template <typename T>
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr ptrdiff_t operator-(const ContiguousIterator<T>& lhs, const ContiguousIterator<T>& rhs);
 
     template <typename T>
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr ContiguousIterator<T> operator-(ContiguousIterator<T> lhs, ptrdiff_t rhs) noexcept;
 
     /// @brief Checks whether @p lhs is compatible with @p rhs, e.g., if both are iterating over the same enumerable.
     template <typename T>
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr bool_t CheckCompatible(const ContiguousIterator<T>& lhs, const ContiguousIterator<T>& rhs) noexcept;
 
     /// @brief Checks whether @p lhs is compatible with @p rhs and throws an exception if they aren't compatible.

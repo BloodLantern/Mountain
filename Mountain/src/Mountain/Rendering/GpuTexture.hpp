@@ -103,43 +103,43 @@ namespace Mountain::Graphics
 
         /// @brief Get whether the GpuTexture data is immutable
         /// @see <a href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/glGetTexParameter.xhtml">glGetTexParameteriv()</a>
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         bool_t GetImmutable() const;
 
         /// @see <a href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/glGetTexParameter.xhtml">glGetTexParameteriv()</a>
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MagnificationFilter GetMinFilter() const;
         /// @see <a href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/glTexParameter.xhtml">glTexParameteri()</a>
         void SetMinFilter(MagnificationFilter newMinFilter) const;
 
         /// @see <a href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/glGetTexParameter.xhtml">glGetTexParameteriv()</a>
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MagnificationFilter GetMagFilter() const;
         /// @see <a href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/glTexParameter.xhtml">glTexParameteri()</a>
         void SetMagFilter(MagnificationFilter newMagFilter) const;
 
         /// @see <a href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/glGetTexParameter.xhtml">glGetTexParameteriv()</a>
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         Wrapping GetWrappingHorizontal() const;
         /// @see <a href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/glTexParameter.xhtml">glTexParameteri()</a>
         void SetWrappingHorizontal(Wrapping newWrappingHorizontal) const;
 
         /// @see <a href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/glGetTexParameter.xhtml">glGetTexParameteriv()</a>
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         Wrapping GetWrappingVertical() const;
         /// @see <a href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/glTexParameter.xhtml">glTexParameteri()</a>
         void SetWrappingVertical(Wrapping newWrappingVertical) const;
 
         /// @see <a href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/glGetTexParameter.xhtml">glGetTexParameterfv()</a>
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         Color GetBorderColor() const;
         /// @see <a href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/glTexParameter.xhtml">glTexParameterfv()</a>
         void SetBorderColor(Color newBorderColor) const;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         uint32_t GetId() const;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         explicit operator uint32_t() const;
 
     private:

@@ -41,67 +41,67 @@ namespace Mountain
 
         virtual void RenderDebug(const Color& color) const = 0;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         virtual Vector2 GetActualPosition() const;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         bool_t CheckCollision(const Entity& e) const;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         bool_t CheckCollision(const Collider& collider) const;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         virtual bool_t CheckCollision(Vector2 point) const = 0;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         virtual bool_t CheckCollision(const Hitbox& hitbox) const = 0;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         virtual bool_t CheckCollision(const Circle& circle) const = 0;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         virtual bool_t CheckCollision(const Grid& grid) const = 0;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         virtual bool_t CheckCollision(const ColliderList& list) const = 0;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         virtual float_t Left() const = 0;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         virtual float_t Right() const = 0;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         virtual float_t Top() const = 0;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         virtual float_t Bottom() const = 0;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         virtual Vector2 Center() const;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         virtual Vector2 TopLeft() const;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         virtual Vector2 TopRight() const;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         virtual Vector2 BottomLeft() const;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         virtual Vector2 BottomRight() const;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         virtual float_t AbsoluteLeft() const = 0;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         virtual float_t AbsoluteRight() const = 0;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         virtual float_t AbsoluteTop() const = 0;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         virtual float_t AbsoluteBottom() const = 0;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         virtual Vector2 AbsoluteCenter() const;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         virtual Vector2 AbsoluteTopLeft() const;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         virtual Vector2 AbsoluteTopRight() const;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         virtual Vector2 AbsoluteBottomLeft() const;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         virtual Vector2 AbsoluteBottomRight() const;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         virtual float_t Width() const;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         virtual float_t Height() const;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         virtual Vector2 Size() const;
     };
 }

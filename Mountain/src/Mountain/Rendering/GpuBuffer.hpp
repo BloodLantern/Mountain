@@ -26,12 +26,12 @@ namespace Mountain::Graphics
 
         void SetDebugName(std::string_view name) const;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         bool_t GetImmutable() const;
 
         GETTER(uint32_t, Id, m_Id)
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         explicit operator uint32_t() const;
 
     private:

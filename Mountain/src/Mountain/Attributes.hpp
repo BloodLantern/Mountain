@@ -27,27 +27,33 @@
 #define ATTRIBUTE_UNLIKELY [[unlikely]]
 
 #ifdef COMPILER_MSVC
-/// @brief Allows this data member to be overlapped with other non-static data members or base class subobjects of its class.
-#define ATTRIBUTE_NO_UNIQUE_ADDRESS [[msvc::no_unique_address]]
+    /// @brief Allows this data member to be overlapped with other non-static data members or base class subobjects of its class.
+    #define ATTRIBUTE_NO_UNIQUE_ADDRESS [[msvc::no_unique_address]]
 #else
-/// @brief Allows this data member to be overlapped with other non-static data members or base class subobjects of its class.
-#define ATTRIBUTE_NO_UNIQUE_ADDRESS [[no_unique_address]]
+    /// @brief Allows this data member to be overlapped with other non-static data members or base class subobjects of its class.
+    #define ATTRIBUTE_NO_UNIQUE_ADDRESS [[no_unique_address]]
 #endif
 
 #if defined(__JETBRAINS_IDE__) || defined(__RESHARPER__)
-/// @brief The @c [[jetbrains::format]] attribute allows you to enable format inspections for custom printf-like functions
-/// and works similarly to @c [[gnu::format]].
-#define ATTRIBUTE_FORMAT(archetype, stringIndex, firstToCheck) [[jetbrains::format(archetype, stringIndex, firstToCheck)]]
-/// @brief The @c [[jetbrains::pass_by_value]] attribute allows you to suppress the "Pass value by const reference" inspection.
-#define ATTRIBUTE_PASS_BY_VALUE [[jetbrains::pass_by_value]]
-/// @brief The @c [[jetbrains::guard]] attribute can be used to suppress the "Local variable is never used" inspection.
-#define ATTRIBUTE_GUARD [[jetbrains::guard]]
-/// @brief The @c [[jetbrains::has_side_effects]] attribute allows you
-/// to mark operator= as having side effects to suppress the "Assigned value is never used" inspection.
-#define ATTRIBUTE_HAS_SIDE_EFFECTS [[jetbrains::has_side_effects]]
+    /// @brief The @c [[jetbrains::format]] attribute allows you to enable format inspections for custom printf-like functions
+    /// and works similarly to @c [[gnu::format]].
+    #define ATTRIBUTE_FORMAT(archetype, stringIndex, firstToCheck) [[jetbrains::format(archetype, stringIndex, firstToCheck)]]
+    /// @brief The @c [[jetbrains::pass_by_value]] attribute allows you to suppress the "Pass value by const reference" inspection.
+    #define ATTRIBUTE_PASS_BY_VALUE [[jetbrains::pass_by_value]]
+    /// @brief The @c [[jetbrains::guard]] attribute can be used to suppress the "Local variable is never used" inspection.
+    #define ATTRIBUTE_GUARD [[jetbrains::guard]]
+    /// @brief The @c [[jetbrains::has_side_effects]] attribute allows you
+    /// to mark operator= as having side effects to suppress the "Assigned value is never used" inspection.
+    #define ATTRIBUTE_HAS_SIDE_EFFECTS [[jetbrains::has_side_effects]]
 #else
-#define ATTRIBUTE_FORMAT(...)
-#define ATTRIBUTE_PASS_BY_VALUE
-#define ATTRIBUTE_GUARD
-#define ATTRIBUTE_HAS_SIDE_EFFECTS
+    /// @brief The @c [[jetbrains::format]] attribute allows you to enable format inspections for custom printf-like functions
+    /// and works similarly to @c [[gnu::format]].
+    #define ATTRIBUTE_FORMAT(...)
+    /// @brief The @c [[jetbrains::pass_by_value]] attribute allows you to suppress the "Pass value by const reference" inspection.
+    #define ATTRIBUTE_PASS_BY_VALUE
+    /// @brief The @c [[jetbrains::guard]] attribute can be used to suppress the "Local variable is never used" inspection.
+    #define ATTRIBUTE_GUARD
+    /// @brief The @c [[jetbrains::has_side_effects]] attribute allows you
+    /// to mark operator= as having side effects to suppress the "Assigned value is never used" inspection.
+    #define ATTRIBUTE_HAS_SIDE_EFFECTS
 #endif

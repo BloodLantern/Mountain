@@ -47,28 +47,28 @@ namespace Mountain
         /// @param name The name of this RenderTarget
         MOUNTAIN_API void SetDebugName(std::string_view name) const;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API uint32_t GetTextureId() const;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API Graphics::GpuTexture GetGpuTexture() const;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API bool_t GetInitialized() const;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API Vector2i GetSize() const;
         MOUNTAIN_API void SetSize(Vector2i newSize);
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API Graphics::MagnificationFilter GetFilter() const;
         MOUNTAIN_API void SetFilter(Graphics::MagnificationFilter newFilter);
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API const Matrix& GetCameraMatrix() const;
         MOUNTAIN_API void SetCameraMatrix(const Matrix& newCameraMatrix);
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API const Vector2& GetCameraScale() const;
 
     private:

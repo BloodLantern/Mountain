@@ -67,7 +67,7 @@ namespace Mountain
         /// Time::GetLastTotalTime(), interval) @endcode
         /// @param interval The time interval between each @c true result
         /// @return @c true if the interval has passed, @c false otherwise
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API static bool_t OnInterval(float_t interval);
 
         /// @brief Returns @c true on the given time interval
@@ -75,7 +75,7 @@ namespace Mountain
         /// Time::GetLastTotalTimeUnscaled(), interval) @endcode
         /// @param interval The time interval between each @c true result
         /// @return @c true if the interval has passed, @c false otherwise
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API static bool_t OnIntervalUnscaled(float_t interval);
 
     private:

@@ -29,34 +29,34 @@ namespace Mountain
         /// @returns Guid
         static Guid FromString(const char_t* str);
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         uint32_t GetData1() const;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         uint16_t GetData2() const;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         uint16_t GetData3() const;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         const Array<uint8_t, Data4Size>& GetData4() const;
 
         /// @brief Compares 2 @ref Guid
         /// @param other Other guid
         /// @return Whether the @ref Guid are equal
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         bool_t operator==(const Guid& other) const;
 
         /// @brief Compares 2 @ref Guid
         /// @param other Other guid
         /// @return Whether the @ref Guid are different
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         bool_t operator!=(const Guid& other) const;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         std::string ToString() const;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         size_t GetHashCode() const;
 
     private:

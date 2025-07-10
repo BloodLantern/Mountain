@@ -98,23 +98,23 @@ namespace Mountain
         ~Pointer();
 
         /// @brief Creates a new strong reference to this pointer.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         Pointer CreateStrongReference() const;
 
         /// @brief Gets the underlying raw pointer.
         ///
         /// This is equivalent to calling Pointer::operator T*() const;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         const T* Get() const;
 
         /// @brief Gets the underlying raw pointer.
         ///
         /// This is equivalent to calling Pointer::operator T*();
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         T* Get();
 
         /// @brief Returns whether this Pointer is @c nullptr.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         bool_t IsValid() const;
 
         /// @brief Converts this @ref Pointer to a strong reference.
@@ -124,11 +124,11 @@ namespace Mountain
         void ToWeakReference();
 
         /// @brief Returns the underlying ReferenceCounter.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         const ReferenceCounter<T>* GetReferenceCounter() const;
 
         /// @brief Returns whether this Pointer is holding a strong reference.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         bool_t GetIsStrongReference() const;
 
         /// @brief Resets this Pointer to a @c nullptr.
@@ -161,38 +161,38 @@ namespace Mountain
         Pointer& operator=(Pointer<U>&& other) noexcept;  // NOLINT(cppcoreguidelines-rvalue-reference-param-not-moved)
 
         /// @brief Converts this @c const Pointer to its underlying @c const raw pointer.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         explicit operator const T*() const;
 
         /// @brief Converts this Pointer to its underlying raw pointer.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         explicit operator T*();
 
         // ReSharper disable once CppNonExplicitConversionOperator
         /// @brief Converts this @ref Pointer to a @c bool_t the same way a raw pointer would.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         operator bool_t() const;
 
         /// @brief Dereferences this Pointer, which gives a reference to the underlying Type.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         T& operator*();
 
         /// @brief Dereferences this @c const Pointer, which gives a @c const reference to the underlying Type.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         const T& operator*() const;
 
         /// @brief Dereferences this Pointer, which gives a reference to the underlying Type.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         T* operator->();
 
         /// @brief Dereferences this @c const Pointer, which gives a @c const reference to the underlying Type.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         const T* operator->() const;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         std::string ToString() const;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         size_t GetHashCode() const;
 
     private:
@@ -209,17 +209,17 @@ namespace Mountain
 
     /// @brief Compares two @c Pointer by checking if they point to the same address.
     template <typename T>
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     bool_t operator==(const Pointer<T>& lhs, const Pointer<T>& rhs);
 
     /// @brief Compares two @c Pointer by checking if they point to the same address.
     template <typename T, typename U>
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     bool_t operator==(const Pointer<T>& lhs, const Pointer<U>& rhs);
 
     /// @brief Checks if a @ref Pointer is null.
     template <typename T>
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     bool_t operator==(const Pointer<T>& lhs, nullptr_t);
 
     CHECK_REQUIREMENT(Requirements::StringConvertible, Pointer<Requirements::DefaultType>);

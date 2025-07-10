@@ -24,7 +24,7 @@ namespace Mountain
 
         void SetData(const void* data, int32_t length, uint16_t channels, uint16_t bitDepth, int32_t sampleRate);
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         uint32_t GetHandle() const;
 
     private:
@@ -34,7 +34,7 @@ namespace Mountain
 
         AudioContext* m_Context = nullptr;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         static int32_t AlFormatFromData(uint16_t channels, uint16_t bitDepth);
     };
 }

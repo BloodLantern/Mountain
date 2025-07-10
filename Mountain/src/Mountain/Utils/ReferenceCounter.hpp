@@ -40,16 +40,16 @@ namespace Mountain
 
         void DecWeak(const Pointer<T>* weakReferenceOwner);
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         uint64_t GetStrong() const;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         uint64_t GetWeak() const;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         T* GetPointer();
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         const T* GetPointer() const;
 
     private:

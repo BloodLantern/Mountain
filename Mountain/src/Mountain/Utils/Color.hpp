@@ -609,14 +609,14 @@ namespace Mountain
         /// @brief Alpha component
         float_t a = 1.f;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         Color() = default;
 
         /// @brief Constructs a grayscale color with each component equal to @p rgb
         ///
         /// @param rgb Red, Green and Blue components
         /// @param a Alpha component
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         explicit constexpr Color(float_t rgb, float_t a = 1.f);
 
         /// @brief Constructs a color with each specified component
@@ -625,54 +625,54 @@ namespace Mountain
         /// @param g Green component
         /// @param b Blue component
         /// @param a Alpha component
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr Color(float_t r, float_t g, float_t b, float_t a = 1.f);
 
         /// @brief Constructs a color from a Vector3 and an alpha value
         ///
         /// @param rgb Red, Green and Blue components
         /// @param a Alpha component
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         explicit constexpr Color(const Vector3& rgb, float_t a = 1.f);
 
         /// @brief Constructs a color from a Vector4
         ///
         /// @param rgba Color components
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         explicit constexpr Color(const Vector4& rgba);
 
         /// @brief Constructs a color from four floats at the given pointer address
         ///
         /// @param data Color components
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         explicit constexpr Color(const float* data);
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         uint32_t GetPackedValue() const;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr float_t* Data();
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr const float_t* Data() const;
 
         /// @brief Converts the Color to a ColorHsv
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr explicit operator ColorHsva() const;
 
         /// @brief Converts the Color to a Vector3
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr explicit operator Vector3() const;
 
         /// @brief Converts the Color to a Vector4
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr explicit operator Vector4() const;
 
         /// @brief Converts the Color to a ImVec4
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         explicit operator ImVec4() const;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         std::string ToString() const;
     };
 
@@ -685,47 +685,47 @@ namespace Mountain
     {
         /// @brief Constant for white
         /// @return Color
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         static constexpr ColorHsva White();
 
         /// @brief Constant for gray
         /// @return Color
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         static constexpr ColorHsva Gray();
 
         /// @brief Constant for black
         /// @return Color
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         static constexpr ColorHsva Black();
 
         /// @brief Constant for red
         /// @return Color
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         static constexpr ColorHsva Red();
 
         /// @brief Constant for green
         /// @return Color
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         static constexpr ColorHsva Green();
 
         /// @brief Constant for blue
         /// @return Color
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         static constexpr ColorHsva Blue();
 
         /// @brief Constant for yellow
         /// @return Color
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         static constexpr ColorHsva Yellow();
 
         /// @brief Constant for cyan
         /// @return Color
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         static constexpr ColorHsva LightBlue();
 
         /// @brief Constant for magenta
         /// @return Color
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         static constexpr ColorHsva Magenta();
 
         /// @brief Hue component
@@ -745,22 +745,22 @@ namespace Mountain
         /// @param s Saturation component
         /// @param v Value component
         /// @param a Alpha component
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr ColorHsva(float_t h, float_t s, float_t v, float_t a = 1.f);
 
         /// @brief Converts the ColorHsva to a Color
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr explicit operator Color() const;
 
         /// @brief Converts the ColorHsva to a Vector3
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr explicit operator Vector3() const;
 
         /// @brief Converts the ColorHsva to a Vector4
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr explicit operator Vector4() const;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         std::string ToString() const;
     };
 
@@ -770,71 +770,71 @@ namespace Mountain
     /// @param c1 A
     /// @param c2 B
     /// @return A + B
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr Color operator+(const Color& c1, const Color& c2);
 
     /// @brief Multiplies two Color
     /// @param c1 A
     /// @param c2 B
     /// @return A * B
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr Color operator*(const Color& c1, const Color& c2);
 
     /// @brief Multiplies the alpha component of a Color
     /// @param color Color
     /// @param alphaFactor Alpha factor
     /// @return Color.a * alphaFactor
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr Color operator*(Color color, float_t alphaFactor);
 
     /// @brief Compares two Color component-wise
     /// @param c1 A
     /// @param c2 B
     /// @return A == B
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr bool_t operator==(const Color& c1, const Color& c2);
 
     /// @brief Compares two Color component-wise
     /// @param c1 A
     /// @param c2 B
     /// @return A != B
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr bool_t operator!=(const Color& c1, const Color& c2);
 
     /// @brief Multiplies the alpha component of a ColorHsva
     /// @param color Color
     /// @param alphaFactor Alpha factor
     /// @return Color.a * alphaFactor
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr ColorHsva operator*(const ColorHsva& color, float_t alphaFactor);
 
     /// @brief Compares two ColorHsva component-wise
     /// @param c1 A
     /// @param c2 B
     /// @return A == B
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr bool_t operator==(const ColorHsva& c1, const ColorHsva& c2);
 
     /// @brief Compares two ColorHsva component-wise
     /// @param c1 A
     /// @param c2 B
     /// @return A != B
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr bool_t operator!=(const ColorHsva& c1, const ColorHsva& c2);
 }
 
 namespace Calc
 {
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API Mountain::Color Lerp(const Mountain::Color& value, const Mountain::Color& target, float_t time);
 
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API Mountain::Color Lerp(const Mountain::Color& value, const Mountain::Color& target, float_t time, Easing::Easer easer);
 
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API Mountain::Color LerpFixed(const Mountain::Color& value, const Mountain::Color& target, float_t time);
 
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API Mountain::Color LerpFixed(const Mountain::Color& value, const Mountain::Color& target, float_t time, Easing::Easer easer);
 }
 

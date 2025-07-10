@@ -14,7 +14,7 @@ namespace Mountain
     public:
         MOUNTAIN_API static bool_t CheckError(const AudioDevice* device = nullptr);
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API explicit AudioDevice(std::string&& name);
 
         MOUNTAIN_API ~AudioDevice();
@@ -23,7 +23,7 @@ namespace Mountain
 
         MOUNTAIN_API void Reopen(const std::string& newName);
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API std::string GetName() const;
 
     private:

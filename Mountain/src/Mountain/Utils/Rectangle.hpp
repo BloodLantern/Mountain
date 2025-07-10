@@ -15,29 +15,29 @@ namespace Mountain
         explicit constexpr Rectangle(Vector2 size);
         constexpr Rectangle(Vector2 position, Vector2 size);
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr float Left() const;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr float Right() const;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr float Top() const;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr float Bottom() const;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr Vector2 Center() const;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr Vector2 TopLeft() const;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr Vector2 TopRight() const;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr Vector2 BottomLeft() const;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr Vector2 BottomRight() const;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr float Width() const;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         constexpr float Height() const;
     };
 }

@@ -48,13 +48,13 @@ namespace Mountain
         T* AddComponent(Args&&... args);
 
         template <Concepts::Component T>
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         T* GetComponent() const;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API List<Component*>& GetComponents();
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API const List<Component*>& GetComponents() const;
 
         MOUNTAIN_API void RemoveComponent(Component* component);
@@ -62,7 +62,7 @@ namespace Mountain
         template <Concepts::Component T>
         void RemoveComponent();
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API const Collider* GetCollider() const;
 
         MOUNTAIN_API Collider* GetCollider();

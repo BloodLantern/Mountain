@@ -17,7 +17,7 @@ namespace Mountain
     {
     public:
         /// @brief Constructs an Entry corresponding to the given @p path.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API explicit Entry(std::filesystem::path&& path);
 
         /// @brief Default Entry destruction.
@@ -42,15 +42,15 @@ namespace Mountain
         MOUNTAIN_API virtual void OpenInExplorer() const;
 
         /// @brief Returns the corresponding filesystem path.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API const std::filesystem::path& GetPath() const;
 
         /// @brief Returns the string representation of GetPath.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API std::string GetPathString() const;
 
         /// @brief Returns this Entry name.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API std::string GetName() const;
 
         /// @brief Renames this Entry on the file system.
@@ -61,14 +61,14 @@ namespace Mountain
         MOUNTAIN_API virtual void SetName(const std::string& newName);
 
         /// @brief Returns whether this Entry has been loaded.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API bool_t GetLoaded() const;
 
         /// @brief Sets the new path of this Entry.
         virtual void SetParent(Pointer<Directory>&& newParent);
 
         /// @brief Returns a Pointer to the parent Directory of this Entry, with a strong reference stored in the FileManager.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API Pointer<Directory> GetParent();
 
     protected:
