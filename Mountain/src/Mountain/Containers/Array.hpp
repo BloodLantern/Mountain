@@ -76,6 +76,30 @@ namespace Mountain
         constexpr ConstIterator cend() const noexcept;
 
         ENUMERABLE_EXTENSIONS_IMPLEMENTATION
+
+        template <typename U, typename = Meta::EnableIf<Meta::IsConvertibleTo<EnumeratedType, U>>>
+        [[nodiscard]]
+        Array<U, Size> Cast() const
+        {
+            Array<U, Size> result;
+
+            for (size_t i = 0; i < Size; i++)
+                result[i] = static_cast<U>((*this)[i]);
+
+            return result;
+        }
+
+        template <Concepts::Invocable<EnumeratedType> ProjectionFunctionT, typename U = decltype(ProjectionFunctionT{}(EnumeratedType{}))>
+        [[nodiscard]]
+        Array<U, Size> Select(const ProjectionFunctionT& function) const
+        {
+            Array<U, Size> result;
+
+            for (size_t i = 0; i < Size; i++)
+                result[i] = function((*this)[i]);
+
+            return result;
+        }
     };
 
     template <class T, class... Other>
