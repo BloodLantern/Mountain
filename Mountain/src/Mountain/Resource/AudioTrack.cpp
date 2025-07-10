@@ -5,6 +5,7 @@
 #include <stb_vorbis.h>
 
 #include "Mountain/Audio/Audio.hpp"
+#include "Mountain/Audio/Sound.hpp"
 #include "Mountain/Utils/Logger.hpp"
 
 using namespace Mountain;
@@ -32,14 +33,14 @@ bool_t AudioTrack::SetSourceData(const uint8_t* const buffer, const int64_t leng
 void AudioTrack::Load()
 {
     m_Buffer = new AudioBuffer(this);
-    Audio::RegisterBuffer(m_Buffer);
+    Sound::RegisterBuffer(m_Buffer);
 
     m_Loaded = true;
 }
 
 void AudioTrack::Unload()
 {
-    Audio::UnregisterBuffer(m_Buffer);
+    Sound::UnregisterBuffer(m_Buffer);
     delete m_Buffer;
     m_Buffer = nullptr;
 

@@ -2,6 +2,7 @@
 
 #include <mimalloc.h>
 
+#include "Audio/Sound.hpp"
 #include "Mountain/Window.hpp"
 #include "Mountain/Audio/Audio.hpp"
 #include "Mountain/Input/Input.hpp"
@@ -63,7 +64,7 @@ Game::Game(const std::string& windowTitle, const Vector2i windowSize)
     if (!Renderer::Initialize(windowTitle, windowSize))
         THROW(InvalidOperationException{"Failed to initialize renderer"});
 
-    if (!Audio::Initialize())
+    if (!Sound::Initialize())
         Logger::LogError("Failed to initialize audio {}", windowSize);
 }
 
@@ -76,7 +77,7 @@ Game::~Game()
     ResourceManager::UnloadAll();
     FileManager::UnloadAll();
 
-    Audio::Shutdown();
+    Sound::Shutdown();
     Renderer::Shutdown();
 
     Logger::Stop();
@@ -111,7 +112,7 @@ bool_t Game::NextFrame()
     Window::PollEvents();
 
     Time::Update();
-    Audio::Update();
+    Sound::Update();
     Coroutine::UpdateAll();
 
     Renderer::PreFrame();

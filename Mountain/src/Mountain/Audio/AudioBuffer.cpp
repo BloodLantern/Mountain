@@ -3,6 +3,7 @@
 #include <AL/al.h>
 #include <AL/alext.h>
 
+#include "Sound.hpp"
 #include "Mountain/Audio/Audio.hpp"
 #include "Mountain/Audio/AudioContext.hpp"
 #include "Mountain/Resource/AudioTrack.hpp"
@@ -11,7 +12,7 @@
 using namespace Mountain;
 
 AudioBuffer::AudioBuffer()
-    : m_Context(Audio::GetContext())
+    : m_Context(Sound::GetContext())
 {
     m_Context->MakeCurrent();
     alGenBuffers(1, &m_Handle);

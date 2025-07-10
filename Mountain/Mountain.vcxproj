@@ -212,6 +212,7 @@
     <ClInclude Include="src\Mountain\Audio\AudioBuffer.hpp" />
     <ClInclude Include="src\Mountain\Audio\AudioContext.hpp" />
     <ClInclude Include="src\Mountain\Audio\AudioDevice.hpp" />
+    <ClInclude Include="src\Mountain\Audio\Sound.hpp" />
     <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_10604039599264331763.hpp" />
     <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_11431338934652808651.hpp" />
     <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_11774202807359543870.hpp" />
@@ -358,6 +359,7 @@
     <ClCompile Include="src\Mountain\Audio\AudioBuffer.cpp" />
     <ClCompile Include="src\Mountain\Audio\AudioContext.cpp" />
     <ClCompile Include="src\Mountain\Audio\AudioDevice.cpp" />
+    <ClCompile Include="src\Mountain\Audio\Sound.cpp" />
     <ClCompile Include="src\Mountain\BinaryResources\resource_holder.cpp" />
     <ClCompile Include="src\Mountain\Collision\Circle.cpp" />
     <ClCompile Include="src\Mountain\Collision\Collider.cpp" />
