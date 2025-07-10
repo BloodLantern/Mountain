@@ -155,6 +155,14 @@ void BoxBlur::SetRadius(const int32_t newRadius) const
     m_OtherComputeShader->SetUniform("radius", newRadius);
 }
 
+void Mosaic::LoadResources()
+{
+    m_ComputeShader = ResourceManager::Get<ComputeShader>(Utils::GetBuiltinShadersPath() + "effects/mosaic.comp");
+    SetBoxSize(1);
+}
+
+void Mosaic::SetBoxSize(const int32_t newSize) const { m_ComputeShader->SetUniform("blockSize", newSize); }
+
 void Greyscale::LoadResources()
 {
     m_ComputeShader = ResourceManager::Get<ComputeShader>(Utils::GetBuiltinShadersPath() + "effects/greyscale.comp");

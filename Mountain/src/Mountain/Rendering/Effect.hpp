@@ -114,6 +114,16 @@ namespace Mountain
 
     };
 
+    // Effect will be applied on the first texture and the second one is used as a buffer
+    class Mosaic : public Effect
+    {
+        public:
+        MOUNTAIN_API void LoadResources() override;
+        
+        MOUNTAIN_API void SetBoxSize(int32_t newSize) const;
+        
+    };
+
     class Greyscale : public Effect
     {
     public:

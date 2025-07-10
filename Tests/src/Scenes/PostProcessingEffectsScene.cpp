@@ -1,5 +1,6 @@
 ﻿#include "Scenes/PostProcessingEffectsScene.hpp"
 
+#include <ObjectArray.h>
 #include <Mountain/Rendering/Draw.hpp>
 #include <Mountain/Rendering/Renderer.hpp>
 #include <Mountain/Resource/ResourceManager.hpp>
@@ -29,6 +30,7 @@ void PostProcessingEffectsScene::Begin()
     m_BoxBlur.effect.imageBindings.Emplace(renderTargetId, 0u, Graphics::ImageShaderAccess::ReadWrite);
     m_GaussianBlur.effect.imageBindings.Emplace(renderTargetId, 0u, Graphics::ImageShaderAccess::ReadWrite);
 
+    m_Mosaic.effect.imageBindings.Emplace(renderTargetId, 1u, Graphics::ImageShaderAccess::WriteOnly);
     m_Greyscale.effect.imageBindings.Emplace(renderTargetId, 0u, Graphics::ImageShaderAccess::WriteOnly);
 
     const uint32_t intermediateTextureId = m_IntermediateTexture.GetId();
@@ -38,6 +40,8 @@ void PostProcessingEffectsScene::Begin()
 
     m_BoxBlur.effect.imageBindings.Emplace(intermediateTextureId, 1u, Graphics::ImageShaderAccess::ReadWrite);
     m_GaussianBlur.effect.imageBindings.Emplace(intermediateTextureId, 1u, Graphics::ImageShaderAccess::ReadWrite);
+
+    m_Mosaic.effect.imageBindings.Emplace(intermediateTextureId, 0u, Graphics::ImageShaderAccess::ReadOnly);
 
 }
 
@@ -57,6 +61,7 @@ void PostProcessingEffectsScene::Render()
     ApplyEffectIfEnabled(m_ChromaticAberrationTransverse);
     ApplyEffectIfEnabled(m_BoxBlur);
     ApplyEffectIfEnabled(m_GaussianBlur);
+    ApplyEffectIfEnabled(m_Mosaic);
     ApplyEffectIfEnabled(m_Greyscale);
 }
 
@@ -103,6 +108,12 @@ void PostProcessingEffectsScene::RenderImGui()
         ImGui::DragFloat("intensity", &intensity, 0.01f, 0.f, 10.f);
         e.SetIntensity(intensity);
     });
+    ShowEffectImGui("Mosaic ", m_Mosaic, [](auto& e)
+    {
+        static int32_t size = 1;
+        ImGui::DragInt("intensity", &size, 0.1f, 1.f, 150.f);
+        e.SetBoxSize(size);
+    });
     ShowEffectImGui("Greyscale", m_Greyscale, [](auto& e)
     {
     });
@@ -116,6 +127,7 @@ void PostProcessingEffectsScene::End()
     m_ChromaticAberrationTransverse.effect.imageBindings.Clear();
     m_BoxBlur.effect.imageBindings.Clear();
     m_GaussianBlur.effect.imageBindings.Clear();
+    m_Mosaic.effect.imageBindings.Clear();
     m_Greyscale.effect.imageBindings.Clear();
 
     m_IntermediateTexture.Delete();
@@ -133,6 +145,7 @@ void PostProcessingEffectsScene::LoadPersistentResources()
     m_ChromaticAberrationTransverse.effect.LoadResources();
     m_BoxBlur.effect.LoadResources();
     m_GaussianBlur.effect.LoadResources();
+    m_Mosaic.effect.LoadResources();
     m_Greyscale.effect.LoadResources();
 }
 

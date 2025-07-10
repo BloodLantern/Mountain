@@ -1,0 +1,21 @@
+﻿#version 460
+
+layout (local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
+
+layout (rgba32f, binding = 0) uniform restrict readonly image2D sourceImage;
+layout (rgba32f, binding = 1) uniform restrict writeonly image2D destinationImage;
+
+uniform int blockSize;
+
+void main()
+{
+    const ivec2 texel = ivec2(gl_GlobalInvocationID.xy);
+    const ivec2 size = ivec2(gl_NumWorkGroups.xy);
+
+    const ivec2 blockOrigin = (texel / blockSize) * blockSize;
+
+    const vec4 newColor = imageLoad(sourceImage, blockOrigin);
+
+    imageStore(destinationImage, texel, newColor);
+
+}
