@@ -90,8 +90,8 @@ void PostProcessingEffectsScene::RenderImGui()
     });
     ShowEffectImGui("Box Blur", m_BoxBlur, [](auto& e)
     {
-        static int32_t radius = 1.f;
-        ImGui::DragInt("radius", &radius, 0.01f, 0.f, 10.f);
+        static int32_t radius = 1;
+        ImGui::DragInt("radius", &radius, 0.1f, 0, 10);
         e.SetRadius(radius);
     });
     ShowEffectImGui("Gaussian Blur ", m_GaussianBlur, [](auto& e)
