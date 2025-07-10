@@ -11,6 +11,26 @@
 /// You should only use this if you know what you are doing and/or have experience with audio APIs such as OpenAL.
 namespace Mountain::Audio
 {
+    enum class Error : uint8_t
+    {
+        None,
+        InvalidName,
+        InvalidEnum,
+        InvalidValue,
+        InvalidOperation,
+        OutOfMemory,
+    };
+
+    enum class ContextError : uint8_t
+    {
+        None,
+        InvalidDevice,
+        InvalidContext,
+        InvalidEnum,
+        InvalidValue,
+        OutOfMemory
+    };
+    
     enum class EventType : uint8_t
     {
         DeviceChanged,
@@ -54,7 +74,7 @@ namespace Mountain::Audio
         SourceRelative
     };
 
-    enum class SourceType : uint8_t
+    enum class SourcePlayType : uint8_t
     {
         Static,
         Streaming,
@@ -77,18 +97,46 @@ namespace Mountain::Audio
         Orientation
     };
 
+    enum class SourceType : uint8_t
+    {
+        Mono,
+        Stereo
+    };
+
+    enum class ContextAttribute : uint8_t
+    {
+        Frequency,
+        RefreshRate,
+        Sync,
+        MonoSourceAmount,
+        StereoSourceAmount
+    };
+
+    enum class SourceState : uint8_t
+    {
+        Initial,
+        Playing,
+        Paused,
+        Stopped
+    };
+
     template <typename T>
     concept OpenAlConvertibleT = Meta::IsAny<
         T,
+        Error,
+        ContextError,
         EventType,
         SourceVector,
         SourceFloat,
         SourceInt,
         SourceBool,
-        SourceType,
+        SourcePlayType,
         ListenerVector,
         ListenerFloat,
-        ListenerArray
+        ListenerArray,
+        SourceType,
+        ContextAttribute,
+        SourceState
     >;
 
     /// @brief Gets the default audio device name
@@ -149,7 +197,11 @@ namespace Mountain::Audio
     /// @brief Sets a boolean value for an audio source
     /// @param source Source id
     /// @return Source type
-    MOUNTAIN_API SourceType GetSourceType(uint32_t source);
+    [[nodiscard]]
+    MOUNTAIN_API SourcePlayType GetSourceType(uint32_t source);
+
+    [[nodiscard]]
+    MOUNTAIN_API SourceState GetSourceState(uint32_t source);
 
     /// @brief Sets a vector value for an audio listener
     /// @param type Value type
@@ -173,28 +225,84 @@ namespace Mountain::Audio
     template <size_t Size>
     MOUNTAIN_API void SetEventCallback(const Array<EventType, Size>& events, std::function<void(EventType, const std::string&)> callback);
 
+    /// @brief Gets the attributes of an audio device context
+    /// @param device Audio device
+    /// @param attributes Attributes, written to
+    MOUNTAIN_API void GetDeviceAttributes(ALCdevice* device, List<int32_t>& attributes);
+
+    /// @brief Gets a requested attributes from a list
+    /// @param attributes Attribute list
+    /// @param attribute Attribute
+    /// @return Attribute value
+    MOUNTAIN_API int32_t GetDeviceAttribute(const List<int32_t>& attributes, ContextAttribute attribute);
+
+    /// @brief Gets the latest OpenAl error
+    /// @return Error
+    [[nodiscard]]
+    MOUNTAIN_API Error GetError();
+
+    /// @brief Gets the string representing an error
+    /// @param error Error
+    /// @return String
+    [[nodiscard]]
+    MOUNTAIN_API std::string_view GetErrorString(Error error);
+
+    /// @brief Gets the latest OpenAl context error
+    /// @param device Device
+    /// @return Error
+    [[nodiscard]]
+    MOUNTAIN_API ContextError GetContextError(ALCdevice* device);
+
+    /// @brief Gets the string representing a context error
+    /// @param device
+    /// @param error Error
+    /// @return String
+    [[nodiscard]]
+    MOUNTAIN_API std::string_view GetContextErrorString(ALCdevice* device, ContextError error);
+
     template <OpenAlConvertibleT T>
     // ReSharper disable once CppFunctionIsNotImplemented
     T FromOpenAl(int32_t value);
 
     template <>
+    [[nodiscard]]
     MOUNTAIN_API EventType FromOpenAl<EventType>(int32_t value);
     template <>
+    [[nodiscard]]
     MOUNTAIN_API SourceVector FromOpenAl<SourceVector>(int32_t value);
     template <>
+    [[nodiscard]]
     MOUNTAIN_API SourceFloat FromOpenAl<SourceFloat>(int32_t value);
     template <>
+    [[nodiscard]]
     MOUNTAIN_API SourceInt FromOpenAl<SourceInt>(int32_t value);
     template <>
+    [[nodiscard]]
     MOUNTAIN_API SourceBool FromOpenAl<SourceBool>(int32_t value);
     template <>
-    MOUNTAIN_API SourceType FromOpenAl<SourceType>(int32_t value);
+    [[nodiscard]]
+    MOUNTAIN_API SourcePlayType FromOpenAl<SourcePlayType>(int32_t value);
     template <>
+    [[nodiscard]]
     MOUNTAIN_API ListenerVector FromOpenAl<ListenerVector>(int32_t value);
     template <>
+    [[nodiscard]]
     MOUNTAIN_API ListenerFloat FromOpenAl<ListenerFloat>(int32_t value);
     template <>
+    [[nodiscard]]
     MOUNTAIN_API ListenerArray FromOpenAl<ListenerArray>(int32_t value);
+    template <>
+    [[nodiscard]]
+    MOUNTAIN_API Error FromOpenAl<Error>(int32_t value);
+    template <>
+    [[nodiscard]]
+    MOUNTAIN_API ContextError FromOpenAl<ContextError>(int32_t value);
+    template <>
+    [[nodiscard]]
+    MOUNTAIN_API ContextAttribute FromOpenAl<ContextAttribute>(int32_t value);
+    template <>
+    [[nodiscard]]
+    MOUNTAIN_API SourceState FromOpenAl<SourceState>(int32_t value);
     
     [[nodiscard]]
     MOUNTAIN_API int32_t ToOpenAl(EventType value);
@@ -207,13 +315,21 @@ namespace Mountain::Audio
     [[nodiscard]]
     MOUNTAIN_API int32_t ToOpenAl(SourceBool value);
     [[nodiscard]]
-    MOUNTAIN_API int32_t ToOpenAl(SourceType value);
+    MOUNTAIN_API int32_t ToOpenAl(SourcePlayType value);
     [[nodiscard]]
     MOUNTAIN_API int32_t ToOpenAl(ListenerVector value);
     [[nodiscard]]
     MOUNTAIN_API int32_t ToOpenAl(ListenerFloat value);
     [[nodiscard]]
     MOUNTAIN_API int32_t ToOpenAl(ListenerArray value);
+    [[nodiscard]]
+    MOUNTAIN_API int32_t ToOpenAl(Error value);
+    [[nodiscard]]
+    MOUNTAIN_API int32_t ToOpenAl(ContextError value);
+    [[nodiscard]]
+    MOUNTAIN_API int32_t ToOpenAl(ContextAttribute value);
+    [[nodiscard]]
+    MOUNTAIN_API int32_t ToOpenAl(SourceState value);
 }
 
 // Start of Audio.hpp

@@ -5,6 +5,7 @@
 
 #include <magic_enum/magic_enum.hpp>
 
+#include "Audio.hpp"
 #include "Mountain/Audio/AudioDevice.hpp"
 #include "Mountain/Containers/EnumerableExt.hpp"
 #include "Mountain/Utils/Logger.hpp"
@@ -24,10 +25,7 @@ AudioContext::AudioContext(AudioDevice& device)
     MakeCurrent();
 
     // Get the context attribute values
-    int32_t size = 0;
-    alcGetIntegerv(m_Device->m_Handle, ALC_ATTRIBUTES_SIZE, 1, &size);
-    m_Attributes.Resize(size);
-    alcGetIntegerv(m_Device->m_Handle, ALC_ALL_ATTRIBUTES, size, m_Attributes.GetData());
+    Audio::GetDeviceAttributes(m_Device->m_Handle, m_Attributes);
 }
 
 AudioContext::~AudioContext()
@@ -41,51 +39,45 @@ void AudioContext::MakeCurrent() const { alcMakeContextCurrent(m_Handle); }
 
 bool_t AudioContext::CheckError()
 {
-    const ALCenum error = alGetError();
+    const Audio::Error error = Audio::GetError();
 
-    if (error != AL_NO_ERROR)
+    if (error != Audio::Error::None)
     {
-        Logger::LogError("[OpenAL] {}", std::string_view(alGetString(error)));
+        Logger::LogError("[OpenAL] {}", Audio::GetErrorString(error));
         return true;
     }
 
     return false;
 }
 
-int32_t AudioContext::GetMaxSourceCount(const AudioSourceType sourceType) const
+int32_t AudioContext::GetMaxSourceCount(const Audio::SourceType sourceType) const
 {
-    int32_t result = 0;
+    const Audio::ContextAttribute attr = sourceType == Audio::SourceType::Mono ?
+        Audio::ContextAttribute::MonoSourceAmount :
+        Audio::ContextAttribute::StereoSourceAmount;
 
-    for (size_t i = 0; i < m_Attributes.GetSize(); i++)
-    {
-        if ((sourceType == AudioSourceType::Mono && m_Attributes[i] == ALC_MONO_SOURCES) || (sourceType == AudioSourceType::Stereo && m_Attributes[i] == ALC_STEREO_SOURCES))
-            result += m_Attributes[i + 1];
-    }
-
-    return result;
+    return Audio::GetDeviceAttribute(m_Attributes, attr);
 }
 
-uint32_t AudioContext::GetSource(const AudioSourceType type)
+uint32_t AudioContext::GetSource(const Audio::SourceType type)
 {
-    List<uint32_t>& sources = type == AudioSourceType::Mono ? m_SourcesMono : m_SourcesStereo;
+    List<uint32_t>& sources = type == Audio::SourceType::Mono ? m_SourcesMono : m_SourcesStereo;
 
-    List<int32_t> states(sources.GetSize());
+    List<Audio::SourceState> states(sources.GetSize());
 
     MakeCurrent();
 
     ForEach(sources,
         [&] (const uint32_t& s)
         {
-            int32_t value = 0;
-            alGetSourcei(s, AL_SOURCE_STATE, &value);
-            states.Add(value);
+            states.Add(Audio::GetSourceState(s));
         }
     );
 
     uint32_t source = 0;
     for (size_t i = 0; i < sources.GetSize(); i++)
     {
-        if (states[i] != AL_INITIAL)
+        if (states[i] != Audio::SourceState::Initial)
             continue;
 
         source = sources[i];
@@ -97,7 +89,7 @@ uint32_t AudioContext::GetSource(const AudioSourceType type)
 
     for (size_t i = 0; i < sources.GetSize(); i++)
     {
-        if (states[i] != AL_STOPPED)
+        if (states[i] != Audio::SourceState::Stopped)
             continue;
 
         source = sources[i];

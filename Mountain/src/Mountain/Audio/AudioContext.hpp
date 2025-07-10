@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Audio.hpp"
 #include "Mountain/Core.hpp"
 #include "Mountain/Containers/List.hpp"
 
@@ -9,12 +10,6 @@ struct ALCcontext;
 namespace Mountain
 {
     class AudioDevice;
-
-    enum class AudioSourceType
-    {
-        Mono,
-        Stereo
-    };
 
     class AudioContext
     {
@@ -31,11 +26,11 @@ namespace Mountain
         MOUNTAIN_API static bool_t CheckError();
 
         [[nodiscard]]
-        MOUNTAIN_API int32_t GetMaxSourceCount(AudioSourceType sourceType) const;
+        MOUNTAIN_API int32_t GetMaxSourceCount(Audio::SourceType sourceType) const;
 
         /// @brief Returns the next available source of the given type.
         [[nodiscard]]
-        MOUNTAIN_API uint32_t GetSource(AudioSourceType type = AudioSourceType::Mono);
+        MOUNTAIN_API uint32_t GetSource(Audio::SourceType type = Audio::SourceType::Mono);
 
     private:
         ALCcontext* m_Handle = nullptr;
