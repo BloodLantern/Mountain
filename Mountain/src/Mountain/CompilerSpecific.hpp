@@ -26,6 +26,23 @@
     #define COMPILER_ATTRIBUTE(x) __declspec(x)
 #endif
 
+#ifdef ENVIRONMENT_WINDOWS
+    #ifdef MOUNTAIN_EXPORT
+        #define SHARED_PUBLIC COMPILER_ATTRIBUTE(dllexport)
+    #else
+        #define SHARED_PUBLIC COMPILER_ATTRIBUTE(dllimport)
+    #endif
+    #define SHARED_PRIVATE
+#else
+    #if __GNUC__ >= 4
+        #define SHARED_PUBLIC COMPILER_ATTRIBUTE(visibility("default"))
+        #define SHARED_PRIVATE  COMPILER_ATTRIBUTE(visibility("hidden"))
+    #else
+        #define SHARED_PUBLIC
+        #define SHARED_PRIVATE
+    #endif
+#endif
+
 #ifdef COMPILER_MSVC
     /// @brief Specifies that the given expression is assumed to always evaluate to true at a given point.
     /// @details This allows compiler optimizations based on the information given.

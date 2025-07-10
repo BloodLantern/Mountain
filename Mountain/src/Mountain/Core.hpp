@@ -33,15 +33,10 @@ typedef char char_t;
 /// @see char_t for the reason.
 typedef bool bool_t;
 
-#ifdef MOUNTAIN_EXPORT
-    /// @brief Macro used for DLL export/import.
-    /// @details This macro should be used at the beginning of static member variable and non-inline function declarations.
-    #define MOUNTAIN_API __declspec(dllexport)
-#else
-    /// @brief Macro used for DLL export/import.
-    /// @details This macro should be used at the beginning of static member variable and non-inline function declarations.
-    #define MOUNTAIN_API __declspec(dllimport)
-#endif
+/// @brief Macro used for DLL export/import.
+/// @details This macro should be used at the beginning of static member variable and non-inline function declarations.
+#define MOUNTAIN_API SHARED_PUBLIC
+#define MOUNTAIN_PRIVATE_API SHARED_PRIVATE
 
 /// @namespace Mountain
 /// @brief Contains all declarations of the Mountain Framework.
