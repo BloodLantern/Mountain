@@ -12,10 +12,6 @@
     [[nodiscard]] \
     bool_t Any(const ::Mountain::Predicate<EnumeratedType>& predicate) const { return ::Mountain::Any(*this, predicate); } \
     \
-    template <typename U, typename = ::Mountain::Meta::EnableIf<::Mountain::Meta::IsConvertibleTo<EnumeratedType, U>>> \
-    [[nodiscard]] \
-    ::Mountain::List<U> Cast() const { return ::Mountain::Cast<::Mountain::Meta::RemoveCvRefSpecifier<decltype(*this)>, U>(*this); } \
-    \
     template <typename U, typename = ::Mountain::Meta::EnableIf<::Mountain::Meta::IsEqualityComparableWith<U, EnumeratedType>>> \
     [[nodiscard]] \
     bool_t Contains(const U& element) const { return ::Mountain::Contains(*this, element); } \
@@ -49,11 +45,6 @@
     \
     void ForEach(const ::Mountain::Operation<const EnumeratedType>& operation) const { return ::Mountain::ForEach(*this, operation); } \
     \
-    template <::Mountain::Concepts::Invocable<EnumeratedType> ProjectionFunctionT, \
-        typename U = decltype(ProjectionFunctionT{}(EnumeratedType{}))> \
-    [[nodiscard]] \
-    ::Mountain::List<U> Select(const ProjectionFunctionT& function) const { return ::Mountain::Select(*this, function); } \
-    \
     template <typename = ::Mountain::Meta::EnableIf< \
         ::Mountain::Meta::IsSortable<Iterator, ::Mountain::Comparer<EnumeratedType>, decltype(::Mountain::Identity<EnumeratedType>)>>> \
     void Sort() { return ::Mountain::Sort(*this); } \
@@ -76,12 +67,6 @@ namespace Mountain
     template <Requirements::MountainEnumerable EnumerableT, typename T = Meta::MountainEnumerableType<EnumerableT>>
     [[nodiscard]]
     bool_t Any(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate);
-
-    template <Requirements::MountainEnumerable EnumerableT,
-        typename T,
-        typename = Meta::EnableIf<Meta::IsConvertibleTo<Meta::MountainEnumerableType<EnumerableT>, T>>>
-    [[nodiscard]]
-    List<T> Cast(const EnumerableT& enumerable);
 
     template <Requirements::MountainEnumerable EnumerableT,
         typename T,
@@ -150,13 +135,6 @@ namespace Mountain
     void ForEach(const EnumerableT& enumerable, const Operation<const Meta::Identity<T>>& operation);
 
     template <Requirements::MountainEnumerable EnumerableT,
-        typename T = Meta::EnumerableType<EnumerableT>,
-        Concepts::Invocable<T> ProjectionFunctionT,
-        typename U = decltype(ProjectionFunctionT{}(T{}))>
-    [[nodiscard]]
-    List<U> Select(const EnumerableT& enumerable, const ProjectionFunctionT& function);
-
-    template <Requirements::MountainEnumerable EnumerableT,
         typename T = Meta::MountainEnumerableType<EnumerableT>,
         typename = Meta::EnableIf<Meta::IsSortable<typename EnumerableT::Iterator, Comparer<T>, decltype(Identity<T>)>>>
     void Sort(EnumerableT& enumerable);
@@ -195,18 +173,6 @@ namespace Mountain
         }
 
         return false;
-    }
-
-    template <Requirements::MountainEnumerable EnumerableT, typename T, typename>
-    List<T> Cast(const EnumerableT& enumerable)
-    {
-        List<T> result;
-        result.Reserve(GetSize(enumerable));
-
-        for (const Meta::EnumerableType<EnumerableT>& element : enumerable)
-            result.Add(static_cast<T>(element));
-
-        return result;
     }
 
     template <Requirements::MountainEnumerable EnumerableT, typename T, typename>
@@ -351,18 +317,6 @@ namespace Mountain
     {
         for (const T& e : enumerable)
             operation(e);
-    }
-
-    template <Requirements::MountainEnumerable EnumerableT, typename T, Concepts::Invocable<T> ProjectionFunctionT, typename U>
-    List<U> Select(const EnumerableT& enumerable, const ProjectionFunctionT& function)
-    {
-        List<U> result;
-        result.Reserve(GetSize(enumerable));
-
-        for (const T& element : enumerable)
-            result.Add(function(element));
-
-        return result;
     }
 
     template <Requirements::MountainEnumerable EnumerableT, typename T, typename>

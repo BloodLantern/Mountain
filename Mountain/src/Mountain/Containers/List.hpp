@@ -268,6 +268,32 @@ namespace Mountain
 
         ENUMERABLE_EXTENSIONS_IMPLEMENTATION
 
+        template <typename U, typename = Meta::EnableIf<Meta::IsConvertibleTo<EnumeratedType, U>>>
+        [[nodiscard]]
+        List<U> Cast() const
+        {
+            List<U> result;
+            result.Reserve(m_Size);
+
+            for (const EnumeratedType& element : *this)
+                result.Add(static_cast<U>(element));
+
+            return result;
+        }
+
+        template <Concepts::Invocable<EnumeratedType> ProjectionFunctionT, typename U = decltype(ProjectionFunctionT{}(EnumeratedType{}))>
+        [[nodiscard]]
+        List<U> Select(const ProjectionFunctionT& function) const
+        {
+            List<U> result;
+            result.Reserve(m_Size);
+
+            for (const EnumeratedType& element : *this)
+                result.Add(function(element));
+
+            return result;
+        }
+
     private:
         T* m_Data = nullptr;
         size_t m_Size = 0;
