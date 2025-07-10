@@ -42,7 +42,10 @@ namespace Mountain
         constexpr bool_t IsEmpty() const noexcept;
 
         [[nodiscard]]
-        constexpr T* GetData() const noexcept;
+        constexpr T* GetData() noexcept;
+
+        [[nodiscard]]
+        constexpr const T* GetData() const noexcept;
 
         void Fill(const T& value) noexcept;
 
@@ -108,7 +111,9 @@ namespace Mountain
     constexpr bool_t Array<T, Size>::IsEmpty() const noexcept { return Size == 0; }
 
     template <Concepts::ContainerType T, size_t Size>
-    constexpr T* Array<T, Size>::GetData() const noexcept { return data; }
+    constexpr T* Array<T, Size>::GetData() noexcept { return data; }
+    template <Concepts::ContainerType T, size_t Size>
+    constexpr const T* Array<T, Size>::GetData() const noexcept { return data; }
 
     template <Concepts::ContainerType T, size_t Size>
     void Array<T, Size>::Fill(const T& value) noexcept
