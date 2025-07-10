@@ -70,15 +70,15 @@ compile by statically linking against the corresponding `Mountain.lib`
   - ~~Film grain~~
   - ~~Vignette~~
   - ~~Chromatic aberration (both axial and transverse)~~
-  - Blur (both box and gaussian)
+  - ~~Blur (both box and gaussian)~~
   - Noise
-  - Mosaic
-  - Grayscale
+  - ~~Mosaic~~
+  - ~~Grayscale~~
 - ~~Make gamepad input work for both Xbox, PS and Switch controllers~~
-- Low-level audio API
+- \[WIP] Low-level audio API
 - `Audio::Play()` static function
 - \[WIP] Low-level graphics API
-- \[WIP] `Scene` class
+- ~~`Scene` class~~
 - Linux support
 - ~~Automatic `std::formatter` implementation for all classes that define a `ToString()` function~~
 - ~~Automatic `std::hash` implementation for all classes that define a `GetHashCode()` function~~
@@ -88,7 +88,7 @@ compile by statically linking against the corresponding `Mountain.lib`
 - ~~Compute shader API~~
 - ~~Custom exceptions~~
 - Built-in shader hot-reloading
-- Real unit tests
+- \[WIP] Real unit tests
 - Replace all `std::array` and `std::vector` usages with `Mountain::Array` and `Mountain::List`
 - True text rendering
 - Add an instanced Random API to have both a static and instanced way or generated RNG
