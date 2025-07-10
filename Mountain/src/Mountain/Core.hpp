@@ -190,9 +190,15 @@ using stdstring = std::string;
 #define DEFAULT_VIRTUAL_DESTRUCTOR(type) virtual ~type() = default;
 
 #if defined(__JETBRAINS_IDE__) || defined(__RESHARPER__)
+/// @brief The @c [[jetbrains::format]] attribute allows you to enable format inspections for custom printf-like functions
+/// and works similarly to @c [[gnu::format]].
 #define ATTRIBUTE_FORMAT(archetype, stringIndex, firstToCheck) [[jetbrains::format(archetype, stringIndex, firstToCheck)]]
+/// @brief The @c [[jetbrains::pass_by_value]] attribute allows you to suppress the "Pass value by const reference" inspection.
 #define ATTRIBUTE_PASS_BY_VALUE [[jetbrains::pass_by_value]]
+/// @brief The @c [[jetbrains::guard]] attribute can be used to suppress the "Local variable is never used" inspection.
 #define ATTRIBUTE_GUARD [[jetbrains::guard]]
+/// @brief The @c [[jetbrains::has_side_effects]] attribute allows you
+/// to mark operator= as having side effects to suppress the "Assigned value is never used" inspection.
 #define ATTRIBUTE_HAS_SIDE_EFFECTS [[jetbrains::has_side_effects]]
 #else
 #define ATTRIBUTE_FORMAT(...)
