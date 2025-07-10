@@ -541,7 +541,7 @@ namespace Mountain
 
     /// @brief Compares two @c Pointer by checking if they point to the same address.
     template <typename T>
-    bool_t operator==(const Pointer<T>& a, const Pointer<T>& b) { return static_cast<const T*>(a) == static_cast<const T*>(b); }
+    bool_t operator==(const Pointer<T>& a, const Pointer<T>& b) { return a.Get() == b.Get(); }
 
     /// @brief Compares two @c Pointer by checking if they point to the same address.
     template <typename T>
@@ -549,7 +549,7 @@ namespace Mountain
 
     /// @brief Compares two @c Pointer by checking if they point to the same address.
     template <typename T, typename U>
-    bool_t operator==(const Pointer<T>& a, const Pointer<U>& b) { return static_cast<const T*>(a) == reinterpret_cast<const T*>(static_cast<const U*>(b)); }
+    bool_t operator==(const Pointer<T>& a, const Pointer<U>& b) { return a.Get() == reinterpret_cast<const T*>(b.Get()); }
 
     /// @brief Compares two @c Pointer by checking if they point to the same address.
     template <typename T, typename U>

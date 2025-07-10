@@ -18,7 +18,6 @@
 // ReSharper disable once CppEnforceTypeAliasCodeStyle
 /// @brief Equivalent to <c>char</c>.
 ///
-/// ### Reason
 /// We use a typedef here instead of a type alias for consistency
 /// with how the other integral types are defined in the <c>cstdint</c> header.
 /// Also, we need to manually add this type because it is considered
@@ -33,8 +32,7 @@ typedef char char_t;
 typedef bool bool_t;
 
 /// @brief Macro used for DLL export/import.
-///
-/// This macro should be used at the beginning of static member variable and non-inline function declarations.
+/// @details This macro should be used at the beginning of static member variable and non-inline function declarations.
 #ifdef MOUNTAIN_EXPORT
 #define MOUNTAIN_API __declspec(dllexport)
 #else
@@ -79,27 +77,25 @@ namespace Mountain {}
 /// @endcode
 ///
 /// @param type The type to default the copy and move operations of.
-#define DEFAULT_COPY_MOVE_OPERATIONS(type)                  \
-    type(const type& other) noexcept = default;             \
-    type(type&& other) noexcept = default;                  \
-    type& operator=(const type& other) noexcept = default;  \
+#define DEFAULT_COPY_MOVE_OPERATIONS(type) \
+    type(const type& other) noexcept = default; \
+    type(type&& other) noexcept = default; \
+    type& operator=(const type& other) noexcept = default; \
     type& operator=(type&& other) noexcept = default;
 
-#define DEFAULT_VIRTUAL_COPY_MOVE_OPERATIONS(type)                  \
-    type(const type& other) noexcept = default;                     \
-    type(type&& other) noexcept = default;                          \
-    virtual type& operator=(const type& other) noexcept = default;  \
+#define DEFAULT_VIRTUAL_COPY_MOVE_OPERATIONS(type) \
+    type(const type& other) noexcept = default; \
+    type(type&& other) noexcept = default; \
+    virtual type& operator=(const type& other) noexcept = default; \
     virtual type& operator=(type&& other) noexcept = default;
 
 /// @brief Deletes the copy and move operations of a given @p type.
-///
 /// @param type The type to delete the copy and move operations of.
-///
 /// @see @ref DEFAULT_COPY_MOVE_OPERATIONS for usage.
-#define DELETE_COPY_MOVE_OPERATIONS(type)          \
-    type(const type& other) = delete;              \
-    type(type&& other) = delete;                   \
-    type& operator=(const type& other) = delete;   \
+#define DELETE_COPY_MOVE_OPERATIONS(type) \
+    type(const type& other) = delete; \
+    type(type&& other) = delete; \
+    type& operator=(const type& other) = delete; \
     type& operator=(type&& other) = delete;
 
 /// @brief Macro used to declare a static class, e.g., a class that cannot be instantiated.
@@ -118,11 +114,11 @@ namespace Mountain {}
 /// Also, a static class shouldn't define any other constructors.
 ///
 /// @param type The type to make static.
-#define STATIC_CLASS(type)              \
-    public:                             \
-    type() = delete;                    \
-    ~type() = delete;                   \
-    DELETE_COPY_MOVE_OPERATIONS(type)   \
+#define STATIC_CLASS(type) \
+    public: \
+    type() = delete; \
+    ~type() = delete; \
+    DELETE_COPY_MOVE_OPERATIONS(type) \
     private:
 
 // We need this to be able to make Doxygen links to std::string conversion operators.
@@ -131,37 +127,36 @@ namespace Mountain {}
 using stdstring = std::string;
 #endif
 
-/// @brief Defines binary flag operators for an enum type
-/// @param enumName The enum
-///
-/// This macro **must** be used in the global namespace, as it declares a template specialization of magic_enum
-#define ENUM_FLAGS(enumName)                                                                                                                                                                                                \
-    static_assert(std::is_enum_v<enumName>, "enumName must be a valid enum type");                                                                                                                                          \
-                                                                                                                                                                                                                            \
-    inline std::underlying_type_t<enumName> operator&(const enumName left, const enumName right) { return static_cast<std::underlying_type_t<enumName>>(left) & static_cast<std::underlying_type_t<enumName>>(right); }     \
-    inline std::underlying_type_t<enumName> operator|(const enumName left, const enumName right) { return static_cast<std::underlying_type_t<enumName>>(left) | static_cast<std::underlying_type_t<enumName>>(right); }     \
-    inline std::underlying_type_t<enumName> operator&(const std::underlying_type_t<enumName> left, const enumName right) { return left & static_cast<std::underlying_type_t<enumName>>(right); }                            \
-    inline std::underlying_type_t<enumName> operator|(const std::underlying_type_t<enumName> left, const enumName right) { return left | static_cast<std::underlying_type_t<enumName>>(right); }                            \
-    inline std::underlying_type_t<enumName> operator&(const enumName left, const std::underlying_type_t<enumName> right) { return static_cast<std::underlying_type_t<enumName>>(left) & right; }                            \
-    inline std::underlying_type_t<enumName> operator|(const enumName left, const std::underlying_type_t<enumName> right) { return static_cast<std::underlying_type_t<enumName>>(left) | right; }                            \
-    inline std::underlying_type_t<enumName>& operator&=(std::underlying_type_t<enumName>& left, const enumName right) { return left = left & right; }                                                                       \
-    inline std::underlying_type_t<enumName>& operator|=(std::underlying_type_t<enumName>& left, const enumName right) { return left = left | right; }                                                                       \
-                                                                                                                                                                                                                            \
-    template <>                                                                                                                                                                                                             \
-    struct magic_enum::customize::enum_range<enumName>                                                                                                                                                                      \
-    {                                                                                                                                                                                                                       \
-        static constexpr bool is_flags = true;                                                                                                                                                                              \
+/// @brief Defines binary flag operators for an enum type.
+/// @param enumName The enum to define the flag operations of.
+/// @note This macro **must** be used in the global namespace, as it declares a template specialization of a @c magic_enum struct.
+#define ENUM_FLAGS(enumName) \
+    static_assert(std::is_enum_v<enumName>, "enumName must be a valid enum type"); \
+    \
+    inline std::underlying_type_t<enumName> operator&(const enumName lhs, const enumName rhs) { return static_cast<std::underlying_type_t<enumName>>(lhs) & static_cast<std::underlying_type_t<enumName>>(rhs); } \
+    inline enumName operator|(const enumName lhs, const enumName rhs) { return static_cast<enumName>(static_cast<std::underlying_type_t<enumName>>(lhs) | static_cast<std::underlying_type_t<enumName>>(rhs)); } \
+    inline std::underlying_type_t<enumName> operator&(const std::underlying_type_t<enumName> lhs, const enumName rhs) { return lhs & static_cast<std::underlying_type_t<enumName>>(rhs); } \
+    inline std::underlying_type_t<enumName> operator|(const std::underlying_type_t<enumName> lhs, const enumName rhs) { return lhs | static_cast<std::underlying_type_t<enumName>>(rhs); } \
+    inline std::underlying_type_t<enumName> operator&(const enumName lhs, const std::underlying_type_t<enumName> rhs) { return static_cast<std::underlying_type_t<enumName>>(lhs) & rhs; } \
+    inline std::underlying_type_t<enumName> operator|(const enumName lhs, const std::underlying_type_t<enumName> rhs) { return static_cast<std::underlying_type_t<enumName>>(lhs) | rhs; } \
+    inline std::underlying_type_t<enumName>& operator&=(std::underlying_type_t<enumName>& lhs, const enumName rhs) { return lhs = lhs & rhs; } \
+    inline std::underlying_type_t<enumName>& operator|=(std::underlying_type_t<enumName>& lhs, const enumName rhs) { return lhs = lhs | rhs; } \
+    inline enumName& operator&=(enumName& lhs, const enumName rhs) { return lhs = static_cast<enumName>(lhs & rhs); } \
+    inline enumName& operator|=(enumName& lhs, const enumName rhs) { return lhs = static_cast<enumName>(lhs | rhs); } \
+    \
+    template <> \
+    struct magic_enum::customize::enum_range<enumName> \
+    { \
+        static constexpr bool is_flags = true; \
     };
-
-// TODO - Add comparison operators for enum flags
 
 /// @brief Defines global definitions that make OpenGL use the dedicated GPU instead of the integrated one
 /// Source: https://www.reddit.com/r/opengl/comments/unc3fy/comment/i8728y3/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
-#define USE_DEDICATED_GPU                                                       \
-    extern "C"                                                                  \
-    {                                                                           \
-        _declspec(dllexport) uint32_t NvOptimusEnablement = 1;                  \
-        _declspec(dllexport) int32_t AmdPowerXpressRequestHighPerformance = 1;  \
+#define USE_DEDICATED_GPU \
+    extern "C" \
+    { \
+        _declspec(dllexport) uint32_t NvOptimusEnablement = 1; \
+        _declspec(dllexport) int32_t AmdPowerXpressRequestHighPerformance = 1; \
     }
 
 #ifdef MOUNTAIN_EXPORT
@@ -191,11 +186,13 @@ using stdstring = std::string;
 /// @see https://learn.microsoft.com/en-us/cpp/cpp/novtable
 #define interface struct __declspec(novtable)
 
+/// @brief Defines a default virtual destructor.
+/// @param type The type to default the destructor of.
 #define DEFAULT_VIRTUAL_DESTRUCTOR(type) virtual ~type() = default;
 
 #if defined(__JETBRAINS_IDE__) || defined(__RESHARPER__)
 #define ATTRIBUTE_FORMAT(archetype, stringIndex, firstToCheck) [[jetbrains::format(archetype, stringIndex, firstToCheck)]]
-#define ATTRIBUTE_PASS_BY_VALUE [[jetbrains::pass_by_value]
+#define ATTRIBUTE_PASS_BY_VALUE [[jetbrains::pass_by_value]]
 #define ATTRIBUTE_GUARD [[jetbrains::guard]]
 #define ATTRIBUTE_HAS_SIDE_EFFECTS [[jetbrains::has_side_effects]]
 #else

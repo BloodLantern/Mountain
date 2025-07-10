@@ -66,68 +66,68 @@ TimeSpan TimeSpan::Duration() const
     return TimeSpan{m_Ticks >= 0 ? m_Ticks : -m_Ticks};
 }
 
-TimeSpan Mountain::operator+(const TimeSpan a, const TimeSpan b)
+TimeSpan Mountain::operator+(const TimeSpan lhs, const TimeSpan rhs)
 {
-    const int64_t result = a.m_Ticks + b.m_Ticks;
+    const int64_t result = lhs.m_Ticks + rhs.m_Ticks;
 
     // Overflow if signs of operands was identical and result's
     // sign was opposite.
     // >> 63 gives the sign bit (either 64 1's or 64 0's).
-    if ((a.m_Ticks >> 63 == b.m_Ticks >> 63) && (a.m_Ticks >> 63 != result >> 63))
+    if ((lhs.m_Ticks >> 63 == rhs.m_Ticks >> 63) && (lhs.m_Ticks >> 63 != result >> 63))
         THROW(OverflowException{"TimeSpan sum overflow"});
 
     return TimeSpan{result};
 }
 
-TimeSpan Mountain::operator-(const TimeSpan v)
+TimeSpan Mountain::operator-(const TimeSpan value)
 {
-    if (v.m_Ticks == TimeSpan::MinValue().m_Ticks)
+    if (value.m_Ticks == TimeSpan::MinValue().m_Ticks)
         THROW(OverflowException{"Cannot negate the MinValue TimeSpan because of Two's Complement"});
-    return TimeSpan{-v.m_Ticks};
+    return TimeSpan{-value.m_Ticks};
 }
 
-TimeSpan Mountain::operator-(const TimeSpan a, const TimeSpan b)
+TimeSpan Mountain::operator-(const TimeSpan lhs, const TimeSpan rhs)
 {
-    const int64_t result = a.m_Ticks + b.m_Ticks;
+    const int64_t result = lhs.m_Ticks + rhs.m_Ticks;
 
     // Overflow if signs of operands was different and result's
     // sign was opposite.
     // >> 63 gives the sign bit (either 64 1's or 64 0's).
-    if ((a.m_Ticks >> 63 != b.m_Ticks >> 63) && (a.m_Ticks >> 63 != result >> 63))
+    if ((lhs.m_Ticks >> 63 != rhs.m_Ticks >> 63) && (lhs.m_Ticks >> 63 != result >> 63))
         THROW(OverflowException{"TimeSpan difference underflow"});
 
     return TimeSpan{result};
 }
 
-TimeSpan Mountain::operator*(const TimeSpan v, const double_t factor)
+TimeSpan Mountain::operator*(const TimeSpan lhs, const double_t rhs)
 {
-    if (std::isnan(factor))
-        THROW(ArgumentException{"Cannot multiply a TimeSpan by a NaN factor", "factor"});
+    if (std::isnan(rhs))
+        THROW(ArgumentException{"Cannot multiply a TimeSpan by a NaN rhs", "rhs"});
 
-    const double_t ticks = std::round(static_cast<double_t>(v.m_Ticks) * factor);
+    const double_t ticks = std::round(static_cast<double_t>(lhs.m_Ticks) * rhs);
     return TimeSpan::IntervalFromDoubleTicks(ticks);
 }
 
-TimeSpan Mountain::operator*(const double_t factor, const TimeSpan v) { return v * factor; }
+TimeSpan Mountain::operator*(const double_t lhs, const TimeSpan rhs) { return rhs * lhs; }
 
-TimeSpan Mountain::operator/(const TimeSpan v, const double_t divisor)
+TimeSpan Mountain::operator/(const TimeSpan lhs, const double_t rhs)
 {
-    if (std::isnan(divisor))
-        THROW(ArgumentException{"Cannot divide a TimeSpan by a NaN divisor", "divisor"});
+    if (std::isnan(rhs))
+        THROW(ArgumentException{"Cannot divide a TimeSpan by a NaN rhs", "rhs"});
 
-    const double_t ticks = std::round(static_cast<double_t>(v.m_Ticks) / divisor);
+    const double_t ticks = std::round(static_cast<double_t>(lhs.m_Ticks) / rhs);
     return TimeSpan::IntervalFromDoubleTicks(ticks);
 }
 
-double_t Mountain::operator/(const TimeSpan a, const TimeSpan b) { return static_cast<double_t>(a.m_Ticks) / static_cast<double_t>(b.m_Ticks); }
+double_t Mountain::operator/(const TimeSpan lhs, const TimeSpan rhs) { return static_cast<double_t>(lhs.m_Ticks) / static_cast<double_t>(rhs.m_Ticks); }
 
-TimeSpan& Mountain::operator+=(TimeSpan& a, const TimeSpan b) { return a = a + b; }
+TimeSpan& Mountain::operator+=(TimeSpan& lhs, const TimeSpan rhs) { return lhs = lhs + rhs; }
 
-TimeSpan& Mountain::operator-=(TimeSpan& a, const TimeSpan b) { return a = a - b; }
+TimeSpan& Mountain::operator-=(TimeSpan& lhs, const TimeSpan rhs) { return lhs = lhs - rhs; }
 
-TimeSpan& Mountain::operator*=(TimeSpan& v, const double_t factor) { return v = v * factor; }
+TimeSpan& Mountain::operator*=(TimeSpan& lhs, const double_t rhs) { return lhs = lhs * rhs; }
 
-TimeSpan& Mountain::operator/=(TimeSpan& v, const double_t divisor) { return v = v / divisor; }
+TimeSpan& Mountain::operator/=(TimeSpan& lhs, const double_t rhs) { return lhs = lhs / rhs; }
 
 std::string TimeSpan::ToString() const
 {

@@ -37,9 +37,9 @@ void Coroutine::Start(Coroutine&& coroutine, Guid* const coroutineId)
 
 void Coroutine::UpdateAll()
 {
-    std::vector<const Coroutine*> finishedRoutines;
+    List<const Coroutine*> finishedRoutines;
 
-    for (const auto& routine : m_RunningRoutines | std::views::values)
+    for (const Coroutine& routine : m_RunningRoutines | std::views::values)
     {
         if (!routine.Valid())
             continue;
@@ -53,10 +53,10 @@ void Coroutine::UpdateAll()
         routine.Resume();
 
         if (routine.Finished())
-            finishedRoutines.push_back(&routine);
+            finishedRoutines.Add(&routine);
     }
 
-    for (const auto& routine : finishedRoutines)
+    for (const Coroutine* const& routine : finishedRoutines)
         Stop(routine->GetId());
 }
 

@@ -91,20 +91,27 @@ namespace Mountain
         TimeSpan Duration() const;
 
         [[nodiscard]]
-        friend auto operator<=>(TimeSpan, TimeSpan) = default;
+        friend std::strong_ordering operator<=>(TimeSpan, TimeSpan) = default;
 
-        friend TimeSpan operator+(TimeSpan a, TimeSpan b);
-        friend TimeSpan operator-(TimeSpan v);
-        friend TimeSpan operator-(TimeSpan a, TimeSpan b);
-        friend TimeSpan operator*(TimeSpan v, double_t factor);
-        friend TimeSpan operator*(double_t factor, TimeSpan v);
-        friend TimeSpan operator/(TimeSpan v, double_t divisor);
-        friend double_t operator/(TimeSpan a, TimeSpan b);
+        [[nodiscard]]
+        friend TimeSpan operator+(TimeSpan lhs, TimeSpan rhs);
+        [[nodiscard]]
+        friend TimeSpan operator-(TimeSpan value);
+        [[nodiscard]]
+        friend TimeSpan operator-(TimeSpan lhs, TimeSpan rhs);
+        [[nodiscard]]
+        friend TimeSpan operator*(TimeSpan lhs, double_t rhs);
+        [[nodiscard]]
+        friend TimeSpan operator*(double_t lhs, TimeSpan rhs);
+        [[nodiscard]]
+        friend TimeSpan operator/(TimeSpan lhs, double_t rhs);
+        [[nodiscard]]
+        friend double_t operator/(TimeSpan lhs, TimeSpan rhs);
 
-        friend TimeSpan& operator+=(TimeSpan& a, TimeSpan b);
-        friend TimeSpan& operator-=(TimeSpan& a, TimeSpan b);
-        friend TimeSpan& operator*=(TimeSpan& v, double_t factor);
-        friend TimeSpan& operator/=(TimeSpan& v, double_t divisor);
+        friend TimeSpan& operator+=(TimeSpan& lhs, TimeSpan rhs);
+        friend TimeSpan& operator-=(TimeSpan& lhs, TimeSpan rhs);
+        friend TimeSpan& operator*=(TimeSpan& lhs, double_t rhs);
+        friend TimeSpan& operator/=(TimeSpan& lhs, double_t rhs);
 
         [[nodiscard]]
         std::string ToString() const;

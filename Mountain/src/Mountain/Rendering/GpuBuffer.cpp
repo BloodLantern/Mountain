@@ -13,7 +13,7 @@ void GpuBuffer::Recreate() { Delete(); Create(); }
 void GpuBuffer::SetStorage(
     const int64_t size,
     const void* data,
-    const Meta::Flags<BufferStorageFlags> flags
+    const BufferStorageFlags flags
 ) const
 {
     glNamedBufferStorage(m_Id, size, data, static_cast<GLbitfield>(flags));
@@ -34,6 +34,13 @@ void GpuBuffer::SetDebugName([[maybe_unused]] const std::string_view name) const
 #ifdef _DEBUG
     glObjectLabel(GL_BUFFER, m_Id, static_cast<GLsizei>(name.length()), name.data());
 #endif
+}
+
+bool_t GpuBuffer::GetImmutable() const
+{
+    GLint result;
+    glGetNamedBufferParameteriv(m_Id, GL_BUFFER_IMMUTABLE_STORAGE, &result);
+    return static_cast<bool_t>(result);
 }
 
 GpuBuffer::operator unsigned int() const { return m_Id; }

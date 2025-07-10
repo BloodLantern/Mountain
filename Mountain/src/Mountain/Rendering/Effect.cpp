@@ -26,7 +26,7 @@ void Effect::Apply(const Vector2i textureSize, const bool_t synchronizeImageData
     m_ComputeShader->Dispatch(textureSize.x, textureSize.y);
 
     if (synchronizeImageData)
-        Graphics::SynchronizeGpuData(Utils::ToFlags(Graphics::GpuDataSynchronizationFlags::ShaderImageAccess));
+        Graphics::SynchronizeGpuData(Graphics::GpuDataSynchronizationFlags::ShaderImageAccess);
 }
 
 void Vignette::LoadResources()
@@ -160,3 +160,4 @@ void BoxBlur::SetRadius(const int32_t newRadius) const
     m_ComputeShader->SetUniform("radius", newRadius);
     m_OtherComputeShader->SetUniform("radius", newRadius);
 }
+

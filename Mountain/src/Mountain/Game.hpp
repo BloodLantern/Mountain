@@ -60,10 +60,10 @@ namespace Mountain
         /// @brief Used to clean everything up before the application closes.
         virtual void Shutdown() = 0;
 
-        /// @brief Called once each frame before @c Render(). Used to update game logic before rendering.
+        /// @brief Called each frame once before @c Render(). Used to update game logic before rendering.
         virtual void Update() = 0;
 
-        /// @brief Called once each frame after @c Update(). Used to render the current state of the game.
+        /// @brief Called each frame once after @c Update(). Used to render the current state of the game.
         virtual void Render() = 0;
     };
 }

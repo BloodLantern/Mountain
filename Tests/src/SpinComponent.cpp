@@ -10,8 +10,8 @@
 
 void SpinComponent::Added()
 {
-    Mountain::AudioSource* source = m_Entity->AddComponent<Mountain::AudioSource>();
-    source->audioTrack = Mountain::ResourceManager::Get<Mountain::AudioTrack>("assets/sfx.ogg");
+    AudioSource* source = m_Entity->AddComponent<AudioSource>();
+    source->audioTrack = ResourceManager::Get<AudioTrack>("assets/sfx.ogg");
     source->SetLooping(true);
     source->SetVolume(0.2f);
     source->Play();
@@ -26,5 +26,5 @@ void SpinComponent::Update()
 
 void SpinComponent::DebugRender()
 {
-    Mountain::Draw::Circle(m_Entity->position, 5.f, 1.f, Vector2::One(), Mountain::Color::Fuchsia());
+    Draw::Circle(m_Entity->position, 5.f, 1.f, Vector2::One(), Color::Fuchsia());
 }

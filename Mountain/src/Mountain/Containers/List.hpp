@@ -39,7 +39,7 @@ namespace Mountain
 
         /// @brief Constructs a List from a range of elements.
         template <Concepts::ConvertibleTo<T>... U>
-        List(U&&... values) noexcept;
+        explicit List(U&&... values) noexcept;
 
         /// @brief Constructs a List from a range of elements.
         List(std::initializer_list<T> initializer) noexcept;

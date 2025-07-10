@@ -9,7 +9,7 @@
 
 #include "Scenes/TestScene.hpp"
 
-class GameExample : public Mountain::Game
+class GameExample : public Game
 {
 	static inline GameExample* m_Instance = nullptr;
 
@@ -30,24 +30,28 @@ public:
 	void RenderImGui();
 
 	GETTER(TestScene*, Scene, m_ActiveScene)
+	/// @brief Sets the next scene to be used. This will take effect on the next frame.
 	void SetScene(TestScene* newScene);
 
 private:
-    Mountain::List<TestScene*> m_Scenes;
+    List<TestScene*> m_Scenes;
 
 	TestScene* m_ActiveScene = nullptr;
+	TestScene* m_NextActiveScene = nullptr;
 
-	Mountain::Color m_ClearColor = Mountain::Color::Black();
+	Color m_ClearColor = Color::Black();
 
 	bool_t m_EnableDebugRendering = true;
 
-	Mountain::FileSystemWatcher m_AssetsWatcher{ "assets" };
+	FileSystemWatcher m_AssetsWatcher{ "assets" };
 
-	Mountain::FileSystemWatcher m_ShadersWatcher;
-	Mountain::List<Mountain::Pointer<Mountain::ShaderBase>> m_ShadersToReload;
+	FileSystemWatcher m_ShadersWatcher;
+	List<Pointer<ShaderBase>> m_ShadersToReload;
 	std::mutex m_ShadersToReloadMutex;
 
 	void InitializeFileSystemWatchers();
 
     void ReloadShader(const std::filesystem::path& path);
+
+	void HandleSceneChange();
 };
