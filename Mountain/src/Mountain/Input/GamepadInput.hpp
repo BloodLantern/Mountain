@@ -209,8 +209,8 @@ namespace Mountain
         MOUNTAIN_API void SetLight(const Color& color) const;
 
         /// @brief Performs a rumble
-        /// @param weak Low rumble frequency, value in [0;1]
-        /// @param strong High rumble frequency, value in [0;1]
+        /// @param weak Weak rumble frequency, value in [0;1]
+        /// @param strong Strong rumble frequency, value in [0;1]
         /// @param duration Rumble duration, in seconds
         MOUNTAIN_API void Rumble(float_t weak, float_t strong, float_t duration) const;
 
