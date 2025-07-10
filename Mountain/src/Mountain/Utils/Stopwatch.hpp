@@ -6,6 +6,8 @@
 #include "Mountain/Core.hpp"
 #include "Mountain/Utils/TimeSpan.hpp"
 
+#define START_STOPWATCH const ::Mountain::Stopwatch stopwatch = ::Mountain::Stopwatch::StartNew()
+
 namespace Mountain
 {
     /// @brief C++ reimplementation of the .NET Stopwatch class

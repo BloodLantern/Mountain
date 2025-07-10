@@ -105,7 +105,7 @@ void FileSystemWatcher::Run()
         ReadDirectoryChangesW(file, buffer.data(), BufferSize, m_IsDirectory && checkContents, NotifyFiltersToWindows(notifyFilters), nullptr, &overlapped, nullptr);
         Windows::SilenceError(); // Windows would return an error because the 0ms timeout of WaitForSingleObject expired
 
-        m_CondVar.wait_for(lock, updateRate);
+        m_CondVar.wait_for(lock, std::chrono::nanoseconds{static_cast<int64_t>(updateRate.GetTotalNanoseconds())});
 
         const DWORD waitResult = WaitForSingleObject(overlapped.hEvent, 0);
         Windows::SilenceError(); // Same here

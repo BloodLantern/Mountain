@@ -25,6 +25,8 @@ namespace Mountain
 
         MOUNTAIN_API static DateTime Now();
 
+        MOUNTAIN_API static DateTime UtcNow();
+
         MOUNTAIN_API static DateTime Today();
 
         constexpr DateTime() = default;

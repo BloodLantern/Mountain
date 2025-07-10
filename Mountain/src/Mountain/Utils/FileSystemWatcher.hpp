@@ -7,6 +7,7 @@
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Utils/Event.hpp"
+#include "Mountain/Utils/TimeSpan.hpp"
 
 // ReSharper disable once CppInconsistentNaming
 // ReSharper disable once CppEnforceTypeAliasCodeStyle
@@ -40,7 +41,7 @@ namespace Mountain
         Event<const std::filesystem::path&, const std::filesystem::path&> onRenamed;
 
         /// @brief Time between each update.
-        std::chrono::milliseconds updateRate{750};
+        TimeSpan updateRate{0, 0, 0, 0, 750};
 
         /// @brief Whether to check the directory contents. Doesn't do anything if the watched path points to a file.
         bool_t checkContents = true;

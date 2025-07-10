@@ -154,7 +154,7 @@ void Mountain::Renderer::DebugString(std::string str, const float_t duration, co
         0,
         {
             .str = std::move(str),
-            .time = std::chrono::system_clock::now(),
+            .time = DateTime::Now(),
             .color = color,
             .duration = duration
         }
@@ -264,11 +264,11 @@ void Mountain::Renderer::PostFrame()
     Draw::RenderTarget(*m_RenderTarget);
 
     // Draw debug strings
-    const auto now = std::chrono::system_clock::now();
+    const DateTime now = DateTime::Now();
     for (size_t i = 0; i < m_DebugStrings.GetSize(); i++)
     {
         const DebugStringData& data = m_DebugStrings[i];
-        if (std::chrono::duration_cast<std::chrono::duration<float_t>>(now - data.time).count() > data.duration)
+        if ((now - data.time).GetTotalSeconds() > data.duration)
         {
             m_DebugStrings.RemoveAt(i);
             continue;

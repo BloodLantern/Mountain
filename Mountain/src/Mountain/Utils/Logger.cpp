@@ -47,16 +47,15 @@ void Logger::OpenFile(const std::filesystem::path &filepath)
 
 void Logger::OpenDefaultFile()
 {
-    const auto&& now = std::chrono::system_clock::now();
-    const auto&& time = std::chrono::zoned_time(std::chrono::current_zone(), std::chrono::floor<std::chrono::seconds>(now))
-                .get_local_time().time_since_epoch();
+    const DateTime now = DateTime::Now();
+    const TimeSpan time = now.GetTimeOfDay();
 
     // Get the current date and format it in yyyy-mm-dd for the directory name
-    const std::string dateStr = std::format("{:%Y-%m-%d}", now);
+    const std::string dateStr = std::format("{:4}-{:2}-{:2}", now.GetYear(), now.GetMonth(), now.GetDay());
     // Get the current date and format it in hh-mm-ss for the file name
-    const std::string timeStr = std::format("{:%H-%M-%S}", std::chrono::hh_mm_ss(time).to_duration() - std::chrono::floor<std::chrono::days>(now).time_since_epoch());
+    const std::string timeStr = std::format("{:2}-{:2}-{:2}", time.GetHours(), time.GetMinutes(), time.GetSeconds());
 
-    const std::filesystem::path directory = std::filesystem::path("logs") / dateStr;
+    const std::filesystem::path directory = std::filesystem::path{"logs"} / dateStr;
     const std::filesystem::path filepath = directory / (timeStr + ".log");
 
     if (!exists(directory))
@@ -66,9 +65,9 @@ void Logger::OpenDefaultFile()
     }
 
     // Count the number of existing logs to get the log index
-    // Start at -1 so that we get index-like numbers, e.g. 0 for the first one, 1 for the second one, etc...
+    // Start at -1 so that we get index-like numbers, e.g., 0 for the first one, 1 for the second one, etc...
     int32_t fileCount = -1;
-    for (const std::filesystem::directory_entry& entry : std::filesystem::directory_iterator(directory))
+    for (const std::filesystem::directory_entry& entry : std::filesystem::directory_iterator{directory})
     {
         if (is_regular_file(entry))
             fileCount++;
@@ -145,22 +144,12 @@ Logger::LogEntry::LogEntry()
 }
 
 Logger::LogEntry::LogEntry(std::string&& message, const LogLevel level)
-    : LogEntry(
-        std::move(message),
-        level,
-        std::chrono::zoned_time(std::chrono::current_zone(), std::chrono::floor<std::chrono::milliseconds>(std::chrono::system_clock::now()))
-            .get_local_time().time_since_epoch()
-    )
+    : LogEntry(std::move(message), level, DateTime::Now())
 {
 }
 
 Logger::LogEntry::LogEntry(std::string&& message, const LogLevel level, const std::string& file, const int32_t line)
-    : LogEntry(
-        std::move(message),
-        level,
-        std::chrono::zoned_time(std::chrono::current_zone(), std::chrono::floor<std::chrono::milliseconds>(std::chrono::system_clock::now()))
-            .get_local_time().time_since_epoch()
-    )
+    : LogEntry(std::move(message), level, DateTime::Now())
 {
     this->file = file;
     this->line = line;
@@ -169,24 +158,11 @@ Logger::LogEntry::LogEntry(std::string&& message, const LogLevel level, const st
 Logger::LogEntry::LogEntry(
     std::string&& message,
     const LogLevel level,
-    const std::chrono::system_clock::time_point timePoint
+    const DateTime timePoint
 )
     : message(std::move(message))
     , level(level)
-    , time(timePoint - std::chrono::floor<std::chrono::days>(timePoint))
-    , printToConsole(level >= minimumConsoleLevel)
-    , printToFile(level >= minimumFileLevel)
-{
-}
-
-Logger::LogEntry::LogEntry(
-    std::string&& message,
-    const LogLevel level,
-    const std::chrono::system_clock::duration duration
-)
-    : message(std::move(message))
-    , level(level)
-    , time(duration - std::chrono::floor<std::chrono::days>(duration))
+    , time(timePoint)
     , printToConsole(level >= minimumConsoleLevel)
     , printToFile(level >= minimumFileLevel)
 {
@@ -309,9 +285,15 @@ void Logger::PrintLog(const std::shared_ptr<LogEntry>& log)
 
 std::pair<std::string, const char_t*> Logger::BuildLogPrefix(const std::shared_ptr<LogEntry>& log)
 {
+    const TimeSpan timeOfDay = log->time.GetTimeOfDay();
     // Get the message time and format it in [hh:mm:ss:ms]
-    const auto&& t = std::chrono::duration_cast<std::chrono::milliseconds, int64_t>(log->time.time_since_epoch());
-    const std::string time = std::format("[{:%T}] ", t);
+    const std::string time = std::format(
+        "[{:2}:{:2}:{:2}:{:03}] ",
+        timeOfDay.GetHours(),
+        timeOfDay.GetMinutes(),
+        timeOfDay.GetSeconds(),
+        timeOfDay.GetMilliseconds()
+    );
 
     std::string baseMessage;
     const char_t* color = ANSI_RESET;

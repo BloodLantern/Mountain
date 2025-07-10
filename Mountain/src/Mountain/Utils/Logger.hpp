@@ -6,6 +6,7 @@
 #include <thread>
 
 #include "Mountain/Core.hpp"
+#include "Mountain/Utils/DateTime.hpp"
 #include "Mountain/Utils/Requirements.hpp"
 #include "Mountain/Utils/TsQueue.hpp"
 
@@ -87,7 +88,7 @@ namespace Mountain
         {
             std::string message;
             LogLevel level;
-            std::chrono::system_clock::time_point time;
+            DateTime time;
 
             bool_t printToConsole, printToFile;
 
@@ -104,9 +105,7 @@ namespace Mountain
 
             MOUNTAIN_API LogEntry(std::string&& message, LogLevel level, const std::string& file, int32_t line);
 
-            MOUNTAIN_API LogEntry(std::string&& message, LogLevel level, std::chrono::system_clock::time_point timePoint);
-
-            MOUNTAIN_API LogEntry(std::string&& message, LogLevel level, std::chrono::system_clock::duration duration);
+            MOUNTAIN_API LogEntry(std::string&& message, LogLevel level, DateTime timePoint);
 
             MOUNTAIN_API bool_t operator==(const LogEntry& other) const;
         };
