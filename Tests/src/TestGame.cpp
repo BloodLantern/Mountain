@@ -289,8 +289,8 @@ void GameExample::ReloadShader(const std::filesystem::path& path)
             m_ShadersToReload.Add(shaderBase);
     }
 
-    const bool_t isDrawShader = Utils::StringArrayContains(Shader::VertexFileExtensions, extension) ||
-                                Utils::StringArrayContains(Shader::FragmentFileExtensions, extension);
+    const bool_t isDrawShader = Utils::StringEnumerableContains(Shader::VertexFileExtensions, extension) ||
+                                Utils::StringEnumerableContains(Shader::FragmentFileExtensions, extension);
     const std::string name = isDrawShader ? path.parent_path().generic_string() : path.generic_string();
 
     if (!ResourceManager::Contains(name))
