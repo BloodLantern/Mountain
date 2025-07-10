@@ -76,7 +76,7 @@ namespace Mountain
     };
 
     template <class T, class... Other>
-    explicit Array(T, Other...) -> Array<T, 1 + sizeof...(Other)> requires Meta::AllSame<T, Other...>;
+    Array(T, Other...) -> Array<T, 1 + sizeof...(Other)> requires Meta::AllSame<T, Other...>;
 
     CHECK_REQUIREMENT(Requirements::MountainEnumerableContainer, Array<Requirements::DefaultType, Requirements::DefaultSize>);
 }

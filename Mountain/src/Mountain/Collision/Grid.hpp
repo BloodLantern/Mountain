@@ -8,8 +8,6 @@
 
 namespace Mountain
 {
-    // TODO - Add a template type instead of bool_t
-
     class Grid : public Collider
     {
     public:

@@ -9,7 +9,7 @@ namespace Mountain
     /// @brief Supports a simple read-only iteration over a templated container whose elements are stored contiguously.
     /// @tparam T The type to iterate on.
     template <typename T>
-    struct ContiguousConstIterator
+    struct ATTRIBUTE_PASS_BY_VALUE ContiguousConstIterator
     {
         using Type = T;
         using IteratedType = Type;
@@ -102,7 +102,7 @@ namespace Mountain
     /// @brief Supports a simple iteration over a templated container whose elements are stored contiguously.
     /// @tparam T The type to iterate on.
     template <typename T>
-    struct ContiguousIterator : ContiguousConstIterator<T>
+    struct ATTRIBUTE_PASS_BY_VALUE ContiguousIterator : ContiguousConstIterator<T>
     {
         using Base = ContiguousConstIterator<T>;
         using Type = T;

@@ -2,8 +2,6 @@
 
 #include <Math/matrix.hpp>
 
-// TODO - Add Camera utility functions
-
 class Camera
 {
 public:
