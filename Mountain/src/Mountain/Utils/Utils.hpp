@@ -68,72 +68,77 @@ namespace Mountain::Utils
     MOUNTAIN_API void AlignImGuiCursor(float_t objectWidth, float_t alignment = 0.5f);
 
     /// @brief Humanizes the provided string
-    ///
-    /// The process converts a PascalCase styled word to a humanized version that puts spaces between each words and adds an uppercase at the very beginning
-    ///
-    /// e.g. RequiresUIReloadAttribute will become Requires UI Reload Attribute
+    /// @details The process converts a PascalCase styled word to a humanized version
+    /// that puts spaces between each word and adds an uppercase letter at the very beginning
+    /// E.g., RequiresUIReloadAttribute will become Requires UI Reload Attribute
     /// @param str String to humanize
-    /// @return Result
     ATTRIBUTE_NODISCARD
     MOUNTAIN_API std::string HumanizeString(const std::string& str);
 
     /// @brief Humanizes the provided variable name
-    ///
-    /// The process converts a m_PascalCase styled word to a humanized version that puts spaces between each word and adds an uppercase at the very beginning, it also removes the m_ prefix
-    ///
-    /// e.g. m_ShouldChange will become Should Change
+    /// @details The process converts an m_PascalCase styled word to a humanized version
+    /// that puts spaces between each word and adds an uppercase letter at the very beginning,
+    /// it also removes the m_ prefix
+    /// E.g., m_ShouldChange will become Should Change
     /// @param str String to humanize
-    /// @return Result
     ATTRIBUTE_NODISCARD
     MOUNTAIN_API std::string HumanizeVariableName(const std::string& str);
 
     /// @brief Removes the namespaces indicators from the provided string
-    ///
-    /// e.g. Mountain::MyClass will become MyClass
-    ///
+    /// @details E.g., Mountain::MyClass will become MyClass
     /// @param str String to modify
-    /// @return Result
     ATTRIBUTE_NODISCARD
     MOUNTAIN_API constexpr std::string RemoveNamespaces(const std::string& str);
 
-#ifndef SWIG
-    /// @brief Removes the namespaces indicators from the provided string
-    ///
-    /// e.g. Mountain::MyClass will become MyClass
-    ///
+    /// @brief Removes the namespace indicators from the provided string
+    /// @details E.g., Mountain::MyClass will become MyClass
     /// @param str String to modify
-    /// @return Result
     ATTRIBUTE_NODISCARD
     MOUNTAIN_API constexpr const char_t* RemoveNamespaces(const char_t* str);
-#endif
 
     /// @brief Remaps a value from one range to another
-    ///
-    /// e.g., the number 5 in the range [0;10] will become .5 if remapped to the range [0;1]
+    /// @details E.g., the number 5 in the range [0;10] will become .5 if remapped to the range [0;1]
     /// @param oldValue Value
     /// @param oldRange Old range
     /// @param newRange New range
-    /// @return New value
     ATTRIBUTE_NODISCARD
     MOUNTAIN_API constexpr float_t RemapValue(float_t oldValue, Vector2 oldRange, Vector2 newRange);
 
     /// @brief Remaps a value from one range to another
-    ///
-    /// e.g., the number 5 in the range [0;10] will become 1 if remapped to the range [0;2]
+    /// @details E.g., the number 5 in the range [0;10] will become .5 if remapped to the range [0;1]
+    /// @param oldValue Value
+    /// @param oldMin Old range min
+    /// @param oldMax Old range max
+    /// @param newMin New range min
+    /// @param newMax New range max
+    ATTRIBUTE_NODISCARD
+    MOUNTAIN_API constexpr float_t RemapValue(float_t oldValue, float_t oldMin, float_t oldMax, float_t newMin, float_t newMax);
+
+    /// @brief Remaps a value from one range to another
+    /// @details E.g., the number 5 in the range [0;10] will become 1 if remapped to the range [0;2]
     /// @param oldValue Value
     /// @param oldRange Old range
     /// @param newRange New range
-    /// @return New value
     ATTRIBUTE_NODISCARD
     MOUNTAIN_API constexpr size_t RemapValue(size_t oldValue, Vector2i oldRange, Vector2i newRange);
+
+    /// @brief Remaps a value from one range to another
+    /// @details E.g., the number 5 in the range [0;10] will become 1 if remapped to the range [0;2]
+    /// @param oldValue Value
+    /// @param oldMin Old range min
+    /// @param oldMax Old range max
+    /// @param newMin New range min
+    /// @param newMax New range max
+    ATTRIBUTE_NODISCARD
+    MOUNTAIN_API constexpr size_t RemapValue(size_t oldValue, size_t oldMin, size_t oldMax, size_t newMin, size_t newMax);
 
     /// @brief Normalizes an angle (clamps its value between 0 and 2 * PI)
     /// @param angle Angle to normalize
     /// @return Normalized representation
     MOUNTAIN_API float_t NormalizeAngle(float_t angle);
 
-    /// @brief Normalizes a set of 3 angles in a Vector3 (clamps their value between 0 and 2 * PI)
-    /// @param angles Vector3 of angles to normalize
+    /// @brief Normalizes a set of three angles in a @c Vector3 (clamps their value between 0 and 2 * PI)
+    /// @param angles @c Vector3 of angles to normalize
     /// @return Normalized representation
     MOUNTAIN_API Vector3 NormalizeAngles(Vector3 angles);
 
@@ -334,9 +339,19 @@ namespace Mountain
         return (oldValue - oldRange.x) * (newRange.y - newRange.x) / (oldRange.y - oldRange.x) + newRange.x;
     }
 
+    constexpr float_t Utils::RemapValue(const float_t oldValue, const float_t oldMin, const float_t oldMax, const float_t newMin, const float_t newMax)
+    {
+        return RemapValue(oldValue, Vector2{oldMin, oldMax}, Vector2{newMin, newMax});
+    }
+
     constexpr size_t Utils::RemapValue(const size_t oldValue, const Vector2i oldRange, const Vector2i newRange)
     {
         return (oldValue - oldRange.x) * (newRange.y - newRange.x) / (oldRange.y - oldRange.x) + newRange.x;
+    }
+
+    constexpr size_t Utils::RemapValue(const size_t oldValue, const size_t oldMin, const size_t oldMax, const size_t newMin, const size_t newMax)
+    {
+        return (oldValue - oldMin) * (newMax - newMin) / (oldMax - oldMin) + newMin;
     }
 
     template <typename T>

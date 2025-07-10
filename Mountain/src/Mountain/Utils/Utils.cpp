@@ -70,33 +70,29 @@ std::string Utils::HumanizeVariableName(const std::string& str)
         result = result.substr(2);
 
     return result;
-    // return HumanizeString(result);
+    // FIXME - return HumanizeString(result);
 }
 
 float_t Utils::NormalizeAngle(float_t angle)
 {
-    while (angle > Calc::PiOver2)
-        angle -= Calc::PiOver2;
+    while (angle > Calc::TwoPi)
+        angle -= Calc::TwoPi;
 
     while (angle < 0)
-        angle += Calc::PiOver2;
+        angle += Calc::TwoPi;
 
     return angle;
 }
 
 Vector3 Utils::NormalizeAngles(const Vector3 angles)
 {
-    const Vector3 normalized = Vector3(
-        NormalizeAngle(angles.x),
-        NormalizeAngle(angles.y),
-        NormalizeAngle(angles.z)
-    );
-
-    return normalized;
+    return {NormalizeAngle(angles.x), NormalizeAngle(angles.y), NormalizeAngle(angles.z)};
 }
 
 Vector3 Utils::GetQuaternionEulerAngles(const Quaternion& rot)
 {
+    // Function taken from glm
+
     const float_t sqw = rot.W() * rot.W();
     const float_t sqx = rot.X() * rot.X();
     const float_t sqy = rot.Y() * rot.Y();

@@ -1,5 +1,6 @@
 // ReSharper disable CppNoDiscardExpression
 #include "Common.hpp"
+
 #include <array>
 
 #include "Mountain/Containers/Array.hpp"
