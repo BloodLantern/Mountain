@@ -113,4 +113,10 @@ namespace Mountain
         Pointer<ComputeShader> m_OtherComputeShader;
 
     };
+
+    class Greyscale : public Effect
+    {
+    public:
+        MOUNTAIN_API void LoadResources() override;
+    };
 }

@@ -154,3 +154,8 @@ void BoxBlur::SetRadius(const int32_t newRadius) const
     m_ComputeShader->SetUniform("radius", newRadius);
     m_OtherComputeShader->SetUniform("radius", newRadius);
 }
+
+void Greyscale::LoadResources()
+{
+    m_ComputeShader = ResourceManager::Get<ComputeShader>(Utils::GetBuiltinShadersPath() + "effects/greyscale.comp");
+}

@@ -1,0 +1,18 @@
+﻿#version 460
+
+layout (local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
+
+layout (rgba32f, binding = 0) uniform image2D image;
+
+void main()
+{
+    ivec2 texel = ivec2(gl_GlobalInvocationID.xy);
+    ivec2 size = ivec2(gl_NumWorkGroups.xy);
+
+    vec4 originalColor = imageLoad(image, texel);
+
+    float average = 0.2126 * originalColor.r + 0.7152 * originalColor.g + 0.0722 * originalColor.b;
+
+    imageStore(image, texel, vec4(average, average, average, originalColor.a));
+
+}
