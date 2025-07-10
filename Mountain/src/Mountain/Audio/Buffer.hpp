@@ -36,6 +36,5 @@ namespace Mountain::Audio
         int32_t m_Format = 0;
 
         Context* m_Context = nullptr;
-        AudioContext* m_Context = nullptr;
     };
 }

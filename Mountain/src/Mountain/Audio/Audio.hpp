@@ -11,7 +11,7 @@
 /// You should only use this if you know what you are doing and/or have experience with audio APIs such as OpenAL.
 namespace Mountain::Audio
 {
-    enum class MOUNTAIN_API Error : uint8_t
+    enum class Error : uint8_t
     {
         None,
         InvalidName,
@@ -21,7 +21,7 @@ namespace Mountain::Audio
         OutOfMemory,
     };
 
-    enum class MOUNTAIN_API ContextError : uint8_t
+    enum class ContextError : uint8_t
     {
         None,
         InvalidDevice,
@@ -30,22 +30,22 @@ namespace Mountain::Audio
         InvalidValue,
         OutOfMemory
     };
-    
-    enum class MOUNTAIN_API EventType : uint8_t
+
+    enum class EventType : uint8_t
     {
         DeviceChanged,
         DeviceAdded,
         DeviceRemoved,
     };
 
-    enum class MOUNTAIN_API SourceVector : uint8_t
+    enum class SourceVector : uint8_t
     {
         Direction,
         Position,
         Velocity
     };
 
-    enum class MOUNTAIN_API SourceFloat : uint8_t
+    enum class SourceFloat : uint8_t
     {
         ConeInnerAngle,
         ConeOuterAngle,
@@ -60,7 +60,7 @@ namespace Mountain::Audio
         SecondsOffset
     };
 
-    enum class MOUNTAIN_API SourceInt : uint8_t
+    enum class SourceInt : uint8_t
     {
         Buffer,
         ByteOffset,
@@ -68,42 +68,42 @@ namespace Mountain::Audio
         SourceType
     };
 
-    enum class MOUNTAIN_API SourceBool : uint8_t
+    enum class SourceBool : uint8_t
     {
         Looping,
         SourceRelative
     };
 
-    enum class MOUNTAIN_API SourcePlayType : uint8_t
+    enum class SourcePlayType : uint8_t
     {
         Static,
         Streaming,
         Undetermined
     };
 
-    enum class MOUNTAIN_API ListenerVector : uint8_t
+    enum class ListenerVector : uint8_t
     {
         Position,
         Velocity
     };
 
-    enum class MOUNTAIN_API ListenerFloat : uint8_t
+    enum class ListenerFloat : uint8_t
     {
         Gain
     };
 
-    enum class MOUNTAIN_API ListenerArray : uint8_t
+    enum class ListenerArray : uint8_t
     {
         Orientation
     };
 
-    enum class MOUNTAIN_API SourceType : uint8_t
+    enum class SourceType : uint8_t
     {
         Mono,
         Stereo
     };
 
-    enum class MOUNTAIN_API ContextAttribute : uint8_t
+    enum class ContextAttribute : uint8_t
     {
         Frequency,
         RefreshRate,
@@ -112,7 +112,7 @@ namespace Mountain::Audio
         StereoSourceAmount
     };
 
-    enum class MOUNTAIN_API SourceState : uint8_t
+    enum class SourceState : uint8_t
     {
         Initial,
         Playing,
@@ -120,7 +120,7 @@ namespace Mountain::Audio
         Stopped
     };
 
-    enum class MOUNTAIN_API Format : uint8_t
+    enum class Format : uint8_t
     {
         Unknown,
         Mono8,
@@ -237,7 +237,7 @@ namespace Mountain::Audio
     /// @param events Events to apply the callback to
     /// @param callback Callback function
     template <size_t Size>
-    MOUNTAIN_API void SetEventCallback(const Array<EventType, Size>& events, std::function<void(EventType, const std::string&)> callback);
+    void SetEventCallback(const Array<EventType, Size>& events, std::function<void(EventType, const std::string&)> callback);
 
     /// @brief Opens an audio device
     /// @param name Device name
