@@ -113,9 +113,7 @@ void PostProcessingEffectsScene::RenderImGui()
         ImGui::DragInt("intensity", &size, 0.1f, 1, 150);
         e.SetBoxSize(size);
     });
-    ShowEffectImGui("Greyscale", m_Greyscale, [](auto& e)
-    {
-    });
+    ShowEffectImGui("Greyscale", m_Greyscale);
 }
 
 void PostProcessingEffectsScene::End()

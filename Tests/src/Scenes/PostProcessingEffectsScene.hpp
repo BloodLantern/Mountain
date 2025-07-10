@@ -49,10 +49,13 @@ private:
 	Graphics::GpuTexture m_IntermediateTexture;
 
 	template <Concepts::Effect T>
+	static void ShowEffectImGui(const std::string& name, PostProcessingEffect<T>& effect);
+
+	template <Concepts::Effect T>
 	void ShowEffectImGui(
 		const std::string& name,
 		PostProcessingEffect<T>& effect,
-		const std::type_identity_t<std::function<void(T& effect)>>& additionalAction = std::identity{}
+		const Meta::Identity<std::function<void(T& effect)>>& additionalAction
 	);
 
 	template <Concepts::Effect T>
@@ -64,16 +67,27 @@ private:
 // Start of PostProcessingEffectsScene.inl
 
 template <Concepts::Effect T>
+void PostProcessingEffectsScene::ShowEffectImGui(const std::string& name, PostProcessingEffect<T>& effect)
+{
+	const std::string checkboxLabel = "##" + name + "Enabled";
+
+	ImGui::Checkbox(checkboxLabel.c_str(), &effect.enabled);
+	ImGui::SameLine();
+	if (ImGui::TreeNodeEx(name.c_str(), ImGuiTreeNodeFlags_Leaf))
+		ImGui::TreePop();
+}
+
+template <Concepts::Effect T>
 void PostProcessingEffectsScene::ShowEffectImGui(
 	const std::string& name,
 	PostProcessingEffect<T>& effect,
-	const std::type_identity_t<std::function<void(T& effect)>>& additionalAction
+	const Meta::Identity<std::function<void(T& effect)>>& additionalAction
 )
 {
-	const static std::string CheckboxLabel = "##" + name + "Enabled";
-	ImGui::Checkbox(CheckboxLabel.c_str(), &effect.enabled);
+	const std::string checkboxLabel = "##" + name + "Enabled";
+
+	ImGui::Checkbox(checkboxLabel.c_str(), &effect.enabled);
 	ImGui::SameLine();
-	// TODO - Check if TreeNode is empty (i.e., if additionalAction doesn't do anything)
 	if (ImGui::TreeNode(name.c_str()))
 	{
 		additionalAction(effect.effect);
