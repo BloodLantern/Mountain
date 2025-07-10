@@ -111,7 +111,6 @@ bool_t Game::NextFrame()
     Window::PollEvents();
 
     Time::Update();
-    Input::Update();
     Audio::Update();
     Coroutine::UpdateAll();
 
@@ -127,5 +126,5 @@ bool_t Game::NextFrame()
     Input::Reset();
     Time::WaitForNextFrame();
 
-    return !Window::GetShouldClose();
+    return !Window::shouldClose;
 }

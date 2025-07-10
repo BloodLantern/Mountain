@@ -20,6 +20,8 @@ env:
   # https://docs.github.com/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
   BUILD_CONFIGURATION: Release
 
+  BUILD_ARCHITECTURE: x64
+
 permissions:
   contents: read
 
@@ -36,7 +38,7 @@ jobs:
     - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@v1.0.2
       with:
-        msbuild-architecture: x64
+        msbuild-architecture: ${{env.BUILD_ARCHITECTURE}}
 
     # Restore NuGet packages in the solution
     # We need this for Google Tests projects
@@ -51,4 +53,4 @@ jobs:
 
     - name: Run UnitTests
       working-directory: ${{env.GITHUB_WORKSPACE}}
-      run: x64/Release/UnitTests.exe
+      run: ${{env.BUILD_ARCHITECTURE}}/${{env.BUILD_CONFIGURATION}}/UnitTests.exe

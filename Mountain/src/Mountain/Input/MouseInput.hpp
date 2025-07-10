@@ -12,10 +12,10 @@ namespace Mountain
     {
         /// @brief Left click
         Left,
-        /// @brief Right click
-        Right,
         /// @brief Wheel click
         Middle,
+        /// @brief Right click
+        Right,
         /// @brief Extension button 3
         Button3,
         /// @brief Extension button 4
@@ -29,7 +29,7 @@ namespace Mountain
         /// @brief Extension button 8
         Button8,
 
-        None
+        None,
     };
 
     /// @brief %List of mouse button states

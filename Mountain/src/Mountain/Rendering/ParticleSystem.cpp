@@ -322,7 +322,7 @@ void ParticleSystem::SetMaxParticles(const uint32_t newMaxParticles)
     m_UpdateComputeShader->SetUniform("particleCount", newMaxParticles);
     m_DrawShader->SetUniform("particleCount", newMaxParticles);
 
-    Graphics::MemoryBarrier(Utils::ToFlags(Graphics::MemoryBarrierFlags::ShaderStorageBarrier));
+    Graphics::MemoryBarrier(Graphics::MemoryBarrierFlags::ShaderStorageBarrier);
 }
 
 bool_t ParticleSystem::IsPlaying() const { return m_Playing; }

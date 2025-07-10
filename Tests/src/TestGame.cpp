@@ -15,6 +15,7 @@
 
 #include "Scenes/ParticleSystemScene.hpp"
 #include "Scenes/PostProcessingEffectsScene.hpp"
+#include "Scenes/SpriteAnimationsScene.hpp"
 
 using namespace Mountain;
 
@@ -23,9 +24,11 @@ GameExample::GameExample(const char_t* const windowTitle)
 {
     m_Scenes.AddRange(
         new ParticleSystemScene,
-        new PostProcessingEffectsScene
+        new PostProcessingEffectsScene,
+        new SpriteAnimationsScene
     );
 
+    // Sort the scenes alphabetically
     m_Scenes.Sort([](const TestScene* lhs, const TestScene* rhs) { return lhs->GetName() < rhs->GetName(); });
 }
 
@@ -71,6 +74,8 @@ void GameExample::Update()
     }
     m_ShadersToReload.Clear();
     m_ShadersToReloadMutex.unlock();
+
+    HandleSceneChange();
 
     if (m_ActiveScene)
     {
@@ -155,27 +160,30 @@ void GameExample::RenderImGui()
         ImGuiUtils::PopCollapsingHeader();
     }
 
-    ImGui::SeparatorText("Scene");
-
-    const char_t* sceneComboPreview = "None";
-    if (m_ActiveScene)
-        sceneComboPreview = m_ActiveScene->GetName().c_str();
-
-    if (ImGui::BeginCombo("Active scene", sceneComboPreview))
+    if (ImGuiUtils::PushCollapsingHeader("Scene"))
     {
-        for (TestScene* scene : m_Scenes)
+        const char_t* sceneComboPreview = "None";
+        if (m_ActiveScene)
+            sceneComboPreview = m_ActiveScene->GetName().c_str();
+
+        if (ImGui::BeginCombo("Active scene", sceneComboPreview))
         {
-            if (ImGui::Selectable(scene->GetName().c_str()))
-                SetScene(scene);
+            for (TestScene* scene : m_Scenes)
+            {
+                if (ImGui::Selectable(scene->GetName().c_str()))
+                    SetScene(scene);
+            }
+            ImGui::EndCombo();
         }
-        ImGui::EndCombo();
-    }
 
-    if (m_ActiveScene)
-    {
-        m_ActiveScene->BeforeRenderImGui();
-        m_ActiveScene->RenderImGui();
-        m_ActiveScene->AfterRenderImGui();
+        if (m_ActiveScene)
+        {
+            m_ActiveScene->BeforeRenderImGui();
+            m_ActiveScene->RenderImGui();
+            m_ActiveScene->AfterRenderImGui();
+        }
+
+        ImGuiUtils::PopCollapsingHeader();
     }
 
     ImGui::End();
@@ -198,13 +206,7 @@ void GameExample::RenderImGui()
 
 void GameExample::SetScene(TestScene* newScene)
 {
-    if (m_ActiveScene)
-        m_ActiveScene->End();
-
-    m_ActiveScene = newScene;
-
-    if (m_ActiveScene)
-        m_ActiveScene->Begin();
+    m_NextActiveScene = newScene;
 }
 
 void GameExample::InitializeFileSystemWatchers()
@@ -297,4 +299,18 @@ void GameExample::ReloadShader(const std::filesystem::path& path)
     const Pointer s = ResourceManager::Get<ShaderBase>(name);
 
     m_ShadersToReload.Add(s);
+}
+
+void GameExample::HandleSceneChange()
+{
+    if (!m_NextActiveScene)
+        return;
+
+    if (m_ActiveScene)
+        m_ActiveScene->End();
+
+    m_ActiveScene = m_NextActiveScene;
+    m_ActiveScene->Begin();
+
+    m_NextActiveScene = nullptr;
 }

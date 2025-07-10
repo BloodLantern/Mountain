@@ -69,9 +69,12 @@ compile by statically linking against the corresponding `Mountain.lib`
 - \[WIP] Built-in effects to apply on textures
   - ~~Film grain~~
   - ~~Vignette~~
-  - Chromatic aberration
-  - Blur
-- Make gamepad input work for both Xbox, PS and Switch controllers
+  - ~~Chromatic aberration (both axial and transverse)~~
+  - Blur (both box and gaussian)
+  - Noise
+  - Mosaic
+  - Grayscale
+- ~~Make gamepad input work for both Xbox, PS and Switch controllers~~
 - Low-level audio API
 - `Audio::Play()` static function
 - \[WIP] Low-level graphics API
@@ -79,8 +82,8 @@ compile by statically linking against the corresponding `Mountain.lib`
 - Linux support
 - ~~Automatic `std::formatter` implementation for all classes that define a `ToString()` function~~
 - ~~Automatic `std::hash` implementation for all classes that define a `GetHashCode()` function~~
-- Gamepad rumble support
-- Gamepad gyro support
+- ~~Gamepad rumble support~~
+- ~~Gamepad gyro support~~
 - ~~`Coroutine` class~~
 - ~~Compute shader API~~
 - ~~Custom exceptions~~
@@ -88,3 +91,5 @@ compile by statically linking against the corresponding `Mountain.lib`
 - Real unit tests
 - Replace all `std::array` and `std::vector` usages with `Mountain::Array` and `Mountain::List`
 - True text rendering
+- Add an instanced Random API to have both a static and instanced way or generated RNG
+- \[WIP] Add `DateTime` class from .NET and replace all `std::chrono` usages by `Stopwatch`, `TimeSpan` and `DateTime`

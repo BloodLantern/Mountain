@@ -18,7 +18,7 @@ namespace Mountain::Graphics
         /// @brief Shorthand for @code Delete(); Create();@endcode
         void Recreate();
 
-        void SetStorage(int64_t size, const void* data, Meta::Flags<BufferStorageFlags> flags = Utils::ToFlags(BufferStorageFlags::None)) const;
+        void SetStorage(int64_t size, const void* data, BufferStorageFlags flags = BufferStorageFlags::None) const;
 
         void SetSubData(int64_t offset, int64_t size, const void* data) const;
 

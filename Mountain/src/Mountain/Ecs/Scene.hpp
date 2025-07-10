@@ -34,7 +34,7 @@ namespace Mountain
 
         MOUNTAIN_API virtual void End();
 
-    private:
+    protected:
         EntityList m_Entities;
     };
 }
