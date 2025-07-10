@@ -8,6 +8,12 @@
 /// @file Globals.hpp
 /// @brief This file contains global configuration variables that can be modified before any calls to the framework functions.
 
+#ifdef MOUNTAIN_EXPORT
+#define PUBLIC_GLOBAL(varType, varName, defaultValue) MOUNTAIN_API inline varType varName = defaultValue;
+#else
+#define PUBLIC_GLOBAL(varType, varName, defaultValue) MOUNTAIN_API varType varName;
+#endif
+
 namespace Mountain
 {
     /// @brief Whether to <b>not</b> use packaged binary resources.

@@ -208,6 +208,7 @@
     <ClInclude Include="externals\src\SDL3\SDL_vulkan.h" />
     <ClInclude Include="externals\src\stb_image.h" />
     <ClInclude Include="externals\src\stb_vorbis.h" />
+    <ClInclude Include="src\Mountain\Attributes.hpp" />
     <ClInclude Include="src\Mountain\Audio\Audio.hpp" />
     <ClInclude Include="src\Mountain\Audio\AudioBuffer.hpp" />
     <ClInclude Include="src\Mountain\Audio\AudioContext.hpp" />
@@ -256,6 +257,7 @@
     <ClInclude Include="src\Mountain\Collision\Collision.hpp" />
     <ClInclude Include="src\Mountain\Collision\Grid.hpp" />
     <ClInclude Include="src\Mountain\Collision\Hitbox.hpp" />
+    <ClInclude Include="src\Mountain\CompilerSpecific.hpp" />
     <ClInclude Include="src\Mountain\Configuration.hpp" />
     <ClInclude Include="src\Mountain\Containers\Array.hpp" />
     <ClInclude Include="src\Mountain\Containers\ContiguousIterator.hpp" />

@@ -1,5 +1,9 @@
 #pragma once
 
+#include "Mountain/Core.hpp"
+
+#ifdef ENVIRONMENT_WINDOWS
+
 #include <string>
 
 /// @file windows.hpp
@@ -19,8 +23,6 @@
 #undef far
 #undef MessageBox
 
-#include "Mountain/Core.hpp"
-
 namespace Mountain::Windows
 {
     MOUNTAIN_API bool_t CheckError();
@@ -31,3 +33,5 @@ namespace Mountain::Windows
 
     MOUNTAIN_API std::string GetAppdataRoamingPath();
 }
+
+#endif

@@ -1,5 +1,7 @@
 ﻿#include "Mountain/Utils/Windows.hpp"
 
+#ifdef ENVIRONMENT_WINDOWS
+
 #include "Mountain/Utils/Logger.hpp"
 
 using namespace Mountain;
@@ -47,3 +49,5 @@ std::string Windows::GetAppdataRoamingPath()
     CheckError();
     return result;
 }
+
+#endif
