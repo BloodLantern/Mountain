@@ -3,7 +3,6 @@
 
 #include <cmath>
 #include <cstdint>
-#include <functional>
 
 /// @file Core.hpp
 /// @brief This file is meant to be included by every single other header file of this project.
