@@ -54,10 +54,7 @@ namespace Mountain
         STATIC_CLASS(ThrowHelper)
 
     public:
-        /// @brief Returns an @c InvalidOperationException with the message: "The given iterator is invalid for this container."
         THROW_HELPER_FUNC(InvalidIterator, InvalidOperationException, "The given iterator is invalid for this container.")
-
-        /// @brief Returns an @c ArgumentOutOfRangeException with the message: "The given index is out of range for this container."
         THROW_HELPER_FUNC_ARG(IndexOutOfRange, ArgumentOutOfRangeException, "The given index is out of range for this container.")
     };
 }

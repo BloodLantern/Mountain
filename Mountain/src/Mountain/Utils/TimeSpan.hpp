@@ -28,6 +28,36 @@ namespace Mountain
         static constexpr int64_t TicksPerHour = TicksPerMinute * 60;
         /// @brief Represents the number of ticks in 1 day
         static constexpr int64_t TicksPerDay = TicksPerHour * 24;
+        /// @brief Represents the number of microseconds in 1 millisecond.
+        static constexpr int64_t MicrosecondsPerMillisecond = TicksPerMillisecond / TicksPerMicrosecond;
+        /// @brief Represents the number of microseconds in 1 second.
+        static constexpr int64_t MicrosecondsPerSecond = TicksPerSecond / TicksPerMicrosecond;
+        /// @brief Represents the number of microseconds in 1 minute.
+        static constexpr int64_t MicrosecondsPerMinute = TicksPerMinute / TicksPerMicrosecond;
+        /// @brief Represents the number of microseconds in 1 hour.
+        static constexpr int64_t MicrosecondsPerHour = TicksPerHour / TicksPerMicrosecond;
+        /// @brief Represents the number of microseconds in 1 day.
+        static constexpr int64_t MicrosecondsPerDay = TicksPerDay / TicksPerMicrosecond;
+        /// @brief Represents the number of milliseconds in 1 second.
+        static constexpr int64_t MillisecondsPerSecond = TicksPerSecond / TicksPerMillisecond;
+        /// @brief Represents the number of milliseconds in 1 minute.
+        static constexpr int64_t MillisecondsPerMinute = TicksPerMinute / TicksPerMillisecond;
+        /// @brief Represents the number of milliseconds in 1 hour.
+        static constexpr int64_t MillisecondsPerHour = TicksPerHour / TicksPerMillisecond;
+        /// @brief Represents the number of milliseconds in 1 day.
+        static constexpr int64_t MillisecondsPerDay = TicksPerDay / TicksPerMillisecond;
+        /// @brief Represents the number of seconds in 1 minute.
+        static constexpr int64_t SecondsPerMinute = TicksPerMinute / TicksPerSecond;
+        /// @brief Represents the number of seconds in 1 hour.
+        static constexpr int64_t SecondsPerHour = TicksPerHour / TicksPerSecond;
+        /// @brief Represents the number of seconds in 1 day.
+        static constexpr int64_t SecondsPerDay = TicksPerDay / TicksPerSecond;
+        /// @brief Represents the number of minutes in 1 hour.
+        static constexpr int64_t MinutesPerHour = TicksPerHour / TicksPerMinute;
+        /// @brief Represents the number of minutes in 1 day.
+        static constexpr int64_t MinutesPerDay = TicksPerDay / TicksPerMinute;
+        /// @brief Represents the number of hours in 1 day.
+        static constexpr int32_t HoursPerDay = TicksPerDay / TicksPerHour;
 
         [[nodiscard]]
         static constexpr TimeSpan Zero();

@@ -307,6 +307,7 @@
     <ClInclude Include="src\Mountain\Screen.hpp" />
     <ClInclude Include="src\Mountain\Utils\Color.hpp" />
     <ClInclude Include="src\Mountain\Utils\Coroutine.hpp" />
+    <ClInclude Include="src\Mountain\Utils\DateTime.hpp" />
     <ClInclude Include="src\Mountain\Utils\Event.hpp" />
     <ClInclude Include="src\Mountain\Utils\FileSystemWatcher.hpp" />
     <ClInclude Include="src\Mountain\Utils\Formatter.hpp" />
@@ -402,6 +403,7 @@
     <ClCompile Include="src\Mountain\Screen.cpp" />
     <ClCompile Include="src\Mountain\Utils\Color.cpp" />
     <ClCompile Include="src\Mountain\Utils\Coroutine.cpp" />
+    <ClCompile Include="src\Mountain\Utils\DateTime.cpp" />
     <ClCompile Include="src\Mountain\Utils\FileSystemWatcher.cpp" />
     <ClCompile Include="src\Mountain\Utils\Guid.cpp" />
     <ClCompile Include="src\Mountain\Utils\ImGuiUtils.cpp" />
