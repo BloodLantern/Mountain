@@ -6,7 +6,7 @@
 #include "Mountain/Utils/MetaProgramming.hpp"
 
 // ReSharper disable CppClangTidyBugproneMacroParentheses
-#define DECLARE_EXCEPTION_NAME(exceptionType) [[nodiscard]] const char_t* GetName() const noexcept override { return #exceptionType; }
+#define DECLARE_EXCEPTION_NAME(exceptionType) ATTRIBUTE_NODISCARD const char_t* GetName() const noexcept override { return #exceptionType; }
 
 #define DECLARE_DEFAULT_EXCEPTION(exceptionType, parentType) \
     class exceptionType : public parentType \
@@ -32,28 +32,28 @@ namespace Mountain
     class Exception : public std::exception
     {
     public:
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API Exception() noexcept;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API Exception(Exception&& other) noexcept = default;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API Exception& operator=(Exception&& other) noexcept = default;
         MOUNTAIN_API ~Exception() override = default;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API Exception(const Exception& other) noexcept;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API Exception& operator=(const Exception& other) noexcept;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API explicit Exception(const char_t* message) noexcept;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API const char_t* GetMessage() const noexcept;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API const ExceptionState& GetState() const noexcept;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         virtual const char_t* GetName() const noexcept { return "Exception"; }
 
     private:

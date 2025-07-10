@@ -6,6 +6,7 @@
 #include "Mountain/Core.hpp"
 #include "Mountain/Rendering/RenderTarget.hpp"
 #include "Mountain/Resource/Font.hpp"
+#include "Mountain/Utils/DateTime.hpp"
 #include "Mountain/Utils/Pointer.hpp"
 
 // ReSharper disable once CppInconsistentNaming
@@ -26,7 +27,7 @@ namespace Mountain
     struct DebugStringData
     {
         std::string str;
-        std::chrono::time_point<std::chrono::system_clock> time;
+        DateTime time;
         Color color;
         float_t duration;
     };

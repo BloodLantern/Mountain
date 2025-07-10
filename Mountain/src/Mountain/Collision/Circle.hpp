@@ -16,63 +16,63 @@ namespace Mountain
 
         void RenderDebug(const Color& color) const override;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         bool CheckCollision(Vector2 point) const override;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         bool CheckCollision(const Hitbox& hitbox) const override;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         bool CheckCollision(const Circle& circle) const override;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         bool CheckCollision(const Grid& grid) const override;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         bool CheckCollision(const ColliderList& list) const override;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         bool Intersect(Vector2 p1, Vector2 p2) const;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         float_t Left() const override;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         float_t Right() const override;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         float_t Top() const override;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         float_t Bottom() const override;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         Vector2 Center() const override;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         Vector2 TopLeft() const override;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         Vector2 TopRight() const override;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         Vector2 BottomLeft() const override;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         Vector2 BottomRight() const override;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         float AbsoluteLeft() const override;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         float AbsoluteRight() const override;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         float AbsoluteTop() const override;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         float AbsoluteBottom() const override;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         Vector2 AbsoluteCenter() const override;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         Vector2 AbsoluteTopLeft() const override;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         Vector2 AbsoluteTopRight() const override;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         Vector2 AbsoluteBottomLeft() const override;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         Vector2 AbsoluteBottomRight() const override;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         float Width() const override;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         float Height() const override;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         Vector2 Size() const override;
     };
 }

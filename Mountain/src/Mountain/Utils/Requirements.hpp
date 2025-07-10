@@ -21,22 +21,22 @@
     using ConstIterator = WrappedEnumerable::ConstIterator; \
     using EnumeratedType = Iterator::Type; \
     \
-    [[nodiscard]] \
+    ATTRIBUTE_NODISCARD \
     Iterator begin() noexcept { return wrappedEnumerableField.begin(); } \
     \
-    [[nodiscard]] \
+    ATTRIBUTE_NODISCARD \
     Iterator end() noexcept { return wrappedEnumerableField.end(); } \
     \
-    [[nodiscard]] \
+    ATTRIBUTE_NODISCARD \
     ConstIterator begin() const noexcept { return wrappedEnumerableField.begin(); } \
     \
-    [[nodiscard]] \
+    ATTRIBUTE_NODISCARD \
     ConstIterator end() const noexcept { return wrappedEnumerableField.end(); } \
     \
-    [[nodiscard]] \
+    ATTRIBUTE_NODISCARD \
     ConstIterator cbegin() const noexcept { return wrappedEnumerableField.cbegin(); } \
     \
-    [[nodiscard]] \
+    ATTRIBUTE_NODISCARD \
     ConstIterator cend() const noexcept { return wrappedEnumerableField.cend(); }
 
 // ReSharper enable CppClangTidyBugproneMacroParentheses

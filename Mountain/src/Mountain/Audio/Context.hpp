@@ -14,7 +14,7 @@ namespace Mountain::Audio
     class Context
     {
     public:
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API explicit Context(Device& device);
 
         MOUNTAIN_API ~Context();
@@ -25,11 +25,11 @@ namespace Mountain::Audio
 
         MOUNTAIN_API static bool_t CheckError();
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API int32_t GetMaxSourceCount(SourceType sourceType) const;
 
         /// @brief Returns the next available source of the given type.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API uint32_t GetSource(SourceType type = SourceType::Mono);
 
     private:

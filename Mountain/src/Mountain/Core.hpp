@@ -4,6 +4,9 @@
 #include <cmath>
 #include <cstdint>
 
+#include "Mountain/Attributes.hpp"
+#include "Mountain/CompilerSpecific.hpp"
+
 /// @file Core.hpp
 /// @brief This file is meant to be included by every single other header file of this project.
 ///
@@ -32,11 +35,8 @@ typedef bool bool_t;
 
 /// @brief Macro used for DLL export/import.
 /// @details This macro should be used at the beginning of static member variable and non-inline function declarations.
-#ifdef MOUNTAIN_EXPORT
-#define MOUNTAIN_API __declspec(dllexport)
-#else
-#define MOUNTAIN_API __declspec(dllimport)
-#endif
+#define MOUNTAIN_API SHARED_PUBLIC
+#define MOUNTAIN_PRIVATE_API SHARED_PRIVATE
 
 /// @namespace Mountain
 /// @brief Contains all declarations of the Mountain Framework.
@@ -120,12 +120,6 @@ namespace Mountain {}
     DELETE_COPY_MOVE_OPERATIONS(type) \
     private:
 
-// We need this to be able to make Doxygen links to std::string conversion operators.
-#ifdef DOXYGEN
-/// @private
-using stdstring = std::string;
-#endif
-
 /// @brief Defines binary flag operators for an enum type.
 /// @param enumName The enum to define the flag operations of.
 /// @note This macro **must** be used in the global namespace, as it declares a template specialization of a @c magic_enum struct.
@@ -158,19 +152,11 @@ using stdstring = std::string;
         _declspec(dllexport) int32_t AmdPowerXpressRequestHighPerformance = 1; \
     }
 
-#ifdef MOUNTAIN_EXPORT
-#define PUBLIC_GLOBAL(varType, varName, defaultValue) MOUNTAIN_API inline varType varName = defaultValue;
-#else
-#define PUBLIC_GLOBAL(varType, varName, defaultValue) MOUNTAIN_API varType varName;
-#endif
-
-#define GETTER(type, name, internalName) [[nodiscard]] type Get##name() const noexcept { return internalName; }
+#define GETTER(type, name, internalName) ATTRIBUTE_NODISCARD type Get##name() const noexcept { return internalName; }
 #define SETTER(type, name, internalName) void Set##name(const type new##name) noexcept { internalName = new##name; }
-#define GETTER_SETTER(type, name, internalName) GETTER(type, name, internalName) SETTER(type, name, internalName)
 
-#define STATIC_GETTER(type, name, internalName) [[nodiscard]] static type Get##name() noexcept { return internalName; }
+#define STATIC_GETTER(type, name, internalName) ATTRIBUTE_NODISCARD static type Get##name() noexcept { return internalName; }
 #define STATIC_SETTER(type, name, internalName) static void Set##name(const type new##name) noexcept { internalName = new##name; }
-#define STATIC_GETTER_SETTER(type, name, internalName) STATIC_GETTER(type, name, internalName) STATIC_SETTER(type, name, internalName)
 
 // Undefine any Windows interface macro
 #undef interface
@@ -188,15 +174,3 @@ using stdstring = std::string;
 /// @brief Defines a default virtual destructor.
 /// @param type The type to default the destructor of.
 #define DEFAULT_VIRTUAL_DESTRUCTOR(type) virtual ~type() = default;
-
-#if defined(__JETBRAINS_IDE__) || defined(__RESHARPER__)
-#define ATTRIBUTE_FORMAT(archetype, stringIndex, firstToCheck) [[jetbrains::format(archetype, stringIndex, firstToCheck)]]
-#define ATTRIBUTE_PASS_BY_VALUE [[jetbrains::pass_by_value]]
-#define ATTRIBUTE_GUARD [[jetbrains::guard]]
-#define ATTRIBUTE_HAS_SIDE_EFFECTS [[jetbrains::has_side_effects]]
-#else
-#define ATTRIBUTE_FORMAT(...)
-#define ATTRIBUTE_PASS_BY_VALUE
-#define ATTRIBUTE_GUARD
-#define ATTRIBUTE_HAS_SIDE_EFFECTS
-#endif

@@ -1,5 +1,7 @@
 #include "Mountain/FileSystem/FileManager.hpp"
 
+#include "Mountain/Utils/Stopwatch.hpp"
+
 using namespace Mountain;
 
 Pointer<File> FileManager::Add(std::filesystem::path path)
@@ -107,7 +109,7 @@ Pointer<Directory> FileManager::LoadDirectory(std::filesystem::path path)
 {
     Logger::LogInfo("Loading directory {}...", path);
 
-    auto&& start = std::chrono::system_clock::now();
+    START_STOPWATCH;
 
     if (Contains(path))
     {
@@ -148,7 +150,7 @@ Pointer<Directory> FileManager::LoadDirectory(std::filesystem::path path)
     // Make sure to return a weak reference
     directory.ToWeakReference();
 
-    Logger::LogVerbose("Directory {} load successful. Took {}", p, std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - start));
+    Logger::LogVerbose("Directory {} load successful. Took {}", p, stopwatch);
 
     return directory;
 }
@@ -209,7 +211,7 @@ void FileManager::UnloadAll()
 {
     Logger::LogInfo("Unloading all FileManager entries ({})", m_Entries.size());
 
-    auto&& start = std::chrono::system_clock::now();
+    START_STOPWATCH;
 
     for (auto&& entry : m_Entries)
     {
@@ -222,5 +224,5 @@ void FileManager::UnloadAll()
     // Smart pointers are deleted automatically, we only need to clear the container
     m_Entries.clear();
 
-    Logger::LogVerbose("FileManager unload successful. Took {}", std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - start));
+    Logger::LogVerbose("FileManager unload successful. Took {}", stopwatch);
 }

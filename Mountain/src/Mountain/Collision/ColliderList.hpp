@@ -17,35 +17,35 @@ namespace Mountain
 
 		MOUNTAIN_API void RenderDebug(const Color& color) const override;
 
-		[[nodiscard]]
+		ATTRIBUTE_NODISCARD
 		MOUNTAIN_API bool CheckCollision(Vector2 point) const override;
-		[[nodiscard]]
+		ATTRIBUTE_NODISCARD
 		MOUNTAIN_API bool CheckCollision(const Hitbox& hitbox) const override;
-		[[nodiscard]]
+		ATTRIBUTE_NODISCARD
 		MOUNTAIN_API bool CheckCollision(const Circle& circle) const override;
-		[[nodiscard]]
+		ATTRIBUTE_NODISCARD
 		MOUNTAIN_API bool CheckCollision(const Grid& grid) const override;
-		[[nodiscard]]
+		ATTRIBUTE_NODISCARD
 		MOUNTAIN_API bool CheckCollision(const ColliderList& otherList) const override;
 
-		[[nodiscard]]
+		ATTRIBUTE_NODISCARD
 		MOUNTAIN_API float_t Left() const override;
-		[[nodiscard]]
+		ATTRIBUTE_NODISCARD
 		MOUNTAIN_API float_t Right() const override;
-		[[nodiscard]]
+		ATTRIBUTE_NODISCARD
 		MOUNTAIN_API float_t Top() const override;
-		[[nodiscard]]
+		ATTRIBUTE_NODISCARD
 		MOUNTAIN_API float_t Bottom() const override;
 
-		[[nodiscard]]
+		ATTRIBUTE_NODISCARD
 		MOUNTAIN_API float AbsoluteLeft() const override;
-		[[nodiscard]]
+		ATTRIBUTE_NODISCARD
 		MOUNTAIN_API float AbsoluteRight() const override;
-		[[nodiscard]]
+		ATTRIBUTE_NODISCARD
 		MOUNTAIN_API float AbsoluteTop() const override;
-		[[nodiscard]]
+		ATTRIBUTE_NODISCARD
 		MOUNTAIN_API float AbsoluteBottom() const override;
-		[[nodiscard]]
+		ATTRIBUTE_NODISCARD
 		MOUNTAIN_API Vector2 AbsoluteCenter() const override;
 	};
 }

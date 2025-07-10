@@ -20,7 +20,7 @@ namespace Mountain
     {
     public:
         /// @brief Constructs a Directory corresponding to the given @p path.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API explicit Directory(std::filesystem::path&& filepath);
 
         /// @brief Default Directory destruction.
@@ -42,27 +42,27 @@ namespace Mountain
         MOUNTAIN_API void OpenInExplorer() const override;
 
         /// @brief Returns all the child @ref Entry "Entries" of this Directory.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API const std::vector<Pointer<Entry>>& GetChildEntries() const;
 
         /// @brief Returns all the child @ref Entry "Entries" of this Directory.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API std::vector<Pointer<Entry>>& GetChildEntries();
 
         /// @brief Returns all the child @ref File "Files" of this Directory.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API const std::vector<Pointer<File>>& GetChildFiles() const;
 
         /// @brief Returns all the child @ref File "Files" of this Directory.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API std::vector<Pointer<File>>& GetChildFiles();
 
         /// @brief Returns all the child @ref Directory "Directories" of this Directory.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API const std::vector<Pointer<Directory>>& GetChildDirectories() const;
 
         /// @brief Returns all the child @ref Directory "Directories" of this Directory.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API std::vector<Pointer<Directory>>& GetChildDirectories();
 
         /// @brief Sets the name of this Directory.

@@ -41,17 +41,17 @@ namespace Mountain::Utils
     /// @param number Number to convert
     /// @return Pointer representation of the number
     template <typename PtrT, Concepts::Integral IntT>
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr PtrT* IntToPointer(IntT number);
 
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr size_t PointerToInt(const void* pointer);
 
     /// @brief Gets the hash code of a specified type
     /// @tparam T Type
     /// @return Hash
     template <typename T>
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     size_t GetTypeHash();
 
     /// @brief Gets the hash code of a specified polymorphic pointer type
@@ -59,7 +59,7 @@ namespace Mountain::Utils
     /// @param ptr Polymorphic pointer
     /// @return Hash
     template <typename T>
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     size_t GetTypeHash(const T* ptr);
 
     /// @brief Horizontally aligns the cursor of ImGui to be centered around a specific portion of the available space
@@ -74,7 +74,7 @@ namespace Mountain::Utils
     /// e.g. RequiresUIReloadAttribute will become Requires UI Reload Attribute
     /// @param str String to humanize
     /// @return Result
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API std::string HumanizeString(const std::string& str);
 
     /// @brief Humanizes the provided variable name
@@ -84,7 +84,7 @@ namespace Mountain::Utils
     /// e.g. m_ShouldChange will become Should Change
     /// @param str String to humanize
     /// @return Result
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API std::string HumanizeVariableName(const std::string& str);
 
     /// @brief Removes the namespaces indicators from the provided string
@@ -93,7 +93,7 @@ namespace Mountain::Utils
     ///
     /// @param str String to modify
     /// @return Result
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API constexpr std::string RemoveNamespaces(const std::string& str);
 
 #ifndef SWIG
@@ -103,7 +103,7 @@ namespace Mountain::Utils
     ///
     /// @param str String to modify
     /// @return Result
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API constexpr const char_t* RemoveNamespaces(const char_t* str);
 #endif
 
@@ -114,7 +114,7 @@ namespace Mountain::Utils
     /// @param oldRange Old range
     /// @param newRange New range
     /// @return New value
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API constexpr float_t RemapValue(float_t oldValue, Vector2 oldRange, Vector2 newRange);
 
     /// @brief Remaps a value from one range to another
@@ -124,7 +124,7 @@ namespace Mountain::Utils
     /// @param oldRange Old range
     /// @param newRange New range
     /// @return New value
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API constexpr size_t RemapValue(size_t oldValue, Vector2i oldRange, Vector2i newRange);
 
     /// @brief Normalizes an angle (clamps its value between 0 and 2 * PI)
@@ -153,7 +153,7 @@ namespace Mountain::Utils
     /// @param value The Pointer to cast from.
     /// @return A null Pointer if the cast failed. Otherwise, the cast result.
     template <typename T, typename U>
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     Pointer<T> DynamicPointerCast(const Pointer<U>& value);
 
     /// @brief Opens the specified path in the file explorer
@@ -171,25 +171,25 @@ namespace Mountain::Utils
 
     /// @brief Returns whether an array contains an element
     template <Concepts::StandardContainer ContainerT, typename T>
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     bool_t ArrayContains(const ContainerT& container, T element);
 
     /// @brief Returns whether a string array contains an element using @c Utils::StringEqualsIgnoreCase.
     template <Concepts::StandardContainer ContainerT>
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     bool_t StringArrayContains(const ContainerT& container, const std::string& element);
 
     /// @brief Returns whether a string enumerable contains an element using @c Utils::StringEqualsIgnoreCase.
     template <Requirements::MountainEnumerable EnumerableT>
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     bool_t StringEnumerableContains(const EnumerableT& enumerable, const std::string& element);
 
     /// @brief Checks if two strings are equal, case-insensitive.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API bool_t StringEqualsIgnoreCase(std::string_view a, std::string_view b);
 
     /// @brief Checks if a string contains another one, case-insensitive.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API bool_t StringContainsIgnoreCase(std::string_view a, std::string_view b);
 
     /// @brief Gets the address of a function
@@ -198,7 +198,7 @@ namespace Mountain::Utils
     /// @param f Function
     /// @return Address
     template <typename Ret, typename... Args>
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr size_t FunctionAddress(std::function<Ret(Args...)> f);
 
     MOUNTAIN_API int32_t TerminalCommand(const std::string& command, bool_t asynchronous = true);
@@ -346,7 +346,7 @@ namespace Mountain
     }
 
     template <typename T>
-    size_t Utils::GetTypeHash([[maybe_unused]] const T* const ptr)
+    size_t Utils::GetTypeHash(ATTRIBUTE_MAYBE_UNUSED const T* const ptr)
     {
         return typeid(*ptr).hash_code();
     }

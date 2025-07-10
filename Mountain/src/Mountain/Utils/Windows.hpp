@@ -1,5 +1,9 @@
 #pragma once
 
+#include "Mountain/Core.hpp"
+
+#ifdef ENVIRONMENT_WINDOWS
+
 #include <string>
 
 /// @file windows.hpp
@@ -19,15 +23,17 @@
 #undef far
 #undef MessageBox
 
-#include "Mountain/Core.hpp"
-
 namespace Mountain::Windows
 {
     MOUNTAIN_API bool_t CheckError();
 
     MOUNTAIN_API void SilenceError();
 
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API std::string GetAppdataLocalPath();
 
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API std::string GetAppdataRoamingPath();
 }
+
+#endif

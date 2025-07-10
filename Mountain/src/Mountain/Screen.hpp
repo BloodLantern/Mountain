@@ -4,7 +4,7 @@
 
 #include <Math/vector2i.hpp>
 
-#include "SDL3/SDL_video.h"
+#include <SDL3/SDL_video.h>
 
 /// @file screen.hpp
 /// @brief Defines the Mountain::Screen class.
@@ -19,14 +19,17 @@ namespace Mountain
     public:
         /// @brief Gets the position of the given screen
         /// @remark If given a negative screen index, will default to @c Window::GetCurrentScreen().
+        ATTRIBUTE_NODISCARD
         static Vector2i GetPosition(int32_t screenIndex = -1);
 
         /// @brief Gets the size of the given screen
         /// @remark If given a negative screen index, will default to @c Window::GetCurrentScreen().
+        ATTRIBUTE_NODISCARD
         static Vector2i GetSize(int32_t screenIndex = -1);
 
         /// @brief Gets the refresh rate of the given screen
         /// @remark If given a negative screen index, will default to @c Window::GetCurrentScreen().
+        ATTRIBUTE_NODISCARD
         static float_t GetRefreshRate(int32_t screenIndex = -1);
 
         STATIC_GETTER(int32_t, ScreenCount, m_MonitorCount)

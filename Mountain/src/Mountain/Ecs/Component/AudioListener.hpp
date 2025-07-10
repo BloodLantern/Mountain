@@ -16,7 +16,7 @@ namespace Mountain
         void Update() override;
 
         /// @brief Get the volume in the range [0, inf].
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         float_t GetVolume() const;
 
         /// @brief Set the volume in the range [0, inf]. Default value is 1.

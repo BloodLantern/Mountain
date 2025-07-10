@@ -1,30 +1,24 @@
 // ReSharper disable CppNoDiscardExpression
+#include "Common.hpp"
 #include <array>
 
-#include <gtest/gtest.h>
-
-#include "Mountain/Core.hpp"
 #include "Mountain/Containers/Array.hpp"
 #include "Mountain/Containers/List.hpp"
 
 using namespace Mountain;
 
-#pragma warning(push)
-#pragma warning(disable: 4834) // discarding return value of function with 'nodiscard' attribute
-#pragma warning(disable: 4723) // potential divide by 0
-
 TEST(Array, DefaultInitialization)
 {
-    [[maybe_unused]] constexpr Array<int, 3> defaultInitialized{};
-    [[maybe_unused]] constexpr std::array<int, 3> defaultInitializedStd{};
+    ATTRIBUTE_MAYBE_UNUSED constexpr Array<int, 3> defaultInitialized{};
+    ATTRIBUTE_MAYBE_UNUSED constexpr std::array<int, 3> defaultInitializedStd{};
 
     SUCCEED();
 }
 
 TEST(Array, ListInitialization)
 {
-    [[maybe_unused]] constexpr Array listInitialized{1, 2, 3};
-    [[maybe_unused]] constexpr std::array listInitializedStd{1, 2, 3};
+    ATTRIBUTE_MAYBE_UNUSED constexpr Array listInitialized{1, 2, 3};
+    ATTRIBUTE_MAYBE_UNUSED constexpr std::array listInitializedStd{1, 2, 3};
 
     SUCCEED();
 }
@@ -72,5 +66,3 @@ TEST(List, ListInitialization)
 }
 
 // TODO - Unit tests
-
-#pragma warning(pop)

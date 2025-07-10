@@ -14,7 +14,7 @@ namespace Mountain::Audio
     public:
         MOUNTAIN_API static bool_t CheckError(const Device* device = nullptr);
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API explicit Device(std::string&& name);
 
         MOUNTAIN_API ~Device();

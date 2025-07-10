@@ -171,9 +171,9 @@ void Utils::CreateEmptyFile(const std::filesystem::path& path)
     std::ofstream{ path };
 }
 
-void Utils::SetThreadName([[maybe_unused]] std::thread& thread, [[maybe_unused]] const std::wstring& name)
+void Utils::SetThreadName(ATTRIBUTE_MAYBE_UNUSED std::thread& thread, ATTRIBUTE_MAYBE_UNUSED const std::wstring& name)
 {
-#ifdef _DEBUG
+#if defined(_DEBUG) && defined(ENVIRONMENT_WINDOWS)
     (void) SetThreadDescription(thread.native_handle(), name.c_str());
     Windows::SilenceError();
 #endif

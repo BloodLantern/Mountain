@@ -183,25 +183,25 @@ namespace Mountain
 
         MOUNTAIN_API GETTER(bool_t, Connected, m_IsConnected)
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API const std::string& GetName() const;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API float_t GetAxis(GamepadAxis axis) const;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API Vector2 GetStick(GamepadStick stick) const;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API Vector2i GetDirectionalPad() const;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API bool_t GetButton(GamepadButton button, GamepadButtonStatus status = GamepadButtonStatus::Down) const;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API const TouchpadInfo& GetTouchpad(size_t index) const;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API size_t GetTouchpadAmount() const;
 
         /// @brief Sets the gamepad LED color if there's one
@@ -217,7 +217,7 @@ namespace Mountain
         /// @brief Checks whether the gamepad has a specified capability
         /// @param capability Capability
         /// @return Whether the gamepad has it
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API bool_t HasCapability(GamepadCapabilities capability) const;
 
         MOUNTAIN_API GETTER(const ButtonsArray&, Buttons, m_Buttons)
@@ -261,7 +261,7 @@ namespace Mountain
         SDL_JoystickID m_Id;
         /// @brief Native handle
         SDL_Gamepad* m_Handle;
-        
+
         friend class Input;
     };
 }

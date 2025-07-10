@@ -7,6 +7,7 @@
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Utils/Event.hpp"
+#include "Mountain/Utils/TimeSpan.hpp"
 
 // ReSharper disable once CppInconsistentNaming
 // ReSharper disable once CppEnforceTypeAliasCodeStyle
@@ -31,7 +32,7 @@ namespace Mountain
         All             = FileName | DirectoryName | Attributes | Size | LastWrite | LastAccess | Creation | Security
     };
 
-    class FileSystemWatcher
+    class ATTRIBUTE_NODISCARD FileSystemWatcher
     {
     public:
         Event<const std::filesystem::path&> onModified;
@@ -40,7 +41,7 @@ namespace Mountain
         Event<const std::filesystem::path&, const std::filesystem::path&> onRenamed;
 
         /// @brief Time between each update.
-        std::chrono::milliseconds updateRate{750};
+        TimeSpan updateRate{0, 0, 0, 0, 750};
 
         /// @brief Whether to check the directory contents. Doesn't do anything if the watched path points to a file.
         bool_t checkContents = true;
@@ -68,10 +69,12 @@ namespace Mountain
         /// @brief Forces the watcher thread wake up and update now.
         MOUNTAIN_API void Update();
 
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API std::filesystem::path GetPath() const;
 
         MOUNTAIN_API void SetPath(const std::filesystem::path& newPath);
 
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API bool_t GetRunning() const;
 
     private:

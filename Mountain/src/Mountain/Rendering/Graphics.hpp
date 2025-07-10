@@ -701,10 +701,14 @@ namespace Mountain::Graphics
         Vector2i size
     );
 
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API uint32_t GetLastError();
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API const char_t* GetLastErrorString();
 
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API bool_t IsConstantEnabled(Constant constant);
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API bool_t IsConstantEnabled(Constant constant, uint32_t index);
 
     MOUNTAIN_API void GetConstant(Constant constant, bool_t* outData);
@@ -731,44 +735,69 @@ namespace Mountain::Graphics
     MOUNTAIN_API void SetViewport(int32_t x, int32_t y, int32_t width, int32_t height);
 
     template <OpenGlConvertibleT T>
+    ATTRIBUTE_NODISCARD
     // ReSharper disable once CppFunctionIsNotImplemented
     T FromOpenGl(int32_t value);
     template <>
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API MagnificationFilter FromOpenGl<MagnificationFilter>(int32_t value);
     template <>
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API Wrapping FromOpenGl<Wrapping>(int32_t value);
     template <>
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API ShaderType FromOpenGl<ShaderType>(int32_t value);
     template <>
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API InternalFormat FromOpenGl<InternalFormat>(int32_t value);
     template <>
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API Format FromOpenGl<Format>(int32_t value);
     template <>
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API DataType FromOpenGl<DataType>(int32_t value);
     template <>
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API Constant FromOpenGl<Constant>(int32_t value);
     template <>
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API BufferType FromOpenGl<BufferType>(int32_t value);
     template <>
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API BufferUsage FromOpenGl<BufferUsage>(int32_t value);
     template <>
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API DrawMode FromOpenGl<DrawMode>(int32_t value);
     template <>
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API BlendFunction FromOpenGl<BlendFunction>(int32_t value);
     template <>
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API FramebufferType FromOpenGl<FramebufferType>(int32_t value);
 
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API int32_t ToOpenGl(MagnificationFilter value);
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API int32_t ToOpenGl(Wrapping value);
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API int32_t ToOpenGl(ShaderType value);
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API int32_t ToOpenGl(InternalFormat value);
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API int32_t ToOpenGl(Format value);
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API int32_t ToOpenGl(DataType value);
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API int32_t ToOpenGl(Constant value);
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API int32_t ToOpenGl(BufferType value);
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API int32_t ToOpenGl(BufferUsage value);
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API int32_t ToOpenGl(DrawMode value);
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API int32_t ToOpenGl(BlendFunction value);
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API int32_t ToOpenGl(FramebufferType value);
 }
 

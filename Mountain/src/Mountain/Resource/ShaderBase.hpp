@@ -53,7 +53,7 @@ namespace Mountain
 		MOUNTAIN_API void SetUniform(const char_t* keyName, const Matrix& value) const;
 
 		/// @brief Gets the internal id of the shader
-		[[nodiscard]]
+		ATTRIBUTE_NODISCARD
 		MOUNTAIN_API uint32_t GetId() const;
 
 	protected:
@@ -62,7 +62,7 @@ namespace Mountain
 		bool_t CheckCompileError(uint32_t id, std::string_view type, const std::string& code) const;  // NOLINT(modernize-use-nodiscard)
 		bool_t CheckLinkError() const;  // NOLINT(modernize-use-nodiscard)
 
-		[[nodiscard]]
+		ATTRIBUTE_NODISCARD
 		int32_t GetUniformLocation(const char_t* keyName) const;
 
 		static void ReplaceIncludes(std::string& code, const std::filesystem::path& path, std::unordered_set<std::filesystem::path>& replacedFiles);

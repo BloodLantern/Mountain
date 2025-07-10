@@ -83,7 +83,7 @@ namespace Mountain
         /// @brief Checks if the given @p iterator is valid for this List.
         /// @return @c true if the @p iterator points to elements of this List, the List hasn't changed size since the iterator was constructed,
         /// and if it is still inbounds; or @c false if any of these conditions fail.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         bool_t CheckIterator(Iterator iterator) const;
 
         T& Add(T&& element);
@@ -209,14 +209,14 @@ namespace Mountain
 
         void Reserve(size_t newMinimumCapacity);
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         size_t GetCapacity() const;
 
         void Shrink();
 
         void Clear();
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         bool_t IsEmpty() const;
 
         void Remove(const T& value);
@@ -230,46 +230,46 @@ namespace Mountain
         void RemoveLast();
 
         /// @brief Get the element at the given index with bounds checking.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         T& At(size_t index) const;
 
         /// @brief Get the element at the given iterator with bounds checking.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         T& At(Iterator iterator) const;
 
         /// @brief Get the size of the list.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         size_t GetSize() const noexcept;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         T* GetData() const noexcept;
 
         /// @brief Get the element at the given index without bounds checking.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         T& operator[](size_t index) const noexcept;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         Iterator begin() noexcept;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         Iterator end() noexcept;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         ConstIterator begin() const noexcept;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         ConstIterator end() const noexcept;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         ConstIterator cbegin() const noexcept;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         ConstIterator cend() const noexcept;
 
         ENUMERABLE_EXTENSIONS_IMPLEMENTATION
 
         template <typename U, typename = Meta::EnableIf<Meta::IsConvertibleTo<EnumeratedType, U>>>
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         List<U> Cast() const
         {
             List<U> result;
@@ -282,7 +282,7 @@ namespace Mountain
         }
 
         template <Concepts::Invocable<EnumeratedType> ProjectionFunctionT, typename U = decltype(ProjectionFunctionT{}(EnumeratedType{}))>
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         List<U> Select(const ProjectionFunctionT& function) const
         {
             List<U> result;

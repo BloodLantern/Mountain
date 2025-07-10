@@ -11,10 +11,10 @@ namespace Mountain
         using Exception::Exception;
 
     public:
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API ArgumentException(const char_t* message, const char_t* parameterName) noexcept;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API const char_t* GetParameterName() const noexcept;
 
         DECLARE_EXCEPTION_NAME(ArgumentException)

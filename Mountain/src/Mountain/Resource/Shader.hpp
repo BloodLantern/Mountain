@@ -47,7 +47,7 @@ namespace Mountain
 		/// @param extension File extension
 		/// @return @ref ShaderType type
 		/// @throw std::invalid_argument If the extension isn't valid
-		[[nodiscard]]
+		ATTRIBUTE_NODISCARD
 		static Graphics::ShaderType FileExtensionToType(const std::string& extension);
 
 		using ShaderBase::ShaderBase;
@@ -78,16 +78,16 @@ namespace Mountain
 
 		MOUNTAIN_API bool_t Reload(const Pointer<File>& file, bool_t reloadInBackend = true) override;
 
-		[[nodiscard]]
+		ATTRIBUTE_NODISCARD
 		MOUNTAIN_API Array<Pointer<File>, magic_enum::enum_count<Graphics::ShaderType>()>& GetFiles();
 
-		[[nodiscard]]
+		ATTRIBUTE_NODISCARD
 		MOUNTAIN_API const Array<Pointer<File>, magic_enum::enum_count<Graphics::ShaderType>()>& GetFiles() const;
 
-		[[nodiscard]]
+		ATTRIBUTE_NODISCARD
 		MOUNTAIN_API Array<ShaderCode, magic_enum::enum_count<Graphics::ShaderType>()>& GetCode();
 
-		[[nodiscard]]
+		ATTRIBUTE_NODISCARD
 		MOUNTAIN_API const Array<ShaderCode, magic_enum::enum_count<Graphics::ShaderType>()>& GetCode() const;
 
 		/// @brief Binds the shader for use

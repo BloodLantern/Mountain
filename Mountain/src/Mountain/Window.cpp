@@ -2,7 +2,8 @@
 
 #include <SDL3/SDL.h>
 
-#include "ImGui/imgui_impl_sdl3.h"
+#include <ImGui/imgui_impl_sdl3.h>
+
 #include "Mountain/Screen.hpp"
 #include "Mountain/Input/Input.hpp"
 #include "Mountain/Input/Time.hpp"
@@ -236,7 +237,7 @@ void Window::ProcessWindowEvents(const SDL_Event& event)
         case SDL_EVENT_WINDOW_MINIMIZED:
             m_Minimized = true;
             break;
-            
+
         case SDL_EVENT_WINDOW_SHOWN:
         case SDL_EVENT_WINDOW_RESTORED:
             m_Minimized = false;
@@ -254,7 +255,7 @@ void Window::ProcessKeyboardEvents(const SDL_Event& event)
         // Remap to 0, then map to enum values
         key = key - SDLK_CAPSLOCK + static_cast<size_t>(Key::NormalEnd);
     }
-    
+
     switch (event.type)
     {
         case SDL_EVENT_KEY_UP:
@@ -281,7 +282,7 @@ void Window::ProcessMouseEvents(const SDL_Event& event)
         case SDL_EVENT_MOUSE_MOTION:
             Input::HandleMouseMovement({ event.motion.x, event.motion.y });
             break;
-            
+
         case SDL_EVENT_MOUSE_WHEEL:
             Input::HandleMouseWheel(event.wheel.integer_x, event.wheel.integer_y);
             break;

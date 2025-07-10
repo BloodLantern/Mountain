@@ -39,7 +39,7 @@ namespace Mountain
         MOUNTAIN_API static Pointer<Directory> LoadDirectory(std::filesystem::path path);
 
         /// @brief Checks whether the FileManager contains the specified Entry path.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API static bool_t Contains(const std::filesystem::path& path);
 
         /// @brief Tries to get the Entry with the given @p path.
@@ -47,7 +47,7 @@ namespace Mountain
         /// @param path The system path to get the Entry of.
         /// @return The Entry corresponding to the given @p path, or nullptr if it hasn't been added yet.
         template <Concepts::Entry T = File>
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         static Pointer<T> Get(const std::filesystem::path& path);
 
         /// @brief Renames the Entry with the specified path to another path.
@@ -66,7 +66,7 @@ namespace Mountain
         /// @tparam T The type of Entry to find.
         /// @return The first Entry of type @p T.
         template <Concepts::Entry T = File>
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         static Pointer<T> Find();
 
         /// @brief Finds a specific Entry based on a predicate.
@@ -76,14 +76,14 @@ namespace Mountain
         /// @return The first Entry for which the @p predicate returned @c true. If every Entry
         /// returned @c false, instead return a null Pointer.
         template <Concepts::Entry T = File>
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         static Pointer<T> Find(std::function<bool_t(Pointer<T>)>&& predicate);
 
         /// @brief Finds all @ref Entry "Entries" of type @p T.
         /// @tparam T The type of Entry to find.
         /// @return All stored @ref Entry "Entries" of type @p T.
         template <Concepts::Entry T = File>
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         static std::vector<Pointer<T>> FindAll();
 
         /// @see FileManager::FindAll()
@@ -97,7 +97,7 @@ namespace Mountain
         /// @return The first Entry for which the @p predicate returned @c true. If every Entry
         /// returned @c false, instead return a null Pointer.
         template <Concepts::Entry T = File>
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         static List<Pointer<T>> FindAll(std::function<bool_t(Pointer<T>)>&& predicate);
 
         /// @see FileManager::FindAll(std::function<bool(Pointer<T>)>&&)

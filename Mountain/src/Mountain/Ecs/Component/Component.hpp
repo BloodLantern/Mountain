@@ -46,7 +46,7 @@ namespace Mountain
         virtual void SceneEnd();
 
         /// @brief Get the Entity on which this Component is attached
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         const Entity* GetEntity() const;
 
         /// @brief Get the Entity on which this Component is attached

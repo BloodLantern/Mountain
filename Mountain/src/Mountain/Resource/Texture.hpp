@@ -48,24 +48,24 @@ namespace Mountain
         /// @tparam T Type
         /// @return Data
         template <typename T = char_t>
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         const T* GetData() const;
 
         /// @brief Gets the raw data of the texture
         /// @tparam T Type
         /// @return Data
         template <typename T = char_t>
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         T* GetData();
 
         /// @brief Gets the size of the texture
         /// @return Size
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API Vector2i GetSize() const;
 
         MOUNTAIN_API void SetSize(Vector2i newSize);
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API Graphics::MagnificationFilter GetFilter() const;
         MOUNTAIN_API void SetFilter(Graphics::MagnificationFilter newFilter);
 
@@ -76,11 +76,11 @@ namespace Mountain
         MOUNTAIN_API void Unuse() const;
 
         /// @brief Get the ID of this texture on the GPU
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API uint32_t GetId() const;
 
         /// @brief Gets the underlying GpuTexture
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API Graphics::GpuTexture GetGpuTexture() const;
 
     private:

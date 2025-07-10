@@ -146,7 +146,7 @@ void ResourceManager::LoadAllBinaries()
 {
     Logger::LogInfo("Loading all embedded binary resources");
 
-    const auto start = std::chrono::system_clock::now();
+    START_STOPWATCH;
 
     const auto files = rh::embed.ListFiles();
     const size_t oldResourceCount = m_Resources.size();
@@ -231,7 +231,7 @@ void ResourceManager::LoadAllBinaries()
         "Successfully loaded {} files in {} resources. Took {}",
         files.size(),
         m_Resources.size() - oldResourceCount,
-        std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - start)
+        stopwatch
     );
 }
 
@@ -317,7 +317,7 @@ void ResourceManager::UnloadAll()
 {
     Logger::LogInfo("Unloading all resources ({})", m_Resources.size());
 
-    auto&& start = std::chrono::system_clock::now();
+    START_STOPWATCH;
 
     for (auto& resource : m_Resources)
     {
@@ -332,5 +332,5 @@ void ResourceManager::UnloadAll()
     // Smart pointers are deleted automatically, we only need to clear the container
     m_Resources.clear();
 
-    Logger::LogInfo("ResourceManager unload successful. Took {}", std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - start));
+    Logger::LogInfo("ResourceManager unload successful. Took {}", stopwatch);
 }

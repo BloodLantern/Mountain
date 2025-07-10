@@ -1,18 +1,17 @@
 #pragma once
 
-#include "Mountain/Core.hpp"
-
 #include <magic_enum/magic_enum.hpp>
 
 #include <Math/vector2.hpp>
 
+#include "Mountain/Core.hpp"
+#include "Mountain/Containers/List.hpp"
 #include "Mountain/Rendering/GpuBuffer.hpp"
 #include "Mountain/Rendering/GpuVertexArray.hpp"
 #include "Mountain/Rendering/RenderTarget.hpp"
 #include "Mountain/Resource/Shader.hpp"
 #include "Mountain/Resource/Texture.hpp"
 #include "Mountain/Utils/Color.hpp"
-#include "Mountain/Containers/List.hpp"
 #include "Mountain/Utils/MetaProgramming.hpp"
 #include "Mountain/Utils/Rectangle.hpp"
 

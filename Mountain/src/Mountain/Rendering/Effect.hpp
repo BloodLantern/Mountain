@@ -74,7 +74,7 @@ namespace Mountain
         MOUNTAIN_API void SetIntensity(float_t newIntensity) const;
     };
 
-    // Effect will be applied on the first texture and the second one is used as a buffer
+    // Effect will be applied on the first texture. The second one is only used as a temporary buffer.
     class GaussianBlur : public Effect
     {
     public:
@@ -82,23 +82,25 @@ namespace Mountain
 
         MOUNTAIN_API ~GaussianBlur() override;
 
+        DEFAULT_COPY_MOVE_OPERATIONS(GaussianBlur)
+
         MOUNTAIN_API void LoadResources() override;
 
         MOUNTAIN_API void Apply(Vector2i textureSize, bool_t synchronizeImageData) const override;
 
         MOUNTAIN_API void SetIntensity(float_t newIntensity);
 
-        MOUNTAIN_API List<float_t>ComputeKernel(float_t sigma) const;
+        ATTRIBUTE_NODISCARD
+        MOUNTAIN_API List<float_t> ComputeKernel(float_t sigma) const;
 
-    protected:
+    private:
         Pointer<ComputeShader> m_OtherComputeShader;
         Graphics::GpuBuffer m_KernelBuffer;
 
         float_t m_Radius = 1;
-
     };
 
-    // Effect will be applied on the first texture and the second one is used as a buffer
+    // Effect will be applied on the first texture. The second one is only used as a temporary buffer.
     class BoxBlur : public Effect
     {
     public:
@@ -108,20 +110,17 @@ namespace Mountain
 
         MOUNTAIN_API void SetRadius(int32_t newRadius) const;
 
-
-    protected:
+    private:
         Pointer<ComputeShader> m_OtherComputeShader;
-
     };
 
-    // Effect will be applied on the first texture and the second one is used as a buffer
+    // Effect will be applied on the first texture. The second one is only used as a temporary buffer.
     class Mosaic : public Effect
     {
-        public:
+    public:
         MOUNTAIN_API void LoadResources() override;
-        
+
         MOUNTAIN_API void SetBoxSize(int32_t newSize) const;
-        
     };
 
     class Greyscale : public Effect

@@ -55,7 +55,7 @@ namespace Mountain
     /// @see <a href="https://en.cppreference.com/w/cpp/memory/shared_ptr">std::shared_ptr</a>
     /// @see <a href="https://en.cppreference.com/w/cpp/memory/weak_ptr">std::weak_ptr</a>
     template <typename T>
-    struct Pointer final
+    struct ATTRIBUTE_GUARD Pointer final
     {
         /// @brief The type of ReferenceCounter, and therefore the type this Pointer is pointing to.
         using Type = T;
@@ -98,23 +98,23 @@ namespace Mountain
         ~Pointer();
 
         /// @brief Creates a new strong reference to this pointer.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         Pointer CreateStrongReference() const;
 
         /// @brief Gets the underlying raw pointer.
         ///
         /// This is equivalent to calling Pointer::operator T*() const;
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         const T* Get() const;
 
         /// @brief Gets the underlying raw pointer.
         ///
         /// This is equivalent to calling Pointer::operator T*();
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         T* Get();
 
         /// @brief Returns whether this Pointer is @c nullptr.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         bool_t IsValid() const;
 
         /// @brief Converts this @ref Pointer to a strong reference.
@@ -124,11 +124,11 @@ namespace Mountain
         void ToWeakReference();
 
         /// @brief Returns the underlying ReferenceCounter.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         const ReferenceCounter<T>* GetReferenceCounter() const;
 
         /// @brief Returns whether this Pointer is holding a strong reference.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         bool_t GetIsStrongReference() const;
 
         /// @brief Resets this Pointer to a @c nullptr.
@@ -139,55 +139,60 @@ namespace Mountain
         void Reset();
 
         /// @brief Sets this Pointer to the values of @p other.
+        ATTRIBUTE_HAS_SIDE_EFFECTS
         Pointer& operator=(const Pointer& other);
 
         /// @brief Sets this Pointer to the values of @p other, moving all the data.
+        ATTRIBUTE_HAS_SIDE_EFFECTS
         Pointer& operator=(Pointer&& other) noexcept;
 
         /// @brief Sets this Pointer to @c nullptr.
+        ATTRIBUTE_HAS_SIDE_EFFECTS
         Pointer& operator=(nullptr_t);
 
         /// @brief Sets this Pointer to the values of @p other which is a Pointer of another Type.
         template <typename U>
+        ATTRIBUTE_HAS_SIDE_EFFECTS
         Pointer& operator=(const Pointer<U>& other);
 
         /// @brief Sets this Pointer to the values of @p other which is a Pointer of another Type, moving all the data.
         template <typename U>
-        Pointer& operator=(Pointer<U>&& other) noexcept;
+        ATTRIBUTE_HAS_SIDE_EFFECTS
+        Pointer& operator=(Pointer<U>&& other) noexcept;  // NOLINT(cppcoreguidelines-rvalue-reference-param-not-moved)
 
         /// @brief Converts this @c const Pointer to its underlying @c const raw pointer.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         explicit operator const T*() const;
 
         /// @brief Converts this Pointer to its underlying raw pointer.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         explicit operator T*();
 
         // ReSharper disable once CppNonExplicitConversionOperator
         /// @brief Converts this @ref Pointer to a @c bool_t the same way a raw pointer would.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         operator bool_t() const;
 
         /// @brief Dereferences this Pointer, which gives a reference to the underlying Type.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         T& operator*();
 
         /// @brief Dereferences this @c const Pointer, which gives a @c const reference to the underlying Type.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         const T& operator*() const;
 
         /// @brief Dereferences this Pointer, which gives a reference to the underlying Type.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         T* operator->();
 
         /// @brief Dereferences this @c const Pointer, which gives a @c const reference to the underlying Type.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         const T* operator->() const;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         std::string ToString() const;
 
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         size_t GetHashCode() const;
 
     private:
@@ -201,6 +206,21 @@ namespace Mountain
 
         void CheckReferenceCounterValid();
     };
+
+    /// @brief Compares two @c Pointer by checking if they point to the same address.
+    template <typename T>
+    ATTRIBUTE_NODISCARD
+    bool_t operator==(const Pointer<T>& lhs, const Pointer<T>& rhs);
+
+    /// @brief Compares two @c Pointer by checking if they point to the same address.
+    template <typename T, typename U>
+    ATTRIBUTE_NODISCARD
+    bool_t operator==(const Pointer<T>& lhs, const Pointer<U>& rhs);
+
+    /// @brief Checks if a @ref Pointer is null.
+    template <typename T>
+    ATTRIBUTE_NODISCARD
+    bool_t operator==(const Pointer<T>& lhs, nullptr_t);
 
     CHECK_REQUIREMENT(Requirements::StringConvertible, Pointer<Requirements::DefaultType>);
     CHECK_REQUIREMENT(Requirements::Hashable, Pointer<Requirements::DefaultType>);
@@ -381,7 +401,7 @@ namespace Mountain
 
     template <typename T>
     template <typename U>
-    Pointer<T>& Pointer<T>::operator=(Pointer<U>&& other) noexcept
+    Pointer<T>& Pointer<T>::operator=(Pointer<U>&& other) noexcept  // NOLINT(cppcoreguidelines-rvalue-reference-param-not-moved)
     {
         if (reinterpret_cast<const int8_t*>(this) == reinterpret_cast<const int8_t*>(&other))
             return *this;
@@ -539,9 +559,7 @@ namespace Mountain
         }
     }
 
-    /// @brief Compares two @c Pointer by checking if they point to the same address.
     template <typename T>
-    [[nodiscard]]
     bool_t operator==(const Pointer<T>& lhs, const Pointer<T>& rhs)
     {
         const bool_t lhsNull = !lhs.IsValid(), rhsNull = !rhs.IsValid();
@@ -554,9 +572,7 @@ namespace Mountain
         return lhs.Get() == rhs.Get();
     }
 
-    /// @brief Compares two @c Pointer by checking if they point to the same address.
     template <typename T, typename U>
-    [[nodiscard]]
     bool_t operator==(const Pointer<T>& lhs, const Pointer<U>& rhs)
     {
         const bool_t lhsNull = !lhs.IsValid(), rhsNull = !rhs.IsValid();
@@ -569,8 +585,6 @@ namespace Mountain
         return lhs.Get() == reinterpret_cast<const T*>(rhs.Get());
     }
 
-    /// @brief Checks if a @ref Pointer is null.
     template <typename T>
-    [[nodiscard]]
     bool_t operator==(const Pointer<T>& lhs, const nullptr_t) { return !lhs.IsValid(); }
 }

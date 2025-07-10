@@ -78,15 +78,15 @@ namespace Mountain
         MOUNTAIN_API virtual bool_t Reload(bool_t reloadInBackend = true);
 
         /// @brief Returns whether the Resource has its source data set.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API bool_t IsSourceDataSet() const;
 
         /// @brief Returns whether the Resource has already been loaded in the backend.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API bool_t IsLoaded() const;
 
         /// @brief Returns the name of this Resource.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API const std::string& GetName() const;
 
         /// @brief Sets the name of this Resource.
@@ -98,11 +98,11 @@ namespace Mountain
         MOUNTAIN_API void SetGuid(const Guid& guid);
 
         /// @brief Returns the Guid of this Resource.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API const Guid& GetGuid() const;
 
         /// @brief Returns the File from which this Resource was loaded.
-        [[nodiscard]]
+        ATTRIBUTE_NODISCARD
         MOUNTAIN_API Pointer<File> GetFile() const;
 
         MOUNTAIN_API void SetFile(const Pointer<File>& file);
