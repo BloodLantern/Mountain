@@ -44,10 +44,12 @@
     <ClCompile Include="src\Containers\TestArray.cpp" />
     <ClCompile Include="src\Containers\TestList.cpp" />
     <ClCompile Include="src\Main.cpp" />
-    <ClCompile Include="src\Test.cpp" />
+    <ClCompile Include="src\Utils\TestDateTime.cpp" />
     <ClCompile Include="src\Utils\TestGuid.cpp" />
     <ClCompile Include="src\Utils\TestMetaProgramming.cpp" />
     <ClCompile Include="src\Utils\TestPointer.cpp" />
+    <ClCompile Include="src\Utils\TestStopwatch.cpp" />
+    <ClCompile Include="src\Utils\TestTimeSpan.cpp" />
     <ClCompile Include="src\Utils\TestUtils.cpp" />
   </ItemGroup>
   <ItemGroup>

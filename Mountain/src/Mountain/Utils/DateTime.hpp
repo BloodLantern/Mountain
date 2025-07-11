@@ -17,6 +17,9 @@ namespace Mountain
         Sunday
     };
 
+    /// @brief C++ reimplementation of the .NET DateTime struct
+    /// @details Represents an instant in time, typically expressed as a date and time of day.
+    /// @see Source: https://github.com/dotnet/runtime/blob/release/8.0/src/libraries/System.Private.CoreLib/src/System/DateTime.cs
     struct DateTime
     {
         static constexpr DateTime MinValue();
@@ -54,7 +57,7 @@ namespace Mountain
             int32_t minute,
             int32_t second,
             int32_t millisecond
-            );
+        );
 
         constexpr DateTime(
             int32_t year,
@@ -105,7 +108,7 @@ namespace Mountain
         friend constexpr std::strong_ordering operator<=>(DateTime, DateTime) = default;
 
         ATTRIBUTE_NODISCARD
-        std::string ToString() const;
+        MOUNTAIN_API std::string ToString() const;
 
         ATTRIBUTE_NODISCARD
         constexpr size_t GetHashCode() const;
@@ -268,7 +271,7 @@ namespace Mountain
 
     constexpr DayOfWeek DateTime::GetDayOfWeek() const
     {
-        return static_cast<DayOfWeek>((static_cast<uint32_t>(GetUTicks() / TimeSpan::TicksPerDay) + 1) % 7);
+        return static_cast<DayOfWeek>(static_cast<uint32_t>(GetUTicks() / TimeSpan::TicksPerDay) % 7);
     }
 
     constexpr int32_t DateTime::GetDayOfYear() const

@@ -30,7 +30,7 @@ DateTime DateTime::Today()
 std::string DateTime::ToString() const
 {
     return std::format(
-        "{}/{}/{} {}:{}:{}",
+        "{:04}/{:02}/{:02} {:02}:{:02}:{:02}",
         GetYear(),
         GetMonth(),
         GetDay(),
