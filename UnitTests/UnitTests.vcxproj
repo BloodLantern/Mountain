@@ -41,6 +41,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Common.cpp" PrecompiledHeader="Create" />
+    <ClCompile Include="src\Containers\TestArray.cpp" />
+    <ClCompile Include="src\Containers\TestList.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Test.cpp" />
     <ClCompile Include="src\Utils\TestGuid.cpp" />
