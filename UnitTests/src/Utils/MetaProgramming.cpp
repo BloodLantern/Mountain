@@ -443,3 +443,11 @@ TEST(Utils_MetaProgramming, Concepts_Resource)
     EXPECT_TRUE(Concepts::Resource<Font>);
     EXPECT_TRUE(Concepts::Resource<Shader>);
 }
+
+TEST(Utils_MetaProgramming, Concepts_LoadableResource)
+{
+    EXPECT_TRUE(Concepts::LoadableResource<Resource>);
+    EXPECT_TRUE(Concepts::LoadableResource<Texture>);
+    EXPECT_FALSE(Concepts::LoadableResource<Font>);
+    EXPECT_TRUE(Concepts::LoadableResource<Shader>);
+}
