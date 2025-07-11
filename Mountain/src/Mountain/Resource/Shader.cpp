@@ -54,9 +54,9 @@ bool_t Shader::Load(const char_t* const buffer, const int64_t length, const Grap
 
 void Shader::Load()
 {
-    std::array<uint32_t, magic_enum::enum_count<Graphics::ShaderType>()> shaderIds;
+    Array<uint32_t, magic_enum::enum_count<Graphics::ShaderType>()> shaderIds;
     bool_t compileError = false;
-    for (size_t i = 0; i < magic_enum::enum_count<Graphics::ShaderType>(); i++)
+    for (size_t i = 0; i < shaderIds.GetSize(); i++)
     {
         const ShaderCode& code = m_Code[i];
         if (code.code.empty())
@@ -93,7 +93,7 @@ void Shader::Load()
     glObjectLabel(GL_PROGRAM, m_Id, static_cast<GLsizei>(m_Name.length()), m_Name.c_str());
 #endif
 
-    for (size_t i = 0; i < magic_enum::enum_count<Graphics::ShaderType>(); i++)
+    for (size_t i = 0; i < shaderIds.GetSize(); i++)
 		glAttachShader(m_Id, shaderIds[i]);
 
     glLinkProgram(m_Id);
