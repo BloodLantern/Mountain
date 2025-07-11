@@ -105,7 +105,7 @@ compile by statically linking against the corresponding `Mountain.lib`
 - ~~Custom exceptions~~
 - Built-in shader hot-reloading
 - \[WIP] Real unit tests
-- Replace all `std::array` and `std::vector` usages with `Mountain::Array` and `Mountain::List`
+- ~~Replace all `std::array` and `std::vector` usages with `Mountain::Array` and `Mountain::List`~~
 - True text rendering
 - Add an instanced Random API to have both a static and instanced way or generated RNG
 - ~~Add `DateTime` class from .NET~~
