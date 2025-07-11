@@ -110,7 +110,7 @@ namespace Mountain
         template <typename T>
         constexpr bool_t IsTriviallyCopyable = std::is_trivially_copyable_v<T>;
 
-        /// @brief Checks whether @p From is trivially assignable to @p T.
+        /// @brief Checks whether @p From is trivially assignable to @p To.
         template <typename To, typename From>
         constexpr bool_t IsTriviallyAssignable = std::is_trivially_assignable_v<To, From>;
 
@@ -118,15 +118,15 @@ namespace Mountain
         template <typename T>
         constexpr bool_t IsTriviallyConstructible = std::is_trivially_constructible_v<T>;
 
-        /// @brief Checks whether @p T is trivially copy assignable.
+        /// @brief Checks whether @p T is trivially copy-assignable.
         template <typename T>
         constexpr bool_t IsTriviallyCopyAssignable = std::is_trivially_copy_assignable_v<T>;
 
-        /// @brief Checks whether @p T is trivially copy constructible.
+        /// @brief Checks whether @p T is trivially copy-constructible.
         template <typename T>
         constexpr bool_t IsTriviallyCopyConstructible = std::is_trivially_copy_constructible_v<T>;
 
-        /// @brief Checks whether @p T is trivially default constructible.
+        /// @brief Checks whether @p T is trivially default-constructible.
         template <typename T>
         constexpr bool_t IsTriviallyDefaultConstructible = std::is_trivially_default_constructible_v<T>;
 
@@ -134,11 +134,11 @@ namespace Mountain
         template <typename T>
         constexpr bool_t IsTriviallyDestructible = std::is_trivially_destructible_v<T>;
 
-        /// @brief Checks whether @p T is trivially move assignable.
+        /// @brief Checks whether @p T is trivially move-assignable.
         template <typename T>
         constexpr bool_t IsTriviallyMoveAssignable = std::is_trivially_move_assignable_v<T>;
 
-        /// @brief Checks whether @p T is trivially move constructible.
+        /// @brief Checks whether @p T is trivially move-constructible.
         template <typename T>
         constexpr bool_t IsTriviallyMoveConstructible = std::is_trivially_move_constructible_v<T>;
 
@@ -201,7 +201,7 @@ namespace Mountain
 
         /// @brief Removes any const, volatile and pointer specifications from @p T
         template <typename T>
-        using RemoveCvPointerSpecifier = RemovePointerSpecifier<RemoveCvSpecifier<T>>;
+        using RemoveCvPointerSpecifier = RemoveCvSpecifier<RemovePointerSpecifier<T>>;
 
         /// @brief Checks whether the type is a function type
         /// <a href="https://en.cppreference.com/w/cpp/types/is_function.html">as defined in the C++ standard</a>.
@@ -231,6 +231,7 @@ namespace Mountain
         /// @brief Checks if T is a native type.
         ///
         /// A native type is one of the following types:
+        /// - char_t
         /// - uint8_t
         /// - int8_t
         /// - uint16_t
@@ -239,14 +240,15 @@ namespace Mountain
         /// - int32_t
         /// - float_t
         /// - double_t
-        /// - bool_t_t
+        /// - bool_t
         ///
         template <typename T>
-        constexpr bool_t IsNativeType = IsAny<T, uint8_t, int8_t, uint16_t, int16_t, uint32_t, int32_t, uint64_t, int64_t, float_t, double_t, bool_t>;
+        constexpr bool_t IsNativeType = IsAny<T, char_t, uint8_t, int8_t, uint16_t, int16_t, uint32_t, int32_t, uint64_t, int64_t, float_t, double_t, bool_t>;
 
         /// @brief Checks if T is an integral or a floating type.
         ///
-        /// A int/float type is one of the following types:
+        /// An int/float type is one of the following types:
+        /// - char_t
         /// - uint8_t
         /// - int8_t
         /// - uint16_t
@@ -255,9 +257,10 @@ namespace Mountain
         /// - int32_t
         /// - float_t
         /// - double_t
+        /// - bool_t
         ///
         template <typename T>
-        constexpr bool_t IsIntegralOrFloating = IsAny<T, uint8_t, int8_t, uint16_t, int16_t, uint32_t, int32_t, uint64_t, int64_t, float_t, double_t>;
+        constexpr bool_t IsIntegralOrFloating = IsIntegral<T> || IsFloatingPoint<T>;
 
         /// @brief Checks if T is a math type.
         ///
@@ -267,9 +270,12 @@ namespace Mountain
         /// - Vector3
         /// - Vector4
         /// - Quaternion
+        /// - Matrix2
+        /// - Matrix3
+        /// - Matrix
         ///
         template <typename T>
-        constexpr bool_t IsMathType = IsAny<T, Vector2, Vector2i, Vector3, Vector4, Quaternion>;
+        constexpr bool_t IsMathType = IsAny<T, Vector2, Vector2i, Vector3, Vector4, Quaternion, Matrix2, Matrix3, Matrix>;
 
         /// @brief Checks if T is a color type.
         ///
@@ -280,6 +286,7 @@ namespace Mountain
         template <typename T>
         constexpr bool_t IsColorType = IsAny<T, Color, ColorHsva>;
 
+        /// @brief Checks if @p From is **implicitly** convertible to @p To.
         template <typename From, typename To>
         constexpr bool_t IsConvertibleTo = std::is_convertible_v<From, To>;
 

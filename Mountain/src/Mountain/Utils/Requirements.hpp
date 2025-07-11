@@ -266,7 +266,7 @@ namespace Mountain::Meta
     using EnumerableIteratorType = typename EnumerableIteratorTypeS<T>::Type;
 
     /// @brief Checks whether @p T is sortable.
-    template <Concepts::Iterator Iterator, typename Comparer, typename Projection = decltype(Mountain::Identity<IteratorType<Iterator>>)>
+    template <Concepts::Iterator Iterator, typename Comparer, typename Projection = Mountain::Identity>
     constexpr bool_t IsSortable = std::sortable<Iterator, Comparer, Projection>;
 }
 

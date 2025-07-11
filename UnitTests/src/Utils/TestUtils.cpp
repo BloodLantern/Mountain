@@ -73,3 +73,72 @@ TEST(Utils_Utils, ArrayContains)
     EXPECT_TRUE(Utils::ArrayContains(array, 2));
     EXPECT_FALSE(Utils::ArrayContains(array, 4));
 }
+
+TEST(Utils_Utils, StringArrayContains)
+{
+    constexpr std::array array{"Hello", ", ", "World", "!"};
+
+    EXPECT_TRUE(Utils::StringArrayContains(array, "hello"));
+    EXPECT_TRUE(Utils::StringArrayContains(array, "HELLO"));
+    EXPECT_TRUE(Utils::StringArrayContains(array, "Hello"));
+    EXPECT_FALSE(Utils::StringArrayContains(array, "string"));
+}
+
+TEST(Utils_Utils, StringEnumerableContains)
+{
+    constexpr Array array{"Hello", ", ", "World", "!"};
+
+    EXPECT_TRUE(Utils::StringEnumerableContains(array, "hello"));
+    EXPECT_TRUE(Utils::StringEnumerableContains(array, "HELLO"));
+    EXPECT_TRUE(Utils::StringEnumerableContains(array, "Hello"));
+    EXPECT_FALSE(Utils::StringEnumerableContains(array, "string"));
+}
+
+TEST(Utils_Utils, StringEqualsIgnoreCase)
+{
+    EXPECT_TRUE(Utils::StringEqualsIgnoreCase("hello", "HELLO"));
+    EXPECT_TRUE(Utils::StringEqualsIgnoreCase("heLlO", "Hello"));
+    EXPECT_FALSE(Utils::StringEqualsIgnoreCase("hello", "HELLO "));
+}
+
+TEST(Utils_Utils, StringContainsIgnoreCase)
+{
+    constexpr std::string_view str = "Hello, World!";
+
+    EXPECT_TRUE(Utils::StringContainsIgnoreCase(str, "HELLO"));
+    EXPECT_TRUE(Utils::StringContainsIgnoreCase(str, ","));
+    EXPECT_FALSE(Utils::StringContainsIgnoreCase(str, "Hello world"));
+}
+
+namespace
+{
+    void Func(){}
+}
+
+TEST(Utils_Utils, FunctionAddress)
+{
+    EXPECT_EQ(reinterpret_cast<size_t>(&Func), Utils::FunctionAddress(std::function{Func}));
+    EXPECT_NE(0ull, Utils::FunctionAddress(std::function{Func}));
+}
+
+TEST(Utils_Utils, CallSafe)
+{
+    const std::function<int()> null;
+    const std::function<int()> nonnull = [] { return 1; };
+
+    EXPECT_EQ(Utils::CallSafe(null), 0);
+    EXPECT_EQ(Utils::CallSafe(nonnull), 1);
+}
+
+TEST(Utils_Utils, GetBits)
+{
+    constexpr uint8_t i = 0b01110000;
+
+    auto result = Utils::GetBits<4, 1>(i);
+
+    EXPECT_EQ(result, 0b00000001ull);
+
+    result = Utils::GetBits<5, 3>(i);
+
+    EXPECT_EQ(result, 0b00000011ull);
+}
