@@ -413,7 +413,7 @@ TEST(Utils_MetaProgramming, Meta_IsConvertibleTo)
     EXPECT_FALSE((Meta::IsConvertibleTo<Color, ColorHsva>));
     EXPECT_FALSE((Meta::IsConvertibleTo<ColorHsva, Color>));
     EXPECT_TRUE((Meta::IsConvertibleTo<B*, A*>));
-    EXPECT_TRUE((Meta::IsConvertibleTo<A*, B*>));
+    EXPECT_FALSE((Meta::IsConvertibleTo<A*, B*>));
 }
 
 TEST(Utils_MetaProgramming, Meta_IsEqualityComparable)
