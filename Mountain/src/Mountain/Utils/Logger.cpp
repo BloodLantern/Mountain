@@ -1,4 +1,6 @@
-﻿#include "Mountain/Utils/Logger.hpp"
+﻿#include "Mountain/PrecompiledHeader.hpp"
+
+#include "Mountain/Utils/Logger.hpp"
 
 #include <iostream>
 

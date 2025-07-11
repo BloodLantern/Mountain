@@ -1,4 +1,6 @@
-﻿#include "Mountain/Rendering/Effect.hpp"
+﻿#include "Mountain/PrecompiledHeader.hpp"
+
+#include "Mountain/Rendering/Effect.hpp"
 
 #include "Mountain/Rendering/Draw.hpp"
 #include "Mountain/Rendering/Renderer.hpp"

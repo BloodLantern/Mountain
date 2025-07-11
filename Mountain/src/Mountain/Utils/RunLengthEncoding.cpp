@@ -1,3 +1,5 @@
+#include "Mountain/PrecompiledHeader.hpp"
+
 #include "Mountain/Utils/RunLengthEncoding.hpp"
 
 using namespace Mountain;

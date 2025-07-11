@@ -1,4 +1,6 @@
-﻿#include "Mountain/Ecs/Component/Sprite.hpp"
+﻿#include "Mountain/PrecompiledHeader.hpp"
+
+#include "Mountain/Ecs/Component/Sprite.hpp"
 
 #include "Mountain/Ecs/Entity.hpp"
 #include "Mountain/Input/Time.hpp"

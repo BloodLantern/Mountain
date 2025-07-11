@@ -1,3 +1,5 @@
+#include "Mountain/PrecompiledHeader.hpp"
+
 #include "Mountain/Resource/Texture.hpp"
 
 #include <stb_image.h>

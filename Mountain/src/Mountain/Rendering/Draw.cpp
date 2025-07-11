@@ -1,6 +1,7 @@
+#include "Mountain/PrecompiledHeader.hpp"
+
 #include "Mountain/Rendering/Draw.hpp"
 
-#include "Mountain/Globals.hpp"
 #include "Mountain/Containers/EnumerableExt.hpp"
 #include "Mountain/Resource/Font.hpp"
 #include "Mountain/Resource/ResourceManager.hpp"
@@ -149,7 +150,7 @@ void Draw::Texture(
     const Vector2 uv0,
     const Vector2 uv1,
     const Color& color,
-    const Meta::UnderlyingEnumType<DrawTextureFlipping> flipFlags
+    const DrawTextureFlipping flipFlags
 )
 {
     if (uv0.x > uv1.x || uv0.y > uv1.y)
@@ -221,7 +222,7 @@ void Draw::RenderTarget(
     const Vector2 uv0,
     const Vector2 uv1,
     const Color& color,
-    const Meta::UnderlyingEnumType<DrawTextureFlipping> flipFlags
+    const DrawTextureFlipping flipFlags
 )
 {
     if (uv0.x > uv1.x || uv0.y > uv1.y)
@@ -580,14 +581,14 @@ void Draw::InitializeTriangleColoredBuffers()
 
 void Draw::InitializeRectangleBuffers()
 {
-    constexpr std::array vertexData{
+    constexpr Array vertexData{
         0.f, 0.f,
         1.f, 0.f,
         1.f, 1.f,
         0.f, 1.f
     };
 
-    constexpr std::array<uint32_t, 6> indexData{
+    constexpr Array<uint32_t, 6> indexData{
         0, 1, 2,
         2, 3, 0
     };
@@ -596,11 +597,11 @@ void Draw::InitializeRectangleBuffers()
 
     // VBO
     BindBuffer(Graphics::BufferType::ArrayBuffer, m_RectangleVbo);
-    m_RectangleVbo.SetData(sizeof(vertexData), vertexData.data(), Graphics::BufferUsage::StaticDraw);
+    m_RectangleVbo.SetData(sizeof(vertexData), vertexData.GetData(), Graphics::BufferUsage::StaticDraw);
 
     // EBO
     BindBuffer(Graphics::BufferType::ElementArrayBuffer, m_RectangleEbo);
-    m_RectangleEbo.SetData(sizeof(indexData), indexData.data(), Graphics::BufferUsage::StaticDraw);
+    m_RectangleEbo.SetData(sizeof(indexData), indexData.GetData(), Graphics::BufferUsage::StaticDraw);
 
     // VAO
     uint32_t index = 0;
@@ -694,7 +695,7 @@ void Draw::InitializeArcBuffers()
 
 void Draw::InitializeTextureBuffers()
 {
-    constexpr std::array vertexData = {
+    constexpr Array vertexData = {
         0.f, 0.f,
         1.f, 0.f,
         1.f, 1.f,
@@ -705,7 +706,7 @@ void Draw::InitializeTextureBuffers()
 
     // VBO
     BindBuffer(Graphics::BufferType::ArrayBuffer, m_TextureVbo);
-    m_TextureVbo.SetData(sizeof(vertexData), vertexData.data(), Graphics::BufferUsage::StaticDraw);
+    m_TextureVbo.SetData(sizeof(vertexData), vertexData.GetData(), Graphics::BufferUsage::StaticDraw);
 
     // EBO
     BindBuffer(Graphics::BufferType::ElementArrayBuffer, m_RectangleEbo);
@@ -743,7 +744,7 @@ void Draw::InitializeTextBuffers()
 
 void Draw::InitializeRenderTargetBuffers()
 {
-    constexpr std::array vertexData = {
+    constexpr Array vertexData = {
         0.f, 0.f,
         1.f, 0.f,
         1.f, 1.f,
@@ -754,7 +755,7 @@ void Draw::InitializeRenderTargetBuffers()
 
     // VBO
     BindBuffer(Graphics::BufferType::ArrayBuffer, m_RenderTargetVbo);
-    m_RenderTargetVbo.SetData(sizeof(vertexData), vertexData.data(), Graphics::BufferUsage::StaticDraw);
+    m_RenderTargetVbo.SetData(sizeof(vertexData), vertexData.GetData(), Graphics::BufferUsage::StaticDraw);
 
     // EBO
     BindBuffer(Graphics::BufferType::ElementArrayBuffer, m_RectangleEbo);
@@ -1043,7 +1044,7 @@ void Draw::RenderTextData(const List<TextData>& texts, const size_t index, const
 
                 const Vector2 size = Calc::Round(character.size * data.scale);
 
-                const std::array vertices = {
+                const Array vertices = {
                     pos.x,          pos.y,           0.f, 0.f,
                     pos.x + size.x, pos.y,           1.f, 0.f,
                     pos.x + size.x, pos.y + size.y,  1.f, 1.f,
@@ -1052,7 +1053,7 @@ void Draw::RenderTextData(const List<TextData>& texts, const size_t index, const
 
                 BindTexture(character.texture);
 
-                m_TextVbo.SetSubData(0, sizeof(vertices), vertices.data());
+                m_TextVbo.SetSubData(0, sizeof(vertices), vertices.GetData());
 
                 DrawElements(Graphics::DrawMode::Triangles, 6, Graphics::DataType::UnsignedInt, nullptr);
             }

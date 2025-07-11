@@ -1,13 +1,11 @@
-// ReSharper disable CppNoDiscardExpression
+﻿// ReSharper disable CppNoDiscardExpression
 #include "Common.hpp"
+
 #include <array>
 
-#include "Mountain/Containers/Array.hpp"
-#include "Mountain/Containers/List.hpp"
+#include <Mountain/Containers/Array.hpp>
 
-using namespace Mountain;
-
-TEST(Array, DefaultInitialization)
+TEST(Containers_Array, DefaultInitialization)
 {
     ATTRIBUTE_MAYBE_UNUSED constexpr Array<int, 3> defaultInitialized{};
     ATTRIBUTE_MAYBE_UNUSED constexpr std::array<int, 3> defaultInitializedStd{};
@@ -15,7 +13,7 @@ TEST(Array, DefaultInitialization)
     SUCCEED();
 }
 
-TEST(Array, ListInitialization)
+TEST(Containers_Array, ListInitialization)
 {
     ATTRIBUTE_MAYBE_UNUSED constexpr Array listInitialized{1, 2, 3};
     ATTRIBUTE_MAYBE_UNUSED constexpr std::array listInitializedStd{1, 2, 3};
@@ -23,7 +21,7 @@ TEST(Array, ListInitialization)
     SUCCEED();
 }
 
-TEST(Array, RandomAccess)
+TEST(Containers_Array, RandomAccess)
 {
     constexpr Array array{1, 2, 3};
     constexpr std::array arrayStd{1, 2, 3};
@@ -38,7 +36,7 @@ TEST(Array, RandomAccess)
     }
 }
 
-TEST(Array, Iterator)
+TEST(Containers_Array, Iterator)
 {
     constexpr Array array{1, 2, 3};
     constexpr std::array arrayStd{1, 2, 3};
@@ -49,20 +47,25 @@ TEST(Array, Iterator)
         EXPECT_EQ(*it, *itStd);
 }
 
-TEST(List, DefaultInitialization)
+TEST(Containers_Array, Enumerable_Cast)
 {
-    List<int> defaultInitialized{};
-    std::vector<int> defaultInitializedStd{};
+    constexpr Array array{1, 2, 3};
 
-    //EXPECT_EQ(defaultInitialized, defaultInitializedStd);
+    const Array fArray = array.Cast<float>();
+
+    EXPECT_FLOAT_EQ(fArray[0], 1.f);
+    EXPECT_FLOAT_EQ(fArray[1], 2.f);
+    EXPECT_FLOAT_EQ(fArray[2], 3.f);
 }
 
-TEST(List, ListInitialization)
+TEST(Containers_Array, Enumerable_Select)
 {
-    List listInitialized{1, 2, 3};
-    std::vector listInitializedStd{1, 2, 3};
+    constexpr Array cStrArray{"Hello", ", ", "World", "!"};
 
-    //EXPECT_EQ(listInitialized, listInitializedStd);
+    const Array strArray = cStrArray.Select([](const char* cStr) { return std::string{cStr}; });
+
+    EXPECT_EQ(strArray[0], cStrArray[0]);
+    EXPECT_EQ(strArray[1], cStrArray[1]);
+    EXPECT_EQ(strArray[2], cStrArray[2]);
+    EXPECT_EQ(strArray[3], cStrArray[3]);
 }
-
-// TODO - Unit tests

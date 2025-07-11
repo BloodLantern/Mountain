@@ -30,6 +30,10 @@ namespace Mountain
     template <typename T, typename U = T>
     using Projection = std::function<U(T)>;
 
-    template <typename T>
-    const Projection<T> Identity = [](T t) -> T { return t; };
+    /// @brief Identity @c Projection function. Returns the given value when invoked.
+    struct Identity
+    {
+        template <typename T>
+        T operator()(T t) { return t; }
+    };
 }

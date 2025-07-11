@@ -1,4 +1,6 @@
-﻿#include "Mountain/Input/Input.hpp"
+﻿#include "Mountain/PrecompiledHeader.hpp"
+
+#include "Mountain/Input/Input.hpp"
 
 #include "Time.hpp"
 #include "Mountain/Utils/Logger.hpp"
@@ -149,7 +151,7 @@ void Input::ConnectGamepad(const uint32_t id)
         capabilities |= GamepadCapabilities::Gyroscope;
         SDL_SetGamepadSensorEnabled(gamepad->m_Handle, SDL_SENSOR_GYRO, true);
     }
-    
+
     gamepad->m_Capabilities = capabilities;
 
     if (gamepad->HasCapability(GamepadCapabilities::Led))
@@ -214,10 +216,10 @@ void Input::UpdateGamepadAxis(const uint32_t id, const GamepadAxis axis, const i
 
     if (!gamepad)
         return;
-    
+
     const float_t floatValue = Utils::RemapValue(static_cast<float_t>(value), { -32768.f, 32767.f }, { -1, 1 });
     const size_t idx = static_cast<size_t>(axis);
-    
+
     gamepad->m_Axes[idx] = Calc::MakeZero(floatValue, GamepadInput::nullAnalogValue);
 
     if (axis == GamepadAxis::LeftTrigger || axis == GamepadAxis::RightTrigger)
@@ -249,7 +251,7 @@ void Input::UpdateGamepadGyro(uint32_t id, const Vector3& gyro)
     GamepadInput* const gamepad = FindFirst(m_Gamepads, [id](const GamepadInput& g) { return g.m_Id == id; });
     if (!gamepad)
         return;
-    
+
     gamepad->m_Gyroscope = gyro;
 }
 
@@ -258,7 +260,7 @@ void Input::UpdateGamepadAccel(uint32_t id, const Vector3& accel)
     GamepadInput* const gamepad = FindFirst(m_Gamepads, [id](const GamepadInput& g) { return g.m_Id == id; });
     if (!gamepad)
         return;
-    
+
     gamepad->m_Accelerometer = accel;
 }
 
@@ -267,7 +269,7 @@ void Input::UpdateGamepadTouchpad(const uint32_t id, const size_t touchpad, cons
     const GamepadInput* const gamepad = FindFirst(m_Gamepads, [id](const GamepadInput& g) { return g.m_Id == id; });
     if (!gamepad)
         return;
-    
+
     gamepad->m_Touchpads[touchpad].fingerLocations[finger] = location;
 }
 

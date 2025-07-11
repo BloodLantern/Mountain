@@ -1,4 +1,6 @@
-﻿#include "Mountain/Exceptions/Exception.hpp"
+﻿#include "Mountain/PrecompiledHeader.hpp"
+
+#include "Mountain/Exceptions/Exception.hpp"
 
 using namespace Mountain;
 

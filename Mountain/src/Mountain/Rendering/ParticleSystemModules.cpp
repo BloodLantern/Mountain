@@ -1,4 +1,6 @@
-﻿#include "Mountain/Rendering/ParticleSystemModules.hpp"
+﻿#include "Mountain/PrecompiledHeader.hpp"
+
+#include "Mountain/Rendering/ParticleSystemModules.hpp"
 
 #include <ImGui/imgui.h>
 

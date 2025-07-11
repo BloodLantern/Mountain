@@ -46,11 +46,11 @@
     void ForEach(const ::Mountain::Operation<const EnumeratedType>& operation) const { return ::Mountain::ForEach(*this, operation); } \
     \
     template <typename = ::Mountain::Meta::EnableIf< \
-        ::Mountain::Meta::IsSortable<Iterator, ::Mountain::Comparer<EnumeratedType>, decltype(::Mountain::Identity<EnumeratedType>)>>> \
+        ::Mountain::Meta::IsSortable<Iterator, ::Mountain::Comparer<EnumeratedType>, ::Mountain::Identity>>> \
     void Sort() { return ::Mountain::Sort(*this); } \
     \
     template <typename = ::Mountain::Meta::EnableIf< \
-        ::Mountain::Meta::IsSortable<Iterator, ::Mountain::Comparer<EnumeratedType>, decltype(::Mountain::Identity<EnumeratedType>)>>> \
+        ::Mountain::Meta::IsSortable<Iterator, ::Mountain::Comparer<EnumeratedType>, ::Mountain::Identity>>> \
     void Sort(const ::Mountain::Comparer<EnumeratedType>& comparer) { return ::Mountain::Sort(*this, comparer); }
 
 namespace Mountain
@@ -136,12 +136,12 @@ namespace Mountain
 
     template <Requirements::MountainEnumerable EnumerableT,
         typename T = Meta::MountainEnumerableType<EnumerableT>,
-        typename = Meta::EnableIf<Meta::IsSortable<typename EnumerableT::Iterator, Comparer<T>, decltype(Identity<T>)>>>
+        typename = Meta::EnableIf<Meta::IsSortable<typename EnumerableT::Iterator, Comparer<T>, Identity>>>
     void Sort(EnumerableT& enumerable);
 
     template <Requirements::MountainEnumerable EnumerableT,
         typename T = Meta::MountainEnumerableType<EnumerableT>,
-        typename = Meta::EnableIf<Meta::IsSortable<typename EnumerableT::Iterator, Comparer<T>, decltype(Identity<T>)>>>
+        typename = Meta::EnableIf<Meta::IsSortable<typename EnumerableT::Iterator, Comparer<T>, Identity>>>
     void Sort(EnumerableT& enumerable, const Comparer<Meta::Identity<T>>& comparer);
 }
 

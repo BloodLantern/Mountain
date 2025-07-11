@@ -1,3 +1,5 @@
+#include "Mountain/PrecompiledHeader.hpp"
+
 #include "Mountain/Utils/TimeSpan.hpp"
 
 #include "Mountain/Exceptions/ThrowHelper.hpp"
@@ -175,7 +177,7 @@ size_t TimeSpan::GetHashCode() const
 
 TimeSpan TimeSpan::Interval(const double_t ticks, const double_t scale)
 {
-    if (std::isnan(ticks))
+    if (std::isnan(ticks)) // TODO - Add a constexpr version of std::isnan to make the remaining functions of TimeSpan constexpr
         THROW(ArgumentException{"Cannot create an interval from a NaN amount of ticks", "ticks"});
     return IntervalFromDoubleTicks(ticks * scale);
 }

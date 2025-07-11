@@ -1,3 +1,5 @@
+#include "Mountain/PrecompiledHeader.hpp"
+
 #include "Mountain/Window.hpp"
 
 #include <SDL3/SDL.h>

@@ -43,27 +43,27 @@ namespace Mountain
 
         /// @brief Returns all the child @ref Entry "Entries" of this Directory.
         ATTRIBUTE_NODISCARD
-        MOUNTAIN_API const std::vector<Pointer<Entry>>& GetChildEntries() const;
+        MOUNTAIN_API const List<Pointer<Entry>>& GetChildEntries() const;
 
         /// @brief Returns all the child @ref Entry "Entries" of this Directory.
         ATTRIBUTE_NODISCARD
-        MOUNTAIN_API std::vector<Pointer<Entry>>& GetChildEntries();
+        MOUNTAIN_API List<Pointer<Entry>>& GetChildEntries();
 
         /// @brief Returns all the child @ref File "Files" of this Directory.
         ATTRIBUTE_NODISCARD
-        MOUNTAIN_API const std::vector<Pointer<File>>& GetChildFiles() const;
+        MOUNTAIN_API const List<Pointer<File>>& GetChildFiles() const;
 
         /// @brief Returns all the child @ref File "Files" of this Directory.
         ATTRIBUTE_NODISCARD
-        MOUNTAIN_API std::vector<Pointer<File>>& GetChildFiles();
+        MOUNTAIN_API List<Pointer<File>>& GetChildFiles();
 
         /// @brief Returns all the child @ref Directory "Directories" of this Directory.
         ATTRIBUTE_NODISCARD
-        MOUNTAIN_API const std::vector<Pointer<Directory>>& GetChildDirectories() const;
+        MOUNTAIN_API const List<Pointer<Directory>>& GetChildDirectories() const;
 
         /// @brief Returns all the child @ref Directory "Directories" of this Directory.
         ATTRIBUTE_NODISCARD
-        MOUNTAIN_API std::vector<Pointer<Directory>>& GetChildDirectories();
+        MOUNTAIN_API List<Pointer<Directory>>& GetChildDirectories();
 
         /// @brief Sets the name of this Directory.
         ///
@@ -71,9 +71,9 @@ namespace Mountain
         void SetName(const std::string& newName) override;
 
     private:
-        std::vector<Pointer<Entry>> m_ChildEntries;
-        std::vector<Pointer<File>> m_ChildFiles;
-        std::vector<Pointer<Directory>> m_ChildDirectories;
+        List<Pointer<Entry>> m_ChildEntries;
+        List<Pointer<File>> m_ChildFiles;
+        List<Pointer<Directory>> m_ChildDirectories;
     };
 }
 

@@ -1,4 +1,6 @@
-﻿#include "Mountain/Utils/Windows.hpp"
+﻿#include "Mountain/PrecompiledHeader.hpp"
+
+#include "Mountain/Utils/Windows.hpp"
 
 #ifdef ENVIRONMENT_WINDOWS
 

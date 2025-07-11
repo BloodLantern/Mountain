@@ -1,4 +1,6 @@
-﻿#include "Mountain/Utils/DateTime.hpp"
+﻿#include "Mountain/PrecompiledHeader.hpp"
+
+#include "Mountain/Utils/DateTime.hpp"
 
 #include "Mountain/Utils/Windows.hpp"
 
@@ -28,7 +30,7 @@ DateTime DateTime::Today()
 std::string DateTime::ToString() const
 {
     return std::format(
-        "{}/{}/{} {}:{}:{}",
+        "{:04}/{:02}/{:02} {:02}:{:02}:{:02}",
         GetYear(),
         GetMonth(),
         GetDay(),

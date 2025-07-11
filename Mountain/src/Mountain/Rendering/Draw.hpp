@@ -153,7 +153,7 @@ namespace Mountain
             Vector2 uv0 = Vector2::Zero(),
             Vector2 uv1 = Vector2::One(),
             const Color& color = Color::White(),
-            Meta::UnderlyingEnumType<DrawTextureFlipping> flipFlags = static_cast<Meta::UnderlyingEnumType<DrawTextureFlipping>>(DrawTextureFlipping::None)
+            DrawTextureFlipping flipFlags = DrawTextureFlipping::None
         );
 
         /// @brief Draw text
@@ -182,7 +182,7 @@ namespace Mountain
             Vector2 uv0 = Vector2::Zero(),
             Vector2 uv1 = Vector2::One(),
             const Color& color = Color::White(),
-            Meta::UnderlyingEnumType<DrawTextureFlipping> flipFlags = static_cast<Meta::UnderlyingEnumType<DrawTextureFlipping>>(DrawTextureFlipping::None)
+            DrawTextureFlipping flipFlags = DrawTextureFlipping::None
         );
 
         /// @brief Flushes the cached draw data onto the current RenderTarget

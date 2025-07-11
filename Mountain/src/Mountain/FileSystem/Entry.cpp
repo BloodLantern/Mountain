@@ -1,4 +1,6 @@
-﻿#include "Mountain/FileSystem/Entry.hpp"
+﻿#include "Mountain/PrecompiledHeader.hpp"
+
+#include "Mountain/FileSystem/Entry.hpp"
 
 #include "Mountain/FileSystem/Directory.hpp"
 #include "Mountain/FileSystem/FileManager.hpp"

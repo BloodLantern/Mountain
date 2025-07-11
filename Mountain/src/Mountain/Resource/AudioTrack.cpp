@@ -1,3 +1,5 @@
+#include "Mountain/PrecompiledHeader.hpp"
+
 #include "Mountain/Resource/AudioTrack.hpp"
 
 #include <minimp3.h>

@@ -1,7 +1,7 @@
-﻿#include "Mountain/FileSystem/Directory.hpp"
+﻿#include "Mountain/PrecompiledHeader.hpp"
 
+#include "Mountain/FileSystem/Directory.hpp"
 #include "Mountain/FileSystem/FileManager.hpp"
-#include "Mountain/Utils/Formatter.hpp"
 
 using namespace Mountain;
 
@@ -25,14 +25,14 @@ bool_t Directory::Load()
                     directory = FileManager::Get(entryPath);
                 else
                     directory = FileManager::LoadDirectory(entryPath);
-                m_ChildDirectories.push_back(directory);
-                m_ChildEntries.push_back(static_cast<Pointer<Entry>>(directory));
+                m_ChildDirectories.Add(directory);
+                m_ChildEntries.Add(static_cast<Pointer<Entry>>(directory));
                 continue;
             }
 
             Pointer<File> file = FileManager::Load(entryPath);
-            m_ChildFiles.push_back(file);
-            m_ChildEntries.push_back(static_cast<Pointer<Entry>>(file));
+            m_ChildFiles.Add(file);
+            m_ChildEntries.Add(static_cast<Pointer<Entry>>(file));
         }
     }
     catch (const std::runtime_error& e)
@@ -47,9 +47,9 @@ bool_t Directory::Load()
 
 void Directory::Unload()
 {
-    m_ChildEntries.clear();
-    m_ChildFiles.clear();
-    m_ChildDirectories.clear();
+    m_ChildEntries.Clear();
+    m_ChildFiles.Clear();
+    m_ChildDirectories.Clear();
     m_Loaded = false;
 }
 
@@ -58,32 +58,32 @@ void Directory::OpenInExplorer() const
     Utils::OpenInExplorer(m_Path, false);
 }
 
-const std::vector<Pointer<Entry>>& Directory::GetChildEntries() const
+const List<Pointer<Entry>>& Directory::GetChildEntries() const
 {
     return m_ChildEntries;
 }
 
-std::vector<Pointer<Entry>>& Directory::GetChildEntries()
+List<Pointer<Entry>>& Directory::GetChildEntries()
 {
     return m_ChildEntries;
 }
 
-const std::vector<Pointer<File>>& Directory::GetChildFiles() const
+const List<Pointer<File>>& Directory::GetChildFiles() const
 {
     return m_ChildFiles;
 }
 
-std::vector<Pointer<File>>& Directory::GetChildFiles()
+List<Pointer<File>>& Directory::GetChildFiles()
 {
     return m_ChildFiles;
 }
 
-const std::vector<Pointer<Directory>>& Directory::GetChildDirectories() const
+const List<Pointer<Directory>>& Directory::GetChildDirectories() const
 {
     return m_ChildDirectories;
 }
 
-std::vector<Pointer<Directory>>& Directory::GetChildDirectories()
+List<Pointer<Directory>>& Directory::GetChildDirectories()
 {
     return m_ChildDirectories;
 }

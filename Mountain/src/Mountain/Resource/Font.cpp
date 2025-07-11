@@ -1,3 +1,5 @@
+#include "Mountain/PrecompiledHeader.hpp"
+
 #include "Mountain/Resource/Font.hpp"
 
 #include <algorithm>

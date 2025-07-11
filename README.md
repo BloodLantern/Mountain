@@ -45,6 +45,22 @@ To then use the framework in any of your projects, do as you would usually: incl
 compile by statically linking against the corresponding `Mountain.lib`
 (`Debug` or `Release`) and add the correct `Mountain.dll` to your executable file directory.
 
+## External dependencies used
+
+- [OpenGL](https://www.opengl.org)
+- [OpenAL](https://github.com/kcat/openal-soft)
+- [FreeType](https://freetype.org)
+- [GLAD](https://glad.dav1d.de)
+- [ImGui (docking branch)](https://github.com/ocornut/imgui/tree/docking)
+- [magic_enum](https://github.com/Neargye/magic_enum)
+- [mimalloc](https://github.com/microsoft/mimalloc)
+- [RapidXML](https://rapidxml.sourceforge.net/)
+- [SDL3](https://wiki.libsdl.org/SDL3/FrontPage)
+- [minimp3](https://github.com/lieff/minimp3)
+- [stb_image](https://github.com/nothings/stb/blob/master/stb_image.h)
+- [stb_vorbis](https://github.com/nothings/stb/blob/master/stb_vorbis.h)
+- [MathToolbox](https://github.com/BloodLantern/MathToolbox) (Submodule)
+
 ## Roadmap
 
 - ~~GPU instancing for `Draw` API~~
@@ -89,8 +105,9 @@ compile by statically linking against the corresponding `Mountain.lib`
 - ~~Custom exceptions~~
 - Built-in shader hot-reloading
 - \[WIP] Real unit tests
-- Replace all `std::array` and `std::vector` usages with `Mountain::Array` and `Mountain::List`
+- ~~Replace all `std::array` and `std::vector` usages with `Mountain::Array` and `Mountain::List`~~
 - True text rendering
 - Add an instanced Random API to have both a static and instanced way or generated RNG
 - ~~Add `DateTime` class from .NET~~
-- ~~Replace all `std::chrono` usages by `Stopwatch`, `TimeSpan` and `DateTime`~~
+- ~~Replace all `std::chrono` usages by `Stopwatch`, `TimeSpan` and `DateTime`~
+- ~~Credit external dependencies in README~~

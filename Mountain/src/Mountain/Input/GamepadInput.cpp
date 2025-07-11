@@ -1,3 +1,5 @@
+#include "Mountain/PrecompiledHeader.hpp"
+
 #include "Mountain/Input/GamepadInput.hpp"
 
 #include "Mountain/Utils/Color.hpp"

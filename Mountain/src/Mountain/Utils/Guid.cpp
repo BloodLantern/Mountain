@@ -1,3 +1,5 @@
+#include "Mountain/PrecompiledHeader.hpp"
+
 #include "Mountain/Utils/Guid.hpp"
 
 #include "Mountain/Utils/Logger.hpp"

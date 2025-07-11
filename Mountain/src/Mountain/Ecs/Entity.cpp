@@ -1,3 +1,5 @@
+#include "Mountain/PrecompiledHeader.hpp"
+
 #include "Mountain/Ecs/Entity.hpp"
 
 #include "Mountain/Ecs/Component/Component.hpp"

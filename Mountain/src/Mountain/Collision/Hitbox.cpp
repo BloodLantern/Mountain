@@ -1,3 +1,5 @@
+#include "Mountain/PrecompiledHeader.hpp"
+
 #include "Mountain/Collision/Hitbox.hpp"
 
 #include "Mountain/Collision/Circle.hpp"

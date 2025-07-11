@@ -1,4 +1,6 @@
-﻿#include "Mountain/Utils/Color.hpp"
+﻿#include "Mountain/PrecompiledHeader.hpp"
+
+#include "Mountain/Utils/Color.hpp"
 
 using namespace Mountain;
 

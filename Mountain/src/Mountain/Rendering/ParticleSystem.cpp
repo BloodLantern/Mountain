@@ -1,4 +1,6 @@
-﻿#include "Mountain/Rendering/ParticleSystem.hpp"
+﻿#include "Mountain/PrecompiledHeader.hpp"
+
+#include "Mountain/Rendering/ParticleSystem.hpp"
 
 #include <glad/glad.h>
 
@@ -202,7 +204,7 @@ void ParticleSystem::RenderImGui()
 
                 ImGui::TableSetColumnIndex(4);
                 ImGuiUtils::SetNextItemWidthAvail();
-                ImGui::DragFloat("##interval", &burst.interval, 0.01f, 0.f, std::numeric_limits<float_t>::max(), "%.3f", ImGuiSliderFlags_AlwaysClamp);
+                ImGui::DragFloat("##interval", &burst.interval, 0.01f, Calc::Zero, std::numeric_limits<float_t>::max(), "%.3f", ImGuiSliderFlags_AlwaysClamp);
 
                 ImGui::TableSetColumnIndex(5);
                 ImGuiUtils::SetNextItemWidthAvail();

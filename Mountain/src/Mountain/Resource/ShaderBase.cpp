@@ -1,4 +1,6 @@
-﻿#include "Mountain/Resource/ShaderBase.hpp"
+﻿#include "Mountain/PrecompiledHeader.hpp"
+
+#include "Mountain/Resource/ShaderBase.hpp"
 
 #include <glad/glad.h>
 

@@ -77,14 +77,14 @@ namespace Mountain
         /// returned @c false, instead return a null Pointer.
         template <Concepts::Entry T = File>
         ATTRIBUTE_NODISCARD
-        static Pointer<T> Find(std::function<bool_t(Pointer<T>)>&& predicate);
+        static Pointer<T> Find(const std::function<bool_t(const Pointer<T>& element)>& predicate);
 
         /// @brief Finds all @ref Entry "Entries" of type @p T.
         /// @tparam T The type of Entry to find.
         /// @return All stored @ref Entry "Entries" of type @p T.
         template <Concepts::Entry T = File>
         ATTRIBUTE_NODISCARD
-        static std::vector<Pointer<T>> FindAll();
+        static List<Pointer<T>> FindAll();
 
         /// @see FileManager::FindAll()
         template <Concepts::Entry T = File>
@@ -98,11 +98,11 @@ namespace Mountain
         /// returned @c false, instead return a null Pointer.
         template <Concepts::Entry T = File>
         ATTRIBUTE_NODISCARD
-        static List<Pointer<T>> FindAll(std::function<bool_t(Pointer<T>)>&& predicate);
+        static List<Pointer<T>> FindAll(const std::function<bool_t(const Pointer<T>& element)>& predicate);
 
         /// @see FileManager::FindAll(std::function<bool(Pointer<T>)>&&)
         template <Concepts::Entry T = File>
-        static void FindAll(std::function<bool_t(Pointer<T>)>&& predicate, List<Pointer<T>>* result);
+        static void FindAll(const std::function<bool_t(const Pointer<T>& element)>& predicate, List<Pointer<T>>* result);
 
         /// @brief Unloads the Entry corresponding to the given path.
         MOUNTAIN_API static void Unload(const std::filesystem::path& path);
@@ -115,7 +115,7 @@ namespace Mountain
         MOUNTAIN_API static void UnloadAll();
 
     private:
-        MOUNTAIN_API static inline std::map<std::filesystem::path, Pointer<Entry>> m_Entries;
+        MOUNTAIN_API static inline std::unordered_map<std::filesystem::path, Pointer<Entry>> m_Entries;
     };
 }
 
@@ -142,7 +142,7 @@ namespace Mountain
     template <Concepts::Entry T>
     Pointer<T> FileManager::Find()
     {
-        for (auto& entry : m_Entries | std::views::values)
+        for (const Pointer<Entry>& entry : m_Entries | std::views::values)
         {
             Pointer<T> t = Utils::DynamicPointerCast<T>(entry);
 
@@ -154,11 +154,11 @@ namespace Mountain
     }
 
     template <Concepts::Entry T>
-    Pointer<T> FileManager::Find(std::function<bool_t(Pointer<T>)>&& predicate)
+    Pointer<T> FileManager::Find(const Predicate<Pointer<T>>& predicate)
     {
-        for (auto& entry : m_Entries | std::views::values)
+        for (const Pointer<Entry>& entry : m_Entries | std::views::values)
         {
-            auto&& t = Utils::DynamicPointerCast<T>(entry);
+            const Pointer<T>& t = Utils::DynamicPointerCast<T>(entry);
 
             if (t && predicate(t))
                 return t;
@@ -168,9 +168,9 @@ namespace Mountain
     }
 
     template <Concepts::Entry T>
-    std::vector<Pointer<T>> FileManager::FindAll()
+    List<Pointer<T>> FileManager::FindAll()
     {
-        std::vector<Pointer<T>> result;
+        List<Pointer<T>> result;
         FindAll<T>(&result);
         return result;
     }
@@ -180,7 +180,7 @@ namespace Mountain
     {
         result->Clear();
 
-        for (auto& entry : m_Entries | std::views::values)
+        for (const Pointer<Entry>& entry : m_Entries | std::views::values)
         {
             Pointer<T> t = Utils::DynamicPointerCast<T>(entry);
 
@@ -190,7 +190,7 @@ namespace Mountain
     }
 
     template <Concepts::Entry T>
-    List<Pointer<T>> FileManager::FindAll(std::function<bool_t(Pointer<T>)>&& predicate)
+    List<Pointer<T>> FileManager::FindAll(const Predicate<Pointer<T>>& predicate)
     {
         List<Pointer<T>> result;
         FindAll<T>(std::forward<std::function<bool_t(Pointer<T>)>>(predicate), &result);
@@ -198,13 +198,13 @@ namespace Mountain
     }
 
     template <Concepts::Entry T>
-    void FileManager::FindAll(std::function<bool_t(Pointer<T>)>&& predicate, List<Pointer<T>>* result)
+    void FileManager::FindAll(const Predicate<Pointer<T>>& predicate, List<Pointer<T>>* result)
     {
         result->Clear();
 
-        for (auto&& value : m_Entries | std::views::values)
+        for (const Pointer<Entry>& value : m_Entries | std::views::values)
         {
-            auto&& t = Utils::DynamicPointerCast<T>(value);
+            const Pointer<T>& t = Utils::DynamicPointerCast<T>(value);
 
             if (t && predicate(t))
                 result->Add(t);
@@ -218,16 +218,16 @@ namespace Mountain
 
         const size_t oldSize = m_Entries.size();
 
-        for (decltype(m_Entries)::iterator it = m_Entries.begin(); it != m_Entries.end(); it++)
+        for (auto it = m_Entries.begin(); it != m_Entries.end(); it++)
         {
-            if (it->second == entry)
-            {
-                it->second->Unload();
-                it = m_Entries.erase(it);
+            if (it->second != entry)
+                continue;
 
-                if (it == m_Entries.end())
-                    break;
-            }
+            it->second->Unload();
+            it = m_Entries.erase(it);
+
+            if (it == m_Entries.end())
+                break;
         }
 
         if (oldSize == m_Entries.size())
