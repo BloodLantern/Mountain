@@ -60,7 +60,7 @@ void Graphics::SetClearColor(const Color& newClearColor)
 
 void Graphics::Clear(const ClearFlags flags)
 {
-    glClear(static_cast<GLbitfield>(flags));
+    glClear(static_cast<GLbitfield>(flags)); // FIXME - This is broken since we switched to SDL3
 }
 
 void Graphics::BindTexture(const uint32_t textureId) { glBindTexture(GL_TEXTURE_2D, textureId); }
