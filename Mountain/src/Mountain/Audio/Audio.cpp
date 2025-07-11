@@ -10,6 +10,21 @@ std::string Audio::GetDefaultDeviceName()
     return alcGetString(nullptr, ALC_DEFAULT_ALL_DEVICES_SPECIFIER);
 }
 
+void Audio::GetAllDevices(List<std::string>& devices)
+{
+    devices.Clear();
+    const char_t* ptr = alcGetString(nullptr, ALC_ALL_DEVICES_SPECIFIER);
+
+    // Loop until we find an empty string
+    while (*ptr != '\0')
+    {
+        const std::string name = std::string(ptr);
+        devices.Add(name);
+        // Advance the pointer, + 1 to account for the \0 terminator of the string
+        ptr += name.size() + 1;
+    }
+}
+
 uint32_t Audio::CreateSource()
 {
     uint32_t source;
@@ -72,7 +87,7 @@ Audio::SourcePlayType Audio::GetSourceType(const uint32_t source)
     return FromOpenAl<SourcePlayType>(v);
 }
 
-Audio::SourceState Audio::GetSourceState(uint32_t source)
+Audio::SourceState Audio::GetSourceState(const uint32_t source)
 {
     int32_t v = 0;
     alGetSourcei(source, AL_SOURCE_STATE, &v);
@@ -94,17 +109,59 @@ void Audio::SetListenerArray(const ListenerArray type, const Array<Vector3, 2>& 
     alListenerfv(ToOpenAl(type), value.GetData()->Data());
 }
 
+uint32_t Audio::CreateBuffer()
+{
+    uint32_t buffer = 0;
+    alGenBuffers(1, &buffer);
+    return buffer;
+}
+
+List<uint32_t> Audio::CreateBuffers(const size_t count)
+{
+    List<uint32_t> buffers;
+    alGenBuffers(static_cast<int32_t>(count), buffers.GetData());
+    return buffers;
+}
+
+void Audio::SetBufferData(
+    const uint32_t buffer,
+    const BufferFormat format,
+    const void* data,
+    const size_t length,
+    const int32_t sampleRate
+)
+{
+    alBufferData(buffer, ToOpenAl(format), data, static_cast<int32_t>(length), sampleRate);
+}
+
+int32_t Audio::GetBufferInt(const uint32_t buffer, const BufferInt type)
+{
+    int32_t v = 0;
+    alGetBufferi(buffer, ToOpenAl(type), &v);
+    return v;
+}
+
+void Audio::DeleteBuffer(const uint32_t buffer)
+{
+    alDeleteBuffers(1, &buffer);
+}
+
+void Audio::DeleteBuffers(const List<uint32_t>& buffers)
+{
+    alDeleteBuffers(static_cast<int32_t>(buffers.GetSize()), buffers.GetData());
+}
+
 ALCdevice* Audio::OpenDevice(const std::string& name)
 {
     return alcOpenDevice(name.c_str());
 }
 
-void Audio::CloseDevice(ALCdevice* device)
+void Audio::CloseDevice(ALCdevice* const device)
 {
     alcCloseDevice(device);
 }
 
-void Audio::ReopenDevice(ALCdevice* device, const std::string& newName)
+void Audio::ReopenDevice(ALCdevice* const device, const std::string& newName)
 {
     alcReopenDeviceSOFT(device, newName.c_str(), nullptr);
 }
@@ -144,7 +201,7 @@ std::string_view Audio::GetErrorString(const Error error)
     return alGetString(ToOpenAl(error));
 }
 
-Audio::ContextError Audio::GetContextError(ALCdevice* device)
+Audio::ContextError Audio::GetContextError(ALCdevice* const device)
 {
     return FromOpenAl<ContextError>(alcGetError(device));
 }
@@ -154,17 +211,17 @@ std::string_view Audio::GetContextErrorString(ALCdevice* const device, const Con
     return alcGetString(device, ToOpenAl(error));
 }
 
-Audio::Format Audio::GetFormat(const uint16_t channels, const uint16_t bitDepth)
+Audio::BufferFormat Audio::GetBufferFormat(const uint16_t channels, const uint16_t bitDepth)
 {
     if (channels == 1)
     {
         switch (bitDepth)
         {
-            case 8: return Format::Mono8;
-            case 16: return Format::Mono16;
-            case 32: return Format::MonoFloat32;
-            case 64: return Format::MonoDouble;
-            default: return Format::Unknown;
+            case 8: return BufferFormat::Mono8;
+            case 16: return BufferFormat::Mono16;
+            case 32: return BufferFormat::MonoFloat32;
+            case 64: return BufferFormat::MonoDouble;
+            default: return BufferFormat::Unknown;
         }
     }
 
@@ -172,28 +229,28 @@ Audio::Format Audio::GetFormat(const uint16_t channels, const uint16_t bitDepth)
     {
         switch (bitDepth)
         {
-            case 8: return Format::Stereo8;
-            case 16: return Format::Stereo16;
-            case 32: return Format::StereoFloat32;
-            case 64: return Format::StereoDouble;
-            default: return Format::Unknown;
+            case 8: return BufferFormat::Stereo8;
+            case 16: return BufferFormat::Stereo16;
+            case 32: return BufferFormat::StereoFloat32;
+            case 64: return BufferFormat::StereoDouble;
+            default: return BufferFormat::Unknown;
         }
     }
 
-    return Format::Unknown;
+    return BufferFormat::Unknown;
 }
 
-ALCcontext* Audio::CreateContext(ALCdevice* device)
+ALCcontext* Audio::CreateContext(ALCdevice* const device)
 {
     return alcCreateContext(device, nullptr);
 }
 
-void Audio::DestroyContext(ALCcontext* context)
+void Audio::DestroyContext(ALCcontext* const context)
 {
     alcDestroyContext(context);
 }
 
-void Audio::SetContext(ALCcontext* context)
+void Audio::SetContext(ALCcontext* const context)
 {
     alcMakeContextCurrent(context);
 }
@@ -380,18 +437,18 @@ Audio::SourceState Audio::FromOpenAl<Audio::SourceState>(const int32_t value)
 }
 
 template <>
-Audio::Format Audio::FromOpenAl<Audio::Format>(const int32_t value)
+Audio::BufferFormat Audio::FromOpenAl<Audio::BufferFormat>(const int32_t value)
 {
     switch (value)
     {
-        case AL_FORMAT_MONO8: return Format::Mono8;
-        case AL_FORMAT_MONO16: return Format::Mono16;
-        case AL_FORMAT_MONO_FLOAT32: return Format::MonoFloat32;
-        case AL_FORMAT_MONO_DOUBLE_EXT: return Format::MonoDouble;
-        case AL_FORMAT_STEREO8: return Format::Stereo8;
-        case AL_FORMAT_STEREO16: return Format::Stereo16;
-        case AL_FORMAT_STEREO_FLOAT32: return Format::StereoFloat32;
-        case AL_FORMAT_STEREO_DOUBLE_EXT: return Format::StereoDouble;
+        case AL_FORMAT_MONO8: return BufferFormat::Mono8;
+        case AL_FORMAT_MONO16: return BufferFormat::Mono16;
+        case AL_FORMAT_MONO_FLOAT32: return BufferFormat::MonoFloat32;
+        case AL_FORMAT_MONO_DOUBLE_EXT: return BufferFormat::MonoDouble;
+        case AL_FORMAT_STEREO8: return BufferFormat::Stereo8;
+        case AL_FORMAT_STEREO16: return BufferFormat::Stereo16;
+        case AL_FORMAT_STEREO_FLOAT32: return BufferFormat::StereoFloat32;
+        case AL_FORMAT_STEREO_DOUBLE_EXT: return BufferFormat::StereoDouble;
 
         default: THROW(ArgumentOutOfRangeException{"Invalid audio type", "value"});
     }
@@ -565,19 +622,32 @@ int32_t Audio::ToOpenAl(const SourceState value)
     THROW(ArgumentOutOfRangeException{"Invalid source state type", "value"});
 }
 
-int32_t Audio::ToOpenAl(const Format value)
+int32_t Audio::ToOpenAl(const BufferInt value)
 {
     switch (value)
     {
-        case Format::Unknown: return 0;
-        case Format::Mono8: return AL_FORMAT_MONO8;
-        case Format::Mono16: return AL_FORMAT_MONO16;
-        case Format::MonoFloat32: return AL_FORMAT_MONO_FLOAT32;
-        case Format::MonoDouble: return AL_FORMAT_MONO_DOUBLE_EXT;
-        case Format::Stereo8: return AL_FORMAT_STEREO8;
-        case Format::Stereo16: return AL_FORMAT_STEREO16;
-        case Format::StereoFloat32: return AL_FORMAT_STEREO_FLOAT32;
-        case Format::StereoDouble: return AL_FORMAT_STEREO_DOUBLE_EXT;
+        case BufferInt::Bits: return AL_BITS;
+        case BufferInt::Channels: return AL_CHANNELS;
+        case BufferInt::Frequency: return AL_FREQUENCY;
+        case BufferInt::Size: return AL_SIZE;
+    }
+
+    THROW(ArgumentOutOfRangeException{"Invalid buffer int type", "value"});
+}
+
+int32_t Audio::ToOpenAl(const BufferFormat value)
+{
+    switch (value)
+    {
+        case BufferFormat::Unknown: return 0;
+        case BufferFormat::Mono8: return AL_FORMAT_MONO8;
+        case BufferFormat::Mono16: return AL_FORMAT_MONO16;
+        case BufferFormat::MonoFloat32: return AL_FORMAT_MONO_FLOAT32;
+        case BufferFormat::MonoDouble: return AL_FORMAT_MONO_DOUBLE_EXT;
+        case BufferFormat::Stereo8: return AL_FORMAT_STEREO8;
+        case BufferFormat::Stereo16: return AL_FORMAT_STEREO16;
+        case BufferFormat::StereoFloat32: return AL_FORMAT_STEREO_FLOAT32;
+        case BufferFormat::StereoDouble: return AL_FORMAT_STEREO_DOUBLE_EXT;
     }
 
     THROW(ArgumentOutOfRangeException{"Invalid audio type", "value"});

@@ -189,6 +189,13 @@ void ImGuiUtils::DirectionVector(const std::string_view label, Vector2* const va
     ImGui::PopClipRect();
 }
 
+void ImGuiUtils::Percent(const std::string& label, float_t* const value)
+{
+    float_t v = *value * 100.f;
+    ImGui::SliderFloat(label.c_str(), &v, 0, 100, "%.0f%%");
+    *value = v / 100.f;
+}
+
 bool ImGuiUtils::ComboEaser(const std::string& label, Easing::Easer* v, const ImGuiComboFlags flags)
 {
     static constexpr Array Functions{

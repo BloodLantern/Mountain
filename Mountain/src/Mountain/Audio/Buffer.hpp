@@ -15,8 +15,6 @@ namespace Mountain::Audio
     public:
         Buffer();
 
-        explicit Buffer(int32_t size);
-
         explicit Buffer(const AudioTrack* track);
 
         ~Buffer();
@@ -32,8 +30,6 @@ namespace Mountain::Audio
 
     private:
         uint32_t m_Handle = 0;
-
-        int32_t m_Format = 0;
 
         Context* m_Context = nullptr;
     };

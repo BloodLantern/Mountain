@@ -11,6 +11,7 @@
 /// You should only use this if you know what you are doing and/or have experience with audio APIs such as OpenAL.
 namespace Mountain::Audio
 {
+#pragma region Enums
     enum class Error : uint8_t
     {
         None,
@@ -120,7 +121,15 @@ namespace Mountain::Audio
         Stopped
     };
 
-    enum class Format : uint8_t
+    enum class BufferInt : uint8_t
+    {
+        Bits,
+        Channels,
+        Frequency,
+        Size
+    };
+    
+    enum class BufferFormat : uint8_t
     {
         Unknown,
         Mono8,
@@ -150,22 +159,21 @@ namespace Mountain::Audio
         SourceType,
         ContextAttribute,
         SourceState,
-        Format
+        BufferInt,
+        BufferFormat
     >;
+#pragma endregion Enums
 
-    /// @brief Gets the default audio device name
-    /// @return Default audio device name
-    [[nodiscard]]
-    MOUNTAIN_API std::string GetDefaultDeviceName();
-
+#pragma region Source
     /// @brief Creates an audio source
     /// @return Source id
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API uint32_t CreateSource();
 
     /// @brief Creates multiple audio sources
+    /// @param count Amount of sources
     /// @return Sources id
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API List<uint32_t> CreateSources(size_t count);
 
     /// @brief Deletes an audio source
@@ -208,15 +216,21 @@ namespace Mountain::Audio
     /// @param value Value
     MOUNTAIN_API void SetSourceBool(uint32_t source, SourceBool type, bool_t value);
 
-    /// @brief Sets a boolean value for an audio source
+    /// @brief Gets the play type of a source
     /// @param source Source id
-    /// @return Source type
-    [[nodiscard]]
+    /// @return Source play type
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API SourcePlayType GetSourceType(uint32_t source);
 
-    [[nodiscard]]
+    /// @brief Gets the state of a source
+    /// @param source Source id
+    /// @return Source state
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API SourceState GetSourceState(uint32_t source);
 
+#pragma endregion Source
+
+#pragma region Listener
     /// @brief Sets a vector value for an audio listener
     /// @param type Value type
     /// @param value Value
@@ -231,18 +245,66 @@ namespace Mountain::Audio
     /// @param type Value type
     /// @param value Value
     MOUNTAIN_API void SetListenerArray(ListenerArray type, const Array<Vector3, 2>& value);
+#pragma endregion Listener
 
-    /// @brief Sets the openal event callback
-    /// @tparam Size @c events array size
-    /// @param events Events to apply the callback to
-    /// @param callback Callback function
-    template <size_t Size>
-    void SetEventCallback(const Array<EventType, Size>& events, std::function<void(EventType, const std::string&)> callback);
+#pragma region Buffer
+    /// @brief Creates a buffer
+    /// @return Buffer id
+    ATTRIBUTE_NODISCARD
+    MOUNTAIN_API uint32_t CreateBuffer();
+
+    /// @brief Creates a buffer
+    /// @param count Amount of buffers
+    /// @return Buffers id
+    ATTRIBUTE_NODISCARD
+    MOUNTAIN_API List<uint32_t> CreateBuffers(size_t count);
+
+    /// @brief Sets the data for a buffer
+    /// @param buffer Buffer id
+    /// @param format Buffer format
+    /// @param data Data
+    /// @param length Data length
+    /// @param sampleRate Sample rate
+    MOUNTAIN_API void SetBufferData(uint32_t buffer, BufferFormat format, const void* data, size_t length, int32_t sampleRate);
+
+    /// @brief Gets an integer value of a buffer
+    /// @param buffer Buffer id
+    /// @param type Value type
+    /// @return Value
+    ATTRIBUTE_NODISCARD
+    MOUNTAIN_API int32_t GetBufferInt(uint32_t buffer, BufferInt type);
+    
+    /// @brief Deletes a buffer
+    /// @param buffer Buffer id
+    MOUNTAIN_API void DeleteBuffer(uint32_t buffer);
+
+    /// @brief Delets buffers
+    /// @param buffers Buffers id
+    MOUNTAIN_API void DeleteBuffers(const List<uint32_t>& buffers);
+
+    /// @brief Gets the format of a buffer
+    /// @param channels Number of channels
+    /// @param bitDepth Bit depth
+    /// @return Format
+    ATTRIBUTE_NODISCARD
+    MOUNTAIN_API BufferFormat GetBufferFormat(uint16_t channels, uint16_t bitDepth);
+#pragma endregion Buffer
+
+#pragma region Device
+    /// @brief Gets the default audio device name
+    /// @return Default audio device name
+    ATTRIBUTE_NODISCARD
+    MOUNTAIN_API std::string GetDefaultDeviceName();
+
+    /// @brief Gets a list of all the devices available
+    /// @return List of devices names
+    ATTRIBUTE_NODISCARD
+    MOUNTAIN_API void GetAllDevices(List<std::string>& devices);
 
     /// @brief Opens an audio device
     /// @param name Device name
     /// @return Opened device
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API ALCdevice* OpenDevice(const std::string& name);
 
     /// @brief Closes an audio device
@@ -264,42 +326,46 @@ namespace Mountain::Audio
     /// @param attribute Attribute
     /// @return Attribute value
     MOUNTAIN_API int32_t GetDeviceAttribute(const List<int32_t>& attributes, ContextAttribute attribute);
+#pragma endregion Device
 
+#pragma region Misc
     /// @brief Gets the latest OpenAl error
     /// @return Error
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API Error GetError();
 
     /// @brief Gets the string representing an error
     /// @param error Error
     /// @return String
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API std::string_view GetErrorString(Error error);
 
     /// @brief Gets the latest OpenAl context error
     /// @param device Device
     /// @return Error
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API ContextError GetContextError(ALCdevice* device);
 
     /// @brief Gets the string representing a context error
     /// @param device
     /// @param error Error
     /// @return String
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API std::string_view GetContextErrorString(ALCdevice* device, ContextError error);
 
-    /// @brief Gets the format of an audio
-    /// @param channels Number of channels
-    /// @param bitDepth Bit depth
-    /// @return Format
-    [[nodiscard]]
-    MOUNTAIN_API Format GetFormat(uint16_t channels, uint16_t bitDepth);
+    /// @brief Sets the openal event callback
+    /// @tparam Size @c events array size
+    /// @param events Events to apply the callback to
+    /// @param callback Callback function
+    template <size_t Size>
+    void SetEventCallback(const Array<EventType, Size>& events, std::function<void(EventType, const std::string&)> callback);
+#pragma endregion Misc
 
+#pragma region Context
     /// @brief Creates an audio context
     /// @param device Audio device
     /// @return Context
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API ALCcontext* CreateContext(ALCdevice* device);
 
     /// @brief Destroys the audio context
@@ -309,82 +375,87 @@ namespace Mountain::Audio
     /// @brief Sets the current audio context
     /// @param context Context
     MOUNTAIN_API void SetContext(ALCcontext* context);
+#pragma endregion Context
 
+#pragma region Converters
     template <OpenAlConvertibleT T>
     // ReSharper disable once CppFunctionIsNotImplemented
     T FromOpenAl(int32_t value);
 
     template <>
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API EventType FromOpenAl<EventType>(int32_t value);
     template <>
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API SourceVector FromOpenAl<SourceVector>(int32_t value);
     template <>
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API SourceFloat FromOpenAl<SourceFloat>(int32_t value);
     template <>
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API SourceInt FromOpenAl<SourceInt>(int32_t value);
     template <>
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API SourceBool FromOpenAl<SourceBool>(int32_t value);
     template <>
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API SourcePlayType FromOpenAl<SourcePlayType>(int32_t value);
     template <>
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API ListenerVector FromOpenAl<ListenerVector>(int32_t value);
     template <>
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API ListenerFloat FromOpenAl<ListenerFloat>(int32_t value);
     template <>
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API ListenerArray FromOpenAl<ListenerArray>(int32_t value);
     template <>
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API Error FromOpenAl<Error>(int32_t value);
     template <>
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API ContextError FromOpenAl<ContextError>(int32_t value);
     template <>
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API ContextAttribute FromOpenAl<ContextAttribute>(int32_t value);
     template <>
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API SourceState FromOpenAl<SourceState>(int32_t value);
     template <>
-    [[nodiscard]]
-    MOUNTAIN_API Format FromOpenAl<Format>(int32_t value);
+    ATTRIBUTE_NODISCARD
+    MOUNTAIN_API BufferFormat FromOpenAl<BufferFormat>(int32_t value);
     
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API int32_t ToOpenAl(EventType value);
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API int32_t ToOpenAl(SourceVector value);
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API int32_t ToOpenAl(SourceFloat value);
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API int32_t ToOpenAl(SourceInt value);
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API int32_t ToOpenAl(SourceBool value);
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API int32_t ToOpenAl(SourcePlayType value);
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API int32_t ToOpenAl(ListenerVector value);
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API int32_t ToOpenAl(ListenerFloat value);
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API int32_t ToOpenAl(ListenerArray value);
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API int32_t ToOpenAl(Error value);
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API int32_t ToOpenAl(ContextError value);
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API int32_t ToOpenAl(ContextAttribute value);
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API int32_t ToOpenAl(SourceState value);
-    [[nodiscard]]
-    MOUNTAIN_API int32_t ToOpenAl(Format value);
+    ATTRIBUTE_NODISCARD
+    MOUNTAIN_API int32_t ToOpenAl(BufferInt value);
+    ATTRIBUTE_NODISCARD
+    MOUNTAIN_API int32_t ToOpenAl(BufferFormat value);
+#pragma endregion Converters
 }
 
 // Start of Audio.hpp

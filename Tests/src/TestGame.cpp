@@ -9,6 +9,7 @@
 #include <Mountain/Input/Time.hpp>
 #include <Mountain/Rendering/Draw.hpp>
 
+#include "Mountain/Audio/Sound.hpp"
 #include "Mountain/FileSystem/FileManager.hpp"
 #include "Mountain/Resource/ResourceManager.hpp"
 #include "Mountain/Utils/ImGuiUtils.hpp"
@@ -181,6 +182,24 @@ void GameExample::RenderImGui()
             m_ActiveScene->BeforeRenderImGui();
             m_ActiveScene->RenderImGui();
             m_ActiveScene->AfterRenderImGui();
+        }
+
+        ImGuiUtils::PopCollapsingHeader();
+    }
+
+    if (ImGuiUtils::PushCollapsingHeader("Audio"))
+    {
+        const List<std::string>& devices = Sound::GetDeviceNames();
+        ImGui::Text("Devices :");
+        devices.ForEach([](const std::string& name) { ImGui::Text("\t%s", name.c_str()); });
+
+        for (size_t i = 0; i < magic_enum::enum_count<SoundType>(); i++)
+        {
+            const SoundType type = static_cast<SoundType>(i);
+            float_t volume = Sound::GetVolume(type);
+            const std::string label = std::format("{} volume", magic_enum::enum_name(type));
+            ImGuiUtils::Percent(label, &volume);
+            Sound::SetVolume(type, volume);
         }
 
         ImGuiUtils::PopCollapsingHeader();

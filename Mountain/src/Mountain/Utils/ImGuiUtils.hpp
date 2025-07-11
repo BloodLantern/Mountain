@@ -16,6 +16,9 @@ namespace Mountain::ImGuiUtils
 
     MOUNTAIN_API void DirectionVector(std::string_view label, Vector2* value, Vector2 expected);
 
+    /// @brief Displays a float clamped in [0;1] as a percentage value
+    MOUNTAIN_API void Percent(const std::string& label, float_t* value);
+
     template <typename T>
     bool_t Optional(
         std::optional<T>* value,
