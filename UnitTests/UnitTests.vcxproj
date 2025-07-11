@@ -43,8 +43,8 @@
     <ClCompile Include="src\Common.cpp" PrecompiledHeader="Create" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Test.cpp" />
-    <ClCompile Include="src\Utils\Guid.cpp" />
-    <ClCompile Include="src\Utils\MetaProgramming.cpp" />
+    <ClCompile Include="src\Utils\TestGuid.cpp" />
+    <ClCompile Include="src\Utils\TestMetaProgramming.cpp" />
     <ClCompile Include="src\Utils\TestPointer.cpp" />
     <ClCompile Include="src\Utils\TestUtils.cpp" />
   </ItemGroup>
