@@ -1,4 +1,6 @@
-﻿#include "Mountain/Rendering/Graphics.hpp"
+﻿#include "Mountain/Core.hpp"
+
+#include "Mountain/Rendering/Graphics.hpp"
 
 #include <glad/glad.h>
 

@@ -1,4 +1,6 @@
-﻿#include "Mountain/Rendering/GpuTexture.hpp"
+﻿#include "Mountain/Core.hpp"
+
+#include "Mountain/Rendering/GpuTexture.hpp"
 
 #include <glad/glad.h>
 

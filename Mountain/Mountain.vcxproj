@@ -332,30 +332,30 @@
     <ClInclude Include="src\Mountain\Window.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\MathToolbox\src\Math\calc.cpp" />
-    <ClCompile Include="..\MathToolbox\src\Math\easing.cpp" />
-    <ClCompile Include="..\MathToolbox\src\Math\matrix.cpp" />
-    <ClCompile Include="..\MathToolbox\src\Math\matrix2.cpp" />
-    <ClCompile Include="..\MathToolbox\src\Math\matrix3.cpp" />
-    <ClCompile Include="..\MathToolbox\src\Math\quaternion.cpp" />
-    <ClCompile Include="..\MathToolbox\src\Math\vector2.cpp" />
-    <ClCompile Include="..\MathToolbox\src\Math\vector2i.cpp" />
-    <ClCompile Include="..\MathToolbox\src\Math\vector3.cpp" />
-    <ClCompile Include="..\MathToolbox\src\Math\vector4.cpp" />
-    <ClCompile Include="externals\src\glad.c" />
-    <ClCompile Include="externals\src\ImGui\imgui.cpp" />
-    <ClCompile Include="externals\src\ImGui\imgui_demo.cpp" />
-    <ClCompile Include="externals\src\ImGui\imgui_draw.cpp" />
-    <ClCompile Include="externals\src\ImGui\imgui_impl_opengl3.cpp" />
-    <ClCompile Include="externals\src\ImGui\imgui_impl_sdl3.cpp" />
-    <ClCompile Include="externals\src\ImGui\imgui_stdlib.cpp" />
-    <ClCompile Include="externals\src\ImGui\imgui_tables.cpp" />
-    <ClCompile Include="externals\src\ImGui\imgui_widgets.cpp" />
-    <ClCompile Include="externals\src\mimalloc-new-delete.cpp" />
-    <ClCompile Include="externals\src\minimp3.c" />
-    <ClCompile Include="externals\src\RapidXMLSTD.cpp" />
-    <ClCompile Include="externals\src\stb_image.c" />
-    <ClCompile Include="externals\src\stb_vorbis.c" />
+    <ClCompile Include="..\MathToolbox\src\Math\calc.cpp" PrecompiledHeader="NotUsing" />
+    <ClCompile Include="..\MathToolbox\src\Math\easing.cpp" PrecompiledHeader="NotUsing" />
+    <ClCompile Include="..\MathToolbox\src\Math\matrix.cpp" PrecompiledHeader="NotUsing" />
+    <ClCompile Include="..\MathToolbox\src\Math\matrix2.cpp" PrecompiledHeader="NotUsing" />
+    <ClCompile Include="..\MathToolbox\src\Math\matrix3.cpp" PrecompiledHeader="NotUsing" />
+    <ClCompile Include="..\MathToolbox\src\Math\quaternion.cpp" PrecompiledHeader="NotUsing" />
+    <ClCompile Include="..\MathToolbox\src\Math\vector2.cpp" PrecompiledHeader="NotUsing" />
+    <ClCompile Include="..\MathToolbox\src\Math\vector2i.cpp" PrecompiledHeader="NotUsing" />
+    <ClCompile Include="..\MathToolbox\src\Math\vector3.cpp" PrecompiledHeader="NotUsing" />
+    <ClCompile Include="..\MathToolbox\src\Math\vector4.cpp" PrecompiledHeader="NotUsing" />
+    <ClCompile Include="externals\src\glad.c" PrecompiledHeader="NotUsing" />
+    <ClCompile Include="externals\src\ImGui\imgui.cpp" PrecompiledHeader="NotUsing" />
+    <ClCompile Include="externals\src\ImGui\imgui_demo.cpp" PrecompiledHeader="NotUsing" />
+    <ClCompile Include="externals\src\ImGui\imgui_draw.cpp" PrecompiledHeader="NotUsing" />
+    <ClCompile Include="externals\src\ImGui\imgui_impl_opengl3.cpp" PrecompiledHeader="NotUsing" />
+    <ClCompile Include="externals\src\ImGui\imgui_impl_sdl3.cpp" PrecompiledHeader="NotUsing" />
+    <ClCompile Include="externals\src\ImGui\imgui_stdlib.cpp" PrecompiledHeader="NotUsing" />
+    <ClCompile Include="externals\src\ImGui\imgui_tables.cpp" PrecompiledHeader="NotUsing" />
+    <ClCompile Include="externals\src\ImGui\imgui_widgets.cpp" PrecompiledHeader="NotUsing" />
+    <ClCompile Include="externals\src\mimalloc-new-delete.cpp" PrecompiledHeader="NotUsing" />
+    <ClCompile Include="externals\src\minimp3.c" PrecompiledHeader="NotUsing" />
+    <ClCompile Include="externals\src\RapidXMLSTD.cpp" PrecompiledHeader="NotUsing" />
+    <ClCompile Include="externals\src\stb_image.c" PrecompiledHeader="NotUsing" />
+    <ClCompile Include="externals\src\stb_vorbis.c" PrecompiledHeader="NotUsing" />
     <ClCompile Include="src\Mountain\Audio\Audio.cpp" />
     <ClCompile Include="src\Mountain\Audio\AudioBuffer.cpp" />
     <ClCompile Include="src\Mountain\Audio\AudioContext.cpp" />
@@ -367,6 +367,7 @@
     <ClCompile Include="src\Mountain\Collision\Collision.cpp" />
     <ClCompile Include="src\Mountain\Collision\Grid.cpp" />
     <ClCompile Include="src\Mountain\Collision\Hitbox.cpp" />
+    <ClCompile Include="src\Mountain\Core.cpp" PrecompiledHeader="Create" />
     <ClCompile Include="src\Mountain\Ecs\EntityList.cpp" />
     <ClCompile Include="src\Mountain\Ecs\Scene.cpp" />
     <ClCompile Include="src\Mountain\Exceptions\ArgumentException.cpp" />
@@ -511,10 +512,12 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>src;externals\src;..\MathToolbox\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;src;externals\src;..\MathToolbox\src</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <AdditionalOptions>/Gw %(AdditionalOptions)</AdditionalOptions>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>Mountain/Core.hpp</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -547,6 +550,8 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <AdditionalIncludeDirectories>src;externals\src;..\MathToolbox\src</AdditionalIncludeDirectories>
       <AdditionalOptions>/Gw %(AdditionalOptions)</AdditionalOptions>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>Mountain/Core.hpp</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

@@ -1,3 +1,5 @@
+#include "Mountain/Core.hpp"
+
 #include "Mountain/Collision/Collider.hpp"
 
 #include "Mountain/Ecs/Entity.hpp"

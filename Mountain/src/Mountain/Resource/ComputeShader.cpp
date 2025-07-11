@@ -1,4 +1,6 @@
-﻿#include "Mountain/Resource/ComputeShader.hpp"
+﻿#include "Mountain/Core.hpp"
+
+#include "Mountain/Resource/ComputeShader.hpp"
 
 #include <glad/glad.h>
 

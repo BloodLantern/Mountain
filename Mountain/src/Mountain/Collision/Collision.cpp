@@ -1,3 +1,5 @@
+#include "Mountain/Core.hpp"
+
 #include "Mountain/Collision/Collision.hpp"
 
 using namespace Mountain;

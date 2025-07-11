@@ -1,4 +1,6 @@
-﻿#include "Mountain/Exceptions/Exception.hpp"
+﻿#include "Mountain/Core.hpp"
+
+#include "Mountain/Exceptions/Exception.hpp"
 
 using namespace Mountain;
 

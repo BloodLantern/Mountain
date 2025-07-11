@@ -1,4 +1,6 @@
-﻿#include "Mountain/Utils/Stopwatch.hpp"
+﻿#include "Mountain/Core.hpp"
+
+#include "Mountain/Utils/Stopwatch.hpp"
 
 #include <algorithm>
 

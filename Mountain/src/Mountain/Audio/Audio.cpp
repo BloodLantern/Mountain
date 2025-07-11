@@ -1,3 +1,5 @@
+#include "Mountain/Core.hpp"
+
 #include "Mountain/Audio/Audio.hpp"
 
 #include <set>
@@ -15,7 +17,7 @@ using namespace Mountain;
 bool_t Audio::Initialize()
 {
     Logger::LogVerbose("Initializing audio");
-    
+
     m_CurrentDevice = new AudioDevice(alcGetString(nullptr, ALC_DEFAULT_ALL_DEVICES_SPECIFIER));
 
     constexpr std::array enabledEvents = {
@@ -23,7 +25,7 @@ bool_t Audio::Initialize()
     };
     alcEventControlSOFT(static_cast<ALCsizei>(enabledEvents.size()), enabledEvents.data(), ALC_TRUE);
     alcEventCallbackSOFT(EventCallback, nullptr);
-    
+
     m_CurrentContext = new AudioContext(*m_CurrentDevice);
 
     return true;
@@ -47,10 +49,10 @@ void Audio::Update()
         return;
 
     const std::string defaultDevice = alcGetString(nullptr, ALC_DEFAULT_ALL_DEVICES_SPECIFIER);
-        
+
     if (m_CurrentDevice->GetName() == defaultDevice)
         return;
-        
+
     m_CurrentDevice->Reopen(defaultDevice);
     m_DefaultDeviceChanged = false;
 }

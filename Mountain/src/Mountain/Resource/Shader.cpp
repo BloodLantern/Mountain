@@ -1,3 +1,5 @@
+#include "Mountain/Core.hpp"
+
 #include "Mountain/Resource/Shader.hpp"
 
 #include <glad/glad.h>

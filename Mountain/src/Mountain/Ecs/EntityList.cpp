@@ -1,4 +1,6 @@
-﻿#include "Mountain/Ecs/EntityList.hpp"
+﻿#include "Mountain/Core.hpp"
+
+#include "Mountain/Ecs/EntityList.hpp"
 
 #include "Mountain/Ecs/Entity.hpp"
 

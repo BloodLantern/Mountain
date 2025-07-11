@@ -1,3 +1,5 @@
+#include "Mountain/Core.hpp"
+
 #include "Mountain/Game.hpp"
 
 #include <mimalloc.h>

@@ -1,3 +1,5 @@
+#include "Mountain/Core.hpp"
+
 #include "Mountain/Rendering/Draw.hpp"
 
 #include "Mountain/Globals.hpp"

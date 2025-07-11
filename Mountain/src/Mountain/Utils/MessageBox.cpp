@@ -1,3 +1,5 @@
+#include "Mountain/Core.hpp"
+
 #include "Mountain/Utils/MessageBox.hpp"
 
 #include <stdexcept>

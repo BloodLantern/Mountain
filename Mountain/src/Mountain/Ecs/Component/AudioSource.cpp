@@ -1,3 +1,5 @@
+#include "Mountain/Core.hpp"
+
 #include "Mountain/Ecs/Component/AudioSource.hpp"
 
 #include <AL/al.h>
@@ -44,7 +46,7 @@ void AudioSource::Update()
     // If the track is not in mono, there is no audio spatialization
     if (audioTrack->GetChannels() >= 2)
         return;
-    
+
     Audio::GetContext()->MakeCurrent();
 
     const Vector2& position = m_Entity->position * Audio::GetDistanceFactor();
@@ -57,7 +59,7 @@ void AudioSource::Update()
     const float_t deltaTime = Time::GetDeltaTime();
     const Vector2 velocity = deltaTime == 0.f ? Vector2::Zero() : (position - m_LastPosition) / deltaTime;
     std::array direction = { Vector3::UnitZ(), Vector3::UnitY() };
-    
+
     // Velocity
     alSourcefv(m_Handle, AL_VELOCITY, static_cast<Vector3>(velocity).Data());
     AudioContext::CheckError();
@@ -74,7 +76,7 @@ void AudioSource::Play() { if (audioTrack) Play(*audioTrack); }
 void AudioSource::Play(AudioTrack& track)
 {
     Audio::GetContext()->MakeCurrent();
-    
+
     if (!track.IsLoaded())
     {
         Logger::LogWarning("Tried to play an AudioTrack ({}) that wasn't loaded in the audio interface. Loading it", track.GetName());
@@ -103,7 +105,7 @@ float_t AudioSource::GetVolume() const
 void AudioSource::SetVolume(const float_t newVolume)
 {
     m_Volume = std::max(0.f, newVolume);
-    
+
     Audio::GetContext()->MakeCurrent();
     alSourcef(m_Handle, AL_GAIN, m_Volume);
     AudioContext::CheckError();
@@ -117,7 +119,7 @@ float_t AudioSource::GetPitch() const
 void AudioSource::SetPitch(const float_t newPitch)
 {
     m_Pitch = std::max(0.f, newPitch);
-    
+
     Audio::GetContext()->MakeCurrent();
     alSourcef(m_Handle, AL_PITCH, m_Pitch);
     AudioContext::CheckError();
@@ -131,7 +133,7 @@ bool_t AudioSource::GetLooping() const
 void AudioSource::SetLooping(const bool_t newLooping)
 {
     m_Looping = newLooping;
-    
+
     Audio::GetContext()->MakeCurrent();
     alSourcei(m_Handle, AL_LOOPING, m_Looping);
     AudioContext::CheckError();

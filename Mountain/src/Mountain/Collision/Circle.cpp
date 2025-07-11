@@ -1,3 +1,5 @@
+#include "Mountain/Core.hpp"
+
 #include "Mountain/Collision/Circle.hpp"
 
 #include "Mountain/Collision/ColliderList.hpp"

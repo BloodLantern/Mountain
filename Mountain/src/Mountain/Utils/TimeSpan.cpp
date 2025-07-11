@@ -1,3 +1,5 @@
+#include "Mountain/Core.hpp"
+
 #include "Mountain/Utils/TimeSpan.hpp"
 
 #include "Mountain/Exceptions/ThrowHelper.hpp"

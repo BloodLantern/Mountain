@@ -1,4 +1,6 @@
-﻿#include "Mountain/Ecs/Component/Component.hpp"
+﻿#include "Mountain/Core.hpp"
+
+#include "Mountain/Ecs/Component/Component.hpp"
 
 using namespace Mountain;
 

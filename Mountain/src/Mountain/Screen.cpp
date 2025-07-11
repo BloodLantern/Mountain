@@ -1,4 +1,6 @@
-﻿#include "Mountain/Screen.hpp"
+﻿#include "Mountain/Core.hpp"
+
+#include "Mountain/Screen.hpp"
 
 #include "Mountain/Window.hpp"
 

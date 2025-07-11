@@ -1,4 +1,6 @@
-﻿#include "Mountain/Ecs/Scene.hpp"
+﻿#include "Mountain/Core.hpp"
+
+#include "Mountain/Ecs/Scene.hpp"
 
 #include "Mountain/Ecs/Entity.hpp"
 

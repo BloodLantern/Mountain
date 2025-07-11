@@ -1,3 +1,5 @@
+#include "Mountain/Core.hpp"
+
 #include "Mountain/Utils/FileSystemWatcher.hpp"
 
 #include <regex>

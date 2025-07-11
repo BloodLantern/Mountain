@@ -1,4 +1,6 @@
-﻿#include "Mountain/Utils/Utils.hpp"
+﻿#include "Mountain/Core.hpp"
+
+#include "Mountain/Utils/Utils.hpp"
 
 #include <fstream>
 #include <ranges>

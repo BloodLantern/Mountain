@@ -1,4 +1,6 @@
-﻿#include "Mountain/Rendering/ParticleSystem.hpp"
+﻿#include "Mountain/Core.hpp"
+
+#include "Mountain/Rendering/ParticleSystem.hpp"
 
 #include <glad/glad.h>
 

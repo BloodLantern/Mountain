@@ -1,4 +1,6 @@
-﻿#include "Mountain/Audio/AudioBuffer.hpp"
+﻿#include "Mountain/Core.hpp"
+
+#include "Mountain/Audio/AudioBuffer.hpp"
 
 #include <AL/al.h>
 #include <AL/alext.h>

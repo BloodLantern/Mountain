@@ -1,4 +1,6 @@
-﻿#include "Mountain/Rendering/GpuBuffer.hpp"
+﻿#include "Mountain/Core.hpp"
+
+#include "Mountain/Rendering/GpuBuffer.hpp"
 
 #include <glad/glad.h>
 

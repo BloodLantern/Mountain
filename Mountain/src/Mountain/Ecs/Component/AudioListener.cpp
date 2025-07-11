@@ -1,3 +1,5 @@
+#include "Mountain/Core.hpp"
+
 #include "Mountain/Ecs/Component/AudioListener.hpp"
 
 #include <array>

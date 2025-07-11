@@ -1,4 +1,6 @@
-﻿#include "Mountain/Rendering/RenderTarget.hpp"
+﻿#include "Mountain/Core.hpp"
+
+#include "Mountain/Rendering/RenderTarget.hpp"
 
 #include <array>
 

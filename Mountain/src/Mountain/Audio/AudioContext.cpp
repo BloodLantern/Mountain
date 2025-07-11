@@ -1,3 +1,5 @@
+#include "Mountain/Core.hpp"
+
 #include "Mountain/Audio/AudioContext.hpp"
 
 #include <AL/al.h>

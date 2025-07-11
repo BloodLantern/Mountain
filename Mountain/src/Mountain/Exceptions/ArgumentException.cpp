@@ -1,4 +1,6 @@
-﻿#include "Mountain/Exceptions/ArgumentException.hpp"
+﻿#include "Mountain/Core.hpp"
+
+#include "Mountain/Exceptions/ArgumentException.hpp"
 
 using namespace Mountain;
 

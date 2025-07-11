@@ -1,4 +1,6 @@
-﻿#include "Mountain/Utils/DateTime.hpp"
+﻿#include "Mountain/Core.hpp"
+
+#include "Mountain/Utils/DateTime.hpp"
 
 #include "Mountain/Utils/Windows.hpp"
 

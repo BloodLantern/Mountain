@@ -1,3 +1,5 @@
+#include "Mountain/Core.hpp"
+
 #include "Mountain/FileSystem/FileManager.hpp"
 
 #include "Mountain/Utils/Stopwatch.hpp"

@@ -1,4 +1,6 @@
 // ReSharper disable CppMemberFunctionMayBeStatic
+#include "Mountain/Core.hpp"
+
 #include "Mountain/Utils/Coroutine.hpp"
 
 #include <ranges>

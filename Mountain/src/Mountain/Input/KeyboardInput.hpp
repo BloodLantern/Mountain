@@ -162,7 +162,7 @@ namespace Mountain
         NormalEnd = Delete,
 
         /* Scancode keys */
-        
+
         Capslock,
         F1,
         F2,

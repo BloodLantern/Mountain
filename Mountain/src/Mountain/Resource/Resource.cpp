@@ -1,4 +1,6 @@
-﻿#include "Mountain/Resource/Resource.hpp"
+﻿#include "Mountain/Core.hpp"
+
+#include "Mountain/Resource/Resource.hpp"
 
 #include "Mountain/FileSystem/File.hpp"
 #include "Mountain/FileSystem/FileManager.hpp"
