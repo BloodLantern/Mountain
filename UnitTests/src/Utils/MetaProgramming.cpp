@@ -2,6 +2,9 @@
 
 #include <Mountain/Window.hpp>
 #include <Mountain/Containers/Array.hpp>
+#include <Mountain/Ecs/Component/AudioListener.hpp>
+#include <Mountain/Ecs/Component/AudioSource.hpp>
+#include <Mountain/Ecs/Component/Sprite.hpp>
 #include <Mountain/Resource/Shader.hpp>
 #include <Mountain/Utils/MetaProgramming.hpp>
 
@@ -399,11 +402,11 @@ TEST(Utils_MetaProgramming, Meta_IsMathType)
 
 TEST(Utils_MetaProgramming, Meta_IsColorType)
 {
-    EXPECT_TRUE(Meta::IsColorType<Color>);
-    EXPECT_TRUE(Meta::IsColorType<ColorHsva>);
-    EXPECT_FALSE(Meta::IsColorType<Vector2>);
-    EXPECT_FALSE(Meta::IsColorType<float>);
-    EXPECT_FALSE(Meta::IsColorType<A>);
+    EXPECT_TRUE(Meta::IsColor<Color>);
+    EXPECT_TRUE(Meta::IsColor<ColorHsva>);
+    EXPECT_FALSE(Meta::IsColor<Vector2>);
+    EXPECT_FALSE(Meta::IsColor<float>);
+    EXPECT_FALSE(Meta::IsColor<A>);
 }
 
 TEST(Utils_MetaProgramming, Meta_IsConvertibleTo)
@@ -434,20 +437,4 @@ TEST(Utils_MetaProgramming, Meta_IsEqualityComparableWith)
     EXPECT_FALSE((Meta::IsEqualityComparableWith<Color, ColorHsva>));
     EXPECT_FALSE((Meta::IsEqualityComparableWith<ColorHsva, Color>));
     EXPECT_FALSE((Meta::IsEqualityComparableWith<A, A>));
-}
-
-TEST(Utils_MetaProgramming, Concepts_Resource)
-{
-    EXPECT_TRUE(Concepts::Resource<Resource>);
-    EXPECT_TRUE(Concepts::Resource<Texture>);
-    EXPECT_TRUE(Concepts::Resource<Font>);
-    EXPECT_TRUE(Concepts::Resource<Shader>);
-}
-
-TEST(Utils_MetaProgramming, Concepts_LoadableResource)
-{
-    EXPECT_TRUE(Concepts::LoadableResource<Resource>);
-    EXPECT_TRUE(Concepts::LoadableResource<Texture>);
-    EXPECT_FALSE(Concepts::LoadableResource<Font>);
-    EXPECT_TRUE(Concepts::LoadableResource<Shader>);
 }

@@ -151,7 +151,7 @@ void Draw::Texture(
     const Vector2 uv0,
     const Vector2 uv1,
     const Color& color,
-    const Meta::UnderlyingEnumType<DrawTextureFlipping> flipFlags
+    const DrawTextureFlipping flipFlags
 )
 {
     if (uv0.x > uv1.x || uv0.y > uv1.y)
@@ -223,7 +223,7 @@ void Draw::RenderTarget(
     const Vector2 uv0,
     const Vector2 uv1,
     const Color& color,
-    const Meta::UnderlyingEnumType<DrawTextureFlipping> flipFlags
+    const DrawTextureFlipping flipFlags
 )
 {
     if (uv0.x > uv1.x || uv0.y > uv1.y)

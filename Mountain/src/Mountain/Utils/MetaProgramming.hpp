@@ -70,25 +70,9 @@ namespace Mountain
         template <typename T>
         constexpr bool_t IsArray = std::is_array_v<T>;
 
-        /// @brief Checks whether @p T is a pointer.
-        template <typename T>
-        constexpr bool_t IsPointer = std::is_pointer_v<T>;
-
         /// @brief Checks whether @p T is a class.
         template <typename T>
         constexpr bool_t IsClass = std::is_class_v<T>;
-
-        /// @brief Checks whether @p T is an enum.
-        template <typename T>
-        constexpr bool_t IsEnum = std::is_enum_v<T>;
-
-        /// @brief Checks whether @p T is an integral type.
-        template <typename T>
-        constexpr bool_t IsIntegral = std::is_integral_v<T>;
-
-        /// @brief Checks whether @p T is a floating type.
-        template <typename T>
-        constexpr bool_t IsFloatingPoint = std::is_floating_point_v<T>;
 
         /// @brief Checks whether @p T is an abstract class.
         template <typename T>
@@ -158,10 +142,6 @@ namespace Mountain
         template <typename T>
         constexpr bool_t IsReference = std::is_reference_v<T>;
 
-        /// @brief Checks whether @p T is invocable with the given argument types.
-        template <typename T, typename... Args>
-        constexpr bool_t IsInvocable = std::is_invocable_v<T, Args...>;
-
         template <bool_t Condition>
         using EnableIf = std::enable_if_t<Condition>;
 
@@ -203,11 +183,6 @@ namespace Mountain
         template <typename T>
         using RemoveCvPointerSpecifier = RemoveCvSpecifier<RemovePointerSpecifier<T>>;
 
-        /// @brief Checks whether the type is a function type
-        /// <a href="https://en.cppreference.com/w/cpp/types/is_function.html">as defined in the C++ standard</a>.
-        template <typename T>
-        constexpr bool_t IsFunction = std::is_function_v<T>;
-
         /// @brief Checks whether the type is a @c std::function
         template <typename>
         constexpr bool_t IsStandardFunction = false;
@@ -221,12 +196,6 @@ namespace Mountain
 
         template <typename T>
         constexpr bool_t IsMountainPointer<Pointer<T>> = true;
-
-        template <typename T>
-        constexpr bool_t IsException = IsBaseOf<std::exception, T>;
-
-        template <typename T>
-        constexpr bool_t IsMountainException = IsBaseOf<Exception, T>;
 
         /// @brief Checks if T is a native type.
         ///
@@ -245,6 +214,85 @@ namespace Mountain
         template <typename T>
         constexpr bool_t IsNativeType = IsAny<T, char_t, uint8_t, int8_t, uint16_t, int16_t, uint32_t, int32_t, uint64_t, int64_t, float_t, double_t, bool_t>;
 
+        /// @brief Checks if T is a math type.
+        ///
+        /// A math type is one of the following types:
+        /// - Vector2
+        /// - Vector2i
+        /// - Vector3
+        /// - Vector4
+        /// - Quaternion
+        /// - Matrix2
+        /// - Matrix3
+        /// - Matrix
+        ///
+        template <typename T>
+        constexpr bool_t IsMathType = IsAny<T, Vector2, Vector2i, Vector3, Vector4, Quaternion, Matrix2, Matrix3, Matrix>;
+
+        template <typename T>
+        constexpr bool_t IsEqualityComparable = std::equality_comparable<T>;
+
+        template <typename T, typename U>
+        constexpr bool_t IsEqualityComparableWith = std::equality_comparable_with<T, U>;
+
+        template <typename T>
+        constexpr bool_t IsResource = Meta::IsBaseOf<Resource, T>;
+
+        template <typename T>
+        constexpr bool_t IsLoadableResource = IsResource<T> && !Meta::IsSame<T, Font>;
+
+        template <typename T>
+        constexpr bool_t IsEntry = Meta::IsBaseOf<Entry, T>;
+
+        template <typename T>
+        constexpr bool_t IsComponent = Meta::IsBaseOf<Component, T>;
+
+        template <typename T>
+        constexpr bool_t IsEntity = Meta::IsBaseOf<Entity, T>;
+
+        template <typename T>
+        constexpr bool_t IsException = IsBaseOf<std::exception, T>;
+
+        template <typename T>
+        constexpr bool_t IsMountainException = IsBaseOf<Exception, T>;
+
+        template <typename T>
+        constexpr bool_t IsStandardException = IsException<T> && !IsMountainException<T>;
+
+        /// @brief Checks whether the type is a function type
+        /// <a href="https://en.cppreference.com/w/cpp/types/is_function.html">as defined in the C++ standard</a>.
+        template <typename T>
+        constexpr bool_t IsFunction = std::is_function_v<T>;
+
+        /// @brief Checks whether @p T is invocable with the given argument types.
+        template <typename T, typename... Args>
+        constexpr bool_t IsInvocable = std::is_invocable_v<T, Args...>;
+
+        /// @brief Checks if @p From is **implicitly** convertible to @p To.
+        template <typename From, typename To>
+        constexpr bool_t IsConvertibleTo = std::is_convertible_v<From, To>;
+
+        /// @brief Checks if T is a color type.
+        ///
+        /// A color type is one of the following types:
+        /// - Color
+        /// - ColorHsva
+        ///
+        template <typename T>
+        constexpr bool_t IsColor = IsAny<T, Color, ColorHsva>;
+
+        /// @brief Checks whether @p T is a pointer.
+        template <typename T>
+        constexpr bool_t IsPointer = std::is_pointer_v<T>;
+
+        /// @brief Checks whether @p T is an integral type.
+        template <typename T>
+        constexpr bool_t IsIntegral = std::is_integral_v<T>;
+
+        /// @brief Checks whether @p T is a floating type.
+        template <typename T>
+        constexpr bool_t IsFloatingPoint = std::is_floating_point_v<T>;
+
         /// @brief Checks if T is an integral or a floating type.
         ///
         /// An int/float type is one of the following types:
@@ -262,39 +310,15 @@ namespace Mountain
         template <typename T>
         constexpr bool_t IsIntegralOrFloating = IsIntegral<T> || IsFloatingPoint<T>;
 
-        /// @brief Checks if T is a math type.
-        ///
-        /// A math type is one of the following types:
-        /// - Vector2
-        /// - Vector2i
-        /// - Vector3
-        /// - Vector4
-        /// - Quaternion
-        /// - Matrix2
-        /// - Matrix3
-        /// - Matrix
-        ///
+        /// @brief Checks whether @p T is an enum.
         template <typename T>
-        constexpr bool_t IsMathType = IsAny<T, Vector2, Vector2i, Vector3, Vector4, Quaternion, Matrix2, Matrix3, Matrix>;
-
-        /// @brief Checks if T is a color type.
-        ///
-        /// A color type is one of the following types:
-        /// - Color
-        /// - ColorHsva
-        ///
-        template <typename T>
-        constexpr bool_t IsColorType = IsAny<T, Color, ColorHsva>;
-
-        /// @brief Checks if @p From is **implicitly** convertible to @p To.
-        template <typename From, typename To>
-        constexpr bool_t IsConvertibleTo = std::is_convertible_v<From, To>;
+        constexpr bool_t IsEnum = std::is_enum_v<T>;
 
         template <typename T>
-        constexpr bool_t IsEqualityComparable = std::equality_comparable<T>;
+        constexpr bool_t IsEffect = IsBaseOf<Effect, T>;
 
-        template <typename T, typename U>
-        constexpr bool_t IsEqualityComparableWith = std::equality_comparable_with<T, U>;
+        template <typename T>
+        constexpr bool_t IsContainerType = !IsConst<T> && !IsFunction<T> && !IsReference<T>;
     }
 
     /// @namespace Concepts
@@ -303,23 +327,23 @@ namespace Mountain
     {
         /// @brief Concept that forces a type to be derived from @c Resource.
         template <class T>
-        concept Resource = Meta::IsBaseOf<Resource, T>;
+        concept Resource = Meta::IsResource<T>;
 
         /// @brief Concept that forces a type to be derived from @c Resource and is not the @c Font class.
         template <class T>
-        concept LoadableResource = Meta::IsBaseOf<Mountain::Resource, T> && !Meta::IsSame<T, Font>;
+        concept LoadableResource = Meta::IsLoadableResource<T>;
 
         /// @brief Concept that forces a type to be derived from @c Entry.
         template <class T>
-        concept Entry = Meta::IsBaseOf<Entry, T>;
+        concept Entry = Meta::IsEntry<T>;
 
-        /// @brief Concept that forces a type to be a child of @c Component
+        /// @brief Concept that forces a type to be derived from @c Component
         template <class T>
-        concept Component = Meta::IsBaseOf<Component, T>;
+        concept Component = Meta::IsComponent<T>;
 
-        /// @brief Concept that forces a type to be a child of @c Entity
+        /// @brief Concept that forces a type to be derived from @c Entity
         template <class T>
-        concept Entity = Meta::IsBaseOf<Entity, T>;
+        concept Entity = Meta::IsEntity<T>;
 
         /// @brief Concept that forces a type to be derived from @c std::exception.
         template<typename T>
@@ -331,7 +355,7 @@ namespace Mountain
 
         /// @brief Concept that forces a type to be derived from @c std::exception and not from @c Exception.
         template<typename T>
-        concept StandardException = Exception<T> && !MountainException<T>;
+        concept StandardException = Meta::IsStandardException<T>;
 
         /// @brief Concept that forces a type to be a function
         template <typename T>
@@ -349,7 +373,7 @@ namespace Mountain
 
         /// @brief Concept that forces a type to be a color, e.g., either @c Color or @c ColorHsva
         template <typename T>
-        concept Color = Meta::IsColorType<T>;
+        concept Color = Meta::IsColor<T>;
 
         /// @brief Concept that forces a type to be a raw pointer
         template <typename T>
@@ -359,15 +383,23 @@ namespace Mountain
         template <typename T>
         concept Integral = Meta::IsIntegral<T>;
 
+        /// @brief Concept that forces a type to be of a floating point type
+        template <typename T>
+        concept FloatingPoint = Meta::IsFloatingPoint<T>;
+
+        /// @brief Concept that forces a type to be of either an integral or a floating pointer type
+        template <typename T>
+        concept IntegralOrFloating = Meta::IsIntegralOrFloating<T>;
+
         template <typename T>
         concept Enum = Meta::IsEnum<T>;
 
         template <class T>
-        concept Effect = Meta::IsBaseOf<Effect, T>;
+        concept Effect = Meta::IsEffect<T>;
 
         /// @brief A container type is any non-const, non-function, non-reference type.
         template <typename T>
-        concept ContainerType = !Meta::IsConst<T> && !Meta::IsFunction<T> && !Meta::IsReference<T>;
+        concept ContainerType = Meta::IsContainerType<T>;
 
         /// @brief A container type is any non-const, non-function, non-reference type that can be default, copy and move constructed.
         template <typename T>
