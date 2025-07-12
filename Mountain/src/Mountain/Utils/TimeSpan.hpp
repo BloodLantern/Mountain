@@ -67,19 +67,19 @@ namespace Mountain
         static constexpr TimeSpan MinValue();
 
         ATTRIBUTE_NODISCARD
-        static TimeSpan FromDays(double_t days);
+        static constexpr TimeSpan FromDays(double_t days);
         ATTRIBUTE_NODISCARD
-        static TimeSpan FromHours(double_t hours);
+        static constexpr TimeSpan FromHours(double_t hours);
         ATTRIBUTE_NODISCARD
-        static TimeSpan FromMinutes(double_t minutes);
+        static constexpr TimeSpan FromMinutes(double_t minutes);
         ATTRIBUTE_NODISCARD
-        static TimeSpan FromSeconds(double_t seconds);
+        static constexpr TimeSpan FromSeconds(double_t seconds);
         ATTRIBUTE_NODISCARD
-        static TimeSpan FromMilliseconds(double_t milliseconds);
+        static constexpr TimeSpan FromMilliseconds(double_t milliseconds);
         ATTRIBUTE_NODISCARD
-        static TimeSpan FromMicroseconds(double_t microseconds);
+        static constexpr TimeSpan FromMicroseconds(double_t microseconds);
         ATTRIBUTE_NODISCARD
-        static TimeSpan FromTicks(int64_t ticks);
+        static constexpr TimeSpan FromTicks(int64_t ticks);
 
         explicit constexpr TimeSpan(int64_t ticks);
         constexpr TimeSpan(int32_t hours, int32_t minutes, int32_t seconds);
@@ -88,66 +88,66 @@ namespace Mountain
         GETTER(int64_t, Ticks, m_Ticks)
 
         ATTRIBUTE_NODISCARD
-        int32_t GetDays() const;
+        constexpr int32_t GetDays() const;
         ATTRIBUTE_NODISCARD
-        int32_t GetHours() const;
+        constexpr int32_t GetHours() const;
         ATTRIBUTE_NODISCARD
-        int32_t GetMinutes() const;
+        constexpr int32_t GetMinutes() const;
         ATTRIBUTE_NODISCARD
-        int32_t GetSeconds() const;
+        constexpr int32_t GetSeconds() const;
         ATTRIBUTE_NODISCARD
-        int32_t GetMilliseconds() const;
+        constexpr int32_t GetMilliseconds() const;
         ATTRIBUTE_NODISCARD
-        int32_t GetMicroseconds() const;
+        constexpr int32_t GetMicroseconds() const;
         ATTRIBUTE_NODISCARD
-        int32_t GetNanoseconds() const;
+        constexpr int32_t GetNanoseconds() const;
 
         ATTRIBUTE_NODISCARD
-        double_t GetTotalDays() const;
+        constexpr double_t GetTotalDays() const;
         ATTRIBUTE_NODISCARD
-        double_t GetTotalHours() const;
+        constexpr double_t GetTotalHours() const;
         ATTRIBUTE_NODISCARD
-        double_t GetTotalMinutes() const;
+        constexpr double_t GetTotalMinutes() const;
         ATTRIBUTE_NODISCARD
-        double_t GetTotalSeconds() const;
+        constexpr double_t GetTotalSeconds() const;
         ATTRIBUTE_NODISCARD
-        double_t GetTotalMilliseconds() const;
+        constexpr double_t GetTotalMilliseconds() const;
         ATTRIBUTE_NODISCARD
-        double_t GetTotalMicroseconds() const;
+        constexpr double_t GetTotalMicroseconds() const;
         ATTRIBUTE_NODISCARD
-        double_t GetTotalNanoseconds() const;
+        constexpr double_t GetTotalNanoseconds() const;
 
         ATTRIBUTE_NODISCARD
-        TimeSpan Duration() const;
+        constexpr TimeSpan Duration() const;
 
         ATTRIBUTE_NODISCARD
         friend std::strong_ordering operator<=>(TimeSpan, TimeSpan) = default;
 
         ATTRIBUTE_NODISCARD
-        friend TimeSpan operator+(TimeSpan lhs, TimeSpan rhs);
+        friend constexpr TimeSpan operator+(TimeSpan lhs, TimeSpan rhs);
         ATTRIBUTE_NODISCARD
-        friend TimeSpan operator-(TimeSpan value);
+        friend constexpr TimeSpan operator-(TimeSpan value);
         ATTRIBUTE_NODISCARD
-        friend TimeSpan operator-(TimeSpan lhs, TimeSpan rhs);
+        friend constexpr TimeSpan operator-(TimeSpan lhs, TimeSpan rhs);
         ATTRIBUTE_NODISCARD
-        friend TimeSpan operator*(TimeSpan lhs, double_t rhs);
+        friend constexpr TimeSpan operator*(TimeSpan lhs, double_t rhs);
         ATTRIBUTE_NODISCARD
-        friend TimeSpan operator*(double_t lhs, TimeSpan rhs);
+        friend constexpr TimeSpan operator*(double_t lhs, TimeSpan rhs);
         ATTRIBUTE_NODISCARD
-        friend TimeSpan operator/(TimeSpan lhs, double_t rhs);
+        friend constexpr TimeSpan operator/(TimeSpan lhs, double_t rhs);
         ATTRIBUTE_NODISCARD
-        friend double_t operator/(TimeSpan lhs, TimeSpan rhs);
+        friend constexpr double_t operator/(TimeSpan lhs, TimeSpan rhs);
 
-        friend TimeSpan& operator+=(TimeSpan& lhs, TimeSpan rhs);
-        friend TimeSpan& operator-=(TimeSpan& lhs, TimeSpan rhs);
-        friend TimeSpan& operator*=(TimeSpan& lhs, double_t rhs);
-        friend TimeSpan& operator/=(TimeSpan& lhs, double_t rhs);
+        friend constexpr TimeSpan& operator+=(TimeSpan& lhs, TimeSpan rhs);
+        friend constexpr TimeSpan& operator-=(TimeSpan& lhs, TimeSpan rhs);
+        friend constexpr TimeSpan& operator*=(TimeSpan& lhs, double_t rhs);
+        friend constexpr TimeSpan& operator/=(TimeSpan& lhs, double_t rhs);
 
         ATTRIBUTE_NODISCARD
         std::string ToString() const;
 
         ATTRIBUTE_NODISCARD
-        size_t GetHashCode() const;
+        constexpr size_t GetHashCode() const;
 
     private:
         static constexpr int64_t MaxSeconds = std::numeric_limits<int64_t>::max() / TicksPerSecond;
@@ -162,9 +162,9 @@ namespace Mountain
         static constexpr int64_t TicksPerTenthSecond = TicksPerMillisecond * 100;
 
         ATTRIBUTE_NODISCARD
-        static TimeSpan Interval(double_t ticks, double_t scale);
+        static constexpr TimeSpan Interval(double_t ticks, double_t scale);
         ATTRIBUTE_NODISCARD
-        static TimeSpan IntervalFromDoubleTicks(double_t ticks);
+        static constexpr TimeSpan IntervalFromDoubleTicks(double_t ticks);
 
         int64_t m_Ticks = 0;
     };
@@ -181,6 +181,131 @@ namespace Mountain
     constexpr TimeSpan TimeSpan::MinValue() { return TimeSpan{std::numeric_limits<int64_t>::max()}; }
     constexpr TimeSpan TimeSpan::MaxValue() { return TimeSpan{std::numeric_limits<int64_t>::min()}; }
 
+    // ReSharper disable CppClangTidyReadabilitySuspiciousCallArgument
+    constexpr TimeSpan TimeSpan::FromDays(const double_t days) { return Interval(days, TicksPerDay); }
+
+    constexpr TimeSpan TimeSpan::FromHours(const double_t hours) { return Interval(hours, TicksPerHour); }
+
+    constexpr TimeSpan TimeSpan::FromMinutes(const double_t minutes) { return Interval(minutes, TicksPerMinute); }
+
+    constexpr TimeSpan TimeSpan::FromSeconds(const double_t seconds) { return Interval(seconds, TicksPerSecond); }
+
+    constexpr TimeSpan TimeSpan::FromMilliseconds(const double_t milliseconds) { return Interval(milliseconds, TicksPerMillisecond); }
+
+    constexpr TimeSpan TimeSpan::FromMicroseconds(const double_t microseconds) { return Interval(microseconds, TicksPerMicrosecond); }
+    // ReSharper restore CppClangTidyReadabilitySuspiciousCallArgument
+
+    constexpr TimeSpan TimeSpan::FromTicks(const int64_t ticks) { return TimeSpan{ticks}; }
+
+    constexpr int32_t TimeSpan::GetDays() const { return static_cast<int32_t>(m_Ticks / TicksPerDay); }
+
+    constexpr int32_t TimeSpan::GetHours() const { return static_cast<int32_t>(m_Ticks / TicksPerHour % 24); }
+
+    constexpr int32_t TimeSpan::GetMinutes() const { return static_cast<int32_t>(m_Ticks / TicksPerMinute % 60); }
+
+    constexpr int32_t TimeSpan::GetSeconds() const { return static_cast<int32_t>(m_Ticks / TicksPerSecond % 60); }
+
+    constexpr int32_t TimeSpan::GetMilliseconds() const { return static_cast<int32_t>(m_Ticks / TicksPerMillisecond % 1000); }
+
+    constexpr int32_t TimeSpan::GetMicroseconds() const { return static_cast<int32_t>(m_Ticks / TicksPerMicrosecond % 1000); }
+
+    constexpr int32_t TimeSpan::GetNanoseconds() const { return static_cast<int32_t>(m_Ticks % TicksPerMicrosecond * NanosecondsPerTick); }
+
+    constexpr double_t TimeSpan::GetTotalDays() const { return static_cast<double_t>(m_Ticks) / TicksPerDay; }
+
+    constexpr double_t TimeSpan::GetTotalHours() const { return static_cast<double_t>(m_Ticks) / TicksPerHour; }
+
+    constexpr double_t TimeSpan::GetTotalMinutes() const { return static_cast<double_t>(m_Ticks) / TicksPerMinute; }
+
+    constexpr double_t TimeSpan::GetTotalSeconds() const { return static_cast<double_t>(m_Ticks) / TicksPerSecond; }
+
+    constexpr double_t TimeSpan::GetTotalMilliseconds() const
+    {
+        const double_t temp = static_cast<double_t>(m_Ticks) / TicksPerMillisecond;
+
+        if (temp > MaxMilliSeconds)
+            return MaxMilliSeconds;
+
+        if (temp < MinMilliSeconds)
+            return MinMilliSeconds;
+
+        return temp;
+    }
+
+    constexpr double_t TimeSpan::GetTotalMicroseconds() const { return static_cast<double_t>(m_Ticks) / TicksPerMicrosecond; }
+
+    constexpr double_t TimeSpan::GetTotalNanoseconds() const { return static_cast<double_t>(m_Ticks) * NanosecondsPerTick; }
+
+    constexpr TimeSpan TimeSpan::Duration() const
+    {
+        if (m_Ticks == MinValue().m_Ticks)
+            throw OverflowException{"TimeSpan Duration overflow"};
+        return TimeSpan{m_Ticks >= 0 ? m_Ticks : -m_Ticks};
+    }
+
+    constexpr TimeSpan operator+(const TimeSpan lhs, const TimeSpan rhs)
+    {
+        const int64_t result = lhs.m_Ticks + rhs.m_Ticks;
+
+        // Overflow if signs of operands was identical and result's
+        // sign was opposite.
+        // >> 63 gives the sign bit (either 64 1's or 64 0's).
+        if ((lhs.m_Ticks >> 63 == rhs.m_Ticks >> 63) && (lhs.m_Ticks >> 63 != result >> 63))
+            throw OverflowException{"TimeSpan sum overflow"};
+
+        return TimeSpan{result};
+    }
+
+    constexpr TimeSpan operator-(const TimeSpan value)
+    {
+        if (value.m_Ticks == TimeSpan::MinValue().m_Ticks)
+            throw OverflowException{"Cannot negate the MinValue TimeSpan because of Two's Complement"};
+        return TimeSpan{-value.m_Ticks};
+    }
+
+    constexpr TimeSpan operator-(const TimeSpan lhs, const TimeSpan rhs)
+    {
+        const int64_t result = lhs.m_Ticks + rhs.m_Ticks;
+
+        // Overflow if signs of operands was different and result's
+        // sign was opposite.
+        // >> 63 gives the sign bit (either 64 1's or 64 0's).
+        if ((lhs.m_Ticks >> 63 != rhs.m_Ticks >> 63) && (lhs.m_Ticks >> 63 != result >> 63))
+            throw OverflowException{"TimeSpan difference underflow"};
+
+        return TimeSpan{result};
+    }
+
+    constexpr TimeSpan operator*(const TimeSpan lhs, const double_t rhs)
+    {
+        if (Calc::IsNan(rhs))
+            throw ArgumentException{"Cannot multiply a TimeSpan by a NaN", "rhs"};
+
+        const double_t ticks = Calc::Round(static_cast<double_t>(lhs.m_Ticks) * rhs);
+        return TimeSpan::IntervalFromDoubleTicks(ticks);
+    }
+
+    constexpr TimeSpan operator*(const double_t lhs, const TimeSpan rhs) { return rhs * lhs; }
+
+    constexpr TimeSpan operator/(const TimeSpan lhs, const double_t rhs)
+    {
+        if (Calc::IsNan(rhs))
+            throw ArgumentException{"Cannot divide a TimeSpan by a NaN", "rhs"};
+
+        const double_t ticks = Calc::Round(static_cast<double_t>(lhs.m_Ticks) / rhs);
+        return TimeSpan::IntervalFromDoubleTicks(ticks);
+    }
+
+    constexpr double_t operator/(const TimeSpan lhs, const TimeSpan rhs) { return static_cast<double_t>(lhs.m_Ticks) / static_cast<double_t>(rhs.m_Ticks); }
+
+    constexpr TimeSpan& operator+=(TimeSpan& lhs, const TimeSpan rhs) { return lhs = lhs + rhs; }
+
+    constexpr TimeSpan& operator-=(TimeSpan& lhs, const TimeSpan rhs) { return lhs = lhs - rhs; }
+
+    constexpr TimeSpan& operator*=(TimeSpan& lhs, const double_t rhs) { return lhs = lhs * rhs; }
+
+    constexpr TimeSpan& operator/=(TimeSpan& lhs, const double_t rhs) { return lhs = lhs / rhs; }
+
     constexpr TimeSpan::TimeSpan(const int64_t ticks) : m_Ticks(ticks) {}
 
     constexpr TimeSpan::TimeSpan(const int32_t hours, const int32_t minutes, const int32_t seconds)
@@ -188,7 +313,7 @@ namespace Mountain
         const int64_t totalSeconds = static_cast<int64_t>(hours) * 3600 + static_cast<int64_t>(minutes) * 60 + static_cast<int64_t>(seconds);
 
         if (totalSeconds > MaxSeconds || totalSeconds < MinSeconds)
-            THROW(ArgumentOutOfRangeException{"Invalid TimeSpan values"});
+            throw ArgumentOutOfRangeException{"Invalid TimeSpan values"};
 
         m_Ticks = totalSeconds * TicksPerSecond;
     }
@@ -207,8 +332,26 @@ namespace Mountain
                                           microseconds;
 
         if (totalMicroseconds > MaxMicroSeconds || totalMicroseconds < MinMicroSeconds)
-            THROW(ArgumentOutOfRangeException{"Invalid TimeSpan values"});
+            throw ArgumentOutOfRangeException{"Invalid TimeSpan values"};
 
         m_Ticks = totalMicroseconds * TicksPerMicrosecond;
+    }
+
+    constexpr size_t TimeSpan::GetHashCode() const { return m_Ticks ^ (m_Ticks >> 32); }
+
+    constexpr TimeSpan TimeSpan::Interval(const double_t ticks, const double_t scale)
+    {
+        if (Calc::IsNan(ticks))
+            throw ArgumentException{"Cannot create an interval from a NaN amount of ticks", "ticks"};
+        return IntervalFromDoubleTicks(ticks * scale);
+    }
+
+    constexpr TimeSpan TimeSpan::IntervalFromDoubleTicks(const double_t ticks)
+    {
+        if (ticks > static_cast<double_t>(std::numeric_limits<int64_t>::max()) || ticks < static_cast<double_t>(std::numeric_limits<int64_t>::min()) || std::isnan(ticks))
+            throw OverflowException{"Invalid TimeSpan ticks"};
+        if (ticks == static_cast<double_t>(std::numeric_limits<int64_t>::max()))
+            return MaxValue();
+        return TimeSpan{static_cast<int64_t>(ticks)};
     }
 }
