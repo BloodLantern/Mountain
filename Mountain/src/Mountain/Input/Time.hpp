@@ -19,7 +19,7 @@ namespace Mountain
     public:
         MOUNTAIN_API static inline float_t timeScale = 1.f;
 
-        /// @brief The maximum delta time value. This is to prevent clipping during a lag spike.
+        /// @brief The maximum delta time value. This is mainly to prevent clipping through collisions during a lag spike.
         MOUNTAIN_API static inline float_t maxDeltaTime = 0.1f;
 
         /// @brief If this is above 0, the game updates will be frozen for that amount of time
@@ -102,6 +102,9 @@ namespace Mountain
         /// @remark This function might not wait if the game is not keeping up, that is
         /// if the delta time between frames is greater than what the targetFps/VSync aim for.
         static void WaitForNextFrame();
+        /// @brief Sleeps for <i>at least</i> the given amount of time.
+        /// @param milliseconds The minimum amount of time to sleep, in milliseconds.
+        /// @return The actual sleep duration, in milliseconds.
         static double_t SleepFor(double_t milliseconds);
 
         // Calls Initialize, Shutdown, Update and WaitForNextFrame

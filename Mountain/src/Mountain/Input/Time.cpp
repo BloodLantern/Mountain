@@ -100,7 +100,6 @@ void Time::WaitForNextFrame()
     const double_t lastFrameDurationMs = m_Stopwatch.GetElapsedMilliseconds() - frameStartMs;
     m_LastFrameDuration = static_cast<float_t>(lastFrameDurationMs / 1000.0);
 
-    // FIXME - When sleeping between frames to reach to target FPS, it seems we sleep for slightly too long
     if (targetFps.has_value())
     {
         const double_t targetFrameDuration = 1000.0 / targetFps.value();
@@ -114,16 +113,11 @@ void Time::WaitForNextFrame()
         // Never allow the sleep error to become too negative and induce too many catch-up frames
         accumulatedSleepError = std::max(-1000.0 / 30.0, accumulatedSleepError);
     }
-    else
-    {
-        // Even when running at unlimited frame-rate, we should call the scheduler
-        // to give lower-priority background processes a chance to do work.
-        timeSlept = SleepFor(0.0);
-    }
-
-    Window::SwapBuffers();
 
     frameStartMs = m_Stopwatch.GetElapsedMilliseconds();
+
+    // VSync sleeps here
+    Window::SwapBuffers();
 }
 
 double_t Time::SleepFor(const double_t milliseconds)

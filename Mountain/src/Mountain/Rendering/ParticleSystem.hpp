@@ -15,6 +15,8 @@
 // ReSharper disable once CppInconsistentNaming
 struct __GLsync;  // NOLINT(clang-diagnostic-reserved-identifier, bugprone-reserved-identifier)
 
+// TODO - Add settings for negating the delta time when reaching the end of the system lifetime
+
 namespace Mountain
 {
     struct ParticleSystemBurst
