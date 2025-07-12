@@ -2,6 +2,8 @@
 
 #include <functional>
 
+#include "Pool.hpp"
+#include "Source.hpp"
 #include "magic_enum/magic_enum.hpp"
 #include "Mountain/Core.hpp"
 #include "Mountain/Audio/Buffer.hpp"
@@ -36,13 +38,13 @@ namespace Mountain
 
         MOUNTAIN_API static void Update();
 
+        MOUNTAIN_API static void Play(const std::string& trackName);
+        MOUNTAIN_API static void Play(const Pointer<AudioTrack>& track);
+        MOUNTAIN_API static void Play(const Pointer<AudioTrack>& track, const Audio::Source::SourceInfo& info);
+
         /// @brief Returns the current device's context.
         [[nodiscard]]
         MOUNTAIN_API static Audio::Context* GetContext();
-
-        MOUNTAIN_API static void RegisterBuffer(Audio::Buffer* buffer);
-
-        MOUNTAIN_API static void UnregisterBuffer(Audio::Buffer* buffer);
 
         MOUNTAIN_API static void UpdateContext();
 
@@ -62,6 +64,8 @@ namespace Mountain
         MOUNTAIN_API static void CheckUpdateDefaultDevice();
         MOUNTAIN_API static void CheckUpdateDefaultList();
 
+        MOUNTAIN_API static void PlayUnstreamedSound(const Pointer<AudioTrack>& track, Audio::Source* source, const Audio::Source::SourceInfo& info);
+
         ATTRIBUTE_NODISCARD
         MOUNTAIN_API static float_t ComputeVolume(SoundType type);
 
@@ -70,7 +74,8 @@ namespace Mountain
         MOUNTAIN_API static inline Audio::Device* m_CurrentDevice = nullptr;
         MOUNTAIN_API static inline Audio::Context* m_CurrentContext = nullptr;
 
-        MOUNTAIN_API static inline List<Audio::Buffer*> m_Buffers;
+        MOUNTAIN_API static inline Audio::Pool* m_Pool;
+
         MOUNTAIN_API static inline List<std::string> m_DeviceNames;
 
         MOUNTAIN_API static inline bool_t m_DefaultDeviceChanged = false;

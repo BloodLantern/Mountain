@@ -1,8 +1,8 @@
 #pragma once
 
 #include "Mountain/Core.hpp"
-
-#include <Math/vector3.hpp>
+#include "Mountain/Audio/Audio.hpp"
+#include "Mountain/Audio/Listener.hpp"
 
 #include "Mountain/Ecs/Component/Component.hpp"
 
@@ -23,9 +23,6 @@ namespace Mountain
         void SetVolume(float_t newVolume);
 
     private:
-        /// @brief Volume in the range [0, inf]. Default value is 1.
-        float_t m_Volume = 1.f;
-
-        Vector2 m_LastPosition;
+        Audio::Listener m_Listener;
     };
 }

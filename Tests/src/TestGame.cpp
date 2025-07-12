@@ -203,6 +203,11 @@ void GameExample::RenderImGui()
         }
 
         ImGuiUtils::PopCollapsingHeader();
+
+        if (ImGui::Button("Test play sound"))
+        {
+            Sound::Play("assets/sfx.ogg");
+        }
     }
 
     ImGui::End();

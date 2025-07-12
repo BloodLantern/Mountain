@@ -4,6 +4,7 @@
 
 #include <Math/vector2.hpp>
 
+#include "Mountain/Audio/Source.hpp"
 #include "Mountain/Ecs/Component/Component.hpp"
 #include "Mountain/Resource/AudioTrack.hpp"
 
@@ -16,8 +17,6 @@ namespace Mountain
 
         MOUNTAIN_API AudioSource();
 
-        MOUNTAIN_API ~AudioSource() override;
-
         DELETE_COPY_MOVE_OPERATIONS(AudioSource)
 
         MOUNTAIN_API void Added() override;
@@ -26,35 +25,19 @@ namespace Mountain
 
         MOUNTAIN_API void Play();
 
-        MOUNTAIN_API void Play(AudioTrack& track);
+        MOUNTAIN_API void Play(AudioTrack& track) const;
 
         MOUNTAIN_API void SetBuffer(const Audio::Buffer* buffer);
 
         MOUNTAIN_API float_t GetVolume() const;
-
-        MOUNTAIN_API void SetVolume(float_t newVolume);
-
         MOUNTAIN_API float_t GetPitch() const;
 
+        MOUNTAIN_API void SetVolume(float_t newVolume);
         MOUNTAIN_API void SetPitch(float_t newPitch);
-
-        MOUNTAIN_API bool_t GetLooping() const;
-
-        MOUNTAIN_API void SetLooping(bool_t newLooping);
+        MOUNTAIN_API void SetLooping(bool_t newLooping) const;
 
     private:
-        uint32_t m_Handle = 0;
-
-        /// @brief Volume in the range [0, inf]. Default value is 1.
-        float_t m_Volume = 1.f;
-
-        /// @brief Pitch in the range [0, inf]. Default value is 1.
-        float_t m_Pitch = 1.f;
-
-        bool_t m_Looping = false;
-
+        Audio::Source m_Source;
         bool_t m_PlayOnAdded = true;
-
-        Vector2 m_LastPosition;
     };
 }

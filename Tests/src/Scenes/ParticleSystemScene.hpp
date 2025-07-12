@@ -19,6 +19,10 @@ public:
 
 	void RenderImGui() override;
 
+	void LoadResources() override;
+
+	void UnloadResources() override;
+
 private:
 	ParticleSystem m_ParticleSystem{ 1000 };
 };

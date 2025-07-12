@@ -9,6 +9,7 @@
 /// @brief Low-level audio API
 ///
 /// You should only use this if you know what you are doing and/or have experience with audio APIs such as OpenAL.
+/// If you are looking for the audio utility functions, refer to @c Mountain::Sound
 namespace Mountain::Audio
 {
 #pragma region Enums
@@ -187,6 +188,14 @@ namespace Mountain::Audio
     /// @brief Plays an audio source
     /// @param source Source id
     MOUNTAIN_API void PlaySource(uint32_t source);
+
+    /// @brief Pauses an audio source
+    /// @param source Source id
+    MOUNTAIN_API void PauseSource(uint32_t source);
+
+    /// @brief Stops an audio source
+    /// @param source Source id
+    MOUNTAIN_API void StopSource(uint32_t source);
     
     /// @brief Rewinds an audio source
     /// @param source Source id

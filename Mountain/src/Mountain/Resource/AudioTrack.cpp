@@ -6,7 +6,6 @@
 #include <minimp3_ex.h>
 #include <stb_vorbis.h>
 
-#include "Mountain/Audio/Audio.hpp"
 #include "Mountain/Audio/Sound.hpp"
 #include "Mountain/Utils/Logger.hpp"
 
@@ -20,34 +19,28 @@ AudioTrack::~AudioTrack()
 bool_t AudioTrack::SetSourceData(const uint8_t* const buffer, const int64_t length)
 {
     const char_t* const type = reinterpret_cast<const char_t*>(buffer);
+    bool_t success = false;
 
     if (std::strncmp(type, "RIFF", 4) == 0)
-        return LoadWavefront(buffer, length);
-    if (std::strncmp(type, "Ogg", 3) == 0)
-        return LoadOggVorbis(buffer, length);
-    if (std::strncmp(type, "ID3", 3) == 0)
-        return LoadMp3(buffer, length);
+        success = LoadWavefront(buffer, length);
+    else if (std::strncmp(type, "Ogg", 3) == 0)
+        success = LoadOggVorbis(buffer, length);
+    else if (std::strncmp(type, "ID3", 3) == 0)
+        success = LoadMp3(buffer, length);
+    else
+        Logger::LogError("Unsupported file format {}", std::string_view(type, 4));
 
-    Logger::LogError("Unsupported file format {}", std::string_view(type, 4));
-    return false;
+    if (success)
+    {
+        m_IsStreamed = m_DataSize > StreamingChunkSize;
+    }
+
+    return success;
 }
 
-void AudioTrack::Load()
-{
-    m_Buffer = new Audio::Buffer(this);
-    Sound::RegisterBuffer(m_Buffer);
+void AudioTrack::Load() { m_Loaded = true; }
 
-    m_Loaded = true;
-}
-
-void AudioTrack::Unload()
-{
-    Sound::UnregisterBuffer(m_Buffer);
-    delete m_Buffer;
-    m_Buffer = nullptr;
-
-    m_Loaded = false;
-}
+void AudioTrack::Unload() { m_Loaded = false; }
 
 void AudioTrack::ResetSourceData()
 {
@@ -84,9 +77,9 @@ int32_t AudioTrack::GetSampleRate() const { return m_SampleRate; }
 
 uint16_t AudioTrack::GetBitDepth() const { return m_BitDepth; }
 
-const Audio::Buffer* AudioTrack::GetBuffer() const { return m_Buffer; }
-
 AudioTrackFormat AudioTrack::GetFormat() const { return m_Format; }
+
+bool_t AudioTrack::IsStreamed() const { return m_IsStreamed; }
 
 bool_t AudioTrack::LoadWavefront(const uint8_t* const buffer, const int64_t length)
 {

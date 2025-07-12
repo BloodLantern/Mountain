@@ -25,6 +25,9 @@ namespace Mountain
             ".ogg"
         };
 
+        /// @brief The size of a buffer chunk when streaming an audio track, if the track is smaller than this size, it won't be streamed
+        static constexpr size_t StreamingChunkSize = 65536;
+
         // Same constructor from base class
         using Resource::Resource;
 
@@ -70,16 +73,16 @@ namespace Mountain
         MOUNTAIN_API uint16_t GetBitDepth() const;
 
         ATTRIBUTE_NODISCARD
-        MOUNTAIN_API const Audio::Buffer* GetBuffer() const;
+        MOUNTAIN_API AudioTrackFormat GetFormat() const;
 
         ATTRIBUTE_NODISCARD
-        MOUNTAIN_API AudioTrackFormat GetFormat() const;
+        MOUNTAIN_API bool_t IsStreamed() const;
 
     private:
         /// @brief The raw, uncompressed audio data.
         uint8_t* m_Data = nullptr;
         /// @brief The size of the m_Data buffer.
-        int32_t m_DataSize = 0;
+        uint32_t m_DataSize = 0;
         /// @brief The number of audio channels. This would be 1 for mono, 2 for stereo, and so on.
         uint16_t m_Channels = 0;
         /// @brief Also often called frequency.
@@ -87,7 +90,8 @@ namespace Mountain
         /// @brief The number of bits per sample.
         uint16_t m_BitDepth = 0;
 
-        Audio::Buffer* m_Buffer = nullptr;
+        /// @brief Whether the sound should be streamed
+        bool_t m_IsStreamed = false;
 
         AudioTrackFormat m_Format;
 

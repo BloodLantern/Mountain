@@ -14,9 +14,6 @@ namespace Mountain::Audio
     {
     public:
         Buffer();
-
-        explicit Buffer(const AudioTrack* track);
-
         ~Buffer();
 
         DEFAULT_COPY_MOVE_OPERATIONS(Buffer)
@@ -27,6 +24,8 @@ namespace Mountain::Audio
 
         ATTRIBUTE_NODISCARD
         uint32_t GetHandle() const;
+
+        bool_t busy = false;
 
     private:
         uint32_t m_Handle = 0;

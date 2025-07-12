@@ -6,8 +6,10 @@
 #include <ImGui/imgui.h>
 
 #include "Audio.hpp"
-#include "magic_enum/magic_enum_containers.hpp"
 #include "Mountain/Audio/Context.hpp"
+#include "Mountain/FileSystem/File.hpp"
+#include "Mountain/Resource/AudioTrack.hpp"
+#include "Mountain/Resource/ResourceManager.hpp"
 #include "Mountain/Utils/Logger.hpp"
 
 using namespace Mountain;
@@ -46,6 +48,8 @@ bool_t Sound::Initialize()
     // Initialize everything at 100% for now, TODO save settings/config
     m_Volumes.Fill(1.f);
 
+    m_Pool = new Audio::Pool;
+
     return true;
 }
 
@@ -53,11 +57,8 @@ void Sound::Shutdown()
 {
     Logger::LogVerbose("Shutting down audio");
 
-    for (auto&& buffer : m_Buffers)
-        delete buffer;
-
+    delete m_Pool;
     delete m_CurrentContext;
-
     delete m_CurrentDevice;
 }
 
@@ -67,11 +68,31 @@ void Sound::Update()
     CheckUpdateDefaultList();
 }
 
+void Sound::Play(const std::string& trackName)
+{
+    Play(ResourceManager::Get<AudioTrack>(trackName));
+}
+
+void Sound::Play(const Pointer<AudioTrack>& track)
+{
+    Play(track, Audio::Source::SourceInfo{});
+}
+
+void Sound::Play(const Pointer<AudioTrack>& track, const Audio::Source::SourceInfo& info)
+{
+    Audio::Source* const source = m_Pool->FindFreeSource();
+
+    if (!source)
+    {
+        Logger::LogError("Trying to play the sound {} but no sources are available", track->GetName());
+        return;
+    }
+
+    // if (!track->IsStreamed())
+        PlayUnstreamedSound(track, source, info);
+}
+
 Audio::Context* Sound::GetContext() { return m_CurrentContext; }
-
-void Sound::RegisterBuffer(Audio::Buffer* const buffer) { m_Buffers.Add(buffer); }
-
-void Sound::UnregisterBuffer(Audio::Buffer* const buffer) { m_Buffers.Remove(buffer); }
 
 void Sound::UpdateContext()
 {
@@ -118,6 +139,31 @@ void Sound::CheckUpdateDefaultList()
 
     Audio::GetAllDevices(m_DeviceNames);
     m_DeviceListChanged = false;
+}
+
+void Sound::PlayUnstreamedSound(
+    const Pointer<AudioTrack>& track,
+    Audio::Source* const source,
+    const Audio::Source::SourceInfo& info
+)
+{
+    Audio::Buffer* const buffer = m_Pool->FindFreeBuffer();
+
+    if (!buffer)
+    {
+        Logger::LogError("Trying to play the sound {} but no buffers are available", track->GetName());
+        return;
+    }
+
+    buffer->SetData(track.Get());
+    Audio::Context::CheckError();
+
+    source->SetInfo(info);
+    Audio::Context::CheckError();
+    source->SetUnstreamedBuffer(buffer);
+    Audio::Context::CheckError();
+    source->Start();
+    Audio::Context::CheckError();
 }
 
 float_t Sound::ComputeVolume(const SoundType type)

@@ -3,6 +3,9 @@
 #include <Mountain/Window.hpp>
 
 #include "TestGame.hpp"
+#include "Mountain/FileSystem/FileManager.hpp"
+#include "Mountain/Resource/AudioTrack.hpp"
+#include "Mountain/Resource/ResourceManager.hpp"
 
 ParticleSystemScene::ParticleSystemScene()
     : Base{"Particle System"}
@@ -41,4 +44,15 @@ void ParticleSystemScene::RenderImGui()
     TestScene::RenderImGui();
 
     m_ParticleSystem.RenderImGui();
+}
+
+void ParticleSystemScene::LoadResources()
+{
+    ResourceManager::Load<AudioTrack>(FileManager::Load("assets/sfx.ogg"));
+}
+
+void ParticleSystemScene::UnloadResources()
+{
+    ResourceManager::Unload("assets/sfx.ogg");
+    FileManager::Unload("assets/sfx.ogg");
 }

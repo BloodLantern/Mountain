@@ -28,7 +28,7 @@ void Audio::GetAllDevices(List<std::string>& devices)
 
 uint32_t Audio::CreateSource()
 {
-    uint32_t source;
+    uint32_t source = 0;
     alGenSources(1, &source);
     return source;
 }
@@ -54,6 +54,16 @@ void Audio::DeleteSources(const List<uint32_t>& sources)
 void Audio::PlaySource(const uint32_t source)
 {
     alSourcePlay(source);
+}
+
+void Audio::PauseSource(const uint32_t source)
+{
+    alSourcePause(source);
+}
+
+void Audio::StopSource(const uint32_t source)
+{
+    alSourceStop(source);
 }
 
 void Audio::RewindSource(const uint32_t source)

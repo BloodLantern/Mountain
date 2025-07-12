@@ -14,12 +14,6 @@ Buffer::Buffer()
     m_Handle = CreateBuffer();
 }
 
-Buffer::Buffer(const AudioTrack* track)
-    : Buffer()
-{
-    SetData(track);
-}
-
 Buffer::~Buffer()
 {
     m_Context->MakeCurrent();
