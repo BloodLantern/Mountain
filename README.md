@@ -24,7 +24,7 @@ You can choose between two ways of using this framework for your projects.
 
 ### 1. Use this as a submodule (recommended)
 
-In a directory of your choice within your project, run `git submodule add --recurse-submodule https://github.com/BloodLantern/Mountain.git`
+In a directory of your choice within your project, run `git submodule add --recurse-submodules https://github.com/BloodLantern/Mountain.git`.
 
 Add the `Mountain/Mountain.vcxproj` project to your solution and set it as a reference to your project using `Add > Reference...`.
 In your project configuration, add the `Mountain/src`, `Mountain/externals/src` and `MathToolbox/src` folders to your include path.
