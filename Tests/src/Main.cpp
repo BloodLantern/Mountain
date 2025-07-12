@@ -28,7 +28,13 @@ namespace
 }
 #endif
 
-int32_t main(int32_t, char_t**)
+#if defined(ENVIRONMENT_WINDOWS) && defined(NDEBUG)
+#include "Mountain/Utils/Windows.hpp"
+
+int WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
+#else
+int main(int, char**)
+#endif
 {
 #ifdef USE_LPP
 	std::println(std::cout, "Starting program, waiting for Live++ initialization...");
