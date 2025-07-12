@@ -152,7 +152,7 @@ Pointer<Directory> FileManager::LoadDirectory(std::filesystem::path path)
     // Make sure to return a weak reference
     directory.ToWeakReference();
 
-    Logger::LogVerbose("Directory {} load successful. Took {}", p, stopwatch);
+    Logger::LogVerbose("Directory {} load successful. Took {}ms", p, stopwatch.GetElapsedMilliseconds());
 
     return directory;
 }
@@ -226,5 +226,5 @@ void FileManager::UnloadAll()
     // Smart pointers are deleted automatically, we only need to clear the container
     m_Entries.clear();
 
-    Logger::LogVerbose("FileManager unload successful. Took {}", stopwatch);
+    Logger::LogVerbose("FileManager unload successful. Took {}ms", stopwatch.GetElapsedMilliseconds());
 }

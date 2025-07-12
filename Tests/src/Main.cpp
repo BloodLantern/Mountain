@@ -1,14 +1,17 @@
+#include "Common.hpp"
+
 #include <iostream>
 
 #include "TestGame.hpp"
 #include "Mountain/globals.hpp"
-#include "Mountain/Utils/Logger.hpp"
 
 USE_DEDICATED_GPU
 
-//#define USE_LPP
+// To use Live++ on certain machines only (those that have a license, for example),
+// define the environment variable MOUNTAIN_LPP and give it the value USE_LPP
 
 #ifdef USE_LPP
+#include "Mountain/Utils/Logger.hpp"
 // include the API for Windows, 64-bit, C++
 #include "LPP_API_x64_CPP.h"
 
@@ -35,7 +38,11 @@ int32_t main(int32_t, char_t**)
 
 	// bail out in case the agent is not valid
 	if (!LppIsValidSynchronizedAgent(&lppAgent))
+	{
+		std::println(std::cerr, "Couldn't initialize Live++, exiting now");
+		std::flush(std::cerr);
 		return EXIT_FAILURE;
+	}
 
 	// enable Live++ for all loaded modules
 	lppAgent.EnableModule(lpp::LppGetCurrentModulePath(), lpp::LPP_MODULES_OPTION_ALL_IMPORT_MODULES, nullptr, &LppFilterModuleCallback);
@@ -60,22 +67,22 @@ int32_t main(int32_t, char_t**)
 		// listen to hot-reload and hot-restart requests
 		if (lppAgent.WantsReload(lpp::LPP_RELOAD_OPTION_SYNCHRONIZE_WITH_RELOAD))
 		{
-			// client code can do whatever it wants here, e.g. synchronize across several threads, the network, etc.
+			// client code can do whatever it wants here, e.g., synchronize across several threads, the network, etc.
 			// ...
 
-			Mountain::Logger::LogInfo("Loading hot reload changes");
+			Logger::LogInfo("Loading hot reload changes");
 			// Not necessary, but we might as well synchronize the console logs
-			Mountain::Logger::Synchronize();
+			Logger::Synchronize();
 
 			lppAgent.Reload(lpp::LPP_RELOAD_BEHAVIOUR_WAIT_UNTIL_CHANGES_ARE_APPLIED);
 		}
 
 		if (lppAgent.WantsRestart())
 		{
-			// client code can do whatever it wants here, e.g. finish logging, abandon threads, etc.
+			// client code can do whatever it wants here, e.g., finish logging, abandon threads, etc.
 			// ...
 
-			Mountain::Logger::LogInfo("Hot restarting application");
+			Logger::LogInfo("Hot restarting application");
 
 			game->Shutdown();
 			delete game;

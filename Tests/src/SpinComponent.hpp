@@ -1,8 +1,10 @@
 ﻿#pragma once
 
-#include "Mountain/Ecs/Component/Component.hpp"
+#include "Common.hpp"
 
-class SpinComponent : public Mountain::Component
+#include <Mountain/Ecs/Component/Component.hpp>
+
+class SpinComponent : public Component
 {
 public:
     void Added() override;

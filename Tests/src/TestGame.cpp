@@ -1,3 +1,5 @@
+#include "Common.hpp"
+
 #include "TestGame.hpp"
 
 #include <iostream>

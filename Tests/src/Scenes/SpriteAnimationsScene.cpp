@@ -1,4 +1,6 @@
-﻿#include "Scenes/SpriteAnimationsScene.hpp"
+﻿#include "Common.hpp"
+
+#include "Scenes/SpriteAnimationsScene.hpp"
 
 #include <Mountain/Window.hpp>
 #include <Mountain/FileSystem/FileManager.hpp>

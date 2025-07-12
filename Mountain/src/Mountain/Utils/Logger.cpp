@@ -290,7 +290,7 @@ std::pair<std::string, const char_t*> Logger::BuildLogPrefix(const std::shared_p
     const TimeSpan timeOfDay = log->time.GetTimeOfDay();
     // Get the message time and format it in [hh:mm:ss:ms]
     const std::string time = std::format(
-        "[{:2}:{:2}:{:2}:{:03}] ",
+        "[{:02}:{:02}:{:02}:{:03}] ",
         timeOfDay.GetHours(),
         timeOfDay.GetMinutes(),
         timeOfDay.GetSeconds(),

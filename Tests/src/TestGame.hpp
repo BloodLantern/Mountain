@@ -1,11 +1,12 @@
 #pragma once
 
-#include <Mountain/Resource/ShaderBase.hpp>
-#include <Mountain/Utils/FileSystemWatcher.hpp>
+#include "Common.hpp"
 
-#include "Mountain/Game.hpp"
-#include "Mountain/Containers/List.hpp"
-#include "Mountain/Utils/Color.hpp"
+#include <Mountain/Game.hpp>
+#include <Mountain/Containers/List.hpp>
+#include <Mountain/Resource/ShaderBase.hpp>
+#include <Mountain/Utils/Color.hpp>
+#include <Mountain/Utils/FileSystemWatcher.hpp>
 
 #include "Scenes/TestScene.hpp"
 

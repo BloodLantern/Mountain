@@ -1,4 +1,6 @@
-﻿#include "Scenes/ParticleSystemScene.hpp"
+﻿#include "Common.hpp"
+
+#include "Scenes/ParticleSystemScene.hpp"
 
 #include <Mountain/Window.hpp>
 

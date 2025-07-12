@@ -1,8 +1,8 @@
 ﻿#pragma once
 
-#include <Mountain/Ecs/Scene.hpp>
+#include "Common.hpp"
 
-using namespace Mountain;  // NOLINT(clang-diagnostic-header-hygiene)
+#include <Mountain/Ecs/Scene.hpp>
 
 class TestScene : public Scene
 {

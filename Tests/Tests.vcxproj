@@ -56,7 +56,7 @@
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;$(MOUNTAIN_LPP);%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <EnableModules>true</EnableModules>
@@ -65,13 +65,15 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <AdditionalOptions>/Gw %(AdditionalOptions)</AdditionalOptions>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>Common.hpp</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
-      <AdditionalOptions>/ignore:4098 /ignore:4099 /ignore:4217 /WHOLEARCHIVE:mountain.lib %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/ignore:4098 /ignore:4099 /ignore:4217 %(AdditionalOptions)</AdditionalOptions>
       <CreateHotPatchableImage>Enabled</CreateHotPatchableImage>
       <OptimizeReferences>false</OptimizeReferences>
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
@@ -80,32 +82,25 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;$(MOUNTAIN_LPP);%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpplatest</LanguageStandard>
-      <EnableModules>true</EnableModules>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <AdditionalIncludeDirectories>src;..\Mountain\src;..\Mountain\externals\src;..\MathToolbox\src;LivePP\API\x64</AdditionalIncludeDirectories>
-      <AdditionalOptions>/Gw %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>Common.hpp</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <EnableCOMDATFolding>false</EnableCOMDATFolding>
-      <OptimizeReferences>false</OptimizeReferences>
-      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
       <AdditionalOptions>/ignore:4098 /ignore:4099 %(AdditionalOptions)</AdditionalOptions>
       <CreateHotPatchableImage>Enabled</CreateHotPatchableImage>
-      <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\AnimatedCharacter.cpp" />
     <ClCompile Include="src\Camera.cpp" />
+    <ClCompile Include="src\Common.cpp" PrecompiledHeader="Create" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\Scenes\ParticleSystemScene.cpp" />
     <ClCompile Include="src\Scenes\PostProcessingEffectsScene.cpp" />
@@ -123,15 +118,14 @@
     <ClInclude Include="LivePP\API\x64\LPP_API_Preferences.h" />
     <ClInclude Include="LivePP\API\x64\LPP_API_Version_x64_CPP.h" />
     <ClInclude Include="LivePP\API\x64\LPP_API_x64_CPP.h" />
-    <ClInclude Include="src\AnimatedCharacter.hpp" />
     <ClInclude Include="src\Camera.hpp" />
+    <ClInclude Include="src\Common.hpp" />
     <ClInclude Include="src\Player.hpp" />
     <ClInclude Include="src\Scenes\ParticleSystemScene.hpp" />
     <ClInclude Include="src\Scenes\PostProcessingEffectsScene.hpp" />
     <ClInclude Include="src\Scenes\SpriteAnimationsScene.hpp" />
     <ClInclude Include="src\Scenes\TestScene.hpp" />
     <ClInclude Include="src\SpinComponent.hpp" />
-    <ClInclude Include="src\TestEntity.hpp" />
     <ClInclude Include="src\TestGame.hpp" />
   </ItemGroup>
   <ItemGroup>

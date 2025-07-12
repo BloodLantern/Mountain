@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+#include "Common.hpp"
+
 #include <Math/matrix.hpp>
 
 class Camera

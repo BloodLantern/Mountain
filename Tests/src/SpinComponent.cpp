@@ -1,4 +1,6 @@
-﻿#include "SpinComponent.hpp"
+﻿#include "Common.hpp"
+
+#include "SpinComponent.hpp"
 
 #include "Mountain/Ecs/Entity.hpp"
 #include "Mountain/Ecs/Component/AudioSource.hpp"

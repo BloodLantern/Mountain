@@ -1,4 +1,6 @@
-﻿#include "Scenes/TestScene.hpp"
+﻿#include "Common.hpp"
+
+#include "Scenes/TestScene.hpp"
 
 #include <Mountain/Rendering/Draw.hpp>
 #include <Mountain/Utils/ImGuiUtils.hpp>

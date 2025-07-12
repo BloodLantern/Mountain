@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+#include "Common.hpp"
+
 #include <Mountain/Rendering/Effect.hpp>
 #include <Mountain/Rendering/Renderer.hpp>
 

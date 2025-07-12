@@ -143,10 +143,10 @@ std::string TimeSpan::ToString() const
         result += std::format("{}.", GetDays());
 
     if (daysCheck || hoursCheck)
-        result += std::format("{:2}:", GetHours());
+        result += std::format("{:02}:", GetHours());
 
     if (daysCheck || hoursCheck || minutesCheck)
-        result += std::format("{:2}:", GetMinutes());
+        result += std::format("{:02}:", GetMinutes());
 
     result += std::format("{}", GetSeconds());
 

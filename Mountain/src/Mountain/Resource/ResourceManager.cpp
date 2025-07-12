@@ -137,10 +137,10 @@ void ResourceManager::LoadAll()
         shader->Load();
 
     Logger::LogVerbose(
-        "Successfully loaded {} files in {} resources. Took {}",
+        "Successfully loaded {} files in {} resources. Took {}ms",
         files.GetSize(),
         m_Resources.size() - oldResourceCount,
-        stopwatch
+        stopwatch.GetElapsedMilliseconds()
     );
 }
 
@@ -230,10 +230,10 @@ void ResourceManager::LoadAllBinaries()
         shader->Load();
 
     Logger::LogVerbose(
-        "Successfully loaded {} files in {} resources. Took {}",
+        "Successfully loaded {} files in {} resources. Took {}ms",
         files.size(),
         m_Resources.size() - oldResourceCount,
-        stopwatch
+        stopwatch.GetElapsedMilliseconds()
     );
 }
 
@@ -334,5 +334,5 @@ void ResourceManager::UnloadAll()
     // Smart pointers are deleted automatically, we only need to clear the container
     m_Resources.clear();
 
-    Logger::LogInfo("ResourceManager unload successful. Took {}", stopwatch);
+    Logger::LogInfo("ResourceManager unload successful. Took {}ms", stopwatch.GetElapsedMilliseconds());
 }

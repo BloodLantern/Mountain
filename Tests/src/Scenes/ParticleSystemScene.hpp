@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+#include "Common.hpp"
+
 #include <Mountain/Rendering/ParticleSystem.hpp>
 
 #include "Scenes/TestScene.hpp"

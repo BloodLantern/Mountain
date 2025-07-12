@@ -1,4 +1,6 @@
-﻿#include "Player.hpp"
+﻿#include "Common.hpp"
+
+#include "Player.hpp"
 
 #include "Mountain/Ecs/Component/AudioListener.hpp"
 #include "Mountain/Input/Input.hpp"

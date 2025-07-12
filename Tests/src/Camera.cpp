@@ -1,4 +1,6 @@
-﻿#include "Camera.hpp"
+﻿#include "Common.hpp"
+
+#include "Camera.hpp"
 
 void Camera::UpdateMatrix()
 {

@@ -1,4 +1,6 @@
-﻿#include "Scenes/PostProcessingEffectsScene.hpp"
+﻿#include "Common.hpp"
+
+#include "Scenes/PostProcessingEffectsScene.hpp"
 
 #include <Mountain/Rendering/Draw.hpp>
 #include <Mountain/Rendering/Renderer.hpp>
