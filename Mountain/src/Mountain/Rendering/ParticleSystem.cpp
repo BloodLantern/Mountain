@@ -113,129 +113,145 @@ void ParticleSystem::RenderImGui()
 {
     ImGui::PushID(this);
 
-    ImGuiUtils::PushSeparatorText("System controls");
-    const bool_t complete = IsComplete();
-    if (complete)
-        ImGui::BeginDisabled();
-    if (ImGui::Button(m_Playing ? "Pause" : "Play"))
-        TogglePlay();
-    if (complete)
-        ImGui::EndDisabled();
-    ImGui::SameLine();
-    if (ImGui::Button("Restart"))
-        Restart();
-    ImGui::SameLine();
-    if (ImGui::Button("Stop"))
-        Stop();
-    ImGuiUtils::PopSeparatorText();
+    if (ImGuiUtils::PushSeparatorText("System controls"))
+    {
+        const bool_t complete = IsComplete();
+        if (complete)
+            ImGui::BeginDisabled();
+        if (ImGui::Button(m_Playing ? "Pause" : "Play"))
+            TogglePlay();
+        if (complete)
+            ImGui::EndDisabled();
+        ImGui::SameLine();
+        if (ImGui::Button("Restart"))
+            Restart();
+        ImGui::SameLine();
+        if (ImGui::Button("Stop"))
+            Stop();
 
-    // TODO - Add tooltips
+        ImGuiUtils::PopSeparatorText();
+    }
 
     constexpr size_t zero = 0;
-    ImGuiUtils::PushSeparatorText("System settings");
-    ImGui::DragFloat2("Position", position.Data());
-    ImGui::DragAngle("Rotation", &rotation);
-    ImGui::DragFloat("Duration", &duration, 0.1f);
-    ImGui::Checkbox("Looping", &looping);
-    ImGui::DragFloat("Start delay", &startDelay, 0.01f, 0.f, std::numeric_limits<float_t>::max(), "%.2f", ImGuiSliderFlags_AlwaysClamp);
-
-    uint32_t maxParticles = m_MaxParticles;
-    ImGui::DragScalar("Max particles", ImGuiDataType_U32, &maxParticles, 1, &zero, nullptr, nullptr, ImGuiSliderFlags_AlwaysClamp);
-    if (maxParticles != m_MaxParticles)
-        SetMaxParticles(maxParticles);
-    ImGuiUtils::PopSeparatorText();
-
-    ImGuiUtils::PushSeparatorText("System info");
-    ImGui::BeginDisabled();
-    uint32_t currentParticles = GetCurrentParticles();
-    ImGui::DragScalar("Current particles", ImGuiDataType_U32, &currentParticles);
-    ImGui::DragFloat("Playback time", &m_PlaybackTime, 1, 0, 0, "%.2f");
-    ImGui::EndDisabled();
-    ImGuiUtils::PopSeparatorText();
-
-    ImGuiUtils::PushSeparatorText("Emission settings");
-    ImGui::DragFloat("Rate over time", &emissionRateOverTime, 1.f, 0.f, std::numeric_limits<float_t>::max(), "%.2f", ImGuiSliderFlags_AlwaysClamp);
-    ImGui::DragFloat("Rate over distance", &emissionRateOverDistance, 1.f, 0.f, std::numeric_limits<float_t>::max(), "%.2f", ImGuiSliderFlags_AlwaysClamp);
-    ImGui::Text("Bursts: %llu", emissionBursts.GetSize());
-    ImGui::SameLine();
-    if (ImGui::Button("-"))
-        emissionBursts.RemoveLast();
-    ImGui::SameLine();
-    if (ImGui::Button("+"))
-        emissionBursts.Emplace();
-    if (emissionBursts.GetSize() > 0)
+    if (ImGuiUtils::PushSeparatorText("System settings"))
     {
-        if (ImGui::BeginTable("burstsTable", 7, ImGuiTableFlags_RowBg | ImGuiTableFlags_Borders | ImGuiTableFlags_SizingStretchSame))
-        {
-            ImGui::TableSetupColumn("Index");
-            ImGui::TableSetupColumn("Time");
-            ImGui::TableSetupColumn("Count");
-            ImGui::TableSetupColumn("Cycles");
-            ImGui::TableSetupColumn("Interval");
-            ImGui::TableSetupColumn("Probability");
-            ImGui::TableSetupColumn("Remove");
+        ImGui::DragFloat2("Position", position.Data());
+        ImGui::DragAngle("Rotation", &rotation);
+        ImGui::DragFloat("Duration", &duration, 0.1f);
+        ImGui::Checkbox("Looping", &looping);
+        ImGui::DragFloat("Start delay", &startDelay, 0.01f, 0.f, std::numeric_limits<float_t>::max(), "%.2f", ImGuiSliderFlags_AlwaysClamp);
 
-            ImGui::TableHeadersRow();
+        uint32_t maxParticles = m_MaxParticles;
+        ImGui::DragScalar("Max particles", ImGuiDataType_U32, &maxParticles, 1, &zero, nullptr, nullptr, ImGuiSliderFlags_AlwaysClamp);
+        if (maxParticles != m_MaxParticles)
+            SetMaxParticles(maxParticles);
 
-            m_GuiParticleBurstTimeHeld = false;
-            for (size_t i = 0; i < emissionBursts.GetSize(); i++)
-            {
-                ParticleSystemBurst& burst = emissionBursts[i];
-
-                ImGui::PushID(&burst);
-
-                ImGui::TableNextRow();
-
-                ImGui::TableSetColumnIndex(0);
-                ImGui::Text("%llu", i);
-
-                ImGui::TableSetColumnIndex(1);
-                ImGuiUtils::SetNextItemWidthAvail();
-                ImGui::DragFloat("##time", &burst.time, 0.01f, 0.f, std::numeric_limits<float_t>::max(), "%.3f", ImGuiSliderFlags_AlwaysClamp);
-                if (ImGui::IsItemActive())
-                    m_GuiParticleBurstTimeHeld = true;
-
-                ImGui::TableSetColumnIndex(2);
-                ImGuiUtils::SetNextItemWidthAvail();
-                ImGui::DragScalar("##count", ImGuiDataType_U32, &burst.count, 1, &zero, nullptr, nullptr, ImGuiSliderFlags_AlwaysClamp);
-
-                ImGui::TableSetColumnIndex(3);
-                ImGuiUtils::SetNextItemWidthAvail();
-                ImGui::DragScalar("##cycles", ImGuiDataType_U32, &burst.cycles, 1, &zero, nullptr, nullptr, ImGuiSliderFlags_AlwaysClamp);
-                ImGui::SetItemTooltip("If set to 0, this will be infinite");
-
-                ImGui::TableSetColumnIndex(4);
-                ImGuiUtils::SetNextItemWidthAvail();
-                ImGui::DragFloat("##interval", &burst.interval, 0.01f, Calc::Zero, std::numeric_limits<float_t>::max(), "%.3f", ImGuiSliderFlags_AlwaysClamp);
-
-                ImGui::TableSetColumnIndex(5);
-                ImGuiUtils::SetNextItemWidthAvail();
-                ImGui::DragFloat("##probability", &burst.probability, 0.01f, 0.f, 1.f, "%.2f", ImGuiSliderFlags_AlwaysClamp);
-
-                ImGui::TableSetColumnIndex(6);
-                if (ImGui::Button("-", ImVec2{ ImGui::GetContentRegionAvail().x, 0.f }))
-                    emissionBursts.RemoveAt(i--);
-
-                ImGui::PopID();
-            }
-
-            ImGui::EndTable();
-        }
+        ImGuiUtils::PopSeparatorText();
     }
-    ImGuiUtils::PopSeparatorText();
 
-    ImGuiUtils::PushSeparatorText("Particles settings");
-    ImGui::DragFloat("Lifetime", &particleLifetime, 0.01f, 0.f, std::numeric_limits<float_t>::max(), "%.2f", ImGuiSliderFlags_AlwaysClamp);
-    ImGui::DragFloat("Speed", &particleSpeed);
-    ImGui::ColorEdit4("Start color", particleStartColor.Data());
-    ImGuiUtils::PopSeparatorText();
+    if (ImGuiUtils::PushSeparatorText("System info"))
+    {
+        ImGui::BeginDisabled();
+        uint32_t currentParticles = GetCurrentParticles();
+        ImGui::DragScalar("Current particles", ImGuiDataType_U32, &currentParticles);
+        ImGui::DragFloat("Playback time", &m_PlaybackTime, 1, 0, 0, "%.2f");
+        ImGui::EndDisabled();
 
-    ImGuiUtils::PushSeparatorText("Modules settings");
-    uint32_t* enabledModulesInt = reinterpret_cast<uint32_t*>(&enabledModules);
-    ImGui::CheckboxFlags("Enable all modules", enabledModulesInt, static_cast<uint32_t>(ParticleSystemModules::Types::All));
-    for (const auto& module : modules)
-        module->RenderImGui(enabledModulesInt);
-    ImGuiUtils::PopSeparatorText();
+        ImGuiUtils::PopSeparatorText();
+    }
+
+    if (ImGuiUtils::PushSeparatorText("Emission settings"))
+    {
+        ImGui::DragFloat("Rate over time", &emissionRateOverTime, 1.f, 0.f, std::numeric_limits<float_t>::max(), "%.2f", ImGuiSliderFlags_AlwaysClamp);
+        ImGui::DragFloat("Rate over distance", &emissionRateOverDistance, 1.f, 0.f, std::numeric_limits<float_t>::max(), "%.2f", ImGuiSliderFlags_AlwaysClamp);
+        ImGui::Text("Bursts: %llu", emissionBursts.GetSize());
+        ImGui::SameLine();
+        if (ImGui::Button("-"))
+            emissionBursts.RemoveLast();
+        ImGui::SameLine();
+        if (ImGui::Button("+"))
+            emissionBursts.Emplace();
+        if (emissionBursts.GetSize() > 0)
+        {
+            if (ImGui::BeginTable("burstsTable", 7, ImGuiTableFlags_RowBg | ImGuiTableFlags_Borders | ImGuiTableFlags_SizingStretchSame))
+            {
+                ImGui::TableSetupColumn("Index");
+                ImGui::TableSetupColumn("Time");
+                ImGui::TableSetupColumn("Count");
+                ImGui::TableSetupColumn("Cycles");
+                ImGui::TableSetupColumn("Interval");
+                ImGui::TableSetupColumn("Probability");
+                ImGui::TableSetupColumn("Remove");
+
+                ImGui::TableHeadersRow();
+
+                m_GuiParticleBurstTimeHeld = false;
+                for (size_t i = 0; i < emissionBursts.GetSize(); i++)
+                {
+                    ParticleSystemBurst& burst = emissionBursts[i];
+
+                    ImGui::PushID(&burst);
+
+                    ImGui::TableNextRow();
+
+                    ImGui::TableSetColumnIndex(0);
+                    ImGui::Text("%llu", i);
+
+                    ImGui::TableSetColumnIndex(1);
+                    ImGuiUtils::SetNextItemWidthAvail();
+                    ImGui::DragFloat("##time", &burst.time, 0.01f, 0.f, std::numeric_limits<float_t>::max(), "%.3f", ImGuiSliderFlags_AlwaysClamp);
+                    if (ImGui::IsItemActive())
+                        m_GuiParticleBurstTimeHeld = true;
+
+                    ImGui::TableSetColumnIndex(2);
+                    ImGuiUtils::SetNextItemWidthAvail();
+                    ImGui::DragScalar("##count", ImGuiDataType_U32, &burst.count, 1, &zero, nullptr, nullptr, ImGuiSliderFlags_AlwaysClamp);
+
+                    ImGui::TableSetColumnIndex(3);
+                    ImGuiUtils::SetNextItemWidthAvail();
+                    ImGui::DragScalar("##cycles", ImGuiDataType_U32, &burst.cycles, 1, &zero, nullptr, nullptr, ImGuiSliderFlags_AlwaysClamp);
+                    ImGui::SetItemTooltip("If set to 0, this will be infinite");
+
+                    ImGui::TableSetColumnIndex(4);
+                    ImGuiUtils::SetNextItemWidthAvail();
+                    ImGui::DragFloat("##interval", &burst.interval, 0.01f, Calc::Zero, std::numeric_limits<float_t>::max(), "%.3f", ImGuiSliderFlags_AlwaysClamp);
+
+                    ImGui::TableSetColumnIndex(5);
+                    ImGuiUtils::SetNextItemWidthAvail();
+                    ImGui::DragFloat("##probability", &burst.probability, 0.01f, 0.f, 1.f, "%.2f", ImGuiSliderFlags_AlwaysClamp);
+
+                    ImGui::TableSetColumnIndex(6);
+                    if (ImGui::Button("-", ImVec2{ ImGui::GetContentRegionAvail().x, 0.f }))
+                        emissionBursts.RemoveAt(i--);
+
+                    ImGui::PopID();
+                }
+
+                ImGui::EndTable();
+            }
+        }
+
+        ImGuiUtils::PopSeparatorText();
+    }
+
+    if (ImGuiUtils::PushSeparatorText("Particles settings"))
+    {
+        ImGui::DragFloat("Lifetime", &particleLifetime, 0.01f, 0.f, std::numeric_limits<float_t>::max(), "%.2f", ImGuiSliderFlags_AlwaysClamp);
+        ImGui::DragFloat("Speed", &particleSpeed);
+        ImGui::ColorEdit4("Start color", particleStartColor.Data());
+
+        ImGuiUtils::PopSeparatorText();
+    }
+
+    if (ImGuiUtils::PushSeparatorText("Modules settings"))
+    {
+        uint32_t* enabledModulesInt = reinterpret_cast<uint32_t*>(&enabledModules);
+        ImGui::CheckboxFlags("Enable all modules", enabledModulesInt, static_cast<uint32_t>(ParticleSystemModules::Types::All));
+        for (const auto& module : modules)
+            module->RenderImGui(enabledModulesInt);
+
+        ImGuiUtils::PopSeparatorText();
+    }
 
     ImGui::PopID();
 }

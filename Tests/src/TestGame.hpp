@@ -10,14 +10,14 @@
 
 #include "Scenes/TestScene.hpp"
 
-class GameExample : public Game
+class TestGame : public Game
 {
-	static inline GameExample* m_Instance = nullptr;
+	static inline TestGame* m_Instance = nullptr;
 
 public:
-	STATIC_GETTER(GameExample&, , *m_Instance)
+	STATIC_GETTER(TestGame&, , *m_Instance)
 
-    explicit GameExample(const char_t* windowTitle);
+    explicit TestGame(const char_t* windowTitle);
 
 	// Inherited from Game
 	void LoadResources() override;

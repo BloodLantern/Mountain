@@ -60,7 +60,7 @@ int main(int, char**)
 	BuiltinAssetsPath = "../Mountain/assets_internal";
 	BreakOnGraphicsError = true;
 
-	GameExample* game = new GameExample("Mountain tests");
+	TestGame* game = new TestGame("Mountain tests");
 
 #ifdef USE_LPP
 	game->LoadResources();

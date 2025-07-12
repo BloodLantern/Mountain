@@ -152,6 +152,7 @@ void ColorOverLifetime::SetComputeShaderUniforms(const ComputeShader& computeSha
         return;
 
     computeShader.SetUniform("colorOverLifetime.target", target);
+    computeShader.SetUniform("colorOverLifetime.easingType", easingType);
 }
 
 void ColorOverLifetime::RenderImGui(uint32_t* const enabledModulesInt)
@@ -160,16 +161,18 @@ void ColorOverLifetime::RenderImGui(uint32_t* const enabledModulesInt)
         return;
 
     ImGui::ColorEdit4("Target", target.Data());
+    ImGui::ComboEnum("Easing type", &easingType);
 
     EndImGui();
 }
 
-void ForceOverLifetime::SetComputeShaderUniforms(const ComputeShader& computeShader, Types enabledModules) const
+void ForceOverLifetime::SetComputeShaderUniforms(const ComputeShader& computeShader, const Types enabledModules) const
 {
     if (!(enabledModules & Types::ForceOverLifetime))
         return;
 
     computeShader.SetUniform("forceOverLifetime.force", force);
+    computeShader.SetUniform("forceOverLifetime.easingType", easingType);
 }
 
 void ForceOverLifetime::RenderImGui(uint32_t* enabledModulesInt)
@@ -182,6 +185,7 @@ void ForceOverLifetime::RenderImGui(uint32_t* enabledModulesInt)
     float_t strength = force.Length();
     ImGui::DragFloat("Strength", &strength);
     force = direction * (strength == 0.f ? 1.f : strength);
+    ImGui::ComboEnum("Easing type", &easingType);
 
     EndImGui();
 }

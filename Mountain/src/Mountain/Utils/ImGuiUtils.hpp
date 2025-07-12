@@ -55,6 +55,8 @@ namespace Mountain::ImGuiUtils
     MOUNTAIN_API void SetNextItemWidthAvail();
 
     MOUNTAIN_API void ShowPerformanceMonitoring();
+
+    MOUNTAIN_API void DrawEasingFunction(const char_t* label, Easing::Easer function, int32_t pointCount = 30);
 }
 
 // ReSharper disable CppInconsistentNaming
@@ -72,6 +74,9 @@ namespace ImGui
 
     template <Mountain::Concepts::Enum T>
     bool ComboEnum(const char* label, T* v, ImGuiComboFlags flags = ImGuiComboFlags_None);
+
+    template <>
+    bool ComboEnum<Easing::Type>(const char* label, Easing::Type* v, ImGuiComboFlags flags);
 }
 // ReSharper restore CppInconsistentNaming
 
@@ -122,23 +127,26 @@ namespace Mountain
     }
 }
 
-// ReSharper disable CppInconsistentNaming
-template <Mountain::Concepts::Enum T>
-bool ImGui::ComboEnum(const char* label, T* const v, const ImGuiComboFlags flags)
+namespace ImGui
 {
-    bool_t result = false;
-    if (BeginCombo(label, magic_enum::enum_name(*v).data(), flags))
+    // ReSharper disable CppInconsistentNaming
+    template <Mountain::Concepts::Enum T>
+    bool ComboEnum(const char* label, T* const v, const ImGuiComboFlags flags)
     {
-        for (const T value : magic_enum::enum_values<T>())
+        bool_t result = false;
+        if (BeginCombo(label, magic_enum::enum_name(*v).data(), flags))
         {
-            if (Selectable(magic_enum::enum_name(value).data()))
+            for (const T value : magic_enum::enum_values<T>())
             {
-                *v = value;
-                result = true;
+                if (Selectable(magic_enum::enum_name(value).data()))
+                {
+                    *v = value;
+                    result = true;
+                }
             }
+            EndCombo();
         }
-        EndCombo();
+        return result;
     }
-    return result;
+    // ReSharper restore CppInconsistentNaming
 }
-// ReSharper restore CppInconsistentNaming

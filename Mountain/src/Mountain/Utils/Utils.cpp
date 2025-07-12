@@ -273,3 +273,48 @@ uint32_t Utils::Concat32(const uint8_t right0, const uint8_t right1, const uint8
 {
     return right0 | right1 << 8 | left0 << 16 | left1 << 24;
 }
+
+float_t Easing::FromType(const Type type, const float_t t)
+{
+    return FromType(type)(t);
+}
+
+Easing::Easer Easing::FromType(const Type type)
+{
+    switch (type)
+    {
+        case Type::Linear: return Linear;
+        case Type::SineIn: return SineIn;
+        case Type::SineOut: return SineOut;
+        case Type::SineInOut: return SineInOut;
+        case Type::QuadIn: return QuadIn;
+        case Type::QuadOut: return QuadOut;
+        case Type::QuadInOut: return QuadInOut;
+        case Type::CubicIn: return CubicIn;
+        case Type::CubicOut: return CubicOut;
+        case Type::CubicInOut: return CubicInOut;
+        case Type::QuartIn: return QuartIn;
+        case Type::QuartOut: return QuartOut;
+        case Type::QuartInOut: return QuartInOut;
+        case Type::QuintIn: return QuintIn;
+        case Type::QuintOut: return QuintOut;
+        case Type::QuintInOut: return QuintInOut;
+        case Type::ExpoIn: return ExpoIn;
+        case Type::ExpoOut: return ExpoOut;
+        case Type::ExpoInOut: return ExpoInOut;
+        case Type::CircIn: return CircIn;
+        case Type::CircOut: return CircOut;
+        case Type::CircInOut: return CircInOut;
+        case Type::BackIn: return BackIn;
+        case Type::BackOut: return BackOut;
+        case Type::BackInOut: return BackInOut;
+        case Type::ElasticIn: return ElasticIn;
+        case Type::ElasticOut: return ElasticOut;
+        case Type::ElasticInOut: return ElasticInOut;
+        case Type::BounceIn: return BounceIn;
+        case Type::BounceOut: return BounceOut;
+        case Type::BounceInOut: return BounceInOut;
+    }
+
+    THROW(ArgumentOutOfRangeException{"Invalid easing type", "type"});
+}

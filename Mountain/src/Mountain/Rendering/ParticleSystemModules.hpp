@@ -121,6 +121,7 @@ namespace Mountain::ParticleSystemModules
         using Base = ModuleBase;
 
         Color target = Color::Transparent();
+        Easing::Type easingType = Easing::Type::Linear;
 
         void SetComputeShaderUniforms(const ComputeShader& computeShader, Types enabledModules) const override;
         void RenderImGui(uint32_t* enabledModulesInt) override;
@@ -132,6 +133,7 @@ namespace Mountain::ParticleSystemModules
         using Base = ModuleBase;
 
         Vector2 force;
+        Easing::Type easingType = Easing::Type::Linear;
 
         void SetComputeShaderUniforms(const ComputeShader& computeShader, Types enabledModules) const override;
         void RenderImGui(uint32_t* enabledModulesInt) override;

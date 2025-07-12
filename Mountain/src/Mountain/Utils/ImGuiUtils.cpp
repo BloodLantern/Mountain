@@ -23,6 +23,19 @@
 
 using namespace Mountain;
 
+namespace
+{
+    void EasingTooltip(const Easing::Easer function)
+    {
+        if (!ImGui::BeginItemTooltip())
+            return;
+
+        ImGuiUtils::DrawEasingFunction("##", function);
+
+        ImGui::EndTooltip();
+    };
+}
+
 void ImGuiUtils::GridPlotting(const std::string_view label, Vector2* const value, const float_t min, const float_t max)
 {
     ImGui::PushID(value);
@@ -219,40 +232,40 @@ bool ImGuiUtils::ComboEaser(const std::string& label, Easing::Easer* v, const Im
 {
     static constexpr Array Functions{
         std::make_pair("Linear", Easing::Linear),
-        std::make_pair("SineIn", Easing::SineIn),
-        std::make_pair("SineOut", Easing::SineOut),
-        std::make_pair("SineInOut", Easing::SineInOut),
-        std::make_pair("QuadIn", Easing::QuadIn),
-        std::make_pair("QuadOut", Easing::QuadOut),
-        std::make_pair("QuadInOut", Easing::QuadInOut),
-        std::make_pair("CubicIn", Easing::CubicIn),
-        std::make_pair("CubicOut", Easing::CubicOut),
-        std::make_pair("CubicInOut", Easing::CubicInOut),
-        std::make_pair("QuartIn", Easing::QuartIn),
-        std::make_pair("QuartOut", Easing::QuartOut),
-        std::make_pair("QuartInOut", Easing::QuartInOut),
-        std::make_pair("QuintIn", Easing::QuintIn),
-        std::make_pair("QuintOut", Easing::QuintOut),
-        std::make_pair("QuintInOut", Easing::QuintInOut),
-        std::make_pair("ExpoIn", Easing::ExpoIn),
-        std::make_pair("ExpoOut", Easing::ExpoOut),
-        std::make_pair("ExpoInOut", Easing::ExpoInOut),
-        std::make_pair("CircIn", Easing::CircIn),
-        std::make_pair("CircOut", Easing::CircOut),
-        std::make_pair("CircInOut", Easing::CircInOut),
-        std::make_pair("BackIn", Easing::BackIn),
-        std::make_pair("BackOut", Easing::BackOut),
-        std::make_pair("BackInOut", Easing::BackInOut),
-        std::make_pair("ElasticIn", Easing::ElasticIn),
-        std::make_pair("ElasticOut", Easing::ElasticOut),
-        std::make_pair("ElasticInOut", Easing::ElasticInOut),
-        std::make_pair("BounceIn", Easing::BounceIn),
-        std::make_pair("BounceOut", Easing::BounceOut),
-        std::make_pair("BounceInOut", Easing::BounceInOut),
+        std::make_pair("Sine In", Easing::SineIn),
+        std::make_pair("Sine Out", Easing::SineOut),
+        std::make_pair("Sine In/Out", Easing::SineInOut),
+        std::make_pair("Quad In", Easing::QuadIn),
+        std::make_pair("Quad Out", Easing::QuadOut),
+        std::make_pair("Quad In/Out", Easing::QuadInOut),
+        std::make_pair("Cubic In", Easing::CubicIn),
+        std::make_pair("Cubic Out", Easing::CubicOut),
+        std::make_pair("Cubic In/Out", Easing::CubicInOut),
+        std::make_pair("Quart In", Easing::QuartIn),
+        std::make_pair("Quart Out", Easing::QuartOut),
+        std::make_pair("Quart In/Out", Easing::QuartInOut),
+        std::make_pair("Quint In", Easing::QuintIn),
+        std::make_pair("Quint Out", Easing::QuintOut),
+        std::make_pair("Quint In/Out", Easing::QuintInOut),
+        std::make_pair("Expo In", Easing::ExpoIn),
+        std::make_pair("Expo Out", Easing::ExpoOut),
+        std::make_pair("Expo In/Out", Easing::ExpoInOut),
+        std::make_pair("Circ In", Easing::CircIn),
+        std::make_pair("Circ Out", Easing::CircOut),
+        std::make_pair("Circ In/Out", Easing::CircInOut),
+        std::make_pair("Back In", Easing::BackIn),
+        std::make_pair("Back Out", Easing::BackOut),
+        std::make_pair("Back In/Out", Easing::BackInOut),
+        std::make_pair("Elastic In", Easing::ElasticIn),
+        std::make_pair("Elastic Out", Easing::ElasticOut),
+        std::make_pair("Elastic In/Out", Easing::ElasticInOut),
+        std::make_pair("Bounce In", Easing::BounceIn),
+        std::make_pair("Bounce Out", Easing::BounceOut),
+        std::make_pair("Bounce In/Out", Easing::BounceInOut),
     };
 
     const auto current = std::ranges::find_if(Functions, [&](auto element) { return element.second == *v; });
-    const auto value = current == Functions.end() ? "Linear" : current->first;
+    const char_t* const value = current == Functions.end() ? "Linear" : current->first;
 
     bool_t result = false;
     if (ImGui::BeginCombo(label.data(), value, flags))
@@ -264,9 +277,14 @@ bool ImGuiUtils::ComboEaser(const std::string& label, Easing::Easer* v, const Im
                 *v = pair.second;
                 result = true;
             }
+
+            EasingTooltip(pair.second);
         }
         ImGui::EndCombo();
     }
+
+    EasingTooltip(*v);
+
     return result;
 }
 
@@ -572,7 +590,7 @@ void ImGuiUtils::PopSeparatorText()
     ImGui::PopID();
 }
 
-bool_t ImGuiUtils::PushCollapsingHeader(const char_t* label, ImGuiTreeNodeFlags flags)
+bool_t ImGuiUtils::PushCollapsingHeader(const char_t* label, const ImGuiTreeNodeFlags flags)
 {
     if (ImGui::CollapsingHeader(label, flags))
     {
@@ -672,6 +690,29 @@ void ImGuiUtils::ShowPerformanceMonitoring()
     ImGui::End();
 }
 
+void ImGuiUtils::DrawEasingFunction(const char_t* label, const Easing::Easer function, const int32_t pointCount)
+{
+    float_t* data = static_cast<float_t*>(_malloca(pointCount * sizeof(float_t)));
+
+    float_t min = std::numeric_limits<float_t>::max();
+    float_t max = std::numeric_limits<float_t>::min();
+
+    for (int32_t i = 0; i < pointCount; i++)
+    {
+        const float_t value = function(static_cast<float_t>(i) / static_cast<float_t>(pointCount));
+        data[i] = value;
+
+        if (value < min)
+            min = value;
+        else if (value > max)
+            max = value;
+    }
+
+    ImGui::PlotLines(label, data, pointCount, 0, nullptr, min, max, {100, 100});
+
+    _freea(data);
+}
+
 // ReSharper disable CppInconsistentNaming
 bool ImGui::DragAngle(
     const char* label,
@@ -688,4 +729,29 @@ bool ImGui::DragAngle(
     *v_rad = degreeAngle * Calc::Deg2Rad;
     return result;
 }
+
+template <>
+bool ImGui::ComboEnum<Easing::Type>(const char* label, Easing::Type* v, const ImGuiComboFlags flags)
+{
+    bool_t result = false;
+    if (BeginCombo(label, magic_enum::enum_name(*v).data(), flags))
+    {
+        for (const Easing::Type value : magic_enum::enum_values<Easing::Type>())
+        {
+            if (Selectable(magic_enum::enum_name(value).data()))
+            {
+                *v = value;
+                result = true;
+            }
+
+            EasingTooltip(Easing::FromType(value));
+        }
+        EndCombo();
+    }
+
+    EasingTooltip(Easing::FromType(*v));
+
+    return result;
+}
+
 // ReSharper restore CppInconsistentNaming

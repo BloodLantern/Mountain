@@ -90,6 +90,7 @@ compile by statically linking against the corresponding `Mountain.lib`
   - Noise
   - ~~Mosaic~~
   - ~~Grayscale~~
+  - Color inversion
 - ~~Make gamepad input work for both Xbox, PS and Switch controllers~~
 - \[WIP] Low-level audio API
 - `Audio::Play()` static function
@@ -112,3 +113,4 @@ compile by statically linking against the corresponding `Mountain.lib`
 - ~~Replace all `std::chrono` usages by `Stopwatch`, `TimeSpan` and `DateTime`~
 - ~~Credit external dependencies in README~~
 - Add a way to use stereo audio files as mono sources and vice-versa
+- Add an API to edit compute shaders local size from C++

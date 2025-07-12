@@ -288,6 +288,10 @@ namespace Easing
         BounceOut,
         BounceInOut
     };
+
+    MOUNTAIN_API float_t FromType(Type type, float_t t);
+
+    MOUNTAIN_API Easer FromType(Type type);
 }
 
 ENUM_FLAGS(Mountain::Utils::TrimOptions)

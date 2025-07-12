@@ -22,7 +22,7 @@
 
 using namespace Mountain;
 
-GameExample::GameExample(const char_t* const windowTitle)
+TestGame::TestGame(const char_t* const windowTitle)
     : Game(windowTitle, {1600, 900})
 {
     m_Scenes.AddRange(
@@ -36,13 +36,13 @@ GameExample::GameExample(const char_t* const windowTitle)
     m_Scenes.Sort([](const TestScene* lhs, const TestScene* rhs) { return lhs->GetName() < rhs->GetName(); });
 }
 
-void GameExample::LoadResources()
+void TestGame::LoadResources()
 {
     // Each scene is responsible for loading and unloading resources
     m_Scenes.ForEach([](TestScene* scene) { scene->LoadPersistentResources(); });
 }
 
-void GameExample::Initialize()
+void TestGame::Initialize()
 {
     InitializeFileSystemWatchers();
 
@@ -51,7 +51,7 @@ void GameExample::Initialize()
         m_ShadersWatcher.Start();
 }
 
-void GameExample::Shutdown()
+void TestGame::Shutdown()
 {
     m_AssetsWatcher.Stop();
     m_ShadersWatcher.Stop();
@@ -60,7 +60,7 @@ void GameExample::Shutdown()
     m_Scenes.ForEach(OperationDelete<TestScene*>);
 }
 
-void GameExample::Update()
+void TestGame::Update()
 {
     m_ShadersToReloadMutex.lock();
     List<Pointer<ShaderBase>> reloadedShaders;
@@ -87,7 +87,7 @@ void GameExample::Update()
     }
 }
 
-void GameExample::Render()
+void TestGame::Render()
 {
     Draw::Clear(m_ClearColor);
 
@@ -104,7 +104,7 @@ void GameExample::Render()
     RenderImGui();
 }
 
-void GameExample::RenderDebug() const
+void TestGame::RenderDebug() const
 {
     if (m_ActiveScene)
     {
@@ -114,7 +114,7 @@ void GameExample::RenderDebug() const
     }
 }
 
-void GameExample::RenderImGui()
+void TestGame::RenderImGui()
 {
     ImGui::Begin("Debug");
 
@@ -162,7 +162,7 @@ void GameExample::RenderImGui()
         ImGuiUtils::PopCollapsingHeader();
     }
 
-    if (ImGuiUtils::PushCollapsingHeader("Scene"))
+    if (ImGuiUtils::PushCollapsingHeader("Scene", ImGuiTreeNodeFlags_DefaultOpen))
     {
         const char_t* sceneComboPreview = "None";
         if (m_ActiveScene)
@@ -206,12 +206,12 @@ void GameExample::RenderImGui()
         ImGuiUtils::ShowPerformanceMonitoring();
 }
 
-void GameExample::SetScene(TestScene* newScene)
+void TestGame::SetScene(TestScene* newScene)
 {
     m_NextActiveScene = newScene;
 }
 
-void GameExample::InitializeFileSystemWatchers()
+void TestGame::InitializeFileSystemWatchers()
 {
     m_AssetsWatcher.recursive = true;
     m_AssetsWatcher.onCreated += [](const std::filesystem::path& path)
@@ -274,7 +274,7 @@ void GameExample::InitializeFileSystemWatchers()
     }
 }
 
-void GameExample::ReloadShader(const std::filesystem::path& path)
+void TestGame::ReloadShader(const std::filesystem::path& path)
 {
     Logger::LogInfo("Reloading shader file {}", path);
 
@@ -303,7 +303,7 @@ void GameExample::ReloadShader(const std::filesystem::path& path)
     m_ShadersToReload.Add(s);
 }
 
-void GameExample::HandleSceneChange()
+void TestGame::HandleSceneChange()
 {
     if (!m_NextActiveScene)
         return;

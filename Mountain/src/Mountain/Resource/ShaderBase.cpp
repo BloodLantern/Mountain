@@ -7,68 +7,69 @@
 #include <Math/math.hpp>
 
 #include "Mountain/FileSystem/FileManager.hpp"
+#include "Mountain/Rendering/Graphics.hpp"
 #include "Mountain/Utils/Logger.hpp"
 
 using namespace Mountain;
 
-void ShaderBase::SetUniform(const char_t* const keyName, const int32_t value) const
+void ShaderBase::SetUniform(const char_t* uniformName, const int32_t value) const
 {
-    glProgramUniform1i(m_Id, GetUniformLocation(keyName), value);
+    Graphics::SetProgramUniform(m_Id, uniformName, value);
 }
 
-void ShaderBase::SetUniform(const char_t* const keyName, const uint32_t value) const
+void ShaderBase::SetUniform(const char_t* uniformName, const uint32_t value) const
 {
-    glProgramUniform1ui(m_Id, GetUniformLocation(keyName), value);
+    Graphics::SetProgramUniform(m_Id, uniformName, value);
 }
 
-void ShaderBase::SetUniform(const char_t* const keyName, const bool_t value) const
+void ShaderBase::SetUniform(const char_t* uniformName, const bool_t value) const
 {
-    SetUniform(keyName, static_cast<int32_t>(value));
+    SetUniform(uniformName, static_cast<int32_t>(value));
 }
 
-void ShaderBase::SetUniform(const char_t* const keyName, const float_t value) const
+void ShaderBase::SetUniform(const char_t* uniformName, const float_t value) const
 {
-    glProgramUniform1f(m_Id, GetUniformLocation(keyName), value);
+    Graphics::SetProgramUniform(m_Id, uniformName, value);
 }
 
-void ShaderBase::SetUniform(const char_t* const keyName, const Vector2i value) const
+void ShaderBase::SetUniform(const char_t* uniformName, const Vector2i value) const
 {
-    glProgramUniform2iv(m_Id, GetUniformLocation(keyName), 1, value.Data());
+    Graphics::SetProgramUniform(m_Id, uniformName, value);
 }
 
-void ShaderBase::SetUniform(const char_t* const keyName, const Vector2 value) const
+void ShaderBase::SetUniform(const char_t* uniformName, const Vector2 value) const
 {
-    glProgramUniform2fv(m_Id, GetUniformLocation(keyName), 1, value.Data());
+    Graphics::SetProgramUniform(m_Id, uniformName, value);
 }
 
-void ShaderBase::SetUniform(const char_t* const keyName, const Vector3& value) const
+void ShaderBase::SetUniform(const char_t* uniformName, const Vector3& value) const
 {
-    glProgramUniform3fv(m_Id, GetUniformLocation(keyName), 1, value.Data());
+    Graphics::SetProgramUniform(m_Id, uniformName, value);
 }
 
-void ShaderBase::SetUniform(const char_t* const keyName, const Vector4& value) const
+void ShaderBase::SetUniform(const char_t* uniformName, const Vector4& value) const
 {
-    glProgramUniform4fv(m_Id, GetUniformLocation(keyName), 1, value.Data());
+    Graphics::SetProgramUniform(m_Id, uniformName, value);
 }
 
-void ShaderBase::SetUniform(const char_t* const keyName, const Color& value) const
+void ShaderBase::SetUniform(const char_t* uniformName, const Color& value) const
 {
-    SetUniform(keyName, static_cast<Vector4>(value));
+    SetUniform(uniformName, static_cast<Vector4>(value));
 }
 
-void ShaderBase::SetUniform(const char_t* const keyName, const Matrix2& value) const
+void ShaderBase::SetUniform(const char_t* uniformName, const Matrix2& value) const
 {
-    glProgramUniformMatrix2fv(m_Id, GetUniformLocation(keyName), 1, GL_FALSE, value.Data());
+    Graphics::SetProgramUniform(m_Id, uniformName, value);
 }
 
-void ShaderBase::SetUniform(const char_t* const keyName, const Matrix3& value) const
+void ShaderBase::SetUniform(const char_t* uniformName, const Matrix3& value) const
 {
-    glProgramUniformMatrix3fv(m_Id, GetUniformLocation(keyName), 1, GL_FALSE, value.Data());
+    Graphics::SetProgramUniform(m_Id, uniformName, value);
 }
 
-void ShaderBase::SetUniform(const char_t* const keyName, const Matrix& value) const
+void ShaderBase::SetUniform(const char_t* uniformName, const Matrix& value) const
 {
-    glProgramUniformMatrix4fv(m_Id, GetUniformLocation(keyName), 1, GL_FALSE, value.Data());
+    Graphics::SetProgramUniform(m_Id, uniformName, value);
 }
 
 uint32_t ShaderBase::GetId() const { return m_Id; }
@@ -131,9 +132,9 @@ bool_t ShaderBase::CheckLinkError() const
     return false;
 }
 
-int32_t ShaderBase::GetUniformLocation(const char_t* const keyName) const
+int32_t ShaderBase::GetUniformLocation(const char_t* uniformName) const
 {
-    return glGetUniformLocation(m_Id, keyName);
+    return Graphics::GetProgramUniformLocation(m_Id, uniformName);
 }
 
 void ShaderBase::ReplaceIncludes(std::string& code, const std::filesystem::path& path, std::unordered_set<std::filesystem::path>& replacedFiles)
