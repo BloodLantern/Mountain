@@ -26,8 +26,8 @@ void SpriteAnimationsScene::Render()
     const Vector2i currentTextureSize = currentTexture->GetSize();
     const Vector2i windowSize = Window::GetSize();
 
-    // FIXME - Draw scale is incorrect
-    const Vector2 drawScale = 0.5f * Vector2::One() * static_cast<float_t>(std::min(windowSize.x, windowSize.y)) / currentTextureSize;
+    const Vector2 drawScale = 0.5f * Vector2::One()
+        * (static_cast<float_t>(std::min(windowSize.x, windowSize.y)) / static_cast<float_t>(std::min(currentTextureSize.x, currentTextureSize.y)));
 
     Draw::Texture(*currentTexture, windowSize * 0.5f - currentTextureSize * 0.5f * drawScale, drawScale);
 }
