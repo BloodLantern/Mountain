@@ -1,3 +1,4 @@
+#include "Mountain/PrecompiledHeader.hpp"
 #include "Mountain/Ecs/Component/AudioSource.hpp"
 
 #include <ImGui/imgui.h>

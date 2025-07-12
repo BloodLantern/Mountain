@@ -1,4 +1,5 @@
-﻿#include "Mountain/Audio/Buffer.hpp"
+﻿#include "Mountain/PrecompiledHeader.hpp"
+#include "Mountain/Audio/Buffer.hpp"
 
 #include "Sound.hpp"
 #include "Mountain/Audio/Context.hpp"

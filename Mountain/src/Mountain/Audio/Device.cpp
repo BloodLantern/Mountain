@@ -1,3 +1,4 @@
+#include "Mountain/PrecompiledHeader.hpp"
 #include "Mountain/Audio/Device.hpp"
 
 #include "Audio.hpp"

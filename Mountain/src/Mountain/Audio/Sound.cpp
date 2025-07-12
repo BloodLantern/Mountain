@@ -1,4 +1,5 @@
-﻿#include "Mountain/Audio/Sound.hpp"
+﻿#include "Mountain/PrecompiledHeader.hpp"
+#include "Mountain/Audio/Sound.hpp"
 
 #include <set>
 

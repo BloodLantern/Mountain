@@ -1,3 +1,4 @@
+#include "Mountain/PrecompiledHeader.hpp"
 #include "Mountain/Audio/Audio.hpp"
 
 #include "AL/alext.h"

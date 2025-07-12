@@ -1,6 +1,6 @@
+#include "Mountain/PrecompiledHeader.hpp"
 #include "Context.hpp"
 
-#include <AL/al.h>
 #include <AL/alc.h>
 
 #include <magic_enum/magic_enum.hpp>
