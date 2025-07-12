@@ -47,8 +47,11 @@ namespace Mountain
 
         // Emission settings
 
+        /// @brief The number of particles to spawn each second
         float_t emissionRateOverTime = 10.f;
+        /// @brief The number of particles to spawn for every pixel traveled by the system
         float_t emissionRateOverDistance = 0.f;
+        /// @brief Bursts of particles to spawn
         List<ParticleSystemBurst> emissionBursts;
 
         // Particle settings

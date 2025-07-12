@@ -85,6 +85,8 @@ void Entity::RemoveComponent(Component* component)
     delete component;
 }
 
-const Collider* Entity::GetCollider() const { return m_Collider; }
-
-Collider* Entity::GetCollider() { return m_Collider; }
+void Entity::SetCollider(Collider* newCollider) noexcept
+{
+    m_Collider = newCollider;
+    newCollider->basePosition = &position;
+}

@@ -12,6 +12,25 @@ PostProcessingEffectsScene::PostProcessingEffectsScene()
 {
 }
 
+void PostProcessingEffectsScene::LoadPersistentResources()
+{
+    TestScene::LoadPersistentResources();
+
+    m_Vignette.effect.LoadResources();
+    m_FilmGrain.effect.LoadResources();
+    m_ChromaticAberrationAxial.effect.LoadResources();
+    m_ChromaticAberrationTransverse.effect.LoadResources();
+    m_BoxBlur.effect.LoadResources();
+    m_GaussianBlur.effect.LoadResources();
+    m_Mosaic.effect.LoadResources();
+    m_Greyscale.effect.LoadResources();
+}
+
+void PostProcessingEffectsScene::LoadResources()
+{
+    m_LandscapeTexture = ResourceManager::Load<Texture>(FileManager::Load("assets/landscape.jpg"));
+}
+
 void PostProcessingEffectsScene::Begin()
 {
     TestScene::Begin();
@@ -132,25 +151,6 @@ void PostProcessingEffectsScene::End()
     m_IntermediateTexture.Delete();
 
     TestScene::End();
-}
-
-void PostProcessingEffectsScene::LoadPersistentResources()
-{
-    TestScene::LoadPersistentResources();
-
-    m_Vignette.effect.LoadResources();
-    m_FilmGrain.effect.LoadResources();
-    m_ChromaticAberrationAxial.effect.LoadResources();
-    m_ChromaticAberrationTransverse.effect.LoadResources();
-    m_BoxBlur.effect.LoadResources();
-    m_GaussianBlur.effect.LoadResources();
-    m_Mosaic.effect.LoadResources();
-    m_Greyscale.effect.LoadResources();
-}
-
-void PostProcessingEffectsScene::LoadResources()
-{
-    m_LandscapeTexture = ResourceManager::Load<Texture>(FileManager::Load("assets/landscape.jpg"));
 }
 
 void PostProcessingEffectsScene::UnloadResources()

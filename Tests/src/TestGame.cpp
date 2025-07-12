@@ -15,6 +15,7 @@
 #include "Mountain/Resource/ResourceManager.hpp"
 #include "Mountain/Utils/ImGuiUtils.hpp"
 
+#include "Scenes/AudioScene.hpp"
 #include "Scenes/ParticleSystemScene.hpp"
 #include "Scenes/PostProcessingEffectsScene.hpp"
 #include "Scenes/SpriteAnimationsScene.hpp"
@@ -27,7 +28,8 @@ GameExample::GameExample(const char_t* const windowTitle)
     m_Scenes.AddRange(
         new ParticleSystemScene,
         new PostProcessingEffectsScene,
-        new SpriteAnimationsScene
+        new SpriteAnimationsScene,
+        new AudioScene
     );
 
     // Sort the scenes alphabetically
@@ -43,8 +45,6 @@ void GameExample::LoadResources()
 void GameExample::Initialize()
 {
     InitializeFileSystemWatchers();
-
-    SetScene(m_Scenes.First());
 
     m_AssetsWatcher.Start();
     if (NoBinaryResources)
@@ -309,9 +309,13 @@ void GameExample::HandleSceneChange()
         return;
 
     if (m_ActiveScene)
+    {
         m_ActiveScene->End();
+        m_ActiveScene->UnloadResources();
+    }
 
     m_ActiveScene = m_NextActiveScene;
+    m_ActiveScene->LoadResources();
     m_ActiveScene->Begin();
 
     m_NextActiveScene = nullptr;

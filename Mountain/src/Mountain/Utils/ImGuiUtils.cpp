@@ -25,6 +25,8 @@ using namespace Mountain;
 
 void ImGuiUtils::GridPlotting(const std::string_view label, Vector2* const value, const float_t min, const float_t max)
 {
+    ImGui::PushID(value);
+
     ImGui::Text("%.*s", static_cast<int32_t>(label.length()), label.data());
     ImDrawList* drawList = ImGui::GetWindowDrawList();
 
@@ -75,10 +77,14 @@ void ImGuiUtils::GridPlotting(const std::string_view label, Vector2* const value
     ImGui::SameLine();
     ImGui::VSliderFloat("##v2y", { 18.f, 100.f }, &value->y, min, max, "%.3f", ImGuiSliderFlags_AlwaysClamp);
     ImGui::SliderFloat("##v2x", &value->x, min, max, "%.3f", ImGuiSliderFlags_AlwaysClamp);
+
+    ImGui::PopID();
 }
 
 void ImGuiUtils::DirectionVector(const std::string_view label, Vector2* const value)
 {
+    ImGui::PushID(value);
+
     ImGui::Text("%.*s", static_cast<int32_t>(label.length()), label.data());
     ImDrawList* drawList = ImGui::GetWindowDrawList();
 
@@ -128,10 +134,14 @@ void ImGuiUtils::DirectionVector(const std::string_view label, Vector2* const va
     const Vector2 offset = -*value * size.y * 0.1f;
     drawList->AddTriangleFilled(position + normal * size.x * 0.1f + offset, position - normal * size.x * 0.1f + offset, position, Color::Red().GetPackedValue());
     ImGui::PopClipRect();
+
+    ImGui::PopID();
 }
 
 void ImGuiUtils::DirectionVector(const std::string_view label, Vector2* const value, const Vector2 expected)
 {
+    ImGui::PushID(value);
+
     ImGui::Text("%.*s", static_cast<int32_t>(label.length()), label.data());
     ImDrawList* drawList = ImGui::GetWindowDrawList();
 
@@ -184,13 +194,25 @@ void ImGuiUtils::DirectionVector(const std::string_view label, Vector2* const va
     drawList->AddLine(p0 + size * 0.5f, expectedPosition, (Color::Red() * 0.5f).GetPackedValue());
     const Vector2 expectedNormal = expected.Normal();
     const Vector2 expectedOffset = -expected * size.y * 0.1f;
-    drawList->AddTriangleFilled(expectedPosition + expectedNormal * size.x * 0.1f + expectedOffset, expectedPosition - expectedNormal * size.x * 0.1f + expectedOffset, expectedPosition, (Color::Red() * 0.5f).GetPackedValue());
+    drawList->AddTriangleFilled(
+        expectedPosition + expectedNormal * size.x * 0.1f + expectedOffset,
+        expectedPosition - expectedNormal * size.x * 0.1f + expectedOffset,
+        expectedPosition,
+        (Color::Red() * 0.5f).GetPackedValue()
+    );
 
     drawList->AddLine(p0 + size * 0.5f, valuePosition, Color::Red().GetPackedValue());
     const Vector2 valueNormal = value->Normal();
     const Vector2 valueOffset = -*value * size.y * 0.1f;
-    drawList->AddTriangleFilled(valuePosition + valueNormal * size.x * 0.1f + valueOffset, valuePosition - valueNormal * size.x * 0.1f + valueOffset, valuePosition, Color::Red().GetPackedValue());
+    drawList->AddTriangleFilled(
+        valuePosition + valueNormal * size.x * 0.1f + valueOffset,
+        valuePosition - valueNormal * size.x * 0.1f + valueOffset,
+        valuePosition,
+        Color::Red().GetPackedValue()
+    );
     ImGui::PopClipRect();
+
+    ImGui::PopID();
 }
 
 bool ImGuiUtils::ComboEaser(const std::string& label, Easing::Easer* v, const ImGuiComboFlags flags)
@@ -538,10 +560,11 @@ void ImGuiUtils::ShowResourceManager()
     ImGui::End();
 }
 
-void ImGuiUtils::PushSeparatorText(const char_t* label)
+bool_t ImGuiUtils::PushSeparatorText(const char_t* label)
 {
     ImGui::SeparatorText(label);
     ImGui::PushID(label);
+    return true;
 }
 
 void ImGuiUtils::PopSeparatorText()

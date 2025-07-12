@@ -44,8 +44,7 @@ namespace Mountain
         /// @brief Get whether a gamepad is currently connected
         MOUNTAIN_API static bool_t IsGamepadConnected(uint32_t index);
 
-        /// @brief Get the mouse position
-        /// @return Mouse position
+        /// @brief Get the mouse position relative to the window
         MOUNTAIN_API static Vector2 GetMousePosition();
 
         /// @brief Get how much the mouse moved last frame

@@ -422,7 +422,6 @@
     <ClCompile Include="src\Mountain\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="assets_internal\font.ttf" />
     <Content Include="shaders_internal\arc\arc.frag" />
     <Content Include="shaders_internal\arc\arc.vert" />
     <Content Include="shaders_internal\circle\circle.frag" />

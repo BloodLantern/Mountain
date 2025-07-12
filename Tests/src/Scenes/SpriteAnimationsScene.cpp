@@ -18,6 +18,15 @@ SpriteAnimationsScene::SpriteAnimationsScene()
     m_Entities.AddNow(m_Entity);
 }
 
+void SpriteAnimationsScene::LoadResources()
+{
+    const Pointer<Directory>& directory = FileManager::LoadDirectory("assets/strawberry");
+    for (const Pointer<File>& file : directory->GetChildFiles())
+        ResourceManager::Load<Texture>(file);
+
+    m_Sprite->SetupTextures();
+}
+
 void SpriteAnimationsScene::Render()
 {
     TestScene::Render();
@@ -39,15 +48,6 @@ void SpriteAnimationsScene::RenderImGui()
     float_t frameDuration = m_Sprite->frameDuration;
     ImGui::InputFloat("Frame duration", &frameDuration, 0.001f, 0.01f);
     m_Sprite->frameDuration = std::max(frameDuration, 0.f);
-}
-
-void SpriteAnimationsScene::LoadResources()
-{
-    const Pointer<Directory>& directory = FileManager::LoadDirectory("assets/strawberry");
-    for (const Pointer<File>& file : directory->GetChildFiles())
-        ResourceManager::Load<Texture>(file);
-
-    m_Sprite->SetupTextures();
 }
 
 void SpriteAnimationsScene::UnloadResources()

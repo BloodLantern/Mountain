@@ -62,10 +62,12 @@ namespace Mountain
         template <Concepts::Component T>
         void RemoveComponent();
 
-        ATTRIBUTE_NODISCARD
-        MOUNTAIN_API const Collider* GetCollider() const;
+        GETTER_NON_CONST(Collider*, Collider, m_Collider)
 
-        MOUNTAIN_API Collider* GetCollider();
+        MOUNTAIN_API void SetCollider(Collider* newCollider) noexcept;
+
+        template <Concepts::Collider T, typename... Args>
+        T* SetCollider(Args&&... args) noexcept;
 
         GETTER(float_t, Depth, m_Depth)
 
@@ -74,7 +76,7 @@ namespace Mountain
     protected:
         Collider* m_Collider = nullptr;
 
-        /// @brief The rendering depth of the Entity. The higher the depth, the earlier it will get rendered.
+        /// @brief The rendering depth of the Entity. The higher the depth, the earlier it will get rendered in @c Scene::Render().
         float_t m_Depth = 0.f;
 
     private:
@@ -123,5 +125,13 @@ namespace Mountain
                 return;
             }
         }
+    }
+
+    template <Concepts::Collider T, typename... Args>
+    T* Entity::SetCollider(Args&&... args) noexcept
+    {
+        T* result = new T{std::forward<Args>(args)...};
+        SetCollider(result);
+        return result;
     }
 }

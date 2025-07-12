@@ -8,6 +8,16 @@
 
 #include "Mountain/Utils/Utils.hpp"
 
+// TODO - Documentation
+#define IMGUI_GET_SET(imguiFunc, label, variableAccess, field, ...) \
+    do \
+    { \
+        auto var = variableAccess##Get##field(); \
+        imguiFunc(label, &var, __VA_ARGS__); \
+        variableAccess##Set##field(var); \
+    } \
+    while (false)
+
 namespace Mountain::ImGuiUtils
 {
     MOUNTAIN_API void GridPlotting(std::string_view label, Vector2* value, float_t min = -1.f, float_t max = 1.f);
@@ -32,7 +42,7 @@ namespace Mountain::ImGuiUtils
 
     MOUNTAIN_API void ShowResourceManager();
 
-    MOUNTAIN_API void PushSeparatorText(const char_t* label);
+    MOUNTAIN_API bool_t PushSeparatorText(const char_t* label);
 
     MOUNTAIN_API void PopSeparatorText();
 

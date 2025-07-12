@@ -18,11 +18,13 @@ void TestScene::UnloadPersistentResources()
 {
 }
 
+void TestScene::LoadResources()
+{
+}
+
 void TestScene::Begin()
 {
     Scene::Begin();
-
-    LoadResources();
 }
 
 void TestScene::Render()
@@ -48,13 +50,7 @@ void TestScene::AfterRenderImGui()
 
 void TestScene::End()
 {
-    UnloadResources();
-
     Scene::End();
-}
-
-void TestScene::LoadResources()
-{
 }
 
 void TestScene::UnloadResources()

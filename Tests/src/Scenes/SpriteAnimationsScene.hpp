@@ -14,11 +14,11 @@ public:
 
     SpriteAnimationsScene();
 
+    void LoadResources() override;
+
     void Render() override;
 
     void RenderImGui() override;
-
-    void LoadResources() override;
 
     void UnloadResources() override;
 

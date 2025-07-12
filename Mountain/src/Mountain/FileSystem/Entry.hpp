@@ -35,7 +35,7 @@ namespace Mountain
 
         /// @brief Reloads the contents of this Entry.
         ///
-        /// This if effectively the same as calling PostUnload() and then Preload().
+        /// This is effectively the same as calling Unload() and then Load().
         MOUNTAIN_API virtual bool_t Reload();
 
         /// @brief Opens this Entry in the file explorer
@@ -45,7 +45,7 @@ namespace Mountain
         ATTRIBUTE_NODISCARD
         MOUNTAIN_API const std::filesystem::path& GetPath() const;
 
-        /// @brief Returns the string representation of GetPath.
+        /// @brief Returns the string representation of @c GetPath().
         ATTRIBUTE_NODISCARD
         MOUNTAIN_API std::string GetPathString() const;
 

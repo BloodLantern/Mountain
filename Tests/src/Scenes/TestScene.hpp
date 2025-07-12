@@ -15,6 +15,10 @@ public:
 
     virtual void UnloadPersistentResources();
 
+    /// @brief Called right before @c Begin()
+    virtual void LoadResources();
+
+    /// @brief Called right after @c LoadResources()
     void Begin() override;
 
     void Render() override;
@@ -25,16 +29,14 @@ public:
 
     virtual void AfterRenderImGui();
 
+    /// @brief Called right after @c UnloadResources()
     void End() override;
+
+    /// @brief Called right after @c End()
+    virtual void UnloadResources();
 
     GETTER(const std::string&, Name, m_Name)
 
 private:
     std::string m_Name;
-
-    /// @brief Called in @c Begin()
-    virtual void LoadResources();
-
-    /// @brief Called in @c End()
-    virtual void UnloadResources();
 };

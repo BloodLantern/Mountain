@@ -99,14 +99,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\Common.cpp" PrecompiledHeader="Create" />
-    <ClCompile Include="src\Player.cpp" />
+    <ClCompile Include="src\Scenes\AudioScene.cpp" />
     <ClCompile Include="src\Scenes\ParticleSystemScene.cpp" />
     <ClCompile Include="src\Scenes\PostProcessingEffectsScene.cpp" />
     <ClCompile Include="src\Scenes\SpriteAnimationsScene.cpp" />
     <ClCompile Include="src\Scenes\TestScene.cpp" />
-    <ClCompile Include="src\SpinComponent.cpp" />
     <ClCompile Include="src\TestGame.cpp" />
     <ClCompile Include="src\Main.cpp" />
   </ItemGroup>
@@ -118,14 +116,12 @@
     <ClInclude Include="LivePP\API\x64\LPP_API_Preferences.h" />
     <ClInclude Include="LivePP\API\x64\LPP_API_Version_x64_CPP.h" />
     <ClInclude Include="LivePP\API\x64\LPP_API_x64_CPP.h" />
-    <ClInclude Include="src\Camera.hpp" />
     <ClInclude Include="src\Common.hpp" />
-    <ClInclude Include="src\Player.hpp" />
+    <ClInclude Include="src\Scenes\AudioScene.hpp" />
     <ClInclude Include="src\Scenes\ParticleSystemScene.hpp" />
     <ClInclude Include="src\Scenes\PostProcessingEffectsScene.hpp" />
     <ClInclude Include="src\Scenes\SpriteAnimationsScene.hpp" />
     <ClInclude Include="src\Scenes\TestScene.hpp" />
-    <ClInclude Include="src\SpinComponent.hpp" />
     <ClInclude Include="src\TestGame.hpp" />
   </ItemGroup>
   <ItemGroup>
@@ -133,19 +129,6 @@
       <Project>{154dad25-d481-4a8b-ab51-2f9313034be7}</Project>
       <Name>Mountain</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="assets\font.ttf" />
-    <Content Include="assets\landscape.jpg" />
-    <Content Include="assets\music.mp3" />
-    <Content Include="assets\sfx.ogg" />
-    <Content Include="assets\strawberry\normal00.png" />
-    <Content Include="assets\strawberry\normal01.png" />
-    <Content Include="assets\strawberry\normal02.png" />
-    <Content Include="assets\strawberry\normal03.png" />
-    <Content Include="assets\strawberry\normal04.png" />
-    <Content Include="assets\strawberry\normal05.png" />
-    <Content Include="assets\strawberry\normal06.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

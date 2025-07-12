@@ -111,3 +111,4 @@ compile by statically linking against the corresponding `Mountain.lib`
 - ~~Add `DateTime` class from .NET~~
 - ~~Replace all `std::chrono` usages by `Stopwatch`, `TimeSpan` and `DateTime`~
 - ~~Credit external dependencies in README~~
+- Add a way to use stereo audio files as mono sources and vice-versa

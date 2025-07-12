@@ -13,11 +13,11 @@
 #include <Math/vector2.hpp>
 #include <Math/vector3.hpp>
 
-
 namespace Mountain
 {
     class Entity;
     class Component;
+    class Collider;
     class Entry;
     class Font;
     class Resource;
@@ -319,6 +319,9 @@ namespace Mountain
 
         template <typename T>
         constexpr bool_t IsContainerType = !IsConst<T> && !IsFunction<T> && !IsReference<T>;
+
+        template <typename T>
+        constexpr bool_t IsCollider = IsBaseOf<Collider, T>;
     }
 
     /// @namespace Concepts
@@ -404,6 +407,9 @@ namespace Mountain
         /// @brief A container type is any non-const, non-function, non-reference type that can be default, copy and move constructed.
         template <typename T>
         concept DynamicContainerType = ContainerType<T>;
+
+        template <typename T>
+        concept Collider = Meta::IsCollider<T>;
     }
 
     namespace Meta

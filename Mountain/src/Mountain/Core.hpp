@@ -152,11 +152,21 @@ namespace Mountain {}
         _declspec(dllexport) int32_t AmdPowerXpressRequestHighPerformance = 1; \
     }
 
+/// @brief Defines a getter for the field @p internalName, of type @p type, with the name @c Get##name
 #define GETTER(type, name, internalName) ATTRIBUTE_NODISCARD type Get##name() const noexcept { return internalName; }
-#define SETTER(type, name, internalName) void Set##name(const type new##name) noexcept { internalName = new##name; }
+/// @brief Defines a setter for the field @p internalName, of type @p type, with the name @c Get##name
+#define SETTER(type, name, internalName) void Set##name(type new##name) noexcept { internalName = new##name; }
 
+/// @brief Defines a static getter for the field @p internalName, of type @p type, with the name @c Get##name
 #define STATIC_GETTER(type, name, internalName) ATTRIBUTE_NODISCARD static type Get##name() noexcept { return internalName; }
-#define STATIC_SETTER(type, name, internalName) static void Set##name(const type new##name) noexcept { internalName = new##name; }
+/// @brief Defines a static setter for the field @p internalName, of type @p type, with the name @c Get##name
+#define STATIC_SETTER(type, name, internalName) static void Set##name(type new##name) noexcept { internalName = new##name; }
+
+/// @brief Defines getters for the field @p internalName, of type @p type, with the name @c Get##name.
+/// One getter is @c const and returns a @c const value.
+#define GETTER_NON_CONST(type, name, internalName) \
+    ATTRIBUTE_NODISCARD type Get##name() noexcept { return internalName; } \
+    GETTER(const type, name, internalName)
 
 // Undefine any Windows interface macro
 #undef interface

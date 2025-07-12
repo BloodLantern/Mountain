@@ -214,7 +214,7 @@ namespace Mountain
     template <Concepts::Entry T>
     void FileManager::Unload(const Pointer<T>& entry)
     {
-        Logger::LogVerbose("Unloading FileManager entry {}", entry);
+        Logger::LogVerbose("Unloading FileManager entry {}", entry->GetPathString());
 
         const size_t oldSize = m_Entries.size();
 
@@ -231,6 +231,6 @@ namespace Mountain
         }
 
         if (oldSize == m_Entries.size())
-            Logger::LogWarning("Attempt to delete an unknown FileManager entry: {}", entry);
+            Logger::LogWarning("Attempt to delete an unknown FileManager entry: {}", entry->GetPathString());
     }
 }
