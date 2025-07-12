@@ -8,7 +8,8 @@
 USE_DEDICATED_GPU
 
 // To use Live++ on certain machines only (those that have a license, for example),
-// define the environment variable MOUNTAIN_LPP and give it the value USE_LPP
+// define the environment variable MOUNTAIN_LPP and give it the value USE_LPP.
+// It will only be enabled in the Debug configuration.
 
 #ifdef USE_LPP
 #include "Mountain/Utils/Logger.hpp"

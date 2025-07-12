@@ -53,9 +53,9 @@ void Logger::OpenDefaultFile()
     const TimeSpan time = now.GetTimeOfDay();
 
     // Get the current date and format it in yyyy-mm-dd for the directory name
-    const std::string dateStr = std::format("{:4}-{:2}-{:2}", now.GetYear(), now.GetMonth(), now.GetDay());
+    const std::string dateStr = std::format("{:04}-{:02}-{:02}", now.GetYear(), now.GetMonth(), now.GetDay());
     // Get the current date and format it in hh-mm-ss for the file name
-    const std::string timeStr = std::format("{:2}-{:2}-{:2}", time.GetHours(), time.GetMinutes(), time.GetSeconds());
+    const std::string timeStr = std::format("{:02}-{:02}-{:02}", time.GetHours(), time.GetMinutes(), time.GetSeconds());
 
     const std::filesystem::path directory = std::filesystem::path{"logs"} / dateStr;
     const std::filesystem::path filepath = directory / (timeStr + ".log");
