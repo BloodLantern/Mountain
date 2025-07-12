@@ -55,12 +55,12 @@ void Graphics::DrawElementsInstanced(
 
 void Graphics::SetClearColor(const Color& newClearColor)
 {
-    glClearColor(newClearColor.r, newClearColor.g, newClearColor.b, newClearColor.a);
+    glClearColor(newClearColor.r, newClearColor.g, newClearColor.b, newClearColor.a); // FIXME - This seems to be broken since we switched to SDL3
 }
 
 void Graphics::Clear(const ClearFlags flags)
 {
-    glClear(static_cast<GLbitfield>(flags)); // FIXME - This is broken since we switched to SDL3
+    glClear(static_cast<GLbitfield>(flags));
 }
 
 void Graphics::BindTexture(const uint32_t textureId) { glBindTexture(GL_TEXTURE_2D, textureId); }

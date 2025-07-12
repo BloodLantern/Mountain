@@ -23,6 +23,9 @@ Game::Game(const std::string& windowTitle, const Vector2i windowSize)
 
     (void) mi_version(); // Make sure mimalloc is correctly initialized
 
+    if (!mi_is_redirected())
+        Logger::LogWarning("C runtime malloc API calls aren't redirected to mimalloc");
+
     std::set_terminate(
         []
         {

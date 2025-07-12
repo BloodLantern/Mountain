@@ -31,7 +31,6 @@ layout(std430, binding = 0) readonly buffer Lights
 out vec4 fragmentColor;
 
 // TODO - Add bloom
-// TODO - Add screen shake
 
 float LightAttenuation(float x)
 {
@@ -43,27 +42,27 @@ float LightAttenuation(float x)
 void main()
 {
     vec4 baseColor = color * texture(framebuffer, textureCoordinates);
-    
+
     // Compute light color
     vec4 lightColor = ambientColor;
     for (int i = 0; i < lightSourceCount; i++)
     {
         LightSource lightSource = lightSources[i];
         vec2 lightSourcePosition = (camera * vec4(lightSource.position, 0.f, 1.f)).xy * scale;
-        
+
         vec2 lightToFragment = (lightSourcePosition - fragmentPosition) / actualScale;
         float lightToFragmentDistanceSquared = lightToFragment.x * lightToFragment.x + lightToFragment.y * lightToFragment.y;
         float lightSourceRadiusSquared = lightSource.radius * lightSource.radius;
         if (lightToFragmentDistanceSquared > lightSourceRadiusSquared)
             continue;
-        
+
         float attenuation = LightAttenuation(lightToFragmentDistanceSquared / lightSourceRadiusSquared);
-        
+
         lightColor += lightSource.color * lightSource.intensity * attenuation;
     }
-    
+
     // Clamp the light color components between 0 and 1
     lightColor = clamp(lightColor, vec4(0.f), vec4(1.f));
-    
+
     fragmentColor = lightColor * baseColor;
 }

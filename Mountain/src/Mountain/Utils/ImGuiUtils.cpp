@@ -19,6 +19,8 @@
 // Needs to be included after windows.hpp
 #include <psapi.h>
 
+#include "mimalloc.h"
+
 using namespace Mountain;
 
 void ImGuiUtils::GridPlotting(const std::string_view label, Vector2* const value, const float_t min, const float_t max)
@@ -620,13 +622,11 @@ void ImGuiUtils::ShowPerformanceMonitoring()
         frameDurationLeft = Time::GetTargetDeltaTime() == 0.f ? 0.f : (Time::GetTargetDeltaTime() - frameDuration);
         screenSize = Screen::GetSize();
 
-        // TODO - Instead get the memory amount from mimalloc
-        PROCESS_MEMORY_COUNTERS_EX2 memoryCounter;
-        GetProcessMemoryInfo(GetCurrentProcess(), reinterpret_cast<PPROCESS_MEMORY_COUNTERS>(&memoryCounter), sizeof(memoryCounter));
-        Windows::CheckError();
+        size_t cpuMemory, totalMemory;
+        mi_process_info(nullptr, nullptr, nullptr, &cpuMemory, nullptr, &totalMemory, nullptr, nullptr);
 
-        memoryCpuOnly = static_cast<double_t>(memoryCounter.PrivateWorkingSetSize) * 1e-6; // Convert to MB
-        memoryTotal = static_cast<double_t>(memoryCounter.PrivateUsage) * 1e-6; // Convert to MB
+        memoryCpuOnly = static_cast<double_t>(cpuMemory) * 1e-6; // Convert to MB
+        memoryTotal = static_cast<double_t>(totalMemory) * 1e-6; // Convert to MB
 
         lastUpdateTime = updateTime;
         lastUpdateTotalFrames = totalFrames;
