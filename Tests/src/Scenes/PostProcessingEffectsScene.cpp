@@ -24,6 +24,7 @@ void PostProcessingEffectsScene::LoadPersistentResources()
     m_GaussianBlur.effect.LoadResources();
     m_Mosaic.effect.LoadResources();
     m_Greyscale.effect.LoadResources();
+    m_Negative.effect.LoadResources();
 }
 
 void PostProcessingEffectsScene::LoadResources()
@@ -52,6 +53,7 @@ void PostProcessingEffectsScene::Begin()
 
     m_Mosaic.effect.imageBindings.Emplace(renderTargetId, 1u, Graphics::ImageShaderAccess::WriteOnly);
     m_Greyscale.effect.imageBindings.Emplace(renderTargetId, 0u, Graphics::ImageShaderAccess::WriteOnly);
+    m_Negative.effect.imageBindings.Emplace(renderTargetId, 0u, Graphics::ImageShaderAccess::WriteOnly);
 
     const uint32_t intermediateTextureId = m_IntermediateTexture.GetId();
 
@@ -83,6 +85,7 @@ void PostProcessingEffectsScene::Render()
     ApplyEffectIfEnabled(m_GaussianBlur);
     ApplyEffectIfEnabled(m_Mosaic);
     ApplyEffectIfEnabled(m_Greyscale);
+    ApplyEffectIfEnabled(m_Negative);
 }
 
 void PostProcessingEffectsScene::RenderImGui()
@@ -134,7 +137,18 @@ void PostProcessingEffectsScene::RenderImGui()
         ImGui::DragInt("intensity", &size, 0.1f, 1, 150);
         e.SetBoxSize(size);
     });
-    ShowEffectImGui("Greyscale", m_Greyscale);
+    ShowEffectImGui("Greyscale", m_Greyscale, [](auto& e)
+    {
+        static float_t intensity = 0.5f;
+        ImGui::DragFloat("intensity", &intensity, 0.001f, 0.f, 1.f);
+        e.SetIntensity(intensity);
+    });
+    ShowEffectImGui("Negative", m_Negative, [](auto& e)
+    {
+        static float_t intensity = 0.5f;
+        ImGui::DragFloat("intensity", &intensity, 0.001f, 0.f, 1.f);
+        e.SetIntensity(intensity);
+    });
 }
 
 void PostProcessingEffectsScene::End()
@@ -147,6 +161,7 @@ void PostProcessingEffectsScene::End()
     m_GaussianBlur.effect.imageBindings.Clear();
     m_Mosaic.effect.imageBindings.Clear();
     m_Greyscale.effect.imageBindings.Clear();
+    m_Negative.effect.imageBindings.Clear();
 
     m_IntermediateTexture.Delete();
 

@@ -47,6 +47,7 @@ private:
 	PostProcessingEffect<BoxBlur> m_BoxBlur{};
 	PostProcessingEffect<Mosaic> m_Mosaic{};
 	PostProcessingEffect<Greyscale> m_Greyscale{};
+	PostProcessingEffect<Negative> m_Negative{};
 
 	Graphics::GpuTexture m_IntermediateTexture;
 

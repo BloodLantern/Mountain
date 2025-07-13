@@ -13,9 +13,7 @@ void main()
 
     vec4 originalColor = imageLoad(image, texel);
 
-    float average = 0.2126 * originalColor.r + 0.7152 * originalColor.g + 0.0722 * originalColor.b;
-
-    vec4 newColor = mix(originalColor, vec4(average, average, average, originalColor.a), intensity);
+    vec4 newColor = mix(originalColor, vec4(1.f - originalColor.a, 1.f - originalColor.g, 1.f - originalColor.b, originalColor.a), intensity);
 
     imageStore(image, texel, newColor);
 

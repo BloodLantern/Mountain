@@ -127,5 +127,15 @@ namespace Mountain
     {
     public:
         MOUNTAIN_API void LoadResources() override;
+
+        MOUNTAIN_API void SetIntensity(float_t newIntensity) const;
+    };
+
+    class Negative : public Effect
+    {
+    public:
+        MOUNTAIN_API void LoadResources() override;
+
+        MOUNTAIN_API void SetIntensity(float_t newIntensity) const;
     };
 }
