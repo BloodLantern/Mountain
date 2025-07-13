@@ -96,37 +96,47 @@ void GaussianBlur::Apply(const Vector2i textureSize, const bool_t synchronizeIma
     m_OtherComputeShader->Dispatch(textureSize.x, textureSize.y);
 }
 
-void GaussianBlur::SetIntensity(const float_t newIntensity)
+void GaussianBlur::SetIntensity(const int32_t newIntensity)
 {
-    m_Radius = newIntensity * 3.f;
-    m_ComputeShader->SetUniform("radius", static_cast<int32_t>(Calc::Round(m_Radius)));
-    m_OtherComputeShader->SetUniform("radius", static_cast<int32_t>(Calc::Round(m_Radius)));
+    m_Radius = newIntensity * 3;
+    m_ComputeShader->SetUniform("radius", m_Radius);
+    m_OtherComputeShader->SetUniform("radius", m_Radius);
+
     const List<float_t> kernel = ComputeKernel(newIntensity);
 
     BindBufferBase(Graphics::BufferType::ShaderStorageBuffer, 2, m_KernelBuffer);
     m_KernelBuffer.SetData(static_cast<int64_t>(kernel.GetSize() * sizeof(float_t)), kernel.GetData(), Graphics::BufferUsage::DynamicCopy);
 }
 
-List<float_t> GaussianBlur::ComputeKernel(const float_t sigma) const
+List<float_t> GaussianBlur::ComputeKernel(const int32_t sigma) const
 {
-    const int32_t radius = static_cast<int32_t>(Calc::Round(m_Radius));
-    const size_t size = 2 * radius + 1;
+    const int32_t radius = m_Radius;
+    const size_t size = radius + 1;
+
     List<float_t> kernel;
     kernel.Resize(size);
 
     float_t k = 0.f;
 
-    const float_t inverseTwoSigmaSquare = 1.f / (2.f * sigma * sigma);
+    const float_t inverseTwoSigmaSquare = 1.f / static_cast<float_t>(2 * sigma * sigma);
 
-    for (int32_t i = -radius; i <= radius; i++)
+    for (int32_t i = 0; i <= radius; i++)
     {
         const float_t fi = static_cast<float_t>(i);
         const float_t value = std::exp(-fi * fi * inverseTwoSigmaSquare);
-        kernel[i + radius] = value;
-        k += value;
+        kernel[i] = value;
+
+        if (i == 0)
+        {
+            k += value;
+        }
+        else
+        {
+            k += 2.f * value;
+        }
     }
 
-    kernel.ForEach([k](float_t& f) { f /= k; });
+    kernel.ForEach([k](float_t& f) { f /= k;});
 
     return kernel;
 }

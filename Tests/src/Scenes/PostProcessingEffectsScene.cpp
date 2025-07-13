@@ -127,8 +127,8 @@ void PostProcessingEffectsScene::RenderImGui()
     });
     ShowEffectImGui("Gaussian Blur ", m_GaussianBlur, [](auto& e)
     {
-        static float_t intensity = 1.f;
-        ImGui::DragFloat("intensity", &intensity, 0.01f, 0.f, 10.f);
+        static int32_t intensity = 1.f;
+        ImGui::DragInt("intensity", &intensity, 0.01f, 0.f, 10.f);
         e.SetIntensity(intensity);
     });
     ShowEffectImGui("Mosaic ", m_Mosaic, [](auto& e)

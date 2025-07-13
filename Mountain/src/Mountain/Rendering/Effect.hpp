@@ -88,16 +88,16 @@ namespace Mountain
 
         MOUNTAIN_API void Apply(Vector2i textureSize, bool_t synchronizeImageData) const override;
 
-        MOUNTAIN_API void SetIntensity(float_t newIntensity);
+        MOUNTAIN_API void SetIntensity(int32_t newIntensity);
 
         ATTRIBUTE_NODISCARD
-        MOUNTAIN_API List<float_t> ComputeKernel(float_t sigma) const;
+        MOUNTAIN_API List<float_t> ComputeKernel(int32_t sigma) const;
 
     private:
         Pointer<ComputeShader> m_OtherComputeShader;
         Graphics::GpuBuffer m_KernelBuffer;
 
-        float_t m_Radius = 1;
+        int32_t m_Radius = 1;
     };
 
     // Effect will be applied on the first texture. The second one is only used as a temporary buffer.
