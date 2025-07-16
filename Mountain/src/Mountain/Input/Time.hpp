@@ -50,16 +50,16 @@ namespace Mountain
 
         /// @brief Get the target delta time.
         ///
-        /// This is either @code 1.f / GetTargetFps() @endcode
-        /// if @code GetTargetFps().has_value() @endcode is @c true,
-        /// otherwise @code 1.f / Screen::GetRefreshRate() @endcode
-        /// if Window::GetVSync() is @c true,
+        /// This is either @code 1.f / GetTargetFps()@endcode
+        /// if @code GetTargetFps().has_value()@endcode is @c true,
+        /// otherwise @code 1.f / Screen::GetRefreshRate()@endcode
+        /// if @c Window::GetVSync() is @c true,
         /// or @c 0.f if both are @c false.
         ///
         /// @see GetDeltaTime()
         MOUNTAIN_API static float_t GetTargetDeltaTime();
 
-        /// @brief Get how much time the last frame took. If this is equal to the delta time, then the game is lagging.
+        /// @brief Get how much time the last frame took. If this is greater or equal to the delta time, it means that the game is lagging.
         STATIC_GETTER(float_t, LastFrameDuration, m_LastFrameDuration)
 
         /// @brief Returns @c true on the given time interval

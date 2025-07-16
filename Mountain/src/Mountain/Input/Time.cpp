@@ -95,13 +95,18 @@ void Time::WaitForNextFrame()
     // Most of the code for waiting between frames comes from the osu!framework:
     // https://github.com/ppy/osu-framework/blob/master/osu.Framework/Timing/ThrottledFrameClock.cs
 
-    static double_t frameStartMs = 0.0;
+    static double_t frameStartMs = 0.0, frameStartMsAfterSwapBuffers = 0.0;
 
-    const double_t lastFrameDurationMs = m_Stopwatch.GetElapsedMilliseconds() - frameStartMs;
-    m_LastFrameDuration = static_cast<float_t>(lastFrameDurationMs / 1000.0);
+    Graphics::Finish();
+
+    const double_t elapsedMilliseconds = m_Stopwatch.GetElapsedMilliseconds();
+    const double_t lastFrameDurationMsWithoutSwapBuffers = elapsedMilliseconds - frameStartMsAfterSwapBuffers;
+    m_LastFrameDuration = static_cast<float_t>(lastFrameDurationMsWithoutSwapBuffers / 1000.0);
 
     if (targetFps.has_value())
     {
+        const double_t lastFrameDurationMs = elapsedMilliseconds - frameStartMs;
+
         const double_t targetFrameDuration = 1000.0 / targetFps.value();
         const double_t excessFrameTime = targetFrameDuration - lastFrameDurationMs;
         const double_t timeToSleep = std::max(0.0, excessFrameTime + accumulatedSleepError);
@@ -118,6 +123,8 @@ void Time::WaitForNextFrame()
 
     // VSync sleeps here
     Window::SwapBuffers();
+
+    frameStartMsAfterSwapBuffers = m_Stopwatch.GetElapsedMilliseconds();
 }
 
 double_t Time::SleepFor(const double_t milliseconds)
@@ -130,7 +137,7 @@ double_t Time::SleepFor(const double_t milliseconds)
     const TimeSpan timeSpan = TimeSpan::FromMilliseconds(milliseconds);
 
     if (!WaitWaitableTimer(timeSpan))
-        std::this_thread::sleep_for(std::chrono::nanoseconds{static_cast<int64_t>(timeSpan.GetTotalNanoseconds())});
+        std::this_thread::sleep_for(timeSpan.ToChrono());
 
     return m_Stopwatch.GetElapsedMilliseconds() - before;
 }
