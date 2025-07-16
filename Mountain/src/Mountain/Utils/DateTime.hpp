@@ -207,7 +207,7 @@ namespace Mountain
     constexpr DateTime::DateTime(const int64_t ticks)
     {
         if (static_cast<uint64_t>(ticks) > MaxTicks)
-            THROW(ArgumentOutOfRangeException{"Invalid ticks value.", "ticks"});
+            THROW(ArgumentOutOfRangeException{"Invalid ticks value.", TO_STRING(ticks)});
         m_DateData = static_cast<uint64_t>(ticks);
     }
 
@@ -238,7 +238,7 @@ namespace Mountain
         : DateTime(year, month, day, hour, minute, second)
     {
         if (static_cast<uint32_t>(millisecond) >= TimeSpan::MillisecondsPerSecond)
-            THROW(ArgumentOutOfRangeException{"Invalid millisecond value.", "millisecond"});
+            THROW(ArgumentOutOfRangeException{"Invalid millisecond value.", TO_STRING(millisecond)});
         m_DateData += static_cast<uint64_t>(millisecond) * static_cast<uint64_t>(TimeSpan::TicksPerMillisecond);
     }
 
@@ -255,7 +255,7 @@ namespace Mountain
         : DateTime(year, month, day, hour, minute, second, millisecond)
     {
         if (static_cast<uint32_t>(microsecond) >= TimeSpan::MicrosecondsPerMillisecond)
-            THROW(ArgumentOutOfRangeException{"Invalid microsecond value.", "microsecond"});
+            THROW(ArgumentOutOfRangeException{"Invalid microsecond value.", TO_STRING(microsecond)});
         m_DateData += static_cast<uint64_t>(microsecond) * static_cast<uint64_t>(TimeSpan::TicksPerMicrosecond);
     }
 
@@ -401,7 +401,7 @@ namespace Mountain
     constexpr bool_t DateTime::IsLeapYear(const int32_t year)
     {
         if (year < 1 || year > 9999)
-            THROW(ArgumentOutOfRangeException{"Invalid year value.", "year"});
+            THROW(ArgumentOutOfRangeException{"Invalid year value.", TO_STRING(year)});
         if ((year & 3) != 0) return false;
         if ((year & 15) == 0) return true;
         return static_cast<uint32_t>(year) % 25 != 0;

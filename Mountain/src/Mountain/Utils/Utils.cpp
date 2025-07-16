@@ -274,11 +274,6 @@ uint32_t Utils::Concat32(const uint8_t right0, const uint8_t right1, const uint8
     return right0 | right1 << 8 | left0 << 16 | left1 << 24;
 }
 
-float_t Easing::FromType(const Type type, const float_t t)
-{
-    return FromType(type)(t);
-}
-
 Easing::Easer Easing::FromType(const Type type)
 {
     switch (type)
@@ -316,5 +311,10 @@ Easing::Easer Easing::FromType(const Type type)
         case Type::BounceInOut: return BounceInOut;
     }
 
-    THROW(ArgumentOutOfRangeException{"Invalid easing type", "type"});
+    THROW(ArgumentOutOfRangeException{"Invalid easing type", TO_STRING(type)});
+}
+
+float_t Easing::FromType(const Type type, const float_t t)
+{
+    return FromType(type)(t);
 }

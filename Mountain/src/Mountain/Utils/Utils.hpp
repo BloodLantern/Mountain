@@ -18,9 +18,6 @@
 /// @file Utils.hpp
 /// @brief Defines general utility functions.
 
-#define TO_STRING(x) #x
-#define STRINGIFY(x) TO_STRING(x)
-
 /// @namespace Utils
 /// @brief Namespace containing utility functions that don't belong anywhere else
 namespace Mountain::Utils
@@ -289,9 +286,9 @@ namespace Easing
         BounceInOut
     };
 
-    MOUNTAIN_API float_t FromType(Type type, float_t t);
-
     MOUNTAIN_API Easer FromType(Type type);
+
+    MOUNTAIN_API float_t FromType(Type type, float_t t);
 }
 
 ENUM_FLAGS(Mountain::Utils::TrimOptions)

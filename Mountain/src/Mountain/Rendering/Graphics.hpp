@@ -45,7 +45,9 @@ namespace Mountain::Graphics
         TransformFeedback  = 1 << 12,
         AtomicCounter      = 1 << 13,
         ShaderStorage      = 1 << 14,
-        QueryBuffer        = 1 << 15
+        QueryBuffer        = 1 << 15,
+
+        All                = 0xFFFF
     };
 
     enum class MagnificationFilter : uint8_t
@@ -776,6 +778,11 @@ namespace Mountain::Graphics
     MOUNTAIN_API void SetBlendFunction(uint32_t drawBuffer, BlendFunction sourceFactors, BlendFunction destinationFactors);
 
     MOUNTAIN_API void SetViewport(int32_t x, int32_t y, int32_t width, int32_t height);
+
+    /// @brief Equivalent to @c glFlush().
+    /// @warning This is different from @c Draw::Flush().
+    MOUNTAIN_API void Flush();
+    MOUNTAIN_API void Finish();
 
     template <OpenGlConvertibleT T>
     ATTRIBUTE_NODISCARD

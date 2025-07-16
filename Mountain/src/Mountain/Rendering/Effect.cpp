@@ -81,7 +81,7 @@ void GaussianBlur::LoadResources()
     m_ComputeShader = ResourceManager::Get<ComputeShader>(Utils::GetBuiltinShadersPath() + "effects/gaussian_blur_horizontal.comp");
     m_OtherComputeShader = ResourceManager::Get<ComputeShader>(Utils::GetBuiltinShadersPath() + "effects/gaussian_blur_vertical.comp");
 
-    SetIntensity(1.f);
+    SetIntensity(1);
 }
 
 void GaussianBlur::Apply(const Vector2i textureSize, const bool_t synchronizeImageData) const
@@ -178,7 +178,7 @@ void Mosaic::SetBoxSize(const int32_t newSize) const { m_ComputeShader->SetUnifo
 void Greyscale::LoadResources()
 {
     m_ComputeShader = ResourceManager::Get<ComputeShader>(Utils::GetBuiltinShadersPath() + "effects/greyscale.comp");
-    SetIntensity(0.5f);
+    SetIntensity(1.f);
 }
 
 void Greyscale::SetIntensity(const float_t newIntensity) const { m_ComputeShader->SetUniform("intensity", newIntensity); }
@@ -186,7 +186,7 @@ void Greyscale::SetIntensity(const float_t newIntensity) const { m_ComputeShader
 void Negative::LoadResources()
 {
     m_ComputeShader = ResourceManager::Get<ComputeShader>(Utils::GetBuiltinShadersPath() + "effects/negative.comp");
-    SetIntensity(0.5f);
+    SetIntensity(1.f);
 }
 
 void Negative::SetIntensity(const float_t newIntensity) const { m_ComputeShader->SetUniform("intensity", newIntensity); }

@@ -184,3 +184,9 @@ namespace Mountain {}
 /// @brief Defines a default virtual destructor.
 /// @param type The type to default the destructor of.
 #define DEFAULT_VIRTUAL_DESTRUCTOR(type) virtual ~type() = default;
+
+#define TO_STRING(x) #x
+#define STRINGIFY(x) TO_STRING(x)
+
+/// @brief Gets a temporary C null-terminated string from a @c std::string_view.
+#define STRING_VIEW_TO_C_STR(view) ::std::string{view}.c_str()

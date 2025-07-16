@@ -26,7 +26,7 @@ uint32_t MessageBox::TypeToWindows(const Type type)
         case Type::CancelTryContinue: return MB_CANCELTRYCONTINUE;
     }
 
-    THROW(ArgumentOutOfRangeException{});
+    THROW(ArgumentOutOfRangeException{"Invalid MessageBox type", TO_STRING(type)});
 }
 
 uint32_t MessageBox::IconToWindows(const Icon icon)
@@ -39,7 +39,7 @@ uint32_t MessageBox::IconToWindows(const Icon icon)
         case Icon::Information: return MB_ICONINFORMATION;
     }
 
-    THROW(ArgumentOutOfRangeException{});
+    THROW(ArgumentOutOfRangeException{"Invalid MessageBox icon", TO_STRING(icon)});
 }
 
 uint32_t MessageBox::DefaultButtonToWindows(const DefaultButton defaultButton)
@@ -51,7 +51,7 @@ uint32_t MessageBox::DefaultButtonToWindows(const DefaultButton defaultButton)
         case DefaultButton::Third: return MB_DEFBUTTON3;
     }
 
-    THROW(ArgumentOutOfRangeException{});
+    THROW(ArgumentOutOfRangeException{"Invalid MessageBox default button", TO_STRING(defaultButton)});
 }
 
 MessageBox::Result MessageBox::ParseResult(const int32_t windowsResult)
@@ -67,7 +67,7 @@ MessageBox::Result MessageBox::ParseResult(const int32_t windowsResult)
         case IDTRYAGAIN: return Result::Try;
         case IDCONTINUE: return Result::Continue;
 
-        default: THROW(ArgumentOutOfRangeException{});
+        default: THROW(ArgumentOutOfRangeException{"Invalid MessageBox result", TO_STRING(windowsResult)});
     }
 }
 

@@ -33,12 +33,12 @@ In your project configuration, add the `Mountain/src`, `Mountain/externals/src` 
 
 Clone the project using `git clone https://github.com/BloodLantern/Mountain.git`.
 Open the Visual Studio solution file found in the root directory.
-After opening it, the only thing you have to do is to build the framework (Mountain project) in `Debug` and then in `Release` mode.
+After opening it, the only thing you have to do is to build the framework (Mountain project) in both the`Debug` and `Release` configuration.
 
 All the binaries can be found in the `x64/(Debug|Release)` folder.
 Additionally, copy the header files from `Mountain/src`.
 As the framework changes, you might also need to get some header files from `Mountain/externals/src`.
-In its current state, you need the `ImGui` and `magic_enum` folders.
+In its current state, you need the `ImGui` and `magic_enum` folders, but you might want to take everything just in case.
 You also need the math headers, which are located in `MathToolbox/src`.
 
 To then use the framework in any of your projects, do as you would usually: include the necessary headers,

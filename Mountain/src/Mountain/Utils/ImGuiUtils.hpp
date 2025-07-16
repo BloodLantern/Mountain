@@ -8,12 +8,18 @@
 
 #include "Mountain/Utils/Utils.hpp"
 
-// TODO - Documentation
-#define IMGUI_GET_SET(imguiFunc, label, variableAccess, field, ...) \
+/// @brief Calls the given @p imguiFunction using the get/set accessors to the given @p field of @p variableAccess.
+/// @param imguiFunction The @c ImGui function to call. This can be @c ImGui::SliderFloat(), @c ImGui::ComboEnum, etc...
+/// @param label The label to give the @c ImGui function.
+/// @param variableAccess The variable to use the get/set accessors from.
+/// Note that you must explicitly use the dot (.) or pointer-to-member (->) operators when calling this macro.
+/// For example, this parameter can be @c pointerValue-> or @c value. including the arrow/dot.
+/// @param field The field to access. This is actually just the name of the get/set accessors without the Get/Set prefix.
+#define IMGUI_GET_SET(imguiFunction, label, variableAccess, field, ...) \
     do \
     { \
         auto var = variableAccess##Get##field(); \
-        imguiFunc(label, &var, __VA_ARGS__); \
+        imguiFunction(label, &var, __VA_ARGS__); \
         variableAccess##Set##field(var); \
     } \
     while (false)

@@ -2,9 +2,11 @@
 
 #include "Mountain/Utils/ImGuiUtils.hpp"
 
-#include <magic_enum/magic_enum.hpp>
+#include <mimalloc.h>
 
 #include <ImGui/imgui_stdlib.h>
+
+#include <magic_enum/magic_enum.hpp>
 
 #include "Mountain/Screen.hpp"
 #include "Mountain/FileSystem/FileManager.hpp"
@@ -14,12 +16,6 @@
 #include "Mountain/Resource/Font.hpp"
 #include "Mountain/Resource/ResourceManager.hpp"
 #include "Mountain/Utils/FileSystemWatcher.hpp"
-#include "Mountain/Utils/Windows.hpp"
-
-// Needs to be included after windows.hpp
-#include <psapi.h>
-
-#include "mimalloc.h"
 
 using namespace Mountain;
 
@@ -367,18 +363,19 @@ void ImGuiUtils::ShowInputsWindow()
                 {
                     const GamepadInput::TouchpadInfo& touchpad = gamepad.GetTouchpad(j);
 
-                    ImGui::Text("Touchpad %d : ", i);
-                    ImGui::Text("\tMax fingers : %d", touchpad.nbrOfFingersMax);
+                    ImGui::Text("Touchpad %ud: ", i);
+                    ImGui::Text("\tMax fingers: %d", touchpad.nbrOfFingersMax);
                     for (size_t k = 0; k < touchpad.fingerLocations.GetSize(); k++)
                     {
                         const Vector2& finger = touchpad.fingerLocations[k];
-                        ImGui::Text("\tFinger %zu : %f, %f", k, finger.x, finger.y);
+                        ImGui::Text("\tFinger %zu: %f, %f", k, finger.x, finger.y);
                     }
                 }
             }
 
-            ImGui::Text("Battery level : %d%%", gamepad.GetBattery());
-            ImGui::Text("Battery status : %s", magic_enum::enum_name(gamepad.GetBatteryState()).data());
+            ImGui::Text("Battery level: %d%%", gamepad.GetBattery());
+            const std::string_view batteryState = magic_enum::enum_name(gamepad.GetBatteryState());
+            ImGui::Text("Battery status: %*s", static_cast<int32_t>(batteryState.length()), batteryState.data());
 
             if (gamepad.HasCapability(GamepadCapabilities::Rumble))
             {
@@ -647,7 +644,7 @@ void ImGuiUtils::ShowPerformanceMonitoring()
     static float_t deltaTime = 0.f;
     static float_t frameDuration = 0.f;
     static float_t frameDurationLeft = 0.f;
-    static Vector2i screenSize;
+    static Vector2i framebufferSize;
 
     static float_t lastUpdateTime = 0.f;
     static uint64_t lastUpdateTotalFrames = 0;
@@ -661,7 +658,7 @@ void ImGuiUtils::ShowPerformanceMonitoring()
         fps = Calc::Ceil(static_cast<float_t>(totalFrames - lastUpdateTotalFrames) / (updateTime - lastUpdateTime));
         frameDuration = Time::GetLastFrameDuration();
         frameDurationLeft = Time::GetTargetDeltaTime() == 0.f ? 0.f : (Time::GetTargetDeltaTime() - frameDuration);
-        screenSize = Screen::GetSize();
+        framebufferSize = Window::GetSize();
 
         size_t cpuMemory, totalMemory;
         mi_process_info(nullptr, nullptr, nullptr, &cpuMemory, nullptr, &totalMemory, nullptr, nullptr);
@@ -684,7 +681,7 @@ void ImGuiUtils::ShowPerformanceMonitoring()
     ImGui::TextColored(static_cast<ImVec4>(fpsColor), "%.0f FPS (%.1fms)", fps, deltaTime * 1000.f);
     ImGui::Text("CPU: %.1fms (%.1fms left)", frameDuration * 1000.f, frameDurationLeft * 1000.f);
     ImGui::Text("Memory: %.2fMB (%.2fMB including GPU)", memoryCpuOnly, memoryTotal);
-    ImGui::Text("Screen: %dx%d", screenSize.x, screenSize.y);
+    ImGui::Text("Framebuffer: %dx%d", framebufferSize.x, framebufferSize.y);
     ImGui::Unindent();
 
     ImGui::End();
@@ -734,11 +731,11 @@ template <>
 bool ImGui::ComboEnum<Easing::Type>(const char* label, Easing::Type* v, const ImGuiComboFlags flags)
 {
     bool_t result = false;
-    if (BeginCombo(label, magic_enum::enum_name(*v).data(), flags))
+    if (BeginCombo(label, STRING_VIEW_TO_C_STR(magic_enum::enum_name(*v)), flags))
     {
         for (const Easing::Type value : magic_enum::enum_values<Easing::Type>())
         {
-            if (Selectable(magic_enum::enum_name(value).data()))
+            if (Selectable(STRING_VIEW_TO_C_STR(magic_enum::enum_name(value))))
             {
                 *v = value;
                 result = true;

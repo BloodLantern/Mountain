@@ -43,7 +43,7 @@ const GamepadInput::TouchpadInfo& GamepadInput::GetTouchpad(const size_t index) 
 
     if (index >= m_Touchpads.GetSize())
     {
-        THROW(ArgumentOutOfRangeException{"Touchpad index out of range", "index"});
+        THROW(ArgumentOutOfRangeException{"Touchpad index out of range", TO_STRING(index)});
     }
 
     return m_Touchpads[index];
@@ -75,10 +75,10 @@ void GamepadInput::SetLight(const Color& color) const
 void GamepadInput::Rumble(const float_t weak, const float_t strong, const float_t duration) const
 {
     if (weak < 0.f || weak > 1.f)
-        THROW(ArgumentException("Rumble frequency value should be in the range [0, 1]", "weak"));
+        THROW(ArgumentOutOfRangeException("Rumble frequency value should be in the range [0, 1]", TO_STRING(weak)));
 
     if (strong < 0.f || strong > 1.f)
-        THROW(ArgumentException("Rumble frequency value should be in the range [0, 1]", "strong"));
+        THROW(ArgumentOutOfRangeException("Rumble frequency value should be in the range [0, 1]", TO_STRING(strong)));
 
     if (!HasCapability(GamepadCapabilities::Rumble))
     {

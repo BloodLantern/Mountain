@@ -6,6 +6,7 @@
 #include "Mountain/Core.hpp"
 #include "Mountain/Exceptions/ThrowHelper.hpp"
 #include "Mountain/Utils/Requirements.hpp"
+#include "Mountain/Utils/Utils.hpp"
 
 namespace Mountain
 {
@@ -117,8 +118,12 @@ namespace Mountain
         ATTRIBUTE_NODISCARD
         constexpr double_t GetTotalNanoseconds() const;
 
+        /// @brief Returns a new @c TimeSpan whose value is the absolute value of the current @c TimeSpan.
         ATTRIBUTE_NODISCARD
         constexpr TimeSpan Duration() const;
+
+        ATTRIBUTE_NODISCARD
+        constexpr std::chrono::nanoseconds ToChrono() const;
 
         ATTRIBUTE_NODISCARD
         friend std::strong_ordering operator<=>(TimeSpan, TimeSpan) = default;
@@ -243,6 +248,11 @@ namespace Mountain
         return TimeSpan{m_Ticks >= 0 ? m_Ticks : -m_Ticks};
     }
 
+    constexpr std::chrono::nanoseconds TimeSpan::ToChrono() const
+    {
+        return std::chrono::nanoseconds{static_cast<int64_t>(GetTotalNanoseconds())};
+    }
+
     constexpr TimeSpan operator+(const TimeSpan lhs, const TimeSpan rhs)
     {
         const int64_t result = lhs.m_Ticks + rhs.m_Ticks;
@@ -279,7 +289,7 @@ namespace Mountain
     constexpr TimeSpan operator*(const TimeSpan lhs, const double_t rhs)
     {
         if (Calc::IsNan(rhs))
-            throw ArgumentException{"Cannot multiply a TimeSpan by a NaN", "rhs"};
+            throw ArgumentException{"Cannot multiply a TimeSpan by a NaN", TO_STRING(rhs)};
 
         const double_t ticks = Calc::Round(static_cast<double_t>(lhs.m_Ticks) * rhs);
         return TimeSpan::IntervalFromDoubleTicks(ticks);
@@ -290,7 +300,7 @@ namespace Mountain
     constexpr TimeSpan operator/(const TimeSpan lhs, const double_t rhs)
     {
         if (Calc::IsNan(rhs))
-            throw ArgumentException{"Cannot divide a TimeSpan by a NaN", "rhs"};
+            throw ArgumentException{"Cannot divide a TimeSpan by a NaN", TO_STRING(rhs)};
 
         const double_t ticks = Calc::Round(static_cast<double_t>(lhs.m_Ticks) / rhs);
         return TimeSpan::IntervalFromDoubleTicks(ticks);
@@ -342,7 +352,7 @@ namespace Mountain
     constexpr TimeSpan TimeSpan::Interval(const double_t ticks, const double_t scale)
     {
         if (Calc::IsNan(ticks))
-            throw ArgumentException{"Cannot create an interval from a NaN amount of ticks", "ticks"};
+            throw ArgumentException{"Cannot create an interval from a NaN amount of ticks", TO_STRING(ticks)};
         return IntervalFromDoubleTicks(ticks * scale);
     }
 
