@@ -655,7 +655,7 @@ void ImGuiUtils::ShowPerformanceMonitoring()
         const uint64_t totalFrames = Time::GetTotalFrameCount();
 
         deltaTime = Time::GetDeltaTimeUnscaled();
-        fps = Calc::Ceil(static_cast<float_t>(totalFrames - lastUpdateTotalFrames) / (updateTime - lastUpdateTime));
+        fps = Calc::Round(static_cast<float_t>(totalFrames - lastUpdateTotalFrames) / (updateTime - lastUpdateTime));
         frameDuration = Time::GetLastFrameDuration();
         frameDurationLeft = Time::GetTargetDeltaTime() == 0.f ? 0.f : (Time::GetTargetDeltaTime() - frameDuration);
         framebufferSize = Window::GetSize();
@@ -670,8 +670,6 @@ void ImGuiUtils::ShowPerformanceMonitoring()
         lastUpdateTotalFrames = totalFrames;
     }
 
-    ImGui::Text("Graphics:");
-    ImGui::Indent();
     ImGui::Text("Frame #%llu", lastUpdateTotalFrames);
     Color fpsColor = Color::LightGreen();
     if (fps < 60.f)
@@ -682,7 +680,6 @@ void ImGuiUtils::ShowPerformanceMonitoring()
     ImGui::Text("CPU: %.1fms (%.1fms left)", frameDuration * 1000.f, frameDurationLeft * 1000.f);
     ImGui::Text("Memory: %.2fMB (%.2fMB including GPU)", memoryCpuOnly, memoryTotal);
     ImGui::Text("Framebuffer: %dx%d", framebufferSize.x, framebufferSize.y);
-    ImGui::Unindent();
 
     ImGui::End();
 }

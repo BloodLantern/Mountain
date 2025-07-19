@@ -22,7 +22,7 @@ Hitbox::Hitbox(const Vector2 off, const Vector2 size)
 
 void Hitbox::RenderDebug(const Color& color) const
 {
-    Draw::Rectangle(GetActualPosition(), size, color);
+    Draw::Rectangle(GetActualPosition(), size, 0.f, Vector2::Zero(), color);
 }
 
 bool Hitbox::Intersects(const Hitbox &other) const

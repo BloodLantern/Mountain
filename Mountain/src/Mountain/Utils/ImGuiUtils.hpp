@@ -35,9 +35,9 @@ namespace Mountain::ImGuiUtils
     template <typename T>
     bool_t Optional(
         std::optional<T>* value,
-        const std::type_identity_t<T>& defaultValue,
-        std::type_identity_t<T> nullValue,
-        const std::type_identity_t<std::function<bool_t(T& value)>>& displayFunction
+        const Meta::Identity<T>& defaultValue,
+        Meta::Identity<T> nullValue,
+        const Meta::Identity<std::function<bool(T&)>>& displayFunction
     );
 
     MOUNTAIN_API bool ComboEaser(const std::string& label, Easing::Easer* v, ImGuiComboFlags flags = ImGuiComboFlags_None);
@@ -95,9 +95,9 @@ namespace Mountain
     template <typename T>
     bool_t ImGuiUtils::Optional(
         std::optional<T>* value,
-        const std::type_identity_t<T>& defaultValue,
-        std::type_identity_t<T> nullValue,
-        const std::type_identity_t<std::function<bool_t(T& value)>>& displayFunction
+        const Meta::Identity<T>& defaultValue,
+        Meta::Identity<T> nullValue,
+        const Meta::Identity<std::function<bool_t(T& value)>>& displayFunction
     )
     {
         bool_t result = false;

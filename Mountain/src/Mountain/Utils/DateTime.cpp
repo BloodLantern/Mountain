@@ -8,6 +8,8 @@ using namespace Mountain;
 
 DateTime DateTime::Now()
 {
+    // TODO - Add time difference with UTC time
+
     const int64_t tick = UtcNow().GetTicks();
     if (static_cast<uint64_t>(tick) <= MaxTicks)
         return DateTime{static_cast<uint64_t>(tick) | KindLocal};

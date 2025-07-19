@@ -20,14 +20,14 @@ void main()
     vec4 originalColor = imageLoad(sourceImage, texel);
     vec4 newColor;
 
-    vec2 direction = Rotated(vec2(1,0), angle);
-    direction = vec2(direction.x, - direction.y);
+    vec2 direction = Rotated(vec2(1, 0), angle);
+    direction.y *= -1.f;
 
-    vec2 UVs = texelf/sizef;
+    vec2 uvs = texelf / sizef;
     float offset = (0.005 * intensity);
 
-    vec2 redOffset = UVs - direction * offset;
-    vec2 blueOffset = UVs + direction * offset;
+    vec2 redOffset = uvs - direction * offset;
+    vec2 blueOffset = uvs + direction * offset;
 
     newColor.r = imageLoad(sourceImage, ivec2(redOffset * sizef)).r;
     newColor.g = originalColor.g;
@@ -36,4 +36,3 @@ void main()
 
     imageStore(destinationImage, texel, newColor);
 }
-

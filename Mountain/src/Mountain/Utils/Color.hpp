@@ -32,571 +32,571 @@ namespace Mountain
 
 #pragma region Constants
         /// @brief Constant for Transparent.
-        /// @return The Transparent color.
+        /// @return A color with all its components set to @c 0.f.
         static constexpr Color Transparent();
 
         /// @brief Constant for Alice Blue.
-        /// @return The Alice Blue color.
+        /// @return Red = @c 0xF0, Green = @c 0xF8, Blue = @c 0xFF, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color AliceBlue();
 
         /// @brief Constant for Antique White.
-        /// @return The Antique White color.
+        /// @return Red = @c 0xFA, Green = @c 0xEB, Blue = @c 0xD7, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color AntiqueWhite();
 
         /// @brief Constant for Aqua.
-        /// @return The Aqua color.
+        /// @return Red = @c 0x00, Green = @c 0xFF, Blue = @c 0xFF, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color Aqua();
 
         /// @brief Constant for Aquamarine.
-        /// @return The Aquamarine color.
+        /// @return Red = @c 0x7F, Green = @c 0xFF, Blue = @c 0xD4, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color Aquamarine();
 
         /// @brief Constant for Azure.
-        /// @return The Azure color.
+        /// @return Red = @c 0xF0, Green = @c 0xFF, Blue = @c 0xFF, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color Azure();
 
         /// @brief Constant for Beige.
-        /// @return The Beige color.
+        /// @return Red = @c 0xF5, Green = @c 0xF5, Blue = @c 0xDC, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color Beige();
 
         /// @brief Constant for Bisque.
-        /// @return The Bisque color.
+        /// @return Red = @c 0xFF, Green = @c 0xE4, Blue = @c 0xC4, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color Bisque();
 
         /// @brief Constant for Black.
-        /// @return The Black color.
+        /// @return Red = @c 0x00, Green = @c 0x00, Blue = @c 0x00, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color Black();
 
         /// @brief Constant for Blanched Almond.
-        /// @return The Blanched Almond color.
+        /// @return Red = @c 0xFF, Green = @c 0xEB, Blue = @c 0xCD, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color BlanchedAlmond();
 
         /// @brief Constant for Blue.
-        /// @return The Blue color.
+        /// @return Red = @c 0x00, Green = @c 0x00, Blue = @c 0xFF, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color Blue();
 
         /// @brief Constant for Blue Violet.
-        /// @return The Blue Violet color.
+        /// @return Red = @c 0x8A, Green = @c 0x2B, Blue = @c 0xE2, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color BlueViolet();
 
         /// @brief Constant for Brown.
-        /// @return The Brown color.
+        /// @return Red = @c 0xA5, Green = @c 0x2A, Blue = @c 0x2A, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color Brown();
 
         /// @brief Constant for Burly Wood.
-        /// @return The Burly Wood color.
+        /// @return Red = @c 0xDE, Green = @c 0xB8, Blue = @c 0x87, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color BurlyWood();
 
         /// @brief Constant for Cadet Blue.
-        /// @return The Cadet Blue color.
+        /// @return Red = @c 0x5F, Green = @c 0x9E, Blue = @c 0xA0, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color CadetBlue();
 
         /// @brief Constant for Chartreuse.
-        /// @return The Chartreuse color.
+        /// @return Red = @c 0x7F, Green = @c 0xFF, Blue = @c 0x00, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color Chartreuse();
 
         /// @brief Constant for Chocolate.
-        /// @return The Chocolate color.
+        /// @return Red = @c 0xD2, Green = @c 0x69, Blue = @c 0x1E, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color Chocolate();
 
         /// @brief Constant for Coral.
-        /// @return The Coral color.
+        /// @return Red = @c 0xFF, Green = @c 0x7F, Blue = @c 0x50, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color Coral();
 
         /// @brief Constant for Cornflower Blue.
-        /// @return The Cornflower Blue color.
+        /// @return Red = @c 0x64, Green = @c 0x95, Blue = @c 0xED, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color CornflowerBlue();
 
         /// @brief Constant for Cornsilk.
-        /// @return The Cornsilk color.
+        /// @return Red = @c 0xFF, Green = @c 0xF8, Blue = @c 0xDC, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color Cornsilk();
 
         /// @brief Constant for Crimson.
-        /// @return The Crimson color.
+        /// @return Red = @c 0xDC, Green = @c 0x14, Blue = @c 0x3C, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color Crimson();
 
         /// @brief Constant for Cyan.
-        /// @return The Cyan color.
+        /// @return Red = @c 0x00, Green = @c 0xFF, Blue = @c 0xFF, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color Cyan();
 
         /// @brief Constant for Dark Blue.
-        /// @return The Dark Blue color.
+        /// @return Red = @c 0x00, Green = @c 0x00, Blue = @c 0x8B, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color DarkBlue();
 
         /// @brief Constant for Dark Cyan.
-        /// @return The Dark Cyan color.
+        /// @return Red = @c 0x00, Green = @c 0x8B, Blue = @c 0x8B, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color DarkCyan();
 
         /// @brief Constant for Dark Goldenrod.
-        /// @return The Dark Goldenrod color.
+        /// @return Red = @c 0xB8, Green = @c 0x86, Blue = @c 0x0B, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color DarkGoldenrod();
 
         /// @brief Constant for Dark Gray.
-        /// @return The Dark Gray color.
+        /// @return Red = @c 0xA9, Green = @c 0xA9, Blue = @c 0xA9, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color DarkGray();
 
         /// @brief Constant for Dark Green.
-        /// @return The Dark Green color.
+        /// @return Red = @c 0x00, Green = @c 0x64, Blue = @c 0x00, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color DarkGreen();
 
         /// @brief Constant for Dark Khaki.
-        /// @return The Dark Khaki color.
+        /// @return Red = @c 0xBD, Green = @c 0xB7, Blue = @c 0x6B, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color DarkKhaki();
 
         /// @brief Constant for Dark Magenta.
-        /// @return The Dark Magenta color.
+        /// @return Red = @c 0x8B, Green = @c 0x00, Blue = @c 0x8B, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color DarkMagenta();
 
         /// @brief Constant for Dark Olive Green.
-        /// @return The Dark Olive Green color.
+        /// @return Red = @c 0x55, Green = @c 0x6B, Blue = @c 0x2F, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color DarkOliveGreen();
 
         /// @brief Constant for Dark Orange.
-        /// @return The Dark Orange color.
+        /// @return Red = @c 0xFF, Green = @c 0x8C, Blue = @c 0x00, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color DarkOrange();
 
         /// @brief Constant for Dark Orchid.
-        /// @return The Dark Orchid color.
+        /// @return Red = @c 0x99, Green = @c 0x32, Blue = @c 0xCC, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color DarkOrchid();
 
         /// @brief Constant for Dark Red.
-        /// @return The Dark Red color.
+        /// @return Red = @c 0x8B, Green = @c 0x00, Blue = @c 0x00, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color DarkRed();
 
         /// @brief Constant for Dark Salmon.
-        /// @return The Dark Salmon color.
+        /// @return Red = @c 0xE9, Green = @c 0x96, Blue = @c 0x7A, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color DarkSalmon();
 
         /// @brief Constant for Dark Sea Green.
-        /// @return The Dark Sea Green color.
+        /// @return Red = @c 0x8F, Green = @c 0xBC, Blue = @c 0x8B, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color DarkSeaGreen();
 
         /// @brief Constant for Dark Slate Blue.
-        /// @return The Dark Slate Blue color.
+        /// @return Red = @c 0x48, Green = @c 0x3D, Blue = @c 0x8B, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color DarkSlateBlue();
 
         /// @brief Constant for Dark Slate Gray.
-        /// @return The Dark Slate Gray color.
+        /// @return Red = @c 0x2F, Green = @c 0x4F, Blue = @c 0x4F, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color DarkSlateGray();
 
         /// @brief Constant for Dark Turquoise.
-        /// @return The Dark Turquoise color.
+        /// @return Red = @c 0x00, Green = @c 0xCE, Blue = @c 0xD1, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color DarkTurquoise();
 
         /// @brief Constant for Dark Violet.
-        /// @return The Dark Violet color.
+        /// @return Red = @c 0x94, Green = @c 0x00, Blue = @c 0xD3, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color DarkViolet();
 
         /// @brief Constant for Deep Pink.
-        /// @return The Deep Pink color.
+        /// @return Red = @c 0xFF, Green = @c 0x14, Blue = @c 0x93, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color DeepPink();
 
         /// @brief Constant for Deep Sky Blue.
-        /// @return The Deep Sky Blue color.
+        /// @return Red = @c 0x00, Green = @c 0xBF, Blue = @c 0xFF, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color DeepSkyBlue();
 
         /// @brief Constant for Dim Gray.
-        /// @return The Dim Gray color.
+        /// @return Red = @c 0x69, Green = @c 0x69, Blue = @c 0x69, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color DimGray();
 
         /// @brief Constant for Dodger Blue.
-        /// @return The Dodger Blue color.
+        /// @return Red = @c 0x1E, Green = @c 0x90, Blue = @c 0xFF, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color DodgerBlue();
 
         /// @brief Constant for Firebrick.
-        /// @return The Firebrick color.
+        /// @return Red = @c 0xB2, Green = @c 0x22, Blue = @c 0x22, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color Firebrick();
 
         /// @brief Constant for Floral White.
-        /// @return The Floral White color.
+        /// @return Red = @c 0xFF, Green = @c 0xFA, Blue = @c 0xF0, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color FloralWhite();
 
         /// @brief Constant for Forest Green.
-        /// @return The Forest Green color.
+        /// @return Red = @c 0x22, Green = @c 0x8B, Blue = @c 0x22, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color ForestGreen();
 
         /// @brief Constant for Fuchsia.
-        /// @return The Fuchsia color.
+        /// @return Red = @c 0xFF, Green = @c 0x00, Blue = @c 0xFF, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color Fuchsia();
 
         /// @brief Constant for Gainsboro.
-        /// @return The Gainsboro color.
+        /// @return Red = @c 0xDC, Green = @c 0xDC, Blue = @c 0xDC, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color Gainsboro();
 
         /// @brief Constant for Ghost White.
-        /// @return The Ghost White color.
+        /// @return Red = @c 0xF8, Green = @c 0xF8, Blue = @c 0xFF, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color GhostWhite();
 
         /// @brief Constant for Gold.
-        /// @return The Gold color.
+        /// @return Red = @c 0xFF, Green = @c 0xD7, Blue = @c 0x00, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color Gold();
 
         /// @brief Constant for Goldenrod.
-        /// @return The Goldenrod color.
+        /// @return Red = @c 0xDA, Green = @c 0xA5, Blue = @c 0x20, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color Goldenrod();
 
         /// @brief Constant for Gray.
-        /// @return The Gray color.
+        /// @return Red = @c 0x80, Green = @c 0x80, Blue = @c 0x80, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color Gray();
 
         /// @brief Constant for Green.
-        /// @return The Green color.
+        /// @return Red = @c 0x00, Green = @c 0x80, Blue = @c 0x00, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color Green();
 
         /// @brief Constant for Green Yellow.
-        /// @return The Green Yellow color.
+        /// @return Red = @c 0xAD, Green = @c 0xFF, Blue = @c 0x2F, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color GreenYellow();
 
         /// @brief Constant for Honeydew.
-        /// @return The Honeydew color.
+        /// @return Red = @c 0xF0, Green = @c 0xFF, Blue = @c 0xF0, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color Honeydew();
 
         /// @brief Constant for Hot Pink.
-        /// @return The Hot Pink color.
+        /// @return Red = @c 0xFF, Green = @c 0x69, Blue = @c 0xB4, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color HotPink();
 
         /// @brief Constant for Indian Red.
-        /// @return The Indian Red color.
+        /// @return Red = @c 0xCD, Green = @c 0x5C, Blue = @c 0x5C, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color IndianRed();
 
         /// @brief Constant for Indigo.
-        /// @return The Indigo color.
+        /// @return Red = @c 0x4B, Green = @c 0x00, Blue = @c 0x82, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color Indigo();
 
         /// @brief Constant for Ivory.
-        /// @return The Ivory color.
+        /// @return Red = @c 0xFF, Green = @c 0xFF, Blue = @c 0xF0, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color Ivory();
 
         /// @brief Constant for Khaki.
-        /// @return The Khaki color.
+        /// @return Red = @c 0xF0, Green = @c 0xE6, Blue = @c 0x8C, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color Khaki();
 
         /// @brief Constant for Lavender.
-        /// @return The Lavender color.
+        /// @return Red = @c 0xE6, Green = @c 0xE6, Blue = @c 0xFA, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color Lavender();
 
         /// @brief Constant for Lavender Blush.
-        /// @return The Lavender Blush color.
+        /// @return Red = @c 0xFF, Green = @c 0xF0, Blue = @c 0xF5, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color LavenderBlush();
 
         /// @brief Constant for Lawn Green.
-        /// @return The Lawn Green color.
+        /// @return Red = @c 0x7C, Green = @c 0xFC, Blue = @c 0x00, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color LawnGreen();
 
         /// @brief Constant for Lemon Chiffon.
-        /// @return The Lemon Chiffon color.
+        /// @return Red = @c 0xFF, Green = @c 0xFA, Blue = @c 0xCD, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color LemonChiffon();
 
         /// @brief Constant for Light Blue.
-        /// @return The Light Blue color.
+        /// @return Red = @c 0xAD, Green = @c 0xD8, Blue = @c 0xE6, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color LightBlue();
 
         /// @brief Constant for Light Coral.
-        /// @return The Light Coral color.
+        /// @return Red = @c 0xF0, Green = @c 0x80, Blue = @c 0x80, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color LightCoral();
 
         /// @brief Constant for Light Cyan.
-        /// @return The Light Cyan color.
+        /// @return Red = @c 0xE0, Green = @c 0xFF, Blue = @c 0xFF, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color LightCyan();
 
         /// @brief Constant for Light Goldenrod Yellow.
-        /// @return The Light Goldenrod Yellow color.
+        /// @return Red = @c 0xFA, Green = @c 0xFA, Blue = @c 0xD2, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color LightGoldenrodYellow();
 
         /// @brief Constant for Light Gray.
-        /// @return The Light Gray color.
+        /// @return Red = @c 0xD3, Green = @c 0xD3, Blue = @c 0xD3, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color LightGray();
 
         /// @brief Constant for Light Green.
-        /// @return The Light Green color.
+        /// @return Red = @c 0x90, Green = @c 0xEE, Blue = @c 0x90, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color LightGreen();
 
         /// @brief Constant for Light Pink.
-        /// @return The Light Pink color.
+        /// @return Red = @c 0xFF, Green = @c 0xB6, Blue = @c 0xC1, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color LightPink();
 
         /// @brief Constant for Light Salmon.
-        /// @return The Light Salmon color.
+        /// @return Red = @c 0xFF, Green = @c 0xA0, Blue = @c 0x7A, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color LightSalmon();
 
         /// @brief Constant for Light Sea Green.
-        /// @return The Light Sea Green color.
+        /// @return Red = @c 0x20, Green = @c 0xB2, Blue = @c 0xAA, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color LightSeaGreen();
 
         /// @brief Constant for Light Sky Blue.
-        /// @return The Light Sky Blue color.
+        /// @return Red = @c 0x87, Green = @c 0xCE, Blue = @c 0xFA, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color LightSkyBlue();
 
         /// @brief Constant for Light Slate Gray.
-        /// @return The Light Slate Gray color.
+        /// @return Red = @c 0x77, Green = @c 0x88, Blue = @c 0x99, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color LightSlateGray();
 
         /// @brief Constant for Light Steel Blue.
-        /// @return The Light Steel Blue color.
+        /// @return Red = @c 0xB0, Green = @c 0xC4, Blue = @c 0xDE, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color LightSteelBlue();
 
         /// @brief Constant for Light Yellow.
-        /// @return The Light Yellow color.
+        /// @return Red = @c 0xFF, Green = @c 0xFF, Blue = @c 0xE0, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color LightYellow();
 
         /// @brief Constant for Lime.
-        /// @return The Lime color.
+        /// @return Red = @c 0x00, Green = @c 0xFF, Blue = @c 0x00, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color Lime();
 
         /// @brief Constant for Lime Green.
-        /// @return The Lime Green color.
+        /// @return Red = @c 0x32, Green = @c 0xCD, Blue = @c 0x32, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color LimeGreen();
 
         /// @brief Constant for Linen.
-        /// @return The Linen color.
+        /// @return Red = @c 0xFA, Green = @c 0xF0, Blue = @c 0xE6, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color Linen();
 
         /// @brief Constant for Magenta.
-        /// @return The Magenta color.
+        /// @return Red = @c 0xFF, Green = @c 0x00, Blue = @c 0xFF, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color Magenta();
 
         /// @brief Constant for Maroon.
-        /// @return The Maroon color.
+        /// @return Red = @c 0x80, Green = @c 0x00, Blue = @c 0x00, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color Maroon();
 
         /// @brief Constant for Medium Aquamarine.
-        /// @return The Medium Aquamarine color.
+        /// @return Red = @c 0x66, Green = @c 0xCD, Blue = @c 0xAA, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color MediumAquamarine();
 
         /// @brief Constant for Medium Blue.
-        /// @return The Medium Blue color.
+        /// @return Red = @c 0x00, Green = @c 0x00, Blue = @c 0xCD, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color MediumBlue();
 
         /// @brief Constant for Medium Orchid.
-        /// @return The Medium Orchid color.
+        /// @return Red = @c 0xBA, Green = @c 0x55, Blue = @c 0xD3, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color MediumOrchid();
 
         /// @brief Constant for Medium Purple.
-        /// @return The Medium Purple color.
+        /// @return Red = @c 0x93, Green = @c 0x70, Blue = @c 0xDB, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color MediumPurple();
 
         /// @brief Constant for Medium Sea Green.
-        /// @return The Medium Sea Green color.
+        /// @return Red = @c 0x3C, Green = @c 0xB3, Blue = @c 0x71, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color MediumSeaGreen();
 
         /// @brief Constant for Medium Slate Blue.
-        /// @return The Medium Slate Blue color.
+        /// @return Red = @c 0x7B, Green = @c 0x68, Blue = @c 0xEE, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color MediumSlateBlue();
 
         /// @brief Constant for Medium Spring Green.
-        /// @return The Medium Spring Green color.
+        /// @return Red = @c 0x00, Green = @c 0xFA, Blue = @c 0x9A, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color MediumSpringGreen();
 
         /// @brief Constant for Medium Turquoise.
-        /// @return The Medium Turquoise color.
+        /// @return Red = @c 0x48, Green = @c 0xD1, Blue = @c 0xCC, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color MediumTurquoise();
 
         /// @brief Constant for Medium Violet Red.
-        /// @return The Medium Violet Red color.
+        /// @return Red = @c 0xC7, Green = @c 0x15, Blue = @c 0x85, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color MediumVioletRed();
 
         /// @brief Constant for Midnight Blue.
-        /// @return The Midnight Blue color.
+        /// @return Red = @c 0x19, Green = @c 0x19, Blue = @c 0x70, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color MidnightBlue();
 
         /// @brief Constant for Mint Cream.
-        /// @return The Mint Cream color.
+        /// @return Red = @c 0xF5, Green = @c 0xFF, Blue = @c 0xFA, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color MintCream();
 
         /// @brief Constant for Misty Rose.
-        /// @return The Misty Rose color.
+        /// @return Red = @c 0xFF, Green = @c 0xE4, Blue = @c 0xE1, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color MistyRose();
 
         /// @brief Constant for Moccasin.
-        /// @return The Moccasin color.
+        /// @return Red = @c 0xFF, Green = @c 0xE4, Blue = @c 0xB5, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color Moccasin();
 
         /// @brief Constant for MonoGame Orange.
-        /// @return The MonoGame Orange color.
+        /// @return Red = @c 0xE7, Green = @c 0x3C, Blue = @c 0x00, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color MonoGameOrange();
 
         /// @brief Constant for Navajo White.
-        /// @return The Navajo White color.
+        /// @return Red = @c 0xFF, Green = @c 0xDE, Blue = @c 0xAD, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color NavajoWhite();
 
         /// @brief Constant for Navy.
-        /// @return The Navy color.
+        /// @return Red = @c 0x00, Green = @c 0x00, Blue = @c 0x80, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color Navy();
 
         /// @brief Constant for Old Lace.
-        /// @return The Old Lace color.
+        /// @return Red = @c 0xFD, Green = @c 0xF5, Blue = @c 0xE6, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color OldLace();
 
         /// @brief Constant for Olive.
-        /// @return The Olive color.
+        /// @return Red = @c 0x80, Green = @c 0x80, Blue = @c 0x00, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color Olive();
 
         /// @brief Constant for Olive Drab.
-        /// @return The Olive Drab color.
+        /// @return Red = @c 0x6B, Green = @c 0x8E, Blue = @c 0x23, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color OliveDrab();
 
         /// @brief Constant for Orange.
-        /// @return The Orange color.
+        /// @return Red = @c 0xFF, Green = @c 0xA5, Blue = @c 0x00, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color Orange();
 
         /// @brief Constant for Orange Red.
-        /// @return The Orange Red color.
+        /// @return Red = @c 0xFF, Green = @c 0x45, Blue = @c 0x00, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color OrangeRed();
 
         /// @brief Constant for Orchid.
-        /// @return The Orchid color.
+        /// @return Red = @c 0xDA, Green = @c 0x70, Blue = @c 0xD6, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color Orchid();
 
         /// @brief Constant for Pale Goldenrod.
-        /// @return The Pale Goldenrod color.
+        /// @return Red = @c 0xEE, Green = @c 0xE8, Blue = @c 0xAA, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color PaleGoldenrod();
 
         /// @brief Constant for Pale Green.
-        /// @return The Pale Green color.
+        /// @return Red = @c 0x98, Green = @c 0xFB, Blue = @c 0x98, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color PaleGreen();
 
         /// @brief Constant for Pale Turquoise.
-        /// @return The Pale Turquoise color.
+        /// @return Red = @c 0xAF, Green = @c 0xEE, Blue = @c 0xEE, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color PaleTurquoise();
 
         /// @brief Constant for Pale Violet Red.
-        /// @return The Pale Violet Red color.
+        /// @return Red = @c 0xDB, Green = @c 0x70, Blue = @c 0x93, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color PaleVioletRed();
 
         /// @brief Constant for Papaya Whip.
-        /// @return The Papaya Whip color.
+        /// @return Red = @c 0xFF, Green = @c 0xEF, Blue = @c 0xD5, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color PapayaWhip();
 
         /// @brief Constant for Peach Puff.
-        /// @return The Peach Puff color.
+        /// @return Red = @c 0xFF, Green = @c 0xDA, Blue = @c 0xB9, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color PeachPuff();
 
         /// @brief Constant for Peru.
-        /// @return The Peru color.
+        /// @return Red = @c 0xCD, Green = @c 0x85, Blue = @c 0x3F, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color Peru();
 
         /// @brief Constant for Pink.
-        /// @return The Pink color.
+        /// @return Red = @c 0xFF, Green = @c 0xC0, Blue = @c 0xCB, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color Pink();
 
         /// @brief Constant for Plum.
-        /// @return The Plum color.
+        /// @return Red = @c 0xDD, Green = @c 0xA0, Blue = @c 0xDD, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color Plum();
 
         /// @brief Constant for Powder Blue.
-        /// @return The Powder Blue color.
+        /// @return Red = @c 0xB0, Green = @c 0xE0, Blue = @c 0xE6, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color PowderBlue();
 
         /// @brief Constant for Purple.
-        /// @return The Purple color.
+        /// @return Red = @c 0x80, Green = @c 0x00, Blue = @c 0x80, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color Purple();
 
         /// @brief Constant for Red.
-        /// @return The Red color.
+        /// @return Red = @c 0xFF, Green = @c 0x00, Blue = @c 0x00, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color Red();
 
         /// @brief Constant for Rosy Brown.
-        /// @return The Rosy Brown color.
+        /// @return Red = @c 0xBC, Green = @c 0x8F, Blue = @c 0x8F, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color RosyBrown();
 
         /// @brief Constant for Royal Blue.
-        /// @return The Royal Blue color.
+        /// @return Red = @c 0x41, Green = @c 0x69, Blue = @c 0xE1, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color RoyalBlue();
 
         /// @brief Constant for Saddle Brown.
-        /// @return The Saddle Brown color.
+        /// @return Red = @c 0x8B, Green = @c 0x45, Blue = @c 0x13, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color SaddleBrown();
 
         /// @brief Constant for Salmon.
-        /// @return The Salmon color.
+        /// @return Red = @c 0xFA, Green = @c 0x80, Blue = @c 0x72, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color Salmon();
 
         /// @brief Constant for Sandy Brown.
-        /// @return The Sandy Brown color.
+        /// @return Red = @c 0xF4, Green = @c 0xA4, Blue = @c 0x60, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color SandyBrown();
 
         /// @brief Constant for Sea Green.
-        /// @return The Sea Green color.
+        /// @return Red = @c 0x2E, Green = @c 0x8B, Blue = @c 0x57, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color SeaGreen();
 
         /// @brief Constant for SeaShell.
-        /// @return The SeaShell color.
+        /// @return Red = @c 0xFF, Green = @c 0xF5, Blue = @c 0xEE, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color SeaShell();
 
         /// @brief Constant for Sienna.
-        /// @return The Sienna color.
+        /// @return Red = @c 0xA0, Green = @c 0x52, Blue = @c 0x2D, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color Sienna();
 
         /// @brief Constant for Silver.
-        /// @return The Silver color.
+        /// @return Red = @c 0xC0, Green = @c 0xC0, Blue = @c 0xC0, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color Silver();
 
         /// @brief Constant for Sky Blue.
-        /// @return The Sky Blue color.
+        /// @return Red = @c 0x87, Green = @c 0xCE, Blue = @c 0xEB, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color SkyBlue();
 
         /// @brief Constant for Slate Blue.
-        /// @return The Slate Blue color.
+        /// @return Red = @c 0x6A, Green = @c 0x5A, Blue = @c 0xCD, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color SlateBlue();
 
         /// @brief Constant for Slate Gray.
-        /// @return The Slate Gray color.
+        /// @return Red = @c 0x70, Green = @c 0x80, Blue = @c 0x90, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color SlateGray();
 
         /// @brief Constant for Snow.
-        /// @return The Snow color.
+        /// @return Red = @c 0xFF, Green = @c 0xFA, Blue = @c 0xFA, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color Snow();
 
         /// @brief Constant for Spring Green.
-        /// @return The Spring Green color.
+        /// @return Red = @c 0x00, Green = @c 0xFF, Blue = @c 0x7F, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color SpringGreen();
 
         /// @brief Constant for Steel Blue.
-        /// @return The Steel Blue color.
+        /// @return Red = @c 0x46, Green = @c 0x82, Blue = @c 0xB4, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color SteelBlue();
 
         /// @brief Constant for Tan.
-        /// @return The Tan color.
+        /// @return Red = @c 0xD2, Green = @c 0xB4, Blue = @c 0x8C, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color Tan();
 
         /// @brief Constant for Teal.
-        /// @return The Teal color.
+        /// @return Red = @c 0x00, Green = @c 0x80, Blue = @c 0x80, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color Teal();
 
         /// @brief Constant for Thistle.
-        /// @return The Thistle color.
+        /// @return Red = @c 0xD8, Green = @c 0xBF, Blue = @c 0xD8, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color Thistle();
 
         /// @brief Constant for Tomato.
-        /// @return The Tomato color.
+        /// @return Red = @c 0xFF, Green = @c 0x63, Blue = @c 0x47, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color Tomato();
 
         /// @brief Constant for Turquoise.
-        /// @return The Turquoise color.
+        /// @return Red = @c 0x40, Green = @c 0xE0, Blue = @c 0xD0, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color Turquoise();
 
         /// @brief Constant for Violet.
-        /// @return The Violet color.
+        /// @return Red = @c 0xEE, Green = @c 0x82, Blue = @c 0xEE, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color Violet();
 
         /// @brief Constant for Wheat.
-        /// @return The Wheat color.
+        /// @return Red = @c 0xF5, Green = @c 0xDE, Blue = @c 0xB3, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color Wheat();
 
         /// @brief Constant for White.
-        /// @return The White color.
+        /// @return Red = @c 0xFF, Green = @c 0xFF, Blue = @c 0xFF, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color White();
 
         /// @brief Constant for White Smoke.
-        /// @return The White Smoke color.
+        /// @return Red = @c 0xF5, Green = @c 0xF5, Blue = @c 0xF5, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color WhiteSmoke();
 
         /// @brief Constant for Yellow.
-        /// @return The Yellow color.
+        /// @return Red = @c 0xFF, Green = @c 0xFF, Blue = @c 0x00, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color Yellow();
 
         /// @brief Constant for Yellow Green.
-        /// @return The Yellow Green color.
+        /// @return Red = @c 0x9A, Green = @c 0xCD, Blue = @c 0x32, Alpha = @c 0xFF, all divided by @c 0xFF to be between @c 0.f and @c 1.f.
         static constexpr Color YellowGreen();
 #pragma endregion
 
@@ -670,7 +670,8 @@ namespace Mountain
 
         /// @brief Converts the Color to a ImVec4
         ATTRIBUTE_NODISCARD
-        explicit operator ImVec4() const;
+        // ReSharper disable once CppNonExplicitConversionOperator
+        operator ImVec4() const;
 
         ATTRIBUTE_NODISCARD
         std::string ToString() const;
@@ -851,148 +852,148 @@ namespace Mountain
     static constexpr float_t HueCircleOver6 = HueCircle / 6.f;
 
 #pragma region ConstantsImplemetation
-    constexpr Color Color::Transparent() { return Color(0.f, 0.f, 0.f, 0.f); }
-    constexpr Color Color::AliceBlue() { return Color(0xf0 / 255.f, 0xf8 / 255.f, 0xff / 255.f); }
-    constexpr Color Color::AntiqueWhite() { return Color(0xfa / 255.f, 0xeb / 255.f, 0xd7 / 255.f); }
-    constexpr Color Color::Aqua() { return Color(0x00 / 255.f, 0xff / 255.f, 0xff / 255.f); }
-    constexpr Color Color::Aquamarine() { return Color(0x7f / 255.f, 0xff / 255.f, 0xd4 / 255.f); }
-    constexpr Color Color::Azure() { return Color(0xf0 / 255.f, 0xff / 255.f, 0xff / 255.f); }
-    constexpr Color Color::Beige() { return Color(0xf5 / 255.f, 0xf5 / 255.f, 0xdc / 255.f); }
-    constexpr Color Color::Bisque() { return Color(0xff / 255.f, 0xe4 / 255.f, 0xc4 / 255.f); }
-    constexpr Color Color::Black() { return Color(0.f, 0.f, 0.f); }
-    constexpr Color Color::BlanchedAlmond() { return Color(0xff / 255.f, 0xeb / 255.f, 0xcd / 255.f); }
-    constexpr Color Color::Blue() { return Color(0x00 / 255.f, 0x00 / 255.f, 0xff / 255.f); }
-    constexpr Color Color::BlueViolet() { return Color(0x8a / 255.f, 0x2b / 255.f, 0xe2 / 255.f); }
-    constexpr Color Color::Brown() { return Color(0xa5 / 255.f, 0x2a / 255.f, 0x2a / 255.f); }
-    constexpr Color Color::BurlyWood() { return Color(0xde / 255.f, 0xb8 / 255.f, 0x87 / 255.f); }
-    constexpr Color Color::CadetBlue() { return Color(0x5f / 255.f, 0x9e / 255.f, 0xa0 / 255.f); }
-    constexpr Color Color::Chartreuse() { return Color(0x7f / 255.f, 0xff / 255.f, 0x00 / 255.f); }
-    constexpr Color Color::Chocolate() { return Color(0xd2 / 255.f, 0x69 / 255.f, 0x1e / 255.f); }
-    constexpr Color Color::Coral() { return Color(0xff / 255.f, 0x7f / 255.f, 0x50 / 255.f); }
-    constexpr Color Color::CornflowerBlue() { return Color(0x64 / 255.f, 0x95 / 255.f, 0xed / 255.f); }
-    constexpr Color Color::Cornsilk() { return Color(0xff / 255.f, 0xf8 / 255.f, 0xdc / 255.f); }
-    constexpr Color Color::Crimson() { return Color(0xdc / 255.f, 0x14 / 255.f, 0x3c / 255.f); }
-    constexpr Color Color::Cyan() { return Color(0x00 / 255.f, 0xff / 255.f, 0xff / 255.f); }
-    constexpr Color Color::DarkBlue() { return Color(0x00 / 255.f, 0x00 / 255.f, 0x8b / 255.f); }
-    constexpr Color Color::DarkCyan() { return Color(0x00 / 255.f, 0x8b / 255.f, 0x8b / 255.f); }
-    constexpr Color Color::DarkGoldenrod() { return Color(0xb8 / 255.f, 0x86 / 255.f, 0x0b / 255.f); }
-    constexpr Color Color::DarkGray() { return Color(0xa9 / 255.f, 0xa9 / 255.f, 0xa9 / 255.f); }
-    constexpr Color Color::DarkGreen() { return Color(0x00 / 255.f, 0x64 / 255.f, 0x00 / 255.f); }
-    constexpr Color Color::DarkKhaki() { return Color(0xbd / 255.f, 0xb7 / 255.f, 0x6b / 255.f); }
-    constexpr Color Color::DarkMagenta() { return Color(0x8b / 255.f, 0x00 / 255.f, 0x8b / 255.f); }
-    constexpr Color Color::DarkOliveGreen() { return Color(0x55 / 255.f, 0x6b / 255.f, 0x2f / 255.f); }
-    constexpr Color Color::DarkOrange() { return Color(0xff / 255.f, 0x8c / 255.f, 0x00 / 255.f); }
-    constexpr Color Color::DarkOrchid() { return Color(0x99 / 255.f, 0x32 / 255.f, 0xcc / 255.f); }
-    constexpr Color Color::DarkRed() { return Color(0x8b / 255.f, 0x00 / 255.f, 0x00 / 255.f); }
-    constexpr Color Color::DarkSalmon() { return Color(0xe9 / 255.f, 0x96 / 255.f, 0x7a / 255.f); }
-    constexpr Color Color::DarkSeaGreen() { return Color(0x8f / 255.f, 0xbc / 255.f, 0x8b / 255.f); }
-    constexpr Color Color::DarkSlateBlue() { return Color(0x48 / 255.f, 0x3d / 255.f, 0x8b / 255.f); }
-    constexpr Color Color::DarkSlateGray() { return Color(0x2f / 255.f, 0x4f / 255.f, 0x4f / 255.f); }
-    constexpr Color Color::DarkTurquoise() { return Color(0x00 / 255.f, 0xce / 255.f, 0xd1 / 255.f); }
-    constexpr Color Color::DarkViolet() { return Color(0x94 / 255.f, 0x00 / 255.f, 0xd3 / 255.f); }
-    constexpr Color Color::DeepPink() { return Color(0xff / 255.f, 0x14 / 255.f, 0x93 / 255.f); }
-    constexpr Color Color::DeepSkyBlue() { return Color(0x00 / 255.f, 0xbf / 255.f, 0xff / 255.f); }
-    constexpr Color Color::DimGray() { return Color(0x69 / 255.f, 0x69 / 255.f, 0x69 / 255.f); }
-    constexpr Color Color::DodgerBlue() { return Color(0x1e / 255.f, 0x90 / 255.f, 0xff / 255.f); }
-    constexpr Color Color::Firebrick() { return Color(0xb2 / 255.f, 0x22 / 255.f, 0x22 / 255.f); }
-    constexpr Color Color::FloralWhite() { return Color(0xff / 255.f, 0xfa / 255.f, 0xf0 / 255.f); }
-    constexpr Color Color::ForestGreen() { return Color(0x22 / 255.f, 0x8b / 255.f, 0x22 / 255.f); }
-    constexpr Color Color::Fuchsia() { return Color(0xff / 255.f, 0x00 / 255.f, 0xff / 255.f); }
-    constexpr Color Color::Gainsboro() { return Color(0xdc / 255.f, 0xdc / 255.f, 0xdc / 255.f); }
-    constexpr Color Color::GhostWhite() { return Color(0xf8 / 255.f, 0xf8 / 255.f, 0xff / 255.f); }
-    constexpr Color Color::Gold() { return Color(0xff / 255.f, 0xd7 / 255.f, 0x00 / 255.f); }
-    constexpr Color Color::Goldenrod() { return Color(0xda / 255.f, 0xa5 / 255.f, 0x20 / 255.f); }
-    constexpr Color Color::Gray() { return Color(0x80 / 255.f, 0x80 / 255.f, 0x80 / 255.f); }
-    constexpr Color Color::Green() { return Color(0x00 / 255.f, 0x80 / 255.f, 0x00 / 255.f); }
-    constexpr Color Color::GreenYellow() { return Color(0xad / 255.f, 0xff / 255.f, 0x2f / 255.f); }
-    constexpr Color Color::Honeydew() { return Color(0xf0 / 255.f, 0xff / 255.f, 0xf0 / 255.f); }
-    constexpr Color Color::HotPink() { return Color(0xff / 255.f, 0x69 / 255.f, 0xb4 / 255.f); }
-    constexpr Color Color::IndianRed() { return Color(0xcd / 255.f, 0x5c / 255.f, 0x5c / 255.f); }
-    constexpr Color Color::Indigo() { return Color(0x4b / 255.f, 0x00 / 255.f, 0x82 / 255.f); }
-    constexpr Color Color::Ivory() { return Color(0xff / 255.f, 0xff / 255.f, 0xf0 / 255.f); }
-    constexpr Color Color::Khaki() { return Color(0xf0 / 255.f, 0xe6 / 255.f, 0x8c / 255.f); }
-    constexpr Color Color::Lavender() { return Color(0xe6 / 255.f, 0xe6 / 255.f, 0xfa / 255.f); }
-    constexpr Color Color::LavenderBlush() { return Color(0xff / 255.f, 0xf0 / 255.f, 0xf5 / 255.f); }
-    constexpr Color Color::LawnGreen() { return Color(0x7c / 255.f, 0xfc / 255.f, 0x00 / 255.f); }
-    constexpr Color Color::LemonChiffon() { return Color(0xff / 255.f, 0xfa / 255.f, 0xcd / 255.f); }
-    constexpr Color Color::LightBlue() { return Color(0xad / 255.f, 0xd8 / 255.f, 0xe6 / 255.f); }
-    constexpr Color Color::LightCoral() { return Color(0xf0 / 255.f, 0x80 / 255.f, 0x80 / 255.f); }
-    constexpr Color Color::LightCyan() { return Color(0xe0 / 255.f, 0xff / 255.f, 0xff / 255.f); }
-    constexpr Color Color::LightGoldenrodYellow() { return Color(0xfa / 255.f, 0xfa / 255.f, 0xd2 / 255.f); }
-    constexpr Color Color::LightGray() { return Color(0xd3 / 255.f, 0xd3 / 255.f, 0xd3 / 255.f); }
-    constexpr Color Color::LightGreen() { return Color(0x90 / 255.f, 0xee / 255.f, 0x90 / 255.f); }
-    constexpr Color Color::LightPink() { return Color(0xff / 255.f, 0xb6 / 255.f, 0xc1 / 255.f); }
-    constexpr Color Color::LightSalmon() { return Color(0xff / 255.f, 0xa0 / 255.f, 0x7a / 255.f); }
-    constexpr Color Color::LightSeaGreen() { return Color(0x20 / 255.f, 0xb2 / 255.f, 0xaa / 255.f); }
-    constexpr Color Color::LightSkyBlue() { return Color(0x87 / 255.f, 0xce / 255.f, 0xfa / 255.f); }
-    constexpr Color Color::LightSlateGray() { return Color(0x77 / 255.f, 0x88 / 255.f, 0x99 / 255.f); }
-    constexpr Color Color::LightSteelBlue() { return Color(0xb0 / 255.f, 0xc4 / 255.f, 0xde / 255.f); }
-    constexpr Color Color::LightYellow() { return Color(0xff / 255.f, 0xff / 255.f, 0xe0 / 255.f); }
-    constexpr Color Color::Lime() { return Color(0x00 / 255.f, 0xff / 255.f, 0x00 / 255.f); }
-    constexpr Color Color::LimeGreen() { return Color(0x32 / 255.f, 0xcd / 255.f, 0x32 / 255.f); }
-    constexpr Color Color::Linen() { return Color(0xfa / 255.f, 0xf0 / 255.f, 0xe6 / 255.f); }
-    constexpr Color Color::Magenta() { return Color(0xff / 255.f, 0x00 / 255.f, 0xff / 255.f); }
-    constexpr Color Color::Maroon() { return Color(0x80 / 255.f, 0x00 / 255.f, 0x00 / 255.f); }
-    constexpr Color Color::MediumAquamarine() { return Color(0x66 / 255.f, 0xcd / 255.f, 0xaa / 255.f); }
-    constexpr Color Color::MediumBlue() { return Color(0x00 / 255.f, 0x00 / 255.f, 0xcd / 255.f); }
-    constexpr Color Color::MediumOrchid() { return Color(0xba / 255.f, 0x55 / 255.f, 0xd3 / 255.f); }
-    constexpr Color Color::MediumPurple() { return Color(0x93 / 255.f, 0x70 / 255.f, 0xdb / 255.f); }
-    constexpr Color Color::MediumSeaGreen() { return Color(0x3c / 255.f, 0xb3 / 255.f, 0x71 / 255.f); }
-    constexpr Color Color::MediumSlateBlue() { return Color(0x7b / 255.f, 0x68 / 255.f, 0xee / 255.f); }
-    constexpr Color Color::MediumSpringGreen() { return Color(0x00 / 255.f, 0xfa / 255.f, 0x9a / 255.f); }
-    constexpr Color Color::MediumTurquoise() { return Color(0x48 / 255.f, 0xd1 / 255.f, 0xcc / 255.f); }
-    constexpr Color Color::MediumVioletRed() { return Color(0xc7 / 255.f, 0x15 / 255.f, 0x85 / 255.f); }
-    constexpr Color Color::MidnightBlue() { return Color(0x19 / 255.f, 0x19 / 255.f, 0x70 / 255.f); }
-    constexpr Color Color::MintCream() { return Color(0xf5 / 255.f, 0xff / 255.f, 0xfa / 255.f); }
-    constexpr Color Color::MistyRose() { return Color(0xff / 255.f, 0xe4 / 255.f, 0xe1 / 255.f); }
-    constexpr Color Color::Moccasin() { return Color(0xff / 255.f, 0xe4 / 255.f, 0xb5 / 255.f); }
-    constexpr Color Color::MonoGameOrange() { return Color(0xe7 / 255.f, 0x3c / 255.f, 0x00 / 255.f); }
-    constexpr Color Color::NavajoWhite() { return Color(0xff / 255.f, 0xde / 255.f, 0xad / 255.f); }
-    constexpr Color Color::Navy() { return Color(0x00 / 255.f, 0x00 / 255.f, 0x80 / 255.f); }
-    constexpr Color Color::OldLace() { return Color(0xfd / 255.f, 0xf5 / 255.f, 0xe6 / 255.f); }
-    constexpr Color Color::Olive() { return Color(0x80 / 255.f, 0x80 / 255.f, 0x00 / 255.f); }
-    constexpr Color Color::OliveDrab() { return Color(0x6b / 255.f, 0x8e / 255.f, 0x23 / 255.f); }
-    constexpr Color Color::Orange() { return Color(0xff / 255.f, 0xa5 / 255.f, 0x00 / 255.f); }
-    constexpr Color Color::OrangeRed() { return Color(0xff / 255.f, 0x45 / 255.f, 0x00 / 255.f); }
-    constexpr Color Color::Orchid() { return Color(0xda / 255.f, 0x70 / 255.f, 0xd6 / 255.f); }
-    constexpr Color Color::PaleGoldenrod() { return Color(0xee / 255.f, 0xe8 / 255.f, 0xaa / 255.f); }
-    constexpr Color Color::PaleGreen() { return Color(0x98 / 255.f, 0xfb / 255.f, 0x98 / 255.f); }
-    constexpr Color Color::PaleTurquoise() { return Color(0xaf / 255.f, 0xee / 255.f, 0xee / 255.f); }
-    constexpr Color Color::PaleVioletRed() { return Color(0xdb / 255.f, 0x70 / 255.f, 0x93 / 255.f); }
-    constexpr Color Color::PapayaWhip() { return Color(0xff / 255.f, 0xef / 255.f, 0xd5 / 255.f); }
-    constexpr Color Color::PeachPuff() { return Color(0xff / 255.f, 0xda / 255.f, 0xb9 / 255.f); }
-    constexpr Color Color::Peru() { return Color(0xcd / 255.f, 0x85 / 255.f, 0x3f / 255.f); }
-    constexpr Color Color::Pink() { return Color(0xff / 255.f, 0xc0 / 255.f, 0xcb / 255.f); }
-    constexpr Color Color::Plum() { return Color(0xdd / 255.f, 0xa0 / 255.f, 0xdd / 255.f); }
-    constexpr Color Color::PowderBlue() { return Color(0xb0 / 255.f, 0xe0 / 255.f, 0xe6 / 255.f); }
-    constexpr Color Color::Purple() { return Color(0x80 / 255.f, 0x00 / 255.f, 0x80 / 255.f); }
-    constexpr Color Color::Red() { return Color(0xff / 255.f, 0x00 / 255.f, 0x00 / 255.f); }
-    constexpr Color Color::RosyBrown() { return Color(0xbc / 255.f, 0x8f / 255.f, 0x8f / 255.f); }
-    constexpr Color Color::RoyalBlue() { return Color(0x41 / 255.f, 0x69 / 255.f, 0xe1 / 255.f); }
-    constexpr Color Color::SaddleBrown() { return Color(0x8b / 255.f, 0x45 / 255.f, 0x13 / 255.f); }
-    constexpr Color Color::Salmon() { return Color(0xfa / 255.f, 0x80 / 255.f, 0x72 / 255.f); }
-    constexpr Color Color::SandyBrown() { return Color(0xf4 / 255.f, 0xa4 / 255.f, 0x60 / 255.f); }
-    constexpr Color Color::SeaGreen() { return Color(0x2e / 255.f, 0x8b / 255.f, 0x57 / 255.f); }
-    constexpr Color Color::SeaShell() { return Color(0xff / 255.f, 0xf5 / 255.f, 0xee / 255.f); }
-    constexpr Color Color::Sienna() { return Color(0xa0 / 255.f, 0x52 / 255.f, 0x2d / 255.f); }
-    constexpr Color Color::Silver() { return Color(0xc0 / 255.f, 0xc0 / 255.f, 0xc0 / 255.f); }
-    constexpr Color Color::SkyBlue() { return Color(0x87 / 255.f, 0xce / 255.f, 0xeb / 255.f); }
-    constexpr Color Color::SlateBlue() { return Color(0x6a / 255.f, 0x5a / 255.f, 0xcd / 255.f); }
-    constexpr Color Color::SlateGray() { return Color(0x70 / 255.f, 0x80 / 255.f, 0x90 / 255.f); }
-    constexpr Color Color::Snow() { return Color(0xff / 255.f, 0xfa / 255.f, 0xfa / 255.f); }
-    constexpr Color Color::SpringGreen() { return Color(0x00 / 255.f, 0xff / 255.f, 0x7f / 255.f); }
-    constexpr Color Color::SteelBlue() { return Color(0x46 / 255.f, 0x82 / 255.f, 0xb4 / 255.f); }
-    constexpr Color Color::Tan() { return Color(0xd2 / 255.f, 0xb4 / 255.f, 0x8c / 255.f); }
-    constexpr Color Color::Teal() { return Color(0x00 / 255.f, 0x80 / 255.f, 0x80 / 255.f); }
-    constexpr Color Color::Thistle() { return Color(0xd8 / 255.f, 0xbf / 255.f, 0xd8 / 255.f); }
-    constexpr Color Color::Tomato() { return Color(0xff / 255.f, 0x63 / 255.f, 0x47 / 255.f); }
-    constexpr Color Color::Turquoise() { return Color(0x40 / 255.f, 0xe0 / 255.f, 0xd0 / 255.f); }
-    constexpr Color Color::Violet() { return Color(0xee / 255.f, 0x82 / 255.f, 0xee / 255.f); }
-    constexpr Color Color::Wheat() { return Color(0xf5 / 255.f, 0xde / 255.f, 0xb3 / 255.f); }
-    constexpr Color Color::White() { return Color(1.f, 1.f, 1.f); }
-    constexpr Color Color::WhiteSmoke() { return Color(0xf5 / 255.f, 0xf5 / 255.f, 0xf5 / 255.f); }
-    constexpr Color Color::Yellow() { return Color(0xff / 255.f, 0xff / 255.f, 0x00 / 255.f); }
-    constexpr Color Color::YellowGreen() { return Color(0x9a / 255.f, 0xcd / 255.f, 0x32 / 255.f); }
+    constexpr Color Color::Transparent() { return Color{0.f, 0.f, 0.f, 0.f}; }
+    constexpr Color Color::AliceBlue() { return Color{0xF0 / 255.f, 0xF8 / 255.f, 0xFF / 255.f}; }
+    constexpr Color Color::AntiqueWhite() { return Color{0xFA / 255.f, 0xEB / 255.f, 0xD7 / 255.f}; }
+    constexpr Color Color::Aqua() { return Color{0x00 / 255.f, 0xFF / 255.f, 0xFF / 255.f}; }
+    constexpr Color Color::Aquamarine() { return Color{0x7F / 255.f, 0xFF / 255.f, 0xD4 / 255.f}; }
+    constexpr Color Color::Azure() { return Color{0xF0 / 255.f, 0xFF / 255.f, 0xFF / 255.f}; }
+    constexpr Color Color::Beige() { return Color{0xF5 / 255.f, 0xF5 / 255.f, 0xDC / 255.f}; }
+    constexpr Color Color::Bisque() { return Color{0xFF / 255.f, 0xE4 / 255.f, 0xC4 / 255.f}; }
+    constexpr Color Color::Black() { return Color{0.f, 0.f, 0.f}; }
+    constexpr Color Color::BlanchedAlmond() { return Color{0xFF / 255.f, 0xEB / 255.f, 0xCD / 255.f}; }
+    constexpr Color Color::Blue() { return Color{0x00 / 255.f, 0x00 / 255.f, 0xFF / 255.f}; }
+    constexpr Color Color::BlueViolet() { return Color{0x8A / 255.f, 0x2B / 255.f, 0xE2 / 255.f}; }
+    constexpr Color Color::Brown() { return Color{0xA5 / 255.f, 0x2A / 255.f, 0x2A / 255.f}; }
+    constexpr Color Color::BurlyWood() { return Color{0xDE / 255.f, 0xB8 / 255.f, 0x87 / 255.f}; }
+    constexpr Color Color::CadetBlue() { return Color{0x5F / 255.f, 0x9E / 255.f, 0xA0 / 255.f}; }
+    constexpr Color Color::Chartreuse() { return Color{0x7F / 255.f, 0xFF / 255.f, 0x00 / 255.f}; }
+    constexpr Color Color::Chocolate() { return Color{0xD2 / 255.f, 0x69 / 255.f, 0x1E / 255.f}; }
+    constexpr Color Color::Coral() { return Color{0xFF / 255.f, 0x7F / 255.f, 0x50 / 255.f}; }
+    constexpr Color Color::CornflowerBlue() { return Color{0x64 / 255.f, 0x95 / 255.f, 0xED / 255.f}; }
+    constexpr Color Color::Cornsilk() { return Color{0xFF / 255.f, 0xF8 / 255.f, 0xDC / 255.f}; }
+    constexpr Color Color::Crimson() { return Color{0xDC / 255.f, 0x14 / 255.f, 0x3C / 255.f}; }
+    constexpr Color Color::Cyan() { return Color{0x00 / 255.f, 0xFF / 255.f, 0xFF / 255.f}; }
+    constexpr Color Color::DarkBlue() { return Color{0x00 / 255.f, 0x00 / 255.f, 0x8B / 255.f}; }
+    constexpr Color Color::DarkCyan() { return Color{0x00 / 255.f, 0x8B / 255.f, 0x8B / 255.f}; }
+    constexpr Color Color::DarkGoldenrod() { return Color{0xB8 / 255.f, 0x86 / 255.f, 0x0B / 255.f}; }
+    constexpr Color Color::DarkGray() { return Color{0xA9 / 255.f, 0xA9 / 255.f, 0xA9 / 255.f}; }
+    constexpr Color Color::DarkGreen() { return Color{0x00 / 255.f, 0x64 / 255.f, 0x00 / 255.f}; }
+    constexpr Color Color::DarkKhaki() { return Color{0xBD / 255.f, 0xB7 / 255.f, 0x6B / 255.f}; }
+    constexpr Color Color::DarkMagenta() { return Color{0x8B / 255.f, 0x00 / 255.f, 0x8B / 255.f}; }
+    constexpr Color Color::DarkOliveGreen() { return Color{0x55 / 255.f, 0x6B / 255.f, 0x2F / 255.f}; }
+    constexpr Color Color::DarkOrange() { return Color{0xFF / 255.f, 0x8C / 255.f, 0x00 / 255.f}; }
+    constexpr Color Color::DarkOrchid() { return Color{0x99 / 255.f, 0x32 / 255.f, 0xCC / 255.f}; }
+    constexpr Color Color::DarkRed() { return Color{0x8B / 255.f, 0x00 / 255.f, 0x00 / 255.f}; }
+    constexpr Color Color::DarkSalmon() { return Color{0xE9 / 255.f, 0x96 / 255.f, 0x7A / 255.f}; }
+    constexpr Color Color::DarkSeaGreen() { return Color{0x8F / 255.f, 0xBC / 255.f, 0x8B / 255.f}; }
+    constexpr Color Color::DarkSlateBlue() { return Color{0x48 / 255.f, 0x3D / 255.f, 0x8B / 255.f}; }
+    constexpr Color Color::DarkSlateGray() { return Color{0x2F / 255.f, 0x4F / 255.f, 0x4F / 255.f}; }
+    constexpr Color Color::DarkTurquoise() { return Color{0x00 / 255.f, 0xCE / 255.f, 0xD1 / 255.f}; }
+    constexpr Color Color::DarkViolet() { return Color{0x94 / 255.f, 0x00 / 255.f, 0xD3 / 255.f}; }
+    constexpr Color Color::DeepPink() { return Color{0xFF / 255.f, 0x14 / 255.f, 0x93 / 255.f}; }
+    constexpr Color Color::DeepSkyBlue() { return Color{0x00 / 255.f, 0xBF / 255.f, 0xFF / 255.f}; }
+    constexpr Color Color::DimGray() { return Color{0x69 / 255.f, 0x69 / 255.f, 0x69 / 255.f}; }
+    constexpr Color Color::DodgerBlue() { return Color{0x1E / 255.f, 0x90 / 255.f, 0xFF / 255.f}; }
+    constexpr Color Color::Firebrick() { return Color{0xB2 / 255.f, 0x22 / 255.f, 0x22 / 255.f}; }
+    constexpr Color Color::FloralWhite() { return Color{0xFF / 255.f, 0xFA / 255.f, 0xF0 / 255.f}; }
+    constexpr Color Color::ForestGreen() { return Color{0x22 / 255.f, 0x8B / 255.f, 0x22 / 255.f}; }
+    constexpr Color Color::Fuchsia() { return Color{0xFF / 255.f, 0x00 / 255.f, 0xFF / 255.f}; }
+    constexpr Color Color::Gainsboro() { return Color{0xDC / 255.f, 0xDC / 255.f, 0xDC / 255.f}; }
+    constexpr Color Color::GhostWhite() { return Color{0xF8 / 255.f, 0xF8 / 255.f, 0xFF / 255.f}; }
+    constexpr Color Color::Gold() { return Color{0xFF / 255.f, 0xD7 / 255.f, 0x00 / 255.f}; }
+    constexpr Color Color::Goldenrod() { return Color{0xDA / 255.f, 0xA5 / 255.f, 0x20 / 255.f}; }
+    constexpr Color Color::Gray() { return Color{0x80 / 255.f, 0x80 / 255.f, 0x80 / 255.f}; }
+    constexpr Color Color::Green() { return Color{0x00 / 255.f, 0x80 / 255.f, 0x00 / 255.f}; }
+    constexpr Color Color::GreenYellow() { return Color{0xAD / 255.f, 0xFF / 255.f, 0x2F / 255.f}; }
+    constexpr Color Color::Honeydew() { return Color{0xF0 / 255.f, 0xFF / 255.f, 0xF0 / 255.f}; }
+    constexpr Color Color::HotPink() { return Color{0xFF / 255.f, 0x69 / 255.f, 0xB4 / 255.f}; }
+    constexpr Color Color::IndianRed() { return Color{0xCD / 255.f, 0x5C / 255.f, 0x5C / 255.f}; }
+    constexpr Color Color::Indigo() { return Color{0x4B / 255.f, 0x00 / 255.f, 0x82 / 255.f}; }
+    constexpr Color Color::Ivory() { return Color{0xFF / 255.f, 0xFF / 255.f, 0xF0 / 255.f}; }
+    constexpr Color Color::Khaki() { return Color{0xF0 / 255.f, 0xE6 / 255.f, 0x8C / 255.f}; }
+    constexpr Color Color::Lavender() { return Color{0xE6 / 255.f, 0xE6 / 255.f, 0xFA / 255.f}; }
+    constexpr Color Color::LavenderBlush() { return Color{0xFF / 255.f, 0xF0 / 255.f, 0xF5 / 255.f}; }
+    constexpr Color Color::LawnGreen() { return Color{0x7C / 255.f, 0xFC / 255.f, 0x00 / 255.f}; }
+    constexpr Color Color::LemonChiffon() { return Color{0xFF / 255.f, 0xFA / 255.f, 0xCD / 255.f}; }
+    constexpr Color Color::LightBlue() { return Color{0xAD / 255.f, 0xD8 / 255.f, 0xE6 / 255.f}; }
+    constexpr Color Color::LightCoral() { return Color{0xF0 / 255.f, 0x80 / 255.f, 0x80 / 255.f}; }
+    constexpr Color Color::LightCyan() { return Color{0xE0 / 255.f, 0xFF / 255.f, 0xFF / 255.f}; }
+    constexpr Color Color::LightGoldenrodYellow() { return Color{0xFA / 255.f, 0xFA / 255.f, 0xD2 / 255.f}; }
+    constexpr Color Color::LightGray() { return Color{0xD3 / 255.f, 0xD3 / 255.f, 0xD3 / 255.f}; }
+    constexpr Color Color::LightGreen() { return Color{0x90 / 255.f, 0xEE / 255.f, 0x90 / 255.f}; }
+    constexpr Color Color::LightPink() { return Color{0xFF / 255.f, 0xB6 / 255.f, 0xC1 / 255.f}; }
+    constexpr Color Color::LightSalmon() { return Color{0xFF / 255.f, 0xA0 / 255.f, 0x7A / 255.f}; }
+    constexpr Color Color::LightSeaGreen() { return Color{0x20 / 255.f, 0xB2 / 255.f, 0xAA / 255.f}; }
+    constexpr Color Color::LightSkyBlue() { return Color{0x87 / 255.f, 0xCE / 255.f, 0xFA / 255.f}; }
+    constexpr Color Color::LightSlateGray() { return Color{0x77 / 255.f, 0x88 / 255.f, 0x99 / 255.f}; }
+    constexpr Color Color::LightSteelBlue() { return Color{0xB0 / 255.f, 0xC4 / 255.f, 0xDE / 255.f}; }
+    constexpr Color Color::LightYellow() { return Color{0xFF / 255.f, 0xFF / 255.f, 0xE0 / 255.f}; }
+    constexpr Color Color::Lime() { return Color{0x00 / 255.f, 0xFF / 255.f, 0x00 / 255.f}; }
+    constexpr Color Color::LimeGreen() { return Color{0x32 / 255.f, 0xCD / 255.f, 0x32 / 255.f}; }
+    constexpr Color Color::Linen() { return Color{0xFA / 255.f, 0xF0 / 255.f, 0xE6 / 255.f}; }
+    constexpr Color Color::Magenta() { return Color{0xFF / 255.f, 0x00 / 255.f, 0xFF / 255.f}; }
+    constexpr Color Color::Maroon() { return Color{0x80 / 255.f, 0x00 / 255.f, 0x00 / 255.f}; }
+    constexpr Color Color::MediumAquamarine() { return Color{0x66 / 255.f, 0xCD / 255.f, 0xAA / 255.f}; }
+    constexpr Color Color::MediumBlue() { return Color{0x00 / 255.f, 0x00 / 255.f, 0xCD / 255.f}; }
+    constexpr Color Color::MediumOrchid() { return Color{0xBA / 255.f, 0x55 / 255.f, 0xD3 / 255.f}; }
+    constexpr Color Color::MediumPurple() { return Color{0x93 / 255.f, 0x70 / 255.f, 0xDB / 255.f}; }
+    constexpr Color Color::MediumSeaGreen() { return Color{0x3C / 255.f, 0xB3 / 255.f, 0x71 / 255.f}; }
+    constexpr Color Color::MediumSlateBlue() { return Color{0x7B / 255.f, 0x68 / 255.f, 0xEE / 255.f}; }
+    constexpr Color Color::MediumSpringGreen() { return Color{0x00 / 255.f, 0xFA / 255.f, 0x9A / 255.f}; }
+    constexpr Color Color::MediumTurquoise() { return Color{0x48 / 255.f, 0xD1 / 255.f, 0xCC / 255.f}; }
+    constexpr Color Color::MediumVioletRed() { return Color{0xC7 / 255.f, 0x15 / 255.f, 0x85 / 255.f}; }
+    constexpr Color Color::MidnightBlue() { return Color{0x19 / 255.f, 0x19 / 255.f, 0x70 / 255.f}; }
+    constexpr Color Color::MintCream() { return Color{0xF5 / 255.f, 0xFF / 255.f, 0xFA / 255.f}; }
+    constexpr Color Color::MistyRose() { return Color{0xFF / 255.f, 0xE4 / 255.f, 0xE1 / 255.f}; }
+    constexpr Color Color::Moccasin() { return Color{0xFF / 255.f, 0xE4 / 255.f, 0xB5 / 255.f}; }
+    constexpr Color Color::MonoGameOrange() { return Color{0xE7 / 255.f, 0x3C / 255.f, 0x00 / 255.f}; }
+    constexpr Color Color::NavajoWhite() { return Color{0xFF / 255.f, 0xDE / 255.f, 0xAD / 255.f}; }
+    constexpr Color Color::Navy() { return Color{0x00 / 255.f, 0x00 / 255.f, 0x80 / 255.f}; }
+    constexpr Color Color::OldLace() { return Color{0xFD / 255.f, 0xF5 / 255.f, 0xE6 / 255.f}; }
+    constexpr Color Color::Olive() { return Color{0x80 / 255.f, 0x80 / 255.f, 0x00 / 255.f}; }
+    constexpr Color Color::OliveDrab() { return Color{0x6B / 255.f, 0x8E / 255.f, 0x23 / 255.f}; }
+    constexpr Color Color::Orange() { return Color{0xFF / 255.f, 0xA5 / 255.f, 0x00 / 255.f}; }
+    constexpr Color Color::OrangeRed() { return Color{0xFF / 255.f, 0x45 / 255.f, 0x00 / 255.f}; }
+    constexpr Color Color::Orchid() { return Color{0xDA / 255.f, 0x70 / 255.f, 0xD6 / 255.f}; }
+    constexpr Color Color::PaleGoldenrod() { return Color{0xEE / 255.f, 0xE8 / 255.f, 0xAA / 255.f}; }
+    constexpr Color Color::PaleGreen() { return Color{0x98 / 255.f, 0xFB / 255.f, 0x98 / 255.f}; }
+    constexpr Color Color::PaleTurquoise() { return Color{0xAF / 255.f, 0xEE / 255.f, 0xEE / 255.f}; }
+    constexpr Color Color::PaleVioletRed() { return Color{0xDB / 255.f, 0x70 / 255.f, 0x93 / 255.f}; }
+    constexpr Color Color::PapayaWhip() { return Color{0xFF / 255.f, 0xEF / 255.f, 0xD5 / 255.f}; }
+    constexpr Color Color::PeachPuff() { return Color{0xFF / 255.f, 0xDA / 255.f, 0xB9 / 255.f}; }
+    constexpr Color Color::Peru() { return Color{0xCD / 255.f, 0x85 / 255.f, 0x3F / 255.f}; }
+    constexpr Color Color::Pink() { return Color{0xFF / 255.f, 0xC0 / 255.f, 0xCB / 255.f}; }
+    constexpr Color Color::Plum() { return Color{0xDD / 255.f, 0xA0 / 255.f, 0xDD / 255.f}; }
+    constexpr Color Color::PowderBlue() { return Color{0xB0 / 255.f, 0xE0 / 255.f, 0xE6 / 255.f}; }
+    constexpr Color Color::Purple() { return Color{0x80 / 255.f, 0x00 / 255.f, 0x80 / 255.f}; }
+    constexpr Color Color::Red() { return Color{0xFF / 255.f, 0x00 / 255.f, 0x00 / 255.f}; }
+    constexpr Color Color::RosyBrown() { return Color{0xBC / 255.f, 0x8F / 255.f, 0x8F / 255.f}; }
+    constexpr Color Color::RoyalBlue() { return Color{0x41 / 255.f, 0x69 / 255.f, 0xE1 / 255.f}; }
+    constexpr Color Color::SaddleBrown() { return Color{0x8B / 255.f, 0x45 / 255.f, 0x13 / 255.f}; }
+    constexpr Color Color::Salmon() { return Color{0xFA / 255.f, 0x80 / 255.f, 0x72 / 255.f}; }
+    constexpr Color Color::SandyBrown() { return Color{0xF4 / 255.f, 0xA4 / 255.f, 0x60 / 255.f}; }
+    constexpr Color Color::SeaGreen() { return Color{0x2E / 255.f, 0x8B / 255.f, 0x57 / 255.f}; }
+    constexpr Color Color::SeaShell() { return Color{0xFF / 255.f, 0xF5 / 255.f, 0xEE / 255.f}; }
+    constexpr Color Color::Sienna() { return Color{0xA0 / 255.f, 0x52 / 255.f, 0x2D / 255.f}; }
+    constexpr Color Color::Silver() { return Color{0xC0 / 255.f, 0xC0 / 255.f, 0xC0 / 255.f}; }
+    constexpr Color Color::SkyBlue() { return Color{0x87 / 255.f, 0xCE / 255.f, 0xEB / 255.f}; }
+    constexpr Color Color::SlateBlue() { return Color{0x6A / 255.f, 0x5A / 255.f, 0xCD / 255.f}; }
+    constexpr Color Color::SlateGray() { return Color{0x70 / 255.f, 0x80 / 255.f, 0x90 / 255.f}; }
+    constexpr Color Color::Snow() { return Color{0xFF / 255.f, 0xFA / 255.f, 0xFA / 255.f}; }
+    constexpr Color Color::SpringGreen() { return Color{0x00 / 255.f, 0xFF / 255.f, 0x7F / 255.f}; }
+    constexpr Color Color::SteelBlue() { return Color{0x46 / 255.f, 0x82 / 255.f, 0xB4 / 255.f}; }
+    constexpr Color Color::Tan() { return Color{0xD2 / 255.f, 0xB4 / 255.f, 0x8C / 255.f}; }
+    constexpr Color Color::Teal() { return Color{0x00 / 255.f, 0x80 / 255.f, 0x80 / 255.f}; }
+    constexpr Color Color::Thistle() { return Color{0xD8 / 255.f, 0xBF / 255.f, 0xD8 / 255.f}; }
+    constexpr Color Color::Tomato() { return Color{0xFF / 255.f, 0x63 / 255.f, 0x47 / 255.f}; }
+    constexpr Color Color::Turquoise() { return Color{0x40 / 255.f, 0xE0 / 255.f, 0xD0 / 255.f}; }
+    constexpr Color Color::Violet() { return Color{0xEE / 255.f, 0x82 / 255.f, 0xEE / 255.f}; }
+    constexpr Color Color::Wheat() { return Color{0xF5 / 255.f, 0xDE / 255.f, 0xB3 / 255.f}; }
+    constexpr Color Color::White() { return Color{1.f, 1.f, 1.f}; }
+    constexpr Color Color::WhiteSmoke() { return Color{0xF5 / 255.f, 0xF5 / 255.f, 0xF5 / 255.f}; }
+    constexpr Color Color::Yellow() { return Color{0xFF / 255.f, 0xFF / 255.f, 0x00 / 255.f}; }
+    constexpr Color Color::YellowGreen() { return Color{0x9A / 255.f, 0xCD / 255.f, 0x32 / 255.f}; }
 #pragma endregion
 
     constexpr Color::Color(const float_t rgb, const float_t a): r(rgb), g(rgb), b(rgb), a(a) {}

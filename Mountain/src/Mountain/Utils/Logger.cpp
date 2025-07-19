@@ -219,6 +219,8 @@ void Logger::Run()
 
 void Logger::PushLog(const std::shared_ptr<LogEntry>& log)
 {
+    log->message = Utils::Trim(log->message);
+
     m_NewLogs.Push(log);
     if (m_LastLog)
         log->previousLog = m_LastLog;
@@ -262,7 +264,16 @@ void Logger::PrintLog(const std::shared_ptr<LogEntry>& log)
     }
     else
     {
-        const std::string message = baseMessage + log->message + '\n';
+        std::string message = log->message;
+        for (auto it = message.begin(); it != message.end(); it++)
+        {
+            if (*it != '\n')
+                continue;
+
+            it++;
+            it = message.insert_range(it, baseMessage) + static_cast<ptrdiff_t>(baseMessage.length());
+        }
+        message = baseMessage + message + '\n';
 
         if (log->printToConsole)
         {

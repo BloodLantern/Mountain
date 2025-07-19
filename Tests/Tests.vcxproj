@@ -103,6 +103,7 @@
     <ClCompile Include="src\Scenes\AudioScene.cpp" />
     <ClCompile Include="src\Scenes\ParticleSystemScene.cpp" />
     <ClCompile Include="src\Scenes\PostProcessingEffectsScene.cpp" />
+    <ClCompile Include="src\Scenes\ShapesScene.cpp" />
     <ClCompile Include="src\Scenes\SpriteAnimationsScene.cpp" />
     <ClCompile Include="src\Scenes\TestScene.cpp" />
     <ClCompile Include="src\TestGame.cpp" />
@@ -120,6 +121,7 @@
     <ClInclude Include="src\Scenes\AudioScene.hpp" />
     <ClInclude Include="src\Scenes\ParticleSystemScene.hpp" />
     <ClInclude Include="src\Scenes\PostProcessingEffectsScene.hpp" />
+    <ClInclude Include="src\Scenes\ShapesScene.hpp" />
     <ClInclude Include="src\Scenes\SpriteAnimationsScene.hpp" />
     <ClInclude Include="src\Scenes\TestScene.hpp" />
     <ClInclude Include="src\TestGame.hpp" />

@@ -83,21 +83,29 @@ namespace Mountain
         /// @brief Draw a hollow rectangle
         /// @param position The top-left position of the rectangle
         /// @param size The size of the rectangle
+        /// @param rotation The rotation in radians to apply to the rectangle
+        /// @param origin The rotation origin. Value in the range @code [{ 0, 0 }, { 1, 1 }] @endcode
         /// @param color The color of the rectangle
-        MOUNTAIN_API static void Rectangle(Vector2 position, Vector2 size, const Color& color = Color::White());
+        MOUNTAIN_API static void Rectangle(Vector2 position, Vector2 size, float_t rotation = 0.f, Vector2 origin = Vector2::Zero(), const Color& color = Color::White());
         /// @brief Draw a hollow rectangle
         /// @param rectangle The rectangle position and size
+        /// @param rotation The rotation in radians to apply to the rectangle
+        /// @param origin The rotation origin. Value in the range @code [{ 0, 0 }, { 1, 1 }] @endcode
         /// @param color The color of the rectangle
-        MOUNTAIN_API static void Rectangle(const Mountain::Rectangle& rectangle, const Color& color = Color::White());
+        MOUNTAIN_API static void Rectangle(const Mountain::Rectangle& rectangle, float_t rotation = 0.f, Vector2 origin = Vector2::Zero(), const Color& color = Color::White());
         /// @brief Draw a filled rectangle
         /// @param position The top-left position of the rectangle
         /// @param size The size of the rectangle
+        /// @param rotation The rotation in radians to apply to the rectangle
+        /// @param origin The rotation origin. Value in the range @code [{ 0, 0 }, { 1, 1 }] @endcode
         /// @param color The color of the rectangle
-        MOUNTAIN_API static void RectangleFilled(Vector2 position, Vector2 size, const Color& color = Color::White());
+        MOUNTAIN_API static void RectangleFilled(Vector2 position, Vector2 size, float_t rotation = 0.f, Vector2 origin = Vector2::Zero(), const Color& color = Color::White());
         /// @brief Draw a filled rectangle
         /// @param rectangle The rectangle position and size
+        /// @param rotation The rotation in radians to apply to the rectangle
+        /// @param origin The rotation origin. Value in the range @code [{ 0, 0 }, { 1, 1 }] @endcode
         /// @param color The color of the rectangle
-        MOUNTAIN_API static void RectangleFilled(const Mountain::Rectangle& rectangle, const Color& color = Color::White());
+        MOUNTAIN_API static void RectangleFilled(const Mountain::Rectangle& rectangle, float_t rotation = 0.f, Vector2 origin = Vector2::Zero(), const Color& color = Color::White());
 
         /// @brief Draw a hollow circle
         /// @param center The center position of the circle

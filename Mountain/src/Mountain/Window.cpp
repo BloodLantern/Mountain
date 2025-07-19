@@ -59,7 +59,7 @@ void Window::SetIcon(const Pointer<Texture>& newIcon)
         .w = size.x,
         .h = size.y,
         .pixels = Pointer(newIcon)->GetData<uint8_t>()
-    };
+    };  // NOLINT(clang-diagnostic-missing-designated-field-initializers)
 
     SDL_SetWindowIcon(m_Window, &image);
 }
@@ -118,6 +118,12 @@ std::string_view Window::GetTitle() { return SDL_GetWindowTitle(m_Window); }
 
 void Window::SetTitle(const std::string& newTitle) { SDL_SetWindowTitle(m_Window, newTitle.c_str()); }
 
+void Window::SetResizable(const bool_t newResizable)
+{
+    SDL_SetWindowResizable(m_Window, newResizable);
+    m_Resizable = newResizable;
+}
+
 void Window::Initialize(const std::string& windowTitle, const Vector2i windowSize, const OpenGlVersion& glVersion)
 {
     SDL_SetLogOutputFunction([](void* const, int32_t, const SDL_LogPriority priority, const char_t* const message)
@@ -135,7 +141,7 @@ void Window::Initialize(const std::string& windowTitle, const Vector2i windowSiz
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
 #ifdef _DEBUG
-    // glfwWindowHint(GLFW_CONTEXT_DEBUG, GLFW_TRUE);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_DEBUG_FLAG);
 #endif
 
     m_Window = SDL_CreateWindow(windowTitle.c_str(), windowSize.x, windowSize.y, SDL_WINDOW_OPENGL | SDL_WINDOW_HIDDEN);

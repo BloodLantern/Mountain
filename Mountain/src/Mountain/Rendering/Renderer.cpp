@@ -263,7 +263,7 @@ void Mountain::Renderer::PostFrame()
     if (!m_RenderTargets.empty())
         THROW(InvalidOperationException{"RenderTarget push/pop mismatch, e.g. a RenderTarget that was pushed hasn't been popped"});
 
-    Draw::RenderTarget(*m_RenderTarget);
+    // TODO - Fix debug strings
 
     // Draw debug strings
     const DateTime now = DateTime::Now();
@@ -272,12 +272,14 @@ void Mountain::Renderer::PostFrame()
         const DebugStringData& data = m_DebugStrings[i];
         if ((now - data.time).GetTotalSeconds() > data.duration)
         {
-            m_DebugStrings.RemoveAt(i);
+            m_DebugStrings.RemoveAt(i--);
             continue;
         }
 
         Draw::Text(*m_DefaultFont, data.str, Vector2{20.f, 20.f + static_cast<float_t>(i) * 20.f}, 1.f, data.color);
     }
+
+    Draw::RenderTarget(*m_RenderTarget);
 
     Draw::Flush();
 

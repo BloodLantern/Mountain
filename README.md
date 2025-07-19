@@ -1,7 +1,7 @@
 # Mountain
 
-A (currently) Windows-only C++ Framework for making 2D games.
-It will certainly become available for Linux as well at some point.
+A (currently) Windows-only **C++ Framework for making 2D games**.
+It will become available for Linux as well at some point.
 
 ## Language version and architecture
 

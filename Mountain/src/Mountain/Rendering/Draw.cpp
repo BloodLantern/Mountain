@@ -71,25 +71,45 @@ void Draw::TriangleFilled(
     m_DrawList.AddCommand(DrawDataType::TriangleColoredFilled);
 }
 
-void Draw::Rectangle(const Vector2 position, const Vector2 size, const Color& color) { Rectangle({ position, size }, color); }
-
-void Draw::Rectangle(const Mountain::Rectangle& rectangle, const Color& color)
+void Draw::Rectangle(const Vector2 position, const Vector2 size, const float_t rotation, const Vector2 origin, const Color& color)
 {
+    Rectangle({ position, size }, rotation, origin, color);
+}
+
+void Draw::Rectangle(const Mountain::Rectangle& rectangle, const float_t rotation, const Vector2 origin, const Color& color)
+{
+
+    if (origin.x < 0.f || origin.x > 1.f || origin.y < 0.f || origin.y > 1.f)
+        THROW(ArgumentOutOfRangeException{"Origin must be in the range [{ 0, 0 }, { 1, 1 }]", TO_STRING(origin)});
+
     m_DrawList.rectangle.Emplace(
-        Matrix::Translation(static_cast<Vector3>(rectangle.position)) * Matrix::Scaling({ rectangle.size.x, rectangle.size.y, 1.f }),
+        Matrix::Translation(static_cast<Vector3>(rectangle.position))
+        * Matrix::Translation(static_cast<Vector3>(rectangle.size * origin))
+        * Matrix::RotationZ(rotation)
+        * Matrix::Translation(static_cast<Vector3>(-rectangle.size * origin))
+        * Matrix::Scaling({ rectangle.size.x, rectangle.size.y, 1.f }),
         color
     );
     m_DrawList.AddCommand(DrawDataType::Rectangle);
 }
 
-void Draw::RectangleFilled(const Vector2 position, const Vector2 size, const Color& color) { RectangleFilled({ position, size }, color); }
-
-void Draw::RectangleFilled(const Mountain::Rectangle& rectangle, const Color& color)
+void Draw::RectangleFilled(const Vector2 position, const Vector2 size, const float_t rotation, const Vector2 origin, const Color& color)
 {
+    RectangleFilled({ position, size }, rotation, origin, color);
+}
+
+void Draw::RectangleFilled(const Mountain::Rectangle& rectangle, const float_t rotation, const Vector2 origin, const Color& color)
+{
+
+    if (origin.x < 0.f || origin.x > 1.f || origin.y < 0.f || origin.y > 1.f)
+        THROW(ArgumentOutOfRangeException{"Origin must be in the range [{ 0, 0 }, { 1, 1 }]", TO_STRING(origin)});
+
     m_DrawList.rectangleFilled.Emplace(
-        Matrix::Translation(static_cast<Vector3>(rectangle.position)) * Matrix::Scaling(
-            { rectangle.size.x, rectangle.size.y, 1.f }
-        ),
+        Matrix::Translation(static_cast<Vector3>(rectangle.position))
+        * Matrix::Translation(static_cast<Vector3>(rectangle.size * origin))
+        * Matrix::RotationZ(rotation)
+        * Matrix::Translation(static_cast<Vector3>(-rectangle.size * origin))
+        * Matrix::Scaling({ rectangle.size.x, rectangle.size.y, 1.f }),
         color
     );
     m_DrawList.AddCommand(DrawDataType::RectangleFilled);
@@ -184,6 +204,7 @@ void Draw::Texture(
 
     const Vector2i textureSize = texture.GetSize();
     Matrix transformation = Matrix::Translation(static_cast<Vector3>(position))
+        // TODO - Maybe * Matrix::Translation(static_cast<Vector3>(textureSize * origin * scale)) ?
         * Matrix::RotationZ(rotation)
         * Matrix::Translation(static_cast<Vector3>(-textureSize * origin * scale))
         * static_cast<Matrix>(antiDiagonalFlip)
@@ -226,9 +247,7 @@ void Draw::RenderTarget(
 )
 {
     if (uv0.x > uv1.x || uv0.y > uv1.y)
-    {
         THROW(ArgumentException{"UV0 cannot be greater than UV1", TO_STRING(uv0)});
-    }
 
     Vector2 uvDiff = uv1 - uv0;
     Vector2 lowerUv = uv0;
@@ -804,24 +823,28 @@ void Draw::UpdateShaderMatrices()
 
 void Draw::CircleInternal(const Vector2 center, const float_t radius, const float_t thickness, const bool_t filled, const Vector2 scale, const Color& color)
 {
-    const float_t actualThickness = thickness - 1.f; // When thickness == 0, the circle line is 1 pixel wide
+    if (thickness < 0.f)
+        THROW(ArgumentOutOfRangeException{"Thickness must be positive", TO_STRING(thickness)});
+
+    if (thickness == 0.f)
+        return;
 
     m_DrawList.circle.Emplace(
         Matrix::Translation(
             static_cast<Vector3>(
-                center - scale * radius * m_CameraScale - Vector2::One() * actualThickness
+                center - scale * radius * m_CameraScale - Vector2::One() * thickness
             )
         )
         * Matrix::Scaling(
             {
-                radius * 2.f * scale.x * m_CameraScale.x + actualThickness * 2.f,
-                radius * 2.f * scale.y * m_CameraScale.y + actualThickness * 2.f,
+                radius * 2.f * scale.x * m_CameraScale.x + thickness * 2.f,
+                radius * 2.f * scale.y * m_CameraScale.y + thickness * 2.f,
                 1.f
             }
         ),
         center,
         radius,
-        actualThickness,
+        thickness,
         scale / m_CameraScale,
         color,
         filled
@@ -840,18 +863,32 @@ void Draw::ArcInternal(
     const Color& color
 )
 {
-    const float_t actualThickness = thickness - 1.f; // When thickness == 1, the circle line is 1 pixel wide
+    if (thickness < 0.f)
+        THROW(ArgumentOutOfRangeException{"Thickness must be positive", TO_STRING(thickness)});
+
+    if (thickness == 0.f)
+        return;
+
+    if (deltaAngle <= 0.f)
+        return;
+
+    if (deltaAngle >= Calc::TwoPi)
+        return CircleInternal(center, radius, thickness, filled, scale, color);
+
+    startingAngle = std::fmodf(startingAngle, Calc::TwoPi);
+    if (startingAngle < 0.f)
+        startingAngle += Calc::TwoPi;
 
     m_DrawList.arc.Emplace(
         Matrix::Translation(
             static_cast<Vector3>(
-                center - scale * radius * m_CameraScale - Vector2::One() * actualThickness
+                center - scale * radius * m_CameraScale - Vector2::One() * thickness
             )
         )
         * Matrix::Scaling(
             {
-                radius * 2.f * scale.x * m_CameraScale.x + actualThickness * 2.f,
-                radius * 2.f * scale.y * m_CameraScale.y + actualThickness * 2.f,
+                radius * 2.f * scale.x * m_CameraScale.x + thickness * 2.f,
+                radius * 2.f * scale.y * m_CameraScale.y + thickness * 2.f,
                 1.f
             }
         ),
@@ -859,7 +896,7 @@ void Draw::ArcInternal(
         radius,
         startingAngle,
         deltaAngle,
-        actualThickness,
+        thickness,
         scale / m_CameraScale,
         color,
         filled

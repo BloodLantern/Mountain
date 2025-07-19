@@ -115,7 +115,7 @@ namespace Mountain
     template <Concepts::Component T>
     void Entity::RemoveComponent()
     {
-        for (decltype(m_Components)::Iterator it = m_Components.begin(); it != m_Components.end(); it++)
+        for (auto it = m_Components.begin(); it != m_Components.end(); it++)
         {
             const T* const t = dynamic_cast<T*>(*it);
 

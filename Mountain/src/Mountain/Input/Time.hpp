@@ -27,6 +27,8 @@ namespace Mountain
 
         MOUNTAIN_API static inline std::optional<double_t> targetFps;
 
+        // TODO - Add backgroundTargetFps for when the window is unfocused
+
         /// @brief Get the total elapsed time
         STATIC_GETTER(float_t, TotalTime, m_TotalTime)
 

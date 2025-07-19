@@ -41,7 +41,7 @@ void ColliderList::RenderDebug(const Color& color) const
         c->RenderDebug(color);
     }
 
-    Draw::Rectangle(topLeft, bottomRight - topLeft, color);
+    Draw::Rectangle(topLeft, bottomRight - topLeft, 0.f, Vector2::Zero(), color);
 }
 
 bool_t ColliderList::CheckCollision(const Vector2 point) const

@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+#include <Mountain/Rendering/Renderer.hpp>
+
 #include "TestGame.hpp"
 #include "Mountain/globals.hpp"
 
@@ -80,6 +82,7 @@ int main(int, char**)
 			Logger::LogInfo("Loading hot reload changes");
 			// Not necessary, but we might as well synchronize the console logs
 			Logger::Synchronize();
+			Renderer::DebugString("Loading hot reload changes", 5.f);
 
 			lppAgent.Reload(lpp::LPP_RELOAD_BEHAVIOUR_WAIT_UNTIL_CHANGES_ARE_APPLIED);
 		}

@@ -94,6 +94,10 @@ namespace Mountain
 
         STATIC_GETTER(bool_t, Minimized, m_Minimized)
 
+        STATIC_GETTER(bool_t, Resizable, m_Resizable)
+
+        MOUNTAIN_API static void SetResizable(bool_t newResizable);
+
     private:
         /// @brief Native window handle
         MOUNTAIN_API static inline SDL_Window* m_Window = nullptr;
@@ -110,6 +114,8 @@ namespace Mountain
         MOUNTAIN_API static inline bool_t m_Minimized = false;
 
         MOUNTAIN_API static inline bool_t m_VSync = false;
+
+        MOUNTAIN_API static inline bool_t m_Resizable = false;
 
         /// @brief Initializes the window
         static void Initialize(const std::string& windowTitle, Vector2i windowSize, const OpenGlVersion &glVersion);

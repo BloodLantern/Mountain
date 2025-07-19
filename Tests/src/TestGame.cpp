@@ -18,6 +18,7 @@
 #include "Scenes/AudioScene.hpp"
 #include "Scenes/ParticleSystemScene.hpp"
 #include "Scenes/PostProcessingEffectsScene.hpp"
+#include "Scenes/ShapesScene.hpp"
 #include "Scenes/SpriteAnimationsScene.hpp"
 
 using namespace Mountain;
@@ -25,11 +26,18 @@ using namespace Mountain;
 TestGame::TestGame(const char_t* const windowTitle)
     : Game(windowTitle, {1600, 900})
 {
+    Window::SetResizable(true);
+
+    // Use VSync for the tests as it should give a more stable framerate and we don't care about the input lag
+    Window::SetVSync(true);
+    Time::targetFps.reset();
+
     m_Scenes.AddRange(
         new ParticleSystemScene,
         new PostProcessingEffectsScene,
         new SpriteAnimationsScene,
-        new AudioScene
+        new AudioScene,
+        new ShapesScene
     );
 
     // Sort the scenes alphabetically
@@ -74,6 +82,8 @@ void TestGame::Update()
         shader->Reload();
         reloadedShaders.Add(shader);
     }
+    if (!reloadedShaders.IsEmpty())
+        Renderer::DebugString(std::format("Reloaded {} shaders", reloadedShaders.GetSize()), 5.f);
     m_ShadersToReload.Clear();
     m_ShadersToReloadMutex.unlock();
 
