@@ -101,6 +101,7 @@ void TestGame::Render()
 {
     Draw::Clear(m_ClearColor);
 
+
     if (m_ActiveScene)
     {
         m_ActiveScene->BeforeRender();

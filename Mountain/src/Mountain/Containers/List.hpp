@@ -942,6 +942,9 @@ namespace Mountain
     template <Concepts::DynamicContainerType T>
     void List<T>::ShiftElements(const ptrdiff_t amount, const size_t first, const size_t last)
     {
+        if (amount == 0)
+            return;
+
         T* source = m_Data + first;
         T* destination = source + amount;
         const size_t amountToShift = last - first;
@@ -952,8 +955,16 @@ namespace Mountain
         }
         else
         {
-            for (size_t i = 0; i < amountToShift; i++)
-                new (destination + i) T{std::move(source[i])};
+            if (amount > 0)
+            {
+                for (ptrdiff_t i = static_cast<ptrdiff_t>(amountToShift - 1); i >= 0; i--)
+                    new (destination + i) T{std::move(source[i])};
+            }
+            else // if (amount < 0)
+            {
+                for (size_t i = 0; i < amountToShift; i++)
+                    new (destination + i) T{std::move(source[i])};
+            }
         }
     }
 

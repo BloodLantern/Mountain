@@ -180,7 +180,7 @@ bool_t Mountain::Renderer::Initialize(const std::string& windowTitle, const Vect
 
     // Setup GLAD: load all OpenGL function pointers
     if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(SDL_GL_GetProcAddress)))  // NOLINT(clang-diagnostic-cast-function-type-strict)
-        THROW(InvalidOperationException{"Failed to initialize GLAD"});
+        THROW(Exception{"Failed to initialize GLAD"});
 
     glEnable(GL_DEBUG_OUTPUT);
     glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
@@ -263,7 +263,7 @@ void Mountain::Renderer::PostFrame()
     if (!m_RenderTargets.empty())
         THROW(InvalidOperationException{"RenderTarget push/pop mismatch, e.g. a RenderTarget that was pushed hasn't been popped"});
 
-    // TODO - Fix debug strings
+    Draw::RenderTarget(*m_RenderTarget);
 
     // Draw debug strings
     const DateTime now = DateTime::Now();
@@ -279,7 +279,8 @@ void Mountain::Renderer::PostFrame()
         Draw::Text(*m_DefaultFont, data.str, Vector2{20.f, 20.f + static_cast<float_t>(i) * 20.f}, 1.f, data.color);
     }
 
-    Draw::RenderTarget(*m_RenderTarget);
+    if (m_DebugStrings.GetSize() > 2 && m_DebugStrings.GetSize() * 2 < m_DebugStrings.GetCapacity())
+        m_DebugStrings.Shrink();
 
     Draw::Flush();
 
