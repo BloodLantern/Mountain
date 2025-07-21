@@ -76,8 +76,7 @@ void ImGuiUtils::GridPlotting(const std::string_view label, Vector2* const value
     );
 
     // Compute cursor position
-    Vector2 position = p0 + clamped * size;
-    position.y *= -1; // In 2D, the Y axis goes downwards
+    const Vector2 position = p0 + clamped * size;
 
     drawList->AddCircle(position, 5, Color::Red().GetPackedValue());
     ImGui::PopClipRect();

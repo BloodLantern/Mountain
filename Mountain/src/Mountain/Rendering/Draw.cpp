@@ -204,7 +204,7 @@ void Draw::Texture(
 
     const Vector2i textureSize = texture.GetSize();
     Matrix transformation = Matrix::Translation(static_cast<Vector3>(position))
-        // TODO - Maybe * Matrix::Translation(static_cast<Vector3>(textureSize * origin * scale)) ?
+        * Matrix::Translation(static_cast<Vector3>(textureSize * origin * scale))
         * Matrix::RotationZ(rotation)
         * Matrix::Translation(static_cast<Vector3>(-textureSize * origin * scale))
         * static_cast<Matrix>(antiDiagonalFlip)

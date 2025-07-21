@@ -6,6 +6,7 @@
 #include <Mountain/FileSystem/FileManager.hpp>
 #include <Mountain/Rendering/Draw.hpp>
 #include <Mountain/Resource/ResourceManager.hpp>
+#include <Mountain/Utils/ImGuiUtils.hpp>
 
 SpriteAnimationsScene::SpriteAnimationsScene()
     : Base{"Sprite Animations"}
@@ -38,7 +39,7 @@ void SpriteAnimationsScene::Render()
     const Vector2 drawScale = 0.5f * Vector2::One()
         * (static_cast<float_t>(std::min(windowSize.x, windowSize.y)) / static_cast<float_t>(std::min(currentTextureSize.x, currentTextureSize.y)));
 
-    Draw::Texture(*currentTexture, windowSize * 0.5f - currentTextureSize * 0.5f * drawScale, drawScale);
+    Draw::Texture(*currentTexture, windowSize * 0.5f - currentTextureSize * 0.5f * drawScale, drawScale, m_Rotation, m_Origin);
 }
 
 void SpriteAnimationsScene::RenderImGui()
@@ -48,6 +49,9 @@ void SpriteAnimationsScene::RenderImGui()
     float_t frameDuration = m_Sprite->frameDuration;
     ImGui::InputFloat("Frame duration", &frameDuration, 0.001f, 0.01f);
     m_Sprite->frameDuration = std::max(frameDuration, 0.f);
+
+    ImGui::DragAngle("Rotation", &m_Rotation);
+    ImGuiUtils::GridPlotting("Origin", &m_Origin, 0, 1);
 }
 
 void SpriteAnimationsScene::UnloadResources()
