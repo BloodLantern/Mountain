@@ -176,6 +176,8 @@ namespace Mountain
 
     CHECK_REQUIREMENT(Requirements::StringConvertible, TimeSpan);
     CHECK_REQUIREMENT(Requirements::Hashable, TimeSpan);
+    CHECK_REQUIREMENT(Requirements::Equatable, TimeSpan);
+    CHECK_REQUIREMENT(Requirements::Comparable, TimeSpan);
 }
 
 // Start of TimeSpan.inl

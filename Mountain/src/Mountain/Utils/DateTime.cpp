@@ -8,12 +8,12 @@ using namespace Mountain;
 
 DateTime DateTime::Now()
 {
-    // TODO - Add time difference with UTC time
+    static int64_t utcOffsetTicks = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::current_zone()->get_info(std::chrono::system_clock::now()).offset).count() / 100;
 
-    const int64_t tick = UtcNow().GetTicks();
-    if (static_cast<uint64_t>(tick) <= MaxTicks)
-        return DateTime{static_cast<uint64_t>(tick) | KindLocal};
-    return DateTime{tick < 0 ? KindLocal : MaxTicks | KindLocal};
+    const int64_t ticks = UtcNow().GetTicks() + utcOffsetTicks;
+    if (static_cast<uint64_t>(ticks) <= MaxTicks)
+        return DateTime{static_cast<uint64_t>(ticks) | KindLocal};
+    return DateTime{ticks < 0 ? KindLocal : MaxTicks | KindLocal};
 }
 
 DateTime DateTime::UtcNow()

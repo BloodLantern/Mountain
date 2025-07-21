@@ -7,7 +7,7 @@
 // ReSharper disable CppClangTidyBugproneMacroParentheses
 
 #define CHECK_REQUIREMENT(requirement, ...) \
-    static_assert(requirement<__VA_ARGS__>, "Type " #__VA_ARGS__ " doesn't match the requirements of " #requirement)
+    static_assert(requirement<__VA_ARGS__>, "Type <" #__VA_ARGS__ "> doesn't match the requirements of " #requirement)
 
 #define REQUIRES_FUNCTION(value, function, expectedReturnType, ...) \
     { value.function(__VA_ARGS__) } -> ::Mountain::Concepts::ConvertibleTo<expectedReturnType>
@@ -156,10 +156,16 @@ namespace Mountain::Requirements
     concept MountainEnumerableContainer = MountainContainer<T> && MountainEnumerable<T>;
 
     template <typename T, typename U = T>
-    concept Swappable = requires (T&& t, U&& u)
+    concept Equatable = requires (const T& t, const U& u)
     {
-        swap(std::forward<T>(t), std::forward<U>(u));
-        swap(std::forward<U>(u), std::forward<T>(t));
+        REQUIRES_OPERATOR(t, ==, bool_t, u);
+    };
+
+    template <typename T, typename U = T>
+    concept Comparable = requires (const T& t, const U& u)
+    {
+        // std::partial_ordering is implicitly convertible to both std::weak_ordering and std::strong_ordering
+        REQUIRES_OPERATOR(t, <=>, std::partial_ordering, u);
     };
 }
 

@@ -83,7 +83,7 @@ void TestGame::Update()
         reloadedShaders.Add(shader);
     }
     if (!reloadedShaders.IsEmpty())
-        Renderer::DebugString(std::format("Reloaded {} shaders", reloadedShaders.GetSize()), 5.f);
+        Renderer::DebugString(std::format("Hot reloaded {} shaders", reloadedShaders.GetSize()), 5.f);
     m_ShadersToReload.Clear();
     m_ShadersToReloadMutex.unlock();
 

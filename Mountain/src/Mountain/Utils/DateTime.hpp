@@ -6,6 +6,13 @@
 
 namespace Mountain
 {
+    enum DateTimeKind
+    {
+        Unspecified,
+        Utc,
+        Local
+    };
+
     enum class DayOfWeek : uint8_t
     {
         Monday,
@@ -116,6 +123,9 @@ namespace Mountain
         ATTRIBUTE_NODISCARD
         constexpr int64_t GetTicks() const;
 
+        ATTRIBUTE_NODISCARD
+        constexpr DateTimeKind GetKind() const;
+
         constexpr GETTER(uint64_t, DateData, m_DateData)
 
     private:
@@ -182,11 +192,22 @@ namespace Mountain
         static constexpr bool_t IsLeapYear(int32_t year);
         static constexpr uint64_t TimeToTicks(int32_t hour, int32_t minute, int32_t second);
 
+        /// @brief The data is stored as an unsigned 64-bit integer
+        ///
+        /// - Bits 01-62: The value of 100-nanosecond ticks where 0 represents 1/1/0001 12:00am, up until the value
+        ///               12/31/9999 23:59:59.9999999
+        /// - Bits 63-64: A four-state value that describes the DateTimeKind value of the date time, with a second
+        ///               value for the rare case where the date time is local, but is in an overlapped daylight
+        ///               savings time hour, and it is in daylight savings time. This allows distinction of these
+        ///               otherwise ambiguous local times and prevents data loss when round tripping from Local to
+        ///               UTC time.
         uint64_t m_DateData = 0;
     };
 
     CHECK_REQUIREMENT(Requirements::StringConvertible, DateTime);
     CHECK_REQUIREMENT(Requirements::Hashable, DateTime);
+    CHECK_REQUIREMENT(Requirements::Equatable, DateTime);
+    CHECK_REQUIREMENT(Requirements::Comparable, DateTime);
 
     ATTRIBUTE_NODISCARD
     constexpr DateTime operator+(DateTime dateTime, TimeSpan timeSpan);
@@ -372,6 +393,13 @@ namespace Mountain
     constexpr int64_t DateTime::GetTicks() const
     {
         return static_cast<int64_t>(m_DateData & TicksMask);
+    }
+
+    constexpr DateTimeKind DateTime::GetKind() const
+    {
+        const uint32_t kind = static_cast<uint32_t>(m_DateData >> KindShift);
+        // values 0-2 map directly to DateTimeKind, 3 (LocalAmbiguousDst) needs to be mapped to 2 (Local) using bit0 NAND bit1
+        return static_cast<DateTimeKind>(kind & ~(kind >> 1));
     }
 
     constexpr uint64_t DateTime::GetUTicks() const { return m_DateData & TicksMask; }

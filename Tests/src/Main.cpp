@@ -79,10 +79,10 @@ int main(int, char**)
 			// client code can do whatever it wants here, e.g., synchronize across several threads, the network, etc.
 			// ...
 
-			Logger::LogInfo("Loading hot reload changes");
+			Logger::LogInfo("Loading C++ hot reload changes...");
 			// Not necessary, but we might as well synchronize the console logs
 			Logger::Synchronize();
-			Renderer::DebugString("Loading hot reload changes", 5.f);
+			Renderer::DebugString("Loading C++ hot reload changes...", 5.f);
 
 			lppAgent.Reload(lpp::LPP_RELOAD_BEHAVIOUR_WAIT_UNTIL_CHANGES_ARE_APPLIED);
 		}
