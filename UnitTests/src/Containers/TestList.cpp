@@ -69,3 +69,32 @@ TEST(Containers_List, Enumerable_Select)
     EXPECT_EQ(strList[2], cStrList[2]);
     EXPECT_EQ(strList[3], cStrList[3]);
 }
+
+TEST(Containers_List, Enumerable_Average)
+{
+    const List intList{1, 2, 3, 4, 5};
+
+    const List floatList = intList.Cast<float_t>();
+
+    float_t result1 = intList.Average<>();
+    float_t result2 = floatList.Average<>();
+
+    EXPECT_EQ(result1, 3.f);
+    EXPECT_EQ(result2, 3.f);
+}
+
+TEST(Containers_List, Enumerable_Concat)
+{
+    const List firstList{1, 2};
+    const List secondList{3, 4, 5};
+
+    const List concatList = Concat(firstList, secondList);
+
+    const List resultList{1, 2, 3, 4, 5};
+
+    EXPECT_EQ(concatList[0], resultList[0]);
+    EXPECT_EQ(concatList[1], resultList[1]);
+    EXPECT_EQ(concatList[2], resultList[2]);
+    EXPECT_EQ(concatList[3], resultList[3]);
+    EXPECT_EQ(concatList[4], resultList[4]);
+}

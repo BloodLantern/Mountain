@@ -12,6 +12,14 @@
     ATTRIBUTE_NODISCARD \
     bool_t Any(const ::Mountain::Predicate<EnumeratedType>& predicate) const { return ::Mountain::Any(*this, predicate); } \
     \
+    template <typename T = EnumeratedType, typename = ::Mountain::Meta::EnableIf<::Mountain::Meta::IsIntegralOrFloating<EnumeratedType>>> \
+    ATTRIBUTE_NODISCARD \
+    float_t Average() const { return ::Mountain::Average<::Mountain::Meta::RemoveCvRefSpecifier<decltype(*this)>, T>(*this); } \
+    \
+    template <typename EnumerableT, typename = ::Mountain::Meta::EnableIf<Meta::IsSame<EnumeratedType, Meta::EnumerableType<EnumerableT>>>> \
+    ATTRIBUTE_NODISCARD \
+    List<EnumeratedType> Concat(const EnumerableT& enumerable) const { return ::Mountain::Concat(*this, enumerable); } \
+    \
     template <typename U, typename = ::Mountain::Meta::EnableIf<::Mountain::Meta::IsEqualityComparableWith<U, EnumeratedType>>> \
     ATTRIBUTE_NODISCARD \
     bool_t Contains(const U& element) const { return ::Mountain::Contains(*this, element); } \
@@ -58,6 +66,9 @@ namespace Mountain
     template <Concepts::DynamicContainerType T>
     class List;
 
+    template <Concepts::ContainerType T, size_t Size>
+    struct Array;
+
     /// @brief Determines whether all elements of a sequence satisfy a condition.
     template <Requirements::MountainEnumerable EnumerableT, typename T = Meta::MountainEnumerableType<EnumerableT>>
     ATTRIBUTE_NODISCARD
@@ -67,6 +78,24 @@ namespace Mountain
     template <Requirements::MountainEnumerable EnumerableT, typename T = Meta::MountainEnumerableType<EnumerableT>>
     ATTRIBUTE_NODISCARD
     bool_t Any(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate);
+
+    /// @brief Computes the average of a sequence of integral or floating values.
+    template <Requirements::MountainEnumerable EnumerableT,
+        typename T = Meta::MountainEnumerableType<EnumerableT>,
+        typename = Meta::EnableIf<Meta::IsIntegralOrFloating<T>>>
+    ATTRIBUTE_NODISCARD
+    float_t Average(const EnumerableT& enumerable);
+
+    template <Requirements::MountainEnumerable EnumerableT,
+        Requirements::MountainEnumerable EnumerableU,
+        typename T = Meta::EnumerableType<EnumerableT>,
+        typename = Meta::EnableIf<Meta::IsSame<T, Meta::EnumerableType<EnumerableU>>>>
+    ATTRIBUTE_NODISCARD
+    List<T> Concat(const EnumerableT& firstEnumerable, const EnumerableU& secondEnumerable);
+
+    template <typename T, size_t Size>
+    ATTRIBUTE_NODISCARD
+    Array<T, Size * 2> Concat(const Array<T, Size>& firstEnumerable, const Array<T, Size>& secondEnumerable);
 
     template <Requirements::MountainEnumerable EnumerableT,
         typename T,
@@ -148,6 +177,7 @@ namespace Mountain
 // Start of EnumerableExt.inl
 
 #include "Mountain/Containers/List.hpp"
+#include "Mountain/Containers/Array.hpp"
 
 namespace Mountain
 {
@@ -173,6 +203,52 @@ namespace Mountain
         }
 
         return false;
+    }
+
+    template <Requirements::MountainEnumerable EnumerableT, typename T, typename>
+    float_t Average(const EnumerableT& enumerable)
+    {
+        float_t result = 0.f;
+
+        for (const T& e : enumerable)
+        {
+            result += e;
+        }
+
+        return result / GetSize(enumerable);
+    }
+
+    template <Requirements::MountainEnumerable EnumerableT, Requirements::MountainEnumerable EnumerableU, typename T,
+        typename>
+    List<T> Concat(const EnumerableT& firstEnumerable, const EnumerableU& secondEnumerable)
+    {
+        List<T>result;
+        result.Reserve(GetSize(firstEnumerable) + GetSize(secondEnumerable));
+
+        result.AddRange(firstEnumerable);
+        result.AddRange(secondEnumerable);
+
+        return result;
+    }
+
+    template <typename T, size_t Size>
+    Array<T, Size * 2> Concat(const Array<T, Size>& firstEnumerable, const Array<T, Size>& secondEnumerable)
+    {
+        Array<T, Size *2> result;
+        size_t i = 0;
+
+        for (const T& e : firstEnumerable)
+        {
+            result[i] = e;
+            i++;
+        }
+        for (const T& e : secondEnumerable)
+        {
+            result[i] = e;
+            i++;
+        }
+
+        return result;
     }
 
     template <Requirements::MountainEnumerable EnumerableT, typename T, typename>
