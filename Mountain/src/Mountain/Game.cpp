@@ -14,10 +14,15 @@
 #include "Mountain/Utils/Logger.hpp"
 #include "Mountain/Utils/MessageBox.hpp"
 
+#include "ProfilerHeader.hpp"
+
 using namespace Mountain;
 
 Game::Game(const std::string& windowTitle, const Vector2i windowSize)
 {
+    TracyNoop;
+    ZoneScoped;
+
     Logger::Start();
     Logger::OpenDefaultFile();
 
@@ -74,6 +79,8 @@ Game::Game(const std::string& windowTitle, const Vector2i windowSize)
 
 Game::~Game()
 {
+    ZoneScoped;
+
     Logger::LogInfo("Shutting down Mountain Framework...");
 
 	Coroutine::StopAll();
@@ -89,6 +96,8 @@ Game::~Game()
 
 void Game::Play()
 {
+    ZoneScoped;
+
     LoadResources();
     Initialize();
     MainLoop();
@@ -99,12 +108,14 @@ void Game::MainLoop()
 {
     Start();
 
-    while (NextFrame()) {}
+    while (NextFrame()) { FrameMark; }
 }
 
 // ReSharper disable once CppMemberFunctionMayBeStatic
 void Game::Start()
 {
+    ZoneScoped;
+
     // Start the time now
     Time::Initialize();
 
