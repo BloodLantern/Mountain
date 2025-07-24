@@ -282,6 +282,7 @@
     <ClInclude Include="src\Mountain\Input\MouseInput.hpp" />
     <ClInclude Include="src\Mountain\Input\Time.hpp" />
     <ClInclude Include="src\Mountain\PrecompiledHeader.hpp" />
+    <ClInclude Include="src\Mountain\ProfilerHeader.hpp" />
     <ClInclude Include="src\Mountain\Rendering\Draw.hpp" />
     <ClInclude Include="src\Mountain\Rendering\Effect.hpp" />
     <ClInclude Include="src\Mountain\Rendering\GpuBuffer.hpp" />
@@ -476,6 +477,11 @@
   <ItemGroup>
     <Natvis Include="Mountain.natvis" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Profiler\Profiler.vcxproj">
+      <Project>{098884b7-2324-4d54-8b14-007fc02fe751}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -517,7 +523,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>.;src;externals\src;..\MathToolbox\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;src;externals\src;..\MathToolbox\src;..\Profiler</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <AdditionalOptions>/Gw %(AdditionalOptions)</AdditionalOptions>
@@ -550,7 +556,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>src;externals\src;..\MathToolbox\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;externals\src;..\MathToolbox\src;..\Profiler</AdditionalIncludeDirectories>
       <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>Mountain/PrecompiledHeader.hpp</PrecompiledHeaderFile>
