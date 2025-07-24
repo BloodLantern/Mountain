@@ -98,3 +98,14 @@ TEST(Containers_List, Enumerable_Concat)
     EXPECT_EQ(concatList[3], resultList[3]);
     EXPECT_EQ(concatList[4], resultList[4]);
 }
+
+TEST(Containers_List, Enumerable_Count)
+{
+    size_t result = 0;
+    const List list{1, 2, 1, 2, 2, 4, 5};
+
+    result = Count(list, [](auto x) {return x == 1; } );
+
+    EXPECT_EQ(result, 2);
+
+}

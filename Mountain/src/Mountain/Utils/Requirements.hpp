@@ -175,7 +175,7 @@ namespace Mountain::Concepts
     concept StandardIterator = std::forward_iterator<T> && !Pointer<T> && !Requirements::MountainIterator<T>;
 
     template <typename T>
-    concept StandardContainer = std::ranges::input_range<T> && !Requirements::MountainContainer<T>;
+    concept StandardContainer = std::ranges::input_range<T> && !Requirements::MountainContainer<T> && !Requirements::MountainEnumerable<T>;
 }
 
 namespace Mountain::Meta

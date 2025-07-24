@@ -28,6 +28,9 @@
     bool_t Contains(const ::Mountain::Predicate<EnumeratedType>& predicate) const { return ::Mountain::Contains(*this, predicate); } \
     \
     ATTRIBUTE_NODISCARD \
+    size_t Count(const ::Mountain::Predicate<EnumeratedType>& predicate) const { return ::Mountain::Count(*this, predicate); } \
+    \
+    ATTRIBUTE_NODISCARD \
     ::Mountain::List<EnumeratedType> FindAll(const ::Mountain::Predicate<EnumeratedType>& predicate) const \
     { return ::Mountain::FindAll(*this, predicate); } \
     \
@@ -105,7 +108,11 @@ namespace Mountain
 
     template <Requirements::MountainEnumerable EnumerableT, typename T = Meta::EnumerableType<EnumerableT>>
     ATTRIBUTE_NODISCARD
-    bool_t Contains(const EnumerableT& enumerable, const Predicate<T>& predicate);
+    bool_t Contains(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate); // TODO : Maybe add MetaIdentity
+
+    template <Requirements::MountainEnumerable EnumerableT, typename T = Meta::EnumerableType<EnumerableT>>
+    ATTRIBUTE_NODISCARD
+    size_t Count(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate);
 
     template <Requirements::MountainEnumerable EnumerableT, typename T = Meta::MountainEnumerableType<EnumerableT>>
     ATTRIBUTE_NODISCARD
@@ -258,9 +265,23 @@ namespace Mountain
     }
 
     template <Requirements::MountainEnumerable EnumerableT, typename T>
-    bool_t Contains(const EnumerableT& enumerable, const Predicate<T>& predicate)
+    bool_t Contains(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate)
     {
         return FindFirst(enumerable, predicate) != nullptr;
+    }
+
+    template <Requirements::MountainEnumerable EnumerableT, typename T>
+    size_t Count(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate)
+    {
+        size_t result = 0;
+
+        for (const T& e : enumerable)
+        {
+            if (predicate(e))
+                result++;
+        }
+
+        return result;
     }
 
     template <Requirements::MountainEnumerable EnumerableT>

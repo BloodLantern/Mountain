@@ -539,7 +539,7 @@ namespace Mountain
     template <Requirements::MountainEnumerable EnumerableT>
     void List<T>::AddRange(const EnumerableT& enumerable)
     {
-        AddRange(enumerable.GetBeginIterator(), enumerable.GetEndIterator());
+        AddRange(enumerable.begin(), enumerable.end());
     }
 
     template <Concepts::DynamicContainerType T>
