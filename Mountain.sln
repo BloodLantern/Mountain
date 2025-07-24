@@ -12,6 +12,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tests", "Tests\Tests.vcxpro
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UnitTests", "UnitTests\UnitTests.vcxproj", "{54E0E7A6-F2DF-43E7-B718-114A76103B8D}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Profiler", "Profiler\Profiler.vcxproj", "{098884B7-2324-4D54-8B14-007FC02FE751}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -30,6 +32,10 @@ Global
 		{54E0E7A6-F2DF-43E7-B718-114A76103B8D}.Debug|x64.Build.0 = Debug|x64
 		{54E0E7A6-F2DF-43E7-B718-114A76103B8D}.Release|x64.ActiveCfg = Release|x64
 		{54E0E7A6-F2DF-43E7-B718-114A76103B8D}.Release|x64.Build.0 = Release|x64
+		{098884B7-2324-4D54-8B14-007FC02FE751}.Debug|x64.ActiveCfg = Debug|x64
+		{098884B7-2324-4D54-8B14-007FC02FE751}.Debug|x64.Build.0 = Debug|x64
+		{098884B7-2324-4D54-8B14-007FC02FE751}.Release|x64.ActiveCfg = Release|x64
+		{098884B7-2324-4D54-8B14-007FC02FE751}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
