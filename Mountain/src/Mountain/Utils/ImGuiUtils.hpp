@@ -5,7 +5,9 @@
 #include <Math/vector2.hpp>
 
 #include <ImGui/imgui.h>
+#include <ImGui/imgui_stdlib.h>
 
+#include "Mountain/Resource/ResourceManager.hpp"
 #include "Mountain/Utils/Utils.hpp"
 
 /// @brief Calls the given @p imguiFunction using the get/set accessors to the given @p field of @p variableAccess.
@@ -63,6 +65,14 @@ namespace Mountain::ImGuiUtils
     MOUNTAIN_API void ShowPerformanceMonitoring();
 
     MOUNTAIN_API void DrawEasingFunction(const char_t* label, Easing::Easer function, int32_t pointCount = 30);
+
+    MOUNTAIN_API void OpenResourcePopupModal();
+
+    template <Concepts::Resource T>
+    void FilterResourcePopupModal(Pointer<T>* value);
+
+    template <Concepts::Resource T>
+    void SelectResource(const char_t* label, Pointer<T>* value);
 }
 
 // ReSharper disable CppInconsistentNaming
@@ -130,6 +140,100 @@ namespace Mountain
         }
 
         return displayFunction(value->value()) || result;
+    }
+
+    template <Concepts::Resource T>
+    void ImGuiUtils::FilterResourcePopupModal(Pointer<T>* value)
+    {
+        ENSURE_NOT_NULL(value);
+
+        ImGui::SetNextWindowSizeConstraints({200.f, 200.f}, {-1.f, -1.f});
+
+        if (!ImGui::BeginPopupModal("ResourceFilter"))
+            return;
+
+        static std::string filter;
+
+        if (ImGui::IsWindowAppearing())
+        {
+            filter = "";
+            ImGui::SetKeyboardFocusHere(); // Focus the filter input text
+        }
+
+        ImGui::InputText("Filter", &filter);
+
+        ImGui::Separator();
+
+        List<Pointer<T>> resources = ResourceManager::FindAll<T>(
+            [&](const Pointer<T>& resource)
+            {
+                return Utils::StringContainsIgnoreCase(resource->GetName(), filter);
+            }
+        );
+
+        Pointer<T> selectedResource;
+        for (const Pointer<T>& resource : resources)
+        {
+            if (ImGui::Selectable(resource->GetName().c_str()))
+            {
+                selectedResource = resource;
+                break;
+            }
+        }
+
+        if (selectedResource != nullptr)
+        {
+            *value = selectedResource;
+            ImGui::CloseCurrentPopup();
+        }
+
+        if (ImGui::IsKeyPressed(ImGuiKey_Escape))
+            ImGui::CloseCurrentPopup();
+
+        ImGui::EndPopup();
+    }
+
+    template <Concepts::Resource T>
+    void ImGuiUtils::SelectResource(const char_t* label, Pointer<T>* value)
+    {
+        ENSURE_NOT_NULL(value);
+
+        ImGui::PushID(value);
+
+        ImGui::Text(label);
+
+        ImGui::SameLine();
+
+        // Display resource name
+        if (*value != nullptr)
+        {
+            const std::string resourceName = (*value)->GetName();
+            const float_t textSize = Calc::Clamp(ImGui::CalcTextSize(resourceName.c_str()).x, 0.f, 5.f);
+            ImGui::SetNextItemWidth(textSize);
+            ImGui::Text("%s", resourceName.c_str());
+        }
+        else
+        {
+            ImGui::Text("No resource");
+        }
+
+        // Pop up context to clear the resource
+        if (ImGui::BeginPopupContextItem("RemoveResource"))
+        {
+            if (ImGui::Selectable("Remove"))
+                *value = nullptr;
+
+            ImGui::EndPopup();
+        }
+
+        ImGui::SameLine();
+
+        if (ImGui::Button("+"))
+            OpenResourcePopupModal();
+
+        FilterResourcePopupModal(value);
+
+        ImGui::PopID();
     }
 }
 

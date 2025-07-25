@@ -237,6 +237,8 @@ namespace Mountain::Utils
 
     template <Concepts::Enum T>
     constexpr Meta::Flags<T> ToFlags(T enumValue);
+
+    MOUNTAIN_API std::string RemoveByteOrderMark(const std::string& text);
 }
 
 namespace Easing

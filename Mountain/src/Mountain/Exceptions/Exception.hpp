@@ -3,7 +3,6 @@
 #include <exception>
 
 #include "Mountain/Core.hpp"
-#include "Mountain/Utils/MetaProgramming.hpp"
 
 // ReSharper disable CppClangTidyBugproneMacroParentheses
 #define DECLARE_EXCEPTION_NAME(exceptionType) ATTRIBUTE_NODISCARD const char_t* GetName() const noexcept override { return #exceptionType; }
@@ -23,10 +22,14 @@ namespace Mountain
     {
         const char_t* function = nullptr;
         const char_t* file = nullptr;
-        int line = -1;
+        int32_t line = -1;
+
+        ATTRIBUTE_NODISCARD
+        std::string ToString() const;
     };
 
-    inline ExceptionState currentException;
+    MOUNTAIN_API void SetCurrentExceptionState(const ExceptionState& state);
+    MOUNTAIN_API void SetCurrentExceptionState(const char_t* function, const char_t* file, int32_t line);
 
     /// @brief Represents errors that occur during application execution.
     class Exception : public std::exception
@@ -56,6 +59,9 @@ namespace Mountain
         ATTRIBUTE_NODISCARD
         virtual const char_t* GetName() const noexcept { return "Exception"; }
 
+        ATTRIBUTE_NODISCARD
+        std::string ToString() const;
+
     private:
         ExceptionState m_State;
 
@@ -65,7 +71,7 @@ namespace Mountain
     /// @brief The exception that is thrown when a method call is invalid for the object's current state.
     DECLARE_DEFAULT_EXCEPTION(InvalidOperationException, Exception);
 
-    /// @brief The exception that is thrown when a value of a @c Globals variable is invalid.
+    /// @brief The exception that is thrown when a value of a global Mountain variable is invalid.
     DECLARE_DEFAULT_EXCEPTION(InvalidGlobalValueException, InvalidOperationException);
 
     /// @brief The exception that is thrown when a requested method or operation is not implemented.
@@ -78,74 +84,10 @@ namespace Mountain
     DECLARE_DEFAULT_EXCEPTION(OutOfMemoryException, Exception);
 }
 
-/// @brief @c std::formatter template specialization for the @c Mountain::ExceptionState type.
-template <>
-struct std::formatter<Mountain::ExceptionState>  // NOLINT(cert-dcl58-cpp)
+#include "Mountain/Utils/Requirements.hpp"
+
+namespace Mountain
 {
-    /// @brief Parses the input formatting options.
-    template <class ParseContext>
-    constexpr typename ParseContext::iterator parse(ParseContext& ctx)
-    {
-        auto it = ctx.begin();
-        if (it == ctx.end())
-            return it;
-
-        if (*it != '}')
-            throw Mountain::FormatException{"Invalid format arguments for Exception"};
-
-        return it;
-    }
-
-    /// @brief Formats a string using the given instance of @c Mountain::Exception, according to the given options in the parse function.
-    template <class FormatContext>
-    // ReSharper disable once CppMemberFunctionMayBeStatic
-    typename FormatContext::iterator format(const Mountain::ExceptionState& state, FormatContext& ctx) const
-    {
-        std::ostringstream out;
-
-        out << std::format("{}:{} (Function {})", state.file, state.line, state.function);
-
-        return std::ranges::copy(std::move(out).str(), ctx.out()).out;
-    }
-};
-
-/// @brief @c std::formatter template specialization for the @c Mountain::Exception type.
-template <Mountain::Concepts::MountainException ExceptionT>
-struct std::formatter<ExceptionT>  // NOLINT(cert-dcl58-cpp)
-{
-    /// @brief Parses the input formatting options.
-    template <class ParseContext>
-    constexpr typename ParseContext::iterator parse(ParseContext& ctx)
-    {
-        auto it = ctx.begin();
-        if (it == ctx.end())
-            return it;
-
-        if (*it != '}')
-            throw Mountain::FormatException{"Invalid format arguments for Exception"};
-
-        return it;
-    }
-
-    /// @brief Formats a string using the given instance of @c Mountain::Exception, according to the given options in the parse function.
-    template <class FormatContext>
-    // ReSharper disable once CppMemberFunctionMayBeStatic
-    typename FormatContext::iterator format(const ExceptionT& ex, FormatContext& ctx) const
-    {
-        std::ostringstream out;
-
-        const Mountain::ExceptionState& state = ex.GetState();
-        out << "Exception of type "
-            << ex.GetName()
-            << " occured at "
-            << state.file
-            << ':'
-            << state.line
-            << " (Function "
-            << state.function
-            << "): "
-            << ex.GetMessage();
-
-        return std::ranges::copy(std::move(out).str(), ctx.out()).out;
-    }
-};
+    CHECK_REQUIREMENT(Requirements::StringConvertible, ExceptionState);
+    CHECK_REQUIREMENT(Requirements::StringConvertible, Exception);
+}

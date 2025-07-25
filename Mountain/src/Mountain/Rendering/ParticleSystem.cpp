@@ -24,7 +24,7 @@ namespace
 ParticleSystem::ParticleSystem(const uint32_t maxParticles)
 {
     m_UpdateComputeShader = ResourceManager::Get<ComputeShader>(Utils::GetBuiltinShadersPath() + "particles/update.comp");
-    m_DrawShader = ResourceManager::Get<Shader>(Utils::GetBuiltinShadersPath() + "particles/draw");
+    m_DrawShader = ResourceManager::Get<Shader>(Utils::GetBuiltinShadersPath() + "particles/draw_point");
 
     m_LiveSsbo.Create();
     m_ParticleSsbo.Create();
@@ -58,8 +58,11 @@ void ParticleSystem::Update()
     {
         SetComputeShaderUniforms(deltaTime);
 
-        for (const auto& module : modules)
-            module->SetComputeShaderUniforms(*m_UpdateComputeShader, enabledModules);
+        for (const auto& module : m_Modules)
+        {
+            if (enabledModules & module->GetType())
+                module->SetComputeShaderUniforms(*m_UpdateComputeShader);
+        }
 
         const bool_t spawning = looping || m_PlaybackTime - startDelay < duration;
 
@@ -72,7 +75,9 @@ void ParticleSystem::Update()
 
         BindBufferBase(Graphics::BufferType::ShaderStorageBuffer, 0, m_LiveSsbo);
         BindBufferBase(Graphics::BufferType::ShaderStorageBuffer, 1, m_ParticleSsbo);
+
         m_UpdateComputeShader->Dispatch(m_MaxParticles);
+
         BindBufferBase(Graphics::BufferType::ShaderStorageBuffer, 1, 0);
         BindBufferBase(Graphics::BufferType::ShaderStorageBuffer, 0, 0);
 
@@ -89,22 +94,42 @@ void ParticleSystem::Render()
 {
     Draw::Flush();
 
-    m_DrawShader->SetUniform("projection", Draw::m_ProjectionMatrix * Draw::m_CameraMatrix);
+    if (enabledModules & ParticleSystemModules::Types::Renderer && m_RendererModule)
+    {
+        static bool_t lastUseTexture = false;
 
-    m_DrawShader->SetUniform("systemPosition", position);
-    m_DrawShader->SetUniform("systemRotation", rotation);
+        const bool_t useTexture = m_RendererModule->texture != nullptr;
 
-    BindVertexArray(m_DrawVao);
-    m_DrawShader->Use();
-    BindBufferBase(Graphics::BufferType::ShaderStorageBuffer, 0, m_LiveSsbo);
-    BindBufferBase(Graphics::BufferType::ShaderStorageBuffer, 1, m_ParticleSsbo);
+        if (lastUseTexture != useTexture)
+            m_DrawShader = ResourceManager::Get<Shader>(Utils::GetBuiltinShadersPath() + (useTexture ? "particles/draw" : "particles/draw_point"));
 
-    DrawArraysInstanced(Graphics::DrawMode::Points, 0, 1, static_cast<int32_t>(m_MaxParticles));
+        m_DrawShader->SetUniform("particleCount", m_MaxParticles);
 
-    BindBufferBase(Graphics::BufferType::ShaderStorageBuffer, 1, 0);
-    BindBufferBase(Graphics::BufferType::ShaderStorageBuffer, 0, 0);
-    m_DrawShader->Unuse();
-    Graphics::BindVertexArray(0);
+        m_DrawShader->SetUniform("projection", Draw::m_ProjectionMatrix * Draw::m_CameraMatrix);
+
+        m_DrawShader->SetUniform("systemPosition", position);
+        m_DrawShader->SetUniform("systemRotation", rotation);
+
+        if (useTexture)
+            Graphics::BindTexture(m_RendererModule->texture->GetId());
+
+        BindVertexArray(m_DrawVao);
+        m_DrawShader->Use();
+        BindBufferBase(Graphics::BufferType::ShaderStorageBuffer, 0, m_LiveSsbo);
+        BindBufferBase(Graphics::BufferType::ShaderStorageBuffer, 1, m_ParticleSsbo);
+
+        DrawArraysInstanced(Graphics::DrawMode::Points, 0, 1, static_cast<int32_t>(m_MaxParticles));
+
+        BindBufferBase(Graphics::BufferType::ShaderStorageBuffer, 1, 0);
+        BindBufferBase(Graphics::BufferType::ShaderStorageBuffer, 0, 0);
+        m_DrawShader->Unuse();
+        Graphics::BindVertexArray(0);
+
+        if (useTexture)
+            Graphics::BindTexture(0);
+
+        lastUseTexture = useTexture;
+    }
 
     m_RenderTargetSize = Renderer::GetCurrentRenderTarget().GetSize();
 }
@@ -247,8 +272,13 @@ void ParticleSystem::RenderImGui()
     {
         uint32_t* enabledModulesInt = reinterpret_cast<uint32_t*>(&enabledModules);
         ImGui::CheckboxFlags("Enable all modules", enabledModulesInt, static_cast<uint32_t>(ParticleSystemModules::Types::All));
-        for (const auto& module : modules)
-            module->RenderImGui(enabledModulesInt);
+        for (const auto& module : m_Modules)
+        {
+            if (!module->BeginImGui(&enabledModules))
+                continue;
+            module->RenderImGui();
+            module->EndImGui();
+        }
 
         ImGuiUtils::PopSeparatorText();
     }
@@ -259,8 +289,11 @@ void ParticleSystem::RenderImGui()
 void ParticleSystem::RenderDebug()
 {
     const Vector2 renderTargetSizeDiff = Renderer::GetCurrentRenderTarget().GetSize() / m_RenderTargetSize;
-    for (const auto& module : modules)
-        module->RenderDebug(*this, renderTargetSizeDiff);
+    for (const auto& module : m_Modules)
+    {
+        if (enabledModules & module->GetType())
+            module->RenderDebug(*this, renderTargetSizeDiff);
+    }
 }
 
 void ParticleSystem::TogglePlay()
@@ -276,11 +309,121 @@ void ParticleSystem::Restart()
 
 void ParticleSystem::Stop()
 {
-    SetMaxParticles(m_MaxParticles);
+    SetMaxParticles(m_MaxParticles); // Reset the buffers
     m_Playing = false;
     m_PlaybackTime = 0.f;
     m_LastPlaybackTime = 0.f;
     m_SpawnTimer = 0.f;
+}
+
+std::shared_ptr<ParticleSystemModules::ModuleBase> ParticleSystem::AddModule(const ParticleSystemModules::Types type)
+{
+    std::shared_ptr<ParticleSystemModules::ModuleBase> result;
+
+    switch (type)
+    {
+        case ParticleSystemModules::Types::Shape: result = std::make_shared<ParticleSystemModules::Shape>(); break;
+        // case ParticleSystemModules::Types::VelocityOverLifetime: result = std::make_shared<ParticleSystemModules::VelocityOverLifetime>(); break;
+        // case ParticleSystemModules::Types::LimitVelocityOverLifetime: result = std::make_shared<ParticleSystemModules::LimitVelocityOverLifetime>(); break;
+        // case ParticleSystemModules::Types::InheritVelocity: result = std::make_shared<ParticleSystemModules::InheritVelocity>(); break;
+        // case ParticleSystemModules::Types::LifetimeByEmitterSpeed: result = std::make_shared<ParticleSystemModules::LifetimeByEmitterSpeed>(); break;
+        case ParticleSystemModules::Types::ForceOverLifetime: result = std::make_shared<ParticleSystemModules::ForceOverLifetime>(); break;
+        case ParticleSystemModules::Types::ColorOverLifetime: result = std::make_shared<ParticleSystemModules::ColorOverLifetime>(); break;
+        case ParticleSystemModules::Types::ColorBySpeed: result = std::make_shared<ParticleSystemModules::ColorBySpeed>(); break;
+        // case ParticleSystemModules::Types::SizeOverLifetime: result = std::make_shared<ParticleSystemModules::SizeOverLifetime>(); break;
+        // case ParticleSystemModules::Types::SizeBySpeed: result = std::make_shared<ParticleSystemModules::SizeBySpeed>(); break;
+        // case ParticleSystemModules::Types::RotationOverLifetime: result = std::make_shared<ParticleSystemModules::RotationOverLifetime>(); break;
+        // case ParticleSystemModules::Types::RotationBySpeed: result = std::make_shared<ParticleSystemModules::RotationBySpeed>(); break;
+        // case ParticleSystemModules::Types::Noise: result = std::make_shared<ParticleSystemModules::Noise>(); break;
+        // case ParticleSystemModules::Types::Collision: result = std::make_shared<ParticleSystemModules::Collision>(); break;
+        // case ParticleSystemModules::Types::SubEmitters: result = std::make_shared<ParticleSystemModules::SubEmitters>(); break;
+        // case ParticleSystemModules::Types::TextureSheetAnimation: result = std::make_shared<ParticleSystemModules::TextureSheetAnimation>(); break;
+        // case ParticleSystemModules::Types::Lights: result = std::make_shared<ParticleSystemModules::Lights>(); break;
+        // case ParticleSystemModules::Types::Trails: result = std::make_shared<ParticleSystemModules::Trails>(); break;
+        case ParticleSystemModules::Types::Renderer: result = std::make_shared<ParticleSystemModules::Renderer>(); break;
+
+        default: THROW(ArgumentException{"Invalid particle system type", "type"});
+    }
+
+    AddModule(result, true);
+
+    return result;
+}
+
+List<std::shared_ptr<ParticleSystemModules::ModuleBase>> ParticleSystem::AddModules(const ParticleSystemModules::Types types)
+{
+    List<std::shared_ptr<ParticleSystemModules::ModuleBase>> result;
+
+    if (types & ParticleSystemModules::Types::Shape) result.Add(std::make_shared<ParticleSystemModules::Shape>());
+    // if (types & ParticleSystemModules::Types::VelocityOverLifetime) result.Add(std::make_shared<ParticleSystemModules::VelocityOverLifetime>());
+    // if (types & ParticleSystemModules::Types::LimitVelocityOverLifetime) result.Add(std::make_shared<ParticleSystemModules::LimitVelocityOverLifetime>());
+    // if (types & ParticleSystemModules::Types::InheritVelocity) result.Add(std::make_shared<ParticleSystemModules::InheritVelocity>());
+    // if (types & ParticleSystemModules::Types::LifetimeByEmitterSpeed) result.Add(std::make_shared<ParticleSystemModules::LifetimeByEmitterSpeed>());
+    if (types & ParticleSystemModules::Types::ForceOverLifetime) result.Add(std::make_shared<ParticleSystemModules::ForceOverLifetime>());
+    if (types & ParticleSystemModules::Types::ColorOverLifetime) result.Add(std::make_shared<ParticleSystemModules::ColorOverLifetime>());
+    if (types & ParticleSystemModules::Types::ColorBySpeed) result.Add(std::make_shared<ParticleSystemModules::ColorBySpeed>());
+    // if (types & ParticleSystemModules::Types::SizeOverLifetime) result.Add(std::make_shared<ParticleSystemModules::SizeOverLifetime>());
+    // if (types & ParticleSystemModules::Types::SizeBySpeed) result.Add(std::make_shared<ParticleSystemModules::SizeBySpeed>());
+    // if (types & ParticleSystemModules::Types::RotationOverLifetime) result.Add(std::make_shared<ParticleSystemModules::RotationOverLifetime>());
+    // if (types & ParticleSystemModules::Types::RotationBySpeed) result.Add(std::make_shared<ParticleSystemModules::RotationBySpeed>());
+    // if (types & ParticleSystemModules::Types::Noise) result.Add(std::make_shared<ParticleSystemModules::Noise>());
+    // if (types & ParticleSystemModules::Types::Collision) result.Add(std::make_shared<ParticleSystemModules::Collision>());
+    // if (types & ParticleSystemModules::Types::SubEmitters) result.Add(std::make_shared<ParticleSystemModules::SubEmitters>());
+    // if (types & ParticleSystemModules::Types::TextureSheetAnimation) result.Add(std::make_shared<ParticleSystemModules::TextureSheetAnimation>());
+    // if (types & ParticleSystemModules::Types::Lights) result.Add(std::make_shared<ParticleSystemModules::Lights>());
+    // if (types & ParticleSystemModules::Types::Trails) result.Add(std::make_shared<ParticleSystemModules::Trails>());
+    if (types & ParticleSystemModules::Types::Renderer) result.Add(std::make_shared<ParticleSystemModules::Renderer>());
+
+    AddModules(result, true);
+
+    return result;
+}
+
+std::shared_ptr<ParticleSystemModules::ModuleBase> ParticleSystem::GetModule(const ParticleSystemModules::Types type)
+{
+    for (const auto& module : m_Modules)
+    {
+        if (module->GetType() == type)
+            return module;
+    }
+
+    return {};
+}
+
+List<std::shared_ptr<ParticleSystemModules::ModuleBase>> ParticleSystem::GetModules(const ParticleSystemModules::Types types)
+{
+    List<std::shared_ptr<ParticleSystemModules::ModuleBase>> result;
+
+    for (const auto& module : m_Modules)
+    {
+        if (types & module->GetType())
+            result.Add(module);
+    }
+
+    return result;
+}
+
+void ParticleSystem::RemoveModule(const ParticleSystemModules::Types type)
+{
+    for (size_t i = 0; i < m_Modules.GetSize(); i++)
+    {
+        if (m_Modules[i]->GetType() != type)
+            continue;
+
+        RemoveModule(i);
+        return;
+    }
+}
+
+void ParticleSystem::RemoveModules(const ParticleSystemModules::Types types)
+{
+    for (size_t i = 0; i < m_Modules.GetSize(); i++)
+    {
+        if (!(types & m_Modules[i]->GetType()))
+            continue;
+
+        RemoveModule(i--);
+    }
 }
 
 uint32_t ParticleSystem::GetCurrentParticles()
@@ -301,8 +444,6 @@ bool_t ParticleSystem::IsComplete()
 {
     return !(looping || m_PlaybackTime - startDelay < duration) && GetCurrentParticles() == 0;
 }
-
-uint32_t ParticleSystem::GetMaxParticles() const { return m_MaxParticles; }
 
 void ParticleSystem::SetMaxParticles(const uint32_t newMaxParticles)
 {
@@ -340,12 +481,11 @@ void ParticleSystem::SetMaxParticles(const uint32_t newMaxParticles)
     m_LiveParticles = static_cast<int32_t*>(glMapNamedBufferRange(m_LiveSsbo.GetId(), 0, aliveSsboSize, GL_MAP_PERSISTENT_BIT | GL_MAP_READ_BIT | GL_MAP_WRITE_BIT | GL_MAP_COHERENT_BIT));
 
     m_UpdateComputeShader->SetUniform("particleCount", newMaxParticles);
-    m_DrawShader->SetUniform("particleCount", newMaxParticles);
 
     Graphics::MemoryBarrier(Graphics::MemoryBarrierFlags::ShaderStorageBarrier);
 }
 
-bool_t ParticleSystem::IsPlaying() const { return m_Playing; }
+const List<std::shared_ptr<ParticleSystemModules::ModuleBase>>& ParticleSystem::GetModules() const { return m_Modules; }
 
 void ParticleSystem::SetComputeShaderUniforms(const float_t deltaTime) const
 {
@@ -445,6 +585,44 @@ void ParticleSystem::SpawnNewParticles()
 
         LockBuffer(m_SyncObject);
     }
+}
+
+void ParticleSystem::AddModule(const std::shared_ptr<ParticleSystemModules::ModuleBase>& module, const bool_t sort)
+{
+    m_Modules.Add(module);
+
+    if (sort)
+        SortModules();
+
+    if (module->GetType() == ParticleSystemModules::Types::Renderer)
+        m_RendererModule = std::reinterpret_pointer_cast<ParticleSystemModules::Renderer>(module);
+}
+
+void ParticleSystem::AddModules(const List<std::shared_ptr<ParticleSystemModules::ModuleBase>>& modules, const bool_t sort)
+{
+    for (const auto& module : modules)
+        AddModule(module, false);
+
+    if (sort)
+        SortModules();
+}
+
+void ParticleSystem::RemoveModule(const size_t index)
+{
+    if (m_Modules[index]->GetType() == ParticleSystemModules::Types::Renderer)
+        m_RendererModule.reset();
+
+    m_Modules.RemoveAt(index);
+}
+
+void ParticleSystem::SortModules()
+{
+    m_Modules.Sort(
+        [](const std::shared_ptr<ParticleSystemModules::ModuleBase>& lhs, const std::shared_ptr<ParticleSystemModules::ModuleBase>& rhs)
+        {
+            return lhs->GetType() < rhs->GetType();
+        }
+    );
 }
 
 void ParticleSystem::WaitBufferSync(const GLsync syncObject)

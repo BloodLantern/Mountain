@@ -274,6 +274,33 @@ uint32_t Utils::Concat32(const uint8_t right0, const uint8_t right1, const uint8
     return right0 | right1 << 8 | left0 << 16 | left1 << 24;
 }
 
+std::string Utils::RemoveByteOrderMark(const std::string& text)
+{
+    // https://en.wikipedia.org/wiki/Byte_order_mark
+
+    constexpr static Array ByteOrderMarks{
+        "\xEF" "\xBB" "\xBF",           // UTF-8
+        "\xFE" "\xFF",                  // UTF-16 (BE)
+        "\xFF" "\xFE",                  // UTF-16 (LE)
+        "\x00" "\x00" "\xFE" "\xFF",    // UTF-32 (BE)
+        "\x00" "\x00" "\xFF" "\xFE",    // UTF-32 (LE)
+        "\x2B" "\x2F" "\x76",           // UTF-7
+        "\xF7" "\x64" "\x4C",           // UTF-1
+        "\xDD" "\x73" "\x66" "\x73",    // UTF-EBCDIC
+        "\x0E" "\xFE" "\xFF",           // SCSU
+        "\xFB" "\xEE" "\x28",           // BOCU-1
+        "\x84" "\x31" "\x95" "\x33"     // GB18030
+    };
+
+    for (const char_t* byteOrderMark : ByteOrderMarks)
+    {
+        if (text.starts_with(byteOrderMark))
+            return text.substr(std::strlen(byteOrderMark));
+    }
+
+    return text;
+}
+
 Easing::Easer Easing::FromType(const Type type)
 {
     switch (type)

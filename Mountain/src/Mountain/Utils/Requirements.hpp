@@ -2,7 +2,6 @@
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Containers/FunctionTypes.hpp"
-#include "Mountain/Exceptions/Exception.hpp"
 
 // ReSharper disable CppClangTidyBugproneMacroParentheses
 
@@ -275,6 +274,8 @@ namespace Mountain::Meta
     template <Concepts::Iterator Iterator, typename Comparer, typename Projection = Mountain::Identity>
     constexpr bool_t IsSortable = std::sortable<Iterator, Comparer, Projection>;
 }
+
+#include "Mountain/Exceptions/Exception.hpp"
 
 // ReSharper disable CppMemberFunctionMayBeStatic
 // ReSharper disable CppClangTidyCertDcl58Cpp

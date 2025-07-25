@@ -1,7 +1,6 @@
 ﻿#pragma once
 
 #include "Mountain/Core.hpp"
-#include "Mountain/Exceptions/ThrowHelper.hpp"
 #include "Mountain/Utils/Requirements.hpp"
 
 namespace Mountain
@@ -173,6 +172,8 @@ namespace Mountain
 }
 
 // Start of ContiguousIterator.inl
+
+#include "Mountain/Exceptions/ThrowHelper.hpp"
 
 namespace Mountain
 {

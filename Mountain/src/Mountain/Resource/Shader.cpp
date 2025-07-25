@@ -19,21 +19,24 @@ Graphics::ShaderType Shader::FileExtensionToType(const std::string& extension)
     if (Contains(FragmentFileExtensions, extension))
         return Graphics::ShaderType::Fragment;
 
+    if (Contains(GeometryFileExtensions, extension))
+        return Graphics::ShaderType::Geometry;
+
     THROW(ArgumentException{"Invalid file extension for shader", TO_STRING(extension)});
 }
 
-bool_t Shader::SetSourceData(const Pointer<File>& shader)
+bool_t Shader::SetSourceData(const Pointer<File>& file)
 {
-    const Graphics::ShaderType type = FileExtensionToType(shader->GetExtension());
+    const Graphics::ShaderType type = FileExtensionToType(file->GetExtension());
 
-    m_File = shader;
-    const bool_t loadResult = Load(shader->GetData(), shader->GetSize(), type);
+    m_File = file;
+    const bool_t loadResult = Load(file->GetData(), file->GetSize(), type);
     m_File = nullptr;
 
     if (!loadResult)
         return false;
 
-    m_Files[static_cast<size_t>(type)] = shader;
+    m_Files[static_cast<size_t>(type)] = file;
 
     m_SourceDataSet = true;
 
@@ -43,7 +46,7 @@ bool_t Shader::SetSourceData(const Pointer<File>& shader)
 bool_t Shader::Load(const char_t* const buffer, const int64_t length, const Graphics::ShaderType type)
 {
     ShaderCode& code = m_Code[static_cast<size_t>(type)];
-    code.code = std::string(buffer, length);
+    code.code = Utils::RemoveByteOrderMark(std::string{buffer, static_cast<size_t>(length)});
     ReplaceIncludes(code.code, m_File->GetPath(), dependentShaderFiles);
     code.type = type;
 
@@ -54,7 +57,7 @@ bool_t Shader::Load(const char_t* const buffer, const int64_t length, const Grap
 
 void Shader::Load()
 {
-    Array<uint32_t, magic_enum::enum_count<Graphics::ShaderType>()> shaderIds;
+    Array<uint32_t, magic_enum::enum_count<Graphics::ShaderType>()> shaderIds{0};
     bool_t compileError = false;
     for (size_t i = 0; i < shaderIds.GetSize(); i++)
     {
@@ -94,7 +97,10 @@ void Shader::Load()
 #endif
 
     for (size_t i = 0; i < shaderIds.GetSize(); i++)
-		glAttachShader(m_Id, shaderIds[i]);
+    {
+        if (shaderIds[i] != 0)
+            glAttachShader(m_Id, shaderIds[i]);
+    }
 
     glLinkProgram(m_Id);
 
@@ -132,12 +138,13 @@ bool_t Shader::Reload(const bool_t reloadInBackend)
 {
     dependentShaderFiles.clear();
 
-    const bool_t result = SetSourceData(m_Files[0]) && SetSourceData(m_Files[1]);
+    if (!m_Files.All([&](const Pointer<File>& file) { return !file || SetSourceData(file); }))
+        return false;
 
     if (reloadInBackend)
         Load();
 
-    return result;
+    return true;
 }
 
 bool_t Shader::Reload(const Pointer<File>& file, const bool_t reloadInBackend) { return Resource::Reload(file, reloadInBackend); }

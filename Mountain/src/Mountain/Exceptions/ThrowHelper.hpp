@@ -3,6 +3,7 @@
 #include "Mountain/Core.hpp"
 #include "Mountain/Exceptions/ArgumentException.hpp"
 #include "Mountain/Exceptions/Exception.hpp"
+// ReSharper disable once CppUnusedIncludeDirective
 #include "Mountain/Utils/MetaProgramming.hpp"
 
 /// @brief Macro used to throw Mountain Exceptions.
@@ -26,7 +27,7 @@
     { \
         const auto ex = __VA_ARGS__; \
         static_assert(::Mountain::Meta::IsException<decltype(ex)>, "The argument of THROW must be an exception value"); \
-        ::Mountain::currentException = {__FUNCTION__, __FILE__, __LINE__}; \
+        ::Mountain::SetCurrentExceptionState(__FUNCTION__, __FILE__, __LINE__); \
         throw ex; \
     } \
     while (false)

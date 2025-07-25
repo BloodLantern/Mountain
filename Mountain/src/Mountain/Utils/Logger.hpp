@@ -10,11 +10,11 @@
 #include "Mountain/Utils/Requirements.hpp"
 #include "Mountain/Utils/TsQueue.hpp"
 
-/// @file logger.hpp
+/// @file Logger.hpp
 /// @brief Defines the Mountain::Logger static class
 
-/// @brief Logs a @ref Mountain::Logger::LogLevel::Debug "temporary debug message" using the given format message and arguments.
-#define DEBUG_LOG(message, ...) Mountain::Logger::LogDebug(message, __FILE__, __LINE__, __VA_ARGS__)
+/// @brief Logs a debug log using the given format message and arguments.
+#define DEBUG_LOG(message, ...) ::Mountain::Logger::LogDebug(message, __FILE__, __LINE__, __VA_ARGS__)
 
 namespace Mountain
 {
@@ -267,8 +267,6 @@ namespace Mountain
 
 #include <format>
 #include <utility>
-
-#include "Mountain/Utils/Utils.hpp"
 
 namespace Mountain
 {

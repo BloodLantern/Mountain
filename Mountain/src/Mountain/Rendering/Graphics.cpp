@@ -316,6 +316,7 @@ Graphics::ShaderType Graphics::FromOpenGl<Graphics::ShaderType>(const int32_t va
     {
         case GL_VERTEX_SHADER: return ShaderType::Vertex;
         case GL_FRAGMENT_SHADER: return ShaderType::Fragment;
+        case GL_GEOMETRY_SHADER: return ShaderType::Geometry;
 
         default: THROW(ArgumentOutOfRangeException{"Invalid shader type", TO_STRING(value)});
     }
@@ -825,6 +826,7 @@ int32_t Graphics::ToOpenGl(const ShaderType value)
     {
         case ShaderType::Vertex: return GL_VERTEX_SHADER;
         case ShaderType::Fragment: return GL_FRAGMENT_SHADER;
+        case ShaderType::Geometry: return GL_GEOMETRY_SHADER;
     }
 
     THROW(ArgumentOutOfRangeException{"Invalid shader type", TO_STRING(value)});

@@ -6,7 +6,7 @@
 
 namespace Mountain
 {
-    enum DateTimeKind
+    enum class DateTimeKind : uint8_t
     {
         Unspecified,
         Utc,

@@ -6,7 +6,6 @@
 // ReSharper disable once CppUnusedIncludeDirective
 #include "Mountain/Containers/EnumerableExt.hpp"
 #include "Mountain/Containers/FunctionTypes.hpp"
-#include "Mountain/Exceptions/ThrowHelper.hpp"
 #include "Mountain/Utils/Requirements.hpp"
 
 namespace Mountain
@@ -109,6 +108,8 @@ namespace Mountain
 }
 
 // Start of Array.inl
+
+#include "Mountain/Exceptions/ThrowHelper.hpp"
 
 namespace Mountain
 {

@@ -359,7 +359,7 @@ namespace Mountain
 
     template <Concepts::DynamicContainerType T>
     template <size_t Size>
-    List<T>::List(const Array<T, Size>& array) : List(array.GetBeginIterator(), array.GetEndIterator()) {}
+    List<T>::List(const Array<T, Size>& array) : List(array.begin(), array.end()) {}
 
     template <Concepts::DynamicContainerType T>
     List<T>::List(const std::vector<T>& vector) : List(vector.begin(), vector.end()) {}

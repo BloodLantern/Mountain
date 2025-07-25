@@ -4,7 +4,6 @@
 #include <sstream>
 
 #include "Mountain/Core.hpp"
-#include "Mountain/Exceptions/ThrowHelper.hpp"
 #include "Mountain/Utils/Requirements.hpp"
 #include "Mountain/Utils/Utils.hpp"
 
@@ -182,6 +181,8 @@ namespace Mountain
 
 // Start of TimeSpan.inl
 
+#include "Mountain/Exceptions/ThrowHelper.hpp"
+
 namespace Mountain
 {
     constexpr TimeSpan TimeSpan::Zero() { return TimeSpan{0}; }
@@ -246,7 +247,7 @@ namespace Mountain
     constexpr TimeSpan TimeSpan::Duration() const
     {
         if (m_Ticks == MinValue().m_Ticks)
-            throw OverflowException{"TimeSpan Duration overflow"};
+            THROW(OverflowException{"TimeSpan Duration overflow"});
         return TimeSpan{m_Ticks >= 0 ? m_Ticks : -m_Ticks};
     }
 
@@ -263,7 +264,7 @@ namespace Mountain
         // sign was opposite.
         // >> 63 gives the sign bit (either 64 1's or 64 0's).
         if ((lhs.m_Ticks >> 63 == rhs.m_Ticks >> 63) && (lhs.m_Ticks >> 63 != result >> 63))
-            throw OverflowException{"TimeSpan sum overflow"};
+            THROW(OverflowException{"TimeSpan sum overflow"});
 
         return TimeSpan{result};
     }
@@ -271,7 +272,7 @@ namespace Mountain
     constexpr TimeSpan operator-(const TimeSpan value)
     {
         if (value.m_Ticks == TimeSpan::MinValue().m_Ticks)
-            throw OverflowException{"Cannot negate the MinValue TimeSpan because of Two's Complement"};
+            THROW(OverflowException{"Cannot negate the MinValue TimeSpan because of Two's Complement"});
         return TimeSpan{-value.m_Ticks};
     }
 
@@ -283,7 +284,7 @@ namespace Mountain
         // sign was opposite.
         // >> 63 gives the sign bit (either 64 1's or 64 0's).
         if ((lhs.m_Ticks >> 63 != rhs.m_Ticks >> 63) && (lhs.m_Ticks >> 63 != result >> 63))
-            throw OverflowException{"TimeSpan difference underflow"};
+            THROW(OverflowException{"TimeSpan difference underflow"});
 
         return TimeSpan{result};
     }
@@ -291,7 +292,7 @@ namespace Mountain
     constexpr TimeSpan operator*(const TimeSpan lhs, const double_t rhs)
     {
         if (Calc::IsNan(rhs))
-            throw ArgumentException{"Cannot multiply a TimeSpan by a NaN", TO_STRING(rhs)};
+            THROW(ArgumentException{"Cannot multiply a TimeSpan by a NaN", TO_STRING(rhs)});
 
         const double_t ticks = Calc::Round(static_cast<double_t>(lhs.m_Ticks) * rhs);
         return TimeSpan::IntervalFromDoubleTicks(ticks);
@@ -302,7 +303,7 @@ namespace Mountain
     constexpr TimeSpan operator/(const TimeSpan lhs, const double_t rhs)
     {
         if (Calc::IsNan(rhs))
-            throw ArgumentException{"Cannot divide a TimeSpan by a NaN", TO_STRING(rhs)};
+            THROW(ArgumentException{"Cannot divide a TimeSpan by a NaN", TO_STRING(rhs)});
 
         const double_t ticks = Calc::Round(static_cast<double_t>(lhs.m_Ticks) / rhs);
         return TimeSpan::IntervalFromDoubleTicks(ticks);
@@ -325,7 +326,7 @@ namespace Mountain
         const int64_t totalSeconds = static_cast<int64_t>(hours) * 3600 + static_cast<int64_t>(minutes) * 60 + static_cast<int64_t>(seconds);
 
         if (totalSeconds > MaxSeconds || totalSeconds < MinSeconds)
-            throw ArgumentOutOfRangeException{"Invalid TimeSpan values"};
+            THROW(ArgumentOutOfRangeException{"Invalid TimeSpan values"});
 
         m_Ticks = totalSeconds * TicksPerSecond;
     }
@@ -344,7 +345,7 @@ namespace Mountain
                                           microseconds;
 
         if (totalMicroseconds > MaxMicroSeconds || totalMicroseconds < MinMicroSeconds)
-            throw ArgumentOutOfRangeException{"Invalid TimeSpan values"};
+            THROW(ArgumentOutOfRangeException{"Invalid TimeSpan values"});
 
         m_Ticks = totalMicroseconds * TicksPerMicrosecond;
     }
@@ -354,14 +355,14 @@ namespace Mountain
     constexpr TimeSpan TimeSpan::Interval(const double_t ticks, const double_t scale)
     {
         if (Calc::IsNan(ticks))
-            throw ArgumentException{"Cannot create an interval from a NaN amount of ticks", TO_STRING(ticks)};
+            THROW(ArgumentException{"Cannot create an interval from a NaN amount of ticks", TO_STRING(ticks)});
         return IntervalFromDoubleTicks(ticks * scale);
     }
 
     constexpr TimeSpan TimeSpan::IntervalFromDoubleTicks(const double_t ticks)
     {
         if (ticks > static_cast<double_t>(std::numeric_limits<int64_t>::max()) || ticks < static_cast<double_t>(std::numeric_limits<int64_t>::min()) || std::isnan(ticks))
-            throw OverflowException{"Invalid TimeSpan ticks"};
+            THROW(OverflowException{"Invalid TimeSpan ticks"});
         if (ticks == static_cast<double_t>(std::numeric_limits<int64_t>::max()))
             return MaxValue();
         return TimeSpan{static_cast<int64_t>(ticks)};

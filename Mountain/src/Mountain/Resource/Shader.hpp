@@ -43,6 +43,13 @@ namespace Mountain
 			".fs"
 		};
 
+		/// @brief Allowed extensions for geomtry shaders
+		MOUNTAIN_API static constexpr Array GeometryFileExtensions
+		{
+			".geom",
+			".geometry"
+		};
+
 		/// @brief Gets the shader type via a file extension
 		/// @param extension File extension
 		/// @return @ref ShaderType type

@@ -9,8 +9,9 @@ layout (local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 uniform float time;
 
 #include "shape.glsl"
-#include "color_over_lifetime.glsl"
 #include "force_over_lifetime.glsl"
+#include "color_over_lifetime.glsl"
+#include "color_by_speed.glsl"
 
 uniform uint enabledModules;
 
@@ -18,6 +19,7 @@ Particle NewParticle()
 {
     Particle result = Particle(
         particleLifetime,
+        particleStartSize,
         vec2(0.f),
         vec2(0.f, -1.f),
         particleStartColor
@@ -56,12 +58,15 @@ void main()
     }
 
     particle.offset += particle.velocity * deltaTime;
+    particle.color = particleStartColor;
 
     // Modules updates
-    if ((enabledModules & ModuleTypesColorOverLifetime) != 0)
-        ColorOverLifetimeUpdate(particle);
     if ((enabledModules & ModuleTypesForceOverLifetime) != 0)
         ForceOverLifetimeUpdate(particle);
+    if ((enabledModules & ModuleTypesColorOverLifetime) != 0)
+        ColorOverLifetimeUpdate(particle);
+    if ((enabledModules & ModuleTypesColorBySpeed) != 0)
+        ColorBySpeedUpdate(particle);
 
     particle.lifetime -= deltaTime;
 

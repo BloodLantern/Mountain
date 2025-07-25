@@ -14,10 +14,6 @@ void TestScene::LoadPersistentResources()
 {
 }
 
-void TestScene::UnloadPersistentResources()
-{
-}
-
 void TestScene::LoadResources()
 {
 }

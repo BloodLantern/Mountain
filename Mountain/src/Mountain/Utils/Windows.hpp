@@ -22,6 +22,7 @@
 #undef near
 #undef far
 #undef MessageBox
+#undef GetMessage
 
 namespace Mountain::Windows
 {

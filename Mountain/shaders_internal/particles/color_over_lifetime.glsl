@@ -4,11 +4,16 @@
 
 uniform struct ColorOverLifetime
 {
-    vec4 target;
+    vec4 colorMin;
+    vec4 colorMax;
     uint easingType;
 } colorOverLifetime;
 
 void ColorOverLifetimeUpdate(inout Particle particle)
 {
-    particle.color = mix(particleStartColor, colorOverLifetime.target, EasingFromType(colorOverLifetime.easingType, 1.f - (particle.lifetime / particleLifetime)));
+    particle.color *= mix(
+        colorOverLifetime.colorMin,
+        colorOverLifetime.colorMax,
+        EasingFromType(colorOverLifetime.easingType, 1.f - (particle.lifetime / particleLifetime))
+    );
 }

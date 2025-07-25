@@ -28,6 +28,11 @@ namespace Mountain
     template <typename>
     struct Pointer;
 
+    namespace ParticleSystemModules
+    {
+        class ModuleBase;
+    }
+
     /// @namespace Meta
     /// @brief Defines utilities for meta-programming and template manipulation.
     namespace Meta
@@ -322,6 +327,9 @@ namespace Mountain
 
         template <typename T>
         constexpr bool_t IsCollider = IsBaseOf<Collider, T>;
+
+        template <typename T>
+        constexpr bool_t IsParticleSystemModule = IsBaseOf<ParticleSystemModules::ModuleBase, T>;
     }
 
     /// @namespace Concepts
@@ -410,6 +418,9 @@ namespace Mountain
 
         template <typename T>
         concept Collider = Meta::IsCollider<T>;
+
+        template <typename T>
+        concept ParticleSystemModule = Meta::IsParticleSystemModule<T>;
     }
 
     namespace Meta

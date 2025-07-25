@@ -14,13 +14,11 @@ public:
 
     SpriteAnimationsScene();
 
-    void LoadResources() override;
+    void LoadPersistentResources() override;
 
     void Render() override;
 
     void RenderImGui() override;
-
-    void UnloadResources() override;
 
 private:
     Entity* m_Entity = nullptr;

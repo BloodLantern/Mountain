@@ -439,7 +439,11 @@
     <Content Include="shaders_internal\effects\negative.comp" />
     <Content Include="shaders_internal\line_colored\line_colored.frag" />
     <Content Include="shaders_internal\line_colored\line_colored.vert" />
+    <Content Include="shaders_internal\particles\color_by_speed.glsl" />
     <Content Include="shaders_internal\particles\color_over_lifetime.glsl" />
+    <Content Include="shaders_internal\particles\draw\draw.geom" />
+    <Content Include="shaders_internal\particles\draw_point\draw_point.frag" />
+    <Content Include="shaders_internal\particles\draw_point\draw_point.vert" />
     <Content Include="shaders_internal\particles\force_over_lifetime.glsl" />
     <Content Include="shaders_internal\particles\module_types.glsl" />
     <Content Include="shaders_internal\particles\shape.glsl" />

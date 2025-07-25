@@ -3,6 +3,7 @@
 #include "Scenes/ParticleSystemScene.hpp"
 
 #include <Mountain/Window.hpp>
+#include <Mountain/FileSystem/FileManager.hpp>
 
 #include "TestGame.hpp"
 
@@ -10,11 +11,7 @@ ParticleSystemScene::ParticleSystemScene()
     : Base{"Particle System"}
 {
     m_ParticleSystem.position = Window::GetSize() * 0.5f;
-    m_ParticleSystem.modules.AddRange(
-        std::make_shared<ParticleSystemModules::Shape>(),
-        std::make_shared<ParticleSystemModules::ColorOverLifetime>(),
-        std::make_shared<ParticleSystemModules::ForceOverLifetime>()
-    );
+    m_ParticleSystem.AddModules(ParticleSystemModules::Types::All);
 }
 
 void ParticleSystemScene::Update()

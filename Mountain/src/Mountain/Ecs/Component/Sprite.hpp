@@ -7,6 +7,8 @@
 #include "Mountain/Resource/Texture.hpp"
 #include "Mountain/Containers/List.hpp"
 
+// TODO - Make non-Component versions of Sprite and StateMachine
+
 namespace Mountain
 {
     class Sprite : public Component

@@ -13,10 +13,9 @@
 
 namespace Mountain
 {
-    /// @brief Static class used to add, load, get, or unload @ref Mountain::Resource "Resources".
-    ///
-    /// It contains all wrapper instances of the Resource class. These are either added or loaded using the corresponding
-    /// function: ResourceManager::Add and ResourceManager::Preload.
+    /// @brief Static class used to add, load, get, or unload Resources.
+    /// @details It contains all wrapper instances of the Resource class. These are either added or loaded using the corresponding
+    /// function: @c ResourceManager::Add() and @c ResourceManager::Load().
     class ResourceManager final
     {
         STATIC_CLASS(ResourceManager)
@@ -35,6 +34,7 @@ namespace Mountain
         static Pointer<T> Load(const Pointer<File>& file, bool_t loadInInterface = true);
 
         /// @brief Creates the Resource corresponding to the given @p file and loads it.
+        /// @note If the file hasn't been loaded yet, this will load it beforehand.
         template <Concepts::LoadableResource T>
         static Pointer<T> Load(const std::string& name, bool_t loadInInterface = true);
 
@@ -42,6 +42,7 @@ namespace Mountain
         MOUNTAIN_API static Pointer<Font> LoadFont(const Pointer<File>& file, uint32_t size);
 
         /// @brief Creates the Font corresponding to the given @p name and loads it with the given @p size.
+        /// @note If the file hasn't been loaded yet, this will load it beforehand.
         MOUNTAIN_API static Pointer<Font> LoadFont(const std::string& name, uint32_t size);
 
         /// @brief Creates one Resource for each @c FileManager entry.
@@ -78,7 +79,7 @@ namespace Mountain
         ATTRIBUTE_NODISCARD
         MOUNTAIN_API static Pointer<Font> GetFont(const std::string& name, uint32_t size);
 
-        /// @brief Returns the Font that was loaded using the given @p file and @p size.
+        /// @brief Returns the Font loaded using the given @p file and @p size.
         ATTRIBUTE_NODISCARD
         MOUNTAIN_API static Pointer<Font> GetFont(const Pointer<File>& file, uint32_t size);
 
@@ -89,14 +90,14 @@ namespace Mountain
 
         /// @brief Renames the Resource with the given @p name to @p newName.
         ///
-        /// @note This function only renames the key used to store this Resource, and doesn't in any case rename the Resource itself.
-        /// For this exact reason, using Resource::SetName instead is the preferred way or renaming a Resource.
+        /// @note This function only renames the key used to store this Resource and doesn't in any case rename the Resource itself.
+        /// For this exact reason, using @c Resource::SetName() instead is the preferred way or renaming a Resource.
         MOUNTAIN_API static void Rename(const std::string& name, const std::string& newName);
 
         /// @brief Renames the given @p resource to @p newName.
         ///
-        /// @note This function only renames the key used to store this Resource, and doesn't in any case rename the Resource itself.
-        /// For this exact reason, using Resource::SetName instead is the preferred way or renaming a Resource.
+        /// @note This function only renames the key used to store this Resource and doesn't in any case rename the Resource itself.
+        /// For this exact reason, using @c Resource::SetName() instead is the preferred way or renaming a Resource.
         MOUNTAIN_API static void Rename(const Pointer<Resource>& resource, const std::string& newName);
 
         /// @brief Finds all Resource of type @p T.
@@ -115,29 +116,24 @@ namespace Mountain
         /// @param predicate The predicate used to find the correct Resource. This function will be
         /// called for each stored Resource.
         /// @return The first Resource for which the @p predicate returned @c true. If every Resource
-        /// returned @c false, instead return a null @ref Pointer.
+        /// returned @c false, instead return a null @c Pointer.
         template <Concepts::Resource T = Resource>
         ATTRIBUTE_NODISCARD
-        static Pointer<T> Find(const std::function<bool_t(Pointer<T>)>& predicate);
+        static Pointer<T> Find(const Predicate<Pointer<T>>& predicate);
 
         /// @brief Finds a list of Resource based on a predicate.
         /// @tparam T The type of Resource to find.
         /// @param predicate The predicate used to find the correct Resource. This function will be
         /// called for each stored Resource.
         /// @return The first Resource for which the @p predicate returned @c true. If every Resource
-        /// returned @c false, instead return a null @ref Pointer.
+        /// returned @c false, instead return a null @c Pointer.
         template <Concepts::Resource T = Resource>
         ATTRIBUTE_NODISCARD
-        static List<Pointer<T>> FindAll(const std::function<bool_t(Pointer<T>)>& predicate);
+        static List<Pointer<T>> FindAll(const Predicate<Pointer<T>>& predicate);
 
-        /// @see @ref FileManager::FindAll(std::function<bool_t(Pointer<T>)>&&)
+        /// @see @c FileManager::FindAll(const Predicate<Pointer<T>>&)
         template <Concepts::Resource T>
-        static void FindAll(const std::function<bool_t(Pointer<T>)>& predicate, List<Pointer<T>>* result);
-
-        /// @brief Checks whether the given @p name corresponds to a Resource of type @p T.
-        template <Concepts::Resource T>
-        ATTRIBUTE_NODISCARD
-        static bool_t IsResourceOfType(const std::string& name);
+        static void FindAll(const Predicate<Pointer<T>>& predicate, List<Pointer<T>>* result);
 
         /// @brief Unloads the Resource with the given @p name.
         MOUNTAIN_API static void Unload(const std::string& name);
@@ -146,7 +142,7 @@ namespace Mountain
         template <Concepts::Resource T>
         static void Unload(const Pointer<T>& resource);
 
-        /// @brief Unloads all stored @ref Mountain::Resource "Resources".
+        /// @brief Unloads all stored Resources.
         MOUNTAIN_API static void UnloadAll();
 
     private:
@@ -226,7 +222,7 @@ namespace Mountain
     template <Concepts::LoadableResource T>
     Pointer<T> ResourceManager::Load(const std::string& name, const bool_t loadInInterface)
     {
-        return Load<T>(FileManager::Get(name), loadInInterface);
+        return Load<T>(FileManager::Contains(name) ? FileManager::Get(name) : FileManager::Load(name), loadInInterface);
     }
 
     template <Concepts::Resource T>
@@ -281,7 +277,7 @@ namespace Mountain
     }
 
     template <Concepts::Resource T>
-    Pointer<T> ResourceManager::Find(const std::function<bool_t(Pointer<T>)>& predicate)
+    Pointer<T> ResourceManager::Find(const Predicate<Pointer<T>>& predicate)
     {
         for (const auto& val : m_Resources | std::views::values)
         {
@@ -296,7 +292,7 @@ namespace Mountain
     }
 
     template <Concepts::Resource T>
-    List<Pointer<T>> ResourceManager::FindAll(const std::function<bool_t(Pointer<T>)>& predicate)
+    List<Pointer<T>> ResourceManager::FindAll(const Predicate<Pointer<T>>& predicate)
     {
         List<Pointer<T>> result;
         FindAll<T>(predicate, &result);
@@ -304,7 +300,7 @@ namespace Mountain
     }
 
     template <Concepts::Resource T>
-    void ResourceManager::FindAll(const std::function<bool_t(Pointer<T>)>& predicate, List<Pointer<T>>* result)
+    void ResourceManager::FindAll(const Predicate<Pointer<T>>& predicate, List<Pointer<T>>* result)
     {
         result->Clear();
 
@@ -314,17 +310,6 @@ namespace Mountain
             if (r && predicate(r))
                 result->Add(r);
         }
-    }
-
-    template <Concepts::Resource T>
-    bool_t ResourceManager::IsResourceOfType(const std::string& name)
-    {
-        Pointer<T> resource = Get<T>(name);
-
-        if (resource.IsValid())
-            return true;
-
-        return false;
     }
 
     template <Concepts::Resource T>

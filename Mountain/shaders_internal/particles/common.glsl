@@ -2,8 +2,9 @@
 struct Particle
 {
     float lifetime;
-    //int padding0[3]; implicit padding here
 
+    float size;
+    //int padding0[2]; implicit padding here
     vec2 offset;
     vec2 velocity;
     vec4 color;
@@ -25,3 +26,4 @@ uniform float deltaTime;
 uniform float particleLifetime;
 uniform float particleSpeed;
 uniform vec4 particleStartColor;
+uniform float particleStartSize;

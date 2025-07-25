@@ -4,8 +4,6 @@
 
 #include <mimalloc.h>
 
-#include <ImGui/imgui_stdlib.h>
-
 #include <magic_enum/magic_enum.hpp>
 
 #include "Mountain/Screen.hpp"
@@ -14,7 +12,6 @@
 #include "Mountain/Input/Time.hpp"
 #include "Mountain/Resource/AudioTrack.hpp"
 #include "Mountain/Resource/Font.hpp"
-#include "Mountain/Resource/ResourceManager.hpp"
 #include "Mountain/Utils/FileSystemWatcher.hpp"
 
 using namespace Mountain;
@@ -410,7 +407,7 @@ void ImGuiUtils::ShowFileManager()
 
     ImGui::Separator();
 
-    for (Pointer file : FileManager::FindAll<File>([&] (Pointer<File> f) -> bool_t { return f->GetPathString().contains(filter); }))
+    for (Pointer file : FileManager::FindAll<File>([&] (Pointer<File> f) -> bool_t { return Utils::StringContainsIgnoreCase(f->GetPathString(), filter); }))
     {
         if (!ImGui::TreeNode(file->GetPathString().c_str()))
             continue;
@@ -704,6 +701,11 @@ void ImGuiUtils::DrawEasingFunction(const char_t* label, const Easing::Easer fun
     ImGui::PlotLines(label, data, pointCount, 0, nullptr, min, max, {100, 100});
 
     _freea(data);
+}
+
+void ImGuiUtils::OpenResourcePopupModal()
+{
+    ImGui::OpenPopup("ResourceFilter");
 }
 
 // ReSharper disable CppInconsistentNaming

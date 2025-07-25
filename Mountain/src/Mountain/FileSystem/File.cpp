@@ -43,7 +43,7 @@ bool_t File::Load()
 
     m_Data = new int8_t[m_Size];
 
-    file.read(reinterpret_cast<char*>(m_Data), m_Size);
+    file.read(reinterpret_cast<char_t*>(m_Data), m_Size);
 
     m_Loaded = true;
     return true;

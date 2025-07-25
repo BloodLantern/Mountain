@@ -21,10 +21,7 @@ public:
 
 	PostProcessingEffectsScene();
 
-	// We're only getting the effect shaders. No load occurs here, so we don't need to unload afterward
 	void LoadPersistentResources() override;
-
-	void LoadResources() override;
 
 	void Begin() override;
 
@@ -33,8 +30,6 @@ public:
 	void RenderImGui() override;
 
 	void End() override;
-
-	void UnloadResources() override;
 
 private:
 	Pointer<Texture> m_LandscapeTexture;

@@ -1,14 +1,16 @@
 #version 460
 
-in flat int particleAlive;
-in vec4 particleColor;
+in GeometryOut
+{
+    flat vec4 particleColor;
+    vec2 textureCoordinates;
+} shaderIn;
 
-out vec4 fragmentColor;
+out vec4 outFragmentColor;
+
+uniform sampler2D image;
 
 void main()
 {
-    if (particleAlive == 0)
-        discard;
-
-    fragmentColor = particleColor;
+    outFragmentColor = shaderIn.particleColor * texture(image, shaderIn.textureCoordinates);
 }

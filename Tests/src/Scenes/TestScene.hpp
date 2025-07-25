@@ -13,8 +13,6 @@ public:
 
     virtual void LoadPersistentResources();
 
-    virtual void UnloadPersistentResources();
-
     /// @brief Called right before @c Begin()
     virtual void LoadResources();
 

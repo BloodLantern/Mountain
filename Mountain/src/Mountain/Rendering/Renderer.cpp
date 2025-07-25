@@ -18,6 +18,7 @@
 #include "Mountain/Window.hpp"
 #include "Mountain/FileSystem/FileManager.hpp"
 #include "Mountain/Rendering/Draw.hpp"
+#include "Mountain/Rendering/ParticleSystem.hpp"
 #include "Mountain/Resource/ResourceManager.hpp"
 #include "Mountain/Utils/Logger.hpp"
 

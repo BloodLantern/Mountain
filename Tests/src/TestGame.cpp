@@ -46,6 +46,9 @@ TestGame::TestGame(const char_t* const windowTitle)
 
 void TestGame::LoadResources()
 {
+    FileManager::LoadDirectory("assets");
+    ResourceManager::LoadAll();
+
     // Each scene is responsible for loading and unloading resources
     m_Scenes.ForEach([](TestScene* scene) { scene->LoadPersistentResources(); });
 }
@@ -64,7 +67,6 @@ void TestGame::Shutdown()
     m_AssetsWatcher.Stop();
     m_ShadersWatcher.Stop();
 
-    m_Scenes.ForEach([](TestScene* scene) { scene->UnloadPersistentResources(); });
     m_Scenes.ForEach(OperationDelete<TestScene*>);
 }
 

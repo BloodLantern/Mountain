@@ -13,6 +13,7 @@ public:
 
 	ParticleSystemScene();
 
+private:
 	void Update() override;
 
 	void Render() override;
@@ -21,6 +22,5 @@ public:
 
 	void RenderImGui() override;
 
-private:
 	ParticleSystem m_ParticleSystem{ 1000 };
 };

@@ -10,17 +10,22 @@
 
 using namespace Mountain::ParticleSystemModules;
 
+ModuleBase::ModuleBase(const Types type)
+    : m_Type(type)
+{
+}
+
 void ModuleBase::RenderDebug(const ParticleSystem&, const Vector2) const
 {
 }
 
-bool_t ModuleBase::BeginImGui(uint32_t* const enabledModulesInt, const Types type) const
+bool_t ModuleBase::BeginImGui(Types* enabledModulesInt) const
 {
     ImGui::PushID(this);
 
-    ImGui::CheckboxFlags("##enabled", enabledModulesInt, static_cast<uint32_t>(type));
+    ImGui::CheckboxFlags("##enabled", reinterpret_cast<uint32_t*>(enabledModulesInt), static_cast<uint32_t>(m_Type));
     ImGui::SameLine();
-    const bool_t result = ImGui::TreeNode(std::string{magic_enum::enum_name(type)}.c_str());
+    const bool_t result = ImGui::TreeNode(std::string{magic_enum::enum_name(m_Type)}.c_str());
 
     if (!result)
         ImGui::PopID();
@@ -36,11 +41,8 @@ void ModuleBase::EndImGui() const
     ImGui::PopID();
 }
 
-void Shape::SetComputeShaderUniforms(const ComputeShader& computeShader, const Types enabledModules) const
+void Shape::SetComputeShaderUniforms(const ComputeShader& computeShader) const
 {
-    if (!(enabledModules & Types::Shape))
-        return;
-
     computeShader.SetUniform("shape.type", static_cast<uint32_t>(type));
 
     switch (type)
@@ -69,11 +71,8 @@ void Shape::SetComputeShaderUniforms(const ComputeShader& computeShader, const T
     computeShader.SetUniform("shape.scale", scale);
 }
 
-void Shape::RenderImGui(uint32_t* enabledModulesInt)
+void Shape::RenderImGui()
 {
-    if (!BeginImGui(enabledModulesInt, Types::Shape))
-        return;
-
     ImGui::ComboEnum("Type", &type);
 
     static constexpr auto ShapeArcRenderImGui = [](ShapeArc& arc)
@@ -109,8 +108,6 @@ void Shape::RenderImGui(uint32_t* enabledModulesInt)
     ImGui::DragFloat2("Scale", scale.Data(), 0.01f);
 
     ImGui::Checkbox("Show spawn area", &showSpawnArea);
-
-    EndImGui();
 }
 
 void Shape::RenderDebug(const ParticleSystem& system, const Vector2 renderTargetSizeDiff) const
@@ -145,46 +142,60 @@ void Shape::RenderDebug(const ParticleSystem& system, const Vector2 renderTarget
     }
 }
 
-void ColorOverLifetime::SetComputeShaderUniforms(const ComputeShader& computeShader, const Types enabledModules) const
+void ForceOverLifetime::SetComputeShaderUniforms(const ComputeShader& computeShader) const
 {
-    if (!(enabledModules & Types::ColorOverLifetime))
-        return;
-
-    computeShader.SetUniform("colorOverLifetime.target", target);
-    computeShader.SetUniform("colorOverLifetime.easingType", easingType);
-}
-
-void ColorOverLifetime::RenderImGui(uint32_t* const enabledModulesInt)
-{
-    if (!BeginImGui(enabledModulesInt, Types::ColorOverLifetime))
-        return;
-
-    ImGui::ColorEdit4("Target", target.Data());
-    ImGui::ComboEnum("Easing type", &easingType);
-
-    EndImGui();
-}
-
-void ForceOverLifetime::SetComputeShaderUniforms(const ComputeShader& computeShader, const Types enabledModules) const
-{
-    if (!(enabledModules & Types::ForceOverLifetime))
-        return;
-
     computeShader.SetUniform("forceOverLifetime.force", force);
     computeShader.SetUniform("forceOverLifetime.easingType", easingType);
 }
 
-void ForceOverLifetime::RenderImGui(uint32_t* enabledModulesInt)
+void ForceOverLifetime::RenderImGui()
 {
-    if (!BeginImGui(enabledModulesInt, Types::ForceOverLifetime))
-        return;
-
     Vector2 direction = force.Normalized();
     ImGuiUtils::DirectionVector("Direction", &direction);
     float_t strength = force.Length();
     ImGui::DragFloat("Strength", &strength);
     force = direction * (strength == 0.f ? 1.f : strength);
     ImGui::ComboEnum("Easing type", &easingType);
+}
 
-    EndImGui();
+void ColorOverLifetime::SetComputeShaderUniforms(const ComputeShader& computeShader) const
+{
+    computeShader.SetUniform("colorOverLifetime.colorMin", colorMin);
+    computeShader.SetUniform("colorOverLifetime.colorMax", colorMax);
+    computeShader.SetUniform("colorOverLifetime.easingType", easingType);
+}
+
+void ColorOverLifetime::RenderImGui()
+{
+    ImGui::ColorEdit4("Color min", colorMin.Data());
+    ImGui::ColorEdit4("Color max", colorMax.Data());
+    ImGui::ComboEnum("Easing type", &easingType);
+}
+
+void ColorBySpeed::SetComputeShaderUniforms(const ComputeShader& computeShader) const
+{
+    computeShader.SetUniform("colorBySpeed.colorMin", colorMin);
+    computeShader.SetUniform("colorBySpeed.colorMax", colorMax);
+    computeShader.SetUniform("colorBySpeed.speedMin", speedMin);
+    computeShader.SetUniform("colorBySpeed.speedMax", speedMax);
+    computeShader.SetUniform("colorBySpeed.easingType", easingType);
+}
+
+void ColorBySpeed::RenderImGui()
+{
+    ImGui::ColorEdit4("Color min", colorMin.Data());
+    ImGui::ColorEdit4("Color max", colorMax.Data());
+    ImGui::DragFloat("Speed min", &speedMin);
+    ImGui::DragFloat("Speed max", &speedMax);
+    ImGui::ComboEnum("Easing type", &easingType);
+}
+
+void Renderer::SetComputeShaderUniforms(const ComputeShader&) const
+{
+    // TODO
+}
+
+void Renderer::RenderImGui()
+{
+    ImGuiUtils::SelectResource("texture", &texture);
 }

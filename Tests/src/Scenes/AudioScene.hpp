@@ -15,7 +15,7 @@ public:
 
     AudioScene();
 
-    void LoadResources() override;
+    void LoadPersistentResources() override;
 
     void Begin() override;
 
@@ -26,8 +26,6 @@ public:
     void RenderImGui() override;
 
     void End() override;
-
-    void UnloadResources() override;
 
 private:
     Entity* m_MouseEntity = nullptr;

@@ -170,8 +170,11 @@ void ShaderBase::ReplaceIncludes(std::string& code, const std::filesystem::path&
         }
 
         Pointer file = FileManager::Get(filepath);
-        std::string fileContents{ file->GetData(), static_cast<size_t>(file->GetSize()) };
+        std::string fileContents{file->GetData(), static_cast<size_t>(file->GetSize())};
+        fileContents = Utils::RemoveByteOrderMark(fileContents);
+
         ReplaceIncludes(fileContents, filepath, replacedFiles);
+
         fileContents = std::format("// Include file '{0}' //\n{1}\n// End of include file '{0}' //\n", filename, fileContents);
         code.insert(offset, fileContents);
         replacedFiles.emplace(filepath);

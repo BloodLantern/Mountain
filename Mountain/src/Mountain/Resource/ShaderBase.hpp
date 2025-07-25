@@ -52,7 +52,7 @@ namespace Mountain
 		/// @brief Sets a Matrix (16 floats, 512 bits) variable in a shader
 		MOUNTAIN_API void SetUniform(const char_t* uniformName, const Matrix& value) const;
 
-		/// @brief Sets an enum (cast to a 32 bits unsigned integer) variable in a shader
+		/// @brief Sets an enum (cast to a 32-bit unsigned integer) variable in a shader
 		template <Concepts::Enum T>
 		void SetUniform(const char_t* uniformName, T value) const;
 

@@ -2,8 +2,11 @@
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Resource/ComputeShader.hpp"
+#include "Mountain/Resource/Texture.hpp"
 #include "Mountain/Utils/Color.hpp"
 #include "Mountain/Utils/Utils.hpp"
+
+#define PARTICLE_SYSTEM_MODULE_CONSTRUCTOR(type) type() : ::Mountain::ParticleSystemModules::ModuleBase(::Mountain::ParticleSystemModules::Types::type) {}
 
 namespace Mountain
 {
@@ -12,20 +15,31 @@ namespace Mountain
 
 namespace Mountain::ParticleSystemModules
 {
-    enum class MOUNTAIN_API Types : uint32_t // We might as well use an uint as it is the minimum amount of data we can transfer to the shader
+    enum class MOUNTAIN_API Types : uint32_t
     {
         None = 0,
 
-        Shape               = 1 << 0,
-        ForceOverLifetime   = 1 << 1,
-        ColorOverLifetime   = 1 << 2,
-        ColorBySpeed        = 1 << 3,
-        Noise               = 1 << 4,
-        Collision           = 1 << 5,
-        Lights              = 1 << 6,
-        Trails              = 1 << 7,
+        Shape                       = 1 << 0,
+        VelocityOverLifetime        = 1 << 1,
+        LimitVelocityOverLifetime   = 1 << 2,
+        InheritVelocity             = 1 << 3,
+        LifetimeByEmitterSpeed      = 1 << 4,
+        ForceOverLifetime           = 1 << 5,
+        ColorOverLifetime           = 1 << 6,
+        ColorBySpeed                = 1 << 7,
+        SizeOverLifetime            = 1 << 8,
+        SizeBySpeed                 = 1 << 9,
+        RotationOverLifetime        = 1 << 10,
+        RotationBySpeed             = 1 << 11,
+        Noise                       = 1 << 12,
+        Collision                   = 1 << 13,
+        SubEmitters                 = 1 << 14,
+        TextureSheetAnimation       = 1 << 15,
+        Lights                      = 1 << 16,
+        Trails                      = 1 << 17,
+        Renderer                    = 1 << 18,
 
-        Default = Shape,
+        Default = Shape | Renderer,
 
         All = 0xFFFFFFFF
     };
@@ -33,27 +47,33 @@ namespace Mountain::ParticleSystemModules
     class MOUNTAIN_API ModuleBase
     {
     public:
-        ModuleBase() = default;
+        explicit ModuleBase(Types type);
         virtual ~ModuleBase() = default;
         DEFAULT_COPY_MOVE_OPERATIONS(ModuleBase)
 
-        virtual void SetComputeShaderUniforms(const ComputeShader& computeShader, Types enabledModules) const = 0;
-        virtual void RenderImGui(uint32_t* enabledModulesInt) = 0;
+        virtual void SetComputeShaderUniforms(const ComputeShader& computeShader) const = 0;
+        virtual void RenderImGui() = 0;
         virtual void RenderDebug(const ParticleSystem& system, Vector2 renderTargetSizeDiff) const;
 
-    protected:
-        bool_t BeginImGui(uint32_t* enabledModulesInt, Types type) const;
+        GETTER(Types, Type, m_Type)
+
+    private:
+        bool_t BeginImGui(Types* enabledModulesInt) const;
         void EndImGui() const;
+
+        Types m_Type = Types::None;
+
+        friend ParticleSystem; // Needs to call BeginImGui() and EndImGui()
     };
 
-    enum class ShapeType : uint32_t  // NOLINT(performance-enum-size)
+    enum class ShapeType : uint8_t
     {
         Circle,
         Line,
         Rectangle,
     };
 
-    enum class ShapeArcMode : uint32_t  // NOLINT(performance-enum-size)
+    enum class ShapeArcMode : uint8_t
     {
         Random,
         Loop,
@@ -94,6 +114,8 @@ namespace Mountain::ParticleSystemModules
     public:
         using Base = ModuleBase;
 
+        PARTICLE_SYSTEM_MODULE_CONSTRUCTOR(Shape)
+
         ShapeType type = ShapeType::Circle;
 
         ShapeCircle circle;
@@ -110,21 +132,10 @@ namespace Mountain::ParticleSystemModules
 
         bool_t showSpawnArea = false;
 
-        MOUNTAIN_API void SetComputeShaderUniforms(const ComputeShader& computeShader, Types enabledModules) const override;
-        MOUNTAIN_API void RenderImGui(uint32_t* enabledModulesInt) override;
+    private:
+        MOUNTAIN_API void SetComputeShaderUniforms(const ComputeShader& computeShader) const override;
+        MOUNTAIN_API void RenderImGui() override;
         MOUNTAIN_API void RenderDebug(const ParticleSystem& system, Vector2 renderTargetSizeDiff) const override;
-    };
-
-    class MOUNTAIN_API ColorOverLifetime : public ModuleBase
-    {
-    public:
-        using Base = ModuleBase;
-
-        Color target = Color::Transparent();
-        Easing::Type easingType = Easing::Type::Linear;
-
-        void SetComputeShaderUniforms(const ComputeShader& computeShader, Types enabledModules) const override;
-        void RenderImGui(uint32_t* enabledModulesInt) override;
     };
 
     class MOUNTAIN_API ForceOverLifetime : public ModuleBase
@@ -132,11 +143,62 @@ namespace Mountain::ParticleSystemModules
     public:
         using Base = ModuleBase;
 
+        PARTICLE_SYSTEM_MODULE_CONSTRUCTOR(ForceOverLifetime)
+
         Vector2 force;
         Easing::Type easingType = Easing::Type::Linear;
 
-        void SetComputeShaderUniforms(const ComputeShader& computeShader, Types enabledModules) const override;
-        void RenderImGui(uint32_t* enabledModulesInt) override;
+    private:
+        void SetComputeShaderUniforms(const ComputeShader& computeShader) const override;
+        void RenderImGui() override;
+    };
+
+    class MOUNTAIN_API ColorOverLifetime : public ModuleBase
+    {
+    public:
+        using Base = ModuleBase;
+
+        PARTICLE_SYSTEM_MODULE_CONSTRUCTOR(ColorOverLifetime)
+
+        Color colorMin = Color::White();
+        Color colorMax = Color::White();
+        Easing::Type easingType = Easing::Type::Linear;
+
+    private:
+        void SetComputeShaderUniforms(const ComputeShader& computeShader) const override;
+        void RenderImGui() override;
+    };
+
+    class MOUNTAIN_API ColorBySpeed : public ModuleBase
+    {
+    public:
+        using Base = ModuleBase;
+
+        PARTICLE_SYSTEM_MODULE_CONSTRUCTOR(ColorBySpeed)
+
+        Color colorMin = Color::White();
+        Color colorMax = Color::White();
+        float_t speedMin = 0.f;
+        float_t speedMax = 1.f;
+        Easing::Type easingType = Easing::Type::Linear;
+
+    private:
+        void SetComputeShaderUniforms(const ComputeShader& computeShader) const override;
+        void RenderImGui() override;
+    };
+
+    class Renderer : public ModuleBase
+    {
+    public:
+        using Base = ModuleBase;
+
+        PARTICLE_SYSTEM_MODULE_CONSTRUCTOR(Renderer)
+
+        Pointer<Texture> texture;
+
+    private:
+        void SetComputeShaderUniforms(const ComputeShader& computeShader) const override;
+        void RenderImGui() override;
     };
 }
 

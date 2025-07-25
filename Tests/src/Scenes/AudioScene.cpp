@@ -27,11 +27,13 @@ AudioScene::AudioScene()
     m_AudioListenerEntity->position = Window::GetSize() * 0.5f;
 }
 
-void AudioScene::LoadResources()
+void AudioScene::LoadPersistentResources()
 {
-    m_AudioPlayTrack = ResourceManager::Load<AudioTrack>(FileManager::Load("assets/metal-pipe.wav"));
-    m_StereoAudioTrack = ResourceManager::Load<AudioTrack>(FileManager::Load("assets/music.mp3"));
-    m_AudioSourceTrack = ResourceManager::Load<AudioTrack>(FileManager::Load("assets/sfx.ogg"));
+    TestScene::LoadPersistentResources();
+
+    m_AudioPlayTrack = ResourceManager::Get<AudioTrack>("assets/metal-pipe.wav");
+    m_StereoAudioTrack = ResourceManager::Get<AudioTrack>("assets/music.mp3");
+    m_AudioSourceTrack = ResourceManager::Get<AudioTrack>("assets/sfx.ogg");
 
     m_AudioSource->audioTrack = m_AudioSourceTrack;
 }
@@ -110,19 +112,4 @@ void AudioScene::End()
     // TODO - Stop m_AudioSource
 
     TestScene::End();
-}
-
-void AudioScene::UnloadResources()
-{
-    const Pointer<File> audioPlayTrackFile = m_AudioPlayTrack->GetFile();
-    const Pointer<File> stereoAudioTrackFile = m_StereoAudioTrack->GetFile();
-    const Pointer<File> audioSourceTrackFile = m_AudioSourceTrack->GetFile();
-
-    ResourceManager::Unload(m_AudioPlayTrack);
-    ResourceManager::Unload(m_StereoAudioTrack);
-    ResourceManager::Unload(m_AudioSourceTrack);
-
-    FileManager::Unload(audioPlayTrackFile);
-    FileManager::Unload(stereoAudioTrackFile);
-    FileManager::Unload(audioSourceTrackFile);
 }

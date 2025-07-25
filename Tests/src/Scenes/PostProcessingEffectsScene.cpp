@@ -25,11 +25,8 @@ void PostProcessingEffectsScene::LoadPersistentResources()
     m_Mosaic.effect.LoadResources();
     m_Greyscale.effect.LoadResources();
     m_Negative.effect.LoadResources();
-}
 
-void PostProcessingEffectsScene::LoadResources()
-{
-    m_LandscapeTexture = ResourceManager::Load<Texture>(FileManager::Load("assets/landscape.jpg"));
+    m_LandscapeTexture = ResourceManager::Get<Texture>("assets/landscape.jpg");
 }
 
 void PostProcessingEffectsScene::Begin()
@@ -166,13 +163,6 @@ void PostProcessingEffectsScene::End()
     m_IntermediateTexture.Delete();
 
     TestScene::End();
-}
-
-void PostProcessingEffectsScene::UnloadResources()
-{
-    const Pointer<File> file = m_LandscapeTexture->GetFile();
-    ResourceManager::Unload(m_LandscapeTexture);
-    FileManager::Unload(file);
 }
 
 void PostProcessingEffectsScene::UpdateIntermediateTexture() const

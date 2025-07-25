@@ -59,7 +59,7 @@ Pointer<Font> ResourceManager::LoadFont(const Pointer<File>& file, const uint32_
 
 Pointer<Font> ResourceManager::LoadFont(const std::string& name, const uint32_t size)
 {
-    return LoadFont(FileManager::Get(name), size);
+    return LoadFont(FileManager::Contains(name) ? FileManager::Get(name) : FileManager::Load(name), size);
 }
 
 void ResourceManager::LoadAll()
@@ -96,7 +96,11 @@ void ResourceManager::LoadAll()
     {
         std::string&& extension = file->GetExtension();
 
-        if (Mountain::Contains(Shader::VertexFileExtensions, extension) || Mountain::Contains(Shader::FragmentFileExtensions, extension))
+        if (
+            Mountain::Contains(Shader::VertexFileExtensions, extension) ||
+            Mountain::Contains(Shader::FragmentFileExtensions, extension) ||
+            Mountain::Contains(Shader::GeometryFileExtensions, extension)
+        )
         {
             Pointer<Shader> shader;
 

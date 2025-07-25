@@ -67,7 +67,8 @@ namespace Mountain::Graphics
     enum class ShaderType : uint8_t
     {
         Vertex,
-        Fragment
+        Fragment,
+        Geometry
     };
 
     enum class InternalFormat : uint8_t
