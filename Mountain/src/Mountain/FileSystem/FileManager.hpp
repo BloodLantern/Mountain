@@ -77,7 +77,7 @@ namespace Mountain
         /// returned @c false, instead return a null Pointer.
         template <Concepts::Entry T = File>
         ATTRIBUTE_NODISCARD
-        static Pointer<T> Find(const std::function<bool_t(const Pointer<T>& element)>& predicate);
+        static Pointer<T> Find(const Predicate<Pointer<T>>& predicate);
 
         /// @brief Finds all @ref Entry "Entries" of type @p T.
         /// @tparam T The type of Entry to find.
@@ -98,11 +98,11 @@ namespace Mountain
         /// returned @c false, instead return a null Pointer.
         template <Concepts::Entry T = File>
         ATTRIBUTE_NODISCARD
-        static List<Pointer<T>> FindAll(const std::function<bool_t(const Pointer<T>& element)>& predicate);
+        static List<Pointer<T>> FindAll(const Predicate<Pointer<T>>& predicate);
 
         /// @see FileManager::FindAll(std::function<bool(Pointer<T>)>&&)
         template <Concepts::Entry T = File>
-        static void FindAll(const std::function<bool_t(const Pointer<T>& element)>& predicate, List<Pointer<T>>* result);
+        static void FindAll(const Predicate<Pointer<T>>& predicate, List<Pointer<T>>* result);
 
         /// @brief Unloads the Entry corresponding to the given path.
         MOUNTAIN_API static void Unload(const std::filesystem::path& path);

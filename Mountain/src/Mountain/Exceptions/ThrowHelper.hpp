@@ -26,7 +26,7 @@
     do \
     { \
         const auto ex = __VA_ARGS__; \
-        static_assert(::Mountain::Meta::IsException<decltype(ex)>, "The argument of THROW must be an exception value"); \
+        static_assert(::Mountain::Meta::IsException<DECLARING_TYPE(ex)>, "The argument of THROW must be an exception value"); \
         ::Mountain::SetCurrentExceptionState(__FUNCTION__, __FILE__, __LINE__); \
         throw ex; \
     } \
@@ -35,7 +35,7 @@
 #define ENSURE_NOT_NULL(pointerParameter) \
     do \
     { \
-        static_assert(::Mountain::Meta::IsPointer<decltype(pointerParameter)>, "The argument of ENSURE_NOT_NULL must be a pointer"); \
+        static_assert(::Mountain::Meta::IsPointer<DECLARING_TYPE(pointerParameter)>, "The argument of ENSURE_NOT_NULL must be a pointer"); \
         if (!(pointerParameter)) \
             THROW(ArgumentNullException{"Parameter " #pointerParameter " cannot be null", #pointerParameter}); \
     } \

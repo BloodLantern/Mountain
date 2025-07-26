@@ -147,22 +147,14 @@ namespace Mountain
     {
         ENSURE_NOT_NULL(value);
 
-        ImGui::SetNextWindowSizeConstraints({200.f, 200.f}, {-1.f, -1.f});
+        ImGui::SetNextWindowSizeConstraints({300.f, 300.f}, {-1.f, -1.f});
 
         if (!ImGui::BeginPopupModal("ResourceFilter"))
             return;
 
         static std::string filter;
 
-        if (ImGui::IsWindowAppearing())
-        {
-            filter = "";
-            ImGui::SetKeyboardFocusHere(); // Focus the filter input text
-        }
-
-        ImGui::InputText("Filter", &filter);
-
-        ImGui::Separator();
+        static size_t selectedIndex = 0;
 
         List<Pointer<T>> resources = ResourceManager::FindAll<T>(
             [&](const Pointer<T>& resource)
@@ -171,15 +163,50 @@ namespace Mountain
             }
         );
 
-        Pointer<T> selectedResource;
-        for (const Pointer<T>& resource : resources)
+        if (ImGui::IsWindowAppearing())
         {
-            if (ImGui::Selectable(resource->GetName().c_str()))
+            filter = "";
+            ImGui::SetKeyboardFocusHere(); // Focus the filter input text
+
+            selectedIndex = 0;
+
+            if (*value)
+            {
+                for (size_t i = 0; i < resources.GetSize(); i++)
+                {
+                    if (resources[i] != *value)
+                        continue;
+
+                    selectedIndex = i;
+                    break;
+                }
+            }
+        }
+
+        if (ImGui::InputText("Filter", &filter))
+            selectedIndex = 0;
+
+        ImGui::Separator();
+
+        if (ImGui::IsKeyPressed(ImGuiKey_DownArrow))
+            selectedIndex = (selectedIndex + 1) % resources.GetSize();
+        if (ImGui::IsKeyPressed(ImGuiKey_UpArrow))
+            selectedIndex = (selectedIndex - 1) % resources.GetSize();
+
+        Pointer<T> selectedResource;
+        for (size_t i = 0; i < resources.GetSize(); i++)
+        {
+            const Pointer<T>& resource = resources[i];
+
+            if (ImGui::Selectable(resource->GetName().c_str(), resource == resources[selectedIndex]))
             {
                 selectedResource = resource;
                 break;
             }
         }
+
+        if (resources.IsValidIndex(selectedIndex) && (ImGui::IsKeyPressed(ImGuiKey_Enter) || ImGui::IsKeyPressed(ImGuiKey_KeypadEnter)))
+            selectedResource = resources[selectedIndex];
 
         if (selectedResource != nullptr)
         {
@@ -187,8 +214,15 @@ namespace Mountain
             ImGui::CloseCurrentPopup();
         }
 
-        if (ImGui::IsKeyPressed(ImGuiKey_Escape))
+        // If pressed escape or clicked outside the popup window, close the popup
+        if (ImGui::IsKeyPressed(ImGuiKey_Escape) ||
+            (ImGui::IsMouseClicked(ImGuiMouseButton_Left) &&
+                !(ImGui::IsWindowHovered(ImGuiHoveredFlags_RootAndChildWindows) || ImGui::IsAnyItemHovered())
+            )
+        )
+        {
             ImGui::CloseCurrentPopup();
+        }
 
         ImGui::EndPopup();
     }
@@ -217,19 +251,23 @@ namespace Mountain
             ImGui::Text("No resource");
         }
 
-        // Pop up context to clear the resource
-        if (ImGui::BeginPopupContextItem("RemoveResource"))
-        {
-            if (ImGui::Selectable("Remove"))
-                *value = nullptr;
+        ImGui::SameLine();
 
-            ImGui::EndPopup();
-        }
+        if (ImGui::Button("..."))
+            OpenResourcePopupModal();
 
         ImGui::SameLine();
 
-        if (ImGui::Button("+"))
-            OpenResourcePopupModal();
+        const bool_t resetButtonDisabled = *value == nullptr;
+
+        if (resetButtonDisabled)
+            ImGui::BeginDisabled();
+
+        if (ImGui::Button("Reset"))
+            *value = nullptr;
+
+        if (resetButtonDisabled)
+            ImGui::EndDisabled();
 
         FilterResourcePopupModal(value);
 

@@ -16,7 +16,7 @@
     ATTRIBUTE_NODISCARD \
     float_t Average() const { return ::Mountain::Average<::Mountain::Meta::RemoveCvRefSpecifier<decltype(*this)>, T>(*this); } \
     \
-    template <typename EnumerableT, typename = ::Mountain::Meta::EnableIf<Meta::IsSame<EnumeratedType, Meta::EnumerableType<EnumerableT>>>> \
+    template <::Mountain::Requirements::MountainEnumerable EnumerableT, typename = ::Mountain::Meta::EnableIf<Meta::IsSame<EnumeratedType, ::Mountain::Meta::EnumerableType<EnumerableT>>>> \
     ATTRIBUTE_NODISCARD \
     List<EnumeratedType> Concat(const EnumerableT& enumerable) const { return ::Mountain::Concat(*this, enumerable); } \
     \
@@ -62,7 +62,9 @@
     \
     template <typename = ::Mountain::Meta::EnableIf< \
         ::Mountain::Meta::IsSortable<Iterator, ::Mountain::Comparer<EnumeratedType>, ::Mountain::Identity>>> \
-    void Sort(const ::Mountain::Comparer<EnumeratedType>& comparer) { return ::Mountain::Sort(*this, comparer); }
+    void Sort(const ::Mountain::Comparer<EnumeratedType>& comparer) { return ::Mountain::Sort(*this, comparer); } \
+    \
+    bool_t IsValidIndex(const size_t index) const { return ::Mountain::IsValidIndex(*this, index); }
 
 namespace Mountain
 {
@@ -108,7 +110,7 @@ namespace Mountain
 
     template <Requirements::MountainEnumerable EnumerableT, typename T = Meta::EnumerableType<EnumerableT>>
     ATTRIBUTE_NODISCARD
-    bool_t Contains(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate); // TODO : Maybe add MetaIdentity
+    bool_t Contains(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate);
 
     template <Requirements::MountainEnumerable EnumerableT, typename T = Meta::EnumerableType<EnumerableT>>
     ATTRIBUTE_NODISCARD
@@ -179,12 +181,15 @@ namespace Mountain
         typename T = Meta::MountainEnumerableType<EnumerableT>,
         typename = Meta::EnableIf<Meta::IsSortable<typename EnumerableT::Iterator, Comparer<T>, Identity>>>
     void Sort(EnumerableT& enumerable, const Comparer<Meta::Identity<T>>& comparer);
+
+    template <Requirements::MountainEnumerable EnumerableT>
+    bool_t IsValidIndex(const EnumerableT& enumerable, size_t index);
 }
 
 // Start of EnumerableExt.inl
 
-#include "Mountain/Containers/List.hpp"
 #include "Mountain/Containers/Array.hpp"
+#include "Mountain/Containers/List.hpp"
 
 namespace Mountain
 {
@@ -203,7 +208,7 @@ namespace Mountain
     template <Requirements::MountainEnumerable EnumerableT, typename T>
     bool_t Any(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate)
     {
-        for (const T& e : enumerable)
+        for (const T& e : enumerable)  // NOLINT(readability-use-anyofallof)
         {
             if (predicate(e))
                 return true;
@@ -225,8 +230,7 @@ namespace Mountain
         return result / GetSize(enumerable);
     }
 
-    template <Requirements::MountainEnumerable EnumerableT, Requirements::MountainEnumerable EnumerableU, typename T,
-        typename>
+    template <Requirements::MountainEnumerable EnumerableT, Requirements::MountainEnumerable EnumerableU, typename T, typename>
     List<T> Concat(const EnumerableT& firstEnumerable, const EnumerableU& secondEnumerable)
     {
         List<T>result;
@@ -241,7 +245,7 @@ namespace Mountain
     template <typename T, size_t Size>
     Array<T, Size * 2> Concat(const Array<T, Size>& firstEnumerable, const Array<T, Size>& secondEnumerable)
     {
-        Array<T, Size *2> result;
+        Array<T, Size * 2> result;
         size_t i = 0;
 
         for (const T& e : firstEnumerable)
@@ -426,5 +430,11 @@ namespace Mountain
     void Sort(EnumerableT& enumerable, const Comparer<Meta::Identity<T>>& comparer)
     {
         std::ranges::sort(enumerable, comparer);
+    }
+
+    template <Requirements::MountainEnumerable EnumerableT>
+    bool_t IsValidIndex(const EnumerableT& enumerable, const size_t index)
+    {
+        return !IsEmpty(enumerable) && index < GetSize(enumerable);
     }
 }

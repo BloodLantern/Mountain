@@ -13,6 +13,8 @@
 #include <Math/vector2.hpp>
 #include <Math/vector3.hpp>
 
+#define DECLARING_TYPE(value) ::Mountain::Meta::RemoveCvRefSpecifier<decltype(value)>
+
 namespace Mountain
 {
     class Entity;
@@ -180,13 +182,16 @@ namespace Mountain
         template <typename T>
         using RemoveReferenceSpecifier = std::remove_reference_t<T>;
 
-        /// @brief Removes any const, volatile and reference specifications from @p T
+        /// @brief Removes any const, volatile, and reference specifications from @p T
         template <typename T>
         using RemoveCvRefSpecifier = RemoveCvSpecifier<RemoveReferenceSpecifier<T>>;
 
-        /// @brief Removes any const, volatile and pointer specifications from @p T
+        /// @brief Removes any const, volatile, and pointer specifications from @p T
         template <typename T>
         using RemoveCvPointerSpecifier = RemoveCvSpecifier<RemovePointerSpecifier<T>>;
+
+        template <auto Value>
+        using DeclaringType = RemoveCvRefSpecifier<decltype(Value)>;
 
         /// @brief Checks whether the type is a @c std::function
         template <typename>
