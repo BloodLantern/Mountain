@@ -15,6 +15,14 @@ ModuleBase::ModuleBase(const Types type)
 {
 }
 
+void ModuleBase::SetComputeShaderUniforms(const ComputeShader& computeShader) const
+{
+}
+
+void ModuleBase::SetDrawShaderUniforms(const Shader& drawShader) const
+{
+}
+
 void ModuleBase::RenderDebug(const ParticleSystem&, const Vector2) const
 {
 }
@@ -188,11 +196,6 @@ void ColorBySpeed::RenderImGui()
     ImGui::DragFloat("Speed min", &speedMin);
     ImGui::DragFloat("Speed max", &speedMax);
     ImGui::ComboEnum("Easing type", &easingType);
-}
-
-void Renderer::SetComputeShaderUniforms(const ComputeShader&) const
-{
-    // TODO
 }
 
 void Renderer::RenderImGui()

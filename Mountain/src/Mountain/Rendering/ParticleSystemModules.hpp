@@ -2,6 +2,7 @@
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Resource/ComputeShader.hpp"
+#include "Mountain/Resource/Shader.hpp"
 #include "Mountain/Resource/Texture.hpp"
 #include "Mountain/Utils/Color.hpp"
 #include "Mountain/Utils/Utils.hpp"
@@ -51,7 +52,8 @@ namespace Mountain::ParticleSystemModules
         virtual ~ModuleBase() = default;
         DEFAULT_COPY_MOVE_OPERATIONS(ModuleBase)
 
-        virtual void SetComputeShaderUniforms(const ComputeShader& computeShader) const = 0;
+        virtual void SetComputeShaderUniforms(const ComputeShader& computeShader) const;
+        virtual void SetDrawShaderUniforms(const Shader& drawShader) const;
         virtual void RenderImGui() = 0;
         virtual void RenderDebug(const ParticleSystem& system, Vector2 renderTargetSizeDiff) const;
 
@@ -197,7 +199,6 @@ namespace Mountain::ParticleSystemModules
         Pointer<Texture> texture;
 
     private:
-        void SetComputeShaderUniforms(const ComputeShader& computeShader) const override;
         void RenderImGui() override;
     };
 }
