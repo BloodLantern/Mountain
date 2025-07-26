@@ -282,7 +282,6 @@
     <ClInclude Include="src\Mountain\Input\MouseInput.hpp" />
     <ClInclude Include="src\Mountain\Input\Time.hpp" />
     <ClInclude Include="src\Mountain\PrecompiledHeader.hpp" />
-    <ClInclude Include="src\Mountain\ProfilerHeader.hpp" />
     <ClInclude Include="src\Mountain\Rendering\Draw.hpp" />
     <ClInclude Include="src\Mountain\Rendering\Effect.hpp" />
     <ClInclude Include="src\Mountain\Rendering\GpuBuffer.hpp" />
@@ -523,7 +522,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>.;src;externals\src;..\MathToolbox\src;..\Profiler</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;externals\src;..\MathToolbox\src;..\Profiler\src</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <AdditionalOptions>/Gw %(AdditionalOptions)</AdditionalOptions>
@@ -556,7 +555,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>src;externals\src;..\MathToolbox\src;..\Profiler</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;externals\src;..\MathToolbox\src;..\Profiler\src</AdditionalIncludeDirectories>
       <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>Mountain/PrecompiledHeader.hpp</PrecompiledHeaderFile>

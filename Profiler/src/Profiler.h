@@ -1,3 +1,5 @@
+#pragma once
+
 // The following ifdef block is the standard way of creating macros which make exporting
 // from a DLL simpler. All files within this DLL are compiled with the PROFILER_EXPORTS
 // symbol defined on the command line. This symbol should not be defined on any project
@@ -15,12 +17,11 @@
 #if PROFILING
 	#define TRACY_IMPORTS
 	#define TRACY_ENABLE
-#  pragma comment(lib, "Profiler.lib")
+	#pragma comment(lib, "Profiler.lib")
 #endif // PROFILING
 
-#include "src/tracy/Tracy.hpp"
+#include "tracy/Tracy.hpp"
 
 #ifdef __glad_h_
 
 #endif // __glad_h_
-

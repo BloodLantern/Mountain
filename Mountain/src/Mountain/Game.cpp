@@ -4,6 +4,7 @@
 
 #include <mimalloc.h>
 
+#include "Mountain/Configuration.hpp"
 #include "Mountain/Window.hpp"
 #include "Mountain/Audio/Audio.hpp"
 #include "Mountain/Input/Input.hpp"
@@ -14,7 +15,8 @@
 #include "Mountain/Utils/Logger.hpp"
 #include "Mountain/Utils/MessageBox.hpp"
 
-#include "ProfilerHeader.hpp"
+#include "Profiler.h"
+
 
 using namespace Mountain;
 

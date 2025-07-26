@@ -1,2 +1,0 @@
-#define PROFILER_API __declspec(dllexport)
-#define PROFILER_API __declspec(dllimport)
