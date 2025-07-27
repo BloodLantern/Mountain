@@ -23,10 +23,9 @@ float RemapValue(in float oldValue, in vec2 oldRange, in vec2 newRange)
     return RemapValue(oldValue, oldRange.x, oldRange.y, newRange.x, newRange.y);
 }
 
-vec2 Rotated(in vec2 value, in float c, in float s)
-{
-    return vec2(value.x * c - value.y * s, value.x * s + value.y * c);
-}
+vec2 Rotated(in vec2 value, in float c, in float s) { return vec2(value.x * c - value.y * s, value.x * s + value.y * c); }
+
+vec2 Rotated(in vec2 value, in vec2 cs) { return Rotated(value, cs.x, cs.y); }
 
 vec2 Rotated(in vec2 value, in float angle) { return Rotated(value, cos(angle), sin(angle)); }
 

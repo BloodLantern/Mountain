@@ -15,11 +15,11 @@ ModuleBase::ModuleBase(const Types type)
 {
 }
 
-void ModuleBase::SetComputeShaderUniforms(const ComputeShader& computeShader) const
+void ModuleBase::SetComputeShaderUniforms(const ComputeShader&) const
 {
 }
 
-void ModuleBase::SetDrawShaderUniforms(const Shader& drawShader) const
+void ModuleBase::SetDrawShaderUniforms(const Shader&) const
 {
 }
 
@@ -175,8 +175,8 @@ void ColorOverLifetime::SetComputeShaderUniforms(const ComputeShader& computeSha
 
 void ColorOverLifetime::RenderImGui()
 {
-    ImGui::ColorEdit4("Color min", colorMin.Data());
-    ImGui::ColorEdit4("Color max", colorMax.Data());
+    ImGui::ColorEdit4("Start color", colorMin.Data());
+    ImGui::ColorEdit4("End color", colorMax.Data());
     ImGui::ComboEnum("Easing type", &easingType);
 }
 

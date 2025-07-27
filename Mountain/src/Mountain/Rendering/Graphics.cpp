@@ -27,30 +27,30 @@ void Graphics::SynchronizeGpuData(const GpuDataSynchronizationFlags flags) { glM
 
 void Graphics::MemoryBarrier(const MemoryBarrierFlags flags) { glMemoryBarrier(static_cast<GLbitfield>(flags)); }
 
-void Graphics::DrawArrays(const DrawMode mode, const int32_t first, const int32_t count)
+void Graphics::DrawArrays(const DrawMode mode, const int32_t first, const int32_t vertexCount)
 {
-    glDrawArrays(ToOpenGl(mode), first, count);
+    glDrawArrays(ToOpenGl(mode), first, vertexCount);
 }
 
-void Graphics::DrawArraysInstanced(const DrawMode mode, const int32_t first, const int32_t count, const int32_t instanceCount)
+void Graphics::DrawArraysInstanced(const DrawMode mode, const int32_t first, const int32_t vertexCount, const int32_t instanceCount)
 {
-    glDrawArraysInstanced(ToOpenGl(mode), first, count, instanceCount);
+    glDrawArraysInstanced(ToOpenGl(mode), first, vertexCount, instanceCount);
 }
 
-void Graphics::DrawElements(const DrawMode mode, const int32_t count, const DataType type, const void* indices)
+void Graphics::DrawElements(const DrawMode mode, const int32_t vertexCount, const DataType type, const void* indices)
 {
-    glDrawElements(ToOpenGl(mode), count, ToOpenGl(type), indices);
+    glDrawElements(ToOpenGl(mode), vertexCount, ToOpenGl(type), indices);
 }
 
 void Graphics::DrawElementsInstanced(
     const DrawMode mode,
-    const int32_t count,
+    const int32_t vertexCount,
     const DataType type,
     const void* indices,
     const int32_t instanceCount
 )
 {
-    glDrawElementsInstanced(ToOpenGl(mode), count, ToOpenGl(type), indices, instanceCount);
+    glDrawElementsInstanced(ToOpenGl(mode), vertexCount, ToOpenGl(type), indices, instanceCount);
 }
 
 void Graphics::SetClearColor(const Color& newClearColor)

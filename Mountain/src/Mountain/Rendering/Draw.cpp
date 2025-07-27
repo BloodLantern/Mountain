@@ -425,45 +425,8 @@ void Draw::DrawList::Clear()
 
 void Draw::Initialize()
 {
-    m_RectangleEbo.Create();
     m_Vbo.Create();
-    m_RectangleVbo.Create();
-    m_TextureVbo.Create();
-    m_TextVbo.Create();
-    m_RenderTargetVbo.Create();
-    m_RenderTargetSsbo.Create();
-
-    m_PointVao.Create();
-    m_LineVao.Create();
-    m_LineColoredVao.Create();
-    m_TriangleVao.Create();
-    m_TriangleColoredVao.Create();
-    m_RectangleVao.Create();
-    m_CircleVao.Create();
-    m_ArcVao.Create();
-    m_TextureVao.Create();
-    m_TextVao.Create();
-    m_RenderTargetVao.Create();
-
-    m_RectangleEbo.SetDebugName("Rectangle EBO");
     m_Vbo.SetDebugName("Global VBO");
-    m_RectangleVbo.SetDebugName("Rectangle VBO");
-    m_TextureVbo.SetDebugName("Texture VBO");
-    m_TextVbo.SetDebugName("Text VBO");
-    m_RenderTargetVbo.SetDebugName("RenderTarget VBO");
-    m_RenderTargetSsbo.SetDebugName("RenderTarget SSBO");
-
-    m_PointVao.SetDebugName("Point VAO");
-    m_LineVao.SetDebugName("Line VAO");
-    m_LineColoredVao.SetDebugName("Line Colored VAO");
-    m_TriangleVao.SetDebugName("Triangle VAO");
-    m_TriangleColoredVao.SetDebugName("Triangle Colored VAO");
-    m_RectangleVao.SetDebugName("Rectangle VAO");
-    m_CircleVao.SetDebugName("Circle VAO");
-    m_ArcVao.SetDebugName("Arc VAO");
-    m_TextureVao.SetDebugName("Texture VAO");
-    m_TextVao.SetDebugName("Text VAO");
-    m_RenderTargetVao.SetDebugName("RenderTarget VAO");
 
     InitializePointBuffers();
     InitializeLineBuffers();
@@ -476,6 +439,7 @@ void Draw::Initialize()
     InitializeTextureBuffers();
     InitializeTextBuffers();
     InitializeRenderTargetBuffers();
+    InitializeParticleBuffers();
 
     Graphics::BindVertexArray(0);
     BindBuffer(Graphics::BufferType::ArrayBuffer, 0);
@@ -522,10 +486,14 @@ void Draw::Shutdown()
     m_TextureVao.Delete();
     m_TextVao.Delete();
     m_RenderTargetVao.Delete();
+    m_ParticleVao.Delete();
 }
 
 void Draw::InitializePointBuffers()
 {
+    m_PointVao.Create();
+    m_PointVao.SetDebugName("Point VAO");
+
     BindVertexArray(m_PointVao);
 
     BindBuffer(Graphics::BufferType::ArrayBuffer, m_Vbo);
@@ -539,6 +507,9 @@ void Draw::InitializePointBuffers()
 
 void Draw::InitializeLineBuffers()
 {
+    m_LineVao.Create();
+    m_LineVao.SetDebugName("Line VAO");
+
     BindVertexArray(m_LineVao);
 
     BindBuffer(Graphics::BufferType::ArrayBuffer, m_Vbo);
@@ -553,6 +524,9 @@ void Draw::InitializeLineBuffers()
 
 void Draw::InitializeLineColoredBuffers()
 {
+    m_LineColoredVao.Create();
+    m_LineColoredVao.SetDebugName("Line Colored VAO");
+
     BindVertexArray(m_LineColoredVao);
 
     BindBuffer(Graphics::BufferType::ArrayBuffer, m_Vbo);
@@ -568,6 +542,9 @@ void Draw::InitializeLineColoredBuffers()
 
 void Draw::InitializeTriangleBuffers()
 {
+    m_TriangleVao.Create();
+    m_TriangleVao.SetDebugName("Triangle VAO");
+
     BindVertexArray(m_TriangleVao);
 
     BindBuffer(Graphics::BufferType::ArrayBuffer, m_Vbo);
@@ -583,6 +560,9 @@ void Draw::InitializeTriangleBuffers()
 
 void Draw::InitializeTriangleColoredBuffers()
 {
+    m_TriangleColoredVao.Create();
+    m_TriangleColoredVao.SetDebugName("Triangle Colored VAO");
+
     BindVertexArray(m_TriangleColoredVao);
 
     BindBuffer(Graphics::BufferType::ArrayBuffer, m_Vbo);
@@ -600,6 +580,13 @@ void Draw::InitializeTriangleColoredBuffers()
 
 void Draw::InitializeRectangleBuffers()
 {
+    m_RectangleEbo.Create();
+    m_RectangleEbo.SetDebugName("Rectangle EBO");
+    m_RectangleVbo.Create();
+    m_RectangleVbo.SetDebugName("Rectangle VBO");
+    m_RectangleVao.Create();
+    m_RectangleVao.SetDebugName("Rectangle VAO");
+
     constexpr Array vertexData{
         0.f, 0.f,
         1.f, 0.f,
@@ -607,9 +594,9 @@ void Draw::InitializeRectangleBuffers()
         0.f, 1.f
     };
 
-    constexpr Array<uint32_t, 6> indexData{
-        0, 1, 2,
-        2, 3, 0
+    constexpr Array indexData{
+        0u, 1u, 2u,
+        2u, 3u, 0u
     };
 
     BindVertexArray(m_RectangleVao);
@@ -640,6 +627,9 @@ void Draw::InitializeRectangleBuffers()
 
 void Draw::InitializeCircleBuffers()
 {
+    m_CircleVao.Create();
+    m_CircleVao.SetDebugName("Circle VAO");
+
     BindVertexArray(m_CircleVao);
 
     // VBO
@@ -675,6 +665,9 @@ void Draw::InitializeCircleBuffers()
 
 void Draw::InitializeArcBuffers()
 {
+    m_ArcVao.Create();
+    m_ArcVao.SetDebugName("Arc VAO");
+
     BindVertexArray(m_ArcVao);
 
     // VBO
@@ -714,6 +707,11 @@ void Draw::InitializeArcBuffers()
 
 void Draw::InitializeTextureBuffers()
 {
+    m_TextureVbo.Create();
+    m_TextureVbo.SetDebugName("Texture VBO");
+    m_TextureVao.Create();
+    m_TextureVao.SetDebugName("Texture VAO");
+
     constexpr Array vertexData = {
         0.f, 0.f,
         1.f, 0.f,
@@ -753,6 +751,11 @@ void Draw::InitializeTextureBuffers()
 
 void Draw::InitializeTextBuffers()
 {
+    m_TextVbo.Create();
+    m_TextVbo.SetDebugName("Text VBO");
+    m_TextVao.Create();
+    m_TextVao.SetDebugName("Text VAO");
+
     BindVertexArray(m_TextVao);
     BindBuffer(Graphics::BufferType::ElementArrayBuffer, m_RectangleEbo);
     BindBuffer(Graphics::BufferType::ArrayBuffer, m_TextVbo);
@@ -763,6 +766,13 @@ void Draw::InitializeTextBuffers()
 
 void Draw::InitializeRenderTargetBuffers()
 {
+    m_RenderTargetVbo.Create();
+    m_RenderTargetVbo.SetDebugName("RenderTarget VBO");
+    m_RenderTargetSsbo.Create();
+    m_RenderTargetSsbo.SetDebugName("RenderTarget SSBO");
+    m_RenderTargetVao.Create();
+    m_RenderTargetVao.SetDebugName("RenderTarget VAO");
+
     constexpr Array vertexData = {
         0.f, 0.f,
         1.f, 0.f,
@@ -782,6 +792,12 @@ void Draw::InitializeRenderTargetBuffers()
     // VAO
     // Vertex position
     Graphics::SetVertexAttribute(0, 2, sizeof(Vector2), 0, 0);
+}
+
+void Draw::InitializeParticleBuffers()
+{
+    m_ParticleVao.Create();
+    m_ParticleVao.SetDebugName("Particle VAO");
 }
 
 void Draw::SetProjectionMatrix(const Matrix& newProjectionMatrix)

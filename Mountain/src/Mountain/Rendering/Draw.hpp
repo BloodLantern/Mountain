@@ -331,19 +331,12 @@ namespace Mountain
             void Clear();
         };
 
-        static inline Pointer<Shader> m_PointShader;
-        static inline Pointer<Shader> m_LineShader;
-        static inline Pointer<Shader> m_LineColoredShader;
-        static inline Pointer<Shader> m_TriangleShader;
-        static inline Pointer<Shader> m_TriangleColoredShader;
-        static inline Pointer<Shader> m_RectangleShader;
-        static inline Pointer<Shader> m_CircleShader;
-        static inline Pointer<Shader> m_ArcShader;
-
-        static inline Pointer<Shader> m_TextureShader, m_TextShader, m_RenderTargetShader;
+        static inline Pointer<Shader> m_PointShader, m_LineShader, m_LineColoredShader, m_TriangleShader, m_TriangleColoredShader,
+                                      m_RectangleShader, m_CircleShader, m_ArcShader, m_TextureShader, m_TextShader, m_RenderTargetShader;
 
         static inline Graphics::GpuBuffer m_RectangleEbo, m_Vbo, m_RectangleVbo, m_TextureVbo, m_TextVbo, m_RenderTargetVbo, m_RenderTargetSsbo;
-        static inline Graphics::GpuVertexArray m_PointVao, m_LineVao, m_LineColoredVao, m_TriangleVao, m_TriangleColoredVao, m_RectangleVao, m_CircleVao, m_ArcVao, m_TextureVao, m_TextVao, m_RenderTargetVao;
+        static inline Graphics::GpuVertexArray m_PointVao, m_LineVao, m_LineColoredVao, m_TriangleVao, m_TriangleColoredVao, m_RectangleVao,
+                                               m_CircleVao, m_ArcVao, m_TextureVao, m_TextVao, m_RenderTargetVao, m_ParticleVao;
 
         static inline Matrix m_ProjectionMatrix;
 
@@ -367,6 +360,7 @@ namespace Mountain
         static void InitializeTextureBuffers();
         static void InitializeTextBuffers();
         static void InitializeRenderTargetBuffers();
+        static void InitializeParticleBuffers();
 
         static void SetProjectionMatrix(const Matrix& newProjectionMatrix);
         static void SetCamera(const Matrix& newCameraMatrix, Vector2 newCameraScale);

@@ -28,11 +28,9 @@ ParticleSystem::ParticleSystem(const uint32_t maxParticles)
 
     m_LiveSsbo.Create();
     m_ParticleSsbo.Create();
-    m_DrawVao.Create();
 
     m_LiveSsbo.SetDebugName("Particle System Live SSBO");
     m_ParticleSsbo.SetDebugName("Particle System Particle SSBO");
-    m_DrawVao.SetDebugName("Particle System Draw VAO");
 
     SetMaxParticles(maxParticles);
 }
@@ -42,7 +40,6 @@ ParticleSystem::~ParticleSystem()
 {
     glUnmapNamedBuffer(m_LiveSsbo.GetId());
 
-    m_DrawVao.Delete();
     m_LiveSsbo.Delete();
     m_ParticleSsbo.Delete();
 }
@@ -94,6 +91,8 @@ void ParticleSystem::Render()
 {
     Draw::Flush();
 
+    m_RenderTargetSize = Renderer::GetCurrentRenderTarget().GetSize();
+
     if (enabledModules & ParticleSystemModules::Types::Renderer && m_RendererModule)
     {
         static bool_t lastUseTexture = false;
@@ -105,15 +104,18 @@ void ParticleSystem::Render()
 
         m_DrawShader->SetUniform("particleCount", m_MaxParticles);
 
+        if (useTexture)
+            m_DrawShader->SetUniform("imageSizeNormalized", m_RendererModule->texture->GetSize() / m_RenderTargetSize);
+
         m_DrawShader->SetUniform("projection", Draw::m_ProjectionMatrix * Draw::m_CameraMatrix);
 
         m_DrawShader->SetUniform("systemPosition", position);
-        m_DrawShader->SetUniform("systemRotation", rotation);
+        m_DrawShader->SetUniform("systemRotation", Vector2{std::cos(rotation), std::sin(rotation)});
 
         if (useTexture)
             Graphics::BindTexture(m_RendererModule->texture->GetId());
 
-        BindVertexArray(m_DrawVao);
+        BindVertexArray(Draw::m_ParticleVao);
         m_DrawShader->Use();
         BindBufferBase(Graphics::BufferType::ShaderStorageBuffer, 0, m_LiveSsbo);
         BindBufferBase(Graphics::BufferType::ShaderStorageBuffer, 1, m_ParticleSsbo);
@@ -130,8 +132,6 @@ void ParticleSystem::Render()
 
         lastUseTexture = useTexture;
     }
-
-    m_RenderTargetSize = Renderer::GetCurrentRenderTarget().GetSize();
 }
 
 void ParticleSystem::RenderImGui()
@@ -264,6 +264,7 @@ void ParticleSystem::RenderImGui()
         ImGui::DragFloat("Lifetime", &particleLifetime, 0.01f, 0.f, std::numeric_limits<float_t>::max(), "%.2f", ImGuiSliderFlags_AlwaysClamp);
         ImGui::DragFloat("Speed", &particleSpeed);
         ImGui::ColorEdit4("Start color", particleStartColor.Data());
+        ImGui::DragFloat("Start size", &particleStartSize);
 
         ImGuiUtils::PopSeparatorText();
     }
@@ -495,6 +496,7 @@ void ParticleSystem::SetComputeShaderUniforms(const float_t deltaTime) const
     m_UpdateComputeShader->SetUniform("particleLifetime", particleLifetime);
     m_UpdateComputeShader->SetUniform("particleSpeed", particleSpeed);
     m_UpdateComputeShader->SetUniform("particleStartColor", particleStartColor);
+    m_UpdateComputeShader->SetUniform("particleStartSize", particleStartSize);
 
     m_UpdateComputeShader->SetUniform("enabledModules", static_cast<uint32_t>(enabledModules));
 }

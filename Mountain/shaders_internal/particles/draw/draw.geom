@@ -16,7 +16,7 @@ out GeometryOut
     vec2 textureCoordinates;
 } shaderOut;
 
-uniform vec2 imageSizeNormalized; // Texture size in the range [-1, 1])
+uniform vec2 imageSizeNormalized; // Texture size in the range [0, 1])
 
 void EmitVertexData(in vec4 position, in vec2 textureCoordinates)
 {
@@ -45,8 +45,6 @@ void main()
     EmitVertexData(secondPosition, vec2(1.f, 0.f));
     EmitVertexData(firstPosition, vec2(0.f, 0.f));
     EmitVertexData(thirdPosition, vec2(1.f, 1.f));
-
-    EndPrimitive();
 
     EmitVertexData(fourthPosition, vec2(0.f, 1.f));
 

@@ -59,6 +59,7 @@ void main()
 
     particle.offset += particle.velocity * deltaTime;
     particle.color = particleStartColor;
+    particle.size = particleStartSize;
 
     // Modules updates
     if ((enabledModules & ModuleTypesForceOverLifetime) != 0)

@@ -661,10 +661,10 @@ namespace Mountain::Graphics
 
     MOUNTAIN_API void MemoryBarrier(MemoryBarrierFlags flags = MemoryBarrierFlags::None);
 
-    MOUNTAIN_API void DrawArrays(DrawMode mode, int32_t first, int32_t count);
-    MOUNTAIN_API void DrawArraysInstanced(DrawMode mode, int32_t first, int32_t count, int32_t instanceCount);
-    MOUNTAIN_API void DrawElements(DrawMode mode, int32_t count, DataType type, const void* indices);
-    MOUNTAIN_API void DrawElementsInstanced(DrawMode mode, int32_t count, DataType type, const void* indices, int32_t instanceCount);
+    MOUNTAIN_API void DrawArrays(DrawMode mode, int32_t first, int32_t vertexCount);
+    MOUNTAIN_API void DrawArraysInstanced(DrawMode mode, int32_t first, int32_t vertexCount, int32_t instanceCount);
+    MOUNTAIN_API void DrawElements(DrawMode mode, int32_t vertexCount, DataType type, const void* indices);
+    MOUNTAIN_API void DrawElementsInstanced(DrawMode mode, int32_t vertexCount, DataType type, const void* indices, int32_t instanceCount);
 
     MOUNTAIN_API void SetClearColor(const Color& newClearColor);
     MOUNTAIN_API void Clear(ClearFlags flags);

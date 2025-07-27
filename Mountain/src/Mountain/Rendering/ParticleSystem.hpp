@@ -129,7 +129,6 @@ namespace Mountain
 
         Pointer<Shader> m_DrawShader;
         Graphics::GpuBuffer m_LiveSsbo, m_ParticleSsbo;
-        Graphics::GpuVertexArray m_DrawVao;
 
         bool_t m_GuiParticleBurstTimeHeld = false;
         Vector2 m_RenderTargetSize;
