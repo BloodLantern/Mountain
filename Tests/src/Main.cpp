@@ -2,8 +2,6 @@
 
 #include <iostream>
 
-#include <Mountain/Rendering/Renderer.hpp>
-
 #include "TestGame.hpp"
 #include "Mountain/globals.hpp"
 
@@ -14,7 +12,8 @@ USE_DEDICATED_GPU
 // It will only be enabled in the Debug configuration.
 
 #ifdef USE_LPP
-#include "Mountain/Utils/Logger.hpp"
+#include <Mountain/Rendering/Renderer.hpp>
+#include <Mountain/Utils/Logger.hpp>
 // include the API for Windows, 64-bit, C++
 #include "LPP_API_x64_CPP.h"
 

@@ -60,7 +60,8 @@ namespace Mountain
         void ForceState(T newState);
         /// @brief Set the new state if @c locked is not set
         ATTRIBUTE_HAS_SIDE_EFFECTS
-        StateMachine& operator=(T newState) override;
+        // ReSharper disable once CppHidingFunction
+        StateMachine& operator=(T newState);
 
         /// @brief Get the previous state
         ATTRIBUTE_NODISCARD

@@ -5,7 +5,6 @@
 namespace Mountain
 {
     class Scene;
-    class Entity;
 
     /// @brief Represents a behavior that can be attached to an Entity.
     class MOUNTAIN_API Component
@@ -16,7 +15,7 @@ namespace Mountain
         Component() = default;
         virtual ~Component() = default;
 
-        DEFAULT_VIRTUAL_COPY_MOVE_OPERATIONS(Component)
+        DEFAULT_COPY_MOVE_OPERATIONS(Component)
 
         /// @brief Called when the component is added to an Entity.
         virtual void Added();

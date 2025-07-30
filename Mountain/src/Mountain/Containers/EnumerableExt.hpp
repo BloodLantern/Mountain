@@ -12,9 +12,9 @@
     ATTRIBUTE_NODISCARD \
     bool_t Any(const ::Mountain::Predicate<EnumeratedType>& predicate) const { return ::Mountain::Any(*this, predicate); } \
     \
-    template <typename T = EnumeratedType, typename = ::Mountain::Meta::EnableIf<::Mountain::Meta::IsIntegralOrFloating<EnumeratedType>>> \
+    template <typename = ::Mountain::Meta::EnableIf<::Mountain::Meta::IsIntegralOrFloating<EnumeratedType>>> \
     ATTRIBUTE_NODISCARD \
-    float_t Average() const { return ::Mountain::Average<::Mountain::Meta::RemoveCvRefSpecifier<decltype(*this)>, T>(*this); } \
+    float_t Average() const { return ::Mountain::Average<::Mountain::Meta::RemoveCvRefSpecifier<decltype(*this)>, EnumeratedType>(*this); } \
     \
     template <::Mountain::Requirements::MountainEnumerable EnumerableT, typename = ::Mountain::Meta::EnableIf<Meta::IsSame<EnumeratedType, ::Mountain::Meta::EnumerableType<EnumerableT>>>> \
     ATTRIBUTE_NODISCARD \
