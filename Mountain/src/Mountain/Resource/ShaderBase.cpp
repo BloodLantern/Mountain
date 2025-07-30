@@ -12,6 +12,13 @@
 
 using namespace Mountain;
 
+void ShaderBase::Unload()
+{
+    Resource::Unload();
+
+    m_UniformLocationCache.clear();
+}
+
 void ShaderBase::SetUniform(const char_t* uniformName, const int32_t value) const
 {
     Graphics::SetProgramUniform(m_Id, uniformName, value);
@@ -132,9 +139,14 @@ bool_t ShaderBase::CheckLinkError() const
     return false;
 }
 
-int32_t ShaderBase::GetUniformLocation(const char_t* uniformName) const
+int32_t ShaderBase::GetUniformLocation(const char_t* uniformName)
 {
-    return Graphics::GetProgramUniformLocation(m_Id, uniformName);
+    if (m_UniformLocationCache.contains(uniformName))
+        return m_UniformLocationCache[uniformName];
+
+    const int32_t result = Graphics::GetProgramUniformLocation(m_Id, uniformName);
+    m_UniformLocationCache[uniformName] = result;
+    return result;
 }
 
 void ShaderBase::ReplaceIncludes(std::string& code, const std::filesystem::path& path, std::unordered_set<std::filesystem::path>& replacedFiles)

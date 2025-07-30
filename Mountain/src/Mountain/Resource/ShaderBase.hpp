@@ -16,6 +16,8 @@ namespace Mountain
 
 		using Resource::Resource;
 
+		void Unload() override;
+
 		/// @brief Sets an int (signed, 32 bits) variable in a shader
 		MOUNTAIN_API void SetUniform(const char_t* uniformName, int32_t value) const;
 
@@ -63,11 +65,13 @@ namespace Mountain
 	protected:
 		uint32_t m_Id = 0;
 
+		std::unordered_map<const char_t*, int32_t> m_UniformLocationCache;
+
 		bool_t CheckCompileError(uint32_t id, std::string_view type, const std::string& code) const;  // NOLINT(modernize-use-nodiscard)
 		bool_t CheckLinkError() const;  // NOLINT(modernize-use-nodiscard)
 
 		ATTRIBUTE_NODISCARD
-		int32_t GetUniformLocation(const char_t* uniformName) const;
+		int32_t GetUniformLocation(const char_t* uniformName);
 
 		static void ReplaceIncludes(std::string& code, const std::filesystem::path& path, std::unordered_set<std::filesystem::path>& replacedFiles);
 	};
