@@ -82,12 +82,6 @@ namespace Mountain {}
     type& operator=(const type& other) noexcept = default; \
     type& operator=(type&& other) noexcept = default;
 
-#define DEFAULT_VIRTUAL_COPY_MOVE_OPERATIONS(type) \
-    type(const type& other) noexcept = default; \
-    type(type&& other) noexcept = default; \
-    virtual type& operator=(const type& other) noexcept = default; \
-    virtual type& operator=(type&& other) noexcept = default;
-
 /// @brief Deletes the copy and move operations of a given @p type.
 /// @param type The type to delete the copy and move operations of.
 /// @see @ref DEFAULT_COPY_MOVE_OPERATIONS for usage.
