@@ -6,9 +6,8 @@
 
 namespace Mountain
 {
-    class MOUNTAIN_API Rectangle
+    struct MOUNTAIN_API Rectangle
     {
-    public:
         Vector2 position, size;
 
         Rectangle() = default;
