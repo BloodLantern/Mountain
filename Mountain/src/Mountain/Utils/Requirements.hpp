@@ -89,6 +89,7 @@ namespace Mountain::Requirements
         cv.operator->();
         ++v;
         v++;
+        REQUIRES_OPERATOR(cv, ==, bool_t, cv);
         REQUIRES_OPERATOR(cv, <=>, std::strong_ordering, cv);
     };
 

@@ -289,7 +289,6 @@ namespace Mountain
 {
     interface I$INTERFACE$
     {
-    public:
         $END$
     };
 }

@@ -169,8 +169,7 @@ namespace Mountain {}
 ///
 /// This is only a struct under the hood because it declares public members by default and allows for
 /// operators to be defined, whereas the @c __interface Microsoft extension doesn't.
-/// Also, because an interface isn't supposed to provide implementations for any of the functions it
-/// declares, it has the @c novtable specification.
+/// Also, because an interface isn't supposed to be constructible, it has the @c novtable specification.
 ///
 /// @see https://learn.microsoft.com/en-us/cpp/cpp/novtable
 #define interface struct __declspec(novtable)

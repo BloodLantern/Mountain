@@ -3,7 +3,7 @@
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Containers/ContiguousIterator.hpp"
-// ReSharper disable once CppUnusedIncludeDirective
+#include "Mountain/Containers/Enumerable.hpp"
 #include "Mountain/Containers/EnumerableExt.hpp"
 #include "Mountain/Containers/FunctionTypes.hpp"
 #include "Mountain/Utils/Requirements.hpp"
@@ -12,17 +12,26 @@ namespace Mountain
 {
     /// @brief Wrapper around a C array.
     template <Concepts::ContainerType T, size_t Size>
-    struct Array
+    struct Array : IEnumerable<T>
     {
         using Type = T;
-        using ContainedType = Type;
-        using EnumeratedType = Type;
+        using ContainedType = T;
+        using EnumeratedType = T;
         using Iterator = ContiguousIterator<T>;
         using ConstIterator = ContiguousConstIterator<T>;
 
         static constexpr size_t MySize = Size;
 
         T data[Size];
+
+        Array() = default;
+
+        template <typename... Args>
+        // ReSharper disable once CppNonExplicitConvertingConstructor
+        Array(Args&&... args);
+
+        DEFAULT_COPY_MOVE_OPERATIONS(Array)
+        DEFAULT_VIRTUAL_DESTRUCTOR(Array)
 
         /// @brief Get the element at the given index with bounds checking.
         ATTRIBUTE_NODISCARD
@@ -57,22 +66,22 @@ namespace Mountain
         constexpr const T& operator[](size_t index) const noexcept;
 
         ATTRIBUTE_NODISCARD
-        constexpr Iterator begin() noexcept;
+        constexpr Iterator begin() noexcept override;
 
         ATTRIBUTE_NODISCARD
-        constexpr Iterator end() noexcept;
+        constexpr Iterator end() noexcept override;
 
         ATTRIBUTE_NODISCARD
-        constexpr ConstIterator begin() const noexcept;
+        constexpr ConstIterator begin() const noexcept override;
 
         ATTRIBUTE_NODISCARD
-        constexpr ConstIterator end() const noexcept;
+        constexpr ConstIterator end() const noexcept override;
 
         ATTRIBUTE_NODISCARD
-        constexpr ConstIterator cbegin() const noexcept;
+        constexpr ConstIterator cbegin() const noexcept override;
 
         ATTRIBUTE_NODISCARD
-        constexpr ConstIterator cend() const noexcept;
+        constexpr ConstIterator cend() const noexcept override;
 
         ENUMERABLE_EXTENSIONS_IMPLEMENTATION
 
@@ -101,7 +110,7 @@ namespace Mountain
         }
     };
 
-    template <class T, class... Other>
+    template <typename T, typename... Other>
     Array(T, Other...) -> Array<T, 1 + sizeof...(Other)> requires Meta::AllSame<T, Other...>;
 
     CHECK_REQUIREMENT(Requirements::MountainEnumerableContainer, Array<Requirements::DefaultType, Requirements::DefaultSize>);
@@ -139,6 +148,13 @@ namespace Mountain
     constexpr T* Array<T, Size>::GetData() noexcept { return data; }
     template <Concepts::ContainerType T, size_t Size>
     constexpr const T* Array<T, Size>::GetData() const noexcept { return data; }
+
+    template <Concepts::ContainerType T, size_t Size>
+    template <typename... Args>
+    Array<T, Size>::Array(Args&&... args)
+        : data{static_cast<T>(std::forward<Args>(args))...}
+    {
+    }
 
     template <Concepts::ContainerType T, size_t Size>
     void Array<T, Size>::Fill(const T& value) noexcept
