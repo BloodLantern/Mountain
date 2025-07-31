@@ -193,7 +193,9 @@ void ResourceManager::LoadAllBinaries()
             entry->SetParent(FileManager::AddDirectory(entry->GetPath().parent_path()));
         }
 
-        if (Mountain::Contains(Shader::VertexFileExtensions, extension) || Mountain::Contains(Shader::FragmentFileExtensions, extension))
+        if (Mountain::Contains(Shader::VertexFileExtensions, extension) ||
+            Mountain::Contains(Shader::FragmentFileExtensions, extension) ||
+            Mountain::Contains(Shader::GeometryFileExtensions, extension))
         {
             Pointer<Shader> shader;
 
