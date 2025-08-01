@@ -74,7 +74,6 @@ namespace Mountain
     private:
         Graphics::GpuTexture m_Texture;
         uint32_t m_Framebuffer;
-        uint32_t m_Vbo, m_Vao;
 
         bool_t m_Initialized = false;
 

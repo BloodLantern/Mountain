@@ -3,6 +3,7 @@
 #include "Mountain/Rendering/RenderTarget.hpp"
 
 #include <array>
+#include <utility>
 
 #include <glad/glad.h>
 
@@ -55,32 +56,6 @@ void RenderTarget::Initialize(const Vector2i size, const Graphics::Magnification
 
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_Texture.GetId(), 0);
 
-    // Draw buffers
-
-    glCreateBuffers(1, &m_Vbo);
-    glCreateVertexArrays(1, &m_Vao);
-
-    glBindVertexArray(m_Vao);
-
-    // VBO
-
-    static constexpr std::array VertexData = {
-        // pos          // UVs
-        -1.f, -1.f,     0.f, 0.f,
-         1.f, -1.f,     1.f, 0.f,
-         1.f,  1.f,     1.f, 1.f,
-        -1.f,  1.f,     0.f, 1.f
-    };
-
-    glNamedBufferData(m_Vbo, sizeof(VertexData), VertexData.data(), GL_STATIC_DRAW);
-
-    // VAO
-
-    glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(float_t) * 4, nullptr);
-    glEnableVertexAttribArray(0);
-
-    glBindVertexArray(0);
-
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
         Logger::LogError("Incomplete framebuffer after RenderTarget creation");
 
@@ -97,8 +72,6 @@ void RenderTarget::Reset()
     m_Size = Vector2i::Zero();
     m_Projection = Matrix::Identity();
 
-    glDeleteVertexArrays(1, &m_Vao);
-    glDeleteBuffers(1, &m_Vbo);
     glDeleteFramebuffers(1, &m_Framebuffer);
     m_Texture.Delete();
 
@@ -139,8 +112,6 @@ void RenderTarget::SetDebugName(ATTRIBUTE_MAYBE_UNUSED const std::string_view na
     const std::string str{name.data(), name.length()};
     m_Texture.SetDebugName(str + " Texture");
     glObjectLabel(GL_FRAMEBUFFER, m_Framebuffer, 0, (str + " Framebuffer").c_str());
-    glObjectLabel(GL_BUFFER, m_Vbo, 0, (str + " VBO").c_str());
-    glObjectLabel(GL_VERTEX_ARRAY, m_Vao, 0, (str + " VAO").c_str());
 #endif
 }
 
@@ -200,7 +171,7 @@ void RenderTarget::SetCameraMatrix(const Matrix& newCameraMatrix)
     // Update the Draw class fields only if this RenderTarget is the current one
     GLint framebuffer;
     glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING, &framebuffer);
-    if (framebuffer == static_cast<GLint>(m_Framebuffer))
+    if (std::cmp_equal(framebuffer, m_Framebuffer))
         UpdateDrawCamera();
 }
 
