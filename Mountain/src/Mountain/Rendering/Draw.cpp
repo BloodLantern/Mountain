@@ -84,7 +84,6 @@ void Draw::Rectangle(const Mountain::Rectangle& rectangle, const float_t rotatio
 
     m_DrawList.rectangle.Emplace(
         Matrix::Translation(static_cast<Vector3>(rectangle.position))
-        * Matrix::Translation(static_cast<Vector3>(rectangle.size * origin))
         * Matrix::RotationZ(rotation)
         * Matrix::Translation(static_cast<Vector3>(-rectangle.size * origin))
         * Matrix::Scaling({ rectangle.size.x, rectangle.size.y, 1.f }),
@@ -106,7 +105,6 @@ void Draw::RectangleFilled(const Mountain::Rectangle& rectangle, const float_t r
 
     m_DrawList.rectangleFilled.Emplace(
         Matrix::Translation(static_cast<Vector3>(rectangle.position))
-        * Matrix::Translation(static_cast<Vector3>(rectangle.size * origin))
         * Matrix::RotationZ(rotation)
         * Matrix::Translation(static_cast<Vector3>(-rectangle.size * origin))
         * Matrix::Scaling({ rectangle.size.x, rectangle.size.y, 1.f }),
@@ -204,7 +202,6 @@ void Draw::Texture(
 
     const Vector2i textureSize = texture.GetSize();
     Matrix transformation = Matrix::Translation(static_cast<Vector3>(position))
-        * Matrix::Translation(static_cast<Vector3>(textureSize * origin * scale))
         * Matrix::RotationZ(rotation)
         * Matrix::Translation(static_cast<Vector3>(-textureSize * origin * scale))
         * static_cast<Matrix>(antiDiagonalFlip)

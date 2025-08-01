@@ -51,6 +51,8 @@ namespace Mountain
         /// @param color2 The color of the second point
         MOUNTAIN_API static void Line(Vector2 point1, Vector2 point2, const Color& color1, const Color& color2);
 
+        // TODO - Add a convenience Line function with a thickness parameter that draws a rectangle
+
         /// @brief Draw a hollow triangle
         /// @param point1 The first point
         /// @param point2 The second point
