@@ -83,3 +83,8 @@ void EntityList::MarkUnsorted()
 {
     m_Unsorted = true;
 }
+
+void EntityList::Clear()
+{
+    m_Entities.Clear();
+}

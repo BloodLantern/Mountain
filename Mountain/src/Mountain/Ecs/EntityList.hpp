@@ -36,6 +36,10 @@ namespace Mountain
 
         MOUNTAIN_API void MarkUnsorted();
 
+        MOUNTAIN_API void Clear();
+
+        GETTER(List<Entity*>, List, m_Entities)
+
     private:
         List<Entity*> m_ToAdd;
         List<Entity*> m_ToRemove;

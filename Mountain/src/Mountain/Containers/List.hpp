@@ -229,6 +229,8 @@ namespace Mountain
 
         void RemoveLast();
 
+        void RemoveAll(const Predicate<T>& predicate);
+
         /// @brief Get the element at the given index with bounds checking.
         ATTRIBUTE_NODISCARD
         T& At(size_t index) const;
@@ -855,6 +857,16 @@ namespace Mountain
     void List<T>::RemoveLast()
     {
         RemoveAt(m_Size - 1);
+    }
+
+    template <Concepts::DynamicContainerType T>
+    void List<T>::RemoveAll(const Predicate<T>& predicate)
+    {
+        for (size_t i = 0; i < m_Size; i++)
+        {
+            if (predicate(*m_Data[i]))
+                RemoveAt(i--);
+        }
     }
 
     template <Concepts::DynamicContainerType T>
