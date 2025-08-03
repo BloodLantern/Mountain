@@ -110,7 +110,7 @@ compile by statically linking against the corresponding `Mountain.lib`
 - True text rendering
 - Add an instanced Random API to have both a static and instanced way or generated RNG
 - ~~Add `DateTime` class from .NET~~
-- ~~Replace all `std::chrono` usages by `Stopwatch`, `TimeSpan` and `DateTime`~
+- ~~Replace all `std::chrono` usages by `Stopwatch`, `TimeSpan` and `DateTime`~~
 - ~~Credit external dependencies in README~~
 - Add a way to use stereo audio files as mono sources and vice-versa
 - Add an API to edit compute shaders local size from C++
