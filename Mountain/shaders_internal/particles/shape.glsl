@@ -89,9 +89,9 @@ void ShapeInitialize(inout Particle particle)
                 vec2 nearestPointOnOuterRectangle = NearestPointOnRectangle(-halfOuterRectangleSize, outerRectangleSize, particle.offset);
                 vec2 nearestPointOnInnerRectangle = NearestPointOnRectangle(-halfInnerRectangleSize, innerRectangleSize, particle.offset);
 
-                particle.offset = nearestPointOnOuterRectangle;
-//                particle.offset.x = RemapValue(particleOffsetAbs.x, 0.f, halfInnerRectangleSize.x, nearestPointOnInnerRectangle.x, nearestPointOnOuterRectangle.x);
-//                particle.offset.y = RemapValue(particleOffsetAbs.y, 0.f, halfInnerRectangleSize.y, nearestPointOnInnerRectangle.y, nearestPointOnOuterRectangle.y);
+//                particle.offset = nearestPointOnOuterRectangle;
+                particle.offset.x = RemapValue(particleOffsetAbs.x, 0.f, halfInnerRectangleSize.x, nearestPointOnInnerRectangle.x, nearestPointOnOuterRectangle.x);
+                particle.offset.y = RemapValue(particleOffsetAbs.y, 0.f, halfInnerRectangleSize.y, nearestPointOnInnerRectangle.y, nearestPointOnOuterRectangle.y);
             }
             else
                 particle.offset = vec2(0);

@@ -143,9 +143,9 @@ void Shape::RenderDebug(const ParticleSystem& system, const Vector2 renderTarget
         }
 
         case ShapeType::Rectangle:
-            Draw::Rectangle(center - actualScale * 0.5f, actualScale, rotation, Vector2::One() * 0.5f, DrawColor);
+            Draw::Rectangle(center, actualScale, rotation, Vector2::One() * 0.5f, DrawColor);
             const Vector2 actualScaleThickness = actualScale * (Vector2::One() - rectangle.scaleThickness);
-            Draw::Rectangle(center - actualScaleThickness * 0.5f, actualScaleThickness, rotation, Vector2::One() * 0.5f, DrawColor);
+            Draw::Rectangle(center, actualScaleThickness, rotation, Vector2::One() * 0.5f, DrawColor);
             break;
     }
 }

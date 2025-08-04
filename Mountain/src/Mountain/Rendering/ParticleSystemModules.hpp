@@ -125,7 +125,7 @@ namespace Mountain::ParticleSystemModules
         ShapeRectangle rectangle;
 
         Vector2 offset;
-        float_t rotation;
+        float_t rotation = 0.f;
         Vector2 scale = Vector2::One();
 
         float_t randomizeDirection = 0.f;
