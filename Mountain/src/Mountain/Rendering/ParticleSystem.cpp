@@ -558,7 +558,7 @@ void ParticleSystem::SpawnNewParticles()
 
             for (int32_t i = 0; i < spawnCount; i++)
             {
-                if (burst.probability == 1.f || Random::Chance(burst.probability))
+                if (burst.probability == 1.f || Random::Instance().Chance(burst.probability))
                     burstCount += burst.count;
             }
         }

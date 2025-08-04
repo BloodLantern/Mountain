@@ -108,7 +108,7 @@ compile by statically linking against the corresponding `Mountain.lib`
 - \[WIP] Real unit tests
 - ~~Replace all `std::array` and `std::vector` usages with `Mountain::Array` and `Mountain::List`~~
 - True text rendering
-- Add an instanced Random API to have both a static and instanced way or generated RNG
+- ~~Add an instanced Random API to have both a static and instanced way of generating random numbers~~
 - ~~Add `DateTime` class from .NET~~
 - ~~Replace all `std::chrono` usages by `Stopwatch`, `TimeSpan` and `DateTime`~~
 - ~~Credit external dependencies in README~~
