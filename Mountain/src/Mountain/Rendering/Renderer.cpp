@@ -183,10 +183,12 @@ bool_t Mountain::Renderer::Initialize(const std::string& windowTitle, const Vect
     if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(SDL_GL_GetProcAddress)))  // NOLINT(clang-diagnostic-cast-function-type-strict)
         THROW(Exception{"Failed to initialize GLAD"});
 
+#ifdef _DEBUG
     glEnable(GL_DEBUG_OUTPUT);
     glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
 
     glDebugMessageCallback(OpenGlDebugCallback, nullptr);
+#endif
 
     Graphics::SetViewport(0, 0, windowSize.x, windowSize.y);
 
