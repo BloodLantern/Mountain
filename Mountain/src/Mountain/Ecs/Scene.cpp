@@ -15,6 +15,8 @@ void Scene::Begin()
 void Scene::BeforeUpdate()
 {
     m_Entities.UpdateLists();
+    onNextFrame();
+    onNextFrame.Clear();
 }
 
 void Scene::Update()
@@ -25,6 +27,8 @@ void Scene::Update()
 
 void Scene::AfterUpdate()
 {
+    onEndOfCurrentFrame();
+    onEndOfCurrentFrame.Clear();
 }
 
 void Scene::BeforeRender()

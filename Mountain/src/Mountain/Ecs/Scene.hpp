@@ -9,8 +9,13 @@ namespace Mountain
     class Scene
     {
     public:
+        /// @brief Event invoked at the beginning of the next frame only.
+        /// This means that its subscriber list will get cleared after being invoked.
+        /// @details This event is invoked in @c BeforeUpdate() and cleared afterward.
+        Event<> onNextFrame;
+
         /// @brief Event invoked at the end of the current frame only.
-        /// This means that its subscriber list will get cleared on each frame.
+        /// This means that its subscriber list will get cleared after being invoked.
         /// @details This event is invoked in @c AfterUpdate() and cleared afterward.
         Event<> onEndOfCurrentFrame;
 
