@@ -17,7 +17,6 @@
 
 #include "Profiler.h"
 
-
 using namespace Mountain;
 
 Game::Game(const std::string& windowTitle, const Vector2i windowSize)

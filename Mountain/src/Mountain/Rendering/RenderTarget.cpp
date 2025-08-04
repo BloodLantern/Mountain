@@ -25,11 +25,11 @@ void RenderTarget::Use() const
     glBindFramebuffer(GL_FRAMEBUFFER, m_Framebuffer);
     glViewport(0, 0, m_Size.x, m_Size.y);
 
-    Draw::SetProjectionMatrix(m_Projection);
+    Draw::SetProjectionMatrix(m_Projection, false);
     UpdateDrawCamera();
 }
 
-void RenderTarget::UpdateDrawCamera() const { Draw::SetCamera(m_CameraMatrix, m_CameraScale); }
+void RenderTarget::UpdateDrawCamera() const { Draw::SetCamera(m_CameraMatrix, m_CameraScale, true); }
 
 void RenderTarget::Initialize(const Vector2i size, const Graphics::MagnificationFilter filter)
 {

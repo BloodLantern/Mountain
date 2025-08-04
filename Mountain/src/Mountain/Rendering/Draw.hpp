@@ -364,8 +364,8 @@ namespace Mountain
         static void InitializeRenderTargetBuffers();
         static void InitializeParticleBuffers();
 
-        static void SetProjectionMatrix(const Matrix& newProjectionMatrix);
-        static void SetCamera(const Matrix& newCameraMatrix, Vector2 newCameraScale);
+        static void SetProjectionMatrix(const Matrix& newProjectionMatrix, bool_t updateUniforms);
+        static void SetCamera(const Matrix& newCameraMatrix, Vector2 newCameraScale, bool_t updateUniforms);
         static void UpdateShaderMatrices();
 
         static void CircleInternal(Vector2 center, float_t radius, float_t thickness, bool_t filled, Vector2 scale, const Color& color);

@@ -78,7 +78,6 @@ void Draw::Rectangle(const Vector2 position, const Vector2 size, const float_t r
 
 void Draw::Rectangle(const Mountain::Rectangle& rectangle, const float_t rotation, const Vector2 origin, const Color& color)
 {
-
     if (origin.x < 0.f || origin.x > 1.f || origin.y < 0.f || origin.y > 1.f)
         THROW(ArgumentOutOfRangeException{"Origin must be in the range [{ 0, 0 }, { 1, 1 }]", TO_STRING(origin)});
 
@@ -797,19 +796,21 @@ void Draw::InitializeParticleBuffers()
     m_ParticleVao.SetDebugName("Particle VAO");
 }
 
-void Draw::SetProjectionMatrix(const Matrix& newProjectionMatrix)
+void Draw::SetProjectionMatrix(const Matrix& newProjectionMatrix, const bool_t updateUniforms)
 {
     m_ProjectionMatrix = newProjectionMatrix;
 
-    UpdateShaderMatrices();
+    if (updateUniforms)
+        UpdateShaderMatrices();
 }
 
-void Draw::SetCamera(const Matrix& newCameraMatrix, const Vector2 newCameraScale)
+void Draw::SetCamera(const Matrix& newCameraMatrix, const Vector2 newCameraScale, const bool_t updateUniforms)
 {
     m_CameraMatrix = newCameraMatrix;
     m_CameraScale = newCameraScale;
 
-    UpdateShaderMatrices();
+    if (updateUniforms)
+        UpdateShaderMatrices();
 }
 
 void Draw::UpdateShaderMatrices()
@@ -1123,6 +1124,8 @@ void Draw::RenderRenderTargetData(const List<RenderTargetData>& renderTargets, c
 {
     BindVertexArray(m_RenderTargetVao);
     m_RenderTargetShader->Use();
+
+    // TODO - Some of the calls to SetUniform can be optimized by using Uniform Buffers
 
     m_RenderTargetShader->SetUniform("projection", m_ProjectionMatrix * m_CameraMatrix);
 
