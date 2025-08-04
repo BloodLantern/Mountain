@@ -34,12 +34,9 @@ namespace Mountain
 
         MOUNTAIN_API virtual void End();
 
-        ATTRIBUTE_NODISCARD
-        EntityList& GetEntities() { return m_Entities; }
-        ATTRIBUTE_NODISCARD
-        const EntityList& GetEntities() const { return m_Entities; }
+        GETTER_NON_CONST(EntityList<Entity>&, Entities, m_Entities)
 
     protected:
-        EntityList m_Entities;
+        EntityList<Entity> m_Entities;
     };
 }

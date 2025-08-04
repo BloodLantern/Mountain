@@ -381,7 +381,6 @@
     <ClCompile Include="src\Mountain\Collision\Collision.cpp" />
     <ClCompile Include="src\Mountain\Collision\Grid.cpp" />
     <ClCompile Include="src\Mountain\Collision\Hitbox.cpp" />
-    <ClCompile Include="src\Mountain\Ecs\EntityList.cpp" />
     <ClCompile Include="src\Mountain\Ecs\Scene.cpp" />
     <ClCompile Include="src\Mountain\Exceptions\ArgumentException.cpp" />
     <ClCompile Include="src\Mountain\Exceptions\Exception.cpp" />
