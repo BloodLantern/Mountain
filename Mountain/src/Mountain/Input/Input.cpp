@@ -21,10 +21,7 @@ bool_t Input::GetMouseButton(const MouseButton mouseButton, const MouseButtonSta
 const GamepadInput& Input::GetGamepad(const uint32_t gamepadId)
 {
     if (gamepadId > GamepadMax)
-    {
-        Logger::LogError("Invalid gamepad ID {}", gamepadId);
-        THROW(ArgumentException{"Invalid gamepad ID", TO_STRING(gamepadId)});
-    }
+        THROW(ArgumentException{"Invalid gamepad ID", "gamepadId"});
 
     return m_Gamepads.At(gamepadId);
 }

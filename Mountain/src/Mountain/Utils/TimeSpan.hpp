@@ -292,7 +292,7 @@ namespace Mountain
     constexpr TimeSpan operator*(const TimeSpan lhs, const double_t rhs)
     {
         if (Calc::IsNan(rhs))
-            THROW(ArgumentException{"Cannot multiply a TimeSpan by a NaN", TO_STRING(rhs)});
+            THROW(ArgumentException{"Cannot multiply a TimeSpan by a NaN", "rhs"});
 
         const double_t ticks = Calc::Round(static_cast<double_t>(lhs.m_Ticks) * rhs);
         return TimeSpan::IntervalFromDoubleTicks(ticks);
@@ -303,7 +303,7 @@ namespace Mountain
     constexpr TimeSpan operator/(const TimeSpan lhs, const double_t rhs)
     {
         if (Calc::IsNan(rhs))
-            THROW(ArgumentException{"Cannot divide a TimeSpan by a NaN", TO_STRING(rhs)});
+            THROW(ArgumentException{"Cannot divide a TimeSpan by a NaN", "rhs"});
 
         const double_t ticks = Calc::Round(static_cast<double_t>(lhs.m_Ticks) / rhs);
         return TimeSpan::IntervalFromDoubleTicks(ticks);
@@ -355,7 +355,7 @@ namespace Mountain
     constexpr TimeSpan TimeSpan::Interval(const double_t ticks, const double_t scale)
     {
         if (Calc::IsNan(ticks))
-            THROW(ArgumentException{"Cannot create an interval from a NaN amount of ticks", TO_STRING(ticks)});
+            THROW(ArgumentException{"Cannot create an interval from a NaN amount of ticks", "ticks"});
         return IntervalFromDoubleTicks(ticks * scale);
     }
 

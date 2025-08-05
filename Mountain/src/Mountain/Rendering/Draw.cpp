@@ -79,7 +79,7 @@ void Draw::Rectangle(const Vector2 position, const Vector2 size, const float_t r
 void Draw::Rectangle(const Mountain::Rectangle& rectangle, const float_t rotation, const Vector2 origin, const Color& color)
 {
     if (origin.x < 0.f || origin.x > 1.f || origin.y < 0.f || origin.y > 1.f)
-        THROW(ArgumentOutOfRangeException{"Origin must be in the range [{ 0, 0 }, { 1, 1 }]", TO_STRING(origin)});
+        THROW(ArgumentOutOfRangeException{"Origin must be in the range [{ 0, 0 }, { 1, 1 }]", "origin"});
 
     m_DrawList.rectangle.Emplace(
         Matrix::Translation(static_cast<Vector3>(rectangle.position))
@@ -100,7 +100,7 @@ void Draw::RectangleFilled(const Mountain::Rectangle& rectangle, const float_t r
 {
 
     if (origin.x < 0.f || origin.x > 1.f || origin.y < 0.f || origin.y > 1.f)
-        THROW(ArgumentOutOfRangeException{"Origin must be in the range [{ 0, 0 }, { 1, 1 }]", TO_STRING(origin)});
+        THROW(ArgumentOutOfRangeException{"Origin must be in the range [{ 0, 0 }, { 1, 1 }]", "origin"});
 
     m_DrawList.rectangleFilled.Emplace(
         Matrix::Translation(static_cast<Vector3>(rectangle.position))
@@ -171,10 +171,10 @@ void Draw::Texture(
 )
 {
     if (uv0.x > uv1.x || uv0.y > uv1.y)
-        THROW(ArgumentException{"UV0 cannot be greater than UV1", TO_STRING(uv0)});
+        THROW(ArgumentException{"UV0 cannot be greater than UV1", "uv0"});
 
     if (origin.x < 0.f || origin.x > 1.f || origin.y < 0.f || origin.y > 1.f)
-        THROW(ArgumentOutOfRangeException{"Origin must be in the range [{ 0, 0 }, { 1, 1 }]", TO_STRING(origin)});
+        THROW(ArgumentOutOfRangeException{"Origin must be in the range [{ 0, 0 }, { 1, 1 }]", "origin"});
 
     const Vector2 uvDiff = uv1 - uv0;
     const Vector2 lowerUv = uv0;
@@ -243,7 +243,7 @@ void Draw::RenderTarget(
 )
 {
     if (uv0.x > uv1.x || uv0.y > uv1.y)
-        THROW(ArgumentException{"UV0 cannot be greater than UV1", TO_STRING(uv0)});
+        THROW(ArgumentException{"UV0 cannot be greater than UV1", "uv0"});
 
     Vector2 uvDiff = uv1 - uv0;
     Vector2 lowerUv = uv0;
@@ -838,7 +838,7 @@ void Draw::UpdateShaderMatrices()
 void Draw::CircleInternal(const Vector2 center, const float_t radius, const float_t thickness, const bool_t filled, const Vector2 scale, const Color& color)
 {
     if (thickness < 0.f)
-        THROW(ArgumentOutOfRangeException{"Thickness must be positive", TO_STRING(thickness)});
+        THROW(ArgumentOutOfRangeException{"Thickness must be positive", "thickness"});
 
     if (thickness == 0.f)
         return;
@@ -878,7 +878,7 @@ void Draw::ArcInternal(
 )
 {
     if (thickness < 0.f)
-        THROW(ArgumentOutOfRangeException{"Thickness must be positive", TO_STRING(thickness)});
+        THROW(ArgumentOutOfRangeException{"Thickness must be positive", "thickness"});
 
     if (thickness == 0.f)
         return;

@@ -22,7 +22,7 @@ Graphics::ShaderType Shader::FileExtensionToType(const std::string& extension)
     if (Contains(GeometryFileExtensions, extension))
         return Graphics::ShaderType::Geometry;
 
-    THROW(ArgumentException{"Invalid file extension for shader", TO_STRING(extension)});
+    THROW(ArgumentException{"Invalid file extension for shader", "extension"});
 }
 
 bool_t Shader::SetSourceData(const Pointer<File>& file)

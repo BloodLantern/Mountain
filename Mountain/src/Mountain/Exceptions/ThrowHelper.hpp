@@ -41,6 +41,15 @@
     } \
     while (false)
 
+#define CHECK_OPTIONAL(optionalParameter) \
+    do \
+    { \
+        static_assert(::Mountain::Meta::IsStandardOptional<DECLARING_TYPE(optionalParameter)>, "The argument of CHECK_OPTIONAL must be a std::optional"); \
+        if (!(optionalParameter).has_value()) \
+            THROW(ArgumentNullException{"Parameter " #optionalParameter " must have a value", #optionalParameter}); \
+    } \
+    while (false)
+
 #define THROW_HELPER_FUNC(functionName, exceptionType, message) \
     static exceptionType functionName##Exception() { return exceptionType{message}; }  // NOLINT(bugprone-macro-parentheses)
 

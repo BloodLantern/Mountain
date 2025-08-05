@@ -301,6 +301,31 @@ std::string Utils::RemoveByteOrderMark(const std::string& text)
     return text;
 }
 
+List<std::string> Utils::Split(const std::string_view str, const char_t separator)
+{
+    List<std::string> result;
+
+    size_t lastIndex = 0;
+    size_t currentSize = 0;
+    for (size_t i = 0; i < str.length(); i++)
+    {
+        if (str[i] != separator)
+        {
+            currentSize++;
+            continue;
+        }
+
+        result.Add(std::string{str.substr(lastIndex, currentSize)});
+
+        lastIndex = i + 1;
+        currentSize = 0;
+    }
+
+    result.Add(std::string{str.substr(lastIndex, currentSize)});
+
+    return result;
+}
+
 Easing::Easer Easing::FromType(const Type type)
 {
     switch (type)
@@ -338,7 +363,7 @@ Easing::Easer Easing::FromType(const Type type)
         case Type::BounceInOut: return BounceInOut;
     }
 
-    THROW(ArgumentOutOfRangeException{"Invalid easing type", TO_STRING(type)});
+    THROW(ArgumentOutOfRangeException{"Invalid easing type", "type"});
 }
 
 float_t Easing::FromType(const Type type, const float_t t)

@@ -207,6 +207,13 @@ namespace Mountain
         template <typename T>
         constexpr bool_t IsMountainPointer<Pointer<T>> = true;
 
+        /// @brief Checks whether the type is a @c std::optional
+        template <typename>
+        constexpr bool_t IsStandardOptional = false;
+
+        template <typename T>
+        constexpr bool_t IsStandardOptional<std::optional<T>> = true;
+
         /// @brief Checks if T is a native type.
         ///
         /// A native type is one of the following types:

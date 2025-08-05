@@ -565,7 +565,7 @@ namespace Mountain
     T& List<T>::Emplace(size_t index, Args&&... args)
     {
         if (index > m_Size)
-            THROW(ArgumentOutOfRangeException{"Cannot insert element at index > m_Size", TO_STRING(index)});
+            THROW(ArgumentOutOfRangeException{"Cannot insert element at index > m_Size", "index"});
 
         if (index == m_Size)
             return Emplace(std::forward<Args>(args)...);
@@ -589,7 +589,7 @@ namespace Mountain
     T& List<T>::Insert(const size_t index, T&& element)
     {
         if (index > m_Size)
-            THROW(ArgumentOutOfRangeException{"Cannot insert element at index > m_Size", TO_STRING(index)});
+            THROW(ArgumentOutOfRangeException{"Cannot insert element at index > m_Size", "index"});
 
         if (index == m_Size)
             return Add(std::move(element));
@@ -605,7 +605,7 @@ namespace Mountain
     T& List<T>::Insert(const size_t index, const T& element)
     {
         if (index > m_Size)
-            THROW(ArgumentOutOfRangeException{"Cannot insert element at index > m_Size", TO_STRING(index)});
+            THROW(ArgumentOutOfRangeException{"Cannot insert element at index > m_Size", "index"});
 
         if (index == m_Size)
             return Add(element);
@@ -635,7 +635,7 @@ namespace Mountain
     void List<T>::InsertRange(const size_t index, const T* data, const size_t count)
     {
         if (index > m_Size)
-            THROW(ArgumentOutOfRangeException{"Cannot insert elements at index > m_Size", TO_STRING(index)});
+            THROW(ArgumentOutOfRangeException{"Cannot insert elements at index > m_Size", "index"});
 
         if (index == m_Size)
         {
