@@ -188,6 +188,9 @@ bool_t Mountain::Renderer::Initialize(const std::string& windowTitle, const Vect
     glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
 
     glDebugMessageCallback(OpenGlDebugCallback, nullptr);
+#else
+    if (BreakOnGraphicsError)
+        Logger::LogWarning("Mountain::BreakOnGraphicsError has been set when not in a debug build, this won't do anything!");
 #endif
 
     Graphics::SetViewport(0, 0, windowSize.x, windowSize.y);
