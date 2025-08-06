@@ -17,6 +17,8 @@
 
 #include "Profiler.h"
 
+#include "Mountain/Globals.hpp"
+
 using namespace Mountain;
 
 Game::Game(const std::string& windowTitle, const Vector2i windowSize)
@@ -133,7 +135,7 @@ bool_t Game::NextFrame()
 
     Renderer::PreFrame();
 
-    if (Time::freezeTimer <= 0.f)
+    if (ManualFreezeFrames || Time::freezeTimer <= 0.f)
         Update();
     if (!Window::GetMinimized())
         Render();

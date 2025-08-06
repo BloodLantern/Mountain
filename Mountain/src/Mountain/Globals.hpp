@@ -29,4 +29,6 @@ namespace Mountain
     PUBLIC_GLOBAL(std::string, BuiltinAssetsPath, "");
     /// @brief Whether to debug break when an OpenGL error is reported.
     PUBLIC_GLOBAL(bool_t, BreakOnGraphicsError, false);
+    /// @brief Whether to still call @c Game::Update() when @code Time::freezeTimer > 0.f@endcode.
+    PUBLIC_GLOBAL(bool_t, ManualFreezeFrames, false);
 }
