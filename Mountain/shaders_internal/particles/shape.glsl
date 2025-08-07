@@ -74,7 +74,9 @@ void ShapeInitialize(inout Particle particle)
         case ShapeTypeRectangle:
             float rectangleChoice = Random(randomSeed);
             particle.offset = RandomPointInRectangle(randomSeed * rectangleChoice, vec2(0.f), vec2(1.f));
-        
+
+            // TODO - Optimization possible if scaleThickness == vec2(1.f)
+
             float rightRectangleArea = shape.rectangle.scaleThickness.x;
             float bottomRectangleArea = shape.rectangle.scaleThickness.y * (1.f - shape.rectangle.scaleThickness.x);
             float totalArea = rightRectangleArea + bottomRectangleArea;
@@ -94,9 +96,9 @@ void ShapeInitialize(inout Particle particle)
                 if (rectangleChoice >= (1.f + limit) * 0.5f)
                     particle.offset *= -1.f;
             }
-        
+
             particle.offset *= shape.scale;
-        
+
             particle.offset = Rotated(particle.offset, shape.rotation);
             particle.velocity = normalize(particle.offset);
             break;
