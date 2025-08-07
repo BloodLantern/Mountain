@@ -480,7 +480,7 @@ namespace Mountain
     template <Concepts::Iterator InputIterator>
     void List<T>::AddRange(InputIterator first, InputIterator last)
     {
-        static_assert(Meta::IsSame<Meta::IteratorType<InputIterator>, T>, "List::AddRange() needs the type of the iterator to be the same as the List");
+        static_assert(Meta::IsConvertibleTo<Meta::IteratorType<InputIterator>, T>, "List::AddRange() needs the type of the iterator to be the same as the List");
 
         const size_t additionalSize = last - first;
 
@@ -499,7 +499,7 @@ namespace Mountain
     template <Concepts::Enumerable EnumerableT>
     void List<T>::AddRange(const EnumerableT& enumerable)
     {
-        static_assert(Meta::IsSame<Meta::EnumerableType<EnumerableT>, T>, "List::AddRange() needs the type of the enumerable to be the same as the List");
+        static_assert(Meta::IsConvertibleTo<Meta::EnumerableType<EnumerableT>, T>, "List::AddRange() needs the type of the enumerable to be the same as the List");
 
         AddRange(enumerable.begin(), enumerable.end());
     }
@@ -663,7 +663,7 @@ namespace Mountain
     template <Concepts::Iterator InputIterator>
     void List<T>::InsertRange(const size_t index, InputIterator first, InputIterator last)
     {
-        static_assert(Meta::IsSame<Meta::IteratorType<InputIterator>, T>, "List::InsertRange() needs the type of the iterator to be the same as the List");
+        static_assert(Meta::IsConvertibleTo<Meta::IteratorType<InputIterator>, T>, "List::InsertRange() needs the type of the iterator to be the same as the List");
 
         const size_t additionalSize = last - first;
 
@@ -683,7 +683,7 @@ namespace Mountain
     template <Concepts::Enumerable EnumerableT>
     void List<T>::InsertRange(const size_t index, EnumerableT enumerable)
     {
-        static_assert(Meta::IsSame<Meta::EnumerableType<EnumerableT>, T>, "List::InsertRange() needs the type of the enumerable to be the same as the List");
+        static_assert(Meta::IsConvertibleTo<Meta::EnumerableType<EnumerableT>, T>, "List::InsertRange() needs the type of the enumerable to be the same as the List");
 
         return InsertRange(index, enumerable.begin(), enumerable.end());
     }
