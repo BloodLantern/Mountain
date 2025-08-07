@@ -413,7 +413,7 @@ namespace Mountain
         Reallocate(other.m_Capacity);
         m_Size = other.m_Size;
         for (size_t i = 0; i < m_Size; i++)
-            m_Data[i] = other.m_Data[i];
+            new (m_Data + i) T{other.m_Data[i]};
 
         return *this;
     }
