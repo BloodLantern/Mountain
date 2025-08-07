@@ -65,7 +65,9 @@ namespace Mountain
 
         ParticleSystemModules::Types enabledModules = ParticleSystemModules::Types::Default;
 
-        MOUNTAIN_API ParticleSystem() = default;
+        /// @brief Constructs a ParticleSystem with 1000 max particles
+        /// @remark This simply calls @c ParticleSystem(uint32_t) with @c 1000 as a parameter
+        MOUNTAIN_API ParticleSystem();
         MOUNTAIN_API explicit ParticleSystem(uint32_t maxParticles);
         MOUNTAIN_API virtual ~ParticleSystem();
 

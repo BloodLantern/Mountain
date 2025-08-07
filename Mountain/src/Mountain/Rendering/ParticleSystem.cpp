@@ -20,6 +20,11 @@ namespace
     constexpr size_t GpuParticleStructSize = 48;
 }
 
+ParticleSystem::ParticleSystem()
+    : ParticleSystem{1000}
+{
+}
+
 // ReSharper disable CppObjectMemberMightNotBeInitialized
 ParticleSystem::ParticleSystem(const uint32_t maxParticles)
 {
