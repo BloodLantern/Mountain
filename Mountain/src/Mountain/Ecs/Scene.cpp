@@ -15,8 +15,9 @@ void Scene::Begin()
 void Scene::BeforeUpdate()
 {
     m_Entities.UpdateLists();
-    onNextFrame();
+    const auto onNextFrameCopy = onNextFrame;
     onNextFrame.Clear();
+    onNextFrameCopy();
 }
 
 void Scene::Update()
@@ -27,8 +28,9 @@ void Scene::Update()
 
 void Scene::AfterUpdate()
 {
-    onEndOfCurrentFrame();
+    const auto onEndOfCurrentFrameCopy = onEndOfCurrentFrame;
     onEndOfCurrentFrame.Clear();
+    onEndOfCurrentFrameCopy();
 }
 
 void Scene::BeforeRender()
