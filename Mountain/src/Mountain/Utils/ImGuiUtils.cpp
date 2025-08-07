@@ -708,23 +708,30 @@ void ImGuiUtils::OpenPointerPopupModal()
     ImGui::OpenPopup("PointerFilter");
 }
 
-void ImGuiUtils::FilterFilePopupModal(Pointer<File>* value)
+bool_t ImGuiUtils::FilterFilePopupModal(Pointer<File>* value, const std::string_view extension)
 {
     static std::string filter;
+    const std::string f = filter + std::string{extension};
 
     const List<Pointer<File>> resources = FileManager::FindAll<File>(
         [&](const Pointer<File>& resource)
         {
-            return Utils::StringContainsIgnoreCase(resource->GetPathString(), filter);
+            return Utils::StringContainsIgnoreCase(resource->GetPathString(), f);
         }
     );
 
-    FilterPointerPopupModal<File>(value, resources, filter, [](const Pointer<File>& p) { return p->GetName().c_str(); });
+    return FilterPointerPopupModal<File>(value, resources, filter, [](const Pointer<File>& p) { return p->GetName().c_str(); });
 }
 
-void ImGuiUtils::SelectFile(const char_t* label, Pointer<File>* value)
+bool_t ImGuiUtils::SelectFile(const char_t* label, Pointer<File>* value, const bool_t enableResetButton, const std::string_view extension)
 {
-    SelectPointer<File>(label, value, FilterFilePopupModal, [](const Pointer<File>& p) { return p->GetPathString().c_str(); });
+    return SelectPointer<File>(
+        label,
+        value,
+        enableResetButton,
+        [=](Pointer<File>* v) { return FilterFilePopupModal(v, extension); },
+        [](const Pointer<File>& p) { return p->GetPathString().c_str(); }
+    );
 }
 
 // ReSharper disable CppInconsistentNaming

@@ -200,5 +200,5 @@ void ColorBySpeed::RenderImGui()
 
 void Renderer::RenderImGui()
 {
-    ImGuiUtils::SelectResource("texture", &texture);
+    ImGuiUtils::SelectResource("texture", &texture, true);
 }

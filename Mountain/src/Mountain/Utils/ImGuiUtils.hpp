@@ -7,6 +7,7 @@
 #include <ImGui/imgui.h>
 #include <ImGui/imgui_stdlib.h>
 
+#include "Mountain/Window.hpp"
 #include "Mountain/Resource/ResourceManager.hpp"
 #include "Mountain/Utils/Utils.hpp"
 
@@ -69,30 +70,31 @@ namespace Mountain::ImGuiUtils
     MOUNTAIN_API void OpenPointerPopupModal();
 
     template <typename T>
-    void FilterPointerPopupModal(
+    bool_t FilterPointerPopupModal(
         Pointer<T>* value,
         const List<Pointer<T>>& pointers,
         std::string& filter,
         const std::function<const char_t*(const Pointer<T>&)>& getNameFunction
     );
 
-    MOUNTAIN_API void FilterFilePopupModal(Pointer<File>* value);
+    MOUNTAIN_API bool_t FilterFilePopupModal(Pointer<File>* value, std::string_view extension = "");
 
     template <Concepts::Resource T>
-    void FilterResourcePopupModal(Pointer<T>* value);
+    bool_t FilterResourcePopupModal(Pointer<T>* value);
 
     template <typename T>
-    void SelectPointer(
+    bool_t SelectPointer(
         const char_t* label,
         Pointer<T>* value,
-        const std::function<void(Pointer<T>*)>& filterFunction,
+        bool_t enableResetButton,
+        const std::function<bool_t(Pointer<T>*)>& filterFunction,
         const std::function<const char_t*(const Pointer<T>&)>& getNameFunction
     );
 
-    MOUNTAIN_API void SelectFile(const char_t* label, Pointer<File>* value);
+    MOUNTAIN_API bool_t SelectFile(const char_t* label, Pointer<File>* value, bool_t enableResetButton, std::string_view extension = "");
 
     template <Concepts::Resource T>
-    void SelectResource(const char_t* label, Pointer<T>* value);
+    bool_t SelectResource(const char_t* label, Pointer<T>* value, bool_t enableResetButton);
 }
 
 // ReSharper disable CppInconsistentNaming
@@ -163,7 +165,7 @@ namespace Mountain
     }
 
     template <typename T>
-    void ImGuiUtils::FilterPointerPopupModal(
+    bool_t ImGuiUtils::FilterPointerPopupModal(
         Pointer<T>* value,
         const List<Pointer<T>>& pointers,
         std::string& filter,
@@ -172,10 +174,10 @@ namespace Mountain
     {
         ENSURE_NOT_NULL(value);
 
-        ImGui::SetNextWindowSizeConstraints({300.f, 300.f}, {-1.f, -1.f});
+        ImGui::SetNextWindowSizeConstraints({300.f, 300.f}, static_cast<Vector2>(Window::GetSize()));
 
         if (!ImGui::BeginPopupModal("PointerFilter"))
-            return;
+            return false;
 
         static size_t selectedIndex = 0;
 
@@ -228,6 +230,9 @@ namespace Mountain
         {
             *value = selectedPointer;
             ImGui::CloseCurrentPopup();
+
+            ImGui::EndPopup();
+            return true;
         }
 
         // If pressed escape or clicked outside the popup window, close the popup
@@ -241,10 +246,11 @@ namespace Mountain
         }
 
         ImGui::EndPopup();
+        return false;
     }
 
     template <Concepts::Resource T>
-    void ImGuiUtils::FilterResourcePopupModal(Pointer<T>* value)
+    bool_t ImGuiUtils::FilterResourcePopupModal(Pointer<T>* value)
     {
         static std::string filter;
 
@@ -255,14 +261,15 @@ namespace Mountain
             }
         );
 
-        FilterPointerPopupModal<T>(value, resources, filter, [](const Pointer<T>& p) { return p->GetName().c_str(); });
+        return FilterPointerPopupModal<T>(value, resources, filter, [](const Pointer<T>& p) { return p->GetName().c_str(); });
     }
 
     template <typename T>
-    void ImGuiUtils::SelectPointer(
+    bool_t ImGuiUtils::SelectPointer(
         const char_t* label,
         Pointer<T>* value,
-        const std::function<void(Pointer<T>*)>& filterFunction,
+        const bool_t enableResetButton,
+        const std::function<bool_t(Pointer<T>*)>& filterFunction,
         const std::function<const char_t*(const Pointer<T>&)>& getNameFunction
     )
     {
@@ -291,28 +298,33 @@ namespace Mountain
         if (ImGui::Button("..."))
             OpenPointerPopupModal();
 
-        ImGui::SameLine();
+        if (enableResetButton)
+        {
+            ImGui::SameLine();
 
-        const bool_t resetButtonDisabled = *value == nullptr;
+            const bool_t resetButtonDisabled = *value == nullptr;
 
-        if (resetButtonDisabled)
-            ImGui::BeginDisabled();
+            if (resetButtonDisabled)
+                ImGui::BeginDisabled();
 
-        if (ImGui::Button("Reset"))
-            *value = nullptr;
+            if (ImGui::Button("Reset"))
+                *value = nullptr;
 
-        if (resetButtonDisabled)
-            ImGui::EndDisabled();
+            if (resetButtonDisabled)
+                ImGui::EndDisabled();
+        }
 
-        filterFunction(value);
+        const bool_t result = filterFunction(value);
 
         ImGui::PopID();
+
+        return result;
     }
 
     template <Concepts::Resource T>
-    void ImGuiUtils::SelectResource(const char_t* label, Pointer<T>* value)
+    bool_t ImGuiUtils::SelectResource(const char_t* label, Pointer<T>* value, const bool_t enableResetButton)
     {
-        SelectPointer<T>(label, value, FilterResourcePopupModal<T>, [](const Pointer<T>& p) { return p->GetName().c_str(); });
+        return SelectPointer<T>(label, value, enableResetButton, FilterResourcePopupModal<T>, [](const Pointer<T>& p) { return p->GetName().c_str(); });
     }
 }
 
