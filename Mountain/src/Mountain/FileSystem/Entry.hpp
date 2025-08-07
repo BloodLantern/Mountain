@@ -42,38 +42,35 @@ namespace Mountain
         MOUNTAIN_API virtual void OpenInExplorer() const;
 
         /// @brief Returns the corresponding filesystem path.
-        ATTRIBUTE_NODISCARD
-        MOUNTAIN_API const std::filesystem::path& GetPath() const;
+        GETTER(const std::filesystem::path&, Path, m_Path)
 
         /// @brief Returns the string representation of @c GetPath().
-        ATTRIBUTE_NODISCARD
-        MOUNTAIN_API std::string GetPathString() const;
+        GETTER(const std::string&, PathString, m_PathString)
 
         /// @brief Returns this Entry name.
-        ATTRIBUTE_NODISCARD
-        MOUNTAIN_API std::string GetName() const;
+        GETTER(const std::string&, Name, m_Name)
 
         /// @brief Renames this Entry on the file system.
         ///
-        /// This function also renames the File entry in the FileManager using FileManager::Rename(const std::filesystem::path&, const std::filesystem::path&).
+        /// This function renames the File entry in the FileManager using FileManager::Rename().
         ///
         /// @param newName The new name of this Entry.
         MOUNTAIN_API virtual void SetName(const std::string& newName);
 
         /// @brief Returns whether this Entry has been loaded.
-        ATTRIBUTE_NODISCARD
-        MOUNTAIN_API bool_t GetLoaded() const;
+        GETTER(bool_t, Loaded, m_Loaded)
 
         /// @brief Sets the new path of this Entry.
         virtual void SetParent(Pointer<Directory>&& newParent);
 
         /// @brief Returns a Pointer to the parent Directory of this Entry, with a strong reference stored in the FileManager.
-        ATTRIBUTE_NODISCARD
-        MOUNTAIN_API Pointer<Directory> GetParent();
+        GETTER(const Pointer<Directory>&, Parent, m_Parent)
 
     protected:
         /// @brief The underlying filesystem path of this Entry.
         std::filesystem::path m_Path;
+        /// @brief The underlying filesystem path of this Entry, stored as a @c std::string.
+        std::string m_PathString;
         /// @brief The name of this Entry.
         std::string m_Name;
 

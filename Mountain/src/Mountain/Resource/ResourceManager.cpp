@@ -80,7 +80,7 @@ void ResourceManager::LoadAll()
         files.end(),
         [](const Pointer<File>& file) -> void
         {
-            std::string&& extension = file->GetExtension();
+            const std::string& extension = file->GetExtension();
 
             if (Mountain::Contains(Texture::FileExtensions, extension))
                 Load<Texture>(file, false);
@@ -94,7 +94,7 @@ void ResourceManager::LoadAll()
     // Do interface stuff synchronously (OpenGL/OpenAL/FreeType)
     for (Pointer<File>& file : files)
     {
-        std::string&& extension = file->GetExtension();
+        const std::string& extension = file->GetExtension();
 
         if (
             Mountain::Contains(Shader::VertexFileExtensions, extension) ||
@@ -266,9 +266,6 @@ Pointer<Font> ResourceManager::GetFont(const std::string& name, uint32_t size)
 
     if (!Contains(internalName))
     {
-        if (Contains(internalName))
-            return GetNoCheck<Font>(internalName);
-
         Logger::LogError("Attempt to get an unknown font: {}", internalName);
         return nullptr;
     }

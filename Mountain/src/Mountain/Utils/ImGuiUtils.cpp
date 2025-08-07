@@ -703,9 +703,28 @@ void ImGuiUtils::DrawEasingFunction(const char_t* label, const Easing::Easer fun
     _freea(data);
 }
 
-void ImGuiUtils::OpenResourcePopupModal()
+void ImGuiUtils::OpenPointerPopupModal()
 {
-    ImGui::OpenPopup("ResourceFilter");
+    ImGui::OpenPopup("PointerFilter");
+}
+
+void ImGuiUtils::FilterFilePopupModal(Pointer<File>* value)
+{
+    static std::string filter;
+
+    const List<Pointer<File>> resources = FileManager::FindAll<File>(
+        [&](const Pointer<File>& resource)
+        {
+            return Utils::StringContainsIgnoreCase(resource->GetPathString(), filter);
+        }
+    );
+
+    FilterPointerPopupModal<File>(value, resources, filter, [](const Pointer<File>& p) { return p->GetName().c_str(); });
+}
+
+void ImGuiUtils::SelectFile(const char_t* label, Pointer<File>* value)
+{
+    SelectPointer<File>(label, value, FilterFilePopupModal, [](const Pointer<File>& p) { return p->GetPathString().c_str(); });
 }
 
 // ReSharper disable CppInconsistentNaming
