@@ -645,6 +645,9 @@ void ImGuiUtils::ShowPerformanceMonitoring()
     static float_t lastUpdateTime = 0.f;
     static uint64_t lastUpdateTotalFrames = 0;
 
+    static List<float_t> frameDurationList;
+    static constexpr size_t MaxFrameDurations = 200;
+
     if (Time::OnIntervalUnscaled(updateInterval))
     {
         const float_t updateTime = Time::GetTotalTimeUnscaled();
@@ -662,6 +665,11 @@ void ImGuiUtils::ShowPerformanceMonitoring()
         memoryCpuOnly = static_cast<double_t>(cpuMemory) * 1e-6; // Convert to MB
         memoryTotal = static_cast<double_t>(totalMemory) * 1e-6; // Convert to MB
 
+        frameDurationList.Add(frameDuration * 1000.f);
+
+        if (frameDurationList.GetSize() > MaxFrameDurations)
+            frameDurationList.RemoveFirst();
+
         lastUpdateTime = updateTime;
         lastUpdateTotalFrames = totalFrames;
     }
@@ -676,6 +684,8 @@ void ImGuiUtils::ShowPerformanceMonitoring()
     ImGui::Text("CPU: %.1fms (%.1fms left)", frameDuration * 1000.f, frameDurationLeft * 1000.f);
     ImGui::Text("Memory: %.2fMB (%.2fMB including GPU)", memoryCpuOnly, memoryTotal);
     ImGui::Text("Framebuffer: %dx%d", framebufferSize.x, framebufferSize.y);
+
+    ImGui::PlotHistogram("Frame durations (in ms)", frameDurationList.GetData(), static_cast<int32_t>(frameDurationList.GetSize()), 0, nullptr, 0.f, Time::GetTargetDeltaTime() * 1000.f);
 
     ImGui::End();
 }
