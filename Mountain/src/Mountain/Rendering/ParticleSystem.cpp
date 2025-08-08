@@ -463,8 +463,6 @@ void ParticleSystem::SetMaxParticles(const uint32_t newMaxParticles)
     Graphics::MemoryBarrier(Graphics::MemoryBarrierFlags::ShaderStorageBarrier);
 }
 
-const List<std::shared_ptr<ParticleSystemModules::ModuleBase>>& ParticleSystem::GetModules() const { return m_Modules; }
-
 void ParticleSystem::Update(const float_t deltaTime)
 {
     if (!m_Playing || m_MaxParticles == 0)

@@ -112,9 +112,7 @@ namespace Mountain
         MOUNTAIN_API void SetMaxParticles(uint32_t newMaxParticles);
 
         GETTER(bool_t, Playing, m_Playing)
-
-        ATTRIBUTE_NODISCARD
-        const List<std::shared_ptr<ParticleSystemModules::ModuleBase>>& GetModules() const;
+        GETTER(const List<std::shared_ptr<ParticleSystemModules::ModuleBase>>&, Modules, m_Modules)
 
     private:
         uint32_t m_MaxParticles = 0;
@@ -139,24 +137,24 @@ namespace Mountain
 
         std::shared_ptr<ParticleSystemModules::Renderer> m_RendererModule;
 
-        void Update(float_t deltaTime);
+        MOUNTAIN_API void Update(float_t deltaTime);
 
-        void SetComputeShaderUniforms(float_t deltaTime) const;
-        void SpawnNewParticles();
+        MOUNTAIN_API void SetComputeShaderUniforms(float_t deltaTime) const;
+        MOUNTAIN_API void SpawnNewParticles();
 
-        void AddModule(const std::shared_ptr<ParticleSystemModules::ModuleBase>& module, bool_t sort);
-        void AddModules(const List<std::shared_ptr<ParticleSystemModules::ModuleBase>>& modules, bool_t sort);
-        void RemoveModule(size_t index);
+        MOUNTAIN_API void AddModule(const std::shared_ptr<ParticleSystemModules::ModuleBase>& module, bool_t sort);
+        MOUNTAIN_API void AddModules(const List<std::shared_ptr<ParticleSystemModules::ModuleBase>>& modules, bool_t sort);
+        MOUNTAIN_API void RemoveModule(size_t index);
 
-        void SortModules();
+        MOUNTAIN_API void SortModules();
 
         /// @brief Wait for the GPU buffer to sync with the CPU. After that call, the CPU can read/write to that buffer.
-        static void WaitBufferSync(__GLsync* syncObject);
+        MOUNTAIN_API static void WaitBufferSync(__GLsync* syncObject);
         /// @brief Lock the buffer to GPU read/write-only. After that call, the CPU cannot access that buffer anymore.
-        static void LockBuffer(__GLsync*& syncObject);
+        MOUNTAIN_API static void LockBuffer(__GLsync*& syncObject);
 
-        uint8_t* CreateRawDataCopy();
-        bool_t CheckAndDeleteRawDataCopy(uint8_t* copy);
+        MOUNTAIN_API uint8_t* CreateRawDataCopy();
+        MOUNTAIN_API bool_t CheckAndDeleteRawDataCopy(uint8_t* copy);
     };
 
     template <Concepts::ParticleSystemModule ModuleT>
