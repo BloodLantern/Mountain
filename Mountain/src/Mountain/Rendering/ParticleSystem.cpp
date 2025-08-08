@@ -51,45 +51,7 @@ ParticleSystem::~ParticleSystem()
 
 void ParticleSystem::Update()
 {
-    if (!m_Playing || m_MaxParticles == 0)
-        return;
-
-    const float_t deltaTime = useUnscaledDeltaTime ? Time::GetDeltaTimeUnscaled() : Time::GetDeltaTime();
-
-    if (m_PlaybackTime >= startDelay)
-    {
-        SetComputeShaderUniforms(deltaTime);
-
-        for (const auto& module : m_Modules)
-        {
-            if (enabledModules & module->GetType())
-                module->SetComputeShaderUniforms(*m_UpdateComputeShader);
-        }
-
-        const bool_t spawning = looping || m_PlaybackTime - startDelay < duration;
-
-        if (!spawning && GetCurrentParticles() == 0)
-            m_Playing = false;
-
-        // Spawn new particles if necessary
-        if (spawning)
-            SpawnNewParticles();
-
-        BindBufferBase(Graphics::BufferType::ShaderStorageBuffer, 0, m_LiveSsbo);
-        BindBufferBase(Graphics::BufferType::ShaderStorageBuffer, 1, m_ParticleSsbo);
-
-        m_UpdateComputeShader->Dispatch(m_MaxParticles);
-
-        BindBufferBase(Graphics::BufferType::ShaderStorageBuffer, 1, 0);
-        BindBufferBase(Graphics::BufferType::ShaderStorageBuffer, 0, 0);
-
-        m_SpawnTimer -= deltaTime;
-    }
-
-    m_LastPosition = position;
-    m_LastPlaybackTime = m_PlaybackTime;
-
-    m_PlaybackTime += deltaTime;
+    Update(useUnscaledDeltaTime ? Time::GetDeltaTimeUnscaled() : Time::GetDeltaTime());
 }
 
 void ParticleSystem::Render()
@@ -142,6 +104,8 @@ void ParticleSystem::Render()
 void ParticleSystem::RenderImGui()
 {
     ImGui::PushID(this);
+
+    uint8_t* dataCopy = CreateRawDataCopy();
 
     if (ImGuiUtils::PushSeparatorText("System controls"))
     {
@@ -287,6 +251,14 @@ void ParticleSystem::RenderImGui()
         }
 
         ImGuiUtils::PopSeparatorText();
+    }
+
+    if (CheckAndDeleteRawDataCopy(dataCopy))
+    {
+        const float_t oldPlaybackTime = std::min(m_PlaybackTime, duration) + Calc::Modulo(m_PlaybackTime, duration);
+        Restart();
+        while (m_PlaybackTime < oldPlaybackTime)
+            Update(std::min(oldPlaybackTime - m_PlaybackTime, useUnscaledDeltaTime ? Time::GetDeltaTimeUnscaled() : Time::GetDeltaTime()));
     }
 
     ImGui::PopID();
@@ -493,10 +465,52 @@ void ParticleSystem::SetMaxParticles(const uint32_t newMaxParticles)
 
 const List<std::shared_ptr<ParticleSystemModules::ModuleBase>>& ParticleSystem::GetModules() const { return m_Modules; }
 
+void ParticleSystem::Update(const float_t deltaTime)
+{
+    if (!m_Playing || m_MaxParticles == 0)
+        return;
+
+    if (m_PlaybackTime >= startDelay)
+    {
+        SetComputeShaderUniforms(deltaTime);
+
+        for (const auto& module : m_Modules)
+        {
+            if (enabledModules & module->GetType())
+                module->SetComputeShaderUniforms(*m_UpdateComputeShader);
+        }
+
+        const bool_t spawning = looping || m_PlaybackTime - startDelay < duration;
+
+        if (!spawning && GetCurrentParticles() == 0)
+            m_Playing = false;
+
+        // Spawn new particles if necessary
+        if (spawning)
+            SpawnNewParticles();
+
+        BindBufferBase(Graphics::BufferType::ShaderStorageBuffer, 0, m_LiveSsbo);
+        BindBufferBase(Graphics::BufferType::ShaderStorageBuffer, 1, m_ParticleSsbo);
+
+        m_UpdateComputeShader->Dispatch(m_MaxParticles);
+
+        BindBufferBase(Graphics::BufferType::ShaderStorageBuffer, 1, 0);
+        BindBufferBase(Graphics::BufferType::ShaderStorageBuffer, 0, 0);
+
+        m_SpawnTimer -= deltaTime;
+    }
+
+    m_LastPosition = position;
+    m_LastPlaybackTime = m_PlaybackTime;
+
+    m_PlaybackTime += deltaTime;
+
+}
+
 void ParticleSystem::SetComputeShaderUniforms(const float_t deltaTime) const
 {
     m_UpdateComputeShader->SetUniform("deltaTime", deltaTime);
-    m_UpdateComputeShader->SetUniform("time", Time::GetTotalTime());
+    m_UpdateComputeShader->SetUniform("time", m_PlaybackTime); // TODO - Maybe multiply by a random seed
 
     m_UpdateComputeShader->SetUniform("particleLifetime", particleLifetime);
     m_UpdateComputeShader->SetUniform("particleSpeed", particleSpeed);
@@ -648,3 +662,278 @@ void ParticleSystem::LockBuffer(GLsync& syncObject)
         glDeleteSync(syncObject);
     syncObject = glFenceSync(GL_SYNC_GPU_COMMANDS_COMPLETE, GL_NONE);
 }
+
+uint8_t* ParticleSystem::CreateRawDataCopy()
+{
+    size_t totalMemory = sizeof(ParticleSystem);
+
+    if (enabledModules & ParticleSystemModules::Types::Shape) totalMemory += sizeof(ParticleSystemModules::Shape);
+    if (enabledModules & ParticleSystemModules::Types::VelocityOverLifetime) totalMemory += sizeof(ParticleSystemModules::VelocityOverLifetime);
+    // if (enabledModules & ParticleSystemModules::Types::LimitVelocityOverLifetime) totalMemory += sizeof(ParticleSystemModules::LimitVelocityOverLifetime);
+    // if (enabledModules & ParticleSystemModules::Types::InheritVelocity) totalMemory += sizeof(ParticleSystemModules::InheritVelocity);
+    // if (enabledModules & ParticleSystemModules::Types::LifetimeByEmitterSpeed) totalMemory += sizeof(ParticleSystemModules::LifetimeByEmitterSpeed);
+    if (enabledModules & ParticleSystemModules::Types::ForceOverLifetime) totalMemory += sizeof(ParticleSystemModules::ForceOverLifetime);
+    if (enabledModules & ParticleSystemModules::Types::ColorOverLifetime) totalMemory += sizeof(ParticleSystemModules::ColorOverLifetime);
+    if (enabledModules & ParticleSystemModules::Types::ColorBySpeed) totalMemory += sizeof(ParticleSystemModules::ColorBySpeed);
+    // if (enabledModules & ParticleSystemModules::Types::SizeOverLifetime) totalMemory += sizeof(ParticleSystemModules::SizeOverLifetime);
+    // if (enabledModules & ParticleSystemModules::Types::SizeBySpeed) totalMemory += sizeof(ParticleSystemModules::SizeBySpeed);
+    // if (enabledModules & ParticleSystemModules::Types::RotationOverLifetime) totalMemory += sizeof(ParticleSystemModules::RotationOverLifetime);
+    // if (enabledModules & ParticleSystemModules::Types::RotationBySpeed) totalMemory += sizeof(ParticleSystemModules::RotationBySpeed);
+    // if (enabledModules & ParticleSystemModules::Types::Noise) totalMemory += sizeof(ParticleSystemModules::Noise);
+    // if (enabledModules & ParticleSystemModules::Types::Collision) totalMemory += sizeof(ParticleSystemModules::Collision);
+    // if (enabledModules & ParticleSystemModules::Types::SubEmitters) totalMemory += sizeof(ParticleSystemModules::SubEmitters);
+    // if (enabledModules & ParticleSystemModules::Types::TextureSheetAnimation) totalMemory += sizeof(ParticleSystemModules::TextureSheetAnimation);
+    // if (enabledModules & ParticleSystemModules::Types::Lights) totalMemory += sizeof(ParticleSystemModules::Lights);
+    // if (enabledModules & ParticleSystemModules::Types::Trails) totalMemory += sizeof(ParticleSystemModules::Trails);
+    if (enabledModules & ParticleSystemModules::Types::Renderer) totalMemory += sizeof(ParticleSystemModules::Renderer);
+
+    uint8_t* dataCopy = static_cast<uint8_t*>(_malloca(totalMemory));
+    size_t currentOffset = 0;
+    std::memcpy(dataCopy, static_cast<void*>(this), sizeof(ParticleSystem));
+    currentOffset += sizeof(ParticleSystem);
+
+    if (enabledModules & ParticleSystemModules::Types::Shape)
+    {
+        const std::shared_ptr<ParticleSystemModules::Shape> ptr = GetModule<ParticleSystemModules::Shape>();
+        std::memcpy(dataCopy + currentOffset, static_cast<void*>(ptr.get()), sizeof(ParticleSystemModules::Shape));
+        currentOffset += sizeof(ParticleSystemModules::Shape);
+    }
+    if (enabledModules & ParticleSystemModules::Types::VelocityOverLifetime)
+    {
+        const std::shared_ptr<ParticleSystemModules::VelocityOverLifetime> ptr = GetModule<ParticleSystemModules::VelocityOverLifetime>();
+        std::memcpy(dataCopy + currentOffset, static_cast<void*>(ptr.get()), sizeof(ParticleSystemModules::VelocityOverLifetime));
+        currentOffset += sizeof(ParticleSystemModules::VelocityOverLifetime);
+    }
+    // if (enabledModules & ParticleSystemModules::Types::LimitVelocityOverLifetime)
+    //{
+    //    const std::shared_ptr<ParticleSystemModules::LimitVelocityOverLifetime> ptr = GetModule<ParticleSystemModules::LimitVelocityOverLifetime>();
+    //    std::memcpy(oldData + currentOffset, static_cast<void*>(ptr.get()), sizeof(ParticleSystemModules::LimitVelocityOverLifetime));
+    //    currentOffset += sizeof(ParticleSystemModules::LimitVelocityOverLifetime);
+    //}
+    // if (enabledModules & ParticleSystemModules::Types::InheritVelocity)
+    //{
+    //    const std::shared_ptr<ParticleSystemModules::InheritVelocity> ptr = GetModule<ParticleSystemModules::InheritVelocity>();
+    //    std::memcpy(oldData + currentOffset, static_cast<void*>(ptr.get()), sizeof(ParticleSystemModules::InheritVelocity));
+    //    currentOffset += sizeof(ParticleSystemModules::InheritVelocity);
+    //}
+    // if (enabledModules & ParticleSystemModules::Types::LifetimeByEmitterSpeed)
+    //{
+    //    const std::shared_ptr<ParticleSystemModules::LifetimeByEmitterSpeed> ptr = GetModule<ParticleSystemModules::LifetimeByEmitterSpeed>();
+    //    std::memcpy(oldData + currentOffset, static_cast<void*>(ptr.get()), sizeof(ParticleSystemModules::LifetimeByEmitterSpeed));
+    //    currentOffset += sizeof(ParticleSystemModules::LifetimeByEmitterSpeed);
+    //}
+    if (enabledModules & ParticleSystemModules::Types::ForceOverLifetime)
+    {
+        const std::shared_ptr<ParticleSystemModules::ForceOverLifetime> ptr = GetModule<ParticleSystemModules::ForceOverLifetime>();
+        std::memcpy(dataCopy + currentOffset, static_cast<void*>(ptr.get()), sizeof(ParticleSystemModules::ForceOverLifetime));
+        currentOffset += sizeof(ParticleSystemModules::ForceOverLifetime);
+    }
+    if (enabledModules & ParticleSystemModules::Types::ColorOverLifetime)
+    {
+        const std::shared_ptr<ParticleSystemModules::ColorOverLifetime> ptr = GetModule<ParticleSystemModules::ColorOverLifetime>();
+        std::memcpy(dataCopy + currentOffset, static_cast<void*>(ptr.get()), sizeof(ParticleSystemModules::ColorOverLifetime));
+        currentOffset += sizeof(ParticleSystemModules::ColorOverLifetime);
+    }
+    if (enabledModules & ParticleSystemModules::Types::ColorBySpeed)
+    {
+        const std::shared_ptr<ParticleSystemModules::ColorBySpeed> ptr = GetModule<ParticleSystemModules::ColorBySpeed>();
+        std::memcpy(dataCopy + currentOffset, static_cast<void*>(ptr.get()), sizeof(ParticleSystemModules::ColorBySpeed));
+        currentOffset += sizeof(ParticleSystemModules::ColorBySpeed);
+    }
+    // if (enabledModules & ParticleSystemModules::Types::SizeOverLifetime)
+    //{
+    //    const std::shared_ptr<ParticleSystemModules::SizeOverLifetime> ptr = GetModule<ParticleSystemModules::SizeOverLifetime>();
+    //    std::memcpy(oldData + currentOffset, static_cast<void*>(ptr.get()), sizeof(ParticleSystemModules::SizeOverLifetime));
+    //    currentOffset += sizeof(ParticleSystemModules::SizeOverLifetime);
+    //}
+    // if (enabledModules & ParticleSystemModules::Types::SizeBySpeed)
+    //{
+    //    const std::shared_ptr<ParticleSystemModules::SizeBySpeed> ptr = GetModule<ParticleSystemModules::SizeBySpeed>();
+    //    std::memcpy(oldData + currentOffset, static_cast<void*>(ptr.get()), sizeof(ParticleSystemModules::SizeBySpeed));
+    //    currentOffset += sizeof(ParticleSystemModules::SizeBySpeed);
+    //}
+    // if (enabledModules & ParticleSystemModules::Types::RotationOverLifetime)
+    //{
+    //    const std::shared_ptr<ParticleSystemModules::RotationOverLifetime> ptr = GetModule<ParticleSystemModules::RotationOverLifetime>();
+    //    std::memcpy(oldData + currentOffset, static_cast<void*>(ptr.get()), sizeof(ParticleSystemModules::RotationOverLifetime));
+    //    currentOffset += sizeof(ParticleSystemModules::RotationOverLifetime);
+    //}
+    // if (enabledModules & ParticleSystemModules::Types::RotationBySpeed)
+    //{
+    //    const std::shared_ptr<ParticleSystemModules::RotationBySpeed> ptr = GetModule<ParticleSystemModules::RotationBySpeed>();
+    //    std::memcpy(oldData + currentOffset, static_cast<void*>(ptr.get()), sizeof(ParticleSystemModules::RotationBySpeed));
+    //    currentOffset += sizeof(ParticleSystemModules::RotationBySpeed);
+    //}
+    // if (enabledModules & ParticleSystemModules::Types::Noise)
+    //{
+    //    const std::shared_ptr<ParticleSystemModules::Noise> ptr = GetModule<ParticleSystemModules::Noise>();
+    //    std::memcpy(oldData + currentOffset, static_cast<void*>(ptr.get()), sizeof(ParticleSystemModules::Noise));
+    //    currentOffset += sizeof(ParticleSystemModules::Noise);
+    //}
+    // if (enabledModules & ParticleSystemModules::Types::Collision)
+    //{
+    //    const std::shared_ptr<ParticleSystemModules::Collision> ptr = GetModule<ParticleSystemModules::Collision>();
+    //    std::memcpy(oldData + currentOffset, static_cast<void*>(ptr.get()), sizeof(ParticleSystemModules::Collision));
+    //    currentOffset += sizeof(ParticleSystemModules::Collision);
+    //}
+    // if (enabledModules & ParticleSystemModules::Types::SubEmitters)
+    //{
+    //    const std::shared_ptr<ParticleSystemModules::SubEmitters> ptr = GetModule<ParticleSystemModules::SubEmitters>();
+    //    std::memcpy(oldData + currentOffset, static_cast<void*>(ptr.get()), sizeof(ParticleSystemModules::SubEmitters));
+    //    currentOffset += sizeof(ParticleSystemModules::SubEmitters);
+    //}
+    // if (enabledModules & ParticleSystemModules::Types::TextureSheetAnimation)
+    //{
+    //    const std::shared_ptr<ParticleSystemModules::TextureSheetAnimation> ptr = GetModule<ParticleSystemModules::TextureSheetAnimation>();
+    //    std::memcpy(oldData + currentOffset, static_cast<void*>(ptr.get()), sizeof(ParticleSystemModules::TextureSheetAnimation));
+    //    currentOffset += sizeof(ParticleSystemModules::TextureSheetAnimation);
+    //}
+    // if (enabledModules & ParticleSystemModules::Types::Lights)
+    //{
+    //    const std::shared_ptr<ParticleSystemModules::Lights> ptr = GetModule<ParticleSystemModules::Lights>();
+    //    std::memcpy(oldData + currentOffset, static_cast<void*>(ptr.get()), sizeof(ParticleSystemModules::Lights));
+    //    currentOffset += sizeof(ParticleSystemModules::Lights);
+    //}
+    // if (enabledModules & ParticleSystemModules::Types::Trails)
+    //{
+    //    const std::shared_ptr<ParticleSystemModules::Trails> ptr = GetModule<ParticleSystemModules::Trails>();
+    //    std::memcpy(oldData + currentOffset, static_cast<void*>(ptr.get()), sizeof(ParticleSystemModules::Trails));
+    //    currentOffset += sizeof(ParticleSystemModules::Trails);
+    //}
+    if (enabledModules & ParticleSystemModules::Types::Renderer)
+    {
+        const std::shared_ptr<ParticleSystemModules::Renderer> ptr = GetModule<ParticleSystemModules::Renderer>();
+        std::memcpy(dataCopy + currentOffset, static_cast<void*>(ptr.get()), sizeof(ParticleSystemModules::Renderer));
+    }
+
+    return dataCopy;
+}
+
+// ReSharper disable CppClangTidyBugproneSuspiciousStringCompare
+bool_t ParticleSystem::CheckAndDeleteRawDataCopy(uint8_t* copy)
+{
+    int32_t check = 0;
+
+    size_t currentOffset = 0;
+    check |= std::memcmp(copy, static_cast<void*>(this), sizeof(ParticleSystem));
+    currentOffset += sizeof(ParticleSystem);
+
+    if (enabledModules & ParticleSystemModules::Types::Shape)
+    {
+        const std::shared_ptr<ParticleSystemModules::Shape> ptr = GetModule<ParticleSystemModules::Shape>();
+        check |= std::memcmp(copy + currentOffset, static_cast<void*>(ptr.get()), sizeof(ParticleSystemModules::Shape));
+        currentOffset += sizeof(ParticleSystemModules::Shape);
+    }
+    if (enabledModules & ParticleSystemModules::Types::VelocityOverLifetime)
+    {
+        const std::shared_ptr<ParticleSystemModules::VelocityOverLifetime> ptr = GetModule<ParticleSystemModules::VelocityOverLifetime>();
+        check |= std::memcmp(copy + currentOffset, static_cast<void*>(ptr.get()), sizeof(ParticleSystemModules::VelocityOverLifetime));
+        currentOffset += sizeof(ParticleSystemModules::VelocityOverLifetime);
+    }
+    // if (enabledModules & ParticleSystemModules::Types::LimitVelocityOverLifetime)
+    //{
+    //    const std::shared_ptr<ParticleSystemModules::LimitVelocityOverLifetime> ptr = GetModule<ParticleSystemModules::LimitVelocityOverLifetime>();
+    //    check |= std::memcmp(copy + currentOffset, static_cast<void*>(ptr.get()), sizeof(ParticleSystemModules::LimitVelocityOverLifetime));
+    //    currentOffset += sizeof(ParticleSystemModules::LimitVelocityOverLifetime);
+    //}
+    // if (enabledModules & ParticleSystemModules::Types::InheritVelocity)
+    //{
+    //    const std::shared_ptr<ParticleSystemModules::InheritVelocity> ptr = GetModule<ParticleSystemModules::InheritVelocity>();
+    //    check |= std::memcmp(copy + currentOffset, static_cast<void*>(ptr.get()), sizeof(ParticleSystemModules::InheritVelocity));
+    //    currentOffset += sizeof(ParticleSystemModules::InheritVelocity);
+    //}
+    // if (enabledModules & ParticleSystemModules::Types::LifetimeByEmitterSpeed)
+    //{
+    //    const std::shared_ptr<ParticleSystemModules::LifetimeByEmitterSpeed> ptr = GetModule<ParticleSystemModules::LifetimeByEmitterSpeed>();
+    //    check |= std::memcmp(copy + currentOffset, static_cast<void*>(ptr.get()), sizeof(ParticleSystemModules::LifetimeByEmitterSpeed));
+    //    currentOffset += sizeof(ParticleSystemModules::LifetimeByEmitterSpeed);
+    //}
+    if (enabledModules & ParticleSystemModules::Types::ForceOverLifetime)
+    {
+        const std::shared_ptr<ParticleSystemModules::ForceOverLifetime> ptr = GetModule<ParticleSystemModules::ForceOverLifetime>();
+        check |= std::memcmp(copy + currentOffset, static_cast<void*>(ptr.get()), sizeof(ParticleSystemModules::ForceOverLifetime));
+        currentOffset += sizeof(ParticleSystemModules::ForceOverLifetime);
+    }
+    if (enabledModules & ParticleSystemModules::Types::ColorOverLifetime)
+    {
+        const std::shared_ptr<ParticleSystemModules::ColorOverLifetime> ptr = GetModule<ParticleSystemModules::ColorOverLifetime>();
+        check |= std::memcmp(copy + currentOffset, static_cast<void*>(ptr.get()), sizeof(ParticleSystemModules::ColorOverLifetime));
+        currentOffset += sizeof(ParticleSystemModules::ColorOverLifetime);
+    }
+    if (enabledModules & ParticleSystemModules::Types::ColorBySpeed)
+    {
+        const std::shared_ptr<ParticleSystemModules::ColorBySpeed> ptr = GetModule<ParticleSystemModules::ColorBySpeed>();
+        check |= std::memcmp(copy + currentOffset, static_cast<void*>(ptr.get()), sizeof(ParticleSystemModules::ColorBySpeed));
+        currentOffset += sizeof(ParticleSystemModules::ColorBySpeed);
+    }
+    // if (enabledModules & ParticleSystemModules::Types::SizeOverLifetime)
+    //{
+    //    const std::shared_ptr<ParticleSystemModules::SizeOverLifetime> ptr = GetModule<ParticleSystemModules::SizeOverLifetime>();
+    //    check |= std::memcmp(copy + currentOffset, static_cast<void*>(ptr.get()), sizeof(ParticleSystemModules::SizeOverLifetime));
+    //    currentOffset += sizeof(ParticleSystemModules::SizeOverLifetime);
+    //}
+    // if (enabledModules & ParticleSystemModules::Types::SizeBySpeed)
+    //{
+    //    const std::shared_ptr<ParticleSystemModules::SizeBySpeed> ptr = GetModule<ParticleSystemModules::SizeBySpeed>();
+    //    check |= std::memcmp(copy + currentOffset, static_cast<void*>(ptr.get()), sizeof(ParticleSystemModules::SizeBySpeed));
+    //    currentOffset += sizeof(ParticleSystemModules::SizeBySpeed);
+    //}
+    // if (enabledModules & ParticleSystemModules::Types::RotationOverLifetime)
+    //{
+    //    const std::shared_ptr<ParticleSystemModules::RotationOverLifetime> ptr = GetModule<ParticleSystemModules::RotationOverLifetime>();
+    //    check |= std::memcmp(copy + currentOffset, static_cast<void*>(ptr.get()), sizeof(ParticleSystemModules::RotationOverLifetime));
+    //    currentOffset += sizeof(ParticleSystemModules::RotationOverLifetime);
+    //}
+    // if (enabledModules & ParticleSystemModules::Types::RotationBySpeed)
+    //{
+    //    const std::shared_ptr<ParticleSystemModules::RotationBySpeed> ptr = GetModule<ParticleSystemModules::RotationBySpeed>();
+    //    check |= std::memcmp(copy + currentOffset, static_cast<void*>(ptr.get()), sizeof(ParticleSystemModules::RotationBySpeed));
+    //    currentOffset += sizeof(ParticleSystemModules::RotationBySpeed);
+    //}
+    // if (enabledModules & ParticleSystemModules::Types::Noise)
+    //{
+    //    const std::shared_ptr<ParticleSystemModules::Noise> ptr = GetModule<ParticleSystemModules::Noise>();
+    //    check |= std::memcmp(copy + currentOffset, static_cast<void*>(ptr.get()), sizeof(ParticleSystemModules::Noise));
+    //    currentOffset += sizeof(ParticleSystemModules::Noise);
+    //}
+    // if (enabledModules & ParticleSystemModules::Types::Collision)
+    //{
+    //    const std::shared_ptr<ParticleSystemModules::Collision> ptr = GetModule<ParticleSystemModules::Collision>();
+    //    check |= std::memcmp(copy + currentOffset, static_cast<void*>(ptr.get()), sizeof(ParticleSystemModules::Collision));
+    //    currentOffset += sizeof(ParticleSystemModules::Collision);
+    //}
+    // if (enabledModules & ParticleSystemModules::Types::SubEmitters)
+    //{
+    //    const std::shared_ptr<ParticleSystemModules::SubEmitters> ptr = GetModule<ParticleSystemModules::SubEmitters>();
+    //    check |= std::memcmp(copy + currentOffset, static_cast<void*>(ptr.get()), sizeof(ParticleSystemModules::SubEmitters));
+    //    currentOffset += sizeof(ParticleSystemModules::SubEmitters);
+    //}
+    // if (enabledModules & ParticleSystemModules::Types::TextureSheetAnimation)
+    //{
+    //    const std::shared_ptr<ParticleSystemModules::TextureSheetAnimation> ptr = GetModule<ParticleSystemModules::TextureSheetAnimation>();
+    //    check |= std::memcmp(copy + currentOffset, static_cast<void*>(ptr.get()), sizeof(ParticleSystemModules::TextureSheetAnimation));
+    //    currentOffset += sizeof(ParticleSystemModules::TextureSheetAnimation);
+    //}
+    // if (enabledModules & ParticleSystemModules::Types::Lights)
+    //{
+    //    const std::shared_ptr<ParticleSystemModules::Lights> ptr = GetModule<ParticleSystemModules::Lights>();
+    //    check |= std::memcmp(copy + currentOffset, static_cast<void*>(ptr.get()), sizeof(ParticleSystemModules::Lights));
+    //    currentOffset += sizeof(ParticleSystemModules::Lights);
+    //}
+    // if (enabledModules & ParticleSystemModules::Types::Trails)
+    //{
+    //    const std::shared_ptr<ParticleSystemModules::Trails> ptr = GetModule<ParticleSystemModules::Trails>();
+    //    check |= std::memcmp(copy + currentOffset, static_cast<void*>(ptr.get()), sizeof(ParticleSystemModules::Trails));
+    //    currentOffset += sizeof(ParticleSystemModules::Trails);
+    //}
+    if (enabledModules & ParticleSystemModules::Types::Renderer)
+    {
+        const std::shared_ptr<ParticleSystemModules::Renderer> ptr = GetModule<ParticleSystemModules::Renderer>();
+        check |= std::memcmp(copy + currentOffset, static_cast<void*>(ptr.get()), sizeof(ParticleSystemModules::Renderer));
+    }
+
+    _freea(copy);
+
+    return check != 0;
+}
+// ReSharper enable CppClangTidyBugproneSuspiciousStringCompare

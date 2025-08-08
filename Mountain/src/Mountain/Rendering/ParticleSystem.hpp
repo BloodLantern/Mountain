@@ -108,7 +108,7 @@ namespace Mountain
 
         GETTER(uint32_t, MaxParticles, m_MaxParticles)
         /// @brief Set the new maximum particle count
-        /// @warning This is a very heavy operation, avoid doing this each frame
+        /// @warning This can be a quite heavy operation depending on the requested new max particle, avoid doing this every frame
         MOUNTAIN_API void SetMaxParticles(uint32_t newMaxParticles);
 
         GETTER(bool_t, Playing, m_Playing)
@@ -139,6 +139,8 @@ namespace Mountain
 
         std::shared_ptr<ParticleSystemModules::Renderer> m_RendererModule;
 
+        void Update(float_t deltaTime);
+
         void SetComputeShaderUniforms(float_t deltaTime) const;
         void SpawnNewParticles();
 
@@ -152,6 +154,9 @@ namespace Mountain
         static void WaitBufferSync(__GLsync* syncObject);
         /// @brief Lock the buffer to GPU read/write-only. After that call, the CPU cannot access that buffer anymore.
         static void LockBuffer(__GLsync*& syncObject);
+
+        uint8_t* CreateRawDataCopy();
+        bool_t CheckAndDeleteRawDataCopy(uint8_t* copy);
     };
 
     template <Concepts::ParticleSystemModule ModuleT>
