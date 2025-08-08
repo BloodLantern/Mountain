@@ -31,7 +31,7 @@ namespace
 
 void ImGuiUtils::GridPlotting(const std::string_view label, Vector2* const value, const float_t min, const float_t max)
 {
-    ImGui::PushID(value);
+    ImGui::PushID(STRING_VIEW_TO_C_STR(label));
 
     ImGui::Text("%.*s", static_cast<int32_t>(label.length()), label.data());
     ImDrawList* drawList = ImGui::GetWindowDrawList();
@@ -88,7 +88,7 @@ void ImGuiUtils::GridPlotting(const std::string_view label, Vector2* const value
 
 void ImGuiUtils::DirectionVector(const std::string_view label, Vector2* const value)
 {
-    ImGui::PushID(value);
+    ImGui::PushID(STRING_VIEW_TO_C_STR(label));
 
     ImGui::Text("%.*s", static_cast<int32_t>(label.length()), label.data());
     ImDrawList* drawList = ImGui::GetWindowDrawList();

@@ -329,7 +329,7 @@ std::shared_ptr<ParticleSystemModules::ModuleBase> ParticleSystem::AddModule(con
     switch (type)
     {
         case ParticleSystemModules::Types::Shape: result = std::make_shared<ParticleSystemModules::Shape>(); break;
-        // case ParticleSystemModules::Types::VelocityOverLifetime: result = std::make_shared<ParticleSystemModules::VelocityOverLifetime>(); break;
+        case ParticleSystemModules::Types::VelocityOverLifetime: result = std::make_shared<ParticleSystemModules::VelocityOverLifetime>(); break;
         // case ParticleSystemModules::Types::LimitVelocityOverLifetime: result = std::make_shared<ParticleSystemModules::LimitVelocityOverLifetime>(); break;
         // case ParticleSystemModules::Types::InheritVelocity: result = std::make_shared<ParticleSystemModules::InheritVelocity>(); break;
         // case ParticleSystemModules::Types::LifetimeByEmitterSpeed: result = std::make_shared<ParticleSystemModules::LifetimeByEmitterSpeed>(); break;
@@ -361,7 +361,7 @@ List<std::shared_ptr<ParticleSystemModules::ModuleBase>> ParticleSystem::AddModu
     List<std::shared_ptr<ParticleSystemModules::ModuleBase>> result;
 
     if (types & ParticleSystemModules::Types::Shape) result.Add(std::make_shared<ParticleSystemModules::Shape>());
-    // if (types & ParticleSystemModules::Types::VelocityOverLifetime) result.Add(std::make_shared<ParticleSystemModules::VelocityOverLifetime>());
+    if (types & ParticleSystemModules::Types::VelocityOverLifetime) result.Add(std::make_shared<ParticleSystemModules::VelocityOverLifetime>());
     // if (types & ParticleSystemModules::Types::LimitVelocityOverLifetime) result.Add(std::make_shared<ParticleSystemModules::LimitVelocityOverLifetime>());
     // if (types & ParticleSystemModules::Types::InheritVelocity) result.Add(std::make_shared<ParticleSystemModules::InheritVelocity>());
     // if (types & ParticleSystemModules::Types::LifetimeByEmitterSpeed) result.Add(std::make_shared<ParticleSystemModules::LifetimeByEmitterSpeed>());

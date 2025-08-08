@@ -160,7 +160,7 @@ namespace Mountain
         std::shared_ptr<ModuleT> result;
 
         if constexpr (Meta::IsSame<ModuleT, ParticleSystemModules::Shape>) result = std::make_shared<ParticleSystemModules::Shape>();
-        // else if constexpr (Meta::IsSame<ModuleT, ParticleSystemModules::VelocityOverLifetime>) result = std::make_shared<ParticleSystemModules::VelocityOverLifetime>();
+        else if constexpr (Meta::IsSame<ModuleT, ParticleSystemModules::VelocityOverLifetime>) result = std::make_shared<ParticleSystemModules::VelocityOverLifetime>();
         // else if constexpr (Meta::IsSame<ModuleT, ParticleSystemModules::LimitVelocityOverLifetime>) result = std::make_shared<ParticleSystemModules::LimitVelocityOverLifetime>();
         // else if constexpr (Meta::IsSame<ModuleT, ParticleSystemModules::InheritVelocity>) result = std::make_shared<ParticleSystemModules::InheritVelocity>();
         // else if constexpr (Meta::IsSame<ModuleT, ParticleSystemModules::LifetimeByEmitterSpeed>) result = std::make_shared<ParticleSystemModules::LifetimeByEmitterSpeed>();
@@ -191,8 +191,8 @@ namespace Mountain
     {
         if constexpr (Meta::IsSame<ModuleT, ParticleSystemModules::Shape>)
             return std::reinterpret_pointer_cast<ParticleSystemModules::Shape>(GetModule(ParticleSystemModules::Types::Shape));
-        // else if constexpr (Meta::IsSame<ModuleT, ParticleSystemModules::VelocityOverLifetime>)
-        //     return std::reinterpret_pointer_cast<ParticleSystemModules::VelocityOverLifetime>(GetModule(ParticleSystemModules::Types::VelocityOverLifetime));
+        else if constexpr (Meta::IsSame<ModuleT, ParticleSystemModules::VelocityOverLifetime>)
+            return std::reinterpret_pointer_cast<ParticleSystemModules::VelocityOverLifetime>(GetModule(ParticleSystemModules::Types::VelocityOverLifetime));
         // else if constexpr (Meta::IsSame<ModuleT, ParticleSystemModules::LimitVelocityOverLifetime>)
         //     return std::reinterpret_pointer_cast<ParticleSystemModules::LimitVelocityOverLifetime>(GetModule(ParticleSystemModules::Types::LimitVelocityOverLifetime));
         // else if constexpr (Meta::IsSame<ModuleT, ParticleSystemModules::InheritVelocity>)
@@ -235,7 +235,7 @@ namespace Mountain
     void ParticleSystem::RemoveModule()
     {
         if constexpr (Meta::IsSame<ModuleT, ParticleSystemModules::Shape>) RemoveModule(ParticleSystemModules::Types::Shape);
-        // else if constexpr (Meta::IsSame<ModuleT, ParticleSystemModules::VelocityOverLifetime>) RemoveModule(ParticleSystemModules::Types::VelocityOverLifetime);
+        else if constexpr (Meta::IsSame<ModuleT, ParticleSystemModules::VelocityOverLifetime>) RemoveModule(ParticleSystemModules::Types::VelocityOverLifetime);
         // else if constexpr (Meta::IsSame<ModuleT, ParticleSystemModules::LimitVelocityOverLifetime>) RemoveModule(ParticleSystemModules::Types::LimitVelocityOverLifetime);
         // else if constexpr (Meta::IsSame<ModuleT, ParticleSystemModules::InheritVelocity>) RemoveModule(ParticleSystemModules::Types::InheritVelocity);
         // else if constexpr (Meta::IsSame<ModuleT, ParticleSystemModules::LifetimeByEmitterSpeed>) RemoveModule(ParticleSystemModules::Types::LifetimeByEmitterSpeed);

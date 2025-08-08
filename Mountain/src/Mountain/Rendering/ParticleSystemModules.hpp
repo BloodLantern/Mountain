@@ -140,6 +140,22 @@ namespace Mountain::ParticleSystemModules
         MOUNTAIN_API void RenderDebug(const ParticleSystem& system, Vector2 renderTargetSizeDiff) const override;
     };
 
+    class MOUNTAIN_API VelocityOverLifetime : public ModuleBase
+    {
+    public:
+        using Base = ModuleBase;
+
+        PARTICLE_SYSTEM_MODULE_CONSTRUCTOR(VelocityOverLifetime)
+
+        Vector2 velocityMin;
+        Vector2 velocityMax;
+        Easing::Type easingType = Easing::Type::Linear;
+
+    private:
+        void SetComputeShaderUniforms(const ComputeShader& computeShader) const override;
+        void RenderImGui() override;
+    };
+
     class MOUNTAIN_API ForceOverLifetime : public ModuleBase
     {
     public:
@@ -147,7 +163,8 @@ namespace Mountain::ParticleSystemModules
 
         PARTICLE_SYSTEM_MODULE_CONSTRUCTOR(ForceOverLifetime)
 
-        Vector2 force;
+        Vector2 forceMin;
+        Vector2 forceMax;
         Easing::Type easingType = Easing::Type::Linear;
 
     private:

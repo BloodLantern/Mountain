@@ -3,7 +3,6 @@
 in VertexOut
 {
     flat int particleAlive;
-    float particleSize;
     flat vec4 particleColor;
 } shaderIn;
 

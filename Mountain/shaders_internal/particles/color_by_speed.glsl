@@ -12,7 +12,7 @@ uniform struct ColorBySpeed
     uint easingType;
 } colorBySpeed;
 
-void ColorBySpeedUpdate(inout Particle particle)
+void ColorBySpeedUpdate(inout Particle particle, in float speed)
 {
     particle.color *= mix(
         colorBySpeed.colorMin,
@@ -21,7 +21,7 @@ void ColorBySpeedUpdate(inout Particle particle)
             colorBySpeed.easingType,
             clamp(
                 RemapValue(
-                    SquaredLength(particle.velocity),
+                    speed,
                     colorBySpeed.speedMin * colorBySpeed.speedMin,
                     colorBySpeed.speedMax * colorBySpeed.speedMax,
                     0.f,

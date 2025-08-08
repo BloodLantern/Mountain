@@ -150,19 +150,43 @@ void Shape::RenderDebug(const ParticleSystem& system, const Vector2 renderTarget
     }
 }
 
+void VelocityOverLifetime::SetComputeShaderUniforms(const ComputeShader& computeShader) const
+{
+    computeShader.SetUniform("velocityOverLifetime.velocityMin", velocityMin);
+    computeShader.SetUniform("velocityOverLifetime.velocityMax", velocityMax);
+    computeShader.SetUniform("velocityOverLifetime.easingType", easingType);
+}
+
+void VelocityOverLifetime::RenderImGui()
+{
+    ImGui::DragFloat2("Start vector", velocityMin.Data());
+    ImGui::DragFloat2("End vector", velocityMax.Data());
+    ImGui::ComboEnum("Easing type", &easingType);
+}
+
 void ForceOverLifetime::SetComputeShaderUniforms(const ComputeShader& computeShader) const
 {
-    computeShader.SetUniform("forceOverLifetime.force", force);
+    computeShader.SetUniform("forceOverLifetime.forceMin", forceMin);
+    computeShader.SetUniform("forceOverLifetime.forceMax", forceMax);
     computeShader.SetUniform("forceOverLifetime.easingType", easingType);
 }
 
 void ForceOverLifetime::RenderImGui()
 {
-    Vector2 direction = force.Normalized();
-    ImGuiUtils::DirectionVector("Direction", &direction);
-    float_t strength = force.Length();
-    ImGui::DragFloat("Strength", &strength);
-    force = direction * (strength == 0.f ? 1.f : strength);
+    Vector2 direction = forceMin.Normalized();
+    ImGuiUtils::DirectionVector("Start direction", &direction);
+    float_t strength = forceMin.Length();
+    ImGui::DragFloat("Start strength", &strength);
+    forceMin = direction * (strength == 0.f ? 1.f : strength);
+    ImGui::DragFloat2("Start vector", forceMin.Data());
+
+    direction = forceMax.Normalized();
+    ImGuiUtils::DirectionVector("End direction", &direction);
+    strength = forceMax.Length();
+    ImGui::DragFloat("End strength", &strength);
+    forceMax = direction * (strength == 0.f ? 1.f : strength);
+    ImGui::DragFloat2("End vector", forceMax.Data());
+
     ImGui::ComboEnum("Easing type", &easingType);
 }
 

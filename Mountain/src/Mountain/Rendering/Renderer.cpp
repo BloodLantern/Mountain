@@ -197,6 +197,7 @@ bool_t Mountain::Renderer::Initialize(const std::string& windowTitle, const Vect
 
     // Enable transparency
     EnableConstant(Graphics::Constant::Blend);
+    EnableConstant(Graphics::Constant::ProgramPointSize);
     SetBlendFunction(Graphics::BlendFunction::SrcAlpha, Graphics::BlendFunction::OneMinusSrcAlpha);
 
     m_RenderTarget = new RenderTarget(windowSize, Graphics::MagnificationFilter::Linear);

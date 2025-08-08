@@ -63,7 +63,7 @@ void ShapeInitialize(inout Particle particle)
             randomPoint = Rotated(randomPoint, shape.rotation);
             particle.offset = randomPoint * shape.circle.radius * shape.circle.radiusThickness
                 + normalize(randomPoint) * shape.circle.radius * (1.f - shape.circle.radiusThickness);
-            particle.velocity = normalize(particle.offset);
+            particle.startVelocity = normalize(particle.offset);
 
             particle.offset *= shape.scale;
             break;
@@ -100,7 +100,7 @@ void ShapeInitialize(inout Particle particle)
             particle.offset *= shape.scale;
 
             particle.offset = Rotated(particle.offset, shape.rotation);
-            particle.velocity = normalize(particle.offset);
+            particle.startVelocity = normalize(particle.offset);
             break;
     }
 

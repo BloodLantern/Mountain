@@ -463,6 +463,7 @@
     <Content Include="shaders_internal\particles\common.glsl" />
     <Content Include="shaders_internal\particles\draw\draw.frag" />
     <Content Include="shaders_internal\particles\draw\draw.vert" />
+    <Content Include="shaders_internal\particles\velocity_over_lifetime.glsl" />
     <Content Include="shaders_internal\point\point.frag" />
     <Content Include="shaders_internal\point\point.vert" />
     <Content Include="shaders_internal\effects\vignette.comp" />

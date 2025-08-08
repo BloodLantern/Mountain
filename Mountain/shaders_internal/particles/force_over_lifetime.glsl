@@ -4,11 +4,16 @@
 
 uniform struct ForceOverLifetime
 {
-    vec2 force;
+    vec2 forceMin;
+    vec2 forceMax;
     uint easingType;
 } forceOverLifetime;
 
-void ForceOverLifetimeUpdate(inout Particle particle)
+void ForceOverLifetimeUpdate(in Particle particle, inout vec2 accumulatedVelocity)
 {
-    particle.velocity += forceOverLifetime.force * EasingFromType(forceOverLifetime.easingType, particle.lifetime / particleLifetime) * deltaTime;
+    accumulatedVelocity += mix(
+        forceOverLifetime.forceMin,
+        forceOverLifetime.forceMax,
+        EasingFromType(forceOverLifetime.easingType, 1.f - (particle.lifetime / particleLifetime))
+    ) * deltaTime;
 }
