@@ -685,7 +685,11 @@ void ImGuiUtils::ShowPerformanceMonitoring()
     ImGui::Text("Memory: %.2fMB (%.2fMB including GPU)", memoryCpuOnly, memoryTotal);
     ImGui::Text("Framebuffer: %dx%d", framebufferSize.x, framebufferSize.y);
 
-    ImGui::PlotHistogram("Frame durations (in ms)", frameDurationList.GetData(), static_cast<int32_t>(frameDurationList.GetSize()), 0, nullptr, 0.f, Time::GetTargetDeltaTime() * 1000.f);
+    if (ImGui::TreeNode("Frame duration graph"))
+    {
+        ImGui::PlotHistogram("Frame durations (in ms)", frameDurationList.GetData(), static_cast<int32_t>(frameDurationList.GetSize()), 0, nullptr, 0.f, Time::GetTargetDeltaTime() * 10000.f, {0.f, 200.f});
+        ImGui::TreePop();
+    }
 
     ImGui::End();
 }
