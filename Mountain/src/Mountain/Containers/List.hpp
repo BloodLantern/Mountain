@@ -231,6 +231,14 @@ namespace Mountain
 
         void RemoveAll(const Predicate<T>& predicate);
 
+        void RemoveRange(size_t index, size_t count);
+
+        void RemoveRange(Iterator iterator, size_t count);
+
+        T PopFront();
+
+        T PopBack();
+
         /// @brief Get the element at the given index with bounds checking.
         ATTRIBUTE_NODISCARD
         T& At(size_t index) const;
@@ -867,6 +875,51 @@ namespace Mountain
             if (predicate(*m_Data[i]))
                 RemoveAt(i--);
         }
+    }
+
+    template <Concepts::DynamicContainerType T>
+    void List<T>::RemoveRange(const size_t index, const size_t count)
+    {
+        if (count == 0)
+            return;
+
+        if (index + count > m_Size)
+            THROW(ArgumentException{"Invalid element count", "count"});
+
+        if constexpr (!Meta::IsTriviallyDestructible<T>)
+        {
+            for (size_t i = index; i < index + count; i++)
+                m_Data[i].~T();
+        }
+
+        if (index + count != m_Size)
+            ShiftElements(-static_cast<ptrdiff_t>(count), index + count, m_Size);
+
+        m_Size -= count;
+    }
+
+    template <Concepts::DynamicContainerType T>
+    void List<T>::RemoveRange(const Iterator iterator, const size_t count)
+    {
+        CheckIteratorThrow(iterator);
+
+        return RemoveRange(iterator.GetIndex(), count);
+    }
+
+    template <Concepts::DynamicContainerType T>
+    T List<T>::PopFront()
+    {
+        T result{First()};
+        RemoveFirst();
+        return result;
+    }
+
+    template <Concepts::DynamicContainerType T>
+    T List<T>::PopBack()
+    {
+        T result{Last()};
+        RemoveLast();
+        return result;
     }
 
     template <Concepts::DynamicContainerType T>

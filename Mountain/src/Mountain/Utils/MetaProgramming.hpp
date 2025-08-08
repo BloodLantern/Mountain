@@ -85,9 +85,17 @@ namespace Mountain
         template <typename T>
         constexpr bool_t IsAbstract = std::is_abstract_v<T>;
 
-        /// @brief Checks whether @p T is default-constructible (has a public constructor, with no parameters).
+        /// @brief Checks whether @p T is default-constructible (has a public constructor with no parameters).
         template <typename T>
         constexpr bool_t IsDefaultConstructible = std::is_default_constructible_v<T>;
+
+        /// @brief Checks whether @p T is copy-constructible (has a public constructor taking a const reference to the same type).
+        template <typename T>
+        constexpr bool_t IsCopyConstructible = std::is_copy_constructible_v<T>;
+
+        /// @brief Checks whether @p T is move-constructible (has a public constructor taking an r-value reference of the same type).
+        template <typename T>
+        constexpr bool_t IsMoveConstructible = std::is_move_constructible_v<T>;
 
         /// @brief Checks whether @p T can be assigned a copied value.
         template <typename T>
@@ -426,7 +434,11 @@ namespace Mountain
 
         /// @brief A container type is any non-const, non-function, non-reference type that can be default, copy and move constructed.
         template <typename T>
-        concept DynamicContainerType = ContainerType<T>;
+        concept DynamicContainerType =
+            ContainerType<T> &&
+            Meta::IsDefaultConstructible<T> &&
+            Meta::IsCopyConstructible<T> &&
+            Meta::IsMoveConstructible<T>;
 
         template <typename T>
         concept Collider = Meta::IsCollider<T>;
