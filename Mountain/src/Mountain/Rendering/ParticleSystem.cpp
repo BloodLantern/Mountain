@@ -62,11 +62,9 @@ void ParticleSystem::Render()
 
     if (enabledModules & ParticleSystemModules::Types::Renderer && m_RendererModule)
     {
-        static bool_t lastUseTexture = false;
-
         const bool_t useTexture = m_RendererModule->texture != nullptr;
 
-        if (lastUseTexture != useTexture)
+        if (m_LastUseTexture != useTexture)
             m_DrawShader = ResourceManager::Get<Shader>(Utils::GetBuiltinShadersPath() + (useTexture ? "particles/draw" : "particles/draw_point"));
 
         m_DrawShader->SetUniform("particleCount", m_MaxParticles);
@@ -97,7 +95,7 @@ void ParticleSystem::Render()
         if (useTexture)
             Graphics::BindTexture(0);
 
-        lastUseTexture = useTexture;
+        m_LastUseTexture = useTexture;
     }
 }
 

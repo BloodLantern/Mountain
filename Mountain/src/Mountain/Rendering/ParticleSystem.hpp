@@ -137,6 +137,8 @@ namespace Mountain
 
         std::shared_ptr<ParticleSystemModules::Renderer> m_RendererModule;
 
+        bool_t m_LastUseTexture = false;
+
         MOUNTAIN_API void Update(float_t deltaTime);
 
         MOUNTAIN_API void SetComputeShaderUniforms(float_t deltaTime) const;
