@@ -43,8 +43,6 @@ struct std::formatter<std::filesystem::path>
     template <class FormatContext>
     typename FormatContext::iterator format(const std::filesystem::path& path, FormatContext& ctx) const
     {
-        ZoneScoped;
-
         std::ostringstream out;
 
         out << path.generic_string();
@@ -77,8 +75,6 @@ struct std::formatter<ExceptionT>
     template <class FormatContext>
     typename FormatContext::iterator format(const ExceptionT& ex, FormatContext& ctx) const
     {
-        ZoneScoped;
-
         std::ostringstream out;
 
         out << ex.what();
@@ -120,8 +116,6 @@ struct std::formatter<EnumT>
     template <class FormatContext>
     typename FormatContext::iterator format(const EnumT& e, FormatContext& ctx) const
     {
-        ZoneScoped;
-
         std::ostringstream out;
 
         out << (m_PrintAsInteger ? static_cast<Mountain::Meta::UnderlyingEnumType<EnumT>>(e) : magic_enum::enum_name(e));

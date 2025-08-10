@@ -139,9 +139,20 @@ bool_t Game::NextFrame()
     Renderer::PreFrame();
 
     if (ManualFreezeFrames || Time::freezeTimer <= 0.f)
+    {
+        ZoneScopedN("Game::Update");
+
         Update();
+    }
+
     if (!Window::GetMinimized())
+    {
+        ZoneScopedN("Game::Render");
+
+        TracyGpuZone("Game::Render")
+
         Render();
+    }
 
     Renderer::PostFrame();
 

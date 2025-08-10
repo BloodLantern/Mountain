@@ -24,6 +24,7 @@
 
 namespace
 {
+    ATTRIBUTE_MAYBE_UNUSED
     void OpenGlDebugCallback(const GLenum source, const GLenum type, GLuint, const GLenum severity, const GLsizei length, const GLchar* message, const void*)
     {
         Mountain::Logger::LogLevel level;
@@ -185,6 +186,8 @@ bool_t Mountain::Renderer::Initialize(const std::string& windowTitle, const Vect
     if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(SDL_GL_GetProcAddress)))  // NOLINT(clang-diagnostic-cast-function-type-strict)
         THROW(Exception{"Failed to initialize GLAD"});
 
+    TracyGpuContext
+
 #ifdef _DEBUG
     glEnable(GL_DEBUG_OUTPUT);
     glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
@@ -253,6 +256,8 @@ void Mountain::Renderer::PreFrame()
 {
     ZoneScoped;
 
+    TracyGpuZone("Renderer::PreFrame")
+
     // Start the Dear ImGui frame
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplSDL3_NewFrame();
@@ -270,6 +275,8 @@ void Mountain::Renderer::PreFrame()
 void Mountain::Renderer::PostFrame()
 {
     ZoneScoped;
+
+    TracyGpuZone("Renderer::PostFrame")
 
     PopRenderTarget();
 

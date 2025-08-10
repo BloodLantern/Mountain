@@ -291,6 +291,8 @@ void Draw::Flush()
 {
     ZoneScoped;
 
+    TracyGpuZone("Draw::Flush")
+
     size_t pointIndex = 0;
     size_t lineIndex = 0, lineColoredIndex = 0;
     size_t triangleIndex = 0, triangleColoredIndex = 0, triangleFilledIndex = 0, triangleColoredFilledIndex = 0;

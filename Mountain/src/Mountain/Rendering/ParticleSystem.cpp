@@ -103,7 +103,7 @@ void ParticleSystem::RenderImGui()
 {
     ImGui::PushID(this);
 
-    uint8_t* dataCopy = CreateRawDataCopy();
+    const uint8_t* dataCopy = CreateRawDataCopy();
 
     if (ImGuiUtils::PushSeparatorText("System controls"))
     {
@@ -883,6 +883,8 @@ uint8_t* ParticleSystem::CreateRawDataCopy()
 bool_t ParticleSystem::CheckAndDeleteRawDataCopy(const uint8_t* copy)
 {
     int32_t check = 0;
+
+    // FIXME - This detects a change in every field, which means it also detects a change in m_SyncObject when calling GetCurrentParticles() for example
 
     size_t currentOffset = 0;
     check |= std::memcmp(copy, static_cast<void*>(this), sizeof(ParticleSystem));

@@ -360,4 +360,13 @@ void Window::ProcessGamepadEvents(const SDL_Event& event)
     }
 }
 
-void Window::SwapBuffers() { SDL_GL_SwapWindow(m_Window); }
+void Window::SwapBuffers()
+{
+    ZoneScoped;
+
+    SDL_GL_SwapWindow(m_Window);
+
+    FrameMark;
+
+    TracyGpuCollect
+}

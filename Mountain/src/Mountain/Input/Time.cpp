@@ -134,8 +134,6 @@ void Time::WaitForNextFrame()
     // VSync sleeps here
     Window::SwapBuffers();
 
-    FrameMark;
-
     frameStartMsAfterSwapBuffers = m_Stopwatch.GetElapsedMilliseconds();
 }
 
