@@ -294,6 +294,7 @@
     <ClInclude Include="src\Mountain\Input\KeyboardInput.hpp" />
     <ClInclude Include="src\Mountain\Input\MouseInput.hpp" />
     <ClInclude Include="src\Mountain\Input\Time.hpp" />
+    <ClInclude Include="src\Mountain\Mountain.hpp" />
     <ClInclude Include="src\Mountain\PrecompiledHeader.hpp" />
     <ClInclude Include="src\Mountain\Rendering\Draw.hpp" />
     <ClInclude Include="src\Mountain\Rendering\Effect.hpp" />
