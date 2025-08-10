@@ -35,6 +35,18 @@
     { return ::Mountain::FindAll(*this, predicate); } \
     \
     ATTRIBUTE_NODISCARD \
+    EnumeratedType* FindFirst(const ::Mountain::Predicate<EnumeratedType>& predicate) { return ::Mountain::FindFirst(*this, predicate); } \
+    \
+    ATTRIBUTE_NODISCARD \
+    const EnumeratedType* FindFirst(const ::Mountain::Predicate<EnumeratedType>& predicate) const { return ::Mountain::FindFirst(*this, predicate); } \
+    \
+    ATTRIBUTE_NODISCARD \
+    EnumeratedType* FindLast(const ::Mountain::Predicate<EnumeratedType>& predicate) { return ::Mountain::FindLast(*this, predicate); } \
+    \
+    ATTRIBUTE_NODISCARD \
+    const EnumeratedType* FindLast(const ::Mountain::Predicate<EnumeratedType>& predicate) const { return ::Mountain::FindLast(*this, predicate); } \
+    \
+    ATTRIBUTE_NODISCARD \
     EnumeratedType& First() { return ::Mountain::First(*this); } \
     \
     ATTRIBUTE_NODISCARD \

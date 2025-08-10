@@ -75,7 +75,9 @@ bool_t FileSystemWatcher::GetRunning() const { return m_Running; }
 
 void FileSystemWatcher::Run()
 {
-    Utils::SetThreadName(m_Thread, L"FileSystemWatcher Thread");
+    ZoneScoped;
+
+    Utils::SetThreadName(m_Thread, "FileSystemWatcher Thread");
 
     std::unique_lock lock(m_Mutex);
 
@@ -87,8 +89,14 @@ void FileSystemWatcher::Run()
 
     while (m_Running)
     {
+        ZoneScopedN("MainLoop");
+
         if (m_PathChanged)
         {
+            ZoneScopedN("UpdatePath");
+
+            Utils::SetThreadName(m_Thread, std::format("FileSystemWatcher Thread ({})", m_Path));
+
             const std::filesystem::path&& abs = absolute(m_Path);
             watchedPath = abs.parent_path();
             pathAbs = abs.string();
@@ -114,6 +122,8 @@ void FileSystemWatcher::Run()
 
         if (waitResult == WAIT_OBJECT_0)
         {
+            ZoneScopedN("HandleEvents");
+
             DWORD bytesTransferred = 0;
             GetOverlappedResult(file, &overlapped, &bytesTransferred, FALSE);
             Windows::CheckError();

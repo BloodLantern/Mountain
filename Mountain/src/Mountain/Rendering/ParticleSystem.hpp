@@ -156,7 +156,7 @@ namespace Mountain
         MOUNTAIN_API static void LockBuffer(__GLsync*& syncObject);
 
         MOUNTAIN_API uint8_t* CreateRawDataCopy();
-        MOUNTAIN_API bool_t CheckAndDeleteRawDataCopy(uint8_t* copy);
+        MOUNTAIN_API bool_t CheckAndDeleteRawDataCopy(const uint8_t* copy);
     };
 
     template <Concepts::ParticleSystemModule ModuleT>

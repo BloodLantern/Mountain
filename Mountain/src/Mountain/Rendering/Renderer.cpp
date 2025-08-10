@@ -173,6 +173,8 @@ Mountain::OpenGlVersion& Mountain::Renderer::GetOpenGlVersion() { return m_GlVer
 
 bool_t Mountain::Renderer::Initialize(const std::string& windowTitle, const Vector2i windowSize, const OpenGlVersion& glVersion)
 {
+    ZoneScoped;
+
     Logger::LogVerbose("Initializing renderer");
 
     m_GlVersion = glVersion;
@@ -249,6 +251,8 @@ bool_t Mountain::Renderer::Initialize(const std::string& windowTitle, const Vect
 
 void Mountain::Renderer::PreFrame()
 {
+    ZoneScoped;
+
     // Start the Dear ImGui frame
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplSDL3_NewFrame();
@@ -265,6 +269,8 @@ void Mountain::Renderer::PreFrame()
 
 void Mountain::Renderer::PostFrame()
 {
+    ZoneScoped;
+
     PopRenderTarget();
 
     if (!m_RenderTargets.empty())
@@ -309,6 +315,8 @@ void Mountain::Renderer::PostFrame()
 
 void Mountain::Renderer::Shutdown()
 {
+    ZoneScoped;
+
     Logger::LogVerbose("Shutting down renderer");
 
     // Cleanup

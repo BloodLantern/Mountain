@@ -248,6 +248,7 @@ namespace Mountain
     {
         if (m_Ticks == MinValue().m_Ticks)
             THROW(OverflowException{"TimeSpan Duration overflow"});
+
         return TimeSpan{m_Ticks >= 0 ? m_Ticks : -m_Ticks};
     }
 
@@ -273,6 +274,7 @@ namespace Mountain
     {
         if (value.m_Ticks == TimeSpan::MinValue().m_Ticks)
             THROW(OverflowException{"Cannot negate the MinValue TimeSpan because of Two's Complement"});
+
         return TimeSpan{-value.m_Ticks};
     }
 
@@ -356,6 +358,7 @@ namespace Mountain
     {
         if (Calc::IsNan(ticks))
             THROW(ArgumentException{"Cannot create an interval from a NaN amount of ticks", "ticks"});
+
         return IntervalFromDoubleTicks(ticks * scale);
     }
 
@@ -363,8 +366,10 @@ namespace Mountain
     {
         if (ticks > static_cast<double_t>(std::numeric_limits<int64_t>::max()) || ticks < static_cast<double_t>(std::numeric_limits<int64_t>::min()) || std::isnan(ticks))
             THROW(OverflowException{"Invalid TimeSpan ticks"});
+
         if (ticks == static_cast<double_t>(std::numeric_limits<int64_t>::max()))
             return MaxValue();
+
         return TimeSpan{static_cast<int64_t>(ticks)};
     }
 }

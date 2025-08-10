@@ -253,6 +253,8 @@ void ParticleSystem::RenderImGui()
 
     if (CheckAndDeleteRawDataCopy(dataCopy))
     {
+        Renderer::DebugString("Updating particle system state live");
+
         const float_t oldTime = m_PlaybackTime;
         const float_t restartTime = m_PlaybackTime > duration ? m_PlaybackTime - duration - Calc::Modulo(m_PlaybackTime, duration) : 0.f;
 
@@ -298,6 +300,7 @@ void ParticleSystem::Stop()
     m_SpawnTimer = 0.f;
 }
 
+#pragma region Modules
 std::shared_ptr<ParticleSystemModules::ModuleBase> ParticleSystem::AddModule(const ParticleSystemModules::Types type)
 {
     std::shared_ptr<ParticleSystemModules::ModuleBase> result;
@@ -407,6 +410,7 @@ void ParticleSystem::RemoveModules(const ParticleSystemModules::Types types)
         RemoveModule(i--);
     }
 }
+#pragma endregion
 
 uint32_t ParticleSystem::GetCurrentParticles()
 {
@@ -432,15 +436,18 @@ void ParticleSystem::SetMaxParticles(const uint32_t newMaxParticles)
     m_MaxParticles = newMaxParticles;
 
     // Set up the GPU particle buffer
-    // This is done in a very archaic way, but most of the time this won't matter anyway because this function should only be called once per system in a real application
-    List<uint8_t> emptyData(GpuParticleStructSize * newMaxParticles);
-    for (size_t i = 0; i < emptyData.GetSize(); i += GpuParticleStructSize)
+    // This is done in a very archaic way, but most of the time this won't matter anyway
+    // because this function should only be called once per system in a real application
     {
-        float_t& lifetime = reinterpret_cast<float_t&>(emptyData[i]);
-        lifetime = -std::numeric_limits<float_t>::infinity(); // Set the negative infinity flag for the GPU
+        List<uint8_t> emptyData;
+        emptyData.Resize(GpuParticleStructSize * newMaxParticles);
+        for (size_t i = 0; i < emptyData.GetSize(); i += GpuParticleStructSize)
+        {
+            float_t& lifetime = reinterpret_cast<float_t&>(emptyData[i]);
+            lifetime = -std::numeric_limits<float_t>::infinity(); // Set the negative infinity flag for the GPU
+        }
+        m_ParticleSsbo.SetData(static_cast<int64_t>(GpuParticleStructSize * newMaxParticles), emptyData.GetData(), Graphics::BufferUsage::DynamicCopy);
     }
-    m_ParticleSsbo.SetData(static_cast<int64_t>(GpuParticleStructSize * newMaxParticles), emptyData.GetData(), Graphics::BufferUsage::DynamicCopy);
-    emptyData.Resize(0);
 
     if (m_LiveParticles)
     {
@@ -694,7 +701,7 @@ uint8_t* ParticleSystem::CreateRawDataCopy()
     // if (enabledModules & ParticleSystemModules::Types::Trails && GetModule(ParticleSystemModules::Types::Trails)) totalMemory += sizeof(ParticleSystemModules::Trails);
     if (enabledModules & ParticleSystemModules::Types::Renderer && GetModule(ParticleSystemModules::Types::Renderer)) totalMemory += sizeof(ParticleSystemModules::Renderer);
 
-    uint8_t* dataCopy = static_cast<uint8_t*>(_malloca(totalMemory));
+    uint8_t* dataCopy = new uint8_t[totalMemory];
     size_t currentOffset = 0;
     std::memcpy(dataCopy, static_cast<void*>(this), sizeof(ParticleSystem));
     currentOffset += sizeof(ParticleSystem);
@@ -873,7 +880,7 @@ uint8_t* ParticleSystem::CreateRawDataCopy()
 }
 
 // ReSharper disable CppClangTidyBugproneSuspiciousStringCompare
-bool_t ParticleSystem::CheckAndDeleteRawDataCopy(uint8_t* copy)
+bool_t ParticleSystem::CheckAndDeleteRawDataCopy(const uint8_t* copy)
 {
     int32_t check = 0;
 
@@ -1051,7 +1058,7 @@ bool_t ParticleSystem::CheckAndDeleteRawDataCopy(uint8_t* copy)
             check |= std::memcmp(copy + currentOffset, static_cast<void*>(ptr.get()), sizeof(ParticleSystemModules::Renderer));
     }
 
-    _freea(copy);
+    delete[] copy;
 
     return check != 0;
 }

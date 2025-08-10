@@ -26,6 +26,8 @@ using namespace Mountain;
 TestGame::TestGame(const char_t* const windowTitle)
     : Game(windowTitle, {1600, 900})
 {
+    ZoneScoped;
+
     Window::SetResizable(true);
 
     // Use VSync for the tests as it should give a more stable framerate and we don't care about the input lag
@@ -46,6 +48,8 @@ TestGame::TestGame(const char_t* const windowTitle)
 
 void TestGame::LoadResources()
 {
+    ZoneScoped;
+
     FileManager::LoadDirectory("assets");
     ResourceManager::LoadAll();
 
@@ -55,6 +59,8 @@ void TestGame::LoadResources()
 
 void TestGame::Initialize()
 {
+    ZoneScoped;
+
     InitializeFileSystemWatchers();
 
     m_AssetsWatcher.Start();
@@ -64,6 +70,8 @@ void TestGame::Initialize()
 
 void TestGame::Shutdown()
 {
+    ZoneScoped;
+
     m_AssetsWatcher.Stop();
     m_ShadersWatcher.Stop();
 
@@ -72,6 +80,8 @@ void TestGame::Shutdown()
 
 void TestGame::Update()
 {
+    ZoneScoped;
+
     m_ShadersToReloadMutex.lock();
     List<Pointer<ShaderBase>> reloadedShaders;
     for (auto shader : m_ShadersToReload)
@@ -101,8 +111,9 @@ void TestGame::Update()
 
 void TestGame::Render()
 {
-    Draw::Clear(m_ClearColor);
+    ZoneScoped;
 
+    Draw::Clear(m_ClearColor);
 
     if (m_ActiveScene)
     {
@@ -119,6 +130,8 @@ void TestGame::Render()
 
 void TestGame::RenderDebug() const
 {
+    ZoneScoped;
+
     if (m_ActiveScene)
     {
         m_ActiveScene->BeforeRenderDebug();
@@ -129,6 +142,8 @@ void TestGame::RenderDebug() const
 
 void TestGame::RenderImGui()
 {
+    ZoneScoped;
+
     ImGui::Begin("Debug");
 
     ImGui::SeparatorText("Global settings");

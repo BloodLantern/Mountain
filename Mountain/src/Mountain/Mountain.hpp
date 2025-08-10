@@ -87,7 +87,6 @@
 #include "Mountain/Utils/Rectangle.hpp"
 #include "Mountain/Utils/ReferenceCounter.hpp"
 #include "Mountain/Utils/Requirements.hpp"
-#include "Mountain/Utils/RunLengthEncoding.hpp"
 #include "Mountain/Utils/Stopwatch.hpp"
 #include "Mountain/Utils/TimeSpan.hpp"
 #include "Mountain/Utils/TsQueue.hpp"

@@ -12,11 +12,10 @@
 #define PROFILER_API __declspec(dllimport)
 #endif
 
-
-
-#if PROFILING
+#ifdef PROFILING
 	#define TRACY_IMPORTS
 	#define TRACY_ENABLE
+	#define TRACY_NO_EXIT
 	#pragma comment(lib, "Profiler.lib")
 #endif // PROFILING
 

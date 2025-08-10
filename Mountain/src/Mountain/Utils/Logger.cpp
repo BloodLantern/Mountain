@@ -108,6 +108,8 @@ void Logger::Synchronize()
 
 void Logger::Start()
 {
+    ZoneScoped;
+
     if (m_Running)
         return;
 
@@ -120,6 +122,8 @@ void Logger::Start()
 
 void Logger::Stop()
 {
+    ZoneScoped;
+
     if (!m_Running)
         return;
 
@@ -170,12 +174,17 @@ Logger::LogEntry::LogEntry(
 {
 }
 
-bool_t Logger::LogEntry::operator==(const LogEntry& other) const { return message == other.message && level == other.level && printToConsole == other.printToConsole && printToFile == other.printToFile; }
+bool_t Logger::LogEntry::operator==(const LogEntry& other) const
+{
+    return message == other.message && level == other.level && printToConsole == other.printToConsole && printToFile == other.printToFile;
+}
 
 void Logger::Run()
 {
-    // Set thread name for easier debugging
-    Utils::SetThreadName(m_Thread, L"Logger Thread");
+    ZoneScoped;
+
+    // Set the thread name for easier debugging
+    Utils::SetThreadName(m_Thread, "Logger Thread");
 
     // Detach this thread from the main one to make sure it finishes normally
     m_Thread.detach();
@@ -183,12 +192,16 @@ void Logger::Run()
     std::unique_lock lock(m_Mutex);
     while (m_Running || !m_NewLogs.Empty())
     {
+        ZoneScopedN("MainLoop");
+
         m_CondVar.wait(lock, [] { return !m_NewLogs.Empty() || !m_Running || m_Synchronizing; });
 
         m_Logs.reserve(m_Logs.size() + m_NewLogs.Count());
 
         while (!m_NewLogs.Empty())
         {
+            ZoneScopedN("PrintLogs");
+
             auto&& log = m_NewLogs.Pop();
 
             // Check if the log is equal to the previous one

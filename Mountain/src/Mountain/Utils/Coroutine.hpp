@@ -63,9 +63,6 @@ namespace Mountain
         struct Awaitable;
 
     public:
-        /// @brief Default duration type for Coroutine wait, equivalent to floating-point seconds
-        using AwaitType = std::chrono::duration<double_t>;
-
         /// @brief Promise type for C++20 coroutines.
         ///
         /// This is necessary for the coroutine to function and needs to be public but shouldn't be used
@@ -73,7 +70,7 @@ namespace Mountain
         struct promise_type
         {
             /// @brief The last @c co_await value
-            AwaitType awaitValue = AwaitType::zero();
+            TimeSpan awaitValue = TimeSpan::Zero();
 
             /// @brief Returns the object that will be returns to the caller of a CoroutineFunc
             MOUNTAIN_API Coroutine get_return_object();
@@ -91,8 +88,12 @@ namespace Mountain
             /// @brief Called when @c co_return is used in a Coroutine body. Empty implementation
             MOUNTAIN_API void return_void();
 
-            /// @brief Converts a @c AwaitType value to an @c Awaitable. Called when @c co_await is used with an @c AwaitType value.
-            MOUNTAIN_API Awaitable await_transform(const AwaitType& duration);
+            /// @brief Converts a @c TimeSpan value to an @c Awaitable. Called when @c co_await is used with a @c TimeSpan value.
+            MOUNTAIN_API Awaitable await_transform(const TimeSpan& duration);
+
+            /// @brief Converts an @c std::chrono::duration value to an @c Awaitable.
+            /// Called when @c co_await is used with an @c std::chrono::duration value.
+            MOUNTAIN_API Awaitable await_transform(const std::chrono::duration<double_t>& duration);
 
             /// @brief Converts a @c float_t value to an @c Awaitable. Called when @c co_await is used with a @c float_t value.
             MOUNTAIN_API Awaitable await_transform(float_t duration);

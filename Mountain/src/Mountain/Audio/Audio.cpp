@@ -16,6 +16,8 @@ using namespace Mountain;
 
 bool_t Audio::Initialize()
 {
+    ZoneScoped;
+
     Logger::LogVerbose("Initializing audio");
 
     m_CurrentDevice = new AudioDevice(alcGetString(nullptr, ALC_DEFAULT_ALL_DEVICES_SPECIFIER));
@@ -33,6 +35,8 @@ bool_t Audio::Initialize()
 
 void Audio::Shutdown()
 {
+    ZoneScoped;
+
     Logger::LogVerbose("Shutting down audio");
 
     for (auto&& buffer : m_Buffers)
@@ -45,6 +49,8 @@ void Audio::Shutdown()
 
 void Audio::Update()
 {
+    ZoneScoped;
+
     if (!m_DefaultDeviceChanged)
         return;
 

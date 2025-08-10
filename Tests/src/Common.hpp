@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "Mountain/PrecompiledHeader.hpp"
+#include <Mountain/Mountain.hpp>
 
 using namespace Mountain;  // NOLINT(clang-diagnostic-header-hygiene)
 

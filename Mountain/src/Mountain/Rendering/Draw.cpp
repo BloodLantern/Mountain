@@ -289,6 +289,8 @@ void Draw::RenderTarget(
 
 void Draw::Flush()
 {
+    ZoneScoped;
+
     size_t pointIndex = 0;
     size_t lineIndex = 0, lineColoredIndex = 0;
     size_t triangleIndex = 0, triangleColoredIndex = 0, triangleFilledIndex = 0, triangleColoredFilledIndex = 0;
@@ -421,6 +423,8 @@ void Draw::DrawList::Clear()
 
 void Draw::Initialize()
 {
+    ZoneScoped;
+
     m_Vbo.Create();
     m_Vbo.SetDebugName("Global VBO");
 
@@ -444,6 +448,8 @@ void Draw::Initialize()
 
 void Draw::LoadResources()
 {
+    ZoneScoped;
+
     const std::string basePath = Utils::GetBuiltinShadersPath();
 
     m_PointShader = ResourceManager::Get<Shader>(basePath + "point");
@@ -463,6 +469,8 @@ void Draw::LoadResources()
 
 void Draw::Shutdown()
 {
+    ZoneScoped;
+
     m_RectangleEbo.Delete();
     m_Vbo.Delete();
     m_RectangleVbo.Delete();

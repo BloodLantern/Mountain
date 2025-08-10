@@ -95,7 +95,7 @@ void Input::ConnectGamepad(const uint32_t id)
     if (id == 0)
         return;
 
-    GamepadInput* gamepad = FindFirst(m_Gamepads, [](const GamepadInput& g) { return !g.m_IsConnected; });
+    GamepadInput* gamepad = m_Gamepads.FindFirst([](const GamepadInput& g) { return !g.m_IsConnected; });
 
     if (!gamepad)
         return;
@@ -159,7 +159,7 @@ void Input::ConnectGamepad(const uint32_t id)
 
 void Input::DisconnectGamepad(const uint32_t id)
 {
-    GamepadInput* const gamepad = FindFirst(m_Gamepads, [id](const GamepadInput& g) { return g.m_Id == id; });
+    GamepadInput* const gamepad = m_Gamepads.FindFirst([id](const GamepadInput& g) { return g.m_Id == id; });
 
     if (!gamepad)
         return;
@@ -177,7 +177,7 @@ void Input::DisconnectGamepad(const uint32_t id)
 
 void Input::UpdateGamepadButton(const uint32_t id, const GamepadButton button, const bool_t down)
 {
-    GamepadInput* const gamepad = FindFirst(m_Gamepads, [id](const GamepadInput& g) { return g.m_Id == id; });
+    GamepadInput* const gamepad = m_Gamepads.FindFirst([id](const GamepadInput& g) { return g.m_Id == id; });
 
     if (!gamepad)
         return;
@@ -209,7 +209,7 @@ void Input::UpdateGamepadButton(const uint32_t id, const GamepadButton button, c
 
 void Input::UpdateGamepadAxis(const uint32_t id, const GamepadAxis axis, const int16_t value)
 {
-    GamepadInput* const gamepad = FindFirst(m_Gamepads, [id](const GamepadInput& g) { return g.m_Id == id; });
+    GamepadInput* const gamepad = m_Gamepads.FindFirst([id](const GamepadInput& g) { return g.m_Id == id; });
 
     if (!gamepad)
         return;
@@ -234,7 +234,7 @@ void Input::UpdateGamepadAxis(const uint32_t id, const GamepadAxis axis, const i
 
 void Input::UpdateGamepadBattery(const uint32_t id, const int8_t percent, const GamepadBatteryState state)
 {
-    GamepadInput* const gamepad = FindFirst(m_Gamepads, [id](const GamepadInput& g) { return g.m_Id == id; });
+    GamepadInput* const gamepad = m_Gamepads.FindFirst([id](const GamepadInput& g) { return g.m_Id == id; });
 
     if (!gamepad)
         return;
@@ -245,7 +245,7 @@ void Input::UpdateGamepadBattery(const uint32_t id, const int8_t percent, const 
 
 void Input::UpdateGamepadGyro(uint32_t id, const Vector3& gyro)
 {
-    GamepadInput* const gamepad = FindFirst(m_Gamepads, [id](const GamepadInput& g) { return g.m_Id == id; });
+    GamepadInput* const gamepad = m_Gamepads.FindFirst([id](const GamepadInput& g) { return g.m_Id == id; });
     if (!gamepad)
         return;
 
@@ -254,7 +254,7 @@ void Input::UpdateGamepadGyro(uint32_t id, const Vector3& gyro)
 
 void Input::UpdateGamepadAccel(uint32_t id, const Vector3& accel)
 {
-    GamepadInput* const gamepad = FindFirst(m_Gamepads, [id](const GamepadInput& g) { return g.m_Id == id; });
+    GamepadInput* const gamepad = m_Gamepads.FindFirst([id](const GamepadInput& g) { return g.m_Id == id; });
     if (!gamepad)
         return;
 
@@ -263,7 +263,7 @@ void Input::UpdateGamepadAccel(uint32_t id, const Vector3& accel)
 
 void Input::UpdateGamepadTouchpad(const uint32_t id, const size_t touchpad, const size_t finger, const Vector2 location)
 {
-    const GamepadInput* const gamepad = FindFirst(m_Gamepads, [id](const GamepadInput& g) { return g.m_Id == id; });
+    const GamepadInput* const gamepad = m_Gamepads.FindFirst([id](const GamepadInput& g) { return g.m_Id == id; });
     if (!gamepad)
         return;
 

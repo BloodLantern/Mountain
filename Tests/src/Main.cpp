@@ -37,6 +37,8 @@ int WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 int main(int, char**)
 #endif
 {
+	ZoneScoped;
+
 #ifdef USE_LPP
 	std::println(std::cout, "Starting program, waiting for Live++ initialization...");
 	std::flush(std::cout);
@@ -59,7 +61,10 @@ int main(int, char**)
 	NoBinaryResources = true;
 	BuiltinShadersPath = "../Mountain/shaders_internal";
 	BuiltinAssetsPath = "../Mountain/assets_internal";
+
+#ifdef _DEBUG
 	BreakOnGraphicsError = true;
+#endif
 
 	TestGame* game = new TestGame("Mountain tests");
 
@@ -113,5 +118,6 @@ int main(int, char**)
 	LppDestroySynchronizedAgent(&lppAgent);
 #endif
 
+	std::cout << "Exiting process" << std::endl;
     return EXIT_SUCCESS;
 }

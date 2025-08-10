@@ -260,6 +260,7 @@
     <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_9508759643910089710.hpp" />
     <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_9550955058371070276.hpp" />
     <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_9582143994837232440.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_9699825830242037512.hpp" />
     <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_9926314955806432672.hpp" />
     <ClInclude Include="src\Mountain\BinaryResources\resource.hpp" />
     <ClInclude Include="src\Mountain\BinaryResources\resource_holder.hpp" />
@@ -296,6 +297,7 @@
     <ClInclude Include="src\Mountain\Input\Time.hpp" />
     <ClInclude Include="src\Mountain\Mountain.hpp" />
     <ClInclude Include="src\Mountain\PrecompiledHeader.hpp" />
+    <ClInclude Include="src\Mountain\Profiler.hpp" />
     <ClInclude Include="src\Mountain\Rendering\Draw.hpp" />
     <ClInclude Include="src\Mountain\Rendering\Effect.hpp" />
     <ClInclude Include="src\Mountain\Rendering\GpuBuffer.hpp" />
@@ -338,7 +340,6 @@
     <ClInclude Include="src\Mountain\Utils\Random.hpp" />
     <ClInclude Include="src\Mountain\Utils\Rectangle.hpp" />
     <ClInclude Include="src\Mountain\Utils\ReferenceCounter.hpp" />
-    <ClInclude Include="src\Mountain\Utils\RunLengthEncoding.hpp" />
     <ClInclude Include="src\Mountain\Utils\Stopwatch.hpp" />
     <ClInclude Include="src\Mountain\Utils\TimeSpan.hpp" />
     <ClInclude Include="src\Mountain\Utils\TsQueue.hpp" />
@@ -427,7 +428,6 @@
     <ClCompile Include="src\Mountain\Utils\Logger.cpp" />
     <ClCompile Include="src\Mountain\Utils\MessageBox.cpp" />
     <ClCompile Include="src\Mountain\Utils\Random.cpp" />
-    <ClCompile Include="src\Mountain\Utils\RunLengthEncoding.cpp" />
     <ClCompile Include="src\Mountain\Utils\Stopwatch.cpp" />
     <ClCompile Include="src\Mountain\Utils\TimeSpan.cpp" />
     <ClCompile Include="src\Mountain\Utils\Utils.cpp" />
@@ -493,6 +493,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Profiler\Profiler.vcxproj">
       <Project>{098884b7-2324-4d54-8b14-007fc02fe751}</Project>
+      <Name>Profiler</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -536,7 +537,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>src;externals\src;..\MathToolbox\src;..\Profiler\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;externals\src;..\MathToolbox\src</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <AdditionalOptions>/Gw %(AdditionalOptions)</AdditionalOptions>
@@ -547,11 +548,11 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>externals/libs/static/$(Configuration);externals/libs/static/Common</AdditionalLibraryDirectories>
       <AdditionalDependencies>mimalloc.dll.lib;mimalloc-redirect.lib;freetype.lib;OpenAL32.lib;soft_oal.lib;SDL3.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <CreateHotPatchableImage>Enabled</CreateHotPatchableImage>
       <OptimizeReferences>false</OptimizeReferences>
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
+      <AdditionalLibraryDirectories>externals/libs/static/$(Configuration);externals/libs/static/Common</AdditionalLibraryDirectories>
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>externals/libs/static/$(Configuration);externals/libs/static/Common</AdditionalLibraryDirectories>
@@ -559,9 +560,6 @@
       <TreatLibWarningAsErrors>true</TreatLibWarningAsErrors>
       <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
     </Lib>
-    <ProjectReference>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-    </ProjectReference>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -570,7 +568,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>src;externals\src;..\MathToolbox\src;..\Profiler\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;externals\src;..\MathToolbox\src</AdditionalIncludeDirectories>
       <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>Mountain/PrecompiledHeader.hpp</PrecompiledHeaderFile>
@@ -581,6 +579,7 @@
       <AdditionalDependencies>mimalloc.dll.lib;mimalloc-redirect.lib;freetype.lib;OpenAL32.lib;soft_oal.lib;SDL3.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>externals/libs/static/$(Configuration);externals/libs/static/Common</AdditionalLibraryDirectories>
       <CreateHotPatchableImage>Enabled</CreateHotPatchableImage>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>externals/libs/static/$(Configuration);externals/libs/static/Common</AdditionalLibraryDirectories>
@@ -588,9 +587,6 @@
       <TreatLibWarningAsErrors>true</TreatLibWarningAsErrors>
       <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
     </Lib>
-    <ProjectReference>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-    </ProjectReference>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

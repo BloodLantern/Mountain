@@ -126,15 +126,21 @@ void Window::SetResizable(const bool_t newResizable)
 
 void Window::Initialize(const std::string& windowTitle, const Vector2i windowSize, const OpenGlVersion& glVersion)
 {
-    SDL_SetLogOutputFunction([](void* const, int32_t, const SDL_LogPriority priority, const char_t* const message)
-    {
-        if (priority == SDL_LOG_PRIORITY_ERROR)
-            Logger::LogError("SDL error: {}", message);
-    }, nullptr);
+    ZoneScoped;
+
+    SDL_SetLogOutputFunction(
+        [](void* const, int32_t, const SDL_LogPriority priority, const char_t* const message)
+        {
+            if (priority == SDL_LOG_PRIORITY_ERROR)
+                Logger::LogError("SDL error: {}", message);
+        },
+        nullptr
+    );
 
     SDL_Init(SDL_INIT_VIDEO | SDL_INIT_HAPTIC | SDL_INIT_GAMEPAD);
 
     Screen::Initialize();
+
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, glVersion.major);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, glVersion.minor);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
@@ -147,7 +153,7 @@ void Window::Initialize(const std::string& windowTitle, const Vector2i windowSiz
     m_Window = SDL_CreateWindow(windowTitle.c_str(), windowSize.x, windowSize.y, SDL_WINDOW_OPENGL | SDL_WINDOW_HIDDEN);
 
     const Vector2i screenSize = Screen::GetSize();
-    SDL_SetWindowPosition(m_Window, screenSize.x / 2 - windowSize.x / 2, screenSize.y / 2 - windowSize.y / 2);
+    SetPosition({screenSize.x / 2 - windowSize.x / 2, screenSize.y / 2 - windowSize.y / 2});
 
     m_Context = SDL_GL_CreateContext(m_Window);
 
@@ -160,7 +166,10 @@ void Window::Initialize(const std::string& windowTitle, const Vector2i windowSiz
 
 void Window::Shutdown()
 {
+    ZoneScoped;
+
     SDL_DestroyWindow(m_Window);
+
     SDL_GL_DestroyContext(m_Context);
 
     Screen::Shutdown();
@@ -170,6 +179,8 @@ void Window::Shutdown()
 
 void Window::UpdateFields()
 {
+    ZoneScoped;
+
     // Position
 
     const Vector2i oldPosition = m_Position;
@@ -219,6 +230,8 @@ void Window::UpdateCurrentScreen()
 
 void Window::PollEvents()
 {
+    ZoneScoped;
+
     SDL_Event event;
     // Poll until all events are handled
     while (SDL_PollEvent(&event))

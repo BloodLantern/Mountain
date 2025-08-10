@@ -4,7 +4,6 @@
 
 #include <mimalloc.h>
 
-#include "Mountain/Configuration.hpp"
 #include "Mountain/Window.hpp"
 #include "Mountain/Audio/Audio.hpp"
 #include "Mountain/Input/Input.hpp"
@@ -15,7 +14,7 @@
 #include "Mountain/Utils/Logger.hpp"
 #include "Mountain/Utils/MessageBox.hpp"
 
-#include "Profiler.h"
+#include "Mountain/Profiler.hpp"
 
 #include "Mountain/Globals.hpp"
 
@@ -23,7 +22,8 @@ using namespace Mountain;
 
 Game::Game(const std::string& windowTitle, const Vector2i windowSize)
 {
-    TracyNoop;
+    TracyNoop; // Make sure Tracy is correctly initialized
+
     ZoneScoped;
 
     Logger::Start();
@@ -36,6 +36,7 @@ Game::Game(const std::string& windowTitle, const Vector2i windowSize)
 
     std::set_terminate(
         []
+        ATTRIBUTE_NORETURN
         {
             Logger::LogWarning("std::terminate called");
 
@@ -66,7 +67,7 @@ Game::Game(const std::string& windowTitle, const Vector2i windowSize)
 #ifdef _DEBUG
             std::abort();
 #else
-            std::exit(-1);
+            std::exit(-1);  // NOLINT(concurrency-mt-unsafe)
 #endif
         }
     );
@@ -111,7 +112,7 @@ void Game::MainLoop()
 {
     Start();
 
-    while (NextFrame()) { FrameMark; }
+    while (NextFrame());
 }
 
 // ReSharper disable once CppMemberFunctionMayBeStatic
@@ -127,6 +128,8 @@ void Game::Start()
 
 bool_t Game::NextFrame()
 {
+    ZoneScoped;
+
     Window::PollEvents();
 
     Time::Update();

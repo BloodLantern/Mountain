@@ -6,6 +6,8 @@
 
 #include "Mountain/Attributes.hpp"
 #include "Mountain/CompilerSpecific.hpp"
+#include "Mountain/Configuration.hpp"
+#include "Mountain/Profiler.hpp"
 
 /// @file Core.hpp
 /// @brief This file is meant to be included by every single other header file of this project.

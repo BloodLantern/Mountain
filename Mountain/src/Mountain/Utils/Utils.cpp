@@ -77,10 +77,9 @@ std::string Utils::HumanizeVariableName(const std::string& str)
 
 float_t Utils::NormalizeAngle(float_t angle)
 {
-    while (angle > Calc::TwoPi)
-        angle -= Calc::TwoPi;
+    angle = Calc::Modulo(angle, Calc::TwoPi);
 
-    while (angle < 0)
+    if (angle < 0.f)
         angle += Calc::TwoPi;
 
     return angle;
@@ -166,13 +165,17 @@ int32_t Utils::TerminalCommand(const std::string& command, const bool_t asynchro
 void Utils::CreateEmptyFile(const std::filesystem::path& path)
 {
     // Creating a std::ofstream is the only necessary thing to do to create an empty file
-    std::ofstream{ path };
+    std::ofstream{path};
 }
 
-void Utils::SetThreadName(ATTRIBUTE_MAYBE_UNUSED std::thread& thread, ATTRIBUTE_MAYBE_UNUSED const std::wstring& name)
+void Utils::SetThreadName(ATTRIBUTE_MAYBE_UNUSED std::thread& thread, ATTRIBUTE_MAYBE_UNUSED const std::string& name)
 {
-#if defined(_DEBUG) && defined(ENVIRONMENT_WINDOWS)
-    (void) SetThreadDescription(thread.native_handle(), name.c_str());
+#ifdef PROFILING
+    //tracy::SetThreadName(name.c_str());
+#endif
+
+#if defined(ENVIRONMENT_WINDOWS)
+    (void) SetThreadDescription(thread.native_handle(), NarrowToWide(name).c_str());
     Windows::SilenceError();
 #endif
 }
@@ -211,7 +214,7 @@ std::string Utils::ToUpper(const std::string_view str)
     return result;
 }
 
-std::pair<float_t, std::string_view> Utils::ByteSizeUnit(int64_t size)
+std::pair<float_t, std::string_view> Utils::ByteSizeUnit(const int64_t size)
 {
     if (size < 1000)
         return { static_cast<float_t>(size), "B" };

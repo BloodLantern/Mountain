@@ -39,6 +39,8 @@ void Coroutine::Start(Coroutine&& coroutine, Guid* const coroutineId)
 
 void Coroutine::UpdateAll()
 {
+    ZoneScoped;
+
     List<const Coroutine*> finishedRoutines;
 
     for (const Coroutine& routine : m_RunningRoutines | std::views::values)
@@ -46,10 +48,10 @@ void Coroutine::UpdateAll()
         if (!routine.Valid())
             continue;
 
-        auto& awaitValue = routine.m_Handle.promise().awaitValue;
+        TimeSpan& awaitValue = routine.m_Handle.promise().awaitValue;
 
-        awaitValue -= AwaitType(Time::GetDeltaTime());
-        if (awaitValue > AwaitType::zero())
+        awaitValue -= TimeSpan::FromSeconds(Time::GetDeltaTime());
+        if (awaitValue > TimeSpan::Zero())
             continue;
 
         routine.Resume();
@@ -106,13 +108,22 @@ void Coroutine::promise_type::unhandled_exception()
 
 void Coroutine::promise_type::return_void() {}
 
-Coroutine::Awaitable Coroutine::promise_type::await_transform(const AwaitType& duration)
+Coroutine::Awaitable Coroutine::promise_type::await_transform(const TimeSpan& duration)
 {
     awaitValue = duration;
     return {};
 }
 
-Coroutine::Awaitable Coroutine::promise_type::await_transform(const float_t duration) { return await_transform(AwaitType(duration)); }
+Coroutine::Awaitable Coroutine::promise_type::await_transform(const std::chrono::duration<double_t>& duration)
+{
+    awaitValue = TimeSpan::FromSeconds(duration.count());
+    return {};
+}
+
+Coroutine::Awaitable Coroutine::promise_type::await_transform(const float_t duration)
+{
+    return await_transform(TimeSpan::FromSeconds(duration));
+}
 
 std::suspend_always Coroutine::promise_type::yield_value(nullptr_t) { return {}; }
 

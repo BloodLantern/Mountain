@@ -96,6 +96,7 @@
       </IgnoreSpecificDefaultLibraries>
       <AdditionalOptions>/ignore:4098 /ignore:4099 %(AdditionalOptions)</AdditionalOptions>
       <CreateHotPatchableImage>Enabled</CreateHotPatchableImage>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -130,6 +131,10 @@
     <ProjectReference Include="..\Mountain\Mountain.vcxproj">
       <Project>{154dad25-d481-4a8b-ab51-2f9313034be7}</Project>
       <Name>Mountain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Profiler\Profiler.vcxproj">
+      <Project>{098884b7-2324-4d54-8b14-007fc02fe751}</Project>
+      <Name>Profiler</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

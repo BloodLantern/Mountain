@@ -2,6 +2,8 @@
 
 #include "Mountain/Input/Time.hpp"
 
+#include "Mountain/Profiler.hpp"
+
 #include "Mountain/Screen.hpp"
 #include "Mountain/Window.hpp"
 #include "Mountain/Utils/Windows.hpp"
@@ -51,6 +53,8 @@ namespace
 
 void Time::Initialize()
 {
+    ZoneScoped;
+
     m_Stopwatch.Start();
 
     // Attempt to create a high-resolution timer, only available since Windows 10, version 1803
@@ -66,6 +70,8 @@ void Time::Initialize()
 
 void Time::Shutdown()
 {
+    ZoneScoped;
+
     if (waitableTimer)
     {
         CloseHandle(waitableTimer);
@@ -75,6 +81,8 @@ void Time::Shutdown()
 
 void Time::Update()
 {
+    ZoneScoped;
+
     m_LastTotalTimeUnscaled = m_TotalTimeUnscaled;
     m_LastTotalTime = m_TotalTime;
 
@@ -92,6 +100,8 @@ void Time::Update()
 
 void Time::WaitForNextFrame()
 {
+    ZoneScoped;
+
     // Most of the code for waiting between frames comes from the osu!framework:
     // https://github.com/ppy/osu-framework/blob/master/osu.Framework/Timing/ThrottledFrameClock.cs
 
@@ -123,6 +133,8 @@ void Time::WaitForNextFrame()
 
     // VSync sleeps here
     Window::SwapBuffers();
+
+    FrameMark;
 
     frameStartMsAfterSwapBuffers = m_Stopwatch.GetElapsedMilliseconds();
 }
