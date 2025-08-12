@@ -39,9 +39,9 @@ namespace Mountain
 
         void Clear();
 
-        GETTER(List<EntityT*>, List, m_Entities)
-        GETTER(List<EntityT*>, ToAdd, m_ToAdd)
-        GETTER(List<EntityT*>, ToRemove, m_ToRemove)
+        GETTER_NON_CONST(List<EntityT*>&, List, m_Entities)
+        GETTER_NON_CONST(List<EntityT*>&, ToAdd, m_ToAdd)
+        GETTER_NON_CONST(List<EntityT*>&, ToRemove, m_ToRemove)
 
     private:
         List<EntityT*> m_ToAdd;
@@ -146,6 +146,7 @@ namespace Mountain
     template <Concepts::Entity EntityT>
     void EntityList<EntityT>::RemoveNextFrame(EntityT* entity)
     {
+        m_ToAdd.Remove(entity);
         m_ToRemove.Add(entity);
     }
 
