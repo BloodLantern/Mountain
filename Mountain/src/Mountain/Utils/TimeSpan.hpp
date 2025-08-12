@@ -280,10 +280,10 @@ namespace Mountain
 
     constexpr TimeSpan operator-(const TimeSpan lhs, const TimeSpan rhs)
     {
-        const int64_t result = lhs.m_Ticks + rhs.m_Ticks;
+        const int64_t result = lhs.m_Ticks - rhs.m_Ticks;
 
         // Overflow if signs of operands was different and result's
-        // sign was opposite.
+        // sign was opposite from the first argument's sign.
         // >> 63 gives the sign bit (either 64 1's or 64 0's).
         if ((lhs.m_Ticks >> 63 != rhs.m_Ticks >> 63) && (lhs.m_Ticks >> 63 != result >> 63))
             THROW(OverflowException{"TimeSpan difference underflow"});
