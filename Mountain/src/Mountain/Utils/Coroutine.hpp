@@ -121,11 +121,15 @@ namespace Mountain
         /// @brief The coroutine handle type.
         using HandleType = std::coroutine_handle<promise_type>;
 
+        /// @brief Starts a coroutine, assigning it a @c Guid.
+        /// @details This will run the beginning of the coroutine body. If it
+        /// finishes without yielding, this function returns @c Guid::Empty().
+        /// Otherwise, it returns the @c Guid that was assigned to the coroutine.
         MOUNTAIN_API static Guid Start(Coroutine&& coroutine);
 
-        /// @brief Starts a coroutine using an existing coroutine Guid.
-        ///
-        /// This stops the existing coroutine if it is still running and assigns the guid with a newly created one.
+        /// @brief Starts a coroutine using an existing coroutine @c Guid.
+        /// @details This stops the existing coroutine if it is still running
+        /// and assigns the guid with a newly created one.
         MOUNTAIN_API static void Start(Coroutine&& coroutine, Guid* coroutineId);
 
         MOUNTAIN_API static void UpdateAll();
@@ -142,6 +146,8 @@ namespace Mountain
 
         ATTRIBUTE_NODISCARD
         MOUNTAIN_API static size_t GetRunningCount();
+
+        bool_t useUnscaledDeltaTime = false;
 
         MOUNTAIN_API Coroutine() = default;
 

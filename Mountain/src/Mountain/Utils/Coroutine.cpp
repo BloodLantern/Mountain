@@ -22,6 +22,11 @@ Guid Coroutine::Start(Coroutine&& coroutine)
     Guid id = Guid::New();
 
     coroutine.m_Id = id;
+    coroutine.Resume();
+
+    if (coroutine.Finished()) // If the coroutine didn't yield, no need to keep it for future updates
+        return Guid::Empty();
+
     m_RunningRoutines.emplace(id, std::move(coroutine));
 
     return id;
@@ -50,7 +55,7 @@ void Coroutine::UpdateAll()
 
         TimeSpan& awaitValue = routine.m_Handle.promise().awaitValue;
 
-        awaitValue -= TimeSpan::FromSeconds(Time::GetDeltaTime());
+        awaitValue -= TimeSpan::FromSeconds(routine.useUnscaledDeltaTime ? Time::GetDeltaTimeUnscaled() : Time::GetDeltaTime());
         if (awaitValue > TimeSpan::Zero())
             continue;
 
