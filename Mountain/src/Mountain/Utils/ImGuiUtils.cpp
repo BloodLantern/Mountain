@@ -300,8 +300,18 @@ void ImGuiUtils::ShowInputsWindow()
 
     if (ImGui::TreeNode("Keyboard"))
     {
-        ImGui::Text("Key down B: %d", Input::GetKey(Key::B));
-        ImGui::Text("Key release B: %d", Input::GetKey(Key::B, KeyStatus::Release));
+        ImGui::TextColored(Color::Gray(), "Not all keys are displayed");
+        for (const auto pair : magic_enum::enum_entries<Key>())
+        {
+            if (!ImGui::TreeNode(STRING_VIEW_TO_C_STR(pair.second)))
+                continue;
+
+            ImGui::Text("Pressed: %d", Input::GetKey(pair.first, KeyStatus::Pressed));
+            ImGui::Text("Down: %d", Input::GetKey(pair.first));
+            ImGui::Text("Release: %d", Input::GetKey(pair.first, KeyStatus::Release));
+
+            ImGui::TreePop();
+        }
         ImGui::TreePop();
     }
 

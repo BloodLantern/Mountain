@@ -274,7 +274,7 @@ void Window::ProcessKeyboardEvents(const SDL_Event& event)
     if (key & SDLK_SCANCODE_MASK)
     {
         // Remap to 0, then map to enum values
-        key = key - SDLK_CAPSLOCK + static_cast<size_t>(Key::NormalEnd);
+        key = key - SDLK_CAPSLOCK + static_cast<size_t>(Key::ScancodeBegin);
     }
 
     switch (event.type)

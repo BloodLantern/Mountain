@@ -118,7 +118,10 @@ struct std::formatter<EnumT>
     {
         std::ostringstream out;
 
-        out << (m_PrintAsInteger ? static_cast<Mountain::Meta::UnderlyingEnumType<EnumT>>(e) : magic_enum::enum_name(e));
+        if (m_PrintAsInteger)
+            out << static_cast<Mountain::Meta::UnderlyingEnumType<EnumT>>(e);
+        else
+            out << magic_enum::enum_name(e);
 
         return std::ranges::copy(std::move(out).str(), ctx.out()).out;
     }

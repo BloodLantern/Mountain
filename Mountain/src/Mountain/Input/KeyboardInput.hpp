@@ -337,6 +337,9 @@ namespace Mountain
         Call,
         EndCall,
 
+        ScancodeBegin = Backslash,
+        ScancodeEnd = EndCall,
+
         None,
 
         Count
