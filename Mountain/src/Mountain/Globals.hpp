@@ -31,4 +31,6 @@ namespace Mountain
     PUBLIC_GLOBAL(bool_t, BreakOnGraphicsError, false);
     /// @brief Whether to still call @c Game::Update() when @code Time::freezeTimer > 0.f@endcode.
     PUBLIC_GLOBAL(bool_t, ManualFreezeFrames, false);
+    /// @brief Whether <b>not</b> to call @c Coroutine::UpdateAll() every frame.
+    PUBLIC_GLOBAL(bool_t, ManualCoroutineUpdates, false);
 }

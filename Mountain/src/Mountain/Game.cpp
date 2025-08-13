@@ -134,7 +134,9 @@ bool_t Game::NextFrame()
 
     Time::Update();
     Audio::Update();
-    Coroutine::UpdateAll();
+
+    if (!ManualFreezeFrames)
+        Coroutine::UpdateAll();
 
     Renderer::PreFrame();
 
