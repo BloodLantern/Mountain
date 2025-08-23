@@ -7,6 +7,8 @@
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Utils/DateTime.hpp"
+// ReSharper disable once CppUnusedIncludeDirective
+#include "Mountain/Utils/Formatter.hpp"
 #include "Mountain/Utils/Requirements.hpp"
 #include "Mountain/Utils/TsQueue.hpp"
 
@@ -279,7 +281,7 @@ namespace Mountain
         PushLog(std::make_shared<LogEntry>(std::vformat(format, std::make_format_args(args...)), level));
     }
 
-    template <Requirements::Formattable ... Args>
+    template <Requirements::Formattable... Args>
     void Logger::LogDebug(const std::string& format, const char_t* file, const int32_t line, Args&&... args)
     {
         if (LogLevel::Debug < minimumConsoleLevel && LogLevel::Debug < minimumFileLevel)

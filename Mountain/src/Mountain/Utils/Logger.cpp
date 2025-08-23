@@ -117,7 +117,12 @@ void Logger::Start()
 
     m_Running = true;
 
-    m_Thread = std::thread(Run);
+    m_Thread = std::thread{Run};
+
+    // Set the thread name for easier debugging
+    Utils::SetThreadName(m_Thread, "Logger Thread");
+
+    m_Thread.detach();
 }
 
 void Logger::Stop()
@@ -176,18 +181,15 @@ Logger::LogEntry::LogEntry(
 
 bool_t Logger::LogEntry::operator==(const LogEntry& other) const
 {
-    return message == other.message && level == other.level && printToConsole == other.printToConsole && printToFile == other.printToFile;
+    return message == other.message
+        && level == other.level
+        && printToConsole == other.printToConsole
+        && printToFile == other.printToFile;
 }
 
 void Logger::Run()
 {
     ZoneScoped;
-
-    // Set the thread name for easier debugging
-    Utils::SetThreadName(m_Thread, "Logger Thread");
-
-    // Detach this thread from the main one to make sure it finishes normally
-    m_Thread.detach();
 
     std::unique_lock lock(m_Mutex);
     while (m_Running || !m_NewLogs.Empty())
@@ -245,7 +247,7 @@ void Logger::PushLog(const std::shared_ptr<LogEntry>& log)
 void Logger::PrintLog(const std::shared_ptr<LogEntry>& log)
 {
     static uint64_t sameLastLogs;
-    static decltype(sameLastLogs) oldSameLastLogs;
+    static uint64_t oldSameLastLogs;
 
     oldSameLastLogs = sameLastLogs;
     if (log->sameAsPrevious)
@@ -253,9 +255,9 @@ void Logger::PrintLog(const std::shared_ptr<LogEntry>& log)
     else
         sameLastLogs = 0;
 
-    auto&& prefix = BuildLogPrefix(log);
+    const auto& prefix = BuildLogPrefix(log);
     const std::string& baseMessage = prefix.first;
-    const char_t* const color = prefix.second;
+    const char_t* color = prefix.second;
 
     const bool_t printToFile = log->printToFile && m_File.is_open();
 
