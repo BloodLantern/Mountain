@@ -1,6 +1,6 @@
 #include "Mountain/PrecompiledHeader.hpp"
 
-#include "Mountain/Rendering/Renderer.hpp"
+#include "Mountain/Graphics/Renderer.hpp"
 
 #include <glad/glad.h>
 
@@ -17,8 +17,8 @@
 #include "Mountain/Screen.hpp"
 #include "Mountain/Window.hpp"
 #include "Mountain/FileSystem/FileManager.hpp"
-#include "Mountain/Rendering/Draw.hpp"
-#include "Mountain/Rendering/ParticleSystem.hpp"
+#include "Mountain/Graphics/Draw.hpp"
+#include "Mountain/Graphics/ParticleSystem.hpp"
 #include "Mountain/Resource/ResourceManager.hpp"
 #include "Mountain/Utils/Logger.hpp"
 
@@ -115,7 +115,7 @@ namespace
         if (Mountain::BreakOnGraphicsError && level == Mountain::Logger::LogLevel::Error)
             __debugbreak();
 
-        Mountain::Logger::Log(level, "[OpenGL] Log of type {} received from {}: {}", t, src, std::string_view(message, length));
+        Mountain::Logger::Log(level, "[OpenGL] Log of type {} received from {}: {}", t, src, std::string_view{message, static_cast<size_t>(length)});
     }
 }
 

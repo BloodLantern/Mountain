@@ -8,7 +8,7 @@
 #include "Mountain/Audio/Audio.hpp"
 #include "Mountain/Input/Input.hpp"
 #include "Mountain/Input/Time.hpp"
-#include "Mountain/Rendering/Renderer.hpp"
+#include "Mountain/Graphics/Renderer.hpp"
 #include "Mountain/Resource/ResourceManager.hpp"
 #include "Mountain/Utils/Coroutine.hpp"
 #include "Mountain/Utils/Logger.hpp"

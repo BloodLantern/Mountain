@@ -5,14 +5,17 @@
 #include <Math/matrix.hpp>
 #include <Math/vector2i.hpp>
 
-#include "Mountain/Rendering/GpuTexture.hpp"
-#include "Mountain/Rendering/Graphics.hpp"
-#include "Mountain/Rendering/LightSource.hpp"
+#include "Mountain/Graphics/GpuTexture.hpp"
+#include "Mountain/Graphics/Graphics.hpp"
+#include "Mountain/Graphics/LightSource.hpp"
 #include "Mountain/Utils/Color.hpp"
 #include "Mountain/Containers/List.hpp"
+#include "Mountain/Graphics/GpuFramebuffer.hpp"
 
 namespace Mountain
 {
+    /// @brief A RenderTarget is a texture that can be drawn onto.
+    /// @details This class is made to be used with @c Renderer::PushRenderTarget(), @c Renderer::PopRenderTarget and @c Draw::RenderTarget().
     class RenderTarget
     {
     public:
@@ -27,7 +30,7 @@ namespace Mountain
         MOUNTAIN_API RenderTarget(Vector2i size, Graphics::MagnificationFilter filter);
         MOUNTAIN_API ~RenderTarget();
 
-        DELETE_COPY_MOVE_OPERATIONS(RenderTarget)
+        DEFAULT_COPY_MOVE_OPERATIONS(RenderTarget)
 
         /// @brief Initialize the RenderTarget with the given values
         MOUNTAIN_API void Initialize(Vector2i size, Graphics::MagnificationFilter filter);
@@ -73,7 +76,7 @@ namespace Mountain
 
     private:
         Graphics::GpuTexture m_Texture;
-        uint32_t m_Framebuffer;
+        Graphics::GpuFramebuffer m_Framebuffer;
 
         bool_t m_Initialized = false;
 

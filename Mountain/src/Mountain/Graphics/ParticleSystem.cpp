@@ -1,14 +1,14 @@
 ﻿#include "Mountain/PrecompiledHeader.hpp"
 
-#include "Mountain/Rendering/ParticleSystem.hpp"
+#include "Mountain/Graphics/ParticleSystem.hpp"
 
 #include <glad/glad.h>
 
 #include <ImGui/imgui_stdlib.h>
 
 #include "Mountain/Input/Time.hpp"
-#include "Mountain/Rendering/Draw.hpp"
-#include "Mountain/Rendering/Renderer.hpp"
+#include "Mountain/Graphics/Draw.hpp"
+#include "Mountain/Graphics/Renderer.hpp"
 #include "Mountain/Resource/ResourceManager.hpp"
 #include "Mountain/Utils/ImGuiUtils.hpp"
 #include "Mountain/Utils/Random.hpp"

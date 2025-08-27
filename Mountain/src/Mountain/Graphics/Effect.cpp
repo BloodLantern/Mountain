@@ -1,9 +1,9 @@
 ﻿#include "Mountain/PrecompiledHeader.hpp"
 
-#include "Mountain/Rendering/Effect.hpp"
+#include "Mountain/Graphics/Effect.hpp"
 
-#include "Mountain/Rendering/Draw.hpp"
-#include "Mountain/Rendering/Renderer.hpp"
+#include "Mountain/Graphics/Draw.hpp"
+#include "Mountain/Graphics/Renderer.hpp"
 #include "Mountain/Resource/ComputeShader.hpp"
 #include "Mountain/Resource/ResourceManager.hpp"
 

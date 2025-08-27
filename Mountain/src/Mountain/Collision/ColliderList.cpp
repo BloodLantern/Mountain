@@ -6,7 +6,7 @@
 #include "Mountain/Collision/Grid.hpp"
 #include "Mountain/Collision/Hitbox.hpp"
 #include "Mountain/Containers/EnumerableExt.hpp"
-#include "Mountain/Rendering/Draw.hpp"
+#include "Mountain/Graphics/Draw.hpp"
 
 using namespace Mountain;
 

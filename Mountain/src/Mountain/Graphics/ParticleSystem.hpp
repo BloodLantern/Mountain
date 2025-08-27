@@ -4,9 +4,9 @@
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Containers/List.hpp"
-#include "Mountain/Rendering/GpuBuffer.hpp"
-#include "Mountain/Rendering/GpuVertexArray.hpp"
-#include "Mountain/Rendering/ParticleSystemModules.hpp"
+#include "Mountain/Graphics/GpuBuffer.hpp"
+#include "Mountain/Graphics/GpuVertexArray.hpp"
+#include "Mountain/Graphics/ParticleSystemModules.hpp"
 #include "Mountain/Resource/ComputeShader.hpp"
 #include "Mountain/Resource/Shader.hpp"
 #include "Mountain/Utils/Color.hpp"

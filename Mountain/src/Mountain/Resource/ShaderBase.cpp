@@ -7,7 +7,7 @@
 #include <Math/math.hpp>
 
 #include "Mountain/FileSystem/FileManager.hpp"
-#include "Mountain/Rendering/Graphics.hpp"
+#include "Mountain/Graphics/Graphics.hpp"
 #include "Mountain/Utils/Logger.hpp"
 
 using namespace Mountain;

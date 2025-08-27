@@ -1,6 +1,6 @@
 ﻿#include "Mountain/PrecompiledHeader.hpp"
 
-#include "Mountain/Rendering/GpuBuffer.hpp"
+#include "Mountain/Graphics/GpuBuffer.hpp"
 
 #include <glad/glad.h>
 

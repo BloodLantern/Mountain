@@ -3,7 +3,7 @@
 #include <Math/vector2i.hpp>
 
 #include "Mountain/Core.hpp"
-#include "Mountain/Rendering/Graphics.hpp"
+#include "Mountain/Graphics/Graphics.hpp"
 #include "Mountain/Utils/Utils.hpp"
 
 namespace Mountain::Graphics

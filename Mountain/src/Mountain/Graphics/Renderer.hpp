@@ -4,7 +4,7 @@
 #include <stack>
 
 #include "Mountain/Core.hpp"
-#include "Mountain/Rendering/RenderTarget.hpp"
+#include "Mountain/Graphics/RenderTarget.hpp"
 #include "Mountain/Resource/Font.hpp"
 #include "Mountain/Utils/DateTime.hpp"
 #include "Mountain/Utils/Pointer.hpp"

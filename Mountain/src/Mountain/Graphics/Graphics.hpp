@@ -13,10 +13,12 @@
 /// You should only use this if you know what you are doing and/or have experience with graphics APIs such as OpenGL.
 namespace Mountain::Graphics
 {
+    struct GpuFramebuffer;
     struct GpuVertexArray;
     struct GpuBuffer;
     struct GpuTexture;
 
+#pragma region Enums
     enum class ImageShaderAccess : uint8_t
     {
         ReadOnly,
@@ -636,6 +638,24 @@ namespace Mountain::Graphics
         Framebuffer
     };
 
+    enum class FramebufferStatus : uint8_t
+    {
+        /// @brief The framebuffer is ready to be used.
+        Complete,
+        /// @brief The specified framebuffer is the default read or draw framebuffer, but the default framebuffer does not exist.
+        Undefined,
+        /// @brief At least one of the framebuffer attachment points are framebuffer incomplete.
+        IncompleteAttachment,
+        /// @brief The framebuffer does not have at least one image attached to it.
+        IncompleteMissingAttachment,
+        IncompleteDrawBuffer,
+        IncompleteReadBuffer,
+        /// @brief The combination of internal formats of the attached images violates an implementation-dependent set of restrictions.
+        Unsupported,
+        IncompleteMultisample,
+        IncompleteLayerTargets
+    };
+
     template <typename T>
     concept OpenGlConvertibleT = Meta::IsAny<
         T,
@@ -650,8 +670,10 @@ namespace Mountain::Graphics
         BufferUsage,
         DrawMode,
         BlendFunction,
-        FramebufferType
+        FramebufferType,
+        FramebufferStatus
     >;
+#pragma endregion
 
     MOUNTAIN_API void BindImage(uint32_t textureId, uint32_t shaderBinding, ImageShaderAccess access);
 
@@ -675,8 +697,8 @@ namespace Mountain::Graphics
     MOUNTAIN_API void BindBuffer(BufferType type, uint32_t bufferId);
     MOUNTAIN_API void BindBuffer(BufferType type, GpuBuffer gpuBuffer);
 
-    MOUNTAIN_API void BindBufferBase(BufferType type, uint32_t index, GpuBuffer gpuBuffer);
     MOUNTAIN_API void BindBufferBase(BufferType type, uint32_t index, uint32_t bufferId);
+    MOUNTAIN_API void BindBufferBase(BufferType type, uint32_t index, GpuBuffer gpuBuffer);
 
     MOUNTAIN_API void BindVertexArray(uint32_t vertexArrayId);
     MOUNTAIN_API void BindVertexArray(GpuVertexArray gpuVertexArray);
@@ -684,7 +706,8 @@ namespace Mountain::Graphics
     MOUNTAIN_API void SetVertexAttribute(uint32_t index, int32_t size, int32_t stride, size_t offset, uint32_t divisor = 0);
     MOUNTAIN_API void SetVertexAttributeInt(uint32_t index, int32_t size, int32_t stride, size_t offset, uint32_t divisor = 0);
 
-    MOUNTAIN_API void BindFramebuffer(FramebufferType type, uint32_t framebuffer);
+    MOUNTAIN_API void BindFramebuffer(FramebufferType type, uint32_t framebufferId);
+    MOUNTAIN_API void BindFramebuffer(FramebufferType type, GpuFramebuffer gpuFramebuffer);
 
     /// @brief Copy data from one texture to another
     /// @param sourceTextureId The texture ID from which the data will get copied
@@ -746,6 +769,8 @@ namespace Mountain::Graphics
     /// @brief Sets an enum (cast to a 32 bits unsigned integer) variable in a shader
     template <Concepts::Enum T>
     void SetProgramUniform(uint32_t shaderProgramId, const char_t* uniformName, T value);
+
+    MOUNTAIN_API void SetViewport(Vector2i position, Vector2i size);
 
     ATTRIBUTE_NODISCARD
     MOUNTAIN_API uint32_t GetLastError();
@@ -825,6 +850,9 @@ namespace Mountain::Graphics
     template <>
     ATTRIBUTE_NODISCARD
     MOUNTAIN_API FramebufferType FromOpenGl<FramebufferType>(int32_t value);
+    template <>
+    ATTRIBUTE_NODISCARD
+    MOUNTAIN_API FramebufferStatus FromOpenGl<FramebufferStatus>(int32_t value);
 
     ATTRIBUTE_NODISCARD
     MOUNTAIN_API int32_t ToOpenGl(MagnificationFilter value);
@@ -850,6 +878,8 @@ namespace Mountain::Graphics
     MOUNTAIN_API int32_t ToOpenGl(BlendFunction value);
     ATTRIBUTE_NODISCARD
     MOUNTAIN_API int32_t ToOpenGl(FramebufferType value);
+    ATTRIBUTE_NODISCARD
+    MOUNTAIN_API int32_t ToOpenGl(FramebufferStatus value);
 }
 
 ENUM_FLAGS(Mountain::Graphics::GpuDataSynchronizationFlags);

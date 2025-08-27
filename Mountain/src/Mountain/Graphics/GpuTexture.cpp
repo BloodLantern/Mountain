@@ -1,6 +1,6 @@
 ﻿#include "Mountain/PrecompiledHeader.hpp"
 
-#include "Mountain/Rendering/GpuTexture.hpp"
+#include "Mountain/Graphics/GpuTexture.hpp"
 
 #include <glad/glad.h>
 

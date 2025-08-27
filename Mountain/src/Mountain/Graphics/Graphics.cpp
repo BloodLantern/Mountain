@@ -1,14 +1,15 @@
 ﻿#include "Mountain/PrecompiledHeader.hpp"
 
-#include "Mountain/Rendering/Graphics.hpp"
+#include "Mountain/Graphics/Graphics.hpp"
 
 #include <glad/glad.h>
 
 #include "Mountain/Exceptions/ArgumentException.hpp"
 #include "Mountain/Exceptions/ThrowHelper.hpp"
-#include "Mountain/Rendering/GpuBuffer.hpp"
-#include "Mountain/Rendering/GpuTexture.hpp"
-#include "Mountain/Rendering/GpuVertexArray.hpp"
+#include "Mountain/Graphics/GpuBuffer.hpp"
+#include "Mountain/Graphics/GpuFramebuffer.hpp"
+#include "Mountain/Graphics/GpuTexture.hpp"
+#include "Mountain/Graphics/GpuVertexArray.hpp"
 #include "Mountain/Utils/Utils.hpp"
 
 using namespace Mountain;
@@ -71,14 +72,14 @@ void Graphics::BindBuffer(const BufferType type, const uint32_t bufferId) { glBi
 
 void Graphics::BindBuffer(const BufferType type, const GpuBuffer gpuBuffer) { BindBuffer(type, gpuBuffer.GetId()); }
 
-void Graphics::BindBufferBase(const BufferType type, const uint32_t index, const uint32_t bufferId)
-{
-    glBindBufferBase(ToOpenGl(type), index, bufferId);
-}
-
 void Graphics::BindBufferBase(const BufferType type, const uint32_t index, const GpuBuffer gpuBuffer)
 {
     BindBufferBase(type, index, gpuBuffer.GetId());
+}
+
+void Graphics::BindBufferBase(const BufferType type, const uint32_t index, const uint32_t bufferId)
+{
+    glBindBufferBase(ToOpenGl(type), index, bufferId);
 }
 
 void Graphics::BindVertexArray(const uint32_t vertexArrayId) { glBindVertexArray(vertexArrayId); }
@@ -113,7 +114,9 @@ void Graphics::SetVertexAttributeInt(
         glVertexBindingDivisor(index, divisor);
 }
 
-void Graphics::BindFramebuffer(const FramebufferType type, const uint32_t framebuffer) { glBindFramebuffer(ToOpenGl(type), framebuffer); }
+void Graphics::BindFramebuffer(const FramebufferType type, const uint32_t framebufferId) { glBindFramebuffer(ToOpenGl(type), framebufferId); }
+
+void Graphics::BindFramebuffer(const FramebufferType type, const GpuFramebuffer gpuFramebuffer) { BindFramebuffer(type, gpuFramebuffer.GetId()); }
 
 void Graphics::CopyTextureData(
     const uint32_t sourceTextureId,
@@ -207,6 +210,11 @@ void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const char_t* c
 void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const char_t* const uniformName, const Matrix& value)
 {
     glProgramUniformMatrix4fv(shaderProgramId, GetProgramUniformLocation(shaderProgramId, uniformName), 1, GL_FALSE, value.Data());
+}
+
+void Graphics::SetViewport(const Vector2i position, const Vector2i size)
+{
+    glViewport(position.x, position.y, size.x, size.y);
 }
 
 uint32_t Graphics::GetLastError() { return glGetError(); }
@@ -796,6 +804,25 @@ Graphics::FramebufferType Graphics::FromOpenGl<Graphics::FramebufferType>(const 
     }
 }
 
+template <>
+Graphics::FramebufferStatus Graphics::FromOpenGl<Graphics::FramebufferStatus>(const int32_t value)
+{
+    switch (value)
+    {
+        case GL_FRAMEBUFFER_COMPLETE: return FramebufferStatus::Complete;
+        case GL_FRAMEBUFFER_UNDEFINED: return FramebufferStatus::Undefined;
+        case GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT: return FramebufferStatus::IncompleteAttachment;
+        case GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT: return FramebufferStatus::IncompleteMissingAttachment;
+        case GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER: return FramebufferStatus::IncompleteDrawBuffer;
+        case GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER: return FramebufferStatus::IncompleteReadBuffer;
+        case GL_FRAMEBUFFER_UNSUPPORTED: return FramebufferStatus::Unsupported;
+        case GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE: return FramebufferStatus::IncompleteMultisample;
+        case GL_FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS: return FramebufferStatus::IncompleteLayerTargets;
+
+        default: THROW(ArgumentOutOfRangeException{"Invalid framebuffer status", "value"});
+    }
+}
+
 int32_t Graphics::ToOpenGl(const MagnificationFilter value)
 {
     switch (value)
@@ -1295,4 +1322,22 @@ int32_t Graphics::ToOpenGl(const FramebufferType value)
     }
 
     THROW(ArgumentOutOfRangeException{"Invalid blend function", "value"});
+}
+
+int32_t Graphics::ToOpenGl(const FramebufferStatus value)
+{
+    switch (value)
+    {
+        case FramebufferStatus::Complete: return GL_FRAMEBUFFER_COMPLETE;
+        case FramebufferStatus::Undefined: return GL_FRAMEBUFFER_UNDEFINED;
+        case FramebufferStatus::IncompleteAttachment: return GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT;
+        case FramebufferStatus::IncompleteMissingAttachment: return GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT;
+        case FramebufferStatus::IncompleteDrawBuffer: return GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER;
+        case FramebufferStatus::IncompleteReadBuffer: return GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER;
+        case FramebufferStatus::Unsupported: return GL_FRAMEBUFFER_UNSUPPORTED;
+        case FramebufferStatus::IncompleteMultisample: return GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE;
+        case FramebufferStatus::IncompleteLayerTargets: return GL_FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS;
+    }
+
+    THROW(ArgumentOutOfRangeException{"Invalid framebuffer status", "value"});
 }

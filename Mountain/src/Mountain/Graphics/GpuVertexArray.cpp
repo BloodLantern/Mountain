@@ -1,6 +1,6 @@
 ﻿#include "Mountain/PrecompiledHeader.hpp"
 
-#include "Mountain/Rendering/GpuVertexArray.hpp"
+#include "Mountain/Graphics/GpuVertexArray.hpp"
 
 #include <glad/glad.h>
 

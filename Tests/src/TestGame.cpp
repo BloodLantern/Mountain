@@ -9,7 +9,7 @@
 #include <Mountain/Globals.hpp>
 #include <Mountain/Window.hpp>
 #include <Mountain/Input/Time.hpp>
-#include <Mountain/Rendering/Draw.hpp>
+#include <Mountain/Graphics/Draw.hpp>
 
 #include "Mountain/FileSystem/FileManager.hpp"
 #include "Mountain/Resource/ResourceManager.hpp"

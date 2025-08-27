@@ -5,7 +5,7 @@
 #include "Mountain/Collision/Circle.hpp"
 #include "Mountain/Collision/ColliderList.hpp"
 #include "Mountain/Collision/Grid.hpp"
-#include "Mountain/Rendering/Draw.hpp"
+#include "Mountain/Graphics/Draw.hpp"
 
 using namespace Mountain;
 

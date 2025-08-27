@@ -1,8 +1,8 @@
 ﻿#pragma once
 
 #include "Mountain/Core.hpp"
-#include "Mountain/Rendering/RenderTarget.hpp"
-#include "Mountain/Rendering/GpuBuffer.hpp"
+#include "Mountain/Graphics/RenderTarget.hpp"
+#include "Mountain/Graphics/GpuBuffer.hpp"
 #include "Mountain/Resource/ComputeShader.hpp"
 #include "Mountain/Resource/Texture.hpp"
 

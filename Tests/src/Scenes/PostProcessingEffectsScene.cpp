@@ -2,8 +2,8 @@
 
 #include "Scenes/PostProcessingEffectsScene.hpp"
 
-#include <Mountain/Rendering/Draw.hpp>
-#include <Mountain/Rendering/Renderer.hpp>
+#include <Mountain/Graphics/Draw.hpp>
+#include <Mountain/Graphics/Renderer.hpp>
 #include <Mountain/Resource/ResourceManager.hpp>
 #include <Mountain/Utils/ImGuiUtils.hpp>
 

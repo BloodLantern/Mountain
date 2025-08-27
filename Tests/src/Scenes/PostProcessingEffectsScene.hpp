@@ -2,8 +2,8 @@
 
 #include "Common.hpp"
 
-#include <Mountain/Rendering/Effect.hpp>
-#include <Mountain/Rendering/Renderer.hpp>
+#include <Mountain/Graphics/Effect.hpp>
+#include <Mountain/Graphics/Renderer.hpp>
 
 #include "Scenes/TestScene.hpp"
 

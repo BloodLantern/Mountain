@@ -2,8 +2,8 @@
 
 #include "Scenes/ShapesScene.hpp"
 
-#include <Mountain/Rendering/Draw.hpp>
-#include <Mountain/Rendering/Renderer.hpp>
+#include <Mountain/Graphics/Draw.hpp>
+#include <Mountain/Graphics/Renderer.hpp>
 #include <Mountain/Utils/ImGuiUtils.hpp>
 
 #define UPDATE_DRAW_POSITION drawPosition = GetDrawPosition((index)++)

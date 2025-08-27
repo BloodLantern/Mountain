@@ -5,7 +5,7 @@
 #include <Mountain/Collision/Circle.hpp>
 #include <Mountain/FileSystem/FileManager.hpp>
 #include <Mountain/Input/Input.hpp>
-#include <Mountain/Rendering/Draw.hpp>
+#include <Mountain/Graphics/Draw.hpp>
 #include <Mountain/Resource/ResourceManager.hpp>
 #include <Mountain/Utils/ImGuiUtils.hpp>
 

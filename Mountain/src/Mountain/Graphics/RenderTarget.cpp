@@ -1,14 +1,9 @@
 ﻿#include "Mountain/PrecompiledHeader.hpp"
 
-#include "Mountain/Rendering/RenderTarget.hpp"
-
-#include <array>
-#include <utility>
-
-#include <glad/glad.h>
+#include "Mountain/Graphics/RenderTarget.hpp"
 
 #include "Mountain/Window.hpp"
-#include "Mountain/Rendering/Draw.hpp"
+#include "Mountain/Graphics/Draw.hpp"
 #include "Mountain/Utils/Logger.hpp"
 
 using namespace Mountain;
@@ -22,8 +17,8 @@ void RenderTarget::Use() const
     if (!m_Initialized)
         THROW(InvalidOperationException{"Cannot use an uninitialized RenderTarget"});
 
-    glBindFramebuffer(GL_FRAMEBUFFER, m_Framebuffer);
-    glViewport(0, 0, m_Size.x, m_Size.y);
+    BindFramebuffer(Graphics::FramebufferType::Framebuffer, m_Framebuffer);
+    Graphics::SetViewport(Vector2i::Zero(), m_Size);
 
     Draw::SetProjectionMatrix(m_Projection, false);
     UpdateDrawCamera();
@@ -51,17 +46,17 @@ void RenderTarget::Initialize(const Vector2i size, const Graphics::Magnification
 
     // Framebuffer
 
-    glCreateFramebuffers(1, &m_Framebuffer);
-    glBindFramebuffer(GL_FRAMEBUFFER, m_Framebuffer);
+    m_Framebuffer.Create();
+    BindFramebuffer(Graphics::FramebufferType::Framebuffer, m_Framebuffer);
 
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_Texture.GetId(), 0);
+    m_Framebuffer.SetTexture(m_Texture, 0);
 
-    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+    if (m_Framebuffer.CheckStatus(Graphics::FramebufferType::Framebuffer) != Graphics::FramebufferStatus::Complete)
         Logger::LogError("Incomplete framebuffer after RenderTarget creation");
+    else
+        m_Initialized = true;
 
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-    m_Initialized = true;
+    BindFramebuffer(Graphics::FramebufferType::Framebuffer, 0);
 }
 
 void RenderTarget::Reset()
@@ -72,7 +67,7 @@ void RenderTarget::Reset()
     m_Size = Vector2i::Zero();
     m_Projection = Matrix::Identity();
 
-    glDeleteFramebuffers(1, &m_Framebuffer);
+    m_Framebuffer.Delete();
     m_Texture.Delete();
 
     m_Initialized = false;
@@ -84,21 +79,17 @@ void RenderTarget::Reset(const Vector2i newSize, const Graphics::MagnificationFi
     Initialize(newSize, newFilter);
 }
 
-LightSource& RenderTarget::NewLightSource()
-{
-    m_LightSources.Emplace();
-    return Last(m_LightSources);
-}
+LightSource& RenderTarget::NewLightSource() { return m_LightSources.Emplace(); }
 
 void RenderTarget::DeleteLightSource(const LightSource& lightSource)
 {
     for (size_t i = 0; i < m_LightSources.GetSize(); ++i)
     {
-        if (&m_LightSources[i] == &lightSource)
-        {
-            m_LightSources.RemoveAt(i);
-            return;
-        }
+        if (&m_LightSources[i] != &lightSource)
+            continue;
+
+        m_LightSources.RemoveAt(i);
+        return;
     }
 }
 
@@ -110,8 +101,8 @@ void RenderTarget::SetDebugName(ATTRIBUTE_MAYBE_UNUSED const std::string_view na
 {
 #ifdef _DEBUG
     const std::string str{name.data(), name.length()};
+    m_Framebuffer.SetDebugName(str + " Framebuffer");
     m_Texture.SetDebugName(str + " Texture");
-    glObjectLabel(GL_FRAMEBUFFER, m_Framebuffer, 0, (str + " Framebuffer").c_str());
 #endif
 }
 
@@ -130,9 +121,9 @@ void RenderTarget::SetSize(const Vector2i newSize)
 
     m_Texture.SetData(Graphics::InternalFormat::RedGreenBlueAlpha32Float, newSize, Graphics::Format::RedGreenBlueAlpha, Graphics::DataType::UnsignedByte, nullptr);
 
-    glBindFramebuffer(GL_FRAMEBUFFER, m_Framebuffer);
+    BindFramebuffer(Graphics::FramebufferType::Framebuffer, m_Framebuffer);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_Texture.GetId(), 0);
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    BindFramebuffer(Graphics::FramebufferType::Framebuffer, 0);
 
     m_Size = newSize;
     m_Projection = ComputeProjection(newSize);
@@ -164,14 +155,14 @@ void RenderTarget::SetCameraMatrix(const Matrix& newCameraMatrix)
 
     // Find the scaling applied by the matrix
     const Vector2 a = m_CameraMatrix * -Vector2::One();
-    const Vector2 b = m_CameraMatrix * Vector2(1.f, -1.f);
+    const Vector2 b = m_CameraMatrix * Vector2{1.f, -1.f};
     const Vector2 c = m_CameraMatrix * Vector2::One();
     m_CameraScale = { (b - a).Length() * 0.5f, (c - b).Length() * 0.5f };
 
     // Update the Draw class fields only if this RenderTarget is the current one
     GLint framebuffer;
     glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING, &framebuffer);
-    if (std::cmp_equal(framebuffer, m_Framebuffer))
+    if (static_cast<uint32_t>(framebuffer) == m_Framebuffer.GetId())
         UpdateDrawCamera();
 }
 

@@ -1,11 +1,11 @@
 ﻿#include "Mountain/PrecompiledHeader.hpp"
 
-#include "Mountain/Rendering/ParticleSystemModules.hpp"
+#include "Mountain/Graphics/ParticleSystemModules.hpp"
 
 #include <ImGui/imgui.h>
 
-#include "Mountain/Rendering/Draw.hpp"
-#include "Mountain/Rendering/ParticleSystem.hpp"
+#include "Mountain/Graphics/Draw.hpp"
+#include "Mountain/Graphics/ParticleSystem.hpp"
 #include "Mountain/Utils/ImGuiUtils.hpp"
 
 using namespace Mountain::ParticleSystemModules;
