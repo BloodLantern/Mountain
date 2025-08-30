@@ -175,13 +175,13 @@ void Mosaic::LoadResources()
 
 void Mosaic::SetBoxSize(const int32_t newSize) const { m_ComputeShader->SetUniform("blockSize", newSize); }
 
-void Greyscale::LoadResources()
+void Grayscale::LoadResources()
 {
-    m_ComputeShader = ResourceManager::Get<ComputeShader>(Utils::GetBuiltinShadersPath() + "effects/greyscale.comp");
+    m_ComputeShader = ResourceManager::Get<ComputeShader>(Utils::GetBuiltinShadersPath() + "effects/grayscale.comp");
     SetIntensity(1.f);
 }
 
-void Greyscale::SetIntensity(const float_t newIntensity) const { m_ComputeShader->SetUniform("intensity", newIntensity); }
+void Grayscale::SetIntensity(const float_t newIntensity) const { m_ComputeShader->SetUniform("intensity", newIntensity); }
 
 void Negative::LoadResources()
 {

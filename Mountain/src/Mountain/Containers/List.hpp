@@ -334,12 +334,15 @@ namespace Mountain
     template <Concepts::DynamicContainerType T>
     List<T>::List(std::initializer_list<T> initializer) noexcept
     {
-        Reserve(initializer.size());
+        const size_t size = initializer.size();
 
-        for (int i = 0; i < initializer.size(); i++)
-            m_Data[i] = initializer.begin()[i];
+        Reserve(size);
 
-        m_Size = initializer.size();
+        const T* first = initializer.begin();
+        for (size_t i = 0; i < size; i++)
+            new (m_Data + i) T{first[i]};
+
+        m_Size = size;
     }
 
     template <Concepts::DynamicContainerType T>
@@ -360,7 +363,7 @@ namespace Mountain
         Reserve(initialSize);
         m_Size = initialSize;
         for (size_t i = 0; i < initialSize; i++)
-            m_Data[i] = values[i];
+            new (m_Data + i) T{values[i]};
     }
 
     template <Concepts::DynamicContainerType T>
@@ -384,7 +387,7 @@ namespace Mountain
         for (InputIterator it = first; it != last; it++)
         {
             const size_t index = it - first;
-            m_Data[index] = *it;
+            new (m_Data + index) T{*it};
         }
     }
 

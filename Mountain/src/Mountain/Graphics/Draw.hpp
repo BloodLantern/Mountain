@@ -17,17 +17,20 @@
 
 namespace Mountain
 {
-    enum class DrawTextureFlipping : uint8_t
+    enum class DrawSortMode : uint8_t
     {
-        None = 0,
-
-        Horizontal      = 1 << 0,
-        Vertical        = 1 << 1,
-        Diagonal        = 1 << 2,
-        AntiDiagonal    = 1 << 3
+        /// @brief Everything is drawn when @c Draw::Flush() is called (or @c Renderer::PushRenderTarget() / @c Renderer::PopRenderTarget()),
+        /// in order of the draw call sequence. Depth is ignored.
+        Deferred,
+        /// @brief Everything is drawn at individual draw call, instead of @c Draw::Flush(). Depth is ignored.
+        Immediate,
+        /// @brief Same as @c Deferred, except everything is sorted by depth in back-to-front order before drawing.
+        BackToFront,
+        /// @brief Same as @c Deferred, except everything is sorted by depth in front-to-back order before drawing.
+        FrontToBack
     };
 
-    /// @brief The Draw class contains static functions to draw various things on screen.
+    /// @brief The Draw class contains static functions to draw various things on the screen.
     class Draw
     {
         STATIC_CLASS(Draw)
@@ -37,19 +40,28 @@ namespace Mountain
         /// @param color The new color of all the pixels
         MOUNTAIN_API static void Clear(const Color& color);
 
-        MOUNTAIN_API static void Point(Vector2 position, const Color& color = Color::White());
+        /// @brief Draw a point (pixel)
+        /// @param position The position of the point
+        /// @param color The color of the point
+        /// @param depth The depth (only used if the sort mode is @c DrawSortMode::BackToFront or @c DrawSortMode::FrontToBack).
+        /// A higher depth means further in the back.
+        MOUNTAIN_API static void Point(Vector2 position, const Color& color = Color::White(), float_t depth = 0.f);
 
         /// @brief Draw a line
         /// @param point1 The first point of the line
         /// @param point2 The second point of the line
         /// @param color The color of the line
-        MOUNTAIN_API static void Line(Vector2 point1, Vector2 point2, const Color& color = Color::White());
+        /// @param depth The depth (only used if the sort mode is @c DrawSortMode::BackToFront or @c DrawSortMode::FrontToBack).
+        /// A higher depth means further in the back.
+        MOUNTAIN_API static void Line(Vector2 point1, Vector2 point2, const Color& color = Color::White(), float_t depth = 0.f);
         /// @brief Draw a line
         /// @param point1 The first point of the line
         /// @param point2 The second point of the line
         /// @param color1 The color of the first point
         /// @param color2 The color of the second point
-        MOUNTAIN_API static void Line(Vector2 point1, Vector2 point2, const Color& color1, const Color& color2);
+        /// @param depth The depth (only used if the sort mode is @c DrawSortMode::BackToFront or @c DrawSortMode::FrontToBack).
+        /// A higher depth means further in the back.
+        MOUNTAIN_API static void Line(Vector2 point1, Vector2 point2, const Color& color1, const Color& color2, float_t depth = 0.f);
 
         // TODO - Add a convenience Line function with a thickness parameter that draws a rectangle
 
@@ -58,7 +70,15 @@ namespace Mountain
         /// @param point2 The second point
         /// @param point3 The third point
         /// @param color The color of the triangle
-        MOUNTAIN_API static void Triangle(Vector2 point1, Vector2 point2, Vector2 point3, const Color& color = Color::White());
+        /// @param depth The depth (only used if the sort mode is @c DrawSortMode::BackToFront or @c DrawSortMode::FrontToBack).
+        /// A higher depth means further in the back.
+        MOUNTAIN_API static void Triangle(
+            Vector2 point1,
+            Vector2 point2,
+            Vector2 point3,
+            const Color& color = Color::White(),
+            float_t depth = 0.f
+        );
         /// @brief Draw a hollow triangle
         /// @param point1 The first point
         /// @param point2 The second point
@@ -66,13 +86,31 @@ namespace Mountain
         /// @param color1 The color of the first point
         /// @param color2 The color of the second point
         /// @param color3 The color of the third point
-        MOUNTAIN_API static void Triangle(Vector2 point1, Vector2 point2, Vector2 point3, const Color& color1, const Color& color2, const Color& color3);
+        /// @param depth The depth (only used if the sort mode is @c DrawSortMode::BackToFront or @c DrawSortMode::FrontToBack).
+        /// A higher depth means further in the back.
+        MOUNTAIN_API static void Triangle(
+            Vector2 point1,
+            Vector2 point2,
+            Vector2 point3,
+            const Color& color1,
+            const Color& color2,
+            const Color& color3,
+            float_t depth = 0.f
+        );
         /// @brief Draw a filled triangle
         /// @param point1 The first point
         /// @param point2 The second point
         /// @param point3 The third point
         /// @param color The color of the triangle
-        MOUNTAIN_API static void TriangleFilled(Vector2 point1, Vector2 point2, Vector2 point3, const Color& color = Color::White());
+        /// @param depth The depth (only used if the sort mode is @c DrawSortMode::BackToFront or @c DrawSortMode::FrontToBack).
+        /// A higher depth means further in the back.
+        MOUNTAIN_API static void TriangleFilled(
+            Vector2 point1,
+            Vector2 point2,
+            Vector2 point3,
+            const Color& color = Color::White(),
+            float_t depth = 0.f
+        );
         /// @brief Draw a filled triangle
         /// @param point1 The first point
         /// @param point2 The second point
@@ -80,7 +118,17 @@ namespace Mountain
         /// @param color1 The color of the first point
         /// @param color2 The color of the second point
         /// @param color3 The color of the third point
-        MOUNTAIN_API static void TriangleFilled(Vector2 point1, Vector2 point2, Vector2 point3, const Color& color1, const Color& color2, const Color& color3);
+        /// @param depth The depth (only used if the sort mode is @c DrawSortMode::BackToFront or @c DrawSortMode::FrontToBack).
+        /// A higher depth means further in the back.
+        MOUNTAIN_API static void TriangleFilled(
+            Vector2 point1,
+            Vector2 point2,
+            Vector2 point3,
+            const Color& color1,
+            const Color& color2,
+            const Color& color3,
+            float_t depth = 0.f
+        );
 
         /// @brief Draw a hollow rectangle
         /// @param position The top-left position of the rectangle
@@ -88,26 +136,64 @@ namespace Mountain
         /// @param rotation The rotation in radians to apply to the rectangle
         /// @param origin The rotation origin. Value in the range @code [{ 0, 0 }, { 1, 1 }] @endcode
         /// @param color The color of the rectangle
-        MOUNTAIN_API static void Rectangle(Vector2 position, Vector2 size, float_t rotation = 0.f, Vector2 origin = Vector2::Zero(), const Color& color = Color::White());
+        /// @param depth The depth (only used if the sort mode is @c DrawSortMode::BackToFront or @c DrawSortMode::FrontToBack).
+        /// A higher depth means further in the back.
+        /// @throws ArgumentOutOfRangeException If @p origin is outside the range @code [{0, 0}, {1, 1}]@endcode.
+        MOUNTAIN_API static void Rectangle(
+            Vector2 position,
+            Vector2 size,
+            float_t rotation = 0.f,
+            Vector2 origin = Vector2::Zero(),
+            const Color& color = Color::White(),
+            float_t depth = 0.f
+        );
         /// @brief Draw a hollow rectangle
         /// @param rectangle The rectangle position and size
         /// @param rotation The rotation in radians to apply to the rectangle
-        /// @param origin The rotation origin. Value in the range @code [{ 0, 0 }, { 1, 1 }] @endcode
+        /// @param origin The rotation origin. Value in the range @code [{ 0, 0 }, { 1, 1 }]@endcode
         /// @param color The color of the rectangle
-        MOUNTAIN_API static void Rectangle(const Mountain::Rectangle& rectangle, float_t rotation = 0.f, Vector2 origin = Vector2::Zero(), const Color& color = Color::White());
+        /// @param depth The depth (only used if the sort mode is @c DrawSortMode::BackToFront or @c DrawSortMode::FrontToBack).
+        /// A higher depth means further in the back.
+        /// @throws ArgumentOutOfRangeException If @p origin is outside the range @code [{0, 0}, {1, 1}]@endcode.
+        MOUNTAIN_API static void Rectangle(
+            const Mountain::Rectangle& rectangle,
+            float_t rotation = 0.f,
+            Vector2 origin = Vector2::Zero(),
+            const Color& color = Color::White(),
+            float_t depth = 0.f
+        );
         /// @brief Draw a filled rectangle
         /// @param position The top-left position of the rectangle
         /// @param size The size of the rectangle
         /// @param rotation The rotation in radians to apply to the rectangle
         /// @param origin The rotation origin. Value in the range @code [{ 0, 0 }, { 1, 1 }] @endcode
         /// @param color The color of the rectangle
-        MOUNTAIN_API static void RectangleFilled(Vector2 position, Vector2 size, float_t rotation = 0.f, Vector2 origin = Vector2::Zero(), const Color& color = Color::White());
+        /// @param depth The depth (only used if the sort mode is @c DrawSortMode::BackToFront or @c DrawSortMode::FrontToBack).
+        /// A higher depth means further in the back.
+        /// @throws ArgumentOutOfRangeException If @p origin is outside the range @code [{0, 0}, {1, 1}]@endcode.
+        MOUNTAIN_API static void RectangleFilled(
+            Vector2 position,
+            Vector2 size,
+            float_t rotation = 0.f,
+            Vector2 origin = Vector2::Zero(),
+            const Color& color = Color::White(),
+            float_t depth = 0.f
+        );
         /// @brief Draw a filled rectangle
         /// @param rectangle The rectangle position and size
         /// @param rotation The rotation in radians to apply to the rectangle
         /// @param origin The rotation origin. Value in the range @code [{ 0, 0 }, { 1, 1 }] @endcode
         /// @param color The color of the rectangle
-        MOUNTAIN_API static void RectangleFilled(const Mountain::Rectangle& rectangle, float_t rotation = 0.f, Vector2 origin = Vector2::Zero(), const Color& color = Color::White());
+        /// @param depth The depth (only used if the sort mode is @c DrawSortMode::BackToFront or @c DrawSortMode::FrontToBack).
+        /// A higher depth means further in the back.
+        /// @throws ArgumentOutOfRangeException If @p origin is outside the range @code [{0, 0}, {1, 1}]@endcode.
+        MOUNTAIN_API static void RectangleFilled(
+            const Mountain::Rectangle& rectangle,
+            float_t rotation = 0.f,
+            Vector2 origin = Vector2::Zero(),
+            const Color& color = Color::White(),
+            float_t depth = 0.f
+        );
 
         /// @brief Draw a hollow circle
         /// @param center The center position of the circle
@@ -115,14 +201,33 @@ namespace Mountain
         /// @param thickness The thickness of the circle
         /// @param scale The scale of the circle
         /// @param color The color of the circle
-        MOUNTAIN_API static void Circle(Vector2 center, float_t radius, float_t thickness = 1.f, Vector2 scale = Vector2::One(), const Color& color = Color::White());
+        /// @param depth The depth (only used if the sort mode is @c DrawSortMode::BackToFront or @c DrawSortMode::FrontToBack).
+        /// A higher depth means further in the back.
+        /// @throws ArgumentOutOfRangeException If @p thickness is less than @c 1.f.
+        MOUNTAIN_API static void Circle(
+            Vector2 center,
+            float_t radius,
+            float_t thickness = 1.f,
+            Vector2 scale = Vector2::One(),
+            const Color& color = Color::White(),
+            float_t depth = 0.f
+        );
 
         /// @brief Draw a filled circle
         /// @param center The center position of the circle
         /// @param radius The radius of the circle
         /// @param scale The scale of the circle
         /// @param color The color of the circle
-        MOUNTAIN_API static void CircleFilled(Vector2 center, float_t radius, Vector2 scale = Vector2::One(), const Color& color = Color::White());
+        /// @param depth The depth (only used if the sort mode is @c DrawSortMode::BackToFront or @c DrawSortMode::FrontToBack).
+        /// A higher depth means further in the back.
+        /// @throws ArgumentOutOfRangeException If @p thickness is less than @c 1.f.
+        MOUNTAIN_API static void CircleFilled(
+            Vector2 center,
+            float_t radius,
+            Vector2 scale = Vector2::One(),
+            const Color& color = Color::White(),
+            float_t depth = 0.f
+        );
 
         /// @brief Draw a hollow arc
         /// @param center The center position of the arc
@@ -132,7 +237,19 @@ namespace Mountain
         /// @param thickness The thickness of the circle
         /// @param scale The scale of the arc
         /// @param color The color of the arc
-        MOUNTAIN_API static void Arc(Vector2 center, float_t radius, float_t startingAngle, float_t deltaAngle, float_t thickness = 1.f, Vector2 scale = Vector2::One(), const Color& color = Color::White());
+        /// @param depth The depth (only used if the sort mode is @c DrawSortMode::BackToFront or @c DrawSortMode::FrontToBack).
+        /// A higher depth means further in the back.
+        /// @throws ArgumentOutOfRangeException If @p thickness is less than @c 1.f.
+        MOUNTAIN_API static void Arc(
+            Vector2 center,
+            float_t radius,
+            float_t startingAngle,
+            float_t deltaAngle,
+            float_t thickness = 1.f,
+            Vector2 scale = Vector2::One(),
+            const Color& color = Color::White(),
+            float_t depth = 0.f
+        );
 
         /// @brief Draw a filled arc
         /// @param center The center position of the arc
@@ -141,7 +258,18 @@ namespace Mountain
         /// @param deltaAngle The delta angle of the arc, e.g. the ending angle is @code startingAngle + deltaAngle@endcode
         /// @param scale The scale of the arc
         /// @param color The color of the arc
-        MOUNTAIN_API static void ArcFilled(Vector2 center, float_t radius, float_t startingAngle, float_t deltaAngle, Vector2 scale = Vector2::One(), const Color& color = Color::White());
+        /// @param depth The depth (only used if the sort mode is @c DrawSortMode::BackToFront or @c DrawSortMode::FrontToBack).
+        /// A higher depth means further in the back.
+        /// @throws ArgumentOutOfRangeException If @p thickness is less than @c 1.f.
+        MOUNTAIN_API static void ArcFilled(
+            Vector2 center,
+            float_t radius,
+            float_t startingAngle,
+            float_t deltaAngle,
+            Vector2 scale = Vector2::One(),
+            const Color& color = Color::White(),
+            float_t depth = 0.f
+        );
 
         /// @brief Draw a texture
         /// @param texture The texture to draw
@@ -152,8 +280,9 @@ namespace Mountain
         /// @param uv0 The first texture UV position
         /// @param uv1 The second texture UV position
         /// @param color The tint color of the texture. Use white for default colors
-        /// @param flipFlags Flip flags from the @c DrawTextureFlipping enum
-        /// @throws ArgumentException If @p uv0 is greater than @p uv1
+        /// @param depth The depth (only used if the sort mode is @c DrawSortMode::BackToFront or @c DrawSortMode::FrontToBack).
+        /// A higher depth means further in the back.
+        /// @throws ArgumentOutOfRangeException If @p origin is outside the range @code [{0, 0}, {1, 1}]@endcode.
         MOUNTAIN_API static void Texture(
             const Texture& texture,
             Vector2 position,
@@ -163,7 +292,7 @@ namespace Mountain
             Vector2 uv0 = Vector2::Zero(),
             Vector2 uv1 = Vector2::One(),
             const Color& color = Color::White(),
-            DrawTextureFlipping flipFlags = DrawTextureFlipping::None
+            float_t depth = 0.f
         );
 
         /// @brief Draw text
@@ -172,33 +301,51 @@ namespace Mountain
         /// @param position The top-left position of the text
         /// @param scale The scale to apply to the text
         /// @param color The color of the text
-        MOUNTAIN_API static void Text(const Font& font, const std::string& text, Vector2 position, float_t scale = 1.f, const Color& color = Color::White());
+        /// @param depth The depth (only used if the sort mode is @c DrawSortMode::BackToFront or @c DrawSortMode::FrontToBack).
+        /// A higher depth means further in the back.
+        MOUNTAIN_API static void Text(
+            const Font& font,
+            const std::string& text,
+            Vector2 position,
+            float_t scale = 1.f,
+            const Color& color = Color::White(),
+            float_t depth = 0.f
+        );
 
         /// @brief Draw a RenderTarget
         /// @param renderTarget The RenderTarget to draw
         /// @param position The top-left position of the RenderTarget
         /// @param scale The scale to apply to the RenderTarget
         /// @param rotation The rotation in radians to apply to the RenderTarget
+        /// @param origin The rotation origin. Value in the range @code [{ 0, 0 }, { 1, 1 }] @endcode
         /// @param uv0 The first texture UV position
         /// @param uv1 The second texture UV position
         /// @param color The color of the RenderTarget
-        /// @param flipFlags Flip flags from the @c DrawTextureFlipping enum
-        /// @throws ArgumentException If @p uv0 is greater than @p uv1
+        /// @param depth The depth (only used if the sort mode is @c DrawSortMode::BackToFront or @c DrawSortMode::FrontToBack).
+        /// A higher depth means further in the back.
+        /// @throws ArgumentOutOfRangeException If @p origin is outside the range @code [{0, 0}, {1, 1}]@endcode.
         MOUNTAIN_API static void RenderTarget(
             const RenderTarget& renderTarget,
             Vector2 position = Vector2::Zero(),
             Vector2 scale = Vector2::One(),
             float_t rotation = 0,
+            Vector2 origin = Vector2::Zero(),
             Vector2 uv0 = Vector2::Zero(),
             Vector2 uv1 = Vector2::One(),
             const Color& color = Color::White(),
-            DrawTextureFlipping flipFlags = DrawTextureFlipping::None
+            float_t depth = 0.f
         );
 
         /// @brief Flushes the cached draw data onto the current RenderTarget
-        ///
-        /// This effectively renders everything that was scheduled since the last RenderTarget push/pop or @c Flush()
+        /// @details This effectively renders everything scheduled since the last @c Flush().
+        /// This does nothing if the current sort mode is @c DrawSortMode::Immediate.
+        /// @remark This is also called during @c Renderer::PushRenderTarget() and @c Renderer::PopRenderTarget().
         MOUNTAIN_API static void Flush();
+
+        GETTER(DrawSortMode, SortMode, m_SortMode)
+
+        /// @brief Sets the new sort mode, calling @c Flush() beforehand.
+        MOUNTAIN_API static void SetSortMode(DrawSortMode newSortMode);
 
     private:
         struct PointData
@@ -327,10 +474,12 @@ namespace Mountain
             List<TextData> text;
             List<RenderTargetData> renderTarget;
 
+            List<float_t> depths;
             List<CommandData> commands;
 
-            void AddCommand(DrawDataType type);
+            void AddCommand(DrawDataType type, float_t depth);
             void Clear();
+            void Sort(DrawSortMode sortMode);
         };
 
         static inline Pointer<Shader> m_PointShader, m_LineShader, m_LineColoredShader, m_TriangleShader, m_TriangleColoredShader,
@@ -346,6 +495,8 @@ namespace Mountain
         static inline Vector2 m_CameraScale = Vector2::One();
 
         static inline DrawList m_DrawList;
+
+        static inline DrawSortMode m_SortMode = DrawSortMode::Deferred;
 
         static void Initialize();
         static void LoadResources();
@@ -368,8 +519,22 @@ namespace Mountain
         static void SetCamera(const Matrix& newCameraMatrix, Vector2 newCameraScale, bool_t updateUniforms);
         static void UpdateShaderMatrices();
 
-        static void CircleInternal(Vector2 center, float_t radius, float_t thickness, bool_t filled, Vector2 scale, const Color& color);
-        static void ArcInternal(Vector2 center, float_t radius, float_t startingAngle, float_t deltaAngle, float_t thickness, bool_t filled, Vector2 scale, const Color& color);
+        static void RectangleInternal(const Mountain::Rectangle& rectangle, float_t rotation, Vector2 origin, bool_t filled, const Color& color, float_t depth);
+        static void CircleInternal(Vector2 center, float_t radius, float_t thickness, bool_t filled, Vector2 scale, const Color& color, float_t depth);
+        static void ArcInternal(Vector2 center, float_t radius, float_t startingAngle, float_t deltaAngle, float_t thickness, bool_t filled, Vector2 scale, const Color& color, float_t
+                                depth);
+
+        static void RenderPointData(const PointData& point);
+        static void RenderLineData(const LineData& line);
+        static void RenderLineColoredData(const LineColoredData& lineColored);
+        static void RenderTriangleData(const TriangleData& triangle, bool_t filled);
+        static void RenderTriangleColoredData(const TriangleColoredData& triangleColored, bool_t filled);
+        static void RenderRectangleData(const RectangleData& rectangle, bool_t filled);
+        static void RenderCircleData(const CircleData& circle);
+        static void RenderArcData(const ArcData& arc);
+        static void RenderTextureData(const TextureData& texture, uint32_t textureId);
+        static void RenderTextData(const TextData& text);
+        static void RenderRenderTargetData(const RenderTargetData& renderTarget);
 
         static void RenderPointData(const List<PointData>& points, size_t index, size_t count);
         static void RenderLineData(const List<LineData>& lines, size_t index, size_t count);
@@ -388,5 +553,3 @@ namespace Mountain
         friend class ParticleSystem;
     };
 }
-
-ENUM_FLAGS(Mountain::DrawTextureFlipping)

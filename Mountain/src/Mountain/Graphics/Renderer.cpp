@@ -270,6 +270,7 @@ void Mountain::Renderer::PreFrame()
         m_RenderTarget->SetSize(windowSize);
 
     PushRenderTarget(*m_RenderTarget);
+    Draw::SetSortMode(DrawSortMode::Deferred);
 }
 
 void Mountain::Renderer::PostFrame()
@@ -281,7 +282,7 @@ void Mountain::Renderer::PostFrame()
     PopRenderTarget();
 
     if (!m_RenderTargets.empty())
-        THROW(InvalidOperationException{"RenderTarget push/pop mismatch, e.g. a RenderTarget that was pushed hasn't been popped"});
+        THROW(InvalidOperationException{"RenderTarget push/pop mismatch, e.g., a RenderTarget that was pushed hasn't been popped"});
 
     Draw::RenderTarget(*m_RenderTarget);
 

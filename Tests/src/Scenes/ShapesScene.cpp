@@ -17,6 +17,8 @@ void ShapesScene::Render()
 {
     TestScene::Render();
 
+    Draw::SetSortMode(DrawSortMode::Immediate);
+
     size_t index = 0;
 
     const Vector2 drawSize = GetDrawSize();
@@ -153,7 +155,7 @@ void ShapesScene::RenderImGui()
     ImGui::ColorEdit4("Color 2", m_Color2.Data());
     ImGui::ColorEdit4("Color 3", m_Color3.Data());
 
-    ImGui::DragFloat("Thickness", &m_Thickness, 0.1f, 0.f, std::numeric_limits<float_t>::max());
+    ImGui::DragFloat("Thickness", &m_Thickness, 0.1f, 1.f, std::numeric_limits<float_t>::max());
     ImGui::DragFloat2("Scale", m_Scale.Data(), 0.01f);
 
     ImGui::DragAngle("Arc starting angle", &m_ArcStartingAngle);

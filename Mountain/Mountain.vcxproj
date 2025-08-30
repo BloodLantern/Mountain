@@ -219,6 +219,7 @@
     <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_11774202807359543870.hpp" />
     <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_11952871429675989627.hpp" />
     <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_12442680368039291515.hpp" />
+    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_1291378986966553985.hpp" />
     <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_13070826838953012323.hpp" />
     <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_13177006652388307822.hpp" />
     <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_14338357782030755284.hpp" />
@@ -249,7 +250,6 @@
     <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_6733528840531529029.hpp" />
     <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_6826460111274356971.hpp" />
     <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_6975910120903775418.hpp" />
-    <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_7200289603779701061.hpp" />
     <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_7369051294668265954.hpp" />
     <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_7556603881106790027.hpp" />
     <ClInclude Include="src\Mountain\BinaryResources\embedded_resources\resource_7736256087137476443.hpp" />
@@ -450,7 +450,7 @@
     <Content Include="shaders_internal\effects\gaussian_blur_horizontal.comp" />
     <Content Include="shaders_internal\effects\gaussian_blur_vertical.comp" />
     <Content Include="shaders_internal\effects\mosaic.comp" />
-    <Content Include="shaders_internal\effects\greyscale.comp" />
+    <Content Include="shaders_internal\effects\grayscale.comp" />
     <Content Include="shaders_internal\effects\negative.comp" />
     <Content Include="shaders_internal\line_colored\line_colored.frag" />
     <Content Include="shaders_internal\line_colored\line_colored.vert" />

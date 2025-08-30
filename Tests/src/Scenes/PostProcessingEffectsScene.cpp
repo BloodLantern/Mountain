@@ -8,7 +8,7 @@
 #include <Mountain/Utils/ImGuiUtils.hpp>
 
 PostProcessingEffectsScene::PostProcessingEffectsScene()
-    : Base{"Post Processing Effects"}
+    : Base{"Post-Processing Effects"}
 {
 }
 

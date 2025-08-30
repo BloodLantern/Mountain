@@ -539,6 +539,15 @@ namespace Mountain::Graphics
         UniformBuffer
     };
 
+    /// @brief Defines the intended usage of a buffer.
+    /// @details The frequency of access may be one of these:
+    /// - @c Stream: The data store contents will be modified once and used at most a few times.
+    /// - @c Static: The data store contents will be modified once and used many times.
+    /// - @c Dynamic: The data store contents will be modified repeatedly and used many times.
+    /// @details The nature of access may be one of these:
+    /// - @c Draw: The data store contents are modified by the application, and used as the source for GL drawing and image specification commands.
+    /// - @c Read: The data store contents are modified by reading data from the GL, and used to return that data when queried by the application.
+    /// - @c Copy: The data store contents are modified by reading data from the GL, and used as the source for GL drawing and image specification commands.
     enum class BufferUsage : uint8_t
     {
         StreamDraw,

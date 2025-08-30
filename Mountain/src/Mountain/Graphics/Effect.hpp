@@ -123,7 +123,7 @@ namespace Mountain
         MOUNTAIN_API void SetBoxSize(int32_t newSize) const;
     };
 
-    class Greyscale : public Effect
+    class Grayscale : public Effect
     {
     public:
         MOUNTAIN_API void LoadResources() override;

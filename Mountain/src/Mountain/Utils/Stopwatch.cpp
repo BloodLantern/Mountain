@@ -122,8 +122,7 @@ int64_t Stopwatch::GetRawElapsedTicks() const
 
     if (m_IsRunning)
     {
-        const int64_t currentTimestamp = GetTimestamp();
-        const int64_t elapsedUntilNow = currentTimestamp - m_StartTimestamp;
+        const int64_t elapsedUntilNow = GetTimestamp() - m_StartTimestamp;
         timeElapsed += elapsedUntilNow;
     }
 

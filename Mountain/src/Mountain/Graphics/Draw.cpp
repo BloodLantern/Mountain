@@ -2,10 +2,42 @@
 
 #include "Mountain/Graphics/Draw.hpp"
 
+#include <variant>
+
 #include "Mountain/Containers/EnumerableExt.hpp"
 #include "Mountain/Resource/Font.hpp"
 #include "Mountain/Resource/ResourceManager.hpp"
 #include "Mountain/Resource/Shader.hpp"
+
+#define SCHEDULE_RENDER_DATA(drawData, depth, immediateRenderFunction, drawDataList, commandType) \
+    do \
+    { \
+        if (m_SortMode == DrawSortMode::Immediate) \
+        { \
+            immediateRenderFunction(drawData); \
+        } \
+        else \
+        { \
+            m_DrawList.drawDataList.Add(drawData); \
+            m_DrawList.AddCommand(commandType, depth); \
+        } \
+    } \
+    while (false)
+
+#define SCHEDULE_RENDER_DATA_FILLED(drawData, filled, depth, immediateRenderFunction, drawDataList, commandType) \
+    do \
+    { \
+        if (m_SortMode == DrawSortMode::Immediate) \
+        { \
+            immediateRenderFunction(drawData, filled); \
+        } \
+        else \
+        { \
+            m_DrawList.drawDataList.Add(drawData); \
+            m_DrawList.AddCommand(commandType, depth); \
+        } \
+    } \
+    while (false)
 
 using namespace Mountain;
 
@@ -15,28 +47,46 @@ void Draw::Clear(const Color& color)
     Graphics::Clear(Graphics::ClearFlags::ColorBuffer);
 }
 
-void Draw::Point(Vector2 position, const Color& color)
+#pragma region Shapes
+void Draw::Point(const Vector2 position, const Color& color, const float_t depth)
 {
-    m_DrawList.point.Emplace(position, color);
-    m_DrawList.AddCommand(DrawDataType::Point);
+    const PointData data{
+        .position = position,
+        .color = color
+    };
+    SCHEDULE_RENDER_DATA(data, depth, RenderPointData, point, DrawDataType::Point);
 }
 
-void Draw::Line(const Vector2 point1, const Vector2 point2, const Color& color)
+void Draw::Line(const Vector2 point1, const Vector2 point2, const Color& color, const float_t depth)
 {
-    m_DrawList.line.Emplace(point1, point2, color);
-    m_DrawList.AddCommand(DrawDataType::Line);
+    const LineData data{
+        .p1 = point1,
+        .p2 = point2,
+        .color = color
+    };
+    SCHEDULE_RENDER_DATA(data, depth, RenderLineData, line, DrawDataType::Line);
 }
 
-void Draw::Line(const Vector2 point1, const Vector2 point2, const Color& color1, const Color& color2)
+void Draw::Line(const Vector2 point1, const Vector2 point2, const Color& color1, const Color& color2, const float_t depth)
 {
-    m_DrawList.lineColored.Emplace(point1, point2, color1, color2);
-    m_DrawList.AddCommand(DrawDataType::LineColored);
+    const LineColoredData data{
+        .p1 = point1,
+        .p2 = point2,
+        .c1 = color1,
+        .c2 = color2
+    };
+    SCHEDULE_RENDER_DATA(data, depth, RenderLineColoredData, lineColored, DrawDataType::LineColored);
 }
 
-void Draw::Triangle(const Vector2 point1, const Vector2 point2, const Vector2 point3, const Color& color)
+void Draw::Triangle(const Vector2 point1, const Vector2 point2, const Vector2 point3, const Color& color, const float_t depth)
 {
-    m_DrawList.triangle.Emplace(point1, point2, point3, color);
-    m_DrawList.AddCommand(DrawDataType::Triangle);
+    const TriangleData data{
+        .p1 = point1,
+        .p2 = point2,
+        .p3 = point3,
+        .color = color
+    };
+    SCHEDULE_RENDER_DATA_FILLED(data, false, depth, RenderTriangleData, triangle, DrawDataType::Triangle);
 }
 
 void Draw::Triangle(
@@ -45,17 +95,30 @@ void Draw::Triangle(
     const Vector2 point3,
     const Color& color1,
     const Color& color2,
-    const Color& color3
+    const Color& color3,
+    const float_t depth
 )
 {
-    m_DrawList.triangleColored.Emplace(point1, point2, point3, color1, color2, color3);
-    m_DrawList.AddCommand(DrawDataType::TriangleColored);
+    const TriangleColoredData data{
+        .p1 = point1,
+        .p2 = point2,
+        .p3 = point3,
+        .c1 = color1,
+        .c2 = color2,
+        .c3 = color3
+    };
+    SCHEDULE_RENDER_DATA_FILLED(data, false, depth, RenderTriangleColoredData, triangleColored, DrawDataType::TriangleColored);
 }
 
-void Draw::TriangleFilled(const Vector2 point1, const Vector2 point2, const Vector2 point3, const Color& color)
+void Draw::TriangleFilled(const Vector2 point1, const Vector2 point2, const Vector2 point3, const Color& color, const float_t depth)
 {
-    m_DrawList.triangleFilled.Emplace(point1, point2, point3, color);
-    m_DrawList.AddCommand(DrawDataType::TriangleFilled);
+    const TriangleData data{
+        .p1 = point1,
+        .p2 = point2,
+        .p3 = point3,
+        .color = color
+    };
+    SCHEDULE_RENDER_DATA_FILLED(data, true, depth, RenderTriangleData, triangle, DrawDataType::Triangle);
 }
 
 void Draw::TriangleFilled(
@@ -64,52 +127,65 @@ void Draw::TriangleFilled(
     const Vector2 point3,
     const Color& color1,
     const Color& color2,
-    const Color& color3
+    const Color& color3,
+    const float_t depth
 )
 {
-    m_DrawList.triangleColoredFilled.Emplace(point1, point2, point3, color1, color2, color3);
-    m_DrawList.AddCommand(DrawDataType::TriangleColoredFilled);
+    const TriangleColoredData data{
+        .p1 = point1,
+        .p2 = point2,
+        .p3 = point3,
+        .c1 = color1,
+        .c2 = color2,
+        .c3 = color3
+    };
+    SCHEDULE_RENDER_DATA_FILLED(data, true, depth, RenderTriangleColoredData, triangleColored, DrawDataType::TriangleColored);
 }
 
-void Draw::Rectangle(const Vector2 position, const Vector2 size, const float_t rotation, const Vector2 origin, const Color& color)
+void Draw::Rectangle(
+    const Vector2 position,
+    const Vector2 size,
+    const float_t rotation,
+    const Vector2 origin,
+    const Color& color,
+    const float_t depth
+)
 {
-    Rectangle({ position, size }, rotation, origin, color);
+    Rectangle({ position, size }, rotation, origin, color, depth);
 }
 
-void Draw::Rectangle(const Mountain::Rectangle& rectangle, const float_t rotation, const Vector2 origin, const Color& color)
+void Draw::Rectangle(
+    const Mountain::Rectangle& rectangle,
+    const float_t rotation,
+    const Vector2 origin,
+    const Color& color,
+    const float_t depth
+)
 {
-    if (origin.x < 0.f || origin.x > 1.f || origin.y < 0.f || origin.y > 1.f)
-        THROW(ArgumentOutOfRangeException{"Origin must be in the range [{ 0, 0 }, { 1, 1 }]", "origin"});
-
-    m_DrawList.rectangle.Emplace(
-        Matrix::Translation(static_cast<Vector3>(rectangle.position))
-        * Matrix::RotationZ(rotation)
-        * Matrix::Translation(static_cast<Vector3>(-rectangle.size * origin))
-        * Matrix::Scaling({ rectangle.size.x, rectangle.size.y, 1.f }),
-        color
-    );
-    m_DrawList.AddCommand(DrawDataType::Rectangle);
+    RectangleInternal(rectangle, rotation, origin, false, color, depth);
 }
 
-void Draw::RectangleFilled(const Vector2 position, const Vector2 size, const float_t rotation, const Vector2 origin, const Color& color)
+void Draw::RectangleFilled(
+    const Vector2 position,
+    const Vector2 size,
+    const float_t rotation,
+    const Vector2 origin,
+    const Color& color,
+    const float_t depth
+)
 {
-    RectangleFilled({ position, size }, rotation, origin, color);
+    RectangleFilled({ position, size }, rotation, origin, color, depth);
 }
 
-void Draw::RectangleFilled(const Mountain::Rectangle& rectangle, const float_t rotation, const Vector2 origin, const Color& color)
+void Draw::RectangleFilled(
+    const Mountain::Rectangle& rectangle,
+    const float_t rotation,
+    const Vector2 origin,
+    const Color& color,
+    const float_t depth
+)
 {
-
-    if (origin.x < 0.f || origin.x > 1.f || origin.y < 0.f || origin.y > 1.f)
-        THROW(ArgumentOutOfRangeException{"Origin must be in the range [{ 0, 0 }, { 1, 1 }]", "origin"});
-
-    m_DrawList.rectangleFilled.Emplace(
-        Matrix::Translation(static_cast<Vector3>(rectangle.position))
-        * Matrix::RotationZ(rotation)
-        * Matrix::Translation(static_cast<Vector3>(-rectangle.size * origin))
-        * Matrix::Scaling({ rectangle.size.x, rectangle.size.y, 1.f }),
-        color
-    );
-    m_DrawList.AddCommand(DrawDataType::RectangleFilled);
+    RectangleInternal(rectangle, rotation, origin, true, color, depth);
 }
 
 void Draw::Circle(
@@ -117,20 +193,22 @@ void Draw::Circle(
     const float_t radius,
     const float_t thickness,
     const Vector2 scale,
-    const Color& color
+    const Color& color,
+    const float_t depth
 )
 {
-    CircleInternal(center, radius, thickness, false, scale, color);
+    CircleInternal(center, radius, thickness, false, scale, color, depth);
 }
 
 void Draw::CircleFilled(
     const Vector2 center,
     const float_t radius,
     const Vector2 scale,
-    const Color& color
+    const Color& color,
+    const float_t depth
 )
 {
-    CircleInternal(center, radius, 1.f, true, scale, color);
+    CircleInternal(center, radius, 1.f, true, scale, color, depth);
 }
 
 void Draw::Arc(
@@ -140,10 +218,11 @@ void Draw::Arc(
     const float_t deltaAngle,
     const float_t thickness,
     const Vector2 scale,
-    const Color& color
+    const Color& color,
+    const float_t depth
 )
 {
-    ArcInternal(center, radius, startingAngle, deltaAngle, thickness, false, scale, color);
+    ArcInternal(center, radius, startingAngle, deltaAngle, thickness, false, scale, color, depth);
 }
 
 void Draw::ArcFilled(
@@ -152,10 +231,11 @@ void Draw::ArcFilled(
     const float_t startingAngle,
     const float_t deltaAngle,
     const Vector2 scale,
-    const Color& color
+    const Color& color,
+    const float_t depth
 )
 {
-    ArcInternal(center, radius, startingAngle, deltaAngle, 1.f, true, scale, color);
+    ArcInternal(center, radius, startingAngle, deltaAngle, 1.f, true, scale, color, depth);
 }
 
 void Draw::Texture(
@@ -167,48 +247,36 @@ void Draw::Texture(
     const Vector2 uv0,
     const Vector2 uv1,
     const Color& color,
-    const DrawTextureFlipping flipFlags
+    const float_t depth
 )
 {
-    if (uv0.x > uv1.x || uv0.y > uv1.y)
-        THROW(ArgumentException{"UV0 cannot be greater than UV1", "uv0"});
-
     if (origin.x < 0.f || origin.x > 1.f || origin.y < 0.f || origin.y > 1.f)
         THROW(ArgumentOutOfRangeException{"Origin must be in the range [{ 0, 0 }, { 1, 1 }]", "origin"});
 
     const Vector2 uvDiff = uv1 - uv0;
     const Vector2 lowerUv = uv0;
 
-    if (flipFlags & DrawTextureFlipping::Horizontal)
-        scale.x *= -1.f;
-
-    if (flipFlags & DrawTextureFlipping::Vertical)
-        scale.y *= -1.f;
-
-    Matrix2 diagonalFlip = Matrix2::Identity();
-    if (flipFlags & DrawTextureFlipping::Diagonal)
-    {
-        static constexpr Matrix2 M(1.f, 1.f, -1.f, 1.f);
-        diagonalFlip = M * Matrix2::Scaling({ 1.f, -1.f }) * M.Inverted();
-    }
-
-    Matrix2 antiDiagonalFlip = Matrix2::Identity();
-    if (flipFlags & DrawTextureFlipping::AntiDiagonal)
-    {
-        static constexpr Matrix2 M(-1.f, 1.f, 1.f, 1.f);
-        antiDiagonalFlip = M * Matrix2::Scaling({ 1.f, -1.f }) * M.Inverted();
-    }
-
     const Vector2i textureSize = texture.GetSize();
     Matrix transformation = Matrix::Translation(static_cast<Vector3>(position))
         * Matrix::RotationZ(rotation)
         * Matrix::Translation(static_cast<Vector3>(-textureSize * origin * scale))
-        * static_cast<Matrix>(antiDiagonalFlip)
-        * static_cast<Matrix>(diagonalFlip)
-        * Matrix::Scaling({ static_cast<float_t>(textureSize.x) * Calc::Abs(uvDiff.x) * scale.x, static_cast<float_t>(textureSize.y) * Calc::Abs(uvDiff.y) * scale.y, 1.f });
+        * Matrix::Scaling({ static_cast<float_t>(textureSize.x) * scale.x, static_cast<float_t>(textureSize.y) * scale.y, 1.f });
 
     Matrix uvProjection = Matrix::Translation(static_cast<Vector3>(lowerUv)) * Matrix::Scaling(static_cast<Vector3>(uvDiff));
 
+    const TextureData data{
+        .transformation = transformation,
+        .uvProjection = uvProjection,
+        .color = color
+    };
+
+    if (m_SortMode == DrawSortMode::Immediate)
+    {
+        RenderTextureData(data, texture.GetId());
+        return;
+    }
+
+    m_DrawList.depths.Add(depth);
     m_DrawList.texture.Emplace(transformation, uvProjection, color);
 
     if (!m_DrawList.textureId.IsEmpty() && Last(m_DrawList.textureId) == texture.GetId())
@@ -225,10 +293,23 @@ void Draw::Texture(
     m_DrawList.commands.Emplace(DrawDataType::Texture, 1ull);
 }
 
-void Draw::Text(const Font& font, const std::string& text, const Vector2 position, const float_t scale, const Color& color)
+void Draw::Text(
+    const Font& font,
+    const std::string& text,
+    const Vector2 position,
+    const float_t scale,
+    const Color& color,
+    const float_t depth
+)
 {
-    m_DrawList.text.Emplace(&font, text, position, scale, color);
-    m_DrawList.AddCommand(DrawDataType::Text);
+    const TextData data{
+        .font = &font,
+        .text = text,
+        .position = position,
+        .scale = scale,
+        .color = color
+    };
+    SCHEDULE_RENDER_DATA(data, depth, RenderTextData, text, DrawDataType::Text);
 }
 
 void Draw::RenderTarget(
@@ -236,62 +317,48 @@ void Draw::RenderTarget(
     const Vector2 position,
     const Vector2 scale,
     const float_t rotation,
+    const Vector2 origin,
     const Vector2 uv0,
     const Vector2 uv1,
     const Color& color,
-    const DrawTextureFlipping flipFlags
+    const float_t depth
 )
 {
-    if (uv0.x > uv1.x || uv0.y > uv1.y)
-        THROW(ArgumentException{"UV0 cannot be greater than UV1", "uv0"});
+    if (origin.x < 0.f || origin.x > 1.f || origin.y < 0.f || origin.y > 1.f)
+        THROW(ArgumentOutOfRangeException{"Origin must be in the range [{ 0, 0 }, { 1, 1 }]", "origin"});
 
     Vector2 uvDiff = uv1 - uv0;
     Vector2 lowerUv = uv0;
 
-    if (flipFlags & DrawTextureFlipping::Horizontal)
-    {
-        lowerUv.x += uvDiff.x;
-        uvDiff.x = -uvDiff.x;
-    }
-
-    if (flipFlags & DrawTextureFlipping::Vertical)
-    {
-        lowerUv.y += uvDiff.y;
-        uvDiff.y = -uvDiff.y;
-    }
-
-    Matrix2 diagonalFlip = Matrix2::Identity();
-    if (flipFlags & DrawTextureFlipping::Diagonal)
-    {
-        static constexpr Matrix2 M(1.f, 1.f, -1.f, 1.f);
-        diagonalFlip = M * Matrix2::Scaling({ 1.f, -1.f }) * M.Inverted();
-    }
-
-    Matrix2 antiDiagonalFlip = Matrix2::Identity();
-    if (flipFlags & DrawTextureFlipping::AntiDiagonal)
-    {
-        static constexpr Matrix2 M(-1.f, 1.f, 1.f, 1.f);
-        antiDiagonalFlip = M * Matrix2::Scaling({ 1.f, -1.f }) * M.Inverted();
-    }
-
     const Vector2i textureSize = renderTarget.GetSize();
     Matrix transformation = Matrix::Translation(static_cast<Vector3>(position))
         * Matrix::RotationZ(rotation)
-        * static_cast<Matrix>(antiDiagonalFlip)
-        * static_cast<Matrix>(diagonalFlip)
-        * Matrix::Scaling({ static_cast<float_t>(textureSize.x) * uvDiff.x * scale.x, static_cast<float_t>(textureSize.y) * uvDiff.y * scale.y, 1.f });
+        * Matrix::Translation(static_cast<Vector3>(-textureSize * origin * scale))
+        * Matrix::Scaling({ static_cast<float_t>(textureSize.x) * scale.x, static_cast<float_t>(textureSize.y) * scale.y, 1.f });
 
     Matrix uvProjection = Matrix::Translation(static_cast<Vector3>(lowerUv)) * Matrix::Scaling(static_cast<Vector3>(uvDiff));
 
-    m_DrawList.renderTarget.Emplace(&renderTarget, transformation, uvProjection, scale, color);
-    m_DrawList.AddCommand(DrawDataType::RenderTarget);
+    RenderTargetData data{
+        .renderTarget = &renderTarget,
+        .transformation = transformation,
+        .uvProjection = uvProjection,
+        .scale = scale,
+        .color = color
+    };
+    SCHEDULE_RENDER_DATA(data, depth, RenderRenderTargetData, renderTarget, DrawDataType::RenderTarget);
 }
+#pragma endregion
 
 void Draw::Flush()
 {
     ZoneScoped;
 
+    if (m_SortMode == DrawSortMode::Immediate || m_DrawList.commands.IsEmpty())
+        return;
+
     TracyGpuZone("Draw::Flush")
+
+    m_DrawList.Sort(m_SortMode);
 
     size_t pointIndex = 0;
     size_t lineIndex = 0, lineColoredIndex = 0;
@@ -387,8 +454,16 @@ void Draw::Flush()
     m_DrawList.Clear();
 }
 
-void Draw::DrawList::AddCommand(DrawDataType type)
+void Draw::SetSortMode(const DrawSortMode newSortMode)
 {
+    Flush();
+    m_SortMode = newSortMode;
+}
+
+void Draw::DrawList::AddCommand(const DrawDataType type, const float_t depth)
+{
+    depths.Add(depth);
+
     if (!commands.IsEmpty())
     {
         CommandData& lastCommand = Last(commands);
@@ -420,7 +495,36 @@ void Draw::DrawList::Clear()
     text.Clear();
     renderTarget.Clear();
 
+    depths.Clear();
     commands.Clear();
+}
+
+void Draw::DrawList::Sort(const DrawSortMode sortMode)
+{
+    if (sortMode == DrawSortMode::Deferred || sortMode == DrawSortMode::Immediate || commands.IsEmpty())
+        return;
+
+    const Comparer<float_t> oppositeComparer = sortMode == DrawSortMode::BackToFront ? CompareGreater<float_t> : CompareLess<float_t>;
+
+    // Insertion sort - not that good, so it needs to be changed for a better algorithm at one point
+
+    /*for (size_t i = 1; i < commands.GetSize(); i++)
+    {
+        const CommandData& command = commands[i];
+        const float_t depth = depths[i];
+
+        size_t j = i;
+
+        for (float_t otherDepth = depths[j - 1]; j > 0 && oppositeComparer(otherDepth, depth); j--)
+        {
+            depths[j] = otherDepth;
+
+            const CommandData& otherCommand = commands[j];
+        }
+
+        depths[j] = depth;
+    }*/
+    // TODO
 }
 
 void Draw::Initialize()
@@ -495,6 +599,7 @@ void Draw::Shutdown()
     m_ParticleVao.Delete();
 }
 
+#pragma region InitializeBuffers
 void Draw::InitializePointBuffers()
 {
     m_PointVao.Create();
@@ -805,6 +910,7 @@ void Draw::InitializeParticleBuffers()
     m_ParticleVao.Create();
     m_ParticleVao.SetDebugName("Particle VAO");
 }
+#pragma endregion
 
 void Draw::SetProjectionMatrix(const Matrix& newProjectionMatrix, const bool_t updateUniforms)
 {
@@ -845,49 +951,63 @@ void Draw::UpdateShaderMatrices()
     m_ArcShader->SetUniform("cameraScale", m_CameraScale);
 }
 
-void Draw::CircleInternal(const Vector2 center, const float_t radius, const float_t thickness, const bool_t filled, const Vector2 scale, const Color& color)
+void Draw::RectangleInternal(const Mountain::Rectangle& rectangle, const float_t rotation, const Vector2 origin, const bool_t filled, const Color& color, const float_t depth)
 {
-    if (thickness < 0.f)
+    if (origin.x < 0.f || origin.x > 1.f || origin.y < 0.f || origin.y > 1.f)
+        THROW(ArgumentOutOfRangeException{"Origin must be in the range [{ 0, 0 }, { 1, 1 }]", "origin"});
+
+    const RectangleData data{
+        .transformation = Matrix::Translation(static_cast<Vector3>(rectangle.position))
+                        * Matrix::RotationZ(rotation)
+                        * Matrix::Translation(static_cast<Vector3>(-rectangle.size * origin))
+                        * Matrix::Scaling({ rectangle.size.x, rectangle.size.y, 1.f }),
+        .color = color
+    };
+    SCHEDULE_RENDER_DATA_FILLED(data, filled, depth, RenderRectangleData, rectangle, DrawDataType::Rectangle);
+}
+
+void Draw::CircleInternal(
+    const Vector2 center,
+    const float_t radius,
+    const float_t thickness,
+    const bool_t filled,
+    const Vector2 scale,
+    const Color& color,
+    const float_t depth
+)
+{
+    if (thickness < 1.f)
         THROW(ArgumentOutOfRangeException{"Thickness must be positive", "thickness"});
 
     if (thickness == 0.f)
         return;
 
-    m_DrawList.circle.Emplace(
-        Matrix::Translation(
-            static_cast<Vector3>(
-                center - scale * radius * m_CameraScale - Vector2::One() * thickness
-            )
-        )
-        * Matrix::Scaling(
-            {
-                radius * 2.f * scale.x * m_CameraScale.x + thickness * 2.f,
-                radius * 2.f * scale.y * m_CameraScale.y + thickness * 2.f,
-                1.f
-            }
-        ),
-        center,
-        radius,
-        thickness,
-        scale / m_CameraScale,
-        color,
-        filled
-    );
-    m_DrawList.AddCommand(DrawDataType::Circle);
+    const CircleData data{
+        .transformation = Matrix::Translation(static_cast<Vector3>(center - scale * radius * m_CameraScale - Vector2::One() * thickness))
+                        * Matrix::Scaling({radius * 2.f * scale.x * m_CameraScale.x + thickness * 2.f, radius * 2.f * scale.y * m_CameraScale.y + thickness * 2.f, 1.f}),
+        .center = center,
+        .radius = radius,
+        .thickness = thickness,
+        .scale = scale / m_CameraScale,
+        .color = color,
+        .filled = filled
+    };
+    SCHEDULE_RENDER_DATA(data, depth, RenderCircleData, circle, DrawDataType::Circle);
 }
 
 void Draw::ArcInternal(
-    Vector2 center,
-    float_t radius,
+    const Vector2 center,
+    const float_t radius,
     float_t startingAngle,
-    float_t deltaAngle,
+    const float_t deltaAngle,
     const float_t thickness,
-    bool_t filled,
+    const bool_t filled,
     const Vector2 scale,
-    const Color& color
+    const Color& color,
+    const float_t depth
 )
 {
-    if (thickness < 0.f)
+    if (thickness < 1.f)
         THROW(ArgumentOutOfRangeException{"Thickness must be positive", "thickness"});
 
     if (thickness == 0.f)
@@ -897,41 +1017,56 @@ void Draw::ArcInternal(
         return;
 
     if (deltaAngle >= Calc::TwoPi)
-        return CircleInternal(center, radius, thickness, filled, scale, color);
+        return CircleInternal(center, radius, thickness, filled, scale, color, depth);
 
     startingAngle = std::fmodf(startingAngle, Calc::TwoPi);
     if (startingAngle < 0.f)
         startingAngle += Calc::TwoPi;
 
-    m_DrawList.arc.Emplace(
-        Matrix::Translation(
-            static_cast<Vector3>(
-                center - scale * radius * m_CameraScale - Vector2::One() * thickness
-            )
-        )
-        * Matrix::Scaling(
-            {
-                radius * 2.f * scale.x * m_CameraScale.x + thickness * 2.f,
-                radius * 2.f * scale.y * m_CameraScale.y + thickness * 2.f,
-                1.f
-            }
-        ),
-        center,
-        radius,
-        startingAngle,
-        deltaAngle,
-        thickness,
-        scale / m_CameraScale,
-        color,
-        filled
-    );
-    m_DrawList.AddCommand(DrawDataType::Arc);
+    const ArcData data{
+        .transformation = Matrix::Translation(static_cast<Vector3>(center - scale * radius * m_CameraScale - Vector2::One() * thickness))
+                        * Matrix::Scaling({radius * 2.f * scale.x * m_CameraScale.x + thickness * 2.f, radius * 2.f * scale.y * m_CameraScale.y + thickness * 2.f, 1.f}),
+        .center = center,
+        .radius = radius,
+        .startingAngle = startingAngle,
+        .deltaAngle = deltaAngle,
+        .thickness = thickness,
+        .scale = scale / m_CameraScale,
+        .color = color,
+        .filled = filled
+    };
+    SCHEDULE_RENDER_DATA(data, depth, RenderArcData, arc, DrawDataType::Arc);
 }
+
+#pragma region Rendering
+void Draw::RenderPointData(const PointData& point) { RenderPointData({point}, 0, 1); }
+
+void Draw::RenderLineData(const LineData& line) { RenderLineData({line}, 0, 1); }
+
+void Draw::RenderLineColoredData(const LineColoredData& lineColored) { RenderLineColoredData({lineColored}, 0, 1); }
+
+void Draw::RenderTriangleData(const TriangleData& triangle, const bool_t filled) { RenderTriangleData({triangle}, filled, 0, 1); }
+
+void Draw::RenderTriangleColoredData(const TriangleColoredData& triangleColored, const bool_t filled) { RenderTriangleColoredData({triangleColored}, filled, 0, 1); }
+
+void Draw::RenderRectangleData(const RectangleData& rectangle, const bool_t filled) { RenderRectangleData({rectangle}, filled, 0, 1); }
+
+void Draw::RenderCircleData(const CircleData& circle) { RenderCircleData({circle}, 0, 1); }
+
+void Draw::RenderArcData(const ArcData& arc) { RenderArcData({arc}, 0, 1); }
+
+void Draw::RenderTextureData(const TextureData& texture, const uint32_t textureId) { RenderTextureData({texture}, textureId, 0, 1); }
+
+void Draw::RenderTextData(const TextData& text) { RenderTextData({text}, 0, 1); }
+
+void Draw::RenderRenderTargetData(const RenderTargetData& renderTarget) { RenderRenderTargetData({renderTarget}, 0, 1); }
 
 void Draw::RenderPointData(const List<PointData>& points, const size_t index, const size_t count)
 {
     if (points.IsEmpty())
         return;
+
+    TracyGpuZone("Draw::RenderPointData")
 
     m_Vbo.SetData(static_cast<int64_t>(sizeof(PointData) * count), &points[index], Graphics::BufferUsage::StreamDraw);
 
@@ -949,6 +1084,8 @@ void Draw::RenderLineData(const List<LineData>& lines, const size_t index, const
     if (lines.IsEmpty())
         return;
 
+    TracyGpuZone("Draw::RenderLineData")
+
     m_Vbo.SetData(static_cast<int64_t>(sizeof(LineData) * count), &lines[index], Graphics::BufferUsage::StreamDraw);
 
     BindVertexArray(m_LineVao);
@@ -964,6 +1101,8 @@ void Draw::RenderLineColoredData(const List<LineColoredData>& linesColored, cons
 {
     if (linesColored.IsEmpty())
         return;
+
+    TracyGpuZone("Draw::RenderLineColoredData")
 
     m_Vbo.SetData(static_cast<int64_t>(sizeof(LineColoredData) * count), &linesColored[index], Graphics::BufferUsage::StreamDraw);
 
@@ -981,6 +1120,8 @@ void Draw::RenderTriangleData(const List<TriangleData>& triangles, const bool_t 
     if (triangles.IsEmpty())
         return;
 
+    TracyGpuZone("Draw::RenderTriangleData")
+
     m_Vbo.SetData(static_cast<int64_t>(sizeof(TriangleData) * count), &triangles[index], Graphics::BufferUsage::StreamDraw);
 
     BindVertexArray(m_TriangleVao);
@@ -997,6 +1138,8 @@ void Draw::RenderTriangleColoredData(const List<TriangleColoredData>& trianglesC
     if (trianglesColored.IsEmpty())
         return;
 
+    TracyGpuZone("Draw::RenderTriangleColoredData")
+
     m_Vbo.SetData(static_cast<int64_t>(sizeof(TriangleColoredData) * count), &trianglesColored[index], Graphics::BufferUsage::StreamDraw);
 
     BindVertexArray(m_TriangleColoredVao);
@@ -1012,6 +1155,8 @@ void Draw::RenderRectangleData(const List<RectangleData>& rectangles, const bool
 {
     if (rectangles.IsEmpty())
         return;
+
+    TracyGpuZone("Draw::RenderRectangleData")
 
     m_Vbo.SetData(static_cast<int64_t>(sizeof(RectangleData) * count), &rectangles[index], Graphics::BufferUsage::StreamDraw);
 
@@ -1032,6 +1177,8 @@ void Draw::RenderCircleData(const List<CircleData>& circles, const size_t index,
     if (circles.IsEmpty())
         return;
 
+    TracyGpuZone("Draw::RenderCircleData")
+
     m_Vbo.SetData(static_cast<int64_t>(sizeof(CircleData) * count), &circles[index], Graphics::BufferUsage::StreamDraw);
 
     BindVertexArray(m_CircleVao);
@@ -1047,6 +1194,8 @@ void Draw::RenderArcData(const List<ArcData>& arcs, const size_t index, const si
 {
     if (arcs.IsEmpty())
         return;
+
+    TracyGpuZone("Draw::RenderArcData")
 
     m_Vbo.SetData(static_cast<int64_t>(sizeof(ArcData) * count), &arcs[index], Graphics::BufferUsage::StreamDraw);
 
@@ -1064,6 +1213,8 @@ void Draw::RenderTextureData(const List<TextureData>& textures, const uint32_t t
     if (textures.IsEmpty())
         return;
 
+    TracyGpuZone("Draw::RenderTextureData")
+
     m_Vbo.SetData(static_cast<int64_t>(sizeof(TextureData) * count), &textures[index], Graphics::BufferUsage::StreamDraw);
 
     BindVertexArray(m_TextureVao);
@@ -1079,6 +1230,8 @@ void Draw::RenderTextureData(const List<TextureData>& textures, const uint32_t t
 
 void Draw::RenderTextData(const List<TextData>& texts, const size_t index, const size_t count)
 {
+    TracyGpuZone("Draw::RenderTextData")
+
     BindVertexArray(m_TextVao);
     m_TextShader->Use();
 
@@ -1132,6 +1285,8 @@ void Draw::RenderTextData(const List<TextData>& texts, const size_t index, const
 
 void Draw::RenderRenderTargetData(const List<RenderTargetData>& renderTargets, const size_t index, const size_t count)
 {
+    TracyGpuZone("Draw::RenderRenderTargetData")
+
     BindVertexArray(m_RenderTargetVao);
     m_RenderTargetShader->Use();
 
@@ -1152,10 +1307,10 @@ void Draw::RenderRenderTargetData(const List<RenderTargetData>& renderTargets, c
         m_RenderTargetShader->SetUniform("color", data.color);
         m_RenderTargetShader->SetUniform("ambientColor", data.renderTarget->ambientLight);
 
-        auto lightSources = data.renderTarget->GetLightSources();
+        List<LightSource> lightSources = data.renderTarget->GetLightSources();
         m_RenderTargetShader->SetUniform("lightSourceCount", static_cast<int32_t>(lightSources.GetSize()));
 
-        for (auto& lightSource : lightSources)
+        for (LightSource& lightSource : lightSources)
             lightSource.position = m_CameraMatrix * lightSource.position;
 
         m_RenderTargetSsbo.SetData(
@@ -1177,3 +1332,4 @@ void Draw::RenderRenderTargetData(const List<RenderTargetData>& renderTargets, c
     m_RenderTargetShader->Unuse();
     Graphics::BindVertexArray(0);
 }
+#pragma endregion

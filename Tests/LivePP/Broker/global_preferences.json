@@ -50,7 +50,7 @@
         "soundOnSuccess": ""
     },
     "UI": {
-        "initialState": 0,
+        "initialState": 1,
         "showAnimatedIcon": true,
         "showColorizedIcon": true,
         "showErrorOnVersionMismatch": true,

@@ -102,7 +102,7 @@ int main(int, char**)
 			delete game;
 
 			lppAgent.Restart(lpp::LPP_RESTART_BEHAVIOUR_DEFAULT_EXIT, 0, nullptr);
-			break;
+			return 0;
 		}
 	}
 

@@ -76,6 +76,14 @@
         ::Mountain::Meta::IsSortable<Iterator, ::Mountain::Comparer<EnumeratedType>, ::Mountain::Identity>>> \
     void Sort(const ::Mountain::Comparer<EnumeratedType>& comparer) { return ::Mountain::Sort(*this, comparer); } \
     \
+    template <typename = ::Mountain::Meta::EnableIf< \
+    ::Mountain::Meta::IsSortable<Iterator, ::Mountain::Comparer<EnumeratedType>, ::Mountain::Identity>>> \
+    void StableSort() { return ::Mountain::StableSort(*this); } \
+    \
+    template <typename = ::Mountain::Meta::EnableIf< \
+    ::Mountain::Meta::IsSortable<Iterator, ::Mountain::Comparer<EnumeratedType>, ::Mountain::Identity>>> \
+    void StableSort(const ::Mountain::Comparer<EnumeratedType>& comparer) { return ::Mountain::StableSort(*this, comparer); } \
+    \
     bool_t IsValidIndex(const size_t index) const { return ::Mountain::IsValidIndex(*this, index); }
 
 namespace Mountain
@@ -193,6 +201,16 @@ namespace Mountain
         typename T = Meta::MountainEnumerableType<EnumerableT>,
         typename = Meta::EnableIf<Meta::IsSortable<typename EnumerableT::Iterator, Comparer<T>, Identity>>>
     void Sort(EnumerableT& enumerable, const Comparer<Meta::Identity<T>>& comparer);
+
+    template <Requirements::MountainEnumerable EnumerableT,
+        typename T = Meta::MountainEnumerableType<EnumerableT>,
+        typename = Meta::EnableIf<Meta::IsSortable<typename EnumerableT::Iterator, Comparer<T>, Identity>>>
+    void StableSort(EnumerableT& enumerable);
+
+    template <Requirements::MountainEnumerable EnumerableT,
+        typename T = Meta::MountainEnumerableType<EnumerableT>,
+        typename = Meta::EnableIf<Meta::IsSortable<typename EnumerableT::Iterator, Comparer<T>, Identity>>>
+    void StableSort(EnumerableT& enumerable, const Comparer<Meta::Identity<T>>& comparer);
 
     template <Requirements::MountainEnumerable EnumerableT>
     bool_t IsValidIndex(const EnumerableT& enumerable, size_t index);
@@ -442,6 +460,18 @@ namespace Mountain
     void Sort(EnumerableT& enumerable, const Comparer<Meta::Identity<T>>& comparer)
     {
         std::ranges::sort(enumerable, comparer);
+    }
+
+    template <Requirements::MountainEnumerable EnumerableT, typename T, typename>
+    void StableSort(EnumerableT& enumerable)
+    {
+        return StableSort(enumerable, CompareLess<T>);
+    }
+
+    template <Requirements::MountainEnumerable EnumerableT, typename T, typename>
+    void StableSort(EnumerableT& enumerable, const Comparer<Meta::Identity<T>>& comparer)
+    {
+        std::ranges::stable_sort(enumerable, comparer);
     }
 
     template <Requirements::MountainEnumerable EnumerableT>
