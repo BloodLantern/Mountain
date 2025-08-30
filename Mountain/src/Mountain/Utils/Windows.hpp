@@ -16,6 +16,7 @@
 #define NOMINMAX
 #include <Windows.h>
 
+#include <psapi.h>
 #include <ShlObj_core.h>
 #undef XMLDocument
 

@@ -2,8 +2,6 @@
 
 #include "Mountain/Utils/ImGuiUtils.hpp"
 
-#include <mimalloc.h>
-
 #include <magic_enum/magic_enum.hpp>
 
 #include "Mountain/Screen.hpp"
@@ -13,6 +11,7 @@
 #include "Mountain/Resource/AudioTrack.hpp"
 #include "Mountain/Resource/Font.hpp"
 #include "Mountain/Utils/FileSystemWatcher.hpp"
+#include "Mountain/Utils/Windows.hpp"
 
 using namespace Mountain;
 
@@ -669,11 +668,12 @@ void ImGuiUtils::ShowPerformanceMonitoring()
         frameDurationLeft = Time::GetTargetDeltaTime() == 0.f ? 0.f : (Time::GetTargetDeltaTime() - frameDuration);
         framebufferSize = Window::GetSize();
 
-        size_t cpuMemory, totalMemory;
-        mi_process_info(nullptr, nullptr, nullptr, &cpuMemory, nullptr, &totalMemory, nullptr, nullptr);
+        PROCESS_MEMORY_COUNTERS_EX2 memoryCounter;
+        GetProcessMemoryInfo(GetCurrentProcess(), reinterpret_cast<PPROCESS_MEMORY_COUNTERS>(&memoryCounter), sizeof(memoryCounter));
+        Windows::CheckError();
 
-        memoryCpuOnly = static_cast<double_t>(cpuMemory) * 1e-6; // Convert to MB
-        memoryTotal = static_cast<double_t>(totalMemory) * 1e-6; // Convert to MB
+        memoryCpuOnly = static_cast<double_t>(memoryCounter.PrivateWorkingSetSize) * 1e-6; // Convert to MB
+        memoryTotal = static_cast<double_t>(memoryCounter.PrivateUsage) * 1e-6; // Convert to MB
 
         frameDurationList.Add(frameDuration * 1000.f);
 

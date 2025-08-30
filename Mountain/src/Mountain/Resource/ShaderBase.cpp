@@ -155,6 +155,8 @@ void ShaderBase::ReplaceIncludes(std::string& code, const std::filesystem::path&
 
     std::istringstream input{ code };
 
+    // TODO - Use stb_include
+
     size_t offset = 0, initialLineLength;
     for (std::string line; std::getline(input, line); offset += initialLineLength)
     {

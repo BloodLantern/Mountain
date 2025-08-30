@@ -29,61 +29,6 @@
     <ClInclude Include="externals\src\AL\efx-creative.h" />
     <ClInclude Include="externals\src\AL\efx-presets.h" />
     <ClInclude Include="externals\src\AL\efx.h" />
-    <ClInclude Include="externals\src\freetype\config\ftconfig.h" />
-    <ClInclude Include="externals\src\freetype\config\ftheader.h" />
-    <ClInclude Include="externals\src\freetype\config\ftmodule.h" />
-    <ClInclude Include="externals\src\freetype\config\ftoption.h" />
-    <ClInclude Include="externals\src\freetype\config\ftstdlib.h" />
-    <ClInclude Include="externals\src\freetype\config\integer-types.h" />
-    <ClInclude Include="externals\src\freetype\config\mac-support.h" />
-    <ClInclude Include="externals\src\freetype\config\public-macros.h" />
-    <ClInclude Include="externals\src\freetype\freetype.h" />
-    <ClInclude Include="externals\src\freetype\ftadvanc.h" />
-    <ClInclude Include="externals\src\freetype\ftbbox.h" />
-    <ClInclude Include="externals\src\freetype\ftbdf.h" />
-    <ClInclude Include="externals\src\freetype\ftbitmap.h" />
-    <ClInclude Include="externals\src\freetype\ftbzip2.h" />
-    <ClInclude Include="externals\src\freetype\ftcache.h" />
-    <ClInclude Include="externals\src\freetype\ftchapters.h" />
-    <ClInclude Include="externals\src\freetype\ftcid.h" />
-    <ClInclude Include="externals\src\freetype\ftcolor.h" />
-    <ClInclude Include="externals\src\freetype\ftdriver.h" />
-    <ClInclude Include="externals\src\freetype\fterrdef.h" />
-    <ClInclude Include="externals\src\freetype\fterrors.h" />
-    <ClInclude Include="externals\src\freetype\ftfntfmt.h" />
-    <ClInclude Include="externals\src\freetype\ftgasp.h" />
-    <ClInclude Include="externals\src\freetype\ftglyph.h" />
-    <ClInclude Include="externals\src\freetype\ftgxval.h" />
-    <ClInclude Include="externals\src\freetype\ftgzip.h" />
-    <ClInclude Include="externals\src\freetype\ftimage.h" />
-    <ClInclude Include="externals\src\freetype\ftincrem.h" />
-    <ClInclude Include="externals\src\freetype\ftlcdfil.h" />
-    <ClInclude Include="externals\src\freetype\ftlist.h" />
-    <ClInclude Include="externals\src\freetype\ftlogging.h" />
-    <ClInclude Include="externals\src\freetype\ftlzw.h" />
-    <ClInclude Include="externals\src\freetype\ftmac.h" />
-    <ClInclude Include="externals\src\freetype\ftmm.h" />
-    <ClInclude Include="externals\src\freetype\ftmodapi.h" />
-    <ClInclude Include="externals\src\freetype\ftmoderr.h" />
-    <ClInclude Include="externals\src\freetype\ftotval.h" />
-    <ClInclude Include="externals\src\freetype\ftoutln.h" />
-    <ClInclude Include="externals\src\freetype\ftparams.h" />
-    <ClInclude Include="externals\src\freetype\ftpfr.h" />
-    <ClInclude Include="externals\src\freetype\ftrender.h" />
-    <ClInclude Include="externals\src\freetype\ftsizes.h" />
-    <ClInclude Include="externals\src\freetype\ftsnames.h" />
-    <ClInclude Include="externals\src\freetype\ftstroke.h" />
-    <ClInclude Include="externals\src\freetype\ftsynth.h" />
-    <ClInclude Include="externals\src\freetype\ftsystem.h" />
-    <ClInclude Include="externals\src\freetype\fttrigon.h" />
-    <ClInclude Include="externals\src\freetype\fttypes.h" />
-    <ClInclude Include="externals\src\freetype\ftwinfnt.h" />
-    <ClInclude Include="externals\src\freetype\otsvg.h" />
-    <ClInclude Include="externals\src\freetype\t1tables.h" />
-    <ClInclude Include="externals\src\freetype\ttnameid.h" />
-    <ClInclude Include="externals\src\freetype\tttables.h" />
-    <ClInclude Include="externals\src\freetype\tttags.h" />
-    <ClInclude Include="externals\src\ft2build.h" />
     <ClInclude Include="externals\src\glad\glad.h" />
     <ClInclude Include="externals\src\ImGui\imconfig.h" />
     <ClInclude Include="externals\src\ImGui\imgui.h" />
@@ -105,108 +50,8 @@
     <ClInclude Include="externals\src\magic_enum\magic_enum_iostream.hpp" />
     <ClInclude Include="externals\src\magic_enum\magic_enum_switch.hpp" />
     <ClInclude Include="externals\src\magic_enum\magic_enum_utility.hpp" />
-    <ClInclude Include="externals\src\mimalloc-new-delete.h" />
-    <ClInclude Include="externals\src\mimalloc-override.h" />
-    <ClInclude Include="externals\src\mimalloc-stats.h" />
-    <ClInclude Include="externals\src\mimalloc.h" />
-    <ClInclude Include="externals\src\mimalloc\atomic.h" />
-    <ClInclude Include="externals\src\mimalloc\internal.h" />
-    <ClInclude Include="externals\src\mimalloc\prim.h" />
-    <ClInclude Include="externals\src\mimalloc\track.h" />
-    <ClInclude Include="externals\src\mimalloc\types.h" />
     <ClInclude Include="externals\src\minimp3.h" />
     <ClInclude Include="externals\src\minimp3_ex.h" />
-    <ClInclude Include="externals\src\RapidXML\rapidxml.hpp" />
-    <ClInclude Include="externals\src\RapidXML\RapidXMLSTD.hpp" />
-    <ClInclude Include="externals\src\RapidXML\rapidxml_iterators.hpp" />
-    <ClInclude Include="externals\src\RapidXML\rapidxml_print.hpp" />
-    <ClInclude Include="externals\src\RapidXML\rapidxml_utils.hpp" />
-    <ClInclude Include="externals\src\SDL3\SDL.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_assert.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_asyncio.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_atomic.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_audio.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_begin_code.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_bits.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_blendmode.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_camera.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_clipboard.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_close_code.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_copying.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_cpuinfo.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_dialog.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_egl.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_endian.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_error.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_events.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_filesystem.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_gamepad.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_gpu.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_guid.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_haptic.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_hidapi.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_hints.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_init.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_intrin.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_iostream.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_joystick.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_keyboard.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_keycode.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_loadso.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_locale.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_log.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_main.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_main_impl.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_messagebox.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_metal.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_misc.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_mouse.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_mutex.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_oldnames.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_opengl.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_opengles.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_opengles2.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_opengles2_gl2.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_opengles2_gl2ext.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_opengles2_gl2platform.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_opengles2_khrplatform.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_opengl_glext.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_pen.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_pixels.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_platform.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_platform_defines.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_power.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_process.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_properties.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_rect.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_render.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_revision.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_scancode.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_sensor.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_stdinc.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_storage.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_surface.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_system.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_test.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_test_assert.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_test_common.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_test_compare.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_test_crc32.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_test_font.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_test_fuzzer.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_test_harness.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_test_log.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_test_md5.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_test_memory.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_thread.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_time.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_timer.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_touch.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_tray.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_version.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_video.h" />
-    <ClInclude Include="externals\src\SDL3\SDL_vulkan.h" />
-    <ClInclude Include="externals\src\stb_image.h" />
     <ClInclude Include="externals\src\stb_vorbis.h" />
     <ClInclude Include="src\Mountain\Attributes.hpp" />
     <ClInclude Include="src\Mountain\Audio\Audio.hpp" />
@@ -368,11 +213,9 @@
     <ClCompile Include="externals\src\ImGui\imgui_stdlib.cpp" PrecompiledHeader="NotUsing" />
     <ClCompile Include="externals\src\ImGui\imgui_tables.cpp" PrecompiledHeader="NotUsing" />
     <ClCompile Include="externals\src\ImGui\imgui_widgets.cpp" PrecompiledHeader="NotUsing" />
-    <ClCompile Include="externals\src\mimalloc-new-delete.cpp" PrecompiledHeader="NotUsing" />
     <ClCompile Include="externals\src\minimp3.c" PrecompiledHeader="NotUsing" />
-    <ClCompile Include="externals\src\RapidXMLSTD.cpp" PrecompiledHeader="NotUsing" />
     <ClCompile Include="externals\src\stb_image.c" PrecompiledHeader="NotUsing" />
-    <ClCompile Include="externals\src\stb_vorbis.c" PrecompiledHeader="NotUsing" />
+    <ClCompile Include="externals\src\stb_vorbis_impl.c" PrecompiledHeader="NotUsing" WarningLevel="Level1" />
     <ClCompile Include="src\Mountain\Audio\Audio.cpp" />
     <ClCompile Include="src\Mountain\Audio\AudioBuffer.cpp" />
     <ClCompile Include="src\Mountain\Audio\AudioContext.cpp" />
@@ -488,6 +331,8 @@
     <Content Include="src\Mountain\BinaryResources\README.md" />
     <Content Include="..\README.md" />
     <Content Include="tools\generate_resources.cmd" />
+    <Content Include="vcpkg-configuration.json" />
+    <Content Include="vcpkg.json" />
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="Mountain.natvis" />
@@ -550,7 +395,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
-      <AdditionalDependencies>mimalloc.dll.lib;mimalloc-redirect.lib;freetype.lib;OpenAL32.lib;soft_oal.lib;SDL3.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>OpenAL32.lib;soft_oal.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <CreateHotPatchableImage>Enabled</CreateHotPatchableImage>
       <OptimizeReferences>false</OptimizeReferences>
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
@@ -578,7 +423,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>mimalloc.dll.lib;mimalloc-redirect.lib;freetype.lib;OpenAL32.lib;soft_oal.lib;SDL3.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>OpenAL32.lib;soft_oal.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>externals/libs/static/$(Configuration);externals/libs/static/Common</AdditionalLibraryDirectories>
       <CreateHotPatchableImage>Enabled</CreateHotPatchableImage>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -601,4 +446,7 @@
     <Copy SourceFiles="@(DynamicExternals)" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" Condition="'%(Identity)' != '.gitkeep'" />
     <Message Text="Copy external DLLs to output directory" Importance="high" />
   </Target>
+  <PropertyGroup Label="Vcpkg">
+    <VcpkgEnableManifest>true</VcpkgEnableManifest>
+  </PropertyGroup>
 </Project>

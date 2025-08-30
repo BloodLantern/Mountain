@@ -2,8 +2,6 @@
 
 #include "Mountain/Game.hpp"
 
-#include <mimalloc.h>
-
 #include "Mountain/Window.hpp"
 #include "Mountain/Audio/Audio.hpp"
 #include "Mountain/Input/Input.hpp"
@@ -14,6 +12,7 @@
 #include "Mountain/Utils/Logger.hpp"
 #include "Mountain/Utils/MessageBox.hpp"
 
+// ReSharper disable once CppUnusedIncludeDirective
 #include "Mountain/Profiler.hpp"
 
 #include "Mountain/Globals.hpp"
@@ -28,11 +27,6 @@ Game::Game(const std::string& windowTitle, const Vector2i windowSize)
 
     Logger::Start();
     Logger::OpenDefaultFile();
-
-    (void) mi_version(); // Make sure mimalloc is correctly initialized
-
-    if (!mi_is_redirected())
-        Logger::LogWarning("C runtime malloc API calls aren't redirected to mimalloc");
 
     std::set_terminate(
         []
