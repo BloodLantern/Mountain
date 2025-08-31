@@ -79,8 +79,6 @@ void ShaderBase::SetUniform(const char_t* uniformName, const Matrix& value) cons
     Graphics::SetProgramUniform(m_Id, uniformName, value);
 }
 
-uint32_t ShaderBase::GetId() const { return m_Id; }
-
 bool_t ShaderBase::CheckCompileError(const uint32_t id, const std::string_view type, const std::string& code) const
 {
     int success = 0;
@@ -154,8 +152,6 @@ void ShaderBase::ReplaceIncludes(std::string& code, const std::filesystem::path&
     static constexpr std::string_view Prefix = "#include \"", Suffix = "\"";
 
     std::istringstream input{ code };
-
-    // TODO - Use stb_include
 
     size_t offset = 0, initialLineLength;
     for (std::string line; std::getline(input, line); offset += initialLineLength)

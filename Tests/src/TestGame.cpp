@@ -315,7 +315,7 @@ void TestGame::ReloadShader(const std::filesystem::path& path)
 
     for (auto& shaderBase : ResourceManager::FindAll<ShaderBase>())
     {
-        if (shaderBase->dependentShaderFiles.contains(path))
+        if (shaderBase->GetDependentShaderFiles().contains(path))
             m_ShadersToReload.Add(shaderBase);
     }
 

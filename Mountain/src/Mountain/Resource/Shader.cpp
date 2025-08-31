@@ -47,7 +47,7 @@ bool_t Shader::Load(const char_t* const buffer, const int64_t length, const Grap
 {
     ShaderCode& code = m_Code[static_cast<size_t>(type)];
     code.code = Utils::RemoveByteOrderMark(std::string{buffer, static_cast<size_t>(length)});
-    ReplaceIncludes(code.code, m_File->GetPath(), dependentShaderFiles);
+    ReplaceIncludes(code.code, m_File->GetPath(), m_DependentShaderFiles);
     code.type = type;
 
     m_SourceDataSet = true;
@@ -123,7 +123,7 @@ void Shader::Unload()
 {
 	glDeleteProgram(m_Id);
 
-    dependentShaderFiles.clear();
+    m_DependentShaderFiles.clear();
     m_Id = 0;
     m_Loaded = false;
 }
@@ -136,7 +136,7 @@ void Shader::ResetSourceData()
 
 bool_t Shader::Reload(const bool_t reloadInBackend)
 {
-    dependentShaderFiles.clear();
+    m_DependentShaderFiles.clear();
 
     if (!m_Files.All([&](const Pointer<File>& file) { return !file || SetSourceData(file); }))
         return false;

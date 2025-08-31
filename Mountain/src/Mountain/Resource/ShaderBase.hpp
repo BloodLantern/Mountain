@@ -11,9 +11,6 @@ namespace Mountain
 	class ShaderBase : public Resource
 	{
 	public:
-		/// @brief List of files that are included in this shader file
-		std::unordered_set<std::filesystem::path> dependentShaderFiles;
-
 		using Resource::Resource;
 
 		void Unload() override;
@@ -59,11 +56,16 @@ namespace Mountain
 		void SetUniform(const char_t* uniformName, T value) const;
 
 		/// @brief Gets the internal id of the shader
-		ATTRIBUTE_NODISCARD
-		MOUNTAIN_API uint32_t GetId() const;
+		GETTER(uint32_t, Id, m_Id)
+
+		/// @brief Gets all files that this shader depends on, i.e., that are included in this shader.
+		GETTER(const std::unordered_set<std::filesystem::path>&, DependentShaderFiles, m_DependentShaderFiles)
 
 	protected:
 		uint32_t m_Id = 0;
+
+		/// @brief List of files that are included in this shader file
+		std::unordered_set<std::filesystem::path> m_DependentShaderFiles;
 
 		std::unordered_map<const char_t*, int32_t> m_UniformLocationCache;
 
