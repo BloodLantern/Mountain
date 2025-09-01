@@ -50,6 +50,7 @@ void Grid::RenderDebug(const Color& color) const
                         static_cast<float_t>(x + 1) * tileSize.x,
                         static_cast<float_t>(y) * tileSize.y
                     ),
+                    1.f,
                     color
                 );
             }
@@ -64,6 +65,7 @@ void Grid::RenderDebug(const Color& color) const
                         static_cast<float_t>(x) * tileSize.x,
                         static_cast<float_t>(y + 1) * tileSize.y
                     ),
+                    1.f,
                     color
                 );
             }
@@ -78,6 +80,7 @@ void Grid::RenderDebug(const Color& color) const
                         static_cast<float_t>(x + 1) * tileSize.x,
                         static_cast<float_t>(y + 1) * tileSize.y
                     ),
+                    1.f,
                     color
                 );
             }
@@ -92,6 +95,7 @@ void Grid::RenderDebug(const Color& color) const
                         static_cast<float_t>(x + 1) * tileSize.x,
                         static_cast<float_t>(y + 1) * tileSize.y
                     ),
+                    1.f,
                     color
                 );
             }

@@ -30,7 +30,7 @@ void ShapesScene::Render()
     Draw::Point(drawPosition, m_Color1);
 
     UPDATE_DRAW_POSITION;
-    Draw::Line(drawPosition - halfUsedDrawSize, drawPosition + halfUsedDrawSize, m_Color1);
+    Draw::Line(drawPosition - halfUsedDrawSize, drawPosition + halfUsedDrawSize, m_Thickness, m_Color1);
 
     UPDATE_DRAW_POSITION;
     Draw::Line(drawPosition - halfUsedDrawSize, drawPosition + halfUsedDrawSize, m_Color1, m_Color2);
@@ -129,13 +129,13 @@ void ShapesScene::RenderDebug()
         for (size_t i = 1; i < ShapesRowSize; i++)
         {
             const float_t x = static_cast<float_t>(i) * drawSize.x;
-            Draw::Line(firstPosition + Vector2{x, 0.f}, firstPosition + Vector2{x, drawSize.y * ShapesRowCount}, Color::Lime());
+            Draw::Line(firstPosition + Vector2{x, 0.f}, firstPosition + Vector2{x, drawSize.y * ShapesRowCount}, 1.f, Color::Lime());
         }
 
         for (size_t i = 0; i <= ActualShapesCount / ShapesRowSize; i++)
         {
             const float_t y = static_cast<float_t>(i) * drawSize.y;
-            Draw::Line(firstPosition + Vector2{0.f, y}, firstPosition + Vector2{drawSize.x * ShapesRowSize, y}, Color::Lime());
+            Draw::Line(firstPosition + Vector2{0.f, y}, firstPosition + Vector2{drawSize.x * ShapesRowSize, y}, 1.f, Color::Lime());
         }
     }
 }

@@ -44,16 +44,17 @@ namespace Mountain
         /// @brief Draw a line
         /// @param point1 The first point of the line
         /// @param point2 The second point of the line
+        /// @param thickness The thickness of the line
         /// @param color The color of the line
-        MOUNTAIN_API static void Line(Vector2 point1, Vector2 point2, const Color& color = Color::White());
+        /// @throws ArgumentOutOfRangeException If @p thickness is less than @c 1.f.
+        /// @remark If @p thickness is greater than @c 1.f, this will instead draw a filled rectangle.
+        MOUNTAIN_API static void Line(Vector2 point1, Vector2 point2, float_t thickness = 1.f, const Color& color = Color::White());
         /// @brief Draw a line
         /// @param point1 The first point of the line
         /// @param point2 The second point of the line
         /// @param color1 The color of the first point
         /// @param color2 The color of the second point
         MOUNTAIN_API static void Line(Vector2 point1, Vector2 point2, const Color& color1, const Color& color2);
-
-        // TODO - Add a convenience Line function with a thickness parameter that draws a rectangle
 
         /// @brief Draw a hollow triangle
         /// @param point1 The first point

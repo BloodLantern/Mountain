@@ -138,7 +138,7 @@ void Shape::RenderDebug(const ParticleSystem& system, const Vector2 renderTarget
         {
             const Vector2 left = -Vector2::UnitX() * line.radius;
             const Vector2 right = Vector2::UnitX() * line.radius;
-            Draw::Line(center + left.Rotated(rotation), center + right.Rotated(rotation), DrawColor);
+            Draw::Line(center + left.Rotated(rotation), center + right.Rotated(rotation), 1.f, DrawColor);
             break;
         }
 

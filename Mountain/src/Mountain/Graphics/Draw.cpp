@@ -57,8 +57,26 @@ void Draw::Point(const Vector2 position, const Color& color)
     SCHEDULE_RENDER_DATA(data, RenderPointData, point, DrawDataType::Point);
 }
 
-void Draw::Line(const Vector2 point1, const Vector2 point2, const Color& color)
+void Draw::Line(const Vector2 point1, const Vector2 point2, const float_t thickness, const Color& color)
 {
+    if (thickness < 1.f)
+        THROW(ArgumentOutOfRangeException{"Line thickness must be greater or equal to 1"});
+
+    if (thickness > 1.f)
+    {
+        const Vector2 difference = point2 - point1;
+        const float_t distance = difference.Length();
+        const Vector2 differenceNormalized = difference.Normalized();
+        RectangleFilled(
+            point1 + differenceNormalized.Normal() * thickness * 0.5f,
+            {distance, thickness},
+            std::atan2(differenceNormalized.y, differenceNormalized.x),
+            Vector2::Zero(),
+            color
+        );
+        return;
+    }
+
     const LineData data{
         .p1 = point1,
         .p2 = point2,
