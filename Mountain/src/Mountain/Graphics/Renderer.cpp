@@ -270,7 +270,7 @@ void Mountain::Renderer::PreFrame()
         m_RenderTarget->SetSize(windowSize);
 
     PushRenderTarget(*m_RenderTarget);
-    Draw::SetSortMode(DrawSortMode::Deferred);
+    Draw::SetMode(DrawMode::Deferred);
 }
 
 void Mountain::Renderer::PostFrame()

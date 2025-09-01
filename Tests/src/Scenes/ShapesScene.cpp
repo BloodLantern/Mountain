@@ -17,8 +17,6 @@ void ShapesScene::Render()
 {
     TestScene::Render();
 
-    Draw::SetSortMode(DrawSortMode::Immediate);
-
     size_t index = 0;
 
     const Vector2 drawSize = GetDrawSize();

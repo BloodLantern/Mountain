@@ -9,32 +9,32 @@
 #include "Mountain/Resource/ResourceManager.hpp"
 #include "Mountain/Resource/Shader.hpp"
 
-#define SCHEDULE_RENDER_DATA(drawData, depth, immediateRenderFunction, drawDataList, commandType) \
+#define SCHEDULE_RENDER_DATA(drawData, immediateRenderFunction, drawDataList, commandType) \
     do \
     { \
-        if (m_SortMode == DrawSortMode::Immediate) \
+        if (m_Mode == DrawMode::Immediate) \
         { \
             immediateRenderFunction(drawData); \
         } \
         else \
         { \
             m_DrawList.drawDataList.Add(drawData); \
-            m_DrawList.AddCommand(commandType, depth); \
+            m_DrawList.AddCommand(commandType); \
         } \
     } \
     while (false)
 
-#define SCHEDULE_RENDER_DATA_FILLED(drawData, filled, depth, immediateRenderFunction, drawDataList, commandType) \
+#define SCHEDULE_RENDER_DATA_FILLED(drawData, filled, immediateRenderFunction, drawDataList, commandType) \
     do \
     { \
-        if (m_SortMode == DrawSortMode::Immediate) \
+        if (m_Mode == DrawMode::Immediate) \
         { \
             immediateRenderFunction(drawData, filled); \
         } \
         else \
         { \
             m_DrawList.drawDataList.Add(drawData); \
-            m_DrawList.AddCommand(commandType, depth); \
+            m_DrawList.AddCommand(commandType); \
         } \
     } \
     while (false)
@@ -48,26 +48,26 @@ void Draw::Clear(const Color& color)
 }
 
 #pragma region Shapes
-void Draw::Point(const Vector2 position, const Color& color, const float_t depth)
+void Draw::Point(const Vector2 position, const Color& color)
 {
     const PointData data{
         .position = position,
         .color = color
     };
-    SCHEDULE_RENDER_DATA(data, depth, RenderPointData, point, DrawDataType::Point);
+    SCHEDULE_RENDER_DATA(data, RenderPointData, point, DrawDataType::Point);
 }
 
-void Draw::Line(const Vector2 point1, const Vector2 point2, const Color& color, const float_t depth)
+void Draw::Line(const Vector2 point1, const Vector2 point2, const Color& color)
 {
     const LineData data{
         .p1 = point1,
         .p2 = point2,
         .color = color
     };
-    SCHEDULE_RENDER_DATA(data, depth, RenderLineData, line, DrawDataType::Line);
+    SCHEDULE_RENDER_DATA(data, RenderLineData, line, DrawDataType::Line);
 }
 
-void Draw::Line(const Vector2 point1, const Vector2 point2, const Color& color1, const Color& color2, const float_t depth)
+void Draw::Line(const Vector2 point1, const Vector2 point2, const Color& color1, const Color& color2)
 {
     const LineColoredData data{
         .p1 = point1,
@@ -75,10 +75,10 @@ void Draw::Line(const Vector2 point1, const Vector2 point2, const Color& color1,
         .c1 = color1,
         .c2 = color2
     };
-    SCHEDULE_RENDER_DATA(data, depth, RenderLineColoredData, lineColored, DrawDataType::LineColored);
+    SCHEDULE_RENDER_DATA(data, RenderLineColoredData, lineColored, DrawDataType::LineColored);
 }
 
-void Draw::Triangle(const Vector2 point1, const Vector2 point2, const Vector2 point3, const Color& color, const float_t depth)
+void Draw::Triangle(const Vector2 point1, const Vector2 point2, const Vector2 point3, const Color& color)
 {
     const TriangleData data{
         .p1 = point1,
@@ -86,7 +86,7 @@ void Draw::Triangle(const Vector2 point1, const Vector2 point2, const Vector2 po
         .p3 = point3,
         .color = color
     };
-    SCHEDULE_RENDER_DATA_FILLED(data, false, depth, RenderTriangleData, triangle, DrawDataType::Triangle);
+    SCHEDULE_RENDER_DATA_FILLED(data, false, RenderTriangleData, triangle, DrawDataType::Triangle);
 }
 
 void Draw::Triangle(
@@ -95,8 +95,7 @@ void Draw::Triangle(
     const Vector2 point3,
     const Color& color1,
     const Color& color2,
-    const Color& color3,
-    const float_t depth
+    const Color& color3
 )
 {
     const TriangleColoredData data{
@@ -107,10 +106,10 @@ void Draw::Triangle(
         .c2 = color2,
         .c3 = color3
     };
-    SCHEDULE_RENDER_DATA_FILLED(data, false, depth, RenderTriangleColoredData, triangleColored, DrawDataType::TriangleColored);
+    SCHEDULE_RENDER_DATA_FILLED(data, false, RenderTriangleColoredData, triangleColored, DrawDataType::TriangleColored);
 }
 
-void Draw::TriangleFilled(const Vector2 point1, const Vector2 point2, const Vector2 point3, const Color& color, const float_t depth)
+void Draw::TriangleFilled(const Vector2 point1, const Vector2 point2, const Vector2 point3, const Color& color)
 {
     const TriangleData data{
         .p1 = point1,
@@ -118,7 +117,7 @@ void Draw::TriangleFilled(const Vector2 point1, const Vector2 point2, const Vect
         .p3 = point3,
         .color = color
     };
-    SCHEDULE_RENDER_DATA_FILLED(data, true, depth, RenderTriangleData, triangle, DrawDataType::Triangle);
+    SCHEDULE_RENDER_DATA_FILLED(data, true, RenderTriangleData, triangle, DrawDataType::Triangle);
 }
 
 void Draw::TriangleFilled(
@@ -127,8 +126,7 @@ void Draw::TriangleFilled(
     const Vector2 point3,
     const Color& color1,
     const Color& color2,
-    const Color& color3,
-    const float_t depth
+    const Color& color3
 )
 {
     const TriangleColoredData data{
@@ -139,7 +137,7 @@ void Draw::TriangleFilled(
         .c2 = color2,
         .c3 = color3
     };
-    SCHEDULE_RENDER_DATA_FILLED(data, true, depth, RenderTriangleColoredData, triangleColored, DrawDataType::TriangleColored);
+    SCHEDULE_RENDER_DATA_FILLED(data, true, RenderTriangleColoredData, triangleColored, DrawDataType::TriangleColored);
 }
 
 void Draw::Rectangle(
@@ -147,22 +145,20 @@ void Draw::Rectangle(
     const Vector2 size,
     const float_t rotation,
     const Vector2 origin,
-    const Color& color,
-    const float_t depth
+    const Color& color
 )
 {
-    Rectangle({ position, size }, rotation, origin, color, depth);
+    Rectangle({ position, size }, rotation, origin, color);
 }
 
 void Draw::Rectangle(
     const Mountain::Rectangle& rectangle,
     const float_t rotation,
     const Vector2 origin,
-    const Color& color,
-    const float_t depth
+    const Color& color
 )
 {
-    RectangleInternal(rectangle, rotation, origin, false, color, depth);
+    RectangleInternal(rectangle, rotation, origin, false, color);
 }
 
 void Draw::RectangleFilled(
@@ -170,22 +166,20 @@ void Draw::RectangleFilled(
     const Vector2 size,
     const float_t rotation,
     const Vector2 origin,
-    const Color& color,
-    const float_t depth
+    const Color& color
 )
 {
-    RectangleFilled({ position, size }, rotation, origin, color, depth);
+    RectangleFilled({ position, size }, rotation, origin, color);
 }
 
 void Draw::RectangleFilled(
     const Mountain::Rectangle& rectangle,
     const float_t rotation,
     const Vector2 origin,
-    const Color& color,
-    const float_t depth
+    const Color& color
 )
 {
-    RectangleInternal(rectangle, rotation, origin, true, color, depth);
+    RectangleInternal(rectangle, rotation, origin, true, color);
 }
 
 void Draw::Circle(
@@ -193,22 +187,20 @@ void Draw::Circle(
     const float_t radius,
     const float_t thickness,
     const Vector2 scale,
-    const Color& color,
-    const float_t depth
+    const Color& color
 )
 {
-    CircleInternal(center, radius, thickness, false, scale, color, depth);
+    CircleInternal(center, radius, thickness, false, scale, color);
 }
 
 void Draw::CircleFilled(
     const Vector2 center,
     const float_t radius,
     const Vector2 scale,
-    const Color& color,
-    const float_t depth
+    const Color& color
 )
 {
-    CircleInternal(center, radius, 1.f, true, scale, color, depth);
+    CircleInternal(center, radius, 1.f, true, scale, color);
 }
 
 void Draw::Arc(
@@ -218,11 +210,10 @@ void Draw::Arc(
     const float_t deltaAngle,
     const float_t thickness,
     const Vector2 scale,
-    const Color& color,
-    const float_t depth
+    const Color& color
 )
 {
-    ArcInternal(center, radius, startingAngle, deltaAngle, thickness, false, scale, color, depth);
+    ArcInternal(center, radius, startingAngle, deltaAngle, thickness, false, scale, color);
 }
 
 void Draw::ArcFilled(
@@ -231,11 +222,10 @@ void Draw::ArcFilled(
     const float_t startingAngle,
     const float_t deltaAngle,
     const Vector2 scale,
-    const Color& color,
-    const float_t depth
+    const Color& color
 )
 {
-    ArcInternal(center, radius, startingAngle, deltaAngle, 1.f, true, scale, color, depth);
+    ArcInternal(center, radius, startingAngle, deltaAngle, 1.f, true, scale, color);
 }
 
 void Draw::Texture(
@@ -246,8 +236,7 @@ void Draw::Texture(
     const Vector2 origin,
     const Vector2 uv0,
     const Vector2 uv1,
-    const Color& color,
-    const float_t depth
+    const Color& color
 )
 {
     if (origin.x < 0.f || origin.x > 1.f || origin.y < 0.f || origin.y > 1.f)
@@ -270,13 +259,12 @@ void Draw::Texture(
         .color = color
     };
 
-    if (m_SortMode == DrawSortMode::Immediate)
+    if (m_Mode == DrawMode::Immediate)
     {
         RenderTextureData(data, texture.GetId());
         return;
     }
 
-    m_DrawList.depths.Add(depth);
     m_DrawList.texture.Emplace(transformation, uvProjection, color);
 
     if (!m_DrawList.textureId.IsEmpty() && Last(m_DrawList.textureId) == texture.GetId())
@@ -298,8 +286,7 @@ void Draw::Text(
     const std::string& text,
     const Vector2 position,
     const float_t scale,
-    const Color& color,
-    const float_t depth
+    const Color& color
 )
 {
     const TextData data{
@@ -309,7 +296,7 @@ void Draw::Text(
         .scale = scale,
         .color = color
     };
-    SCHEDULE_RENDER_DATA(data, depth, RenderTextData, text, DrawDataType::Text);
+    SCHEDULE_RENDER_DATA(data, RenderTextData, text, DrawDataType::Text);
 }
 
 void Draw::RenderTarget(
@@ -320,8 +307,7 @@ void Draw::RenderTarget(
     const Vector2 origin,
     const Vector2 uv0,
     const Vector2 uv1,
-    const Color& color,
-    const float_t depth
+    const Color& color
 )
 {
     if (origin.x < 0.f || origin.x > 1.f || origin.y < 0.f || origin.y > 1.f)
@@ -345,7 +331,7 @@ void Draw::RenderTarget(
         .scale = scale,
         .color = color
     };
-    SCHEDULE_RENDER_DATA(data, depth, RenderRenderTargetData, renderTarget, DrawDataType::RenderTarget);
+    SCHEDULE_RENDER_DATA(data, RenderRenderTargetData, renderTarget, DrawDataType::RenderTarget);
 }
 #pragma endregion
 
@@ -353,12 +339,10 @@ void Draw::Flush()
 {
     ZoneScoped;
 
-    if (m_SortMode == DrawSortMode::Immediate || m_DrawList.commands.IsEmpty())
+    if (m_Mode == DrawMode::Immediate || m_DrawList.commands.IsEmpty())
         return;
 
     TracyGpuZone("Draw::Flush")
-
-    m_DrawList.Sort(m_SortMode);
 
     size_t pointIndex = 0;
     size_t lineIndex = 0, lineColoredIndex = 0;
@@ -454,16 +438,14 @@ void Draw::Flush()
     m_DrawList.Clear();
 }
 
-void Draw::SetSortMode(const DrawSortMode newSortMode)
+void Draw::SetMode(const DrawMode newMode)
 {
     Flush();
-    m_SortMode = newSortMode;
+    m_Mode = newMode;
 }
 
-void Draw::DrawList::AddCommand(const DrawDataType type, const float_t depth)
+void Draw::DrawList::AddCommand(const DrawDataType type)
 {
-    depths.Add(depth);
-
     if (!commands.IsEmpty())
     {
         CommandData& lastCommand = Last(commands);
@@ -495,36 +477,7 @@ void Draw::DrawList::Clear()
     text.Clear();
     renderTarget.Clear();
 
-    depths.Clear();
     commands.Clear();
-}
-
-void Draw::DrawList::Sort(const DrawSortMode sortMode)
-{
-    if (sortMode == DrawSortMode::Deferred || sortMode == DrawSortMode::Immediate || commands.IsEmpty())
-        return;
-
-    const Comparer<float_t> oppositeComparer = sortMode == DrawSortMode::BackToFront ? CompareGreater<float_t> : CompareLess<float_t>;
-
-    // Insertion sort - not that good, so it needs to be changed for a better algorithm at one point
-
-    /*for (size_t i = 1; i < commands.GetSize(); i++)
-    {
-        const CommandData& command = commands[i];
-        const float_t depth = depths[i];
-
-        size_t j = i;
-
-        for (float_t otherDepth = depths[j - 1]; j > 0 && oppositeComparer(otherDepth, depth); j--)
-        {
-            depths[j] = otherDepth;
-
-            const CommandData& otherCommand = commands[j];
-        }
-
-        depths[j] = depth;
-    }*/
-    // TODO
 }
 
 void Draw::Initialize()
@@ -951,7 +904,7 @@ void Draw::UpdateShaderMatrices()
     m_ArcShader->SetUniform("cameraScale", m_CameraScale);
 }
 
-void Draw::RectangleInternal(const Mountain::Rectangle& rectangle, const float_t rotation, const Vector2 origin, const bool_t filled, const Color& color, const float_t depth)
+void Draw::RectangleInternal(const Mountain::Rectangle& rectangle, const float_t rotation, const Vector2 origin, const bool_t filled, const Color& color)
 {
     if (origin.x < 0.f || origin.x > 1.f || origin.y < 0.f || origin.y > 1.f)
         THROW(ArgumentOutOfRangeException{"Origin must be in the range [{ 0, 0 }, { 1, 1 }]", "origin"});
@@ -963,7 +916,24 @@ void Draw::RectangleInternal(const Mountain::Rectangle& rectangle, const float_t
                         * Matrix::Scaling({ rectangle.size.x, rectangle.size.y, 1.f }),
         .color = color
     };
-    SCHEDULE_RENDER_DATA_FILLED(data, filled, depth, RenderRectangleData, rectangle, DrawDataType::Rectangle);
+
+    if (m_Mode == DrawMode::Immediate)
+    {
+        RenderRectangleData(data, filled);
+    }
+    else
+    {
+        if (filled)
+        {
+            m_DrawList.rectangleFilled.Add(data);
+            m_DrawList.AddCommand(DrawDataType::RectangleFilled);
+        }
+        else
+        {
+            m_DrawList.rectangle.Add(data);
+            m_DrawList.AddCommand(DrawDataType::Rectangle);
+        }
+    }
 }
 
 void Draw::CircleInternal(
@@ -972,8 +942,7 @@ void Draw::CircleInternal(
     const float_t thickness,
     const bool_t filled,
     const Vector2 scale,
-    const Color& color,
-    const float_t depth
+    const Color& color
 )
 {
     if (thickness < 1.f)
@@ -992,7 +961,7 @@ void Draw::CircleInternal(
         .color = color,
         .filled = filled
     };
-    SCHEDULE_RENDER_DATA(data, depth, RenderCircleData, circle, DrawDataType::Circle);
+    SCHEDULE_RENDER_DATA(data, RenderCircleData, circle, DrawDataType::Circle);
 }
 
 void Draw::ArcInternal(
@@ -1003,8 +972,7 @@ void Draw::ArcInternal(
     const float_t thickness,
     const bool_t filled,
     const Vector2 scale,
-    const Color& color,
-    const float_t depth
+    const Color& color
 )
 {
     if (thickness < 1.f)
@@ -1017,7 +985,7 @@ void Draw::ArcInternal(
         return;
 
     if (deltaAngle >= Calc::TwoPi)
-        return CircleInternal(center, radius, thickness, filled, scale, color, depth);
+        return CircleInternal(center, radius, thickness, filled, scale, color);
 
     startingAngle = std::fmodf(startingAngle, Calc::TwoPi);
     if (startingAngle < 0.f)
@@ -1035,7 +1003,7 @@ void Draw::ArcInternal(
         .color = color,
         .filled = filled
     };
-    SCHEDULE_RENDER_DATA(data, depth, RenderArcData, arc, DrawDataType::Arc);
+    SCHEDULE_RENDER_DATA(data, RenderArcData, arc, DrawDataType::Arc);
 }
 
 #pragma region Rendering
