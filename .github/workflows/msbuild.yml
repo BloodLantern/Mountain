@@ -53,6 +53,9 @@ jobs:
         # Run the installation of packages by running `vcpkg install` on the directory of the discovered 'vcpkg.json' file. Default is false.
         runVcpkgInstall: true # optional
 
+    - name: Integrate vcpkg with MSBuild
+      run: $VCPKG_ROOT/vcpkg.exe integrate install
+
     - name: Build
       working-directory: ${{env.GITHUB_WORKSPACE}}
       # Add additional options to the MSBuild command line here (like platform or verbosity level).
