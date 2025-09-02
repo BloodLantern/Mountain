@@ -24,6 +24,8 @@ Most types and functions have documentation in their respective header files, so
 
 You can choose between two ways of using this framework for your projects.
 
+Both require to have [vcpkg](https://vcpkg.io) installed.
+
 ### 1. Use this as a submodule (recommended)
 
 In a directory of your choice within your project, run `git submodule add --recurse-submodules https://github.com/BloodLantern/Mountain.git`.
