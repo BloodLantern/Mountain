@@ -1,3 +1,5 @@
+[![CodeFactor](https://www.codefactor.io/repository/github/bloodlantern/mountain/badge)](https://www.codefactor.io/repository/github/bloodlantern/mountain)
+
 # Mountain
 
 A (currently) Windows-only **C++ Framework for making 2D games**.
