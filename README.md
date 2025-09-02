@@ -1,5 +1,5 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/bloodlantern/mountain/badge)](https://www.codefactor.io/repository/github/bloodlantern/mountain)
-[![Build](https://github.com/BloodLantern/Mountain/actions/workflows/msbuild.yml/badge.svg?branch=master)](https://github.com/BloodLantern/Mountain/actions/workflows/msbuild.yml)
+[![MSBuild](https://github.com/BloodLantern/Mountain/actions/workflows/msbuild.yml/badge.svg?branch=master)](https://github.com/BloodLantern/Mountain/actions/workflows/msbuild.yml)
 
 # Mountain
 
