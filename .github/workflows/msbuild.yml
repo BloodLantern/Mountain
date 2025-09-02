@@ -50,7 +50,6 @@ jobs:
       # uses: lukka/run-vcpkg@5e0cab206a5ea620130caf672fce3e4a6b5666a1
       uses: lukka/run-vcpkg@v11.5
       with:
-        vcpkgDirectory: ${{github.workspace}} # optional, default is ${{ github.workspace }}/vcpkg
         # Run the installation of packages by running `vcpkg install` on the directory of the discovered 'vcpkg.json' file. Default is false.
         runVcpkgInstall: true # optional
 
