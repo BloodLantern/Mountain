@@ -49,9 +49,6 @@ jobs:
       # You may pin to the exact commit or the version.
       # uses: lukka/run-vcpkg@5e0cab206a5ea620130caf672fce3e4a6b5666a1
       uses: lukka/run-vcpkg@v11.5
-      with:
-        # Run the installation of packages by running `vcpkg install` on the directory of the discovered 'vcpkg.json' file. Default is false.
-        runVcpkgInstall: true # optional
 
     - name: Integrate vcpkg with MSBuild
       run: vcpkg integrate install
