@@ -213,7 +213,7 @@
     <ClCompile Include="externals\src\ImGui\imgui_stdlib.cpp" PrecompiledHeader="NotUsing" />
     <ClCompile Include="externals\src\ImGui\imgui_tables.cpp" PrecompiledHeader="NotUsing" />
     <ClCompile Include="externals\src\ImGui\imgui_widgets.cpp" PrecompiledHeader="NotUsing" />
-    <ClCompile Include="externals\src\minimp3.c" PrecompiledHeader="NotUsing" />
+    <ClCompile Include="externals\src\minimp3.c" PrecompiledHeader="NotUsing" WarningLevel="Level1" />
     <ClCompile Include="externals\src\stb_image.c" PrecompiledHeader="NotUsing" />
     <ClCompile Include="externals\src\stb_vorbis_impl.c" PrecompiledHeader="NotUsing" WarningLevel="Level1" />
     <ClCompile Include="src\Mountain\Audio\Audio.cpp" />
