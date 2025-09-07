@@ -135,7 +135,7 @@ void Draw::TriangleFilled(const Vector2 point1, const Vector2 point2, const Vect
         .p3 = point3,
         .color = color
     };
-    SCHEDULE_RENDER_DATA_FILLED(data, true, RenderTriangleData, triangle, DrawDataType::Triangle);
+    SCHEDULE_RENDER_DATA_FILLED(data, true, RenderTriangleData, triangleFilled, DrawDataType::TriangleFilled);
 }
 
 void Draw::TriangleFilled(
@@ -155,7 +155,7 @@ void Draw::TriangleFilled(
         .c2 = color2,
         .c3 = color3
     };
-    SCHEDULE_RENDER_DATA_FILLED(data, true, RenderTriangleColoredData, triangleColored, DrawDataType::TriangleColored);
+    SCHEDULE_RENDER_DATA_FILLED(data, true, RenderTriangleColoredData, triangleColoredFilled, DrawDataType::TriangleColoredFilled);
 }
 
 void Draw::Rectangle(
@@ -267,7 +267,13 @@ void Draw::Texture(
     Matrix transformation = Matrix::Translation(static_cast<Vector3>(position))
         * Matrix::RotationZ(rotation)
         * Matrix::Translation(static_cast<Vector3>(-textureSize * origin * scale))
-        * Matrix::Scaling({ static_cast<float_t>(textureSize.x) * scale.x, static_cast<float_t>(textureSize.y) * scale.y, 1.f });
+        * Matrix::Scaling(
+            {
+                static_cast<float_t>(textureSize.x) * Calc::Abs(uvDiff.x) * scale.x,
+                static_cast<float_t>(textureSize.y) * Calc::Abs(uvDiff.y) * scale.y,
+                1.f
+            }
+        );
 
     Matrix uvProjection = Matrix::Translation(static_cast<Vector3>(lowerUv)) * Matrix::Scaling(static_cast<Vector3>(uvDiff));
 
@@ -283,7 +289,7 @@ void Draw::Texture(
         return;
     }
 
-    m_DrawList.texture.Emplace(transformation, uvProjection, color);
+    m_DrawList.texture.Add(data);
 
     if (!m_DrawList.textureId.IsEmpty() && Last(m_DrawList.textureId) == texture.GetId())
     {
@@ -338,7 +344,13 @@ void Draw::RenderTarget(
     Matrix transformation = Matrix::Translation(static_cast<Vector3>(position))
         * Matrix::RotationZ(rotation)
         * Matrix::Translation(static_cast<Vector3>(-textureSize * origin * scale))
-        * Matrix::Scaling({ static_cast<float_t>(textureSize.x) * scale.x, static_cast<float_t>(textureSize.y) * scale.y, 1.f });
+        * Matrix::Scaling(
+            {
+                static_cast<float_t>(textureSize.x) * Calc::Abs(uvDiff.x) * scale.x,
+                static_cast<float_t>(textureSize.y) * Calc::Abs(uvDiff.y) * scale.y,
+                1.f
+            }
+        );
 
     Matrix uvProjection = Matrix::Translation(static_cast<Vector3>(lowerUv)) * Matrix::Scaling(static_cast<Vector3>(uvDiff));
 
