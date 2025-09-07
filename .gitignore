@@ -1,5 +1,5 @@
-# Created by https://www.toptal.com/developers/gitignore/api/c++,visualstudio,rider,visualstudiocode
-# Edit at https://www.toptal.com/developers/gitignore?templates=c++,visualstudio,rider,visualstudiocode
+# Created by https://www.toptal.com/developers/gitignore/api/c++,visualstudio,rider,visualstudiocode,vcpkg
+# Edit at https://www.toptal.com/developers/gitignore?templates=c++,visualstudio,rider,visualstudiocode,vcpkg
 
 ### C++ ###
 # Prerequisites
@@ -526,7 +526,15 @@ FodyWeavers.xsd
 ### VisualStudio Patch ###
 # Additional files built by Visual Studio
 
-# End of https://www.toptal.com/developers/gitignore/api/c++,visualstudio,rider,visualstudiocode
+### vcpkg ###
+# Vcpkg
+
+vcpkg-manifest-install.log
+
+## Manifest Mode
+vcpkg_installed/
+
+# End of https://www.toptal.com/developers/gitignore/api/c++,visualstudio,rider,visualstudiocode,vcpkg
 
 !Mountain/externals/libs/**
 

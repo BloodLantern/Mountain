@@ -1,4 +1,5 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/bloodlantern/mountain/badge)](https://www.codefactor.io/repository/github/bloodlantern/mountain)
+[![MSBuild](https://github.com/BloodLantern/Mountain/actions/workflows/msbuild.yml/badge.svg?branch=master)](https://github.com/BloodLantern/Mountain/actions/workflows/msbuild.yml)
 
 # Mountain
 
@@ -23,6 +24,8 @@ Most types and functions have documentation in their respective header files, so
 ## How to use this library
 
 You can choose between two ways of using this framework for your projects.
+
+Both require to have [vcpkg](https://vcpkg.io) installed.
 
 ### 1. Use this as a submodule (recommended)
 

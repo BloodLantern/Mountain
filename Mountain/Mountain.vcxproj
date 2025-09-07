@@ -331,8 +331,6 @@
     <Content Include="src\Mountain\BinaryResources\README.md" />
     <Content Include="..\README.md" />
     <Content Include="tools\generate_resources.cmd" />
-    <Content Include="vcpkg-configuration.json" />
-    <Content Include="vcpkg.json" />
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="Mountain.natvis" />
