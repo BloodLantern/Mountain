@@ -613,14 +613,12 @@ namespace Mountain
         Color() = default;
 
         /// @brief Constructs a grayscale color with each component equal to @p rgb
-        ///
         /// @param rgb Red, Green and Blue components
         /// @param a Alpha component
         ATTRIBUTE_NODISCARD
         explicit constexpr Color(float_t rgb, float_t a = 1.f);
 
         /// @brief Constructs a color with each specified component
-        ///
         /// @param r Red component
         /// @param g Green component
         /// @param b Blue component
@@ -629,26 +627,29 @@ namespace Mountain
         constexpr Color(float_t r, float_t g, float_t b, float_t a = 1.f);
 
         /// @brief Constructs a color from a Vector3 and an alpha value
-        ///
         /// @param rgb Red, Green and Blue components
         /// @param a Alpha component
         ATTRIBUTE_NODISCARD
         explicit constexpr Color(const Vector3& rgb, float_t a = 1.f);
 
         /// @brief Constructs a color from a Vector4
-        ///
         /// @param rgba Color components
         ATTRIBUTE_NODISCARD
         explicit constexpr Color(const Vector4& rgba);
 
         /// @brief Constructs a color from four floats at the given pointer address
-        ///
         /// @param data Color components
         ATTRIBUTE_NODISCARD
         explicit constexpr Color(const float* data);
 
+        /// @brief Constructs a color from a 32-bit packed color value
+        /// @param packedValue Packed color value, e.g., @c 0xFFFF0000 for @c Color::Blue()
         ATTRIBUTE_NODISCARD
-        uint32_t GetPackedValue() const;
+        explicit constexpr Color(uint32_t packedValue);
+
+        /// @brief Get a 32-bit packed value for this color in the following order: @c 0xAABBGGRR
+        ATTRIBUTE_NODISCARD
+        constexpr uint32_t GetPackedValue() const;
 
         ATTRIBUTE_NODISCARD
         constexpr float_t* Data();
@@ -656,19 +657,19 @@ namespace Mountain
         ATTRIBUTE_NODISCARD
         constexpr const float_t* Data() const;
 
-        /// @brief Converts the Color to a ColorHsv
+        /// @brief Converts the @c Color to a @c ColorHsva
         ATTRIBUTE_NODISCARD
         constexpr explicit operator ColorHsva() const;
 
-        /// @brief Converts the Color to a Vector3
+        /// @brief Converts the @c Color to a @c Vector3
         ATTRIBUTE_NODISCARD
         constexpr explicit operator Vector3() const;
 
-        /// @brief Converts the Color to a Vector4
+        /// @brief Converts the @c Color to a @c Vector4
         ATTRIBUTE_NODISCARD
         constexpr explicit operator Vector4() const;
 
-        /// @brief Converts the Color to a ImVec4
+        /// @brief Converts the @c Color to a @c ImVec4
         ATTRIBUTE_NODISCARD
         // ReSharper disable once CppNonExplicitConversionOperator
         operator ImVec4() const;
@@ -685,47 +686,38 @@ namespace Mountain
     struct MOUNTAIN_API ColorHsva
     {
         /// @brief Constant for white
-        /// @return Color
         ATTRIBUTE_NODISCARD
         static constexpr ColorHsva White();
 
         /// @brief Constant for gray
-        /// @return Color
         ATTRIBUTE_NODISCARD
         static constexpr ColorHsva Gray();
 
         /// @brief Constant for black
-        /// @return Color
         ATTRIBUTE_NODISCARD
         static constexpr ColorHsva Black();
 
         /// @brief Constant for red
-        /// @return Color
         ATTRIBUTE_NODISCARD
         static constexpr ColorHsva Red();
 
         /// @brief Constant for green
-        /// @return Color
         ATTRIBUTE_NODISCARD
         static constexpr ColorHsva Green();
 
         /// @brief Constant for blue
-        /// @return Color
         ATTRIBUTE_NODISCARD
         static constexpr ColorHsva Blue();
 
         /// @brief Constant for yellow
-        /// @return Color
         ATTRIBUTE_NODISCARD
         static constexpr ColorHsva Yellow();
 
         /// @brief Constant for cyan
-        /// @return Color
         ATTRIBUTE_NODISCARD
         static constexpr ColorHsva LightBlue();
 
         /// @brief Constant for magenta
-        /// @return Color
         ATTRIBUTE_NODISCARD
         static constexpr ColorHsva Magenta();
 
@@ -741,7 +733,6 @@ namespace Mountain
         ColorHsva() = default;
 
         /// @brief Constructs a color with each specified component
-        ///
         /// @param h Hue component
         /// @param s Saturation component
         /// @param v Value component
@@ -749,15 +740,15 @@ namespace Mountain
         ATTRIBUTE_NODISCARD
         constexpr ColorHsva(float_t h, float_t s, float_t v, float_t a = 1.f);
 
-        /// @brief Converts the ColorHsva to a Color
+        /// @brief Converts the @c ColorHsva to a @c Color
         ATTRIBUTE_NODISCARD
         constexpr explicit operator Color() const;
 
-        /// @brief Converts the ColorHsva to a Vector3
+        /// @brief Converts the @c ColorHsva to a @c Vector3
         ATTRIBUTE_NODISCARD
         constexpr explicit operator Vector3() const;
 
-        /// @brief Converts the ColorHsva to a Vector4
+        /// @brief Converts the @c ColorHsva to a @c Vector4
         ATTRIBUTE_NODISCARD
         constexpr explicit operator Vector4() const;
 
@@ -1005,6 +996,24 @@ namespace Mountain
     constexpr Color::Color(const Vector4& rgba): r(rgba.x), g(rgba.y), b(rgba.z), a(rgba.w) {}
 
     constexpr Color::Color(const float* data): r(data[0]), g(data[1]), b(data[2]), a(data[3]) {}
+
+    constexpr Color::Color(const uint32_t packedValue)
+        : r(static_cast<float_t>(packedValue & 0xFF))
+        , g(static_cast<float_t>(packedValue >> 8 & 0xFF))
+        , b(static_cast<float_t>(packedValue >> 16 & 0xFF))
+        , a(static_cast<float_t>(packedValue >> 24))
+    {
+    }
+
+    constexpr uint32_t Color::GetPackedValue() const
+    {
+        const uint8_t byteR = static_cast<uint8_t>(Calc::Round(r * std::numeric_limits<uint8_t>::max()));
+        const uint8_t byteG = static_cast<uint8_t>(Calc::Round(g * std::numeric_limits<uint8_t>::max()));
+        const uint8_t byteB = static_cast<uint8_t>(Calc::Round(b * std::numeric_limits<uint8_t>::max()));
+        const uint8_t byteA = static_cast<uint8_t>(Calc::Round(a * std::numeric_limits<uint8_t>::max()));
+
+        return byteA << 24 | byteB << 16 | byteG << 8 | byteR;
+    }
 
     constexpr float_t* Color::Data() { return &r; }
 

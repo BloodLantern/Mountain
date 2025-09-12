@@ -4,16 +4,6 @@
 
 using namespace Mountain;
 
-uint32_t Color::GetPackedValue() const
-{
-    const uint8_t byteR = static_cast<uint8_t>(Calc::Round(r * std::numeric_limits<uint8_t>::max()));
-    const uint8_t byteG = static_cast<uint8_t>(Calc::Round(g * std::numeric_limits<uint8_t>::max()));
-    const uint8_t byteB = static_cast<uint8_t>(Calc::Round(b * std::numeric_limits<uint8_t>::max()));
-    const uint8_t byteA = static_cast<uint8_t>(Calc::Round(a * std::numeric_limits<uint8_t>::max()));
-
-    return byteA << 24 | byteB << 16 | byteG << 8 | byteR;
-}
-
 Color::operator ImVec4() const { return ImVec4{ r, g, b, a }; }
 
 std::string Color::ToString() const
