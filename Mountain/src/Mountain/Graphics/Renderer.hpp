@@ -54,6 +54,7 @@ namespace Mountain
 
         static inline Pointer<Font> m_DefaultFont;
         static inline List<DebugStringData> m_DebugStrings;
+        static inline std::mutex m_DebugStringsMutex;
 
         static bool_t Initialize(const std::string& windowTitle, Vector2i windowSize, const OpenGlVersion& glVersion = {});
         static void PreFrame();

@@ -154,6 +154,7 @@ Mountain::RenderTarget& Mountain::Renderer::GetDefaultRenderTarget() { return *m
 
 void Mountain::Renderer::DebugString(std::string str, const float_t duration, const Color& color)
 {
+    m_DebugStringsMutex.lock();
     m_DebugStrings.Insert(
         0,
         {
@@ -163,11 +164,14 @@ void Mountain::Renderer::DebugString(std::string str, const float_t duration, co
             .duration = duration
         }
     );
+    m_DebugStringsMutex.unlock();
 }
 
 void Mountain::Renderer::DebugString(DebugStringData data)
 {
+    m_DebugStringsMutex.lock();
     m_DebugStrings.Insert(0, std::move(data));
+    m_DebugStringsMutex.unlock();
 }
 
 Mountain::OpenGlVersion& Mountain::Renderer::GetOpenGlVersion() { return m_GlVersion; }
