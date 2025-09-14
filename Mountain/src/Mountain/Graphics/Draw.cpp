@@ -260,6 +260,12 @@ void Draw::Texture(
     if (origin.x < 0.f || origin.x > 1.f || origin.y < 0.f || origin.y > 1.f)
         THROW(ArgumentOutOfRangeException{"Origin must be in the range [{ 0, 0 }, { 1, 1 }]", "origin"});
 
+    if (!texture.IsLoaded())
+    {
+        Logger::LogWarning("Trying to draw the non-loaded Texture {}, ignoring", texture.GetName());
+        return;
+    }
+
     const Vector2 uvDiff = uv1 - uv0;
     const Vector2 lowerUv = uv0;
 
