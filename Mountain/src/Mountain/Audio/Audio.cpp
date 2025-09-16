@@ -9,6 +9,7 @@
 
 #include <ImGui/imgui.h>
 
+#include "Mountain/Globals.hpp"
 #include "Mountain/Audio/AudioContext.hpp"
 #include "Mountain/Utils/Logger.hpp"
 
@@ -16,6 +17,9 @@ using namespace Mountain;
 
 bool_t Audio::Initialize()
 {
+    if (NoBuiltinAudio)
+        return true;
+
     ZoneScoped;
 
     Logger::LogVerbose("Initializing audio");
@@ -35,6 +39,9 @@ bool_t Audio::Initialize()
 
 void Audio::Shutdown()
 {
+    if (NoBuiltinAudio)
+        return;
+
     ZoneScoped;
 
     Logger::LogVerbose("Shutting down audio");
@@ -49,6 +56,9 @@ void Audio::Shutdown()
 
 void Audio::Update()
 {
+    if (NoBuiltinAudio)
+        return;
+
     ZoneScoped;
 
     if (!m_DefaultDeviceChanged)

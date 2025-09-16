@@ -33,4 +33,7 @@ namespace Mountain
     PUBLIC_GLOBAL(bool_t, ManualFreezeFrames, false);
     /// @brief Whether <b>not</b> to call @c Coroutine::UpdateAll() every frame.
     PUBLIC_GLOBAL(bool_t, ManualCoroutineUpdates, false);
+    /// @brief Whether to disable the default Mountain audio API.
+    /// @details This can be used if you want another audio API or if you want to manage the audio yourself.
+    PUBLIC_GLOBAL(bool_t, NoBuiltinAudio, false);
 }
