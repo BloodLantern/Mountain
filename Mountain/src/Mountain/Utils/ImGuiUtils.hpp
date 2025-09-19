@@ -114,7 +114,7 @@ namespace ImGui
     bool ComboEnum(const char* label, T* v, ImGuiComboFlags flags = ImGuiComboFlags_None);
 
     template <>
-    bool ComboEnum<Easing::Type>(const char* label, Easing::Type* v, ImGuiComboFlags flags);
+    MOUNTAIN_API bool ComboEnum<Easing::Type>(const char* label, Easing::Type* v, ImGuiComboFlags flags);
 }
 // ReSharper restore CppInconsistentNaming
 

@@ -288,7 +288,10 @@ namespace Mountain
         /// @remark This is also called during @c Renderer::PushRenderTarget() and @c Renderer::PopRenderTarget().
         MOUNTAIN_API static void Flush();
 
-        GETTER(DrawMode, Mode, m_Mode)
+        STATIC_GETTER(const Matrix&, ProjectionMatrix, m_ProjectionMatrix)
+        STATIC_GETTER(const Matrix&, CameraMatrix, m_CameraMatrix)
+        STATIC_GETTER(Vector2, CameraScale, m_CameraScale)
+        STATIC_GETTER(DrawMode, Mode, m_Mode)
 
         /// @brief Sets the new sort mode, calling @c Flush() beforehand.
         MOUNTAIN_API static void SetMode(DrawMode newMode);
