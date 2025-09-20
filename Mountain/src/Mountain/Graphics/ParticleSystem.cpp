@@ -253,8 +253,6 @@ void ParticleSystem::RenderImGui()
 
     if (CheckAndDeleteRawDataCopy(dataCopy))
     {
-        Renderer::DebugString("Updating particle system state live");
-
         const float_t oldTime = m_PlaybackTime;
         const float_t restartTime = m_PlaybackTime > duration ? m_PlaybackTime - duration - Calc::Modulo(m_PlaybackTime, duration) : 0.f;
 

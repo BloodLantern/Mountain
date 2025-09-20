@@ -436,14 +436,14 @@ namespace Mountain
         static inline Graphics::GpuVertexArray m_PointVao, m_LineVao, m_LineColoredVao, m_TriangleVao, m_TriangleColoredVao, m_RectangleVao,
                                                m_CircleVao, m_ArcVao, m_TextureVao, m_TextVao, m_RenderTargetVao, m_ParticleVao;
 
-        static inline Matrix m_ProjectionMatrix;
+        MOUNTAIN_API static inline Matrix m_ProjectionMatrix;
 
-        static inline Matrix m_CameraMatrix = Matrix::Identity();
-        static inline Vector2 m_CameraScale = Vector2::One();
+        MOUNTAIN_API static inline Matrix m_CameraMatrix = Matrix::Identity();
+        MOUNTAIN_API static inline Vector2 m_CameraScale = Vector2::One();
 
         static inline DrawList m_DrawList;
 
-        static inline DrawMode m_Mode = DrawMode::Deferred;
+        MOUNTAIN_API static inline DrawMode m_Mode = DrawMode::Deferred;
 
         static void Initialize();
         static void LoadResources();
