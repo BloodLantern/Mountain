@@ -183,5 +183,17 @@ namespace Mountain {}
 #define TO_STRING(x) #x
 #define STRINGIFY(x) TO_STRING(x)
 
+#define TO_WSTRING(x) L#x
+#define WSTRINGIFY(x) TO_WSTRING(x)
+
+#define RAW_STRING_HELPER(x) R ## #x
+#define TO_RAW_STRING(x) RAW_STRING_HELPER((x))
+
+#define RAW_WSTRING_HELPER(x) LR ## #x
+#define TO_RAW_WSTRING(x) RAW_WSTRING_HELPER((x))
+
 /// @brief Gets a temporary C null-terminated string from a @c std::string_view.
 #define STRING_VIEW_TO_C_STR(view) ::std::string{view}.c_str()
+
+/// @brief Gets a temporary C null-terminated string from a @c std::wstring_view.
+#define WSTRING_VIEW_TO_C_STR(view) ::std::wstring{view}.c_str()
