@@ -47,6 +47,9 @@
     const EnumeratedType* FindLast(const ::Mountain::Predicate<EnumeratedType>& predicate) const { return ::Mountain::FindLast(*this, predicate); } \
     \
     ATTRIBUTE_NODISCARD \
+    std::optional<size_t> FindIndex(const ::Mountain::Predicate<EnumeratedType>& predicate) const { return ::Mountain::FindIndex(*this, predicate); } \
+    \
+    ATTRIBUTE_NODISCARD \
     EnumeratedType& First() { return ::Mountain::First(*this); } \
     \
     ATTRIBUTE_NODISCARD \
@@ -155,6 +158,10 @@ namespace Mountain
     template <Requirements::MountainEnumerable EnumerableT, typename T = Meta::MountainEnumerableType<EnumerableT>>
     ATTRIBUTE_NODISCARD
     const T* FindLast(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate);
+
+    template <Requirements::MountainEnumerable EnumerableT, typename T = Meta::MountainEnumerableType<EnumerableT>>
+    ATTRIBUTE_NODISCARD
+    std::optional<size_t> FindIndex(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate);
 
     /// @brief Returns the first element of a sequence.
     template <Requirements::MountainEnumerable EnumerableT, typename T = Meta::MountainEnumerableType<EnumerableT>>
@@ -384,7 +391,7 @@ namespace Mountain
     template <Requirements::MountainEnumerable EnumerableT, typename T>
     const T* FindLast(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate)
     {
-        for (typename EnumerableT::ConstIterator it = enumerable.GetEndConstIterator() - 1; it + 1 != enumerable.GetBeginConstIterator(); it--)
+        for (typename EnumerableT::ConstIterator it = enumerable.cend() - 1; it + 1 != enumerable.cbegin(); it--)
         {
             const T& value = *it;
             if (predicate(value))
@@ -392,6 +399,18 @@ namespace Mountain
         }
 
         return nullptr;
+    }
+
+    template <Requirements::MountainEnumerable EnumerableT, typename T>
+    std::optional<size_t> FindIndex(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate)
+    {
+        for (typename EnumerableT::ConstIterator it = enumerable.cbegin(); it != enumerable.cend(); it++)
+        {
+            if (predicate(*it))
+                return it - enumerable.cbegin();
+        }
+
+        return {};
     }
 
     template <Requirements::MountainEnumerable EnumerableT, typename T>
