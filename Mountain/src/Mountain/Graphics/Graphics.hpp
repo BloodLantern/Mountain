@@ -75,6 +75,17 @@ namespace Mountain::Graphics
 
     enum class InternalFormat : uint8_t
     {
+        DepthComponent,
+        DepthStencil,
+        Red,
+        RedGreen,
+        RedGreenBlue,
+        RedGreenBlueAlpha,
+
+        DepthComponent16,
+        DepthComponent24,
+        DepthComponent32Float,
+
         Red8,
         Red8Signed,
         Red16,
@@ -159,7 +170,9 @@ namespace Mountain::Graphics
         RedGreenBlue,
         BlueGreenRed,
         RedGreenBlueAlpha,
-        BlueGreenRedAlpha
+        BlueGreenRedAlpha,
+
+        DepthComponent
     };
 
     enum class DataType : uint8_t
@@ -665,6 +678,45 @@ namespace Mountain::Graphics
         IncompleteLayerTargets
     };
 
+    enum class FramebufferAttachment : uint8_t
+    {
+        Color0,
+        Color1,
+        Color2,
+        Color3,
+        Color4,
+        Color5,
+        Color6,
+        Color7,
+        Color8,
+        Color9,
+        Color10,
+        Color11,
+        Color12,
+        Color13,
+        Color14,
+        Color15,
+        Color16,
+        Color17,
+        Color18,
+        Color19,
+        Color20,
+        Color21,
+        Color22,
+        Color23,
+        Color24,
+        Color25,
+        Color26,
+        Color27,
+        Color28,
+        Color29,
+        Color30,
+        Color31,
+        Depth,
+        Stencil,
+        DepthStencil
+    };
+
     template <typename T>
     concept OpenGlConvertibleT = Meta::IsAny<
         T,
@@ -680,7 +732,8 @@ namespace Mountain::Graphics
         DrawMode,
         BlendFunction,
         FramebufferType,
-        FramebufferStatus
+        FramebufferStatus,
+        FramebufferAttachment
     >;
 #pragma endregion
 
@@ -862,6 +915,9 @@ namespace Mountain::Graphics
     template <>
     ATTRIBUTE_NODISCARD
     MOUNTAIN_API FramebufferStatus FromOpenGl<FramebufferStatus>(int32_t value);
+    template <>
+    ATTRIBUTE_NODISCARD
+    MOUNTAIN_API FramebufferAttachment FromOpenGl<FramebufferAttachment>(int32_t value);
 
     ATTRIBUTE_NODISCARD
     MOUNTAIN_API int32_t ToOpenGl(MagnificationFilter value);
@@ -889,6 +945,8 @@ namespace Mountain::Graphics
     MOUNTAIN_API int32_t ToOpenGl(FramebufferType value);
     ATTRIBUTE_NODISCARD
     MOUNTAIN_API int32_t ToOpenGl(FramebufferStatus value);
+    ATTRIBUTE_NODISCARD
+    MOUNTAIN_API int32_t ToOpenGl(FramebufferAttachment value);
 }
 
 ENUM_FLAGS(Mountain::Graphics::GpuDataSynchronizationFlags);

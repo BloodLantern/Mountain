@@ -21,7 +21,7 @@
 /// - @c ArgumentNullException
 /// - @c ArgumentOutOfRangeException
 ///
-/// In a @c constexpr context, however, the classic @c throw should be preferred as this one cannot be used.
+/// In a @c constexpr context, instead use the classic @c throw.
 #define THROW(...) \
     do \
     { \

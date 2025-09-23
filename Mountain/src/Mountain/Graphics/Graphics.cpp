@@ -335,6 +335,16 @@ Graphics::InternalFormat Graphics::FromOpenGl<Graphics::InternalFormat>(const in
 {
     switch (value)
     {
+        case GL_DEPTH_COMPONENT: return InternalFormat::DepthComponent;
+        case GL_DEPTH_STENCIL: return InternalFormat::DepthStencil;
+        case GL_RED: return InternalFormat::Red;
+        case GL_RG: return InternalFormat::RedGreen;
+        case GL_RGB: return InternalFormat::RedGreenBlue;
+        case GL_RGBA: return InternalFormat::RedGreenBlueAlpha;
+
+        case GL_DEPTH_COMPONENT16: return InternalFormat::DepthComponent16;
+        case GL_DEPTH_COMPONENT24: return InternalFormat::DepthComponent24;
+        case GL_DEPTH_COMPONENT32F: return InternalFormat::DepthComponent32Float;
         case GL_R8: return InternalFormat::Red8;
         case GL_R8_SNORM: return InternalFormat::Red8Signed;
         case GL_R16: return InternalFormat::Red16;
@@ -413,6 +423,7 @@ Graphics::Format Graphics::FromOpenGl<Graphics::Format>(const int32_t value)
         case GL_BGR: return Format::BlueGreenRed;
         case GL_RGBA: return Format::RedGreenBlueAlpha;
         case GL_BGRA: return Format::BlueGreenRedAlpha;
+        case GL_DEPTH_COMPONENT: return Format::DepthComponent;
 
         default: THROW(ArgumentOutOfRangeException{"Invalid format", "value"});
     }
@@ -823,6 +834,51 @@ Graphics::FramebufferStatus Graphics::FromOpenGl<Graphics::FramebufferStatus>(co
     }
 }
 
+template <>
+Graphics::FramebufferAttachment Graphics::FromOpenGl<Graphics::FramebufferAttachment>(const int32_t value)
+{
+    switch (value)
+    {
+        case GL_COLOR_ATTACHMENT0: return FramebufferAttachment::Color0;
+        case GL_COLOR_ATTACHMENT1: return FramebufferAttachment::Color1;
+        case GL_COLOR_ATTACHMENT2: return FramebufferAttachment::Color2;
+        case GL_COLOR_ATTACHMENT3: return FramebufferAttachment::Color3;
+        case GL_COLOR_ATTACHMENT4: return FramebufferAttachment::Color4;
+        case GL_COLOR_ATTACHMENT5: return FramebufferAttachment::Color5;
+        case GL_COLOR_ATTACHMENT6: return FramebufferAttachment::Color6;
+        case GL_COLOR_ATTACHMENT7: return FramebufferAttachment::Color7;
+        case GL_COLOR_ATTACHMENT8: return FramebufferAttachment::Color8;
+        case GL_COLOR_ATTACHMENT9: return FramebufferAttachment::Color9;
+        case GL_COLOR_ATTACHMENT10: return FramebufferAttachment::Color10;
+        case GL_COLOR_ATTACHMENT11: return FramebufferAttachment::Color11;
+        case GL_COLOR_ATTACHMENT12: return FramebufferAttachment::Color12;
+        case GL_COLOR_ATTACHMENT13: return FramebufferAttachment::Color13;
+        case GL_COLOR_ATTACHMENT14: return FramebufferAttachment::Color14;
+        case GL_COLOR_ATTACHMENT15: return FramebufferAttachment::Color15;
+        case GL_COLOR_ATTACHMENT16: return FramebufferAttachment::Color16;
+        case GL_COLOR_ATTACHMENT17: return FramebufferAttachment::Color17;
+        case GL_COLOR_ATTACHMENT18: return FramebufferAttachment::Color18;
+        case GL_COLOR_ATTACHMENT19: return FramebufferAttachment::Color19;
+        case GL_COLOR_ATTACHMENT20: return FramebufferAttachment::Color20;
+        case GL_COLOR_ATTACHMENT21: return FramebufferAttachment::Color21;
+        case GL_COLOR_ATTACHMENT22: return FramebufferAttachment::Color22;
+        case GL_COLOR_ATTACHMENT23: return FramebufferAttachment::Color23;
+        case GL_COLOR_ATTACHMENT24: return FramebufferAttachment::Color24;
+        case GL_COLOR_ATTACHMENT25: return FramebufferAttachment::Color25;
+        case GL_COLOR_ATTACHMENT26: return FramebufferAttachment::Color26;
+        case GL_COLOR_ATTACHMENT27: return FramebufferAttachment::Color27;
+        case GL_COLOR_ATTACHMENT28: return FramebufferAttachment::Color28;
+        case GL_COLOR_ATTACHMENT29: return FramebufferAttachment::Color29;
+        case GL_COLOR_ATTACHMENT30: return FramebufferAttachment::Color30;
+        case GL_COLOR_ATTACHMENT31: return FramebufferAttachment::Color31;
+        case GL_DEPTH_ATTACHMENT: return FramebufferAttachment::Depth;
+        case GL_STENCIL_ATTACHMENT: return FramebufferAttachment::Stencil;
+        case GL_DEPTH_STENCIL_ATTACHMENT: return FramebufferAttachment::DepthStencil;
+
+        default: THROW(ArgumentOutOfRangeException{"Invalid framebuffer attachment", "value"});
+    }
+}
+
 int32_t Graphics::ToOpenGl(const MagnificationFilter value)
 {
     switch (value)
@@ -863,6 +919,16 @@ int32_t Graphics::ToOpenGl(const InternalFormat value)
 {
     switch (value)
     {
+        case InternalFormat::DepthComponent: return GL_DEPTH_COMPONENT;
+        case InternalFormat::DepthStencil: return GL_DEPTH_STENCIL;
+        case InternalFormat::Red: return GL_RED;
+        case InternalFormat::RedGreen: return GL_RG;
+        case InternalFormat::RedGreenBlue: return GL_RGB;
+        case InternalFormat::RedGreenBlueAlpha: return GL_RGBA;
+
+        case InternalFormat::DepthComponent16: return GL_DEPTH_COMPONENT16;
+        case InternalFormat::DepthComponent24: return GL_DEPTH_COMPONENT24;
+        case InternalFormat::DepthComponent32Float: return GL_DEPTH_COMPONENT32F;
         case InternalFormat::Red8: return GL_R8;
         case InternalFormat::Red8Signed: return GL_R8_SNORM;
         case InternalFormat::Red16: return GL_R16;
@@ -940,6 +1006,7 @@ int32_t Graphics::ToOpenGl(const Format value)
         case Format::BlueGreenRed: return GL_BGR;
         case Format::RedGreenBlueAlpha: return GL_RGBA;
         case Format::BlueGreenRedAlpha: return GL_BGRA;
+        case Format::DepthComponent: return GL_DEPTH_COMPONENT;
     }
 
     THROW(ArgumentOutOfRangeException{"Invalid format", "value"});
@@ -1340,4 +1407,48 @@ int32_t Graphics::ToOpenGl(const FramebufferStatus value)
     }
 
     THROW(ArgumentOutOfRangeException{"Invalid framebuffer status", "value"});
+}
+
+int32_t Graphics::ToOpenGl(const FramebufferAttachment value)
+{
+    switch (value)
+    {
+        case FramebufferAttachment::Color0: return GL_COLOR_ATTACHMENT0;
+        case FramebufferAttachment::Color1: return GL_COLOR_ATTACHMENT1;
+        case FramebufferAttachment::Color2: return GL_COLOR_ATTACHMENT2;
+        case FramebufferAttachment::Color3: return GL_COLOR_ATTACHMENT3;
+        case FramebufferAttachment::Color4: return GL_COLOR_ATTACHMENT4;
+        case FramebufferAttachment::Color5: return GL_COLOR_ATTACHMENT5;
+        case FramebufferAttachment::Color6: return GL_COLOR_ATTACHMENT6;
+        case FramebufferAttachment::Color7: return GL_COLOR_ATTACHMENT7;
+        case FramebufferAttachment::Color8: return GL_COLOR_ATTACHMENT8;
+        case FramebufferAttachment::Color9: return GL_COLOR_ATTACHMENT9;
+        case FramebufferAttachment::Color10: return GL_COLOR_ATTACHMENT10;
+        case FramebufferAttachment::Color11: return GL_COLOR_ATTACHMENT11;
+        case FramebufferAttachment::Color12: return GL_COLOR_ATTACHMENT12;
+        case FramebufferAttachment::Color13: return GL_COLOR_ATTACHMENT13;
+        case FramebufferAttachment::Color14: return GL_COLOR_ATTACHMENT14;
+        case FramebufferAttachment::Color15: return GL_COLOR_ATTACHMENT15;
+        case FramebufferAttachment::Color16: return GL_COLOR_ATTACHMENT16;
+        case FramebufferAttachment::Color17: return GL_COLOR_ATTACHMENT17;
+        case FramebufferAttachment::Color18: return GL_COLOR_ATTACHMENT18;
+        case FramebufferAttachment::Color19: return GL_COLOR_ATTACHMENT19;
+        case FramebufferAttachment::Color20: return GL_COLOR_ATTACHMENT20;
+        case FramebufferAttachment::Color21: return GL_COLOR_ATTACHMENT21;
+        case FramebufferAttachment::Color22: return GL_COLOR_ATTACHMENT22;
+        case FramebufferAttachment::Color23: return GL_COLOR_ATTACHMENT23;
+        case FramebufferAttachment::Color24: return GL_COLOR_ATTACHMENT24;
+        case FramebufferAttachment::Color25: return GL_COLOR_ATTACHMENT25;
+        case FramebufferAttachment::Color26: return GL_COLOR_ATTACHMENT26;
+        case FramebufferAttachment::Color27: return GL_COLOR_ATTACHMENT27;
+        case FramebufferAttachment::Color28: return GL_COLOR_ATTACHMENT28;
+        case FramebufferAttachment::Color29: return GL_COLOR_ATTACHMENT29;
+        case FramebufferAttachment::Color30: return GL_COLOR_ATTACHMENT30;
+        case FramebufferAttachment::Color31: return GL_COLOR_ATTACHMENT31;
+        case FramebufferAttachment::Depth: return GL_DEPTH_ATTACHMENT;
+        case FramebufferAttachment::Stencil: return GL_STENCIL_ATTACHMENT;
+        case FramebufferAttachment::DepthStencil: return GL_DEPTH_STENCIL_ATTACHMENT;
+    }
+
+    THROW(ArgumentOutOfRangeException{"Invalid framebuffer attachment", "value"});
 }

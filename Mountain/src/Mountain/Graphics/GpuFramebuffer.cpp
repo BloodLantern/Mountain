@@ -10,14 +10,14 @@ void GpuFramebuffer::Delete() { glDeleteFramebuffers(1, &m_Id); m_Id = 0; }
 
 void GpuFramebuffer::Recreate() { Delete(); Create(); }
 
-void GpuFramebuffer::SetTexture(const uint32_t textureId, const int32_t mipmapLevel) const
+void GpuFramebuffer::SetTexture(const uint32_t textureId, const FramebufferAttachment attachment, const int32_t mipmapLevel) const
 {
-    glNamedFramebufferTexture(m_Id, GL_COLOR_ATTACHMENT0, textureId, mipmapLevel);
+    glNamedFramebufferTexture(m_Id, ToOpenGl(attachment), textureId, mipmapLevel);
 }
 
-void GpuFramebuffer::SetTexture(const GpuTexture gpuTexture, const int32_t mipmapLevel) const
+void GpuFramebuffer::SetTexture(const GpuTexture gpuTexture, const FramebufferAttachment attachment, const int32_t mipmapLevel) const
 {
-    SetTexture(gpuTexture.GetId(), mipmapLevel);
+    SetTexture(gpuTexture.GetId(), attachment, mipmapLevel);
 }
 
 FramebufferStatus GpuFramebuffer::CheckStatus(const FramebufferType type) const

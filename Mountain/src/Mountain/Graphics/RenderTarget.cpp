@@ -42,21 +42,23 @@ void RenderTarget::Initialize(const Vector2i size, const Graphics::Magnification
     m_Texture.SetWrappingHorizontal(Graphics::Wrapping::ClampToEdge);
     m_Texture.SetWrappingVertical(Graphics::Wrapping::ClampToEdge);
 
-    m_Texture.SetData(Graphics::InternalFormat::RedGreenBlueAlpha32Float, size, Graphics::Format::RedGreenBlueAlpha, Graphics::DataType::UnsignedByte, nullptr);
+    m_Texture.SetData(
+        Graphics::InternalFormat::RedGreenBlueAlpha32Float,
+        size,
+        Graphics::Format::RedGreenBlueAlpha,
+        Graphics::DataType::UnsignedByte,
+        nullptr
+    );
 
     // Framebuffer
 
     m_Framebuffer.Create();
-    BindFramebuffer(Graphics::FramebufferType::Framebuffer, m_Framebuffer);
-
-    m_Framebuffer.SetTexture(m_Texture, 0);
+    m_Framebuffer.SetTexture(m_Texture, Graphics::FramebufferAttachment::Color0, 0);
 
     if (m_Framebuffer.CheckStatus(Graphics::FramebufferType::Framebuffer) != Graphics::FramebufferStatus::Complete)
         Logger::LogError("Incomplete framebuffer after RenderTarget creation");
     else
         m_Initialized = true;
-
-    BindFramebuffer(Graphics::FramebufferType::Framebuffer, 0);
 }
 
 void RenderTarget::Reset()
@@ -95,8 +97,6 @@ void RenderTarget::DeleteLightSource(const LightSource& lightSource)
 
 void RenderTarget::ClearLightSources() { m_LightSources.Clear(); }
 
-const List<LightSource>& RenderTarget::GetLightSources() const { return m_LightSources; }
-
 void RenderTarget::SetDebugName(ATTRIBUTE_MAYBE_UNUSED const std::string_view name) const
 {
 #ifdef _DEBUG
@@ -106,32 +106,22 @@ void RenderTarget::SetDebugName(ATTRIBUTE_MAYBE_UNUSED const std::string_view na
 #endif
 }
 
-uint32_t RenderTarget::GetTextureId() const { return m_Texture.GetId(); }
-
-Graphics::GpuTexture RenderTarget::GetGpuTexture() const { return m_Texture; }
-
-bool_t RenderTarget::GetInitialized() const { return m_Initialized; }
-
-Vector2i RenderTarget::GetSize() const { return m_Size; }
-
 void RenderTarget::SetSize(const Vector2i newSize)
 {
     if (!m_Initialized)
         THROW(InvalidOperationException{"Cannot set the size of an uninitialized RenderTarget"});
 
-    m_Texture.SetData(Graphics::InternalFormat::RedGreenBlueAlpha32Float, newSize, Graphics::Format::RedGreenBlueAlpha, Graphics::DataType::UnsignedByte, nullptr);
-
-    BindFramebuffer(Graphics::FramebufferType::Framebuffer, m_Framebuffer);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_Texture.GetId(), 0);
-    BindFramebuffer(Graphics::FramebufferType::Framebuffer, 0);
+    m_Texture.SetData(
+        Graphics::InternalFormat::RedGreenBlueAlpha32Float,
+        newSize,
+        Graphics::Format::RedGreenBlueAlpha,
+        Graphics::DataType::UnsignedByte,
+        nullptr
+    );
+    m_Framebuffer.SetTexture(m_Texture.GetId(), Graphics::FramebufferAttachment::Color0);
 
     m_Size = newSize;
     m_Projection = ComputeProjection(newSize);
-}
-
-Graphics::MagnificationFilter RenderTarget::GetFilter() const
-{
-    return m_Filter;
 }
 
 void RenderTarget::SetFilter(const Graphics::MagnificationFilter newFilter)
@@ -147,8 +137,6 @@ void RenderTarget::SetFilter(const Graphics::MagnificationFilter newFilter)
     m_Filter = newFilter;
 }
 
-const Matrix& RenderTarget::GetCameraMatrix() const { return m_CameraMatrix; }
-
 void RenderTarget::SetCameraMatrix(const Matrix& newCameraMatrix)
 {
     m_CameraMatrix = newCameraMatrix;
@@ -160,13 +148,11 @@ void RenderTarget::SetCameraMatrix(const Matrix& newCameraMatrix)
     m_CameraScale = { (b - a).Length() * 0.5f, (c - b).Length() * 0.5f };
 
     // Update the Draw class fields only if this RenderTarget is the current one
-    GLint framebuffer;
-    glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING, &framebuffer);
+    int32_t framebuffer;
+    Graphics::GetConstant(Graphics::Constant::DrawFramebufferBinding, &framebuffer);
     if (static_cast<uint32_t>(framebuffer) == m_Framebuffer.GetId())
         UpdateDrawCamera();
 }
-
-const Vector2& RenderTarget::GetCameraScale() const { return m_CameraScale; }
 
 Matrix RenderTarget::ComputeProjection(const Vector2i size)
 {

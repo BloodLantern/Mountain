@@ -15,8 +15,8 @@ namespace Mountain::Graphics
         /// @brief Shorthand for @code Delete(); Create();@endcode
         void Recreate();
 
-        void SetTexture(uint32_t textureId, int32_t mipmapLevel) const;
-        void SetTexture(GpuTexture gpuTexture, int32_t mipmapLevel) const;
+        void SetTexture(uint32_t textureId, FramebufferAttachment attachment, int32_t mipmapLevel = 0) const;
+        void SetTexture(GpuTexture gpuTexture, FramebufferAttachment attachment, int32_t mipmapLevel = 0) const;
 
         ATTRIBUTE_NODISCARD
         FramebufferStatus CheckStatus(FramebufferType type) const;

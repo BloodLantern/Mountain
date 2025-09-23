@@ -42,7 +42,6 @@ namespace Mountain
         MOUNTAIN_API LightSource& NewLightSource();
         MOUNTAIN_API void DeleteLightSource(const LightSource& lightSource);
         MOUNTAIN_API void ClearLightSources();
-        MOUNTAIN_API const List<LightSource>& GetLightSources() const;
 
         /// @brief Adds a friendly debug name for this RenderTarget.
         /// This is used when debugging graphics in external applications such as Nsight or RenderDoc.
@@ -50,29 +49,20 @@ namespace Mountain
         /// @param name The name of this RenderTarget
         MOUNTAIN_API void SetDebugName(std::string_view name) const;
 
-        ATTRIBUTE_NODISCARD
-        MOUNTAIN_API uint32_t GetTextureId() const;
+        GETTER(const List<LightSource>&, LightSources, m_LightSources)
+        GETTER(Graphics::GpuFramebuffer, GpuFramebuffer, m_Framebuffer)
+        GETTER(uint32_t, FramebufferId, m_Framebuffer.GetId())
+        GETTER(Graphics::GpuTexture, GpuTexture, m_Texture)
+        GETTER(uint32_t, TextureId, m_Texture.GetId())
+        GETTER(bool_t, Initialized, m_Initialized)
+        GETTER(Vector2i, Size, m_Size)
+        GETTER(Graphics::MagnificationFilter, Filter, m_Filter)
+        GETTER(const Matrix&, CameraMatrix, m_CameraMatrix)
+        GETTER(Vector2, CameraScale, m_CameraScale)
 
-        ATTRIBUTE_NODISCARD
-        MOUNTAIN_API Graphics::GpuTexture GetGpuTexture() const;
-
-        ATTRIBUTE_NODISCARD
-        MOUNTAIN_API bool_t GetInitialized() const;
-
-        ATTRIBUTE_NODISCARD
-        MOUNTAIN_API Vector2i GetSize() const;
         MOUNTAIN_API void SetSize(Vector2i newSize);
-
-        ATTRIBUTE_NODISCARD
-        MOUNTAIN_API Graphics::MagnificationFilter GetFilter() const;
         MOUNTAIN_API void SetFilter(Graphics::MagnificationFilter newFilter);
-
-        ATTRIBUTE_NODISCARD
-        MOUNTAIN_API const Matrix& GetCameraMatrix() const;
         MOUNTAIN_API void SetCameraMatrix(const Matrix& newCameraMatrix);
-
-        ATTRIBUTE_NODISCARD
-        MOUNTAIN_API const Vector2& GetCameraScale() const;
 
     private:
         Graphics::GpuTexture m_Texture;
