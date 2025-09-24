@@ -147,70 +147,55 @@ void Graphics::CopyTextureData(
     );
 }
 
-int32_t Graphics::GetProgramUniformLocation(const uint32_t shaderProgramId, const char_t* uniformName)
-{
-    return glGetUniformLocation(shaderProgramId, uniformName);
-}
+int32_t Graphics::GetProgramUniformLocation(const uint32_t shaderProgramId, const char_t* uniformName) { return glGetUniformLocation(shaderProgramId, uniformName); }
 
-void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const char_t* const uniformName, const int32_t value)
-{
-    glProgramUniform1i(shaderProgramId, GetProgramUniformLocation(shaderProgramId, uniformName), value);
-}
+void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const char_t* uniformName, const int32_t value) { SetProgramUniform(shaderProgramId, GetProgramUniformLocation(shaderProgramId, uniformName), value); }
 
-void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const char_t* const uniformName, const uint32_t value)
-{
-    glProgramUniform1ui(shaderProgramId, GetProgramUniformLocation(shaderProgramId, uniformName), value);
-}
+void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const char_t* uniformName, const uint32_t value) { SetProgramUniform(shaderProgramId, GetProgramUniformLocation(shaderProgramId, uniformName), value); }
 
-void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const char_t* const uniformName, const bool_t value)
-{
-    SetProgramUniform(shaderProgramId, uniformName, static_cast<int32_t>(value));
-}
+void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const char_t* uniformName, const bool_t value) { SetProgramUniform(shaderProgramId, GetProgramUniformLocation(shaderProgramId, uniformName), value); }
 
-void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const char_t* const uniformName, const float_t value)
-{
-    glProgramUniform1f(shaderProgramId, GetProgramUniformLocation(shaderProgramId, uniformName), value);
-}
+void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const char_t* uniformName, const float_t value) { SetProgramUniform(shaderProgramId, GetProgramUniformLocation(shaderProgramId, uniformName), value); }
 
-void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const char_t* const uniformName, const Vector2i value)
-{
-    glProgramUniform2iv(shaderProgramId, GetProgramUniformLocation(shaderProgramId, uniformName), 1, value.Data());
-}
+void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const char_t* uniformName, const Vector2i value) { SetProgramUniform(shaderProgramId, GetProgramUniformLocation(shaderProgramId, uniformName), value); }
 
-void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const char_t* const uniformName, const Vector2 value)
-{
-    glProgramUniform2fv(shaderProgramId, GetProgramUniformLocation(shaderProgramId, uniformName), 1, value.Data());
-}
+void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const char_t* uniformName, const Vector2 value) { SetProgramUniform(shaderProgramId, GetProgramUniformLocation(shaderProgramId, uniformName), value); }
 
-void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const char_t* const uniformName, const Vector3& value)
-{
-    glProgramUniform3fv(shaderProgramId, GetProgramUniformLocation(shaderProgramId, uniformName), 1, value.Data());
-}
+void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const char_t* uniformName, const Vector3& value) { SetProgramUniform(shaderProgramId, GetProgramUniformLocation(shaderProgramId, uniformName), value); }
 
-void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const char_t* const uniformName, const Vector4& value)
-{
-    glProgramUniform4fv(shaderProgramId, GetProgramUniformLocation(shaderProgramId, uniformName), 1, value.Data());
-}
+void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const char_t* uniformName, const Vector4& value) { SetProgramUniform(shaderProgramId, GetProgramUniformLocation(shaderProgramId, uniformName), value); }
 
-void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const char_t* const uniformName, const Color& value)
-{
-    SetProgramUniform(shaderProgramId, uniformName, static_cast<Vector4>(value));
-}
+void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const char_t* uniformName, const Color& value) { SetProgramUniform(shaderProgramId, GetProgramUniformLocation(shaderProgramId, uniformName), value); }
 
-void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const char_t* const uniformName, const Matrix2& value)
-{
-    glProgramUniformMatrix2fv(shaderProgramId, GetProgramUniformLocation(shaderProgramId, uniformName), 1, GL_FALSE, value.Data());
-}
+void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const char_t* uniformName, const Matrix2& value) { SetProgramUniform(shaderProgramId, GetProgramUniformLocation(shaderProgramId, uniformName), value); }
 
-void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const char_t* const uniformName, const Matrix3& value)
-{
-    glProgramUniformMatrix3fv(shaderProgramId, GetProgramUniformLocation(shaderProgramId, uniformName), 1, GL_FALSE, value.Data());
-}
+void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const char_t* uniformName, const Matrix3& value) { SetProgramUniform(shaderProgramId, GetProgramUniformLocation(shaderProgramId, uniformName), value); }
 
-void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const char_t* const uniformName, const Matrix& value)
-{
-    glProgramUniformMatrix4fv(shaderProgramId, GetProgramUniformLocation(shaderProgramId, uniformName), 1, GL_FALSE, value.Data());
-}
+void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const char_t* uniformName, const Matrix& value) { SetProgramUniform(shaderProgramId, GetProgramUniformLocation(shaderProgramId, uniformName), value); }
+
+void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const int32_t uniformLocation, const int32_t value) { glProgramUniform1i(shaderProgramId, uniformLocation, value); }
+
+void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const int32_t uniformLocation, const uint32_t value) { glProgramUniform1ui(shaderProgramId, uniformLocation, value); }
+
+void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const int32_t uniformLocation, const bool_t value) { SetProgramUniform(shaderProgramId, uniformLocation, static_cast<int32_t>(value)); }
+
+void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const int32_t uniformLocation, const float_t value) { glProgramUniform1f(shaderProgramId, uniformLocation, value); }
+
+void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const int32_t uniformLocation, const Vector2i value) { glProgramUniform2iv(shaderProgramId, uniformLocation, 1, value.Data()); }
+
+void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const int32_t uniformLocation, const Vector2 value) { glProgramUniform2fv(shaderProgramId, uniformLocation, 1, value.Data()); }
+
+void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const int32_t uniformLocation, const Vector3& value) { glProgramUniform3fv(shaderProgramId, uniformLocation, 1, value.Data()); }
+
+void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const int32_t uniformLocation, const Vector4& value) { glProgramUniform4fv(shaderProgramId, uniformLocation, 1, value.Data()); }
+
+void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const int32_t uniformLocation, const Color& value) { SetProgramUniform(shaderProgramId, uniformLocation, value.ToVector4()); }
+
+void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const int32_t uniformLocation, const Matrix2& value) { glProgramUniformMatrix2fv(shaderProgramId, uniformLocation, 1, GL_FALSE, value.Data()); }
+
+void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const int32_t uniformLocation, const Matrix3& value) { glProgramUniformMatrix3fv(shaderProgramId, uniformLocation, 1, GL_FALSE, value.Data()); }
+
+void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const int32_t uniformLocation, const Matrix& value) { glProgramUniformMatrix4fv(shaderProgramId, uniformLocation, 1, GL_FALSE, value.Data()); }
 
 void Graphics::SetViewport(const Vector2i position, const Vector2i size)
 {

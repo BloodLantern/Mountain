@@ -55,11 +55,11 @@ void AudioScene::Update()
         m_AudioListenerDragStartPosition = m_AudioListenerEntity->position;
     }
 
-    if (m_AudioListenerDragStart.has_value() && Input::GetMouseButton(MouseButton::Left, MouseButtonStatus::Down))
-        m_AudioListenerEntity->position = m_AudioListenerDragStartPosition + Input::GetMousePosition() - m_AudioListenerDragStart.value();
+    if (m_AudioListenerDragStart.HasValue() && Input::GetMouseButton(MouseButton::Left, MouseButtonStatus::Down))
+        m_AudioListenerEntity->position = m_AudioListenerDragStartPosition + Input::GetMousePosition() - m_AudioListenerDragStart.Value();
 
     if (Input::GetMouseButton(MouseButton::Left, MouseButtonStatus::Release))
-        m_AudioListenerDragStart.reset();
+        m_AudioListenerDragStart.Reset();
 }
 
 void AudioScene::Render()

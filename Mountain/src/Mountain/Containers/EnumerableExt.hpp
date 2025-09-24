@@ -2,6 +2,7 @@
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Containers/FunctionTypes.hpp"
+#include "Mountain/Utils/Optional.hpp"
 #include "Mountain/Utils/Requirements.hpp"
 
 /// @brief Defines member functions for all enumerable extensions
@@ -47,7 +48,7 @@
     const EnumeratedType* FindLast(const ::Mountain::Predicate<EnumeratedType>& predicate) const { return ::Mountain::FindLast(*this, predicate); } \
     \
     ATTRIBUTE_NODISCARD \
-    std::optional<size_t> FindIndex(const ::Mountain::Predicate<EnumeratedType>& predicate) const { return ::Mountain::FindIndex(*this, predicate); } \
+    Optional<size_t> FindIndex(const ::Mountain::Predicate<EnumeratedType>& predicate) const { return ::Mountain::FindIndex(*this, predicate); } \
     \
     ATTRIBUTE_NODISCARD \
     EnumeratedType& First() { return ::Mountain::First(*this); } \
@@ -161,7 +162,7 @@ namespace Mountain
 
     template <Requirements::MountainEnumerable EnumerableT, typename T = Meta::MountainEnumerableType<EnumerableT>>
     ATTRIBUTE_NODISCARD
-    std::optional<size_t> FindIndex(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate);
+    Optional<size_t> FindIndex(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate);
 
     /// @brief Returns the first element of a sequence.
     template <Requirements::MountainEnumerable EnumerableT, typename T = Meta::MountainEnumerableType<EnumerableT>>
@@ -402,7 +403,7 @@ namespace Mountain
     }
 
     template <Requirements::MountainEnumerable EnumerableT, typename T>
-    std::optional<size_t> FindIndex(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate)
+    Optional<size_t> FindIndex(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate)
     {
         for (typename EnumerableT::ConstIterator it = enumerable.cbegin(); it != enumerable.cend(); it++)
         {

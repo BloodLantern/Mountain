@@ -662,15 +662,15 @@ namespace Mountain
 
         /// @brief Converts the @c Color to a @c ColorHsva
         ATTRIBUTE_NODISCARD
-        constexpr explicit operator ColorHsva() const;
+        constexpr ColorHsva ToHsva() const;
 
         /// @brief Converts the @c Color to a @c Vector3
         ATTRIBUTE_NODISCARD
-        constexpr explicit operator Vector3() const;
+        constexpr Vector3 ToVector3() const;
 
         /// @brief Converts the @c Color to a @c Vector4
         ATTRIBUTE_NODISCARD
-        constexpr explicit operator Vector4() const;
+        constexpr Vector4 ToVector4() const;
 
         /// @brief Converts the @c Color to a @c ImVec4
         ATTRIBUTE_NODISCARD
@@ -745,15 +745,15 @@ namespace Mountain
 
         /// @brief Converts the @c ColorHsva to a @c Color
         ATTRIBUTE_NODISCARD
-        constexpr explicit operator Color() const;
+        constexpr Color ToRgba() const;
 
         /// @brief Converts the @c ColorHsva to a @c Vector3
         ATTRIBUTE_NODISCARD
-        constexpr explicit operator Vector3() const;
+        constexpr Vector3 ToVector3() const;
 
         /// @brief Converts the @c ColorHsva to a @c Vector4
         ATTRIBUTE_NODISCARD
-        constexpr explicit operator Vector4() const;
+        constexpr Vector4 ToVector4() const;
 
         ATTRIBUTE_NODISCARD
         std::string ToString() const;
@@ -1027,7 +1027,7 @@ namespace Mountain
 
     constexpr const float_t* Color::Data() const { return &r; }
 
-    constexpr Color::operator ColorHsva() const
+    constexpr ColorHsva Color::ToHsva() const
     {
         ColorHsva hsv = { 0.f, 0.f, 0.f, a };
         const float_t minVal = std::min({r, g, b});
@@ -1060,9 +1060,9 @@ namespace Mountain
         return hsv;
     }
 
-    constexpr Color::operator Vector3() const { return Vector3{r, g, b}; }
+    constexpr Vector3 Color::ToVector3() const { return Vector3{r, g, b}; }
 
-    constexpr Color::operator Vector4() const { return Vector4{r, g, b, a}; }
+    constexpr Vector4 Color::ToVector4() const { return Vector4{r, g, b, a}; }
 
     constexpr ColorHsva ColorHsva::White() { return ColorHsva{0.f, 0.f, 1.f}; }
 
@@ -1084,7 +1084,7 @@ namespace Mountain
 
     constexpr ColorHsva::ColorHsva(const float_t h, const float_t s, const float_t v, const float_t a): h(h), s(s), v(v), a(a) {}
 
-    constexpr ColorHsva::operator Color() const
+    constexpr Color ColorHsva::ToRgba() const
     {
         if (Calc::IsZero(s)) // Grayscale
             return { v, v, v, a };
@@ -1112,9 +1112,9 @@ namespace Mountain
         }
     }
 
-    constexpr ColorHsva::operator Vector3() const { return Vector3(h, s, v); }
+    constexpr Vector3 ColorHsva::ToVector3() const { return Vector3(h, s, v); }
 
-    constexpr ColorHsva::operator Vector4() const { return Vector4(h, s, v, a); }
+    constexpr Vector4 ColorHsva::ToVector4() const { return Vector4(h, s, v, a); }
 
     constexpr Color operator+(const Color& c1, const Color& c2) { return Color(std::min(c1.r + c2.r, 1.f), std::min(c1.g + c2.g, 1.f), std::min(c1.b + c2.b, 1.f), std::min(c1.a + c2.a, 1.f)); }
 

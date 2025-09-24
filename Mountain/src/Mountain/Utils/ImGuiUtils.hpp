@@ -9,6 +9,7 @@
 
 #include "Mountain/Window.hpp"
 #include "Mountain/Resource/ResourceManager.hpp"
+#include "Mountain/Utils/Optional.hpp"
 #include "Mountain/Utils/Utils.hpp"
 
 /// @brief Calls the given @p imguiFunction using the get/set accessors to the given @p field of @p variableAccess.
@@ -37,7 +38,7 @@ namespace Mountain::ImGuiUtils
 
     template <typename T>
     bool_t Optional(
-        std::optional<T>* value,
+        Optional<T>* value,
         const Meta::Identity<T>& defaultValue,
         Meta::Identity<T> nullValue,
         const Meta::Identity<std::function<bool(T&)>>& displayFunction
@@ -126,18 +127,18 @@ namespace Mountain
 {
     template <typename T>
     bool_t ImGuiUtils::Optional(
-        std::optional<T>* value,
+        Mountain::Optional<T>* value,
         const Meta::Identity<T>& defaultValue,
         Meta::Identity<T> nullValue,
         const Meta::Identity<std::function<bool_t(T& value)>>& displayFunction
     )
     {
         bool_t result = false;
-        if (value->has_value())
+        if (value->HasValue())
         {
             if (ImGui::Button("Unset value"))
             {
-                value->reset();
+                value->Reset();
                 result = true;
             }
         }
@@ -153,7 +154,7 @@ namespace Mountain
         ImGui::SameLine();
 
         // Need to check this again as this might have changed in the last if statement
-        if (!value->has_value())
+        if (!value->HasValue())
         {
             ImGui::BeginDisabled();
             displayFunction(nullValue);
@@ -161,7 +162,7 @@ namespace Mountain
             return result;
         }
 
-        return displayFunction(value->value()) || result;
+        return displayFunction(value->Value()) || result;
     }
 
     template <typename T>

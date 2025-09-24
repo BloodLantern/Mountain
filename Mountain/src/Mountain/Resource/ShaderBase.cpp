@@ -19,65 +19,29 @@ void ShaderBase::Unload()
     m_UniformLocationCache.clear();
 }
 
-void ShaderBase::SetUniform(const char_t* uniformName, const int32_t value) const
-{
-    Graphics::SetProgramUniform(m_Id, uniformName, value);
-}
+void ShaderBase::SetUniform(const char_t* uniformName, const int32_t value) const { Graphics::SetProgramUniform(m_Id, GetUniformLocation(uniformName), value); }
 
-void ShaderBase::SetUniform(const char_t* uniformName, const uint32_t value) const
-{
-    Graphics::SetProgramUniform(m_Id, uniformName, value);
-}
+void ShaderBase::SetUniform(const char_t* uniformName, const uint32_t value) const { Graphics::SetProgramUniform(m_Id, GetUniformLocation(uniformName), value); }
 
-void ShaderBase::SetUniform(const char_t* uniformName, const bool_t value) const
-{
-    SetUniform(uniformName, static_cast<int32_t>(value));
-}
+void ShaderBase::SetUniform(const char_t* uniformName, const bool_t value) const { Graphics::SetProgramUniform(m_Id, GetUniformLocation(uniformName), value); }
 
-void ShaderBase::SetUniform(const char_t* uniformName, const float_t value) const
-{
-    Graphics::SetProgramUniform(m_Id, uniformName, value);
-}
+void ShaderBase::SetUniform(const char_t* uniformName, const float_t value) const { Graphics::SetProgramUniform(m_Id, GetUniformLocation(uniformName), value); }
 
-void ShaderBase::SetUniform(const char_t* uniformName, const Vector2i value) const
-{
-    Graphics::SetProgramUniform(m_Id, uniformName, value);
-}
+void ShaderBase::SetUniform(const char_t* uniformName, const Vector2i value) const { Graphics::SetProgramUniform(m_Id, GetUniformLocation(uniformName), value); }
 
-void ShaderBase::SetUniform(const char_t* uniformName, const Vector2 value) const
-{
-    Graphics::SetProgramUniform(m_Id, uniformName, value);
-}
+void ShaderBase::SetUniform(const char_t* uniformName, const Vector2 value) const { Graphics::SetProgramUniform(m_Id, GetUniformLocation(uniformName), value); }
 
-void ShaderBase::SetUniform(const char_t* uniformName, const Vector3& value) const
-{
-    Graphics::SetProgramUniform(m_Id, uniformName, value);
-}
+void ShaderBase::SetUniform(const char_t* uniformName, const Vector3& value) const { Graphics::SetProgramUniform(m_Id, GetUniformLocation(uniformName), value); }
 
-void ShaderBase::SetUniform(const char_t* uniformName, const Vector4& value) const
-{
-    Graphics::SetProgramUniform(m_Id, uniformName, value);
-}
+void ShaderBase::SetUniform(const char_t* uniformName, const Vector4& value) const { Graphics::SetProgramUniform(m_Id, GetUniformLocation(uniformName), value); }
 
-void ShaderBase::SetUniform(const char_t* uniformName, const Color& value) const
-{
-    SetUniform(uniformName, static_cast<Vector4>(value));
-}
+void ShaderBase::SetUniform(const char_t* uniformName, const Color& value) const { Graphics::SetProgramUniform(m_Id, GetUniformLocation(uniformName), value); }
 
-void ShaderBase::SetUniform(const char_t* uniformName, const Matrix2& value) const
-{
-    Graphics::SetProgramUniform(m_Id, uniformName, value);
-}
+void ShaderBase::SetUniform(const char_t* uniformName, const Matrix2& value) const { Graphics::SetProgramUniform(m_Id, GetUniformLocation(uniformName), value); }
 
-void ShaderBase::SetUniform(const char_t* uniformName, const Matrix3& value) const
-{
-    Graphics::SetProgramUniform(m_Id, uniformName, value);
-}
+void ShaderBase::SetUniform(const char_t* uniformName, const Matrix3& value) const { Graphics::SetProgramUniform(m_Id, GetUniformLocation(uniformName), value); }
 
-void ShaderBase::SetUniform(const char_t* uniformName, const Matrix& value) const
-{
-    Graphics::SetProgramUniform(m_Id, uniformName, value);
-}
+void ShaderBase::SetUniform(const char_t* uniformName, const Matrix& value) const { Graphics::SetProgramUniform(m_Id, GetUniformLocation(uniformName), value); }
 
 bool_t ShaderBase::CheckCompileError(const uint32_t id, const std::string_view type, const std::string& code) const
 {
@@ -137,7 +101,7 @@ bool_t ShaderBase::CheckLinkError() const
     return false;
 }
 
-int32_t ShaderBase::GetUniformLocation(const char_t* uniformName)
+int32_t ShaderBase::GetUniformLocation(const char_t* uniformName) const
 {
     if (m_UniformLocationCache.contains(uniformName))
         return m_UniformLocationCache[uniformName];

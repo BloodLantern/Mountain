@@ -44,8 +44,23 @@
 #define CHECK_OPTIONAL(optionalParameter) \
     do \
     { \
-        static_assert(::Mountain::Meta::IsStandardOptional<DECLARING_TYPE(optionalParameter)>, "The argument of CHECK_OPTIONAL must be a std::optional"); \
-        if (!(optionalParameter).has_value()) \
+        using Type = DECLARING_TYPE(optionalParameter); \
+        constexpr const bool_t standard = ::Mountain::Meta::IsStandardOptional<Type>; \
+        static_assert(standard || ::Mountain::Meta::IsMountainOptional<Type>, "The argument of CHECK_OPTIONAL must be a either a std::optional or a Mountain::Optional"); \
+         \
+        bool_t noValue = false; \
+        if constexpr (standard) \
+        { \
+            if (!(optionalParameter).has_value()) \
+                noValue = true; \
+        } \
+        else \
+        { \
+            if (!(optionalParameter).HasValue()) \
+                noValue = true; \
+        } \
+         \
+        if (noValue) \
             THROW(ArgumentNullException{"Parameter " #optionalParameter " must have a value", #optionalParameter}); \
     } \
     while (false)
@@ -66,6 +81,7 @@ namespace Mountain
     public:
         THROW_HELPER_FUNC(InvalidIterator, InvalidOperationException, "The given iterator is invalid for this container.")
         THROW_HELPER_FUNC_ARG(IndexOutOfRange, ArgumentOutOfRangeException, "The given index is out of range for this container.")
+        THROW_HELPER_FUNC(OptionalNoValue, EmptyOptionalAccess, "Cannot get the value of an empty Optional.")
     };
 }
 

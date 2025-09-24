@@ -39,6 +39,6 @@ private:
     Pointer<AudioTrack> m_AudioPlayTrack;
     Pointer<AudioTrack> m_StereoAudioTrack;
 
-    std::optional<Vector2> m_AudioListenerDragStart;
+    Optional<Vector2> m_AudioListenerDragStart;
     Vector2 m_AudioListenerDragStartPosition;
 };

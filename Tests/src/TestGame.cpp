@@ -32,7 +32,7 @@ TestGame::TestGame(const char_t* const windowTitle)
 
     // Use VSync for the tests as it should give a more stable framerate and we don't care about the input lag
     Window::SetVSync(true);
-    Time::targetFps.reset();
+    Time::targetFps.Reset();
 
     m_Scenes.AddRange(
         new ParticleSystemScene,

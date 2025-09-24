@@ -12,8 +12,8 @@ using namespace Mountain;
 
 float_t Time::GetTargetDeltaTime()
 {
-    if (targetFps.has_value())
-        return 1.f / static_cast<float_t>(targetFps.value());
+    if (targetFps.HasValue())
+        return 1.f / static_cast<float_t>(targetFps.Value());
     return Window::GetVSync() ? 1.f / Screen::GetRefreshRate() : 0.f;
 }
 
@@ -113,11 +113,11 @@ void Time::WaitForNextFrame()
     const double_t lastFrameDurationMsWithoutSwapBuffers = elapsedMilliseconds - frameStartMsAfterSwapBuffers;
     m_LastFrameDuration = static_cast<float_t>(lastFrameDurationMsWithoutSwapBuffers / 1000.0);
 
-    if (targetFps.has_value())
+    if (targetFps.HasValue())
     {
         const double_t lastFrameDurationMs = elapsedMilliseconds - frameStartMs;
 
-        const double_t targetFrameDuration = 1000.0 / targetFps.value();
+        const double_t targetFrameDuration = 1000.0 / targetFps.Value();
         const double_t excessFrameTime = targetFrameDuration - lastFrameDurationMs;
         const double_t timeToSleep = std::max(0.0, excessFrameTime + accumulatedSleepError);
 

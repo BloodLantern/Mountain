@@ -178,6 +178,7 @@
     <ClInclude Include="src\Mountain\Utils\Formatter.hpp" />
     <ClInclude Include="src\Mountain\Utils\Guid.hpp" />
     <ClInclude Include="src\Mountain\Utils\ImGuiUtils.hpp" />
+    <ClInclude Include="src\Mountain\Utils\Optional.hpp" />
     <ClInclude Include="src\Mountain\Utils\Requirements.hpp" />
     <ClInclude Include="src\Mountain\Utils\Logger.hpp" />
     <ClInclude Include="src\Mountain\Utils\MessageBox.hpp" />

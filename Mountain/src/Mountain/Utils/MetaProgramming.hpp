@@ -29,6 +29,8 @@ namespace Mountain
     class Effect;
     template <typename>
     struct Pointer;
+    template <typename>
+    struct Optional;
 
     namespace ParticleSystemModules
     {
@@ -208,7 +210,7 @@ namespace Mountain
         template <typename T, typename... Args>
         constexpr bool_t IsStandardFunction<std::function<T(Args...)>> = true;
 
-        /// @brief Checks whether the type is a Pointer
+        /// @brief Checks whether the type is a @c Pointer
         template <typename>
         constexpr bool_t IsMountainPointer = false;
 
@@ -221,6 +223,13 @@ namespace Mountain
 
         template <typename T>
         constexpr bool_t IsStandardOptional<std::optional<T>> = true;
+
+        /// @brief Checks whether the type is an @c Optional
+        template <typename>
+        constexpr bool_t IsMountainOptional = false;
+
+        template <typename T>
+        constexpr bool_t IsMountainOptional<Optional<T>> = true;
 
         /// @brief Checks if T is a native type.
         ///

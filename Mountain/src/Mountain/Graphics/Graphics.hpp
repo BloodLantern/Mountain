@@ -794,39 +794,53 @@ namespace Mountain::Graphics
 
     /// @brief Sets an int (signed, 32 bits) variable in a shader
     MOUNTAIN_API void SetProgramUniform(uint32_t shaderProgramId, const char_t* uniformName, int32_t value);
-
     /// @brief Sets an uint (unsigned, 32 bits) variable in a shader
     MOUNTAIN_API void SetProgramUniform(uint32_t shaderProgramId, const char_t* uniformName, uint32_t value);
-
     /// @brief Sets a bool (signed, 32 bits) variable in a shader
     MOUNTAIN_API void SetProgramUniform(uint32_t shaderProgramId, const char_t* uniformName, bool_t value);
-
     /// @brief Sets a float (32 bits) variable in a shader
     MOUNTAIN_API void SetProgramUniform(uint32_t shaderProgramId, const char_t* uniformName, float_t value);
-
     /// @brief Sets a Vector2 (2 floats, 64 bits) variable in a shader
     MOUNTAIN_API void SetProgramUniform(uint32_t shaderProgramId, const char_t* uniformName, Vector2i value);
-
     /// @brief Sets a Vector2 (2 floats, 64 bits) variable in a shader
     MOUNTAIN_API void SetProgramUniform(uint32_t shaderProgramId, const char_t* uniformName, Vector2 value);
-
     /// @brief Sets a Vector3 (3 floats, 96 bits) variable in a shader
     MOUNTAIN_API void SetProgramUniform(uint32_t shaderProgramId, const char_t* uniformName, const Vector3& value);
-
     /// @brief Sets a Vector4 (4 floats, 128 bits) variable in a shader
     MOUNTAIN_API void SetProgramUniform(uint32_t shaderProgramId, const char_t* uniformName, const Vector4& value);
-
     /// @brief Sets a Color (4 floats, 128 bits) variable in a shader
     MOUNTAIN_API void SetProgramUniform(uint32_t shaderProgramId, const char_t* uniformName, const Color& value);
-
     /// @brief Sets a Matrix2 (4 floats, 128 bits) variable in a shader
     MOUNTAIN_API void SetProgramUniform(uint32_t shaderProgramId, const char_t* uniformName, const Matrix2& value);
-
     /// @brief Sets a Matrix3 (9 floats, 288 bits) variable in a shader
     MOUNTAIN_API void SetProgramUniform(uint32_t shaderProgramId, const char_t* uniformName, const Matrix3& value);
-
     /// @brief Sets a Matrix (16 floats, 512 bits) variable in a shader
     MOUNTAIN_API void SetProgramUniform(uint32_t shaderProgramId, const char_t* uniformName, const Matrix& value);
+
+    /// @brief Sets an int (signed, 32 bits) variable in a shader
+    MOUNTAIN_API void SetProgramUniform(uint32_t shaderProgramId, int32_t uniformLocation, int32_t value);
+    /// @brief Sets an uint (unsigned, 32 bits) variable in a shader
+    MOUNTAIN_API void SetProgramUniform(uint32_t shaderProgramId, int32_t uniformLocation, uint32_t value);
+    /// @brief Sets a bool (signed, 32 bits) variable in a shader
+    MOUNTAIN_API void SetProgramUniform(uint32_t shaderProgramId, int32_t uniformLocation, bool_t value);
+    /// @brief Sets a float (32 bits) variable in a shader
+    MOUNTAIN_API void SetProgramUniform(uint32_t shaderProgramId, int32_t uniformLocation, float_t value);
+    /// @brief Sets a Vector2 (2 floats, 64 bits) variable in a shader
+    MOUNTAIN_API void SetProgramUniform(uint32_t shaderProgramId, int32_t uniformLocation, Vector2i value);
+    /// @brief Sets a Vector2 (2 floats, 64 bits) variable in a shader
+    MOUNTAIN_API void SetProgramUniform(uint32_t shaderProgramId, int32_t uniformLocation, Vector2 value);
+    /// @brief Sets a Vector3 (3 floats, 96 bits) variable in a shader
+    MOUNTAIN_API void SetProgramUniform(uint32_t shaderProgramId, int32_t uniformLocation, const Vector3& value);
+    /// @brief Sets a Vector4 (4 floats, 128 bits) variable in a shader
+    MOUNTAIN_API void SetProgramUniform(uint32_t shaderProgramId, int32_t uniformLocation, const Vector4& value);
+    /// @brief Sets a Color (4 floats, 128 bits) variable in a shader
+    MOUNTAIN_API void SetProgramUniform(uint32_t shaderProgramId, int32_t uniformLocation, const Color& value);
+    /// @brief Sets a Matrix2 (4 floats, 128 bits) variable in a shader
+    MOUNTAIN_API void SetProgramUniform(uint32_t shaderProgramId, int32_t uniformLocation, const Matrix2& value);
+    /// @brief Sets a Matrix3 (9 floats, 288 bits) variable in a shader
+    MOUNTAIN_API void SetProgramUniform(uint32_t shaderProgramId, int32_t uniformLocation, const Matrix3& value);
+    /// @brief Sets a Matrix (16 floats, 512 bits) variable in a shader
+    MOUNTAIN_API void SetProgramUniform(uint32_t shaderProgramId, int32_t uniformLocation, const Matrix& value);
 
     /// @brief Sets an enum (cast to a 32 bits unsigned integer) variable in a shader
     template <Concepts::Enum T>

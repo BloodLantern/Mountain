@@ -1,9 +1,9 @@
 ﻿#pragma once
 
 #include <cmath>
-#include <optional>
 
 #include "Mountain/Core.hpp"
+#include "Mountain/Utils/Optional.hpp"
 #include "Mountain/Utils/Stopwatch.hpp"
 
 /// @file time.hpp
@@ -25,7 +25,7 @@ namespace Mountain
         /// @brief If this is above 0, the game updates will be frozen for that amount of time
         MOUNTAIN_API static inline float_t freezeTimer = 0.f;
 
-        MOUNTAIN_API static inline std::optional<double_t> targetFps;
+        MOUNTAIN_API static inline Optional<double_t> targetFps;
 
         // TODO - Add backgroundTargetFps for when the window is unfocused
 
