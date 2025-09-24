@@ -600,6 +600,9 @@ namespace Mountain
         static constexpr Color YellowGreen();
 #pragma endregion
 
+        ATTRIBUTE_NODISCARD
+        static constexpr Color FromHex(uint32_t rgba);
+
         /// @brief Red component
         float_t r = 0.f;
         /// @brief Green component
@@ -640,7 +643,7 @@ namespace Mountain
         /// @brief Constructs a color from four floats at the given pointer address
         /// @param data Color components
         ATTRIBUTE_NODISCARD
-        explicit constexpr Color(const float* data);
+        explicit constexpr Color(const float_t* data);
 
         /// @brief Constructs a color from a 32-bit packed color value
         /// @param packedValue Packed color value, e.g., @c 0xFFFF0000 for @c Color::Blue()
@@ -987,6 +990,11 @@ namespace Mountain
     constexpr Color Color::YellowGreen() { return Color{0x9A / 255.f, 0xCD / 255.f, 0x32 / 255.f}; }
 #pragma endregion
 
+    constexpr Color Color::FromHex(const uint32_t rgba)
+    {
+        return Color{static_cast<uint32_t>(_byteswap_ulong(rgba))};
+    }
+
     constexpr Color::Color(const float_t rgb, const float_t a): r(rgb), g(rgb), b(rgb), a(a) {}
 
     constexpr Color::Color(const float_t r, const float_t g, const float_t b, const float_t a): r(r), g(g), b(b), a(a) {}
@@ -995,13 +1003,13 @@ namespace Mountain
 
     constexpr Color::Color(const Vector4& rgba): r(rgba.x), g(rgba.y), b(rgba.z), a(rgba.w) {}
 
-    constexpr Color::Color(const float* data): r(data[0]), g(data[1]), b(data[2]), a(data[3]) {}
+    constexpr Color::Color(const float_t* data): r(data[0]), g(data[1]), b(data[2]), a(data[3]) {}
 
     constexpr Color::Color(const uint32_t packedValue)
-        : r(static_cast<float_t>(packedValue & 0xFF))
-        , g(static_cast<float_t>(packedValue >> 8 & 0xFF))
-        , b(static_cast<float_t>(packedValue >> 16 & 0xFF))
-        , a(static_cast<float_t>(packedValue >> 24))
+        : r(static_cast<float_t>(packedValue & 0xFF) / std::numeric_limits<uint8_t>::max())
+        , g(static_cast<float_t>(packedValue >> 8 & 0xFF) / std::numeric_limits<uint8_t>::max())
+        , b(static_cast<float_t>(packedValue >> 16 & 0xFF) / std::numeric_limits<uint8_t>::max())
+        , a(static_cast<float_t>(packedValue >> 24) / std::numeric_limits<uint8_t>::max())
     {
     }
 
