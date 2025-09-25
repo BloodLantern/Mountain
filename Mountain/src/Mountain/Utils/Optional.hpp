@@ -10,7 +10,6 @@ namespace Mountain
         ATTRIBUTE_NODISCARD
         constexpr Optional();
 
-        ATTRIBUTE_NODISCARD
         // ReSharper disable once CppNonExplicitConvertingConstructor
         constexpr Optional(T&& value);
 
@@ -18,21 +17,28 @@ namespace Mountain
         // ReSharper disable once CppNonExplicitConvertingConstructor
         constexpr Optional(const T& value);
 
-        template <Concepts::ConvertibleTo<T> U>
         ATTRIBUTE_NODISCARD
-        constexpr Optional(std::optional<U>&& otherOptional);
+        // ReSharper disable once CppNonExplicitConvertingConstructor
+        constexpr Optional(const std::optional<T>& otherOptional);
 
-        template <Concepts::ConvertibleTo<T> U>
-        ATTRIBUTE_NODISCARD
-        constexpr Optional(const std::optional<U>& otherOptional);
+        // ReSharper disable once CppNonExplicitConvertingConstructor
+        constexpr Optional(Optional&& otherOptional) noexcept;
 
-        template <Concepts::ConvertibleTo<T> U>
         ATTRIBUTE_NODISCARD
-        constexpr Optional(Optional<U>&& otherOptional);
+        // ReSharper disable once CppNonExplicitConvertingConstructor
+        constexpr Optional(const Optional& otherOptional);
 
-        template <Concepts::ConvertibleTo<T> U>
-        ATTRIBUTE_NODISCARD
-        constexpr Optional(const Optional<U>& otherOptional);
+        constexpr ~Optional();
+
+        constexpr Optional& operator=(T&& newValue) noexcept;
+
+        constexpr Optional& operator=(const T& newValue);
+
+        constexpr Optional& operator=(const std::optional<T>& otherOptional);
+
+        constexpr Optional& operator=(Optional&& otherOptional) noexcept;
+
+        constexpr Optional& operator=(const Optional& otherOptional);
 
         ATTRIBUTE_NODISCARD
         constexpr bool_t HasValue() const noexcept;
@@ -95,17 +101,7 @@ namespace Mountain
     constexpr Optional<T>::Optional(const T& value) : m_HasValue{true}, value{value} {}
 
     template <typename T>
-    template <Concepts::ConvertibleTo<T> U>
-    constexpr Optional<T>::Optional(std::optional<U>&& otherOptional)  // NOLINT(cppcoreguidelines-rvalue-reference-param-not-moved)
-        : m_HasValue{std::move(otherOptional.has_value())}
-    {
-        if (m_HasValue)
-            new (&value) T{std::move(otherOptional.value())};
-    }
-
-    template <typename T>
-    template <Concepts::ConvertibleTo<T> U>
-    constexpr Optional<T>::Optional(const std::optional<U>& otherOptional)
+    constexpr Optional<T>::Optional(const std::optional<T>& otherOptional)
         : m_HasValue{otherOptional.has_value()}
     {
         if (m_HasValue)
@@ -113,8 +109,7 @@ namespace Mountain
     }
 
     template <typename T>
-    template <Concepts::ConvertibleTo<T> U>
-    constexpr Optional<T>::Optional(Optional<U>&& otherOptional)  // NOLINT(cppcoreguidelines-rvalue-reference-param-not-moved)
+    constexpr Optional<T>::Optional(Optional&& otherOptional) noexcept  // NOLINT(cppcoreguidelines-rvalue-reference-param-not-moved)
         : m_HasValue{std::move(otherOptional.HasValue())}
     {
         if (m_HasValue)
@@ -122,12 +117,62 @@ namespace Mountain
     }
 
     template <typename T>
-    template <Concepts::ConvertibleTo<T> U>
-    constexpr Optional<T>::Optional(const Optional<U>& otherOptional)
+    constexpr Optional<T>::Optional(const Optional& otherOptional)
         : m_HasValue{otherOptional.HasValue()}
     {
         if (m_HasValue)
             new (&value) T{otherOptional.Value()};
+    }
+
+    template <typename T>
+    constexpr Optional<T>::~Optional()
+    {
+        if (m_HasValue)
+            value.~T();
+    }
+
+    template <typename T>
+    constexpr Optional<T>& Optional<T>::operator=(T&& newValue) noexcept
+    {
+        m_HasValue = true;
+        value = std::move(newValue);
+        return *this;
+    }
+
+    template <typename T>
+    constexpr Optional<T>& Optional<T>::operator=(const T& newValue)
+    {
+        m_HasValue = true;
+        value = newValue;
+        return *this;
+    }
+
+    template <typename T>
+    constexpr Optional<T>& Optional<T>::operator=(const std::optional<T>& otherOptional)
+    {
+        m_HasValue = otherOptional.has_value();
+        if (m_HasValue)
+            value = otherOptional.value();
+        return *this;
+    }
+
+    template <typename T>
+    constexpr Optional<T>& Optional<T>::operator=(Optional&& otherOptional) noexcept
+    {
+        m_HasValue = otherOptional.m_HasValue;
+        if (m_HasValue)
+            value = std::move(otherOptional.value);
+        otherOptional.Reset();
+        return *this;
+    }
+
+    template <typename T>
+    constexpr Optional<T>& Optional<T>::operator=(const Optional& otherOptional)
+    {
+        m_HasValue = otherOptional.m_HasValue;
+        if (m_HasValue)
+            value = otherOptional.value;
+        return *this;
     }
 
     template <typename T>
