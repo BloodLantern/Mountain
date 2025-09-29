@@ -149,19 +149,22 @@ namespace Mountain {}
 
 /// @brief Defines a getter for the field @p internalName, of type @p type, with the name @c Get##name
 #define GETTER(type, name, internalName) ATTRIBUTE_NODISCARD type Get##name() const noexcept { return internalName; }
-/// @brief Defines a setter for the field @p internalName, of type @p type, with the name @c Get##name
-#define SETTER(type, name, internalName) void Set##name(type new##name) noexcept { internalName = new##name; }
+/// @brief Defines a getter for the field @c m_##name, of type @p type, with the name @c Get##name
+#define GETTER_M(type, name) GETTER(type, name, m_##name)
 
 /// @brief Defines a static getter for the field @p internalName, of type @p type, with the name @c Get##name
 #define STATIC_GETTER(type, name, internalName) ATTRIBUTE_NODISCARD static type Get##name() noexcept { return internalName; }
-/// @brief Defines a static setter for the field @p internalName, of type @p type, with the name @c Get##name
-#define STATIC_SETTER(type, name, internalName) static void Set##name(type new##name) noexcept { internalName = new##name; }
+/// @brief Defines a static getter for the field @c m_##name, of type @p type, with the name @c Get##name
+#define STATIC_GETTER_M(type, name, internalName) STATIC_GETTER(type, name, m_##name)
 
 /// @brief Defines getters for the field @p internalName, of type @p type, with the name @c Get##name.
 /// One getter is @c const and returns a @c const value.
 #define GETTER_NON_CONST(type, name, internalName) \
     ATTRIBUTE_NODISCARD type Get##name() noexcept { return internalName; } \
     GETTER(const type, name, internalName)
+/// @brief Defines getters for the field @p internalName, of type @p type, with the name @c Get##name.
+/// One getter is @c const and returns a @c const value.
+#define GETTER_NON_CONST_M(type, name, internalName) GETTER_NON_CONST(type, name, m_##name)
 
 // Undefine any Windows interface macro
 #undef interface

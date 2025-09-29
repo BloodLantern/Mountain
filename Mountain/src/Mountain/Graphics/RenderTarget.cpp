@@ -32,7 +32,7 @@ void RenderTarget::Initialize(const Vector2i size, const Graphics::Magnification
         return;
 
     m_Size = size;
-    m_Projection = ComputeProjection(size);
+    m_Projection = ComputeProjection();
 
     // Color Texture
 
@@ -121,7 +121,7 @@ void RenderTarget::SetSize(const Vector2i newSize)
     m_Framebuffer.SetTexture(m_Texture.GetId(), Graphics::FramebufferAttachment::Color0);
 
     m_Size = newSize;
-    m_Projection = ComputeProjection(newSize);
+    m_Projection = ComputeProjection();
 }
 
 void RenderTarget::SetFilter(const Graphics::MagnificationFilter newFilter)
@@ -154,7 +154,9 @@ void RenderTarget::SetCameraMatrix(const Matrix& newCameraMatrix)
         UpdateDrawCamera();
 }
 
-Matrix RenderTarget::ComputeProjection(const Vector2i size)
+Matrix RenderTarget::ComputeProjection() const
 {
-    return Matrix::Orthographic(0.f, static_cast<float_t>(size.x), static_cast<float_t>(size.y), 0.f, -1000.f, 1000.f);
+    return projectionMatrix.ValueOr(
+        Matrix::Orthographic(0.f, static_cast<float_t>(m_Size.x), static_cast<float_t>(m_Size.y), 0.f, -1000.f, 1000.f)
+    );
 }

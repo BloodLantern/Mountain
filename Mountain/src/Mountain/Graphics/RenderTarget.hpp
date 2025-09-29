@@ -22,6 +22,10 @@ namespace Mountain
         /// @brief The ambient light color applied to the entirety of the RenderTarget
         Color ambientLight = Color::White();
 
+        /// @brief Custom projection matrix.
+        /// @details If left without a value, an orthographic projection with the size of the RenderTarget will be used instead.
+        Optional<Matrix> projectionMatrix;
+
         /// @brief Create an uninitialized RenderTarget
         MOUNTAIN_API RenderTarget() = default;
         /// @brief Create a RenderTarget and initialize it with the given values
@@ -84,7 +88,7 @@ namespace Mountain
 
         void UpdateDrawCamera() const;
 
-        static Matrix ComputeProjection(Vector2i size);
+        Matrix ComputeProjection() const;
 
         friend class Renderer;
     };
