@@ -5,12 +5,12 @@
 #include <Math/matrix.hpp>
 #include <Math/vector2i.hpp>
 
+#include "Mountain/Containers/List.hpp"
+#include "Mountain/Graphics/GpuFramebuffer.hpp"
 #include "Mountain/Graphics/GpuTexture.hpp"
 #include "Mountain/Graphics/Graphics.hpp"
 #include "Mountain/Graphics/LightSource.hpp"
 #include "Mountain/Utils/Color.hpp"
-#include "Mountain/Containers/List.hpp"
-#include "Mountain/Graphics/GpuFramebuffer.hpp"
 
 namespace Mountain
 {
@@ -21,10 +21,6 @@ namespace Mountain
     public:
         /// @brief The ambient light color applied to the entirety of the RenderTarget
         Color ambientLight = Color::White();
-
-        /// @brief Custom projection matrix.
-        /// @details If left without a value, an orthographic projection with the size of the RenderTarget will be used instead.
-        Optional<Matrix> projectionMatrix;
 
         /// @brief Create an uninitialized RenderTarget
         MOUNTAIN_API RenderTarget() = default;
@@ -53,16 +49,20 @@ namespace Mountain
         /// @param name The name of this RenderTarget
         MOUNTAIN_API void SetDebugName(std::string_view name) const;
 
-        GETTER(const List<LightSource>&, LightSources, m_LightSources)
+        /// @brief Set a custom projection matrix.
+        /// @details If given an empty value, an orthographic projection with the size of the RenderTarget will be used instead.
+        MOUNTAIN_API void SetProjection(const Optional<Matrix>& newProjection);
+
+        GETTER_M(const List<LightSource>&, LightSources)
         GETTER(Graphics::GpuFramebuffer, GpuFramebuffer, m_Framebuffer)
         GETTER(uint32_t, FramebufferId, m_Framebuffer.GetId())
         GETTER(Graphics::GpuTexture, GpuTexture, m_Texture)
         GETTER(uint32_t, TextureId, m_Texture.GetId())
-        GETTER(bool_t, Initialized, m_Initialized)
-        GETTER(Vector2i, Size, m_Size)
-        GETTER(Graphics::MagnificationFilter, Filter, m_Filter)
-        GETTER(const Matrix&, CameraMatrix, m_CameraMatrix)
-        GETTER(Vector2, CameraScale, m_CameraScale)
+        GETTER_M(bool_t, Initialized)
+        GETTER_M(Vector2i, Size)
+        GETTER_M(Graphics::MagnificationFilter, Filter)
+        GETTER_M(const Matrix&, CameraMatrix)
+        GETTER_M(Vector2, CameraScale)
 
         MOUNTAIN_API void SetSize(Vector2i newSize);
         MOUNTAIN_API void SetFilter(Graphics::MagnificationFilter newFilter);
@@ -77,6 +77,7 @@ namespace Mountain
         Vector2i m_Size;
         Graphics::MagnificationFilter m_Filter;
 
+        bool_t m_CustomProjection = false;
         Matrix m_Projection;
 
         List<LightSource> m_LightSources;
@@ -88,7 +89,7 @@ namespace Mountain
 
         void UpdateDrawCamera() const;
 
-        Matrix ComputeProjection() const;
+        Matrix ComputeDefaultProjection() const;
 
         friend class Renderer;
     };
