@@ -63,9 +63,6 @@ namespace Mountain
         struct Awaitable;
 
     public:
-        /// @brief Default duration type for Coroutine wait, equivalent to floating-point seconds
-        using AwaitType = std::chrono::duration<double_t>;
-
         /// @brief Promise type for C++20 coroutines.
         ///
         /// This is necessary for the coroutine to function and needs to be public but shouldn't be used
@@ -73,7 +70,7 @@ namespace Mountain
         struct promise_type
         {
             /// @brief The last @c co_await value
-            AwaitType awaitValue = AwaitType::zero();
+            TimeSpan awaitValue = TimeSpan::Zero();
 
             /// @brief Returns the object that will be returns to the caller of a CoroutineFunc
             MOUNTAIN_API Coroutine get_return_object();
@@ -91,8 +88,12 @@ namespace Mountain
             /// @brief Called when @c co_return is used in a Coroutine body. Empty implementation
             MOUNTAIN_API void return_void();
 
-            /// @brief Converts a @c AwaitType value to an @c Awaitable. Called when @c co_await is used with an @c AwaitType value.
-            MOUNTAIN_API Awaitable await_transform(const AwaitType& duration);
+            /// @brief Converts a @c TimeSpan value to an @c Awaitable. Called when @c co_await is used with a @c TimeSpan value.
+            MOUNTAIN_API Awaitable await_transform(const TimeSpan& duration);
+
+            /// @brief Converts an @c std::chrono::duration value to an @c Awaitable.
+            /// Called when @c co_await is used with an @c std::chrono::duration value.
+            MOUNTAIN_API Awaitable await_transform(const std::chrono::duration<double_t>& duration);
 
             /// @brief Converts a @c float_t value to an @c Awaitable. Called when @c co_await is used with a @c float_t value.
             MOUNTAIN_API Awaitable await_transform(float_t duration);
@@ -120,11 +121,15 @@ namespace Mountain
         /// @brief The coroutine handle type.
         using HandleType = std::coroutine_handle<promise_type>;
 
+        /// @brief Starts a coroutine, assigning it a @c Guid.
+        /// @details This will run the beginning of the coroutine body. If it
+        /// finishes without yielding, this function returns @c Guid::Empty().
+        /// Otherwise, it returns the @c Guid that was assigned to the coroutine.
         MOUNTAIN_API static Guid Start(Coroutine&& coroutine);
 
-        /// @brief Starts a coroutine using an existing coroutine Guid.
-        ///
-        /// This stops the existing coroutine if it is still running and assigns the guid with a newly created one.
+        /// @brief Starts a coroutine using an existing coroutine @c Guid.
+        /// @details This stops the existing coroutine if it is still running
+        /// and assigns the guid with a newly created one.
         MOUNTAIN_API static void Start(Coroutine&& coroutine, Guid* coroutineId);
 
         MOUNTAIN_API static void UpdateAll();
@@ -141,6 +146,8 @@ namespace Mountain
 
         ATTRIBUTE_NODISCARD
         MOUNTAIN_API static size_t GetRunningCount();
+
+        bool_t useUnscaledDeltaTime = false;
 
         MOUNTAIN_API Coroutine() = default;
 

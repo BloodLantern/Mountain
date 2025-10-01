@@ -71,8 +71,8 @@ namespace Mountain
         /// @brief Unloads and then loads back this Resource.
         ///
         /// This is effectively equivalent to calling @c ResetSourceData()
-        /// and then @c SetSourceData(const Pointer<File>&)
-        /// using @c FileManager::Get(const std::filesystem::path&) as a parameter.
+        /// and then @code SetSourceData(const Pointer<File>&)@endcode
+        /// using @code FileManager::Get(const std::filesystem::path&)@endcode as a parameter.
         ///
         /// @returns @c true if the loading succeeded, @c false otherwise.
         MOUNTAIN_API virtual bool_t Reload(bool_t reloadInBackend = true);

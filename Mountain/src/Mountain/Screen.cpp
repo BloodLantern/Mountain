@@ -37,6 +37,8 @@ float_t Screen::GetRefreshRate(int32_t screenIndex)
 
 void Screen::Initialize()
 {
+    ZoneScoped;
+
     m_Monitors = SDL_GetDisplays(&m_MonitorCount);
 
     m_VideoModes = new const SDL_DisplayMode*[m_MonitorCount];

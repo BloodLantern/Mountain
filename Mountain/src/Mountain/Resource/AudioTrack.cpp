@@ -2,9 +2,9 @@
 
 #include "Mountain/Resource/AudioTrack.hpp"
 
-#include <minimp3.h>
-#include <minimp3_ex.h>
 #include <stb_vorbis.h>
+#include <minimp3/minimp3.h>
+#include <minimp3/minimp3_ex.h>
 
 #include "Mountain/Audio/Audio.hpp"
 #include "Mountain/Utils/Logger.hpp"

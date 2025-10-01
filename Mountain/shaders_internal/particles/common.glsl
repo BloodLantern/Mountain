@@ -4,9 +4,9 @@ struct Particle
     float lifetime;
 
     float size;
-    //int padding0[2]; implicit padding here
+    vec2 startVelocity;
     vec2 offset;
-    vec2 velocity;
+    vec2 accumulatedVelocity;
     vec4 color;
 };
 

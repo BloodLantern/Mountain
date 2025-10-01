@@ -2,39 +2,35 @@
 
 #include "Mountain/Game.hpp"
 
-#include <mimalloc.h>
-
-#include "Mountain/Configuration.hpp"
 #include "Mountain/Window.hpp"
 #include "Mountain/Audio/Audio.hpp"
 #include "Mountain/Input/Input.hpp"
 #include "Mountain/Input/Time.hpp"
-#include "Mountain/Rendering/Renderer.hpp"
+#include "Mountain/Graphics/Renderer.hpp"
 #include "Mountain/Resource/ResourceManager.hpp"
 #include "Mountain/Utils/Coroutine.hpp"
 #include "Mountain/Utils/Logger.hpp"
 #include "Mountain/Utils/MessageBox.hpp"
 
-#include "Profiler.h"
+// ReSharper disable once CppUnusedIncludeDirective
+#include "Mountain/Profiler.hpp"
 
+#include "Mountain/Globals.hpp"
 
 using namespace Mountain;
 
 Game::Game(const std::string& windowTitle, const Vector2i windowSize)
 {
-    TracyNoop;
+    TracyNoop; // Make sure Tracy is correctly initialized
+
     ZoneScoped;
 
     Logger::Start();
     Logger::OpenDefaultFile();
 
-    (void) mi_version(); // Make sure mimalloc is correctly initialized
-
-    if (!mi_is_redirected())
-        Logger::LogWarning("C runtime malloc API calls aren't redirected to mimalloc");
-
     std::set_terminate(
         []
+        ATTRIBUTE_NORETURN
         {
             Logger::LogWarning("std::terminate called");
 
@@ -65,7 +61,7 @@ Game::Game(const std::string& windowTitle, const Vector2i windowSize)
 #ifdef _DEBUG
             std::abort();
 #else
-            std::exit(-1);
+            std::exit(-1);  // NOLINT(concurrency-mt-unsafe)
 #endif
         }
     );
@@ -110,7 +106,7 @@ void Game::MainLoop()
 {
     Start();
 
-    while (NextFrame()) { FrameMark; }
+    while (NextFrame());
 }
 
 // ReSharper disable once CppMemberFunctionMayBeStatic
@@ -126,18 +122,33 @@ void Game::Start()
 
 bool_t Game::NextFrame()
 {
+    ZoneScoped;
+
     Window::PollEvents();
 
     Time::Update();
     Audio::Update();
-    Coroutine::UpdateAll();
+
+    if (!ManualCoroutineUpdates)
+        Coroutine::UpdateAll();
 
     Renderer::PreFrame();
 
-    if (Time::freezeTimer <= 0.f)
+    if (ManualFreezeFrames || Time::freezeTimer <= 0.f)
+    {
+        ZoneScopedN("Game::Update");
+
         Update();
+    }
+
     if (!Window::GetMinimized())
+    {
+        ZoneScopedN("Game::Render");
+
+        TracyGpuZone("Game::Render")
+
         Render();
+    }
 
     Renderer::PostFrame();
 

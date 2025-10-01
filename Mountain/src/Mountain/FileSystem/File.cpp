@@ -77,47 +77,21 @@ void File::OpenFile() const
     Utils::OpenFile(m_Path);
 }
 
-File::Type File::GetType() const
+void File::Destroy() const
 {
-    return m_Type;
-}
-
-void File::Delete() const
-{
-    // We need copies of these variables because they may otherwise be destroyed by FileManager::PostUnload
+    // We need copies of these variables because they may otherwise be destroyed by FileManager::Unload
     const std::filesystem::path path = m_Path;
     const Pointer<Resource> resource = m_Resource;
 
     FileManager::Unload(path);
-    std::filesystem::remove(path);
 
     if (resource)
         ResourceManager::Unload(resource);
 }
 
-bool_t File::Exists()
+bool_t File::Exists() const
 {
     return exists(m_Path);
-}
-
-std::string File::GetNameNoExtension() const
-{
-    return m_NameNoExtension;
-}
-
-std::string File::GetPathNoExtension() const
-{
-    return m_PathNoExtension;
-}
-
-std::string File::GetExtension() const
-{
-    return m_Extension;
-}
-
-int64_t File::GetSize() const
-{
-    return m_Size;
 }
 
 void File::SetName(const std::string& newName)
@@ -125,11 +99,6 @@ void File::SetName(const std::string& newName)
     Entry::SetName(newName);
 
     m_Resource->SetName(GetPathString());
-}
-
-Pointer<Resource> File::GetResource() const
-{
-    return m_Resource;
 }
 
 void File::UpdateUtilityValues()
@@ -151,10 +120,14 @@ void File::UpdateUtilityValues()
         m_Type = Type::Font;
     else if (Utils::StringEqualsIgnoreCase(m_Extension, ".xml"))
         m_Type = Type::Xml;
+    else if (Utils::StringEqualsIgnoreCase(m_Extension, ".json"))
+        m_Type = Type::Json;
     else if (Utils::StringEnumerableContains(Shader::VertexFileExtensions, m_Extension))
         m_Type = Type::VertexShader;
     else if (Utils::StringEnumerableContains(Shader::FragmentFileExtensions, m_Extension))
         m_Type = Type::FragmentShader;
+    else if (Utils::StringEnumerableContains(Shader::GeometryFileExtensions, m_Extension))
+        m_Type = Type::GeometryShader;
     else if (Utils::StringEnumerableContains(ComputeShader::FileExtensions, m_Extension))
         m_Type = Type::ComputeShader;
     else if (Utils::StringEqualsIgnoreCase(m_Extension, ".glsl"))

@@ -16,6 +16,7 @@ namespace Mountain
 
         void RenderDebug(const Color& color) const override;
 
+        using Collider::CheckCollision;
         ATTRIBUTE_NODISCARD
         bool CheckCollision(Vector2 point) const override;
         ATTRIBUTE_NODISCARD

@@ -1,0 +1,10 @@
+{
+  "dependencies": [
+    "freetype",
+    "minimp3",
+    "rapidxml",
+    "sdl3",
+    "stb",
+    "magic-enum"
+  ]
+}

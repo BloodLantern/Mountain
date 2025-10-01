@@ -11,6 +11,7 @@
 
 // Define TRACY_ENABLE to enable profiler.
 
+// ReSharper disable CppClangTidyBugproneSuspiciousInclude
 #include "common/TracySystem.cpp"
 
 #ifdef TRACY_ENABLE

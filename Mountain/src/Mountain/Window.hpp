@@ -6,7 +6,7 @@
 #include <SDL3/SDL_video.h>
 
 #include "Mountain/Core.hpp"
-#include "Mountain/Rendering/Renderer.hpp"
+#include "Mountain/Graphics/Renderer.hpp"
 #include "Mountain/Resource/Texture.hpp"
 #include "Mountain/Utils/Event.hpp"
 

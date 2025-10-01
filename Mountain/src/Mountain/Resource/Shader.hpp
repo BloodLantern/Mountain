@@ -5,7 +5,7 @@
 #include <array>
 
 #include "Mountain/FileSystem/File.hpp"
-#include "Mountain/Rendering/Graphics.hpp"
+#include "Mountain/Graphics/Graphics.hpp"
 #include "Mountain/Resource/ShaderBase.hpp"
 #include "Mountain/Utils/Pointer.hpp"
 

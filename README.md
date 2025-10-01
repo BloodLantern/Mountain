@@ -1,3 +1,6 @@
+[![CodeFactor](https://www.codefactor.io/repository/github/bloodlantern/mountain/badge)](https://www.codefactor.io/repository/github/bloodlantern/mountain)
+[![MSBuild](https://github.com/BloodLantern/Mountain/actions/workflows/msbuild.yml/badge.svg?branch=master)](https://github.com/BloodLantern/Mountain/actions/workflows/msbuild.yml)
+
 # Mountain
 
 A (currently) Windows-only **C++ Framework for making 2D games**.
@@ -21,6 +24,8 @@ Most types and functions have documentation in their respective header files, so
 ## How to use this library
 
 You can choose between two ways of using this framework for your projects.
+
+Both require to have [vcpkg](https://vcpkg.io) installed.
 
 ### 1. Use this as a submodule (recommended)
 
@@ -108,9 +113,10 @@ compile by statically linking against the corresponding `Mountain.lib`
 - \[WIP] Real unit tests
 - ~~Replace all `std::array` and `std::vector` usages with `Mountain::Array` and `Mountain::List`~~
 - True text rendering
-- Add an instanced Random API to have both a static and instanced way or generated RNG
+- ~~Add an instanced Random API to have both a static and instanced way of generating random numbers~~
+- Add a way to fade stereo audio buffers from one to another
 - ~~Add `DateTime` class from .NET~~
-- ~~Replace all `std::chrono` usages by `Stopwatch`, `TimeSpan` and `DateTime`~
+- ~~Replace all `std::chrono` usages by `Stopwatch`, `TimeSpan` and `DateTime`~~
 - ~~Credit external dependencies in README~~
 - Add a way to use stereo audio files as mono sources and vice-versa
 - Add an API to edit compute shaders local size from C++

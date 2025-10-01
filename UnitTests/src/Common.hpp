@@ -4,7 +4,7 @@
 
 #define UNIT_TESTS
 
-#include <Mountain/Core.hpp>
+#include <Mountain/Mountain.hpp>
 
 using namespace Mountain;  // NOLINT(clang-diagnostic-header-hygiene)
 

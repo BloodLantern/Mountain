@@ -2,6 +2,7 @@
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Containers/FunctionTypes.hpp"
+#include "Mountain/Utils/Optional.hpp"
 #include "Mountain/Utils/Requirements.hpp"
 
 /// @brief Defines member functions for all enumerable extensions
@@ -35,6 +36,21 @@
     { return ::Mountain::FindAll(*this, predicate); } \
     \
     ATTRIBUTE_NODISCARD \
+    EnumeratedType* FindFirst(const ::Mountain::Predicate<EnumeratedType>& predicate) { return ::Mountain::FindFirst(*this, predicate); } \
+    \
+    ATTRIBUTE_NODISCARD \
+    const EnumeratedType* FindFirst(const ::Mountain::Predicate<EnumeratedType>& predicate) const { return ::Mountain::FindFirst(*this, predicate); } \
+    \
+    ATTRIBUTE_NODISCARD \
+    EnumeratedType* FindLast(const ::Mountain::Predicate<EnumeratedType>& predicate) { return ::Mountain::FindLast(*this, predicate); } \
+    \
+    ATTRIBUTE_NODISCARD \
+    const EnumeratedType* FindLast(const ::Mountain::Predicate<EnumeratedType>& predicate) const { return ::Mountain::FindLast(*this, predicate); } \
+    \
+    ATTRIBUTE_NODISCARD \
+    Optional<size_t> FindIndex(const ::Mountain::Predicate<EnumeratedType>& predicate) const { return ::Mountain::FindIndex(*this, predicate); } \
+    \
+    ATTRIBUTE_NODISCARD \
     EnumeratedType& First() { return ::Mountain::First(*this); } \
     \
     ATTRIBUTE_NODISCARD \
@@ -63,6 +79,14 @@
     template <typename = ::Mountain::Meta::EnableIf< \
         ::Mountain::Meta::IsSortable<Iterator, ::Mountain::Comparer<EnumeratedType>, ::Mountain::Identity>>> \
     void Sort(const ::Mountain::Comparer<EnumeratedType>& comparer) { return ::Mountain::Sort(*this, comparer); } \
+    \
+    template <typename = ::Mountain::Meta::EnableIf< \
+    ::Mountain::Meta::IsSortable<Iterator, ::Mountain::Comparer<EnumeratedType>, ::Mountain::Identity>>> \
+    void StableSort() { return ::Mountain::StableSort(*this); } \
+    \
+    template <typename = ::Mountain::Meta::EnableIf< \
+    ::Mountain::Meta::IsSortable<Iterator, ::Mountain::Comparer<EnumeratedType>, ::Mountain::Identity>>> \
+    void StableSort(const ::Mountain::Comparer<EnumeratedType>& comparer) { return ::Mountain::StableSort(*this, comparer); } \
     \
     bool_t IsValidIndex(const size_t index) const { return ::Mountain::IsValidIndex(*this, index); }
 
@@ -136,6 +160,10 @@ namespace Mountain
     ATTRIBUTE_NODISCARD
     const T* FindLast(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate);
 
+    template <Requirements::MountainEnumerable EnumerableT, typename T = Meta::MountainEnumerableType<EnumerableT>>
+    ATTRIBUTE_NODISCARD
+    Optional<size_t> FindIndex(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate);
+
     /// @brief Returns the first element of a sequence.
     template <Requirements::MountainEnumerable EnumerableT, typename T = Meta::MountainEnumerableType<EnumerableT>>
     ATTRIBUTE_NODISCARD
@@ -181,6 +209,16 @@ namespace Mountain
         typename T = Meta::MountainEnumerableType<EnumerableT>,
         typename = Meta::EnableIf<Meta::IsSortable<typename EnumerableT::Iterator, Comparer<T>, Identity>>>
     void Sort(EnumerableT& enumerable, const Comparer<Meta::Identity<T>>& comparer);
+
+    template <Requirements::MountainEnumerable EnumerableT,
+        typename T = Meta::MountainEnumerableType<EnumerableT>,
+        typename = Meta::EnableIf<Meta::IsSortable<typename EnumerableT::Iterator, Comparer<T>, Identity>>>
+    void StableSort(EnumerableT& enumerable);
+
+    template <Requirements::MountainEnumerable EnumerableT,
+        typename T = Meta::MountainEnumerableType<EnumerableT>,
+        typename = Meta::EnableIf<Meta::IsSortable<typename EnumerableT::Iterator, Comparer<T>, Identity>>>
+    void StableSort(EnumerableT& enumerable, const Comparer<Meta::Identity<T>>& comparer);
 
     template <Requirements::MountainEnumerable EnumerableT>
     bool_t IsValidIndex(const EnumerableT& enumerable, size_t index);
@@ -354,7 +392,7 @@ namespace Mountain
     template <Requirements::MountainEnumerable EnumerableT, typename T>
     const T* FindLast(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate)
     {
-        for (typename EnumerableT::ConstIterator it = enumerable.GetEndConstIterator() - 1; it + 1 != enumerable.GetBeginConstIterator(); it--)
+        for (typename EnumerableT::ConstIterator it = enumerable.cend() - 1; it + 1 != enumerable.cbegin(); it--)
         {
             const T& value = *it;
             if (predicate(value))
@@ -362,6 +400,18 @@ namespace Mountain
         }
 
         return nullptr;
+    }
+
+    template <Requirements::MountainEnumerable EnumerableT, typename T>
+    Optional<size_t> FindIndex(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate)
+    {
+        for (typename EnumerableT::ConstIterator it = enumerable.cbegin(); it != enumerable.cend(); it++)
+        {
+            if (predicate(*it))
+                return it - enumerable.cbegin();
+        }
+
+        return {};
     }
 
     template <Requirements::MountainEnumerable EnumerableT, typename T>
@@ -430,6 +480,18 @@ namespace Mountain
     void Sort(EnumerableT& enumerable, const Comparer<Meta::Identity<T>>& comparer)
     {
         std::ranges::sort(enumerable, comparer);
+    }
+
+    template <Requirements::MountainEnumerable EnumerableT, typename T, typename>
+    void StableSort(EnumerableT& enumerable)
+    {
+        return StableSort(enumerable, CompareLess<T>);
+    }
+
+    template <Requirements::MountainEnumerable EnumerableT, typename T, typename>
+    void StableSort(EnumerableT& enumerable, const Comparer<Meta::Identity<T>>& comparer)
+    {
+        std::ranges::stable_sort(enumerable, comparer);
     }
 
     template <Requirements::MountainEnumerable EnumerableT>

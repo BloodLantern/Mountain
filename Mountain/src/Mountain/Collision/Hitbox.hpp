@@ -20,18 +20,19 @@ namespace Mountain
         constexpr Rectangle ToRectangle() const;
 
         ATTRIBUTE_NODISCARD
-        bool Intersects(const Hitbox& other) const;
+        bool_t Intersects(const Hitbox& other) const;
 
+        using Collider::CheckCollision;
         ATTRIBUTE_NODISCARD
-        bool CheckCollision(Vector2 point) const override;
+        bool_t CheckCollision(Vector2 point) const override;
         ATTRIBUTE_NODISCARD
-        bool CheckCollision(const Hitbox& hitbox) const override;
+        bool_t CheckCollision(const Hitbox& hitbox) const override;
         ATTRIBUTE_NODISCARD
-        bool CheckCollision(const Circle& circle) const override;
+        bool_t CheckCollision(const Circle& circle) const override;
         ATTRIBUTE_NODISCARD
-        bool CheckCollision(const Grid& grid) const override;
+        bool_t CheckCollision(const Grid& grid) const override;
         ATTRIBUTE_NODISCARD
-        bool CheckCollision(const ColliderList& list) const override;
+        bool_t CheckCollision(const ColliderList& list) const override;
 
         ATTRIBUTE_NODISCARD
         float_t Left() const override;
@@ -43,18 +44,18 @@ namespace Mountain
         float_t Bottom() const override;
 
         ATTRIBUTE_NODISCARD
-        float AbsoluteLeft() const override;
+        float_t AbsoluteLeft() const override;
         ATTRIBUTE_NODISCARD
-        float AbsoluteRight() const override;
+        float_t AbsoluteRight() const override;
         ATTRIBUTE_NODISCARD
-        float AbsoluteTop() const override;
+        float_t AbsoluteTop() const override;
         ATTRIBUTE_NODISCARD
-        float AbsoluteBottom() const override;
+        float_t AbsoluteBottom() const override;
 
         ATTRIBUTE_NODISCARD
-        float Width() const override;
+        float_t Width() const override;
         ATTRIBUTE_NODISCARD
-        float Height() const override;
+        float_t Height() const override;
         ATTRIBUTE_NODISCARD
         Vector2 Size() const override;
     };

@@ -63,7 +63,7 @@ void ShapeInitialize(inout Particle particle)
             randomPoint = Rotated(randomPoint, shape.rotation);
             particle.offset = randomPoint * shape.circle.radius * shape.circle.radiusThickness
                 + normalize(randomPoint) * shape.circle.radius * (1.f - shape.circle.radiusThickness);
-            particle.velocity = normalize(particle.offset);
+            particle.startVelocity = normalize(particle.offset);
 
             particle.offset *= shape.scale;
             break;
@@ -72,32 +72,35 @@ void ShapeInitialize(inout Particle particle)
             break;
 
         case ShapeTypeRectangle:
-            particle.offset = RandomPointInRectangle(randomSeed, vec2(-0.5f), vec2(1.f)) * shape.scale;
+            float rectangleChoice = Random(randomSeed);
+            particle.offset = RandomPointInRectangle(randomSeed * rectangleChoice, vec2(0.f), vec2(1.f));
 
-            vec2 outerRectangleSize = shape.scale;
-            vec2 innerRectangleSize = outerRectangleSize - outerRectangleSize * shape.rectangle.scaleThickness;
+            // TODO - Optimization possible if scaleThickness == vec2(1.f)
 
-            vec2 halfOuterRectangleSize = outerRectangleSize * 0.5f;
-            vec2 halfInnerRectangleSize = innerRectangleSize * 0.5f;
-
-            vec2 particleOffsetAbs = abs(particle.offset);
-
-            if (particleOffsetAbs.x < halfInnerRectangleSize.x && particleOffsetAbs.y < halfInnerRectangleSize.y)
+            float rightRectangleArea = shape.rectangle.scaleThickness.x;
+            float bottomRectangleArea = shape.rectangle.scaleThickness.y * (1.f - shape.rectangle.scaleThickness.x);
+            float totalArea = rightRectangleArea + bottomRectangleArea;
+            float limit = rightRectangleArea / totalArea;
+            if (rectangleChoice <= limit)
             {
-                vec2 factors = particle.offset / halfInnerRectangleSize;
-
-                vec2 nearestPointOnOuterRectangle = NearestPointOnRectangle(-halfOuterRectangleSize, outerRectangleSize, particle.offset);
-                vec2 nearestPointOnInnerRectangle = NearestPointOnRectangle(-halfInnerRectangleSize, innerRectangleSize, particle.offset);
-
-                particle.offset = nearestPointOnOuterRectangle;
-//                particle.offset.x = RemapValue(particleOffsetAbs.x, 0.f, halfInnerRectangleSize.x, nearestPointOnInnerRectangle.x, nearestPointOnOuterRectangle.x);
-//                particle.offset.y = RemapValue(particleOffsetAbs.y, 0.f, halfInnerRectangleSize.y, nearestPointOnInnerRectangle.y, nearestPointOnOuterRectangle.y);
+                particle.offset.x = 1.f + (particle.offset.x - 1.f) * 0.5f * shape.rectangle.scaleThickness.x;
+                particle.offset -= vec2(0.5f);
+                if (rectangleChoice <= limit * 0.5f)
+                    particle.offset *= -1.f;
             }
             else
-                particle.offset = vec2(0);
+            {
+                particle.offset.x = (particle.offset.x - 0.5f) * (1.f - shape.rectangle.scaleThickness.x);
+                particle.offset.y = 1.f + (particle.offset.y - 1.f) * 0.5f * shape.rectangle.scaleThickness.y;
+                particle.offset.y -= 0.5f;
+                if (rectangleChoice >= (1.f + limit) * 0.5f)
+                    particle.offset *= -1.f;
+            }
+
+            particle.offset *= shape.scale;
 
             particle.offset = Rotated(particle.offset, shape.rotation);
-            particle.velocity = normalize(particle.offset);
+            particle.startVelocity = normalize(particle.offset);
             break;
     }
 

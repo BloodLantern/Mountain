@@ -24,6 +24,7 @@ namespace Mountain
 
         // Inherited via Collider
         MOUNTAIN_API void RenderDebug(const Color& color) const override;
+        using Collider::CheckCollision;
         ATTRIBUTE_NODISCARD
         MOUNTAIN_API bool_t CheckCollision(Vector2 point) const override;
         ATTRIBUTE_NODISCARD

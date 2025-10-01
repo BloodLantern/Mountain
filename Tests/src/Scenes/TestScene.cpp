@@ -2,7 +2,7 @@
 
 #include "Scenes/TestScene.hpp"
 
-#include <Mountain/Rendering/Draw.hpp>
+#include <Mountain/Graphics/Draw.hpp>
 #include <Mountain/Utils/ImGuiUtils.hpp>
 
 TestScene::TestScene(std::string name)

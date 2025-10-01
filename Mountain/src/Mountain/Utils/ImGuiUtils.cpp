@@ -2,8 +2,6 @@
 
 #include "Mountain/Utils/ImGuiUtils.hpp"
 
-#include <mimalloc.h>
-
 #include <magic_enum/magic_enum.hpp>
 
 #include "Mountain/Screen.hpp"
@@ -13,6 +11,7 @@
 #include "Mountain/Resource/AudioTrack.hpp"
 #include "Mountain/Resource/Font.hpp"
 #include "Mountain/Utils/FileSystemWatcher.hpp"
+#include "Mountain/Utils/Windows.hpp"
 
 using namespace Mountain;
 
@@ -31,7 +30,7 @@ namespace
 
 void ImGuiUtils::GridPlotting(const std::string_view label, Vector2* const value, const float_t min, const float_t max)
 {
-    ImGui::PushID(value);
+    ImGui::PushID(STRING_VIEW_TO_C_STR(label));
 
     ImGui::Text("%.*s", static_cast<int32_t>(label.length()), label.data());
     ImDrawList* drawList = ImGui::GetWindowDrawList();
@@ -88,7 +87,7 @@ void ImGuiUtils::GridPlotting(const std::string_view label, Vector2* const value
 
 void ImGuiUtils::DirectionVector(const std::string_view label, Vector2* const value)
 {
-    ImGui::PushID(value);
+    ImGui::PushID(STRING_VIEW_TO_C_STR(label));
 
     ImGui::Text("%.*s", static_cast<int32_t>(label.length()), label.data());
     ImDrawList* drawList = ImGui::GetWindowDrawList();
@@ -300,8 +299,18 @@ void ImGuiUtils::ShowInputsWindow()
 
     if (ImGui::TreeNode("Keyboard"))
     {
-        ImGui::Text("Key down B: %d", Input::GetKey(Key::B));
-        ImGui::Text("Key release B: %d", Input::GetKey(Key::B, KeyStatus::Release));
+        ImGui::TextColored(Color::Gray(), "Not all keys are displayed");
+        for (const auto pair : magic_enum::enum_entries<Key>())
+        {
+            if (!ImGui::TreeNode(STRING_VIEW_TO_C_STR(pair.second)))
+                continue;
+
+            ImGui::Text("Pressed: %d", Input::GetKey(pair.first, KeyStatus::Pressed));
+            ImGui::Text("Down: %d", Input::GetKey(pair.first));
+            ImGui::Text("Release: %d", Input::GetKey(pair.first, KeyStatus::Release));
+
+            ImGui::TreePop();
+        }
         ImGui::TreePop();
     }
 
@@ -645,6 +654,9 @@ void ImGuiUtils::ShowPerformanceMonitoring()
     static float_t lastUpdateTime = 0.f;
     static uint64_t lastUpdateTotalFrames = 0;
 
+    static List<float_t> frameDurationList;
+    static constexpr size_t MaxFrameDurations = 200;
+
     if (Time::OnIntervalUnscaled(updateInterval))
     {
         const float_t updateTime = Time::GetTotalTimeUnscaled();
@@ -656,11 +668,17 @@ void ImGuiUtils::ShowPerformanceMonitoring()
         frameDurationLeft = Time::GetTargetDeltaTime() == 0.f ? 0.f : (Time::GetTargetDeltaTime() - frameDuration);
         framebufferSize = Window::GetSize();
 
-        size_t cpuMemory, totalMemory;
-        mi_process_info(nullptr, nullptr, nullptr, &cpuMemory, nullptr, &totalMemory, nullptr, nullptr);
+        PROCESS_MEMORY_COUNTERS_EX2 memoryCounter;
+        GetProcessMemoryInfo(GetCurrentProcess(), reinterpret_cast<PPROCESS_MEMORY_COUNTERS>(&memoryCounter), sizeof(memoryCounter));
+        Windows::CheckError();
 
-        memoryCpuOnly = static_cast<double_t>(cpuMemory) * 1e-6; // Convert to MB
-        memoryTotal = static_cast<double_t>(totalMemory) * 1e-6; // Convert to MB
+        memoryCpuOnly = static_cast<double_t>(memoryCounter.PrivateWorkingSetSize) * 1e-6; // Convert to MB
+        memoryTotal = static_cast<double_t>(memoryCounter.PrivateUsage) * 1e-6; // Convert to MB
+
+        frameDurationList.Add(frameDuration * 1000.f);
+
+        if (frameDurationList.GetSize() > MaxFrameDurations)
+            frameDurationList.RemoveFirst();
 
         lastUpdateTime = updateTime;
         lastUpdateTotalFrames = totalFrames;
@@ -676,6 +694,12 @@ void ImGuiUtils::ShowPerformanceMonitoring()
     ImGui::Text("CPU: %.1fms (%.1fms left)", frameDuration * 1000.f, frameDurationLeft * 1000.f);
     ImGui::Text("Memory: %.2fMB (%.2fMB including GPU)", memoryCpuOnly, memoryTotal);
     ImGui::Text("Framebuffer: %dx%d", framebufferSize.x, framebufferSize.y);
+
+    if (ImGui::TreeNode("Frame duration graph"))
+    {
+        ImGui::PlotHistogram("Frame durations (in ms)", frameDurationList.GetData(), static_cast<int32_t>(frameDurationList.GetSize()), 0, nullptr, 0.f, Time::GetTargetDeltaTime() * 10000.f, {0.f, 200.f});
+        ImGui::TreePop();
+    }
 
     ImGui::End();
 }
@@ -703,9 +727,35 @@ void ImGuiUtils::DrawEasingFunction(const char_t* label, const Easing::Easer fun
     _freea(data);
 }
 
-void ImGuiUtils::OpenResourcePopupModal()
+void ImGuiUtils::OpenPointerPopupModal()
 {
-    ImGui::OpenPopup("ResourceFilter");
+    ImGui::OpenPopup("PointerFilter");
+}
+
+bool_t ImGuiUtils::FilterFilePopupModal(Pointer<File>* value, const std::string_view extension)
+{
+    static std::string filter;
+    const std::string f = filter + std::string{extension};
+
+    const List<Pointer<File>> resources = FileManager::FindAll<File>(
+        [&](const Pointer<File>& resource)
+        {
+            return Utils::StringContainsIgnoreCase(resource->GetPathString(), f);
+        }
+    );
+
+    return FilterPointerPopupModal<File>(value, resources, filter, [](const Pointer<File>& p) { return p->GetName().c_str(); });
+}
+
+bool_t ImGuiUtils::SelectFile(const char_t* label, Pointer<File>* value, const bool_t enableResetButton, const std::string_view extension)
+{
+    return SelectPointer<File>(
+        label,
+        value,
+        enableResetButton,
+        [=](Pointer<File>* v) { return FilterFilePopupModal(v, extension); },
+        [](const Pointer<File>& p) { return p->GetPathString().c_str(); }
+    );
 }
 
 // ReSharper disable CppInconsistentNaming

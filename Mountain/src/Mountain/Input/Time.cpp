@@ -2,6 +2,8 @@
 
 #include "Mountain/Input/Time.hpp"
 
+#include "Mountain/Profiler.hpp"
+
 #include "Mountain/Screen.hpp"
 #include "Mountain/Window.hpp"
 #include "Mountain/Utils/Windows.hpp"
@@ -10,8 +12,8 @@ using namespace Mountain;
 
 float_t Time::GetTargetDeltaTime()
 {
-    if (targetFps.has_value())
-        return 1.f / static_cast<float_t>(targetFps.value());
+    if (targetFps.HasValue())
+        return 1.f / static_cast<float_t>(targetFps.Value());
     return Window::GetVSync() ? 1.f / Screen::GetRefreshRate() : 0.f;
 }
 
@@ -51,6 +53,8 @@ namespace
 
 void Time::Initialize()
 {
+    ZoneScoped;
+
     m_Stopwatch.Start();
 
     // Attempt to create a high-resolution timer, only available since Windows 10, version 1803
@@ -66,6 +70,8 @@ void Time::Initialize()
 
 void Time::Shutdown()
 {
+    ZoneScoped;
+
     if (waitableTimer)
     {
         CloseHandle(waitableTimer);
@@ -75,6 +81,8 @@ void Time::Shutdown()
 
 void Time::Update()
 {
+    ZoneScoped;
+
     m_LastTotalTimeUnscaled = m_TotalTimeUnscaled;
     m_LastTotalTime = m_TotalTime;
 
@@ -92,6 +100,8 @@ void Time::Update()
 
 void Time::WaitForNextFrame()
 {
+    ZoneScoped;
+
     // Most of the code for waiting between frames comes from the osu!framework:
     // https://github.com/ppy/osu-framework/blob/master/osu.Framework/Timing/ThrottledFrameClock.cs
 
@@ -103,11 +113,11 @@ void Time::WaitForNextFrame()
     const double_t lastFrameDurationMsWithoutSwapBuffers = elapsedMilliseconds - frameStartMsAfterSwapBuffers;
     m_LastFrameDuration = static_cast<float_t>(lastFrameDurationMsWithoutSwapBuffers / 1000.0);
 
-    if (targetFps.has_value())
+    if (targetFps.HasValue())
     {
         const double_t lastFrameDurationMs = elapsedMilliseconds - frameStartMs;
 
-        const double_t targetFrameDuration = 1000.0 / targetFps.value();
+        const double_t targetFrameDuration = 1000.0 / targetFps.Value();
         const double_t excessFrameTime = targetFrameDuration - lastFrameDurationMs;
         const double_t timeToSleep = std::max(0.0, excessFrameTime + accumulatedSleepError);
 

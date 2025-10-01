@@ -26,8 +26,10 @@ namespace Mountain
             Texture,
             Font,
             Xml,
+            Json,
             VertexShader,
             FragmentShader,
+            GeometryShader,
             ComputeShader,
             Glsl
         };
@@ -60,25 +62,22 @@ namespace Mountain
         MOUNTAIN_API void OpenFile() const;
 
         /// @brief Returns the Type of this File.
-        MOUNTAIN_API Type GetType() const;
+        GETTER(Type, Type, m_Type)
 
         /// @brief Deletes the corresponding filesystem file.
-        MOUNTAIN_API void Delete() const;
+        MOUNTAIN_API void Destroy() const;
 
         /// @brief Get whether this file exists on the file system or is just a virtual file representation
-        MOUNTAIN_API bool_t Exists();
+        MOUNTAIN_API bool_t Exists() const;
 
         /// @brief Returns the name of this File without the file extension.
-        ATTRIBUTE_NODISCARD
-        MOUNTAIN_API std::string GetNameNoExtension() const;
+        GETTER(const std::string&, NameNoExtension, m_NameNoExtension)
 
         /// @brief Returns the name of this File without the file extension.
-        ATTRIBUTE_NODISCARD
-        MOUNTAIN_API std::string GetPathNoExtension() const;
+        GETTER(const std::string&, PathNoExtension, m_PathNoExtension)
 
         /// @brief Returns the file extension of this File.
-        ATTRIBUTE_NODISCARD
-        MOUNTAIN_API std::string GetExtension() const;
+        GETTER(const std::string&, Extension, m_Extension)
 
         /// @brief Returns a @c const pointer to the raw loaded data.
         template <typename T = char_t>
@@ -91,8 +90,7 @@ namespace Mountain
         T* GetData();
 
         /// @brief Returns the size of the loaded data.
-        ATTRIBUTE_NODISCARD
-        MOUNTAIN_API int64_t GetSize() const;
+        GETTER(int64_t, Size, m_Size)
 
         /// @brief Sets the name of this File.
         MOUNTAIN_API void SetName(const std::string& newName) override;
@@ -101,8 +99,7 @@ namespace Mountain
         ///
         /// Note that a Resource doesn't need to be loaded from a File and can instead be loaded from raw data.
         /// This implies that the return value of this function can be a @c nullptr.
-        ATTRIBUTE_NODISCARD
-        MOUNTAIN_API Pointer<Resource> GetResource() const;
+        GETTER(const Pointer<Resource>&, Resource, m_Resource)
 
     protected:
         void UpdateUtilityValues() override;

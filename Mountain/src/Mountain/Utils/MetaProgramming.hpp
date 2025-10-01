@@ -29,6 +29,8 @@ namespace Mountain
     class Effect;
     template <typename>
     struct Pointer;
+    template <typename>
+    struct Optional;
 
     namespace ParticleSystemModules
     {
@@ -85,9 +87,17 @@ namespace Mountain
         template <typename T>
         constexpr bool_t IsAbstract = std::is_abstract_v<T>;
 
-        /// @brief Checks whether @p T is default-constructible (has a public constructor, with no parameters).
+        /// @brief Checks whether @p T is default-constructible (has a public constructor with no parameters).
         template <typename T>
         constexpr bool_t IsDefaultConstructible = std::is_default_constructible_v<T>;
+
+        /// @brief Checks whether @p T is copy-constructible (has a public constructor taking a const reference to the same type).
+        template <typename T>
+        constexpr bool_t IsCopyConstructible = std::is_copy_constructible_v<T>;
+
+        /// @brief Checks whether @p T is move-constructible (has a public constructor taking an r-value reference of the same type).
+        template <typename T>
+        constexpr bool_t IsMoveConstructible = std::is_move_constructible_v<T>;
 
         /// @brief Checks whether @p T can be assigned a copied value.
         template <typename T>
@@ -200,12 +210,26 @@ namespace Mountain
         template <typename T, typename... Args>
         constexpr bool_t IsStandardFunction<std::function<T(Args...)>> = true;
 
-        /// @brief Checks whether the type is a Pointer
+        /// @brief Checks whether the type is a @c Pointer
         template <typename>
         constexpr bool_t IsMountainPointer = false;
 
         template <typename T>
         constexpr bool_t IsMountainPointer<Pointer<T>> = true;
+
+        /// @brief Checks whether the type is a @c std::optional
+        template <typename>
+        constexpr bool_t IsStandardOptional = false;
+
+        template <typename T>
+        constexpr bool_t IsStandardOptional<std::optional<T>> = true;
+
+        /// @brief Checks whether the type is an @c Optional
+        template <typename>
+        constexpr bool_t IsMountainOptional = false;
+
+        template <typename T>
+        constexpr bool_t IsMountainOptional<Optional<T>> = true;
 
         /// @brief Checks if T is a native type.
         ///
@@ -419,7 +443,11 @@ namespace Mountain
 
         /// @brief A container type is any non-const, non-function, non-reference type that can be default, copy and move constructed.
         template <typename T>
-        concept DynamicContainerType = ContainerType<T>;
+        concept DynamicContainerType =
+            ContainerType<T> &&
+            Meta::IsDefaultConstructible<T> &&
+            Meta::IsCopyConstructible<T> &&
+            Meta::IsMoveConstructible<T>;
 
         template <typename T>
         concept Collider = Meta::IsCollider<T>;

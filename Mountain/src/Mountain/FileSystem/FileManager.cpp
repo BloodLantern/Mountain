@@ -169,7 +169,7 @@ void FileManager::Rename(const std::filesystem::path& path, const std::filesyste
 
 void FileManager::Rename(const Pointer<Entry>& entry, const std::filesystem::path& newPath)
 {
-    std::string&& oldName = entry->GetPathString();
+    const std::string& oldName = entry->GetPathString();
 
     Logger::LogInfo("Renaming FileManager entry {} to {}", oldName, newPath);
 

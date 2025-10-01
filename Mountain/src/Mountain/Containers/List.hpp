@@ -229,6 +229,16 @@ namespace Mountain
 
         void RemoveLast();
 
+        void RemoveAll(const Predicate<T>& predicate);
+
+        void RemoveRange(size_t index, size_t count);
+
+        void RemoveRange(Iterator iterator, size_t count);
+
+        T PopFront();
+
+        T PopBack();
+
         /// @brief Get the element at the given index with bounds checking.
         ATTRIBUTE_NODISCARD
         T& At(size_t index) const;
@@ -324,12 +334,15 @@ namespace Mountain
     template <Concepts::DynamicContainerType T>
     List<T>::List(std::initializer_list<T> initializer) noexcept
     {
-        Reserve(initializer.size());
+        const size_t size = initializer.size();
 
-        for (int i = 0; i < initializer.size(); i++)
-            m_Data[i] = initializer.begin()[i];
+        Reserve(size);
 
-        m_Size = initializer.size();
+        const T* first = initializer.begin();
+        for (size_t i = 0; i < size; i++)
+            new (m_Data + i) T{first[i]};
+
+        m_Size = size;
     }
 
     template <Concepts::DynamicContainerType T>
@@ -350,7 +363,7 @@ namespace Mountain
         Reserve(initialSize);
         m_Size = initialSize;
         for (size_t i = 0; i < initialSize; i++)
-            m_Data[i] = values[i];
+            new (m_Data + i) T{values[i]};
     }
 
     template <Concepts::DynamicContainerType T>
@@ -374,7 +387,7 @@ namespace Mountain
         for (InputIterator it = first; it != last; it++)
         {
             const size_t index = it - first;
-            m_Data[index] = *it;
+            new (m_Data + index) T{*it};
         }
     }
 
@@ -411,7 +424,7 @@ namespace Mountain
         Reallocate(other.m_Capacity);
         m_Size = other.m_Size;
         for (size_t i = 0; i < m_Size; i++)
-            m_Data[i] = other.m_Data[i];
+            new (m_Data + i) T{other.m_Data[i]};
 
         return *this;
     }
@@ -478,7 +491,7 @@ namespace Mountain
     template <Concepts::Iterator InputIterator>
     void List<T>::AddRange(InputIterator first, InputIterator last)
     {
-        static_assert(Meta::IsSame<Meta::IteratorType<InputIterator>, T>, "List::AddRange() needs the type of the iterator to be the same as the List");
+        static_assert(Meta::IsConvertibleTo<Meta::IteratorType<InputIterator>, T>, "List::AddRange() needs the type of the iterator to be the same as the List");
 
         const size_t additionalSize = last - first;
 
@@ -497,7 +510,7 @@ namespace Mountain
     template <Concepts::Enumerable EnumerableT>
     void List<T>::AddRange(const EnumerableT& enumerable)
     {
-        static_assert(Meta::IsSame<Meta::EnumerableType<EnumerableT>, T>, "List::AddRange() needs the type of the enumerable to be the same as the List");
+        static_assert(Meta::IsConvertibleTo<Meta::EnumerableType<EnumerableT>, T>, "List::AddRange() needs the type of the enumerable to be the same as the List");
 
         AddRange(enumerable.begin(), enumerable.end());
     }
@@ -563,7 +576,7 @@ namespace Mountain
     T& List<T>::Emplace(size_t index, Args&&... args)
     {
         if (index > m_Size)
-            THROW(ArgumentOutOfRangeException{"Cannot insert element at index > m_Size", TO_STRING(index)});
+            THROW(ArgumentOutOfRangeException{"Cannot insert element at index > m_Size", "index"});
 
         if (index == m_Size)
             return Emplace(std::forward<Args>(args)...);
@@ -587,7 +600,7 @@ namespace Mountain
     T& List<T>::Insert(const size_t index, T&& element)
     {
         if (index > m_Size)
-            THROW(ArgumentOutOfRangeException{"Cannot insert element at index > m_Size", TO_STRING(index)});
+            THROW(ArgumentOutOfRangeException{"Cannot insert element at index > m_Size", "index"});
 
         if (index == m_Size)
             return Add(std::move(element));
@@ -603,7 +616,7 @@ namespace Mountain
     T& List<T>::Insert(const size_t index, const T& element)
     {
         if (index > m_Size)
-            THROW(ArgumentOutOfRangeException{"Cannot insert element at index > m_Size", TO_STRING(index)});
+            THROW(ArgumentOutOfRangeException{"Cannot insert element at index > m_Size", "index"});
 
         if (index == m_Size)
             return Add(element);
@@ -633,7 +646,7 @@ namespace Mountain
     void List<T>::InsertRange(const size_t index, const T* data, const size_t count)
     {
         if (index > m_Size)
-            THROW(ArgumentOutOfRangeException{"Cannot insert elements at index > m_Size", TO_STRING(index)});
+            THROW(ArgumentOutOfRangeException{"Cannot insert elements at index > m_Size", "index"});
 
         if (index == m_Size)
         {
@@ -661,7 +674,7 @@ namespace Mountain
     template <Concepts::Iterator InputIterator>
     void List<T>::InsertRange(const size_t index, InputIterator first, InputIterator last)
     {
-        static_assert(Meta::IsSame<Meta::IteratorType<InputIterator>, T>, "List::InsertRange() needs the type of the iterator to be the same as the List");
+        static_assert(Meta::IsConvertibleTo<Meta::IteratorType<InputIterator>, T>, "List::InsertRange() needs the type of the iterator to be the same as the List");
 
         const size_t additionalSize = last - first;
 
@@ -681,7 +694,7 @@ namespace Mountain
     template <Concepts::Enumerable EnumerableT>
     void List<T>::InsertRange(const size_t index, EnumerableT enumerable)
     {
-        static_assert(Meta::IsSame<Meta::EnumerableType<EnumerableT>, T>, "List::InsertRange() needs the type of the enumerable to be the same as the List");
+        static_assert(Meta::IsConvertibleTo<Meta::EnumerableType<EnumerableT>, T>, "List::InsertRange() needs the type of the enumerable to be the same as the List");
 
         return InsertRange(index, enumerable.begin(), enumerable.end());
     }
@@ -855,6 +868,61 @@ namespace Mountain
     void List<T>::RemoveLast()
     {
         RemoveAt(m_Size - 1);
+    }
+
+    template <Concepts::DynamicContainerType T>
+    void List<T>::RemoveAll(const Predicate<T>& predicate)
+    {
+        for (size_t i = 0; i < m_Size; i++)
+        {
+            if (predicate(*m_Data[i]))
+                RemoveAt(i--);
+        }
+    }
+
+    template <Concepts::DynamicContainerType T>
+    void List<T>::RemoveRange(const size_t index, const size_t count)
+    {
+        if (count == 0)
+            return;
+
+        if (index + count > m_Size)
+            THROW(ArgumentException{"Invalid element count", "count"});
+
+        if constexpr (!Meta::IsTriviallyDestructible<T>)
+        {
+            for (size_t i = index; i < index + count; i++)
+                m_Data[i].~T();
+        }
+
+        if (index + count != m_Size)
+            ShiftElements(-static_cast<ptrdiff_t>(count), index + count, m_Size);
+
+        m_Size -= count;
+    }
+
+    template <Concepts::DynamicContainerType T>
+    void List<T>::RemoveRange(const Iterator iterator, const size_t count)
+    {
+        CheckIteratorThrow(iterator);
+
+        return RemoveRange(iterator.GetIndex(), count);
+    }
+
+    template <Concepts::DynamicContainerType T>
+    T List<T>::PopFront()
+    {
+        T result{First()};
+        RemoveFirst();
+        return result;
+    }
+
+    template <Concepts::DynamicContainerType T>
+    T List<T>::PopBack()
+    {
+        T result{Last()};
+        RemoveLast();
+        return result;
     }
 
     template <Concepts::DynamicContainerType T>

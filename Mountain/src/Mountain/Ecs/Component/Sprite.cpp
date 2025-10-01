@@ -1,8 +1,6 @@
 ﻿#include "Mountain/PrecompiledHeader.hpp"
-
 #include "Mountain/Ecs/Component/Sprite.hpp"
 
-#include "Mountain/Ecs/Entity.hpp"
 #include "Mountain/Input/Time.hpp"
 #include "Mountain/Resource/ResourceManager.hpp"
 
@@ -43,7 +41,7 @@ void Sprite::SetupTextures()
             if (!fName.starts_with(name))
                 return false;
 
-            std::string&& index = fName.substr(name.size());
+            const std::string& index = fName.substr(name.size());
             if (std::ranges::find_if(index, [](auto c) -> bool_t { return !std::isdigit(c); }) != index.end())
                 return false;
 
@@ -52,7 +50,7 @@ void Sprite::SetupTextures()
         &m_Textures
     );
 
-    m_Textures.Sort([](auto&& a, auto&& b) -> bool_t { return a->GetName() < b->GetName(); });
+    m_Textures.Sort([](const Pointer<Texture>& a, const Pointer<Texture>& b) -> bool_t { return a->GetName() < b->GetName(); });
 
     m_UpdateTimer = frameDuration;
 }

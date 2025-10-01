@@ -4,16 +4,6 @@
 
 using namespace Mountain;
 
-uint32_t Color::GetPackedValue() const
-{
-    const uint8_t byteR = static_cast<uint8_t>(Calc::Round(r * std::numeric_limits<uint8_t>::max()));
-    const uint8_t byteG = static_cast<uint8_t>(Calc::Round(g * std::numeric_limits<uint8_t>::max()));
-    const uint8_t byteB = static_cast<uint8_t>(Calc::Round(b * std::numeric_limits<uint8_t>::max()));
-    const uint8_t byteA = static_cast<uint8_t>(Calc::Round(a * std::numeric_limits<uint8_t>::max()));
-
-    return byteA << 24 | byteB << 16 | byteG << 8 | byteR;
-}
-
 Color::operator ImVec4() const { return ImVec4{ r, g, b, a }; }
 
 std::string Color::ToString() const
@@ -28,7 +18,7 @@ std::string ColorHsva::ToString() const
 
 Color Calc::Lerp(const Color& value, const Color& target, const float_t time)
 {
-    return Color{Lerp(static_cast<Vector4>(value), static_cast<Vector4>(target), time)};
+    return Color{Lerp(value.ToVector4(), target.ToVector4(), time)};
 }
 
 Color Calc::Lerp(
@@ -38,13 +28,13 @@ Color Calc::Lerp(
     const Easing::Easer easer
 )
 {
-    return Color{Lerp(static_cast<Vector4>(value), static_cast<Vector4>(target), time, easer)};
+    return Color{Lerp(value.ToVector4(), target.ToVector4(), time, easer)};
 }
 
 Color Calc::LerpFixed(const Color& value, const Color& target, const float_t time)
 {
-    const Vector4 v = static_cast<Vector4>(value);
-    const Vector4 t = static_cast<Vector4>(target);
+    const Vector4 v = value.ToVector4();
+    const Vector4 t = target.ToVector4();
 
     Vector4 result = Lerp(v * v, t * t, time);
 
@@ -58,8 +48,8 @@ Color Calc::LerpFixed(const Color& value, const Color& target, const float_t tim
 
 Color Calc::LerpFixed(const Color& value, const Color& target, const float_t time, const Easing::Easer easer)
 {
-    const Vector4 v = static_cast<Vector4>(value);
-    const Vector4 t = static_cast<Vector4>(target);
+    const Vector4 v = value.ToVector4();
+    const Vector4 t = target.ToVector4();
 
     Vector4 result = Lerp(v * v, t * t, time, easer);
 

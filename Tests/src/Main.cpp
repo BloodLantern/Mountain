@@ -8,11 +8,11 @@
 USE_DEDICATED_GPU
 
 // To use Live++ on certain machines only (those that have a license, for example),
-// define the environment variable MOUNTAIN_LPP and give it the value USE_LPP.
+// define the environment variable LIVEPP and give it the path to your Live++ directory as a value.
 // It will only be enabled in the Debug configuration.
 
-#ifdef USE_LPP
-#include <Mountain/Rendering/Renderer.hpp>
+#ifdef LPP_PATH
+#include <Mountain/Graphics/Renderer.hpp>
 #include <Mountain/Utils/Logger.hpp>
 // include the API for Windows, 64-bit, C++
 #include "LPP_API_x64_CPP.h"
@@ -37,12 +37,14 @@ int WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 int main(int, char**)
 #endif
 {
-#ifdef USE_LPP
+	ZoneScoped;
+
+#ifdef LPP_PATH
 	std::println(std::cout, "Starting program, waiting for Live++ initialization...");
 	std::flush(std::cout);
 
 	// create a synchronized agent, loading the Live++ agent from the given path, e.g. "ThirdParty/LivePP"
-	lpp::LppSynchronizedAgent lppAgent = lpp::LppCreateSynchronizedAgent(nullptr, L"LivePP");
+	lpp::LppSynchronizedAgent lppAgent = lpp::LppCreateSynchronizedAgent(nullptr, TO_RAW_WSTRING(LPP_PATH));
 
 	// bail out in case the agent is not valid
 	if (!LppIsValidSynchronizedAgent(&lppAgent))
@@ -59,11 +61,14 @@ int main(int, char**)
 	NoBinaryResources = true;
 	BuiltinShadersPath = "../Mountain/shaders_internal";
 	BuiltinAssetsPath = "../Mountain/assets_internal";
+
+#ifdef _DEBUG
 	BreakOnGraphicsError = true;
+#endif
 
 	TestGame* game = new TestGame("Mountain tests");
 
-#ifdef USE_LPP
+#ifdef LPP_PATH
 	game->LoadResources();
 	game->Initialize();
 
@@ -97,7 +102,7 @@ int main(int, char**)
 			delete game;
 
 			lppAgent.Restart(lpp::LPP_RESTART_BEHAVIOUR_DEFAULT_EXIT, 0, nullptr);
-			break;
+			return 0;
 		}
 	}
 
@@ -108,10 +113,13 @@ int main(int, char**)
 
 	delete game;
 
-#ifdef USE_LPP
+#ifdef LPP_PATH
 	// destroy the Live++ agent
 	LppDestroySynchronizedAgent(&lppAgent);
 #endif
+
+	std::println(std::cout, "Exiting process");
+	std::flush(std::cout);
 
     return EXIT_SUCCESS;
 }

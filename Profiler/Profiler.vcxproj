@@ -49,6 +49,9 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <TargetName>Profiler</TargetName>
   </PropertyGroup>
+  <PropertyGroup Label="Vcpkg">
+    <VcpkgEnableManifest>true</VcpkgEnableManifest>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -106,7 +109,7 @@
     <ClInclude Include="src\common\TracyYield.hpp" />
     <ClInclude Include="src\common\tracy_lz4.hpp" />
     <ClInclude Include="src\common\tracy_lz4hc.hpp" />
-    <ClInclude Include="src\Profiler.h" />
+    <ClInclude Include="src\Profiler.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Profiler.cpp" />

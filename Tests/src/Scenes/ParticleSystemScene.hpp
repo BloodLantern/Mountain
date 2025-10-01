@@ -2,7 +2,7 @@
 
 #include "Common.hpp"
 
-#include <Mountain/Rendering/ParticleSystem.hpp>
+#include <Mountain/Graphics/ParticleSystem.hpp>
 
 #include "Scenes/TestScene.hpp"
 

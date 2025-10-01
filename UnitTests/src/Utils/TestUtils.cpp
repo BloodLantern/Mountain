@@ -27,7 +27,8 @@ TEST(Utils_Utils, RemapValue)
 TEST(Utils_Utils, NormalizeAngle)
 {
     EXPECT_FLOAT_EQ(Utils::NormalizeAngle(0.f), 0.f);
-    EXPECT_FLOAT_EQ(Utils::NormalizeAngle(Calc::TwoPi), Calc::TwoPi);
+    EXPECT_FLOAT_EQ(Utils::NormalizeAngle(Calc::TwoPi), 0.f);
+    EXPECT_FLOAT_EQ(Utils::NormalizeAngle(-Calc::TwoPi), 0.f);
 
     EXPECT_FLOAT_EQ(Utils::NormalizeAngle(Calc::Pi * 3.f), Calc::Pi);
     EXPECT_FLOAT_EQ(Utils::NormalizeAngle(5.f * Calc::PiOver2), Calc::PiOver2);

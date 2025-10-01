@@ -16,6 +16,7 @@ namespace Mountain
 
     template <typename T>
     using Operation = std::function<void(T& element)>;
+
     /// @brief Deletes the given element
     template <Concepts::Pointer T>
     const Operation<T> OperationDelete = [](const T& element) { delete element; };
@@ -24,8 +25,13 @@ namespace Mountain
     template <typename T>
     using Comparer = std::function<bool_t(const T& lhs, const T& rhs)>;
 
+    /// @brief Returns @code lhs < rhs@endcode.
     template <typename T>
     const Comparer<T> CompareLess = [](const T& lhs, const T& rhs) -> bool_t { return lhs < rhs; };
+
+    /// @brief Returns @code lhs > rhs@endcode.
+    template <typename T>
+    const Comparer<T> CompareGreater = [](const T& lhs, const T& rhs) -> bool_t { return lhs > rhs; };
 
     template <typename T, typename U = T>
     using Projection = std::function<U(T)>;

@@ -82,6 +82,8 @@ namespace Mountain
     DECLARE_DEFAULT_EXCEPTION(OverflowException, Exception);
 
     DECLARE_DEFAULT_EXCEPTION(OutOfMemoryException, Exception);
+
+    DECLARE_DEFAULT_EXCEPTION(EmptyOptionalAccess, InvalidOperationException);
 }
 
 #include "Mountain/Utils/Requirements.hpp"

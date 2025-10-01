@@ -9,7 +9,7 @@
 
 #include <ft2build.h>
 
-#include "Mountain/Rendering/Renderer.hpp"
+#include "Mountain/Graphics/Renderer.hpp"
 #include "Mountain/Utils/Logger.hpp"
 
 #include FT_FREETYPE_H

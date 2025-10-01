@@ -18,39 +18,75 @@
     <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\camera.cpp">
+    <ClCompile Include="src\Common.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\player.cpp">
+    <ClCompile Include="src\Scenes\AudioScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\spin_component.cpp">
+    <ClCompile Include="src\Scenes\ParticleSystemScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\test_game.cpp">
+    <ClCompile Include="src\Scenes\PostProcessingEffectsScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\animated_character.cpp">
+    <ClCompile Include="src\Scenes\ShapesScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scenes\SpriteAnimationsScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scenes\TestScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TestGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\camera.hpp">
+    <ClInclude Include="LivePP\API\x64\LPP_API.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\player.hpp">
+    <ClInclude Include="LivePP\API\x64\LPP_API_Helpers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\spin_component.hpp">
+    <ClInclude Include="LivePP\API\x64\LPP_API_Hooks.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\test_entity.hpp">
+    <ClInclude Include="LivePP\API\x64\LPP_API_Options.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\test_game.hpp">
+    <ClInclude Include="LivePP\API\x64\LPP_API_Preferences.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\animated_character.hpp">
+    <ClInclude Include="LivePP\API\x64\LPP_API_Version_x64_CPP.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LivePP\API\x64\LPP_API_x64_CPP.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Common.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scenes\AudioScene.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scenes\ParticleSystemScene.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scenes\PostProcessingEffectsScene.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scenes\ShapesScene.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scenes\SpriteAnimationsScene.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scenes\TestScene.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestGame.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

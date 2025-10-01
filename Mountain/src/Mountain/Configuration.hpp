@@ -3,5 +3,5 @@
 //#define MOUNTAIN_USE_PROFILER
 
 #ifdef MOUNTAIN_USE_PROFILER
-#define PROFILING 1
+#define PROFILING
 #endif

@@ -45,6 +45,14 @@ jobs:
     - name: Restore
       run: msbuild -t:restore -p:RestorePackagesConfig=true
 
+    - name: Setup and run vcpkg
+      # You may pin to the exact commit or the version.
+      # uses: lukka/run-vcpkg@5e0cab206a5ea620130caf672fce3e4a6b5666a1
+      uses: lukka/run-vcpkg@v11.5
+
+    - name: Integrate vcpkg with MSBuild
+      run: vcpkg integrate install
+
     - name: Build
       working-directory: ${{env.GITHUB_WORKSPACE}}
       # Add additional options to the MSBuild command line here (like platform or verbosity level).

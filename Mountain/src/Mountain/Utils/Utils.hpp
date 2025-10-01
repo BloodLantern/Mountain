@@ -205,7 +205,7 @@ namespace Mountain::Utils
 
     MOUNTAIN_API void CreateEmptyFile(const std::filesystem::path& path);
 
-    MOUNTAIN_API void SetThreadName(std::thread& thread, const std::wstring& name);
+    MOUNTAIN_API void SetThreadName(std::thread& thread, const std::string& name);
 
     template <typename R, typename... Args>
     R CallSafe(const std::function<R(Args...)>& function, Args&&... args);
@@ -239,6 +239,8 @@ namespace Mountain::Utils
     constexpr Meta::Flags<T> ToFlags(T enumValue);
 
     MOUNTAIN_API std::string RemoveByteOrderMark(const std::string& text);
+
+    MOUNTAIN_API List<std::string> Split(std::string_view str, char_t separator);
 }
 
 namespace Easing

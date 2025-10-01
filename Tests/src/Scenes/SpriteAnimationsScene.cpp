@@ -4,7 +4,7 @@
 
 #include <Mountain/Window.hpp>
 #include <Mountain/FileSystem/FileManager.hpp>
-#include <Mountain/Rendering/Draw.hpp>
+#include <Mountain/Graphics/Draw.hpp>
 #include <Mountain/Resource/ResourceManager.hpp>
 #include <Mountain/Utils/ImGuiUtils.hpp>
 

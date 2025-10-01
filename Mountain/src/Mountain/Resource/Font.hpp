@@ -6,7 +6,7 @@
 #include <Math/vector2i.hpp>
 
 #include "Mountain/Core.hpp"
-#include "Mountain/Rendering/GpuTexture.hpp"
+#include "Mountain/Graphics/GpuTexture.hpp"
 #include "Mountain/Resource/Resource.hpp"
 
 namespace Mountain

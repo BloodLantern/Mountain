@@ -5,7 +5,7 @@
 #include "Mountain/Collision/Circle.hpp"
 #include "Mountain/Collision/ColliderList.hpp"
 #include "Mountain/Collision/Grid.hpp"
-#include "Mountain/Rendering/Draw.hpp"
+#include "Mountain/Graphics/Draw.hpp"
 
 using namespace Mountain;
 
@@ -25,7 +25,7 @@ void Hitbox::RenderDebug(const Color& color) const
     Draw::Rectangle(GetActualPosition(), size, 0.f, Vector2::Zero(), color);
 }
 
-bool Hitbox::Intersects(const Hitbox &other) const
+bool_t Hitbox::Intersects(const Hitbox &other) const
 {
     // Check for a collision with any of the hitbox's corners
     return CheckCollision({ other.AbsoluteLeft(), other.AbsoluteTop() })      // Top left
@@ -34,20 +34,20 @@ bool Hitbox::Intersects(const Hitbox &other) const
         || CheckCollision({ other.AbsoluteRight(), other.AbsoluteBottom() }); // Bottom right
 }
 
-bool Hitbox::CheckCollision(const Vector2 point) const
+bool_t Hitbox::CheckCollision(const Vector2 point) const
 {
     return point.x < AbsoluteRight() && point.x > AbsoluteLeft()
         && point.y < AbsoluteBottom() && point.y > AbsoluteTop();
 }
 
-bool Hitbox::CheckCollision(const Hitbox& hitbox) const
+bool_t Hitbox::CheckCollision(const Hitbox& hitbox) const
 {
     // Check if one of the edges is inside this hitbox
     return hitbox.AbsoluteLeft() < AbsoluteRight() && hitbox.AbsoluteRight() > AbsoluteLeft()
         && hitbox.AbsoluteTop() < AbsoluteBottom() && hitbox.AbsoluteBottom() > AbsoluteTop();
 }
 
-bool Hitbox::CheckCollision(const Circle& circle) const
+bool_t Hitbox::CheckCollision(const Circle& circle) const
 {
     if (CheckCollision(circle.GetActualPosition()))
         return true;
@@ -63,13 +63,13 @@ bool Hitbox::CheckCollision(const Circle& circle) const
         || circle.Intersect(bottomLeft, topLeft);
 }
 
-bool Hitbox::CheckCollision(const Grid &grid) const
+bool_t Hitbox::CheckCollision(const Grid &grid) const
 {
     // Implementation is in 'collision/grid.cpp'
     return grid.CheckCollision(*this);
 }
 
-bool Hitbox::CheckCollision(const ColliderList& list) const
+bool_t Hitbox::CheckCollision(const ColliderList& list) const
 {
     // Implementation is in 'collision/collider_list.cpp'
     return list.CheckCollision(*this);
