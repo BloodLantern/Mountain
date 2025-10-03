@@ -50,6 +50,13 @@ To then use the framework in any of your projects, do as you would usually: incl
 compile by statically linking against the corresponding `Mountain.lib`
 (`Debug` or `Release`) and add the correct `Mountain.dll` to your executable file directory.
 
+## Profiling
+
+This project uses the [Tracy](https://github.com/wolfpld/tracy) profiler.
+To enable profiling of the framework,
+add the `Profiler/Profiler.vcxproj` project to your solution and set it as a reference to both your project and Mountain.
+The last thing to do is to edit the `Mountain/src/Mountain/Configuration.hpp` file and define `MOUNTAIN_USE_PROFILER`.
+
 ## External dependencies used
 
 - [OpenGL](https://www.opengl.org)

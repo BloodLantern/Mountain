@@ -336,12 +336,6 @@
   <ItemGroup>
     <Natvis Include="Mountain.natvis" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Profiler\Profiler.vcxproj">
-      <Project>{098884b7-2324-4d54-8b14-007fc02fe751}</Project>
-      <Name>Profiler</Name>
-    </ProjectReference>
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
