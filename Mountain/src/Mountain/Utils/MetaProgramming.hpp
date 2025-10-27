@@ -441,12 +441,10 @@ namespace Mountain
         template <typename T>
         concept ContainerType = Meta::IsContainerType<T>;
 
-        /// @brief A container type is any non-const, non-function, non-reference type that can be default, copy and move constructed.
+        /// @brief A container type is any non-const, non-function, non-reference type that can be default constructed.
         template <typename T>
         concept DynamicContainerType =
             ContainerType<T> &&
-            Meta::IsDefaultConstructible<T> &&
-            Meta::IsCopyConstructible<T> &&
             Meta::IsMoveConstructible<T>;
 
         template <typename T>

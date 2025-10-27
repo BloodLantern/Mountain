@@ -18,14 +18,11 @@ namespace Mountain
         constexpr Optional(const T& value);
 
         ATTRIBUTE_NODISCARD
-        // ReSharper disable once CppNonExplicitConvertingConstructor
-        constexpr Optional(const std::optional<T>& otherOptional);
+        constexpr explicit Optional(const std::optional<T>& otherOptional);
 
-        // ReSharper disable once CppNonExplicitConvertingConstructor
         constexpr Optional(Optional&& otherOptional) noexcept;
 
         ATTRIBUTE_NODISCARD
-        // ReSharper disable once CppNonExplicitConvertingConstructor
         constexpr Optional(const Optional& otherOptional);
 
         constexpr ~Optional();
@@ -40,6 +37,7 @@ namespace Mountain
 
         constexpr Optional& operator=(const Optional& otherOptional);
 
+        /// @brief Returns whether this Optional contains a value.
         ATTRIBUTE_NODISCARD
         constexpr bool_t HasValue() const noexcept;
 
@@ -53,20 +51,26 @@ namespace Mountain
         ATTRIBUTE_NODISCARD
         constexpr const T&& Value() const &&;
 
+        /// @brief Returns @c Value() if @c HasValue() is @c true, or @p defaultValue otherwise.
+        /// @param defaultValue The value to return if @c HasValue() is @c false.
         template <Concepts::ConvertibleTo<T> U>
         ATTRIBUTE_NODISCARD
         constexpr T ValueOr(U defaultValue) const & noexcept;
 
+        /// @brief Returns @c Value() if @c HasValue() is @c true, or @p defaultValue otherwise.
+        /// @param defaultValue The value to return if @c HasValue() is @c false.
         template <Concepts::ConvertibleTo<T> U>
         ATTRIBUTE_NODISCARD
         constexpr T ValueOr(U defaultValue) && noexcept;
 
+        /// @brief Returns @c Value() if @c HasValue() is @c true, or a default-constructed @c T value otherwise.
         template <typename = Meta::EnableIf<Meta::IsDefaultConstructible<T>>>
         ATTRIBUTE_NODISCARD
         constexpr T ValueOrDefault() const noexcept;
 
         constexpr void Reset() noexcept;
 
+        /// @brief Equivalent to @c HasValue().
         ATTRIBUTE_NODISCARD
         constexpr explicit operator bool_t() const noexcept;
 

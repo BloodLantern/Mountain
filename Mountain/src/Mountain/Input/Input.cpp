@@ -278,6 +278,7 @@ void Input::Reset()
         button.At(static_cast<size_t>(MouseButtonStatus::Release)) = false;
     }
 
+    m_MouseDelta = Vector2::Zero();
     m_MouseWheel = Vector2::Zero();
 
     for (auto& key : m_Keyboard)

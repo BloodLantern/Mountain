@@ -328,7 +328,7 @@ namespace Mountain
 namespace Mountain
 {
     template <Concepts::DynamicContainerType T>
-    template <Concepts::ConvertibleTo<T> ... U>
+    template <Concepts::ConvertibleTo<T>... U>
     List<T>::List(U&&... values) noexcept : List{{std::forward<U>(values)...}} {}
 
     template <Concepts::DynamicContainerType T>
