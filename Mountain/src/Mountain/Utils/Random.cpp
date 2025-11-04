@@ -18,81 +18,81 @@ Random::Random(const std::default_random_engine::result_type seed)
 {
 }
 
-int8_t Random::SByte(const int8_t min, const int8_t max)
+int8_t Random::SByte(const int8_t minInclusive, const int8_t maxExclusive)
 {
-    return static_cast<int8_t>(Short(min, max));
+    return static_cast<int8_t>(Short(minInclusive, maxExclusive));
 }
 
-uint8_t Random::Byte(const uint8_t min, const uint8_t max)
+uint8_t Random::Byte(const uint8_t minInclusive, const uint8_t maxExclusive)
 {
-    return static_cast<uint8_t>(Short(min, max));
+    return static_cast<uint8_t>(Short(minInclusive, maxExclusive));
 }
 
-int16_t Random::Short(const int16_t min, const int16_t max)
+int16_t Random::Short(const int16_t minInclusive, const int16_t maxExclusive)
 {
-    std::uniform_int_distribution dist{min, max};
+    std::uniform_int_distribution dist{minInclusive, maxExclusive - 1};
     return dist(m_Engine);
 }
 
-uint16_t Random::UShort(const uint16_t min, const uint16_t max)
+uint16_t Random::UShort(const uint16_t minInclusive, const uint16_t maxExclusive)
 {
-    std::uniform_int_distribution dist{min, max};
+    std::uniform_int_distribution dist{minInclusive, maxExclusive - 1};
     return dist(m_Engine);
 }
 
-int32_t Random::Int(const int32_t min, const int32_t max)
+int32_t Random::Int(const int32_t minInclusive, const int32_t maxExclusive)
 {
-    std::uniform_int_distribution dist{min, max};
+    std::uniform_int_distribution dist{minInclusive, maxExclusive - 1};
     return dist(m_Engine);
 }
 
-uint32_t Random::UInt(const uint32_t min, const uint32_t max)
+uint32_t Random::UInt(const uint32_t minInclusive, const uint32_t maxExclusive)
 {
-    std::uniform_int_distribution dist{min, max};
+    std::uniform_int_distribution dist{minInclusive, maxExclusive - 1};
     return dist(m_Engine);
 }
 
-int64_t Random::Long(const int64_t min, const int64_t max)
+int64_t Random::Long(const int64_t minInclusive, const int64_t maxExclusive)
 {
-    std::uniform_int_distribution dist{min, max};
+    std::uniform_int_distribution dist{minInclusive, maxExclusive - 1};
     return dist(m_Engine);
 }
 
-uint64_t Random::ULong(const uint64_t min, const uint64_t max)
+uint64_t Random::ULong(const uint64_t minInclusive, const uint64_t maxExclusive)
 {
-    std::uniform_int_distribution dist{min, max};
+    std::uniform_int_distribution dist{minInclusive, maxExclusive - 1};
     return dist(m_Engine);
 }
 
-float_t Random::Float(const float_t min, const float_t max)
+float_t Random::Float(const float_t minInclusive, const float_t maxExclusive)
 {
-    std::uniform_real_distribution dist{min, max};
+    std::uniform_real_distribution dist{minInclusive, maxExclusive};
     return dist(m_Engine);
 }
 
-double_t Random::Double(const double_t min, const double_t max)
+double_t Random::Double(const double_t minInclusive, const double_t maxExclusive)
 {
-    std::uniform_real_distribution dist{min, max};
+    std::uniform_real_distribution dist{minInclusive, maxExclusive};
     return dist(m_Engine);
 }
 
-Color Random::Color(const Mountain::Color minValues, const Mountain::Color maxValues)
+Color Random::Color(const Mountain::Color minValuesInclusive, const Mountain::Color maxValuesInclusive)
 {
     return Mountain::Color{
-        Float(minValues.r, maxValues.r),
-        Float(minValues.g, maxValues.g),
-        Float(minValues.b, maxValues.b),
-        Float(minValues.a, maxValues.a)
+        Float(minValuesInclusive.r, maxValuesInclusive.r),
+        Float(minValuesInclusive.g, maxValuesInclusive.g),
+        Float(minValuesInclusive.b, maxValuesInclusive.b),
+        Float(minValuesInclusive.a, maxValuesInclusive.a)
     };
 }
 
-ColorHsva Random::ColorHsva(const Mountain::ColorHsva minValues, const Mountain::ColorHsva maxValues)
+ColorHsva Random::ColorHsva(const Mountain::ColorHsva minValuesInclusive, const Mountain::ColorHsva maxValuesInclusive)
 {
     return Mountain::ColorHsva{
-        Float(minValues.h, maxValues.h),
-        Float(minValues.s, maxValues.s),
-        Float(minValues.v, maxValues.v),
-        Float(minValues.a, maxValues.a)
+        Float(minValuesInclusive.h, maxValuesInclusive.h),
+        Float(minValuesInclusive.s, maxValuesInclusive.s),
+        Float(minValuesInclusive.v, maxValuesInclusive.v),
+        Float(minValuesInclusive.a, maxValuesInclusive.a)
     };
 }
 
