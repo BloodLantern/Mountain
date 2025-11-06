@@ -30,13 +30,13 @@ uint8_t Random::Byte(const uint8_t minInclusive, const uint8_t maxExclusive)
 
 int16_t Random::Short(const int16_t minInclusive, const int16_t maxExclusive)
 {
-    std::uniform_int_distribution dist{minInclusive, maxExclusive - 1};
+    std::uniform_int_distribution dist{minInclusive, static_cast<int16_t>(maxExclusive - 1)};
     return dist(m_Engine);
 }
 
 uint16_t Random::UShort(const uint16_t minInclusive, const uint16_t maxExclusive)
 {
-    std::uniform_int_distribution dist{minInclusive, maxExclusive - 1};
+    std::uniform_int_distribution dist{minInclusive, static_cast<uint16_t>(maxExclusive - 1)};
     return dist(m_Engine);
 }
 
