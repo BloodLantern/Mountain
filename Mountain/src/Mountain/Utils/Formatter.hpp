@@ -96,12 +96,8 @@ struct std::formatter<EnumT>
         if (it == ctx.end())
             return it;
 
-        if (*it == ':')
+        if (*it == 'd')
         {
-            it++;
-            if (*it != 'd')
-                throw Mountain::FormatException{"Invalid format arguments for enum"};
-
             m_PrintAsInteger = true;
             it++;
         }
