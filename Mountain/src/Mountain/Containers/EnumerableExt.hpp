@@ -17,9 +17,9 @@
     ATTRIBUTE_NODISCARD \
     float_t Average() const { return ::Mountain::Average<::Mountain::Meta::RemoveCvRefSpecifier<decltype(*this)>, EnumeratedType>(*this); } \
     \
-    template <::Mountain::Requirements::MountainEnumerable EnumerableT, typename = ::Mountain::Meta::EnableIf<Meta::IsSame<EnumeratedType, ::Mountain::Meta::EnumerableType<EnumerableT>>>> \
+    template <::Mountain::Requirements::MountainEnumerable EnumerableT, typename = ::Mountain::Meta::EnableIf<::Mountain::Meta::IsSame<EnumeratedType, ::Mountain::Meta::EnumerableType<EnumerableT>>>> \
     ATTRIBUTE_NODISCARD \
-    List<EnumeratedType> Concat(const EnumerableT& enumerable) const { return ::Mountain::Concat(*this, enumerable); } \
+    ::Mountain::List<EnumeratedType> Concat(const EnumerableT& enumerable) const { return ::Mountain::Concat(*this, enumerable); } \
     \
     template <typename U, typename = ::Mountain::Meta::EnableIf<::Mountain::Meta::IsEqualityComparableWith<U, EnumeratedType>>> \
     ATTRIBUTE_NODISCARD \
@@ -48,7 +48,7 @@
     const EnumeratedType* FindLast(const ::Mountain::Predicate<EnumeratedType>& predicate) const { return ::Mountain::FindLast(*this, predicate); } \
     \
     ATTRIBUTE_NODISCARD \
-    Optional<size_t> FindIndex(const ::Mountain::Predicate<EnumeratedType>& predicate) const { return ::Mountain::FindIndex(*this, predicate); } \
+    ::Mountain::Optional<size_t> FindIndex(const ::Mountain::Predicate<EnumeratedType>& predicate) const { return ::Mountain::FindIndex(*this, predicate); } \
     \
     ATTRIBUTE_NODISCARD \
     EnumeratedType& First() { return ::Mountain::First(*this); } \
@@ -88,6 +88,7 @@
     ::Mountain::Meta::IsSortable<Iterator, ::Mountain::Comparer<EnumeratedType>, ::Mountain::Identity>>> \
     void StableSort(const ::Mountain::Comparer<EnumeratedType>& comparer) { return ::Mountain::StableSort(*this, comparer); } \
     \
+    ATTRIBUTE_NODISCARD \
     bool_t IsValidIndex(const size_t index) const { return ::Mountain::IsValidIndex(*this, index); }
 
 namespace Mountain
