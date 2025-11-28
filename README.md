@@ -60,13 +60,11 @@ The last thing to do is to edit the `Mountain/src/Mountain/Configuration.hpp` fi
 ## External dependencies used
 
 - [OpenGL](https://www.opengl.org)
-- [OpenAL](https://github.com/kcat/openal-soft)
+- [OpenAL-soft](https://github.com/kcat/openal-soft)
 - [FreeType](https://freetype.org)
 - [GLAD](https://glad.dav1d.de)
 - [ImGui (docking branch)](https://github.com/ocornut/imgui/tree/docking)
 - [magic_enum](https://github.com/Neargye/magic_enum)
-- [mimalloc](https://github.com/microsoft/mimalloc)
-- [RapidXML](https://rapidxml.sourceforge.net/)
 - [SDL3](https://wiki.libsdl.org/SDL3/FrontPage)
 - [minimp3](https://github.com/lieff/minimp3)
 - [stb_image](https://github.com/nothings/stb/blob/master/stb_image.h)
