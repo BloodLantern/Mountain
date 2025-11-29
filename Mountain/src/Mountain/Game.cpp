@@ -32,7 +32,7 @@ Game::Game(const std::string& windowTitle, const Vector2i windowSize)
         []
         ATTRIBUTE_NORETURN
         {
-            Logger::LogWarning("std::terminate called");
+            Logger::LogWarning("std::terminate called, this might be because of an uncaught exception");
 
             try
             {
