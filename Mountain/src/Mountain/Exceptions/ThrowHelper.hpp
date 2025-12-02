@@ -25,9 +25,9 @@
 #define THROW(...) \
     do \
     { \
+        ::Mountain::SetCurrentExceptionState(__FUNCTION__, __FILE__, __LINE__); \
         const auto ex = __VA_ARGS__; \
         static_assert(::Mountain::Meta::IsException<DECLARING_TYPE(ex)>, "The argument of THROW must be an exception value"); \
-        ::Mountain::SetCurrentExceptionState(__FUNCTION__, __FILE__, __LINE__); \
         throw ex; \
     } \
     while (false)

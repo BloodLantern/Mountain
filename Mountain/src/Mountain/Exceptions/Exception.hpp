@@ -18,7 +18,7 @@
 
 namespace Mountain
 {
-    struct ExceptionState
+    struct MOUNTAIN_API ExceptionState
     {
         const char_t* function = nullptr;
         const char_t* file = nullptr;
@@ -60,7 +60,7 @@ namespace Mountain
         virtual const char_t* GetName() const noexcept { return "Exception"; }
 
         ATTRIBUTE_NODISCARD
-        std::string ToString() const;
+        MOUNTAIN_API std::string ToString() const;
 
     private:
         ExceptionState m_State;
