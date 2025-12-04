@@ -644,8 +644,7 @@ void ImGuiUtils::ShowPerformanceMonitoring()
     ImGui::SeparatorText("Statistics");
 
     static float_t fps = 0.f;
-    static double_t memoryCpuOnly = 0.f;
-    static double_t memoryTotal = 0.f;
+    static double_t memory = 0.f;
     static float_t deltaTime = 0.f;
     static float_t frameDuration = 0.f;
     static float_t frameDurationLeft = 0.f;
@@ -672,8 +671,7 @@ void ImGuiUtils::ShowPerformanceMonitoring()
         GetProcessMemoryInfo(GetCurrentProcess(), reinterpret_cast<PPROCESS_MEMORY_COUNTERS>(&memoryCounter), sizeof(memoryCounter));
         Windows::CheckError();
 
-        memoryCpuOnly = static_cast<double_t>(memoryCounter.PrivateWorkingSetSize) * 1e-6; // Convert to MB
-        memoryTotal = static_cast<double_t>(memoryCounter.PrivateUsage) * 1e-6; // Convert to MB
+        memory = static_cast<double_t>(memoryCounter.PrivateWorkingSetSize) * 1e-6; // Convert to MB
 
         frameDurationList.Add(frameDuration * 1000.f);
 
@@ -692,7 +690,7 @@ void ImGuiUtils::ShowPerformanceMonitoring()
         fpsColor = Color::Red();
     ImGui::TextColored(static_cast<ImVec4>(fpsColor), "%.0f FPS (%.1fms)", fps, deltaTime * 1000.f);
     ImGui::Text("CPU: %.1fms (%.1fms left)", frameDuration * 1000.f, frameDurationLeft * 1000.f);
-    ImGui::Text("Memory: %.2fMB (%.2fMB including GPU)", memoryCpuOnly, memoryTotal);
+    ImGui::Text("Memory: %.2fMB", memory);
     ImGui::Text("Framebuffer: %dx%d", framebufferSize.x, framebufferSize.y);
 
     if (ImGui::TreeNode("Frame duration graph"))
