@@ -620,7 +620,7 @@ void ImGuiUtils::ShowPerformanceMonitoring()
 
     ImGui::SeparatorText("Settings");
 
-    ImGui::DragFloat("Update interval", &updateInterval, 0.01f, 0.f, 1.f);
+    ImGui::DragFloat("Monitoring update interval", &updateInterval, 0.01f, 0.f, 1.f);
 
     auto targetFps = Time::targetFps;
     const double_t refreshRate = Screen::GetRefreshRate();
