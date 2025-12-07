@@ -947,7 +947,14 @@ namespace Mountain
     T* List<T>::GetData() const noexcept { return m_Data; }
 
     template <Concepts::DynamicContainerType T>
-    T& List<T>::operator[](const size_t index) const noexcept { return At(index); }
+    T& List<T>::operator[](const size_t index) const noexcept
+    {
+#ifdef _DEBUG
+        return At(index);
+#else
+        return m_Data[index]; // No bounds checking when in release mode
+#endif
+    }
 
     template <Concepts::DynamicContainerType T>
     typename List<T>::Iterator List<T>::begin() noexcept { return Iterator{m_Data, 0}; }
