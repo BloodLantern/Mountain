@@ -773,6 +773,22 @@ bool ImGui::DragAngle(
     return result;
 }
 
+bool ImGui::DragAngle3(
+    const char* label,
+    float v_rad[3],
+    const float v_speed,
+    const float v_degrees_min,
+    const float v_degrees_max,
+    const char* format,
+    const ImGuiSliderFlags flags
+)
+{
+    Vector3 degreeAngle = Vector3{v_rad} * Calc::Rad2Deg;
+    const bool_t result = DragFloat3(label, degreeAngle.Data(), v_speed, v_degrees_min, v_degrees_max, format, flags);
+    *reinterpret_cast<Vector3*>(v_rad) = degreeAngle * Calc::Deg2Rad;
+    return result;
+}
+
 template <>
 bool ImGui::ComboEnum<Easing::Type>(const char* label, Easing::Type* v, const ImGuiComboFlags flags)
 {

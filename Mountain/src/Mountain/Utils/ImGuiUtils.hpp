@@ -111,6 +111,16 @@ namespace ImGui
         ImGuiSliderFlags flags = 0
     );
 
+    MOUNTAIN_API bool DragAngle3(
+        const char* label,
+        float v_rad[3],
+        float v_speed = 1,
+        float v_degrees_min = -360,
+        float v_degrees_max = +360,
+        const char* format = "%.3f",
+        ImGuiSliderFlags flags = 0
+    );
+
     template <Mountain::Concepts::Enum T>
     bool ComboEnum(const char* label, T* v, ImGuiComboFlags flags = ImGuiComboFlags_None);
 
