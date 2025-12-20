@@ -18,10 +18,20 @@ TEST(Utils_Utils, HumanizeString)
     EXPECT_EQ(Utils::HumanizeString("RequiresUIReload"), "Requires UI Reload");
 }
 
+TEST(Utils_Utils, HumanizeVariableName)
+{
+    EXPECT_EQ(Utils::HumanizeVariableName("m_Variable"), "Variable");
+    EXPECT_EQ(Utils::HumanizeVariableName("m_variableName"), "Variable Name");
+    EXPECT_EQ(Utils::HumanizeVariableName("variable"), "Variable");
+}
+
 TEST(Utils_Utils, RemapValue)
 {
     EXPECT_FLOAT_EQ(Utils::RemapValue(5.f, 0.f, 10.f, 0.f, 1.f), 0.5f);
     EXPECT_EQ(Utils::RemapValue(5ull, 0ull, 10ull, 0ull, 2ull), 1ull);
+
+    EXPECT_FLOAT_EQ(Utils::RemapValue(5.f, Vector2(0.f, 10.f), Vector2(0.f, 1.f)), 0.5f);
+    EXPECT_EQ(Utils::RemapValue(5ull, Vector2i(0, 10), Vector2i(0, 2)), 1ull);
 }
 
 TEST(Utils_Utils, NormalizeAngle)
@@ -35,6 +45,16 @@ TEST(Utils_Utils, NormalizeAngle)
 
     EXPECT_FLOAT_EQ(Utils::NormalizeAngle(-Calc::Pi), Calc::Pi);
     EXPECT_FLOAT_EQ(Utils::NormalizeAngle(-Calc::PiOver2), 3.f * Calc::PiOver2);
+}
+
+TEST(Utils_Utils, NormalizeAngles)
+{
+    constexpr Vector3 angles(Calc::TwoPi + 0.1f, -0.1f, Calc::Pi * 3.f);
+    const Vector3 normalized = Utils::NormalizeAngles(angles);
+
+    EXPECT_NEAR(normalized.x, 0.1f, 1e-6f);
+    EXPECT_NEAR(normalized.y, Calc::TwoPi - 0.1f, 1e-6f);
+    EXPECT_NEAR(normalized.z, Calc::Pi, 1e-6f);
 }
 
 TEST(Utils_Utils, DynamicPointerCast)
@@ -166,8 +186,49 @@ TEST(Utils_Utils, Split)
     EXPECT_EQ(parts[2], "c");
 }
 
+TEST(Utils_Utils, GetTypeHash)
+{
+    EXPECT_NE(Utils::GetTypeHash<int>(), 0);
+    EXPECT_NE(Utils::GetTypeHash<float>(), 0);
+    EXPECT_NE(Utils::GetTypeHash<int>(), Utils::GetTypeHash<float>());
+
+    int i = 0;
+    EXPECT_EQ(Utils::GetTypeHash<int>(), Utils::GetTypeHash(&i));
+}
+
+TEST(Utils_Utils, RemoveByteOrderMark)
+{
+    EXPECT_EQ(Utils::RemoveByteOrderMark("\xEF\xBB\xBFHello"), "Hello");
+    EXPECT_EQ(Utils::RemoveByteOrderMark("Hello"), "Hello");
+}
+
 TEST(Utils_Utils, Concat)
 {
     EXPECT_EQ(Utils::Concat16(0x01, 0x02), 0x0201);
     EXPECT_EQ(Utils::Concat32(0x01, 0x02, 0x03, 0x04), 0x04030201u);
+}
+
+TEST(Utils_Utils, ByteSizeUnit)
+{
+    const auto [val1, unit1] = Utils::ByteSizeUnit(500);
+    EXPECT_FLOAT_EQ(val1, 500.f);
+    EXPECT_EQ(unit1, "B");
+
+    const auto [val2, unit2] = Utils::ByteSizeUnit(1500);
+    EXPECT_FLOAT_EQ(val2, 1.5f);
+    EXPECT_EQ(unit2, "KB");
+
+    const auto [val3, unit3] = Utils::ByteSizeUnit(2500000);
+    EXPECT_FLOAT_EQ(val3, 2.5f);
+    EXPECT_EQ(unit3, "MB");
+}
+
+TEST(Utils_Utils, StringConversions)
+{
+    const std::string narrow = "Hello";
+    const std::wstring wide = Utils::NarrowToWide(narrow);
+    EXPECT_EQ(wide, L"Hello");
+
+    const std::string back = Utils::WideToNarrow(wide);
+    EXPECT_EQ(back, narrow);
 }

@@ -143,7 +143,7 @@ void Logger::Stop()
     CloseFile();
 }
 
-const decltype(Logger::m_Logs)& Logger::GetLogList() { return m_Logs; }
+const std::vector<std::shared_ptr<Logger::LogEntry>>& Logger::GetLogList() { return m_Logs; }
 
 void Logger::Clear() { m_Logs.clear(); }
 
@@ -328,7 +328,7 @@ std::pair<std::string, const c8*> Logger::BuildLogPrefix(const std::shared_ptr<L
     switch (log->level)
     {
         case LogLevel::Debug:
-            color = ANSI_COLOR_GREEN;
+            color = ANSI_STYLE_BOLD ANSI_COLOR_GREEN;
             baseMessage = time + "[DEBUG] " + log->file + "(" + std::to_string(log->line) + "): ";
             break;
 

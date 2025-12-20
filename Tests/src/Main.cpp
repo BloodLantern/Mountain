@@ -39,6 +39,8 @@ int main(int, char**)
 {
 	ZoneScoped;
 
+	auto str = Utils::NarrowToWide("Hello");
+
 #ifdef LPP_PATH
 	std::println(std::cout, "Starting program, waiting for Live++ initialization...");
 	std::flush(std::cout);

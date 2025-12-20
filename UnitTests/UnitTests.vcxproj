@@ -51,8 +51,11 @@
     <ClCompile Include="src\Containers\TestArray.cpp" />
     <ClCompile Include="src\Containers\TestList.cpp" />
     <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\Utils\TestColor.cpp" />
     <ClCompile Include="src\Utils\TestDateTime.cpp" />
+    <ClCompile Include="src\Utils\TestEvent.cpp" />
     <ClCompile Include="src\Utils\TestGuid.cpp" />
+    <ClCompile Include="src\Utils\TestLogger.cpp" />
     <ClCompile Include="src\Utils\TestMetaProgramming.cpp" />
     <ClCompile Include="src\Utils\TestPointer.cpp" />
     <ClCompile Include="src\Utils\TestStopwatch.cpp" />

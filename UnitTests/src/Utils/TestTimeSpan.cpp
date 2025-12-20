@@ -32,6 +32,26 @@ TEST(Utils_TimeSpan, Properties)
     EXPECT_DOUBLE_EQ(TimeSpan::FromHours(1.5).GetTotalMinutes(), 90.0);
 }
 
+TEST(Utils_TimeSpan, Nanoseconds)
+{
+    constexpr TimeSpan ts = TimeSpan::FromTicks(1); // 1 tick = 100ns
+    EXPECT_EQ(ts.GetNanoseconds(), 100);
+    EXPECT_DOUBLE_EQ(ts.GetTotalNanoseconds(), 100.0);
+}
+
+TEST(Utils_TimeSpan, Chrono)
+{
+    const TimeSpan ts = TimeSpan::FromMilliseconds(100);
+    const auto chrono = ts.ToChrono();
+    EXPECT_EQ(chrono.count(), 100'000'000); // 100ms in ns
+}
+
+TEST(Utils_TimeSpan, Duration)
+{
+    EXPECT_EQ(TimeSpan::FromSeconds(-5).Duration(), TimeSpan::FromSeconds(5));
+    EXPECT_EQ(TimeSpan::FromSeconds(5).Duration(), TimeSpan::FromSeconds(5));
+}
+
 TEST(Utils_TimeSpan, Arithmetic)
 {
     const TimeSpan a = TimeSpan::FromSeconds(10);
@@ -40,6 +60,7 @@ TEST(Utils_TimeSpan, Arithmetic)
     EXPECT_EQ((a + b).GetTotalSeconds(), 15.0);
     EXPECT_EQ((a - b).GetTotalSeconds(), 5.0);
     EXPECT_EQ((a * 2.0).GetTotalSeconds(), 20.0);
+    EXPECT_EQ((2.0 * a).GetTotalSeconds(), 20.0);
     EXPECT_EQ((a / 2.0).GetTotalSeconds(), 5.0);
     EXPECT_DOUBLE_EQ(a / b, 2.0);
 }

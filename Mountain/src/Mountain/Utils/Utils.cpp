@@ -71,8 +71,7 @@ std::string Utils::HumanizeVariableName(const std::string& str)
     if (result[0] == 'm' && result[1] == '_')
         result = result.substr(2);
 
-    return result;
-    // FIXME - return HumanizeString(result);
+    return HumanizeString(result);
 }
 
 f32 Utils::NormalizeAngle(f32 angle)
@@ -88,40 +87,6 @@ f32 Utils::NormalizeAngle(f32 angle)
 Vector3 Utils::NormalizeAngles(const Vector3 angles)
 {
     return {NormalizeAngle(angles.x), NormalizeAngle(angles.y), NormalizeAngle(angles.z)};
-}
-
-Vector3 Utils::GetQuaternionEulerAngles(const Quaternion& rot)
-{
-    // Function taken from glm
-
-    const f32 sqw = rot.W() * rot.W();
-    const f32 sqx = rot.X() * rot.X();
-    const f32 sqy = rot.Y() * rot.Y();
-    const f32 sqz = rot.Z() * rot.Z();
-    const f32 unit = sqx + sqy + sqz + sqw; // if normalised is one, otherwise is correction factor
-    const f32 test = rot.X() * rot.W() - rot.Y() * rot.Z();
-    Vector3 v;
-
-    if (test > 0.4995f * unit)
-    { // singularity at north pole
-        v.y = 2.f * std::atan2f(rot.Y(), rot.X());
-        v.x = Calc::PiOver2;
-        v.z = 0;
-        return NormalizeAngles(v);
-    }
-    if (test < -0.4995f * unit)
-    { // singularity at south pole
-        v.y = -2.f * std::atan2f(rot.Y(), rot.X());
-        v.x = -Calc::PiOver2;
-        v.z = 0;
-        return NormalizeAngles(v);
-    }
-
-    Quaternion q = Quaternion(rot.Z(), rot.X(), rot.Y(), rot.W());
-    v.y = std::atan2f(2.f * q.X() * q.W() + 2.f * q.Y() * q.Z(), 1 - 2.f * (q.Z() * q.Z() + q.W() * q.W()));    // Yaw
-    v.x = std::asinf(2.f * (q.X() * q.Z() - q.W() * q.Y()));                                                    // Pitch
-    v.z = std::atan2f(2.f * q.X() * q.Y() + 2.f * q.Z() * q.W(), 1 - 2.f * (q.Y() * q.Y() + q.Z() * q.Z()));    // Roll
-    return NormalizeAngles(v);
 }
 
 void Utils::OpenInExplorer(const std::filesystem::path& path) { OpenInExplorer(path, !is_directory(path)); }
@@ -174,25 +139,29 @@ void Utils::SetThreadName(ATTRIBUTE_MAYBE_UNUSED std::thread& thread, ATTRIBUTE_
     //tracy::SetThreadName(name.c_str());
 #endif
 
-#if defined(ENVIRONMENT_WINDOWS)
+#ifdef ENVIRONMENT_WINDOWS
     (void) SetThreadDescription(thread.native_handle(), NarrowToWide(name).c_str());
     Windows::SilenceError();
 #endif
 }
 
-std::wstring Utils::NarrowToWide(const std::string_view str)
+std::wstring Utils::NarrowToWide(const std::string_view& str)
 {
     std::wstring result;
     result.resize(str.size());
+#ifdef ENVIRONMENT_WINDOWS
     MultiByteToWideChar(CP_ACP, MB_COMPOSITE, str.data(), static_cast<s32>(str.size()), result.data(), static_cast<s32>(result.size()));
+#endif
     return result;
 }
 
-std::string Utils::WideToNarrow(const std::wstring_view str)
+std::string Utils::WideToNarrow(const std::wstring_view& str)
 {
     std::string result;
     result.resize(str.size());
+#ifdef ENVIRONMENT_WINDOWS
     WideCharToMultiByte(CP_ACP, WC_COMPOSITECHECK, str.data(), static_cast<s32>(str.size()), result.data(), static_cast<s32>(result.size()), nullptr, nullptr);
+#endif
     return result;
 }
 

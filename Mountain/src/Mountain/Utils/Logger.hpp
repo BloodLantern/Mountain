@@ -204,7 +204,7 @@ namespace Mountain
         /// @details This function doesn't do anything if the logger has already been stopped.
         MOUNTAIN_API static void Stop();
 
-        MOUNTAIN_API static const decltype(m_Logs)& GetLogList();
+        MOUNTAIN_API static const std::vector<std::shared_ptr<LogEntry>>& GetLogList();
 
         MOUNTAIN_API static void Clear();
 
@@ -240,6 +240,12 @@ namespace Mountain
 
         /// @brief Builds the given log's prefix. Returns the [prefix, color] pair.
         MOUNTAIN_API static std::pair<std::string, const c8*> BuildLogPrefix(const std::shared_ptr<LogEntry>& log);
+
+        /// @brief Returns whether a log with the given level should be logged.
+        /// @param level The level to check.
+        /// @return @c true if the log should be logged, @c false otherwise.
+        ATTRIBUTE_NODISCARD
+        static constexpr bool ShouldLog(LogLevel level);
     };
 }
 
@@ -253,7 +259,7 @@ namespace Mountain
     template <Requirements::Formattable... Args>
     void Logger::Log(const LogLevel level, const std::string& format, Args&&... args)
     {
-        if (level < minimumConsoleLevel && level < minimumFileLevel)
+        if (!ShouldLog(level))
             return;
 
         PushLog(std::make_shared<LogEntry>(std::vformat(format, std::make_format_args(args...)), level));
@@ -262,7 +268,7 @@ namespace Mountain
     template <Requirements::Formattable... Args>
     void Logger::LogDebug(const std::string& format, const c8* file, const s32 line, Args&&... args)
     {
-        if (LogLevel::Debug < minimumConsoleLevel && LogLevel::Debug < minimumFileLevel)
+        if (!ShouldLog(LogLevel::Debug))
             return;
 
         PushLog(std::make_shared<LogEntry>(std::vformat(format, std::make_format_args(args...)), LogLevel::Debug, file, line));
@@ -296,5 +302,10 @@ namespace Mountain
     void Logger::LogFatal(const std::string& format, Args&&... args)
     {
         Logger::Log(LogLevel::Fatal, format, std::forward<Args>(args)...);
+    }
+
+    constexpr bool Logger::ShouldLog(const LogLevel level)
+    {
+        return level >= minimumConsoleLevel || (HasFileOpen() && level >= minimumFileLevel);
     }
 }

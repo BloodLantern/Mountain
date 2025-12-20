@@ -125,11 +125,6 @@ namespace Mountain::Utils
     /// @return Normalized representation
     MOUNTAIN_API Vector3 NormalizeAngles(Vector3 angles);
 
-    /// @brief Converts a quaternion to its euler angle representation
-    /// @param rot Quaternion to convert
-    /// @return Euler representation
-    MOUNTAIN_API Vector3 GetQuaternionEulerAngles(const Quaternion& rot);
-
     /// @brief Equivalent of a @c dynamic_cast for the @c Pointer type.
     ///
     /// This function first checks if the given @c Pointer is @c nullptr and returns @c nullptr if so.
@@ -198,9 +193,9 @@ namespace Mountain::Utils
     template <typename R, typename... Args>
     R CallSafe(const std::function<R(Args...)>& function, Args&&... args);
 
-    MOUNTAIN_API std::wstring NarrowToWide(std::string_view str);
+    MOUNTAIN_API std::wstring NarrowToWide(const std::string_view& str);
 
-    MOUNTAIN_API std::string WideToNarrow(std::wstring_view str);
+    MOUNTAIN_API std::string WideToNarrow(const std::wstring_view& str);
 
     MOUNTAIN_API std::string ToLower(std::string_view str);
 

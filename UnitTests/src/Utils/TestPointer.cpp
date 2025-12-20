@@ -72,3 +72,33 @@ TEST(Utils_Pointer, StrongReference)
 
     EXPECT_TRUE(strongRef.IsValid());
 }
+
+TEST(Utils_Pointer, Conversions)
+{
+    Pointer<int> ptr = Pointer<int>::New(10);
+    Pointer<int> weak = ptr;
+
+    EXPECT_TRUE(weak.GetIsStrongReference() == false);
+    EXPECT_TRUE(ptr.GetIsStrongReference() == true);
+
+    weak.ToStrongReference();
+    EXPECT_TRUE(weak.GetIsStrongReference() == true);
+    EXPECT_EQ(ptr.GetReferenceCounter()->GetStrong(), 2);
+
+    weak.ToWeakReference();
+    EXPECT_TRUE(weak.GetIsStrongReference() == false);
+    EXPECT_EQ(ptr.GetReferenceCounter()->GetStrong(), 1);
+}
+
+TEST(Utils_Pointer, Equality)
+{
+    Pointer<int> a = Pointer<int>::New(1);
+    Pointer<int> b = a;
+    Pointer<int> c = Pointer<int>::New(1);
+    Pointer<int> d = nullptr;
+
+    EXPECT_TRUE(a == b);
+    EXPECT_FALSE(a == c);
+    EXPECT_TRUE(d == nullptr);
+    EXPECT_FALSE(a == nullptr);
+}
