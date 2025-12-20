@@ -79,18 +79,6 @@ namespace Mountain::Utils
     ATTRIBUTE_NODISCARD
     MOUNTAIN_API std::string HumanizeVariableName(const std::string& str);
 
-    /// @brief Removes the namespaces indicators from the provided string
-    /// @details E.g., Mountain::MyClass will become MyClass
-    /// @param str String to modify
-    ATTRIBUTE_NODISCARD
-    MOUNTAIN_API constexpr std::string RemoveNamespaces(const std::string& str);
-
-    /// @brief Removes the namespace indicators from the provided string
-    /// @details E.g., Mountain::MyClass will become MyClass
-    /// @param str String to modify
-    ATTRIBUTE_NODISCARD
-    MOUNTAIN_API constexpr const c8* RemoveNamespaces(const c8* str);
-
     /// @brief Remaps a value from one range to another
     /// @details E.g., the number 5 in the range [0;10] will become .5 if remapped to the range [0;1]
     /// @param oldValue Value
@@ -307,35 +295,6 @@ namespace Mountain
     constexpr PtrT* Utils::IntToPointer(const IntT number) { return reinterpret_cast<PtrT*>(reinterpret_cast<u8*>(1) + static_cast<const usize>(number) - 1); }
 
     constexpr usize Utils::PointerToInt(const void* pointer) { return std::bit_cast<usize>(pointer); }
-
-    constexpr std::string Utils::RemoveNamespaces(const std::string& str)
-    {
-        const usize pos = str.find_last_of(':');
-
-        if (pos == std::string::npos)
-            return str;
-
-        return str.substr(pos + 1);
-    }
-
-    constexpr const c8* Utils::RemoveNamespaces(const c8* const str)
-    {
-        const c8* s = str;
-        usize l = 0;
-
-        while (*s++)
-            l++;
-
-        while (s != str)
-        {
-            if (*s == ':')
-                return s + 1;
-
-            s--;
-        }
-
-        return str;
-    }
 
     constexpr f32 Utils::RemapValue(const f32 oldValue, const Vector2 oldRange, const Vector2 newRange)
     {

@@ -109,3 +109,86 @@ TEST(Containers_List, Enumerable_Count)
     EXPECT_EQ(result, 2);
 
 }
+
+TEST(Containers_List, Modification)
+{
+    List<int> list;
+    list.Add(1);
+    list.Add(2);
+    list.Add(3);
+    EXPECT_EQ(list.GetSize(), 3);
+    EXPECT_EQ(list[0], 1);
+    EXPECT_EQ(list[1], 2);
+    EXPECT_EQ(list[2], 3);
+
+    list.Insert(1, 10);
+    EXPECT_EQ(list.GetSize(), 4);
+    EXPECT_EQ(list[1], 10);
+    EXPECT_EQ(list[2], 2);
+
+    list.RemoveAt(1);
+    EXPECT_EQ(list.GetSize(), 3);
+    EXPECT_EQ(list[1], 2);
+
+    list.Remove(2);
+    EXPECT_EQ(list.GetSize(), 2);
+    EXPECT_EQ(list[1], 3);
+
+    list.Clear();
+    EXPECT_EQ(list.GetSize(), 0);
+    EXPECT_TRUE(list.IsEmpty());
+}
+
+TEST(Containers_List, RangeOperations)
+{
+    List list{1, 2, 3};
+    const List other{4, 5};
+
+    list.AddRange(other);
+    EXPECT_EQ(list.GetSize(), 5);
+    EXPECT_EQ(list[3], 4);
+    EXPECT_EQ(list[4], 5);
+
+    list.InsertRange(1, {10, 11});
+    EXPECT_EQ(list.GetSize(), 7);
+    EXPECT_EQ(list[1], 10);
+    EXPECT_EQ(list[2], 11);
+    EXPECT_EQ(list[3], 2);
+
+    list.RemoveRange(1, 2);
+    EXPECT_EQ(list.GetSize(), 5);
+    EXPECT_EQ(list[1], 2);
+}
+
+TEST(Containers_List, Capacity)
+{
+    List<int> list;
+    EXPECT_EQ(list.GetCapacity(), 0);
+
+    list.Reserve(10);
+    EXPECT_GE(list.GetCapacity(), 10);
+
+    list.Add(1);
+    list.Shrink();
+    EXPECT_EQ(list.GetCapacity(), 1);
+
+    list.Resize(5, 100);
+    EXPECT_EQ(list.GetSize(), 5);
+    EXPECT_EQ(list[4], 100);
+
+    list.Resize(2);
+    EXPECT_EQ(list.GetSize(), 2);
+}
+
+TEST(Containers_List, Pop)
+{
+    List list{1, 2, 3};
+
+    EXPECT_EQ(list.PopFront(), 1);
+    EXPECT_EQ(list.GetSize(), 2);
+    EXPECT_EQ(list[0], 2);
+
+    EXPECT_EQ(list.PopBack(), 3);
+    EXPECT_EQ(list.GetSize(), 1);
+    EXPECT_EQ(list[0], 2);
+}

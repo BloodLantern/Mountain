@@ -39,3 +39,18 @@ TEST_F(Utils_DateTime, HashCode)
     EXPECT_EQ(time.GetHashCode(), time.GetHashCode());
     EXPECT_NE(time.GetHashCode(), DateTime::Now().GetHashCode());
 }
+
+TEST_F(Utils_DateTime, Arithmetic)
+{
+    constexpr DateTime dt{2000, 1, 1};
+    const TimeSpan ts = TimeSpan::FromDays(1);
+
+    EXPECT_EQ(dt + ts, (DateTime{2000, 1, 2}));
+    EXPECT_EQ((dt + ts) - dt, ts);
+    EXPECT_EQ((dt + ts) - ts, dt);
+}
+
+TEST_F(Utils_DateTime, Constants)
+{
+    EXPECT_EQ(DateTime::UnixEpoch().GetTicks(), 621355968000000000LL);
+}

@@ -69,3 +69,18 @@ TEST(Containers_Array, Enumerable_Select)
     EXPECT_EQ(strArray[2], cStrArray[2]);
     EXPECT_EQ(strArray[3], cStrArray[3]);
 }
+
+TEST(Containers_Array, Basic)
+{
+    Array<int, 5> arr;
+    arr.Fill(42);
+    for (int i : arr)
+        EXPECT_EQ(i, 42);
+
+    EXPECT_EQ(arr.GetSize(), 5);
+    EXPECT_FALSE(arr.IsEmpty());
+
+    arr.At(0) = 1;
+    EXPECT_EQ(arr[0], 1);
+    EXPECT_EQ(arr.GetData(), &arr[0]);
+}

@@ -133,7 +133,7 @@ TEST(Utils_Utils, CallSafe)
 
 TEST(Utils_Utils, GetBits)
 {
-    constexpr u8 i = 0b01110000;
+    constexpr u64 i = 0b01110000;
 
     auto result = Utils::GetBits<4, 1>(i);
 
@@ -142,4 +142,32 @@ TEST(Utils_Utils, GetBits)
     result = Utils::GetBits<5, 3>(i);
 
     EXPECT_EQ(result, 0b00000011ull);
+}
+
+TEST(Utils_Utils, StringCase)
+{
+    EXPECT_EQ(Utils::ToLower("HeLLo"), "hello");
+    EXPECT_EQ(Utils::ToUpper("HeLLo"), "HELLO");
+}
+
+TEST(Utils_Utils, Trim)
+{
+    EXPECT_EQ(Utils::Trim("  hello  ", Utils::TrimOptions::Both), "hello");
+    EXPECT_EQ(Utils::Trim("  hello  ", Utils::TrimOptions::Start), "hello  ");
+    EXPECT_EQ(Utils::Trim("  hello  ", Utils::TrimOptions::End), "  hello");
+}
+
+TEST(Utils_Utils, Split)
+{
+    const List<std::string> parts = Utils::Split("a,b,c", ',');
+    EXPECT_EQ(parts.GetSize(), 3);
+    EXPECT_EQ(parts[0], "a");
+    EXPECT_EQ(parts[1], "b");
+    EXPECT_EQ(parts[2], "c");
+}
+
+TEST(Utils_Utils, Concat)
+{
+    EXPECT_EQ(Utils::Concat16(0x01, 0x02), 0x0201);
+    EXPECT_EQ(Utils::Concat32(0x01, 0x02, 0x03, 0x04), 0x04030201u);
 }

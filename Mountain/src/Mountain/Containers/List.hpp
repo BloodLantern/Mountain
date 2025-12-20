@@ -476,7 +476,7 @@ namespace Mountain
 
         if constexpr (Meta::IsTriviallyCopyConstructible<T>)
         {
-            std::memcpy(static_cast<void*>(m_Data + m_Size), static_cast<void*>(data), count * sizeof(T));  // NOLINT(bugprone-sizeof-expression)
+            std::memcpy(static_cast<void*>(m_Data + m_Size), static_cast<const void*>(data), count * sizeof(T));  // NOLINT(bugprone-sizeof-expression)
         }
         else
         {
@@ -659,7 +659,7 @@ namespace Mountain
 
         if constexpr (Meta::IsTriviallyCopyConstructible<T>)
         {
-            std::memcpy(static_cast<void*>(m_Data + index), static_cast<void*>(data), count * sizeof(T));  // NOLINT(bugprone-sizeof-expression)
+            std::memcpy(static_cast<void*>(m_Data + index), static_cast<const void*>(data), count * sizeof(T));  // NOLINT(bugprone-sizeof-expression)
         }
         else
         {
