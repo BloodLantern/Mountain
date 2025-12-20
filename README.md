@@ -29,14 +29,14 @@ Both require to have [vcpkg](https://vcpkg.io) installed.
 
 ### 1. Use this as a submodule (recommended)
 
-In a directory of your choice within your project, run `git submodule add --recurse-submodules https://github.com/BloodLantern/Mountain.git`.
+In a directory of your choice within your project, run `git submodule add https://github.com/BloodLantern/Mountain.git` and then `git submodule update --init --recursive`.
 
 Add the `Mountain/Mountain.vcxproj` project to your solution and set it as a reference to your project using `Add > Reference...`.
 In your project configuration, add the `Mountain/src`, `Mountain/externals/src` and `MathToolbox/src` folders to your include path.
 
 ### 2. Build from source
 
-Clone the project using `git clone https://github.com/BloodLantern/Mountain.git`.
+Clone the project using `git clone --recurse-submodules https://github.com/BloodLantern/Mountain.git`.
 Open the Visual Studio solution file found in the root directory.
 After opening it, the only thing you have to do is to build the framework (Mountain project) in both the`Debug` and `Release` configuration.
 
