@@ -186,8 +186,8 @@ namespace Mountain
 namespace Mountain
 {
     constexpr TimeSpan TimeSpan::Zero() { return TimeSpan{0}; }
-    constexpr TimeSpan TimeSpan::MinValue() { return TimeSpan{std::numeric_limits<int64_t>::max()}; }
-    constexpr TimeSpan TimeSpan::MaxValue() { return TimeSpan{std::numeric_limits<int64_t>::min()}; }
+    constexpr TimeSpan TimeSpan::MaxValue() { return TimeSpan{std::numeric_limits<int64_t>::max()}; }
+    constexpr TimeSpan TimeSpan::MinValue() { return TimeSpan{std::numeric_limits<int64_t>::min()}; }
 
     // ReSharper disable CppClangTidyReadabilitySuspiciousCallArgument
     constexpr TimeSpan TimeSpan::FromDays(const double_t days) { return Interval(days, TicksPerDay); }
@@ -364,7 +364,7 @@ namespace Mountain
 
     constexpr TimeSpan TimeSpan::IntervalFromDoubleTicks(const double_t ticks)
     {
-        if (ticks > static_cast<double_t>(std::numeric_limits<int64_t>::max()) || ticks < static_cast<double_t>(std::numeric_limits<int64_t>::min()) || std::isnan(ticks))
+        if (ticks > static_cast<double_t>(std::numeric_limits<int64_t>::max()) || ticks < static_cast<double_t>(std::numeric_limits<int64_t>::min()) || Calc::IsNan(ticks))
             THROW(OverflowException{"Invalid TimeSpan ticks"});
 
         if (ticks == static_cast<double_t>(std::numeric_limits<int64_t>::max()))

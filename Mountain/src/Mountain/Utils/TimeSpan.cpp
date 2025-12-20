@@ -10,37 +10,25 @@ std::string TimeSpan::ToString() const
 {
     std::string result;
 
-    const bool_t daysCheck = GetDays() > 0;
-    const bool_t hoursCheck = GetHours() > 0;
-    const bool_t minutesCheck = GetMinutes() > 0;
+    const int64_t ticks = m_Ticks;
+    const uint64_t absTicks = ticks >= 0 ? static_cast<uint64_t>(ticks) : 0ULL - static_cast<uint64_t>(ticks);
 
-    if (daysCheck)
-        result += std::format("{}.", GetDays());
+    if (ticks < 0)
+        result += '-';
 
-    if (daysCheck || hoursCheck)
-        result += std::format("{:02}:", GetHours());
+    const int32_t days = static_cast<int32_t>(absTicks / TicksPerDay);
+    const int32_t hours = static_cast<int32_t>(absTicks / TicksPerHour % 24);
+    const int32_t minutes = static_cast<int32_t>(absTicks / TicksPerMinute % 60);
+    const int32_t seconds = static_cast<int32_t>(absTicks / TicksPerSecond % 60);
+    const int32_t fractionalTicks = static_cast<int32_t>(absTicks % TicksPerSecond);
 
-    if (daysCheck || hoursCheck || minutesCheck)
-        result += std::format("{:02}:", GetMinutes());
+    if (days != 0)
+        result += std::format("{}.", days);
 
-    result += std::format("{}", GetSeconds());
+    result += std::format("{:02}:{:02}:{:02}", hours, minutes, seconds);
 
-    const bool_t millisecondsCheck = GetMilliseconds() > 0;
-    const bool_t microsecondsCheck = GetMicroseconds() > 0;
-    const bool_t nanosecondsCheck = GetNanoseconds() > 0;
-
-    if (nanosecondsCheck || microsecondsCheck)
-        result += std::format(".{:03}", GetMilliseconds());
-    else if (millisecondsCheck)
-        result += std::format(".{}", GetMilliseconds());
-
-    if (nanosecondsCheck || microsecondsCheck)
-        result += std::format("{:03}", GetMicroseconds());
-    else if (microsecondsCheck)
-        result += std::format(".{}", GetMilliseconds());
-
-    if (nanosecondsCheck)
-        result += std::format("{}", GetNanoseconds());
+    if (fractionalTicks != 0)
+        result += std::format(".{:07}", fractionalTicks);
 
     return result;
 }
