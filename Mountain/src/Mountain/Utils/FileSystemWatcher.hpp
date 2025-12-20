@@ -16,7 +16,7 @@ typedef unsigned long DWORD; // Windows type forward declaration  // NOLINT(mode
 namespace Mountain
 {
     /// @private
-    enum class FswNotifyFilters : uint8_t
+    enum class FswNotifyFilters : u8
     {
         FileName        = 1 << 0,
         DirectoryName   = 1 << 1,
@@ -44,10 +44,10 @@ namespace Mountain
         TimeSpan updateRate{0, 0, 0, 0, 750};
 
         /// @brief Whether to check the directory contents. Doesn't do anything if the watched path points to a file.
-        bool_t checkContents = true;
+        bool checkContents = true;
 
         /// @brief Whether to check subdirectories. Doesn't do anything if the watched path points to a file or if @c checkContents is @c false
-        bool_t recursive = false;
+        bool recursive = false;
 
         /// @brief File extensions including the dot '.'
         List<std::string> fileExtensions;
@@ -75,7 +75,7 @@ namespace Mountain
         MOUNTAIN_API void SetPath(const std::filesystem::path& newPath);
 
         ATTRIBUTE_NODISCARD
-        MOUNTAIN_API bool_t GetRunning() const;
+        MOUNTAIN_API bool GetRunning() const;
 
     private:
         std::thread m_Thread;
@@ -83,11 +83,11 @@ namespace Mountain
         std::mutex m_Mutex;
 
         std::filesystem::path m_Path;
-        bool_t m_IsDirectory = false;
+        bool m_IsDirectory = false;
 
-        bool_t m_Running = false;
+        bool m_Running = false;
 
-        bool_t m_PathChanged = false;
+        bool m_PathChanged = false;
 
         void Run();
 

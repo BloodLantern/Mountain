@@ -55,7 +55,7 @@ namespace Mountain
         void Start();
 
         /// @brief Runs a single frame. Automatically called in @c MainLoop().
-        bool_t NextFrame();
+        bool NextFrame();
 
         /// @brief Used to clean everything up before the application closes.
         virtual void Shutdown() = 0;

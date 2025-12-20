@@ -45,10 +45,10 @@
     do \
     { \
         using Type = DECLARING_TYPE(optionalParameter); \
-        constexpr const bool_t standard = ::Mountain::Meta::IsStandardOptional<Type>; \
+        constexpr const bool standard = ::Mountain::Meta::IsStandardOptional<Type>; \
         static_assert(standard || ::Mountain::Meta::IsMountainOptional<Type>, "The argument of CHECK_OPTIONAL must be a either a std::optional or a Mountain::Optional"); \
          \
-        bool_t noValue = false; \
+        bool noValue = false; \
         if constexpr (standard) \
         { \
             if (!(optionalParameter).has_value()) \
@@ -69,7 +69,7 @@
     static exceptionType functionName##Exception() { return exceptionType{message}; }  // NOLINT(bugprone-macro-parentheses)
 
 #define THROW_HELPER_FUNC_ARG(functionName, argumentExceptionType, message) \
-    static argumentExceptionType functionName##Exception(const char_t* argumentName) { return argumentExceptionType{message, argumentName}; }  // NOLINT(bugprone-macro-parentheses)
+    static argumentExceptionType functionName##Exception(const c8* argumentName) { return argumentExceptionType{message, argumentName}; }  // NOLINT(bugprone-macro-parentheses)
 
 namespace Mountain
 {

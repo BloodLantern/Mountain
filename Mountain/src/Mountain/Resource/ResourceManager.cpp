@@ -24,7 +24,7 @@ namespace rh
 
 using namespace Mountain;
 
-Pointer<Font> ResourceManager::LoadFont(const Pointer<File>& file, const uint32_t size)
+Pointer<Font> ResourceManager::LoadFont(const Pointer<File>& file, const u32 size)
 {
     Logger::LogVerbose("Loading font {} with size {}", file->GetPath(), size);
 
@@ -57,7 +57,7 @@ Pointer<Font> ResourceManager::LoadFont(const Pointer<File>& file, const uint32_
     return font;
 }
 
-Pointer<Font> ResourceManager::LoadFont(const std::string& name, const uint32_t size)
+Pointer<Font> ResourceManager::LoadFont(const std::string& name, const u32 size)
 {
     return LoadFont(FileManager::Contains(name) ? FileManager::Get(name) : FileManager::Load(name), size);
 }
@@ -71,7 +71,7 @@ void ResourceManager::LoadAll()
     List<Pointer<File>> files;
     FileManager::FindAll<File>([](Pointer<File> file) { return file->GetResource() == nullptr && !IsBinary(file->GetPathString()); }, &files);
 
-    const size_t oldResourceCount = m_Resources.size();
+    const usize oldResourceCount = m_Resources.size();
 
     // Preload resource data asynchronously
     std::for_each(
@@ -155,14 +155,14 @@ void ResourceManager::LoadAllBinaries()
     START_STOPWATCH;
 
     const auto files = rh::embed.ListFiles();
-    const size_t oldResourceCount = m_Resources.size();
+    const usize oldResourceCount = m_Resources.size();
 
     for (auto&& fileString : files)
     {
         auto data = rh::embed(fileString);
 
         Pointer file = FileManager::Add(fileString);
-        file->Load(reinterpret_cast<const char_t*>(data.data()), data.size());
+        file->Load(reinterpret_cast<const c8*>(data.data()), data.size());
         file->UpdateUtilityValues();
 
         std::filesystem::path parentPath = file->GetPath().parent_path();
@@ -255,12 +255,12 @@ bool ResourceManager::Contains(const Pointer<File>& file)
     return m_Resources.contains(file->GetPathString());
 }
 
-bool_t ResourceManager::IsBinary(const std::string& name)
+bool ResourceManager::IsBinary(const std::string& name)
 {
     return Utils::StringArrayContains(rh::embed.ListFiles(), std::filesystem::path(name).make_preferred().string());
 }
 
-Pointer<Font> ResourceManager::GetFont(const std::string& name, uint32_t size)
+Pointer<Font> ResourceManager::GetFont(const std::string& name, u32 size)
 {
     std::string internalName = std::format("{}/{}", name, size);
 
@@ -273,7 +273,7 @@ Pointer<Font> ResourceManager::GetFont(const std::string& name, uint32_t size)
     return GetNoCheck<Font>(internalName);
 }
 
-Pointer<Font> ResourceManager::GetFont(const Pointer<File>& file, uint32_t size)
+Pointer<Font> ResourceManager::GetFont(const Pointer<File>& file, u32 size)
 {
     return GetFont(file->GetPathString(), size);
 }

@@ -33,7 +33,7 @@ namespace Mountain
         /// This effectively means loading all children of this Directory.
         ///
         /// @returns @c false if an error occured while loading.
-        MOUNTAIN_API bool_t Load() override;
+        MOUNTAIN_API bool Load() override;
 
         /// @brief Unloads the contents of this Directory.
         MOUNTAIN_API void Unload() override;

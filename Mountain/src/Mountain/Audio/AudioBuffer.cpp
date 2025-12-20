@@ -19,7 +19,7 @@ AudioBuffer::AudioBuffer()
     alGenBuffers(1, &m_Handle);
 }
 
-AudioBuffer::AudioBuffer(const int32_t size)
+AudioBuffer::AudioBuffer(const s32 size)
     : AudioBuffer()
 {
     alBufferi(m_Handle, AL_SIZE, size);
@@ -43,19 +43,19 @@ void AudioBuffer::SetData(const AudioTrack* track)
 }
 
 // ReSharper disable once CppMemberFunctionMayBeConst
-void AudioBuffer::SetData(const void* const data, const int32_t length, const uint16_t channels, const uint16_t bitDepth, const int32_t sampleRate)
+void AudioBuffer::SetData(const void* const data, const s32 length, const u16 channels, const u16 bitDepth, const s32 sampleRate)
 {
     m_Context->MakeCurrent();
     alBufferData(m_Handle, AlFormatFromData(channels, bitDepth), data, length, sampleRate);
     AudioContext::CheckError();
 }
 
-uint32_t AudioBuffer::GetHandle() const
+u32 AudioBuffer::GetHandle() const
 {
     return m_Handle;
 }
 
-int32_t AudioBuffer::AlFormatFromData(const uint16_t channels, const uint16_t bitDepth)
+s32 AudioBuffer::AlFormatFromData(const u16 channels, const u16 bitDepth)
 {
     ALenum format = 0;
     if (channels == 1)

@@ -46,120 +46,120 @@ namespace Mountain
         using Identity = std::type_identity_t<T>;
 
         /// @brief Result of a logical AND (@c &&) between all the given conditions.
-        template <bool_t... Conditions>
-        constexpr bool_t LogicalAnd = (Conditions && ...);
+        template <bool... Conditions>
+        constexpr bool LogicalAnd = (Conditions && ...);
 
         /// @brief Result of a logical OR (@c ||) between all the given conditions.
-        template <bool_t... Conditions>
-        constexpr bool_t LogicalOr = (Conditions || ...);
+        template <bool... Conditions>
+        constexpr bool LogicalOr = (Conditions || ...);
 
         /// @brief Checks whether @p Derived is a derived class of @p Base.
         /// @tparam Base Base class
         /// @tparam Derived Derived class
         template <typename Base, typename Derived>
-        constexpr bool_t IsBaseOf = std::is_base_of_v<Base, Derived>;
+        constexpr bool IsBaseOf = std::is_base_of_v<Base, Derived>;
 
         /// @brief Checks whether @p A and @p B are the same type.
         /// @tparam A First type
         /// @tparam B Second type
         template <typename A, typename B>
-        constexpr bool_t IsSame = std::is_same_v<A, B>;
+        constexpr bool IsSame = std::is_same_v<A, B>;
 
         /// @brief Checks whether @p T is any of the provided types in @p Other.
         /// @tparam Other Other types
         template <typename T, typename... Other>
-        constexpr bool_t AllSame = LogicalAnd<IsSame<T, Other>...>;
+        constexpr bool AllSame = LogicalAnd<IsSame<T, Other>...>;
 
         /// @brief Checks whether @p T is any of the provided types in @p Other.
         /// @tparam Other Other types
         template <typename T, typename... Other>
-        constexpr bool_t IsAny = LogicalOr<IsSame<T, Other>...>;
+        constexpr bool IsAny = LogicalOr<IsSame<T, Other>...>;
 
         /// @brief Checks whether @p T is an array.
         template <typename T>
-        constexpr bool_t IsArray = std::is_array_v<T>;
+        constexpr bool IsArray = std::is_array_v<T>;
 
         /// @brief Checks whether @p T is a class.
         template <typename T>
-        constexpr bool_t IsClass = std::is_class_v<T>;
+        constexpr bool IsClass = std::is_class_v<T>;
 
         /// @brief Checks whether @p T is an abstract class.
         template <typename T>
-        constexpr bool_t IsAbstract = std::is_abstract_v<T>;
+        constexpr bool IsAbstract = std::is_abstract_v<T>;
 
         /// @brief Checks whether @p T is default-constructible (has a public constructor with no parameters).
         template <typename T>
-        constexpr bool_t IsDefaultConstructible = std::is_default_constructible_v<T>;
+        constexpr bool IsDefaultConstructible = std::is_default_constructible_v<T>;
 
         /// @brief Checks whether @p T is copy-constructible (has a public constructor taking a const reference to the same type).
         template <typename T>
-        constexpr bool_t IsCopyConstructible = std::is_copy_constructible_v<T>;
+        constexpr bool IsCopyConstructible = std::is_copy_constructible_v<T>;
 
         /// @brief Checks whether @p T is move-constructible (has a public constructor taking an r-value reference of the same type).
         template <typename T>
-        constexpr bool_t IsMoveConstructible = std::is_move_constructible_v<T>;
+        constexpr bool IsMoveConstructible = std::is_move_constructible_v<T>;
 
         /// @brief Checks whether @p T can be assigned a copied value.
         template <typename T>
-        constexpr bool_t IsCopyAssignable = std::is_copy_assignable_v<T>;
+        constexpr bool IsCopyAssignable = std::is_copy_assignable_v<T>;
 
         /// @brief Checks whether @p T can be assigned a moved value.
         template <typename T>
-        constexpr bool_t IsMoveAssignable = std::is_move_assignable_v<T>;
+        constexpr bool IsMoveAssignable = std::is_move_assignable_v<T>;
 
         /// @brief Checks whether @p T is trivially copyable.
         template <typename T>
-        constexpr bool_t IsTriviallyCopyable = std::is_trivially_copyable_v<T>;
+        constexpr bool IsTriviallyCopyable = std::is_trivially_copyable_v<T>;
 
         /// @brief Checks whether @p From is trivially assignable to @p To.
         template <typename To, typename From>
-        constexpr bool_t IsTriviallyAssignable = std::is_trivially_assignable_v<To, From>;
+        constexpr bool IsTriviallyAssignable = std::is_trivially_assignable_v<To, From>;
 
         /// @brief Checks whether @p T is trivially constructible.
         template <typename T>
-        constexpr bool_t IsTriviallyConstructible = std::is_trivially_constructible_v<T>;
+        constexpr bool IsTriviallyConstructible = std::is_trivially_constructible_v<T>;
 
         /// @brief Checks whether @p T is trivially copy-assignable.
         template <typename T>
-        constexpr bool_t IsTriviallyCopyAssignable = std::is_trivially_copy_assignable_v<T>;
+        constexpr bool IsTriviallyCopyAssignable = std::is_trivially_copy_assignable_v<T>;
 
         /// @brief Checks whether @p T is trivially copy-constructible.
         template <typename T>
-        constexpr bool_t IsTriviallyCopyConstructible = std::is_trivially_copy_constructible_v<T>;
+        constexpr bool IsTriviallyCopyConstructible = std::is_trivially_copy_constructible_v<T>;
 
         /// @brief Checks whether @p T is trivially default-constructible.
         template <typename T>
-        constexpr bool_t IsTriviallyDefaultConstructible = std::is_trivially_default_constructible_v<T>;
+        constexpr bool IsTriviallyDefaultConstructible = std::is_trivially_default_constructible_v<T>;
 
         /// @brief Checks whether @p T is trivially destructible.
         template <typename T>
-        constexpr bool_t IsTriviallyDestructible = std::is_trivially_destructible_v<T>;
+        constexpr bool IsTriviallyDestructible = std::is_trivially_destructible_v<T>;
 
         /// @brief Checks whether @p T is trivially move-assignable.
         template <typename T>
-        constexpr bool_t IsTriviallyMoveAssignable = std::is_trivially_move_assignable_v<T>;
+        constexpr bool IsTriviallyMoveAssignable = std::is_trivially_move_assignable_v<T>;
 
         /// @brief Checks whether @p T is trivially move-constructible.
         template <typename T>
-        constexpr bool_t IsTriviallyMoveConstructible = std::is_trivially_move_constructible_v<T>;
+        constexpr bool IsTriviallyMoveConstructible = std::is_trivially_move_constructible_v<T>;
 
         /// @brief Checks whether @p T is a @c const type.
         template <typename T>
-        constexpr bool_t IsConst = std::is_const_v<T>;
+        constexpr bool IsConst = std::is_const_v<T>;
 
         /// @brief Checks whether @p T is a @c volatile type.
         template <typename T>
-        constexpr bool_t IsVolatile = std::is_volatile_v<T>;
+        constexpr bool IsVolatile = std::is_volatile_v<T>;
 
         /// @brief Checks whether @p T is qualified either with @c const, @c volatile, or both.
         template <typename T>
-        constexpr bool_t IsConstVolatileQualified = IsConst<T> || IsVolatile<T>;
+        constexpr bool IsConstVolatileQualified = IsConst<T> || IsVolatile<T>;
 
         /// @brief Checks whether @p T is a reference type.
         template <typename T>
-        constexpr bool_t IsReference = std::is_reference_v<T>;
+        constexpr bool IsReference = std::is_reference_v<T>;
 
-        template <bool_t Condition>
+        template <bool Condition>
         using EnableIf = std::enable_if_t<Condition>;
 
         /// @brief Removes the array specification from @p T
@@ -205,48 +205,48 @@ namespace Mountain
 
         /// @brief Checks whether the type is a @c std::function
         template <typename>
-        constexpr bool_t IsStandardFunction = false;
+        constexpr bool IsStandardFunction = false;
 
         template <typename T, typename... Args>
-        constexpr bool_t IsStandardFunction<std::function<T(Args...)>> = true;
+        constexpr bool IsStandardFunction<std::function<T(Args...)>> = true;
 
         /// @brief Checks whether the type is a @c Pointer
         template <typename>
-        constexpr bool_t IsMountainPointer = false;
+        constexpr bool IsMountainPointer = false;
 
         template <typename T>
-        constexpr bool_t IsMountainPointer<Pointer<T>> = true;
+        constexpr bool IsMountainPointer<Pointer<T>> = true;
 
         /// @brief Checks whether the type is a @c std::optional
         template <typename>
-        constexpr bool_t IsStandardOptional = false;
+        constexpr bool IsStandardOptional = false;
 
         template <typename T>
-        constexpr bool_t IsStandardOptional<std::optional<T>> = true;
+        constexpr bool IsStandardOptional<std::optional<T>> = true;
 
         /// @brief Checks whether the type is an @c Optional
         template <typename>
-        constexpr bool_t IsMountainOptional = false;
+        constexpr bool IsMountainOptional = false;
 
         template <typename T>
-        constexpr bool_t IsMountainOptional<Optional<T>> = true;
+        constexpr bool IsMountainOptional<Optional<T>> = true;
 
         /// @brief Checks if T is a native type.
         ///
         /// A native type is one of the following types:
-        /// - char_t
-        /// - uint8_t
-        /// - int8_t
-        /// - uint16_t
-        /// - int16_t
-        /// - uint32_t
-        /// - int32_t
-        /// - float_t
-        /// - double_t
-        /// - bool_t
+        /// - c8
+        /// - u8
+        /// - s8
+        /// - u16
+        /// - s16
+        /// - u32
+        /// - s32
+        /// - f32
+        /// - f64
+        /// - bool
         ///
         template <typename T>
-        constexpr bool_t IsNativeType = IsAny<T, char_t, uint8_t, int8_t, uint16_t, int16_t, uint32_t, int32_t, uint64_t, int64_t, float_t, double_t, bool_t>;
+        constexpr bool IsNativeType = IsAny<T, c8, u8, s8, u16, s16, u32, s32, u64, s64, f32, f64, bool>;
 
         /// @brief Checks if T is a math type.
         ///
@@ -261,50 +261,50 @@ namespace Mountain
         /// - Matrix
         ///
         template <typename T>
-        constexpr bool_t IsMathType = IsAny<T, Vector2, Vector2i, Vector3, Vector4, Quaternion, Matrix2, Matrix3, Matrix>;
+        constexpr bool IsMathType = IsAny<T, Vector2, Vector2i, Vector3, Vector4, Quaternion, Matrix2, Matrix3, Matrix>;
 
         template <typename T>
-        constexpr bool_t IsEqualityComparable = std::equality_comparable<T>;
+        constexpr bool IsEqualityComparable = std::equality_comparable<T>;
 
         template <typename T, typename U>
-        constexpr bool_t IsEqualityComparableWith = std::equality_comparable_with<T, U>;
+        constexpr bool IsEqualityComparableWith = std::equality_comparable_with<T, U>;
 
         template <typename T>
-        constexpr bool_t IsResource = Meta::IsBaseOf<Resource, T>;
+        constexpr bool IsResource = Meta::IsBaseOf<Resource, T>;
 
         template <typename T>
-        constexpr bool_t IsLoadableResource = IsResource<T> && !Meta::IsSame<T, Font>;
+        constexpr bool IsLoadableResource = IsResource<T> && !Meta::IsSame<T, Font>;
 
         template <typename T>
-        constexpr bool_t IsEntry = Meta::IsBaseOf<Entry, T>;
+        constexpr bool IsEntry = Meta::IsBaseOf<Entry, T>;
 
         template <typename T>
-        constexpr bool_t IsComponent = Meta::IsBaseOf<Component, T>;
+        constexpr bool IsComponent = Meta::IsBaseOf<Component, T>;
 
         template <typename T>
-        constexpr bool_t IsEntity = Meta::IsBaseOf<Entity, T>;
+        constexpr bool IsEntity = Meta::IsBaseOf<Entity, T>;
 
         template <typename T>
-        constexpr bool_t IsException = IsBaseOf<std::exception, T>;
+        constexpr bool IsException = IsBaseOf<std::exception, T>;
 
         template <typename T>
-        constexpr bool_t IsMountainException = IsBaseOf<Exception, T>;
+        constexpr bool IsMountainException = IsBaseOf<Exception, T>;
 
         template <typename T>
-        constexpr bool_t IsStandardException = IsException<T> && !IsMountainException<T>;
+        constexpr bool IsStandardException = IsException<T> && !IsMountainException<T>;
 
         /// @brief Checks whether the type is a function type
         /// <a href="https://en.cppreference.com/w/cpp/types/is_function.html">as defined in the C++ standard</a>.
         template <typename T>
-        constexpr bool_t IsFunction = std::is_function_v<T>;
+        constexpr bool IsFunction = std::is_function_v<T>;
 
         /// @brief Checks whether @p T is invocable with the given argument types.
         template <typename T, typename... Args>
-        constexpr bool_t IsInvocable = std::is_invocable_v<T, Args...>;
+        constexpr bool IsInvocable = std::is_invocable_v<T, Args...>;
 
         /// @brief Checks if @p From is **implicitly** convertible to @p To.
         template <typename From, typename To>
-        constexpr bool_t IsConvertibleTo = std::is_convertible_v<From, To>;
+        constexpr bool IsConvertibleTo = std::is_convertible_v<From, To>;
 
         /// @brief Checks if T is a color type.
         ///
@@ -313,52 +313,52 @@ namespace Mountain
         /// - ColorHsva
         ///
         template <typename T>
-        constexpr bool_t IsColor = IsAny<T, Color, ColorHsva>;
+        constexpr bool IsColor = IsAny<T, Color, ColorHsva>;
 
         /// @brief Checks whether @p T is a pointer.
         template <typename T>
-        constexpr bool_t IsPointer = std::is_pointer_v<T>;
+        constexpr bool IsPointer = std::is_pointer_v<T>;
 
         /// @brief Checks whether @p T is an integral type.
         template <typename T>
-        constexpr bool_t IsIntegral = std::is_integral_v<T>;
+        constexpr bool IsIntegral = std::is_integral_v<T>;
 
         /// @brief Checks whether @p T is a floating type.
         template <typename T>
-        constexpr bool_t IsFloatingPoint = std::is_floating_point_v<T>;
+        constexpr bool IsFloatingPoint = std::is_floating_point_v<T>;
 
         /// @brief Checks if T is an integral or a floating type.
         ///
         /// An int/float type is one of the following types:
-        /// - char_t
-        /// - uint8_t
-        /// - int8_t
-        /// - uint16_t
-        /// - int16_t
-        /// - uint32_t
-        /// - int32_t
-        /// - float_t
-        /// - double_t
-        /// - bool_t
+        /// - c8
+        /// - u8
+        /// - s8
+        /// - u16
+        /// - s16
+        /// - u32
+        /// - s32
+        /// - f32
+        /// - f64
+        /// - bool
         ///
         template <typename T>
-        constexpr bool_t IsIntegralOrFloating = IsIntegral<T> || IsFloatingPoint<T>;
+        constexpr bool IsIntegralOrFloating = IsIntegral<T> || IsFloatingPoint<T>;
 
         /// @brief Checks whether @p T is an enum.
         template <typename T>
-        constexpr bool_t IsEnum = std::is_enum_v<T>;
+        constexpr bool IsEnum = std::is_enum_v<T>;
 
         template <typename T>
-        constexpr bool_t IsEffect = IsBaseOf<Effect, T>;
+        constexpr bool IsEffect = IsBaseOf<Effect, T>;
 
         template <typename T>
-        constexpr bool_t IsContainerType = !IsConst<T> && !IsFunction<T> && !IsReference<T>;
+        constexpr bool IsContainerType = !IsConst<T> && !IsFunction<T> && !IsReference<T>;
 
         template <typename T>
-        constexpr bool_t IsCollider = IsBaseOf<Collider, T>;
+        constexpr bool IsCollider = IsBaseOf<Collider, T>;
 
         template <typename T>
-        constexpr bool_t IsParticleSystemModule = IsBaseOf<ParticleSystemModules::ModuleBase, T>;
+        constexpr bool IsParticleSystemModule = IsBaseOf<ParticleSystemModules::ModuleBase, T>;
     }
 
     /// @namespace Concepts

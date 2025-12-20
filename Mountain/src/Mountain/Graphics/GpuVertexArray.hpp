@@ -19,12 +19,12 @@ namespace Mountain::Graphics
         void SetDebugName(std::string_view name) const;
 
         ATTRIBUTE_NODISCARD
-        uint32_t GetId() const;
+        u32 GetId() const;
 
         ATTRIBUTE_NODISCARD
-        explicit operator uint32_t() const;
+        explicit operator u32() const;
 
     private:
-        uint32_t m_Id = 0;
+        u32 m_Id = 0;
     };
 }

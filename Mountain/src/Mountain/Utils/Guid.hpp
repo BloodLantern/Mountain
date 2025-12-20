@@ -14,7 +14,7 @@ namespace Mountain
     struct MOUNTAIN_API Guid final
     {
     private:
-        static constexpr size_t Data4Size = 8;
+        static constexpr usize Data4Size = 8;
 
     public:
         /// @brief Empty guid
@@ -27,43 +27,43 @@ namespace Mountain
         /// @brief Parses a Guid from a string
         /// @param str String
         /// @returns Guid
-        static Guid FromString(const char_t* str);
+        static Guid FromString(const c8* str);
 
         ATTRIBUTE_NODISCARD
-        uint32_t GetData1() const;
+        u32 GetData1() const;
 
         ATTRIBUTE_NODISCARD
-        uint16_t GetData2() const;
+        u16 GetData2() const;
 
         ATTRIBUTE_NODISCARD
-        uint16_t GetData3() const;
+        u16 GetData3() const;
 
         ATTRIBUTE_NODISCARD
-        const Array<uint8_t, Data4Size>& GetData4() const;
+        const Array<u8, Data4Size>& GetData4() const;
 
         /// @brief Compares 2 @ref Guid
         /// @param other Other guid
         /// @return Whether the @ref Guid are equal
         ATTRIBUTE_NODISCARD
-        bool_t operator==(const Guid& other) const;
+        bool operator==(const Guid& other) const;
 
         /// @brief Compares 2 @ref Guid
         /// @param other Other guid
         /// @return Whether the @ref Guid are different
         ATTRIBUTE_NODISCARD
-        bool_t operator!=(const Guid& other) const;
+        bool operator!=(const Guid& other) const;
 
         ATTRIBUTE_NODISCARD
         std::string ToString() const;
 
         ATTRIBUTE_NODISCARD
-        size_t GetHashCode() const;
+        usize GetHashCode() const;
 
     private:
-        uint32_t m_Data1 = 0;
-        uint16_t m_Data2 = 0;
-        uint16_t m_Data3 = 0;
-        Array<uint8_t, Data4Size> m_Data4{};
+        u32 m_Data1 = 0;
+        u16 m_Data2 = 0;
+        u16 m_Data3 = 0;
+        Array<u8, Data4Size> m_Data4{};
     };
 
     CHECK_REQUIREMENT(Requirements::StringConvertible, Guid);

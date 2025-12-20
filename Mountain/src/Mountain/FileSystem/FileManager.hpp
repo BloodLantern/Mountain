@@ -40,7 +40,7 @@ namespace Mountain
 
         /// @brief Checks whether the FileManager contains the specified Entry path.
         ATTRIBUTE_NODISCARD
-        MOUNTAIN_API static bool_t Contains(const std::filesystem::path& path);
+        MOUNTAIN_API static bool Contains(const std::filesystem::path& path);
 
         /// @brief Tries to get the Entry with the given @p path.
         /// @tparam T The type of Entry to get.
@@ -193,7 +193,7 @@ namespace Mountain
     List<Pointer<T>> FileManager::FindAll(const Predicate<Pointer<T>>& predicate)
     {
         List<Pointer<T>> result;
-        FindAll<T>(std::forward<std::function<bool_t(Pointer<T>)>>(predicate), &result);
+        FindAll<T>(std::forward<std::function<bool(Pointer<T>)>>(predicate), &result);
         return result;
     }
 
@@ -216,7 +216,7 @@ namespace Mountain
     {
         Logger::LogVerbose("Unloading FileManager entry {}", entry->GetPathString());
 
-        const size_t oldSize = m_Entries.size();
+        const usize oldSize = m_Entries.size();
 
         for (auto it = m_Entries.begin(); it != m_Entries.end(); it++)
         {

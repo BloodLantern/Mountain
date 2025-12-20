@@ -11,28 +11,24 @@
 /// @file Core.hpp
 /// @brief This file is meant to be included by every single other header file of this project.
 ///
-/// It includes the standard headers @c \<cmath> and @c \<cstdint> so that types such as
-/// @c int8_t or @c float_t are defined. It also defines typedefs for char_t and
-/// bool_t, as they aren't defined by those standard headers.
+/// It declares typedefs for all numeric types such as @c s8, @c u32, @c f32, @c c8, @c usize...
 ///
 /// Apart from typedefs, this file declares macros ranging from necessary (MOUNTAIN_API)
 /// to useful and of general-use (DEFAULT_COPY_MOVE_OPERATIONS).
 
-// ReSharper disable once CppEnforceTypeAliasCodeStyle
-/// @brief Equivalent to <c>char</c>.
-///
-/// We use a typedef here instead of a type alias for consistency
-/// with how the other integral types are defined in the <c>cstdint</c> header.
-/// Also, we need to manually add this type because it is considered
-/// different to <c>int8_t</c> as the latter is the equivalent of <c>signed char</c>
-/// and not <c>char</c>.
-typedef char char_t;
-
-// ReSharper disable once CppEnforceTypeAliasCodeStyle
-/// @brief Equivalent to <c>bool</c>.
-///
-/// @see char_t for the reason.
-typedef bool bool_t;
+using s8 = std::int8_t;
+using s16 = std::int16_t;
+using s32 = std::int32_t;
+using s64 = std::int64_t;
+using u8 = std::uint8_t;
+using u16 = std::uint16_t;
+using u32 = std::uint32_t;
+using u64 = std::uint64_t;
+using usize = std::size_t;
+using c8 = char;
+using c16 = wchar_t;
+using f32 = float;
+using f64 = double;
 
 /// @brief Macro used for DLL export/import.
 /// @details This macro should be used at the beginning of static member variable and non-inline function declarations.
@@ -143,8 +139,8 @@ namespace Mountain {}
 #define USE_DEDICATED_GPU \
     extern "C" \
     { \
-        _declspec(dllexport) uint32_t NvOptimusEnablement = 1; \
-        _declspec(dllexport) int32_t AmdPowerXpressRequestHighPerformance = 1; \
+        _declspec(dllexport) u32 NvOptimusEnablement = 1; \
+        _declspec(dllexport) s32 AmdPowerXpressRequestHighPerformance = 1; \
     }
 
 /// @brief Defines a getter for the field @p internalName, of type @p type, with the name @c Get##name

@@ -26,7 +26,7 @@ namespace Mountain
         using Type = T;
         using UnderlyingType = Meta::UnderlyingEnumType<T>;
 
-        bool_t locked = false;
+        bool locked = false;
 
         using Component::operator=;
 
@@ -72,7 +72,7 @@ namespace Mountain
 
         /// @brief Get whether the current state changed since the last update
         ATTRIBUTE_NODISCARD
-        bool_t GetStateChanged() const;
+        bool GetStateChanged() const;
 
         ATTRIBUTE_NODISCARD
         // ReSharper disable once CppNonExplicitConversionOperator
@@ -91,7 +91,7 @@ namespace Mountain
 
         T m_State = static_cast<T>(0);
         T m_PreviousState = static_cast<T>(0);
-        bool_t m_StateChanged = false;
+        bool m_StateChanged = false;
     };
 }
 
@@ -213,7 +213,7 @@ namespace Mountain
     typename StateMachine<T>::UnderlyingType StateMachine<T>::GetPreviousStateIntegral() const { return magic_enum::enum_integer(m_PreviousState); }
 
     template <Concepts::Enum T>
-    bool_t StateMachine<T>::GetStateChanged() const { return m_StateChanged; }
+    bool StateMachine<T>::GetStateChanged() const { return m_StateChanged; }
 
     template <Concepts::Enum T>
     StateMachine<T>::operator T() { return m_State; }

@@ -18,23 +18,23 @@ namespace Mountain::Graphics
         /// @brief Shorthand for @code Delete(); Create();@endcode
         void Recreate();
 
-        void SetStorage(int64_t size, const void* data, BufferStorageFlags flags = BufferStorageFlags::None) const;
+        void SetStorage(s64 size, const void* data, BufferStorageFlags flags = BufferStorageFlags::None) const;
 
-        void SetSubData(int64_t offset, int64_t size, const void* data) const;
+        void SetSubData(s64 offset, s64 size, const void* data) const;
 
-        void SetData(int64_t size, const void* data, BufferUsage usage) const;
+        void SetData(s64 size, const void* data, BufferUsage usage) const;
 
         void SetDebugName(std::string_view name) const;
 
         ATTRIBUTE_NODISCARD
-        bool_t GetImmutable() const;
+        bool GetImmutable() const;
 
-        GETTER(uint32_t, Id, m_Id)
+        GETTER(u32, Id, m_Id)
 
         ATTRIBUTE_NODISCARD
-        explicit operator uint32_t() const;
+        explicit operator u32() const;
 
     private:
-        uint32_t m_Id = 0;
+        u32 m_Id = 0;
     };
 }

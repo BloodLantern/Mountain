@@ -8,7 +8,7 @@
 
 using namespace Mountain;
 
-Vector2i Screen::GetPosition(int32_t screenIndex)
+Vector2i Screen::GetPosition(s32 screenIndex)
 {
     if (screenIndex < 0)
         screenIndex = Window::GetCurrentScreen();
@@ -19,7 +19,7 @@ Vector2i Screen::GetPosition(int32_t screenIndex)
     return { rect.x, rect.y };
 }
 
-Vector2i Screen::GetSize(int32_t screenIndex)
+Vector2i Screen::GetSize(s32 screenIndex)
 {
     if (screenIndex < 0)
         screenIndex = Window::GetCurrentScreen();
@@ -27,7 +27,7 @@ Vector2i Screen::GetSize(int32_t screenIndex)
     return { m_VideoModes[screenIndex]->w, m_VideoModes[screenIndex]->h };
 }
 
-float_t Screen::GetRefreshRate(int32_t screenIndex)
+f32 Screen::GetRefreshRate(s32 screenIndex)
 {
     if (screenIndex < 0)
         screenIndex = Window::GetCurrentScreen();
@@ -43,7 +43,7 @@ void Screen::Initialize()
 
     m_VideoModes = new const SDL_DisplayMode*[m_MonitorCount];
 
-    for (int32_t i = 0; i < m_MonitorCount; i++)
+    for (s32 i = 0; i < m_MonitorCount; i++)
         m_VideoModes[i] = SDL_GetCurrentDisplayMode(m_Monitors[i]);
 }
 

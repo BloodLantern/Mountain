@@ -48,7 +48,7 @@ namespace Mountain
         List<EntityT*> m_ToRemove;
 
         /// @brief Whether the @c m_Entities list is currently unsorted (and therefore needs to be sorted).
-        bool_t m_Unsorted = false;
+        bool m_Unsorted = false;
 
         Scene* m_Scene = nullptr;
 

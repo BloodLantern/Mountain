@@ -27,13 +27,13 @@ void ModuleBase::RenderDebug(const ParticleSystem&, const Vector2) const
 {
 }
 
-bool_t ModuleBase::BeginImGui(Types* enabledModulesInt) const
+bool ModuleBase::BeginImGui(Types* enabledModulesInt) const
 {
     ImGui::PushID(this);
 
-    ImGui::CheckboxFlags("##enabled", reinterpret_cast<uint32_t*>(enabledModulesInt), static_cast<uint32_t>(m_Type));
+    ImGui::CheckboxFlags("##enabled", reinterpret_cast<u32*>(enabledModulesInt), static_cast<u32>(m_Type));
     ImGui::SameLine();
-    const bool_t result = ImGui::TreeNode(std::string{magic_enum::enum_name(m_Type)}.c_str());
+    const bool result = ImGui::TreeNode(std::string{magic_enum::enum_name(m_Type)}.c_str());
 
     if (!result)
         ImGui::PopID();
@@ -51,7 +51,7 @@ void ModuleBase::EndImGui() const
 
 void Shape::SetComputeShaderUniforms(const ComputeShader& computeShader) const
 {
-    computeShader.SetUniform("shape.type", static_cast<uint32_t>(type));
+    computeShader.SetUniform("shape.type", static_cast<u32>(type));
 
     switch (type)
     {
@@ -59,13 +59,13 @@ void Shape::SetComputeShaderUniforms(const ComputeShader& computeShader) const
             computeShader.SetUniform("shape.circle.radius", circle.radius);
             computeShader.SetUniform("shape.circle.radiusThickness", circle.radiusThickness);
             computeShader.SetUniform("shape.circle.arcAngle", circle.arcAngle);
-            computeShader.SetUniform("shape.circle.arc.mode", static_cast<uint32_t>(circle.arc.mode));
+            computeShader.SetUniform("shape.circle.arc.mode", static_cast<u32>(circle.arc.mode));
             computeShader.SetUniform("shape.circle.arc.spread", circle.arc.spread);
             break;
 
         case ShapeType::Line:
             computeShader.SetUniform("shape.line.radius", line.radius);
-            computeShader.SetUniform("shape.line.arc.mode", static_cast<uint32_t>(line.arc.mode));
+            computeShader.SetUniform("shape.line.arc.mode", static_cast<u32>(line.arc.mode));
             computeShader.SetUniform("shape.line.arc.spread", line.arc.spread);
             break;
 
@@ -95,14 +95,14 @@ void Shape::RenderImGui()
     switch (type)
     {
         case ShapeType::Circle:
-            ImGui::DragFloat("Radius", &circle.radius, 0.01f, 0.f, std::numeric_limits<float_t>::max(), "%.2f", ImGuiSliderFlags_AlwaysClamp);
+            ImGui::DragFloat("Radius", &circle.radius, 0.01f, 0.f, std::numeric_limits<f32>::max(), "%.2f", ImGuiSliderFlags_AlwaysClamp);
             ImGui::DragFloat("Radius thickness", &circle.radiusThickness, 0.01f, 0.f, 1.f, "%.2f", ImGuiSliderFlags_AlwaysClamp);
             ImGui::DragAngle("Arc angle", &circle.arcAngle, 0.1f, 0.f, 360.f, "%.2f", ImGuiSliderFlags_AlwaysClamp);
             ShapeArcRenderImGui(circle.arc);
             break;
 
         case ShapeType::Line:
-            ImGui::DragFloat("Radius", &line.radius, 0.01f, 0.f, std::numeric_limits<float_t>::max(), "%.2f", ImGuiSliderFlags_AlwaysClamp);
+            ImGui::DragFloat("Radius", &line.radius, 0.01f, 0.f, std::numeric_limits<f32>::max(), "%.2f", ImGuiSliderFlags_AlwaysClamp);
             ShapeArcRenderImGui(line.arc);
             break;
 
@@ -175,7 +175,7 @@ void ForceOverLifetime::RenderImGui()
 {
     Vector2 direction = forceMin.Normalized();
     ImGuiUtils::DirectionVector("Start direction", &direction);
-    float_t strength = forceMin.Length();
+    f32 strength = forceMin.Length();
     ImGui::DragFloat("Start strength", &strength);
     forceMin = direction * (strength == 0.f ? 1.f : strength);
     ImGui::DragFloat2("Start vector", forceMin.Data());

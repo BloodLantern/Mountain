@@ -16,7 +16,7 @@ namespace Mountain
     {
     public:
         /// @brief Allowed extensions for font files
-        MOUNTAIN_API static constexpr Array<const char_t*, 1> FileExtensions
+        MOUNTAIN_API static constexpr Array<const c8*, 1> FileExtensions
         {
             ".ttf"
         };
@@ -29,7 +29,7 @@ namespace Mountain
         MOUNTAIN_API ~Font() override;
 
         /// This also loads the font
-        MOUNTAIN_API bool_t SetSourceData(const Pointer<File>& file, uint32_t size);  // NOLINT(clang-diagnostic-overloaded-virtual)
+        MOUNTAIN_API bool SetSourceData(const Pointer<File>& file, u32 size);  // NOLINT(clang-diagnostic-overloaded-virtual)
 
         /// This also unloads the font
         MOUNTAIN_API void ResetSourceData() override;
@@ -42,12 +42,12 @@ namespace Mountain
             Graphics::GpuTexture texture{};
             Vector2i size;       // Size of glyph
             Vector2i bearing;    // Offset from baseline to left/top of glyph
-            uint32_t advance;
+            u32 advance;
         };
 
-        std::map<char_t, Character> m_Characters;
+        std::map<c8, Character> m_Characters;
 
-        uint32_t m_Size = 0;
+        u32 m_Size = 0;
 
         void Load() override;
 

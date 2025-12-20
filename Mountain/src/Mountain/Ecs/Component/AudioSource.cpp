@@ -52,11 +52,11 @@ void AudioSource::Update()
     const Vector2& position = m_Entity->position * Audio::GetDistanceFactor();
 
     // Position
-    constexpr float_t positionZ = -20.f;
+    constexpr f32 positionZ = -20.f;
     alSourcefv(m_Handle, AL_POSITION, Vector3(position.x, position.y, positionZ * Audio::GetDistanceFactor()).Data());
     AudioContext::CheckError();
 
-    const float_t deltaTime = Time::GetDeltaTime();
+    const f32 deltaTime = Time::GetDeltaTime();
     const Vector2 velocity = deltaTime == 0.f ? Vector2::Zero() : (position - m_LastPosition) / deltaTime;
     std::array direction = { Vector3::UnitZ(), Vector3::UnitY() };
 
@@ -93,16 +93,16 @@ void AudioSource::Play(AudioTrack& track)
 void AudioSource::SetBuffer(const AudioBuffer* buffer)
 {
     Audio::GetContext()->MakeCurrent();
-    alSourcei(m_Handle, AL_BUFFER, static_cast<int32_t>(buffer->GetHandle()));
+    alSourcei(m_Handle, AL_BUFFER, static_cast<s32>(buffer->GetHandle()));
     AudioContext::CheckError();
 }
 
-float_t AudioSource::GetVolume() const
+f32 AudioSource::GetVolume() const
 {
     return m_Volume;
 }
 
-void AudioSource::SetVolume(const float_t newVolume)
+void AudioSource::SetVolume(const f32 newVolume)
 {
     m_Volume = std::max(0.f, newVolume);
 
@@ -111,12 +111,12 @@ void AudioSource::SetVolume(const float_t newVolume)
     AudioContext::CheckError();
 }
 
-float_t AudioSource::GetPitch() const
+f32 AudioSource::GetPitch() const
 {
     return m_Pitch;
 }
 
-void AudioSource::SetPitch(const float_t newPitch)
+void AudioSource::SetPitch(const f32 newPitch)
 {
     m_Pitch = std::max(0.f, newPitch);
 
@@ -125,12 +125,12 @@ void AudioSource::SetPitch(const float_t newPitch)
     AudioContext::CheckError();
 }
 
-bool_t AudioSource::GetLooping() const
+bool AudioSource::GetLooping() const
 {
     return m_Looping;
 }
 
-void AudioSource::SetLooping(const bool_t newLooping)
+void AudioSource::SetLooping(const bool newLooping)
 {
     m_Looping = newLooping;
 

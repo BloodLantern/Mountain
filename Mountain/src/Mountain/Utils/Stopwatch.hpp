@@ -20,47 +20,47 @@ namespace Mountain
         static Stopwatch StartNew();
 
         ATTRIBUTE_NODISCARD
-        static int64_t GetFrequency();
+        static s64 GetFrequency();
         ATTRIBUTE_NODISCARD
-        static int64_t GetTimestamp();
+        static s64 GetTimestamp();
         ATTRIBUTE_NODISCARD
-        static TimeSpan GetElapsedTime(int64_t startingTimestamp);
+        static TimeSpan GetElapsedTime(s64 startingTimestamp);
         ATTRIBUTE_NODISCARD
-        static TimeSpan GetElapsedTime(int64_t startingTimestamp, int64_t endingTimestamp);
+        static TimeSpan GetElapsedTime(s64 startingTimestamp, s64 endingTimestamp);
 
         void Start();
         void Stop();
         void Reset();
         void Restart();
 
-        GETTER(bool_t, IsRunning, m_IsRunning)
+        GETTER(bool, IsRunning, m_IsRunning)
 
         ATTRIBUTE_NODISCARD
         TimeSpan GetElapsed() const;
         ATTRIBUTE_NODISCARD
-        int64_t GetElapsedTicks() const;
+        s64 GetElapsedTicks() const;
         ATTRIBUTE_NODISCARD
-        double_t GetElapsedMilliseconds() const;
+        f64 GetElapsedMilliseconds() const;
         ATTRIBUTE_NODISCARD
-        double_t GetElapsedSeconds() const;
+        f64 GetElapsedSeconds() const;
 
         ATTRIBUTE_NODISCARD
         std::string ToString() const;
 
     private:
-        static constexpr int64_t TicksPerMillisecond = 10000;
-        static constexpr int64_t TicksPerSecond = TicksPerMillisecond * 1000;
+        static constexpr s64 TicksPerMillisecond = 10000;
+        static constexpr s64 TicksPerSecond = TicksPerMillisecond * 1000;
 
-        static const double_t TickFrequency;
+        static const f64 TickFrequency;
 
-        int64_t m_StartTimestamp = 0;
-        int64_t m_Elapsed = 0;
-        bool_t m_IsRunning = false;
+        s64 m_StartTimestamp = 0;
+        s64 m_Elapsed = 0;
+        bool m_IsRunning = false;
 
         ATTRIBUTE_NODISCARD
-        int64_t GetRawElapsedTicks() const;
+        s64 GetRawElapsedTicks() const;
         ATTRIBUTE_NODISCARD
-        int64_t GetElapsedDateTimeTicks() const;
+        s64 GetElapsedDateTimeTicks() const;
     };
 
     CHECK_REQUIREMENT(Requirements::StringConvertible, Stopwatch);

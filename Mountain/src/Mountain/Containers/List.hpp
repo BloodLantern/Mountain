@@ -11,7 +11,7 @@
 
 namespace Mountain
 {
-    template <Concepts::ContainerType T, size_t Size>
+    template <Concepts::ContainerType T, usize Size>
     struct Array;
 
     /// @brief A dynamic array implementation.
@@ -44,26 +44,26 @@ namespace Mountain
         /// @brief Constructs a List from a range of elements.
         List(std::initializer_list<T> initializer) noexcept;
 
-        explicit List(size_t initialSize) noexcept;
+        explicit List(usize initialSize) noexcept;
 
         /// @brief Constructs a List from the specified size, and fills it with the provided value.
         /// @param initialSize List size
         /// @param defaultValue Default value
-        List(size_t initialSize, const T& defaultValue);
+        List(usize initialSize, const T& defaultValue);
 
         /// @brief Constructs a List from the specified size, and fills it with the provided values.
         /// @param initialSize List size
         /// @param values Provided values
-        List(size_t initialSize, const T* values);
+        List(usize initialSize, const T* values);
 
         /// @brief Constructs a List from the specified array. This creates a copy of the given array contents.
         /// @tparam Size The @p array size
-        template <size_t Size>
+        template <usize Size>
         explicit List(const std::array<T, Size>& array);
 
         /// @brief Constructs a List from the specified array. This creates a copy of the given array contents.
         /// @tparam Size The @p array size
-        template <size_t Size>
+        template <usize Size>
         explicit List(const Array<T, Size>& array);
 
         /// @brief Constructs a List from the specified vector. This creates a copy of the given vector contents.
@@ -84,7 +84,7 @@ namespace Mountain
         /// @return @c true if the @p iterator points to elements of this List, the List hasn't changed size since the iterator was constructed,
         /// and if it is still inbounds; or @c false if any of these conditions fail.
         ATTRIBUTE_NODISCARD
-        bool_t CheckIterator(Iterator iterator) const;
+        bool CheckIterator(Iterator iterator) const;
 
         T& Add(T&& element);
 
@@ -92,7 +92,7 @@ namespace Mountain
 
         /// @brief Adds a range of elements to the end of the List.
         template <typename = Meta::EnableIf<Meta::IsTriviallyCopyable<T>>>
-        void AddRange(const T* data, size_t count);
+        void AddRange(const T* data, usize count);
 
         /// @brief Adds a range of elements to the end of the List.
         template <Concepts::Iterator InputIterator>
@@ -111,12 +111,12 @@ namespace Mountain
 
         /// @brief Adds a range of elements to the end of the List. This creates a copy of the given array contents.
         /// @tparam Size The @p array size
-        template <size_t Size>
+        template <usize Size>
         void AddRange(const std::array<T, Size>& array);
 
         /// @brief Adds a range of elements to the end of the List. This creates a copy of the given array contents.
         /// @tparam Size The @p array size
-        template <size_t Size>
+        template <usize Size>
         void AddRange(const Array<T, Size>& array);
 
         /// @brief Adds a range of elements to the end of the List. This creates a copy of the given vector contents.
@@ -136,48 +136,48 @@ namespace Mountain
         T& Emplace(Args&&... args);
 
         template <typename... Args>
-        T& Emplace(size_t index, Args&&... args);
+        T& Emplace(usize index, Args&&... args);
 
         template <typename... Args>
         T& Emplace(Iterator iterator, Args&&... args);
 
-        T& Insert(size_t index, T&& element);
+        T& Insert(usize index, T&& element);
 
-        T& Insert(size_t index, const T& element);
+        T& Insert(usize index, const T& element);
 
         T& Insert(Iterator iterator, T&& element);
 
         T& Insert(Iterator iterator, const T& element);
 
         /// @brief Inserts a range of elements at the given position.
-        void InsertRange(size_t index, const T* data, size_t count);
+        void InsertRange(usize index, const T* data, usize count);
 
         /// @brief Inserts a range of elements at the given position.
         template <Concepts::Iterator InputIterator>
-        void InsertRange(size_t index, InputIterator first, InputIterator last);
+        void InsertRange(usize index, InputIterator first, InputIterator last);
 
         /// @brief Inserts a range of elements at the given position.
         template <Concepts::Enumerable EnumerableT>
-        void InsertRange(size_t index, EnumerableT enumerable);
+        void InsertRange(usize index, EnumerableT enumerable);
 
         /// @brief Inserts a range of elements at the given position.
-        void InsertRange(size_t index, const std::initializer_list<T>& values);
-
-        /// @brief Inserts a range of elements at the given position.
-        /// @tparam Size The @p array size
-        template <size_t Size>
-        void InsertRange(size_t index, const std::array<T, Size>& array);
+        void InsertRange(usize index, const std::initializer_list<T>& values);
 
         /// @brief Inserts a range of elements at the given position.
         /// @tparam Size The @p array size
-        template <size_t Size>
-        void InsertRange(size_t index, const Array<T, Size>& array);
+        template <usize Size>
+        void InsertRange(usize index, const std::array<T, Size>& array);
 
         /// @brief Inserts a range of elements at the given position.
-        void InsertRange(size_t index, const std::vector<T>& vector);
+        /// @tparam Size The @p array size
+        template <usize Size>
+        void InsertRange(usize index, const Array<T, Size>& array);
 
         /// @brief Inserts a range of elements at the given position.
-        void InsertRange(Iterator iterator, const T* data, size_t count);
+        void InsertRange(usize index, const std::vector<T>& vector);
+
+        /// @brief Inserts a range of elements at the given position.
+        void InsertRange(Iterator iterator, const T* data, usize count);
 
         /// @brief Inserts a range of elements at the given position.
         template <Concepts::Iterator InputIterator>
@@ -192,36 +192,36 @@ namespace Mountain
 
         /// @brief Inserts a range of elements at the given position.
         /// @tparam Size The @p array size
-        template <size_t Size>
+        template <usize Size>
         void InsertRange(Iterator iterator, const std::array<T, Size>& array);
 
         /// @brief Inserts a range of elements at the given position.
         /// @tparam Size The @p array size
-        template <size_t Size>
+        template <usize Size>
         void InsertRange(Iterator iterator, const Array<T, Size>& array);
 
         /// @brief Inserts a range of elements at the given position.
         void InsertRange(Iterator iterator, const std::vector<T>& vector);
 
-        void Resize(size_t newSize);
+        void Resize(usize newSize);
 
-        void Resize(size_t newSize, const T& newElementsValue);
+        void Resize(usize newSize, const T& newElementsValue);
 
-        void Reserve(size_t newMinimumCapacity);
+        void Reserve(usize newMinimumCapacity);
 
         ATTRIBUTE_NODISCARD
-        size_t GetCapacity() const;
+        usize GetCapacity() const;
 
         void Shrink();
 
         void Clear();
 
         ATTRIBUTE_NODISCARD
-        bool_t IsEmpty() const;
+        bool IsEmpty() const;
 
         void Remove(const T& value);
 
-        void RemoveAt(size_t index);
+        void RemoveAt(usize index);
 
         void RemoveAt(Iterator iterator);
 
@@ -231,9 +231,9 @@ namespace Mountain
 
         void RemoveAll(const Predicate<T>& predicate);
 
-        void RemoveRange(size_t index, size_t count);
+        void RemoveRange(usize index, usize count);
 
-        void RemoveRange(Iterator iterator, size_t count);
+        void RemoveRange(Iterator iterator, usize count);
 
         T PopFront();
 
@@ -241,7 +241,7 @@ namespace Mountain
 
         /// @brief Get the element at the given index with bounds checking.
         ATTRIBUTE_NODISCARD
-        T& At(size_t index) const;
+        T& At(usize index) const;
 
         /// @brief Get the element at the given iterator with bounds checking.
         ATTRIBUTE_NODISCARD
@@ -249,14 +249,14 @@ namespace Mountain
 
         /// @brief Get the size of the list.
         ATTRIBUTE_NODISCARD
-        size_t GetSize() const noexcept;
+        usize GetSize() const noexcept;
 
         ATTRIBUTE_NODISCARD
         T* GetData() const noexcept;
 
         /// @brief Get the element at the given index without bounds checking.
         ATTRIBUTE_NODISCARD
-        T& operator[](size_t index) const noexcept;
+        T& operator[](usize index) const noexcept;
 
         ATTRIBUTE_NODISCARD
         Iterator begin() noexcept;
@@ -306,15 +306,15 @@ namespace Mountain
 
     private:
         T* m_Data = nullptr;
-        size_t m_Size = 0;
-        size_t m_Capacity = 0;
+        usize m_Size = 0;
+        usize m_Capacity = 0;
 
-        void Reallocate(size_t targetCapacity);
+        void Reallocate(usize targetCapacity);
         void IncreaseCapacity();
         void IncreaseCapacityIfFull();
-        void DestroyElements(size_t first, size_t last);
+        void DestroyElements(usize first, usize last);
         /// @brief Shift all elements in the range [@p first, @p last) by @p amount elements.
-        void ShiftElements(ptrdiff_t amount, size_t first, size_t last);
+        void ShiftElements(ptrdiff_t amount, usize first, usize last);
         void CheckIteratorThrow(Iterator iterator);
     };
 
@@ -334,44 +334,44 @@ namespace Mountain
     template <Concepts::DynamicContainerType T>
     List<T>::List(std::initializer_list<T> initializer) noexcept
     {
-        const size_t size = initializer.size();
+        const usize size = initializer.size();
 
         Reserve(size);
 
         const T* first = initializer.begin();
-        for (size_t i = 0; i < size; i++)
+        for (usize i = 0; i < size; i++)
             new (m_Data + i) T{first[i]};
 
         m_Size = size;
     }
 
     template <Concepts::DynamicContainerType T>
-    List<T>::List(const size_t initialSize) noexcept
+    List<T>::List(const usize initialSize) noexcept
     {
         Resize(initialSize);
     }
 
     template <Concepts::DynamicContainerType T>
-    List<T>::List(const size_t initialSize, const T& defaultValue)
+    List<T>::List(const usize initialSize, const T& defaultValue)
     {
         Resize(initialSize, defaultValue);
     }
 
     template <Concepts::DynamicContainerType T>
-    List<T>::List(const size_t initialSize, const T* values)
+    List<T>::List(const usize initialSize, const T* values)
     {
         Reserve(initialSize);
         m_Size = initialSize;
-        for (size_t i = 0; i < initialSize; i++)
+        for (usize i = 0; i < initialSize; i++)
             new (m_Data + i) T{values[i]};
     }
 
     template <Concepts::DynamicContainerType T>
-    template <size_t Size>
+    template <usize Size>
     List<T>::List(const std::array<T, Size>& array) : List(array.begin(), array.end()) {}
 
     template <Concepts::DynamicContainerType T>
-    template <size_t Size>
+    template <usize Size>
     List<T>::List(const Array<T, Size>& array) : List(array.begin(), array.end()) {}
 
     template <Concepts::DynamicContainerType T>
@@ -381,12 +381,12 @@ namespace Mountain
     template <Concepts::Iterator InputIterator>
     List<T>::List(InputIterator first, InputIterator last)
     {
-        const size_t newSize = last - first;
+        const usize newSize = last - first;
         Reserve(newSize);
         m_Size = newSize;
         for (InputIterator it = first; it != last; it++)
         {
-            const size_t index = it - first;
+            const usize index = it - first;
             new (m_Data + index) T{*it};
         }
     }
@@ -423,7 +423,7 @@ namespace Mountain
 
         Reallocate(other.m_Capacity);
         m_Size = other.m_Size;
-        for (size_t i = 0; i < m_Size; i++)
+        for (usize i = 0; i < m_Size; i++)
             new (m_Data + i) T{other.m_Data[i]};
 
         return *this;
@@ -447,7 +447,7 @@ namespace Mountain
     }
 
     template <Concepts::DynamicContainerType T>
-    bool_t List<T>::CheckIterator(Iterator iterator) const
+    bool List<T>::CheckIterator(Iterator iterator) const
     {
         return iterator.GetFirstElement() == m_Data && iterator.GetIndex() < m_Size;
     }
@@ -470,7 +470,7 @@ namespace Mountain
 
     template <Concepts::DynamicContainerType T>
     template <typename>
-    void List<T>::AddRange(const T* data, const size_t count)
+    void List<T>::AddRange(const T* data, const usize count)
     {
         Reserve(m_Size + count);
 
@@ -480,7 +480,7 @@ namespace Mountain
         }
         else
         {
-            for (size_t i = 0; i < count; i++)
+            for (usize i = 0; i < count; i++)
                 new (m_Size + i) T{data[i]};
         }
 
@@ -493,13 +493,13 @@ namespace Mountain
     {
         static_assert(Meta::IsConvertibleTo<Meta::IteratorType<InputIterator>, T>, "List::AddRange() needs the type of the iterator to be the same as the List");
 
-        const size_t additionalSize = last - first;
+        const usize additionalSize = last - first;
 
         Reserve(m_Size + additionalSize);
 
         for (InputIterator it = first; it != last; it++)
         {
-            const size_t index = it - first;
+            const usize index = it - first;
             new (static_cast<void*>(m_Data + m_Size + index)) T{*it};
         }
 
@@ -529,14 +529,14 @@ namespace Mountain
     }
 
     template <Concepts::DynamicContainerType T>
-    template <size_t Size>
+    template <usize Size>
     void List<T>::AddRange(const std::array<T, Size>& array)
     {
         AddRange(array.data(), Size);
     }
 
     template <Concepts::DynamicContainerType T>
-    template <size_t Size>
+    template <usize Size>
     void List<T>::AddRange(const Array<T, Size>& array)
     {
         AddRange(array.GetData(), Size);
@@ -558,7 +558,7 @@ namespace Mountain
     template <Concepts::DynamicContainerType T>
     void List<T>::Fill(const T& value)
     {
-        for (size_t i = 0; i < m_Size; i++)
+        for (usize i = 0; i < m_Size; i++)
             m_Data[i] = value;
     }
 
@@ -573,7 +573,7 @@ namespace Mountain
 
     template <Concepts::DynamicContainerType T>
     template <typename... Args>
-    T& List<T>::Emplace(size_t index, Args&&... args)
+    T& List<T>::Emplace(usize index, Args&&... args)
     {
         if (index > m_Size)
             THROW(ArgumentOutOfRangeException{"Cannot insert element at index > m_Size", "index"});
@@ -597,7 +597,7 @@ namespace Mountain
     }
 
     template <Concepts::DynamicContainerType T>
-    T& List<T>::Insert(const size_t index, T&& element)
+    T& List<T>::Insert(const usize index, T&& element)
     {
         if (index > m_Size)
             THROW(ArgumentOutOfRangeException{"Cannot insert element at index > m_Size", "index"});
@@ -613,7 +613,7 @@ namespace Mountain
     }
 
     template <Concepts::DynamicContainerType T>
-    T& List<T>::Insert(const size_t index, const T& element)
+    T& List<T>::Insert(const usize index, const T& element)
     {
         if (index > m_Size)
             THROW(ArgumentOutOfRangeException{"Cannot insert element at index > m_Size", "index"});
@@ -643,7 +643,7 @@ namespace Mountain
     }
 
     template <Concepts::DynamicContainerType T>
-    void List<T>::InsertRange(const size_t index, const T* data, const size_t count)
+    void List<T>::InsertRange(const usize index, const T* data, const usize count)
     {
         if (index > m_Size)
             THROW(ArgumentOutOfRangeException{"Cannot insert elements at index > m_Size", "index"});
@@ -663,7 +663,7 @@ namespace Mountain
         }
         else
         {
-            for (size_t i = 0; i < count; i++)
+            for (usize i = 0; i < count; i++)
                 new (index + i) T{data[i]};
         }
 
@@ -672,18 +672,18 @@ namespace Mountain
 
     template <Concepts::DynamicContainerType T>
     template <Concepts::Iterator InputIterator>
-    void List<T>::InsertRange(const size_t index, InputIterator first, InputIterator last)
+    void List<T>::InsertRange(const usize index, InputIterator first, InputIterator last)
     {
         static_assert(Meta::IsConvertibleTo<Meta::IteratorType<InputIterator>, T>, "List::InsertRange() needs the type of the iterator to be the same as the List");
 
-        const size_t additionalSize = last - first;
+        const usize additionalSize = last - first;
 
         Reserve(m_Size + additionalSize);
         ShiftElements(additionalSize, index, m_Size);
 
         for (InputIterator it = first; it != last; it++)
         {
-            const size_t i = it - first;
+            const usize i = it - first;
             new (static_cast<void*>(m_Data + index + i)) T{*it};
         }
 
@@ -692,7 +692,7 @@ namespace Mountain
 
     template <Concepts::DynamicContainerType T>
     template <Concepts::Enumerable EnumerableT>
-    void List<T>::InsertRange(const size_t index, EnumerableT enumerable)
+    void List<T>::InsertRange(const usize index, EnumerableT enumerable)
     {
         static_assert(Meta::IsConvertibleTo<Meta::EnumerableType<EnumerableT>, T>, "List::InsertRange() needs the type of the enumerable to be the same as the List");
 
@@ -700,33 +700,33 @@ namespace Mountain
     }
 
     template <Concepts::DynamicContainerType T>
-    void List<T>::InsertRange(const size_t index, const std::initializer_list<T>& values)
+    void List<T>::InsertRange(const usize index, const std::initializer_list<T>& values)
     {
         return InsertRange(index, values.begin(), values.size());
     }
 
     template <Concepts::DynamicContainerType T>
-    template <size_t Size>
-    void List<T>::InsertRange(const size_t index, const std::array<T, Size>& array)
+    template <usize Size>
+    void List<T>::InsertRange(const usize index, const std::array<T, Size>& array)
     {
         return InsertRange(index, array.data(), Size);
     }
 
     template <Concepts::DynamicContainerType T>
-    template <size_t Size>
-    void List<T>::InsertRange(const size_t index, const Array<T, Size>& array)
+    template <usize Size>
+    void List<T>::InsertRange(const usize index, const Array<T, Size>& array)
     {
         return InsertRange(index, array.GetData(), Size);
     }
 
     template <Concepts::DynamicContainerType T>
-    void List<T>::InsertRange(const size_t index, const std::vector<T>& vector)
+    void List<T>::InsertRange(const usize index, const std::vector<T>& vector)
     {
         return InsertRange(index, vector.data(), vector.size());
     }
 
     template <Concepts::DynamicContainerType T>
-    void List<T>::InsertRange(const Iterator iterator, const T* data, size_t count)
+    void List<T>::InsertRange(const Iterator iterator, const T* data, usize count)
     {
         CheckIteratorThrow(iterator);
         return InsertRange(iterator.GetIndex(), data, count);
@@ -754,14 +754,14 @@ namespace Mountain
     }
 
     template <Concepts::DynamicContainerType T>
-    template <size_t Size>
+    template <usize Size>
     void List<T>::InsertRange(const Iterator iterator, const std::array<T, Size>& array)
     {
         return InsertRange(iterator, array.data(), Size);
     }
 
     template <Concepts::DynamicContainerType T>
-    template <size_t Size>
+    template <usize Size>
     void List<T>::InsertRange(const Iterator iterator, const Array<T, Size>& array)
     {
         return InsertRange(iterator, array.GetData(), Size);
@@ -774,10 +774,10 @@ namespace Mountain
     }
 
     template <Concepts::DynamicContainerType T>
-    void List<T>::Resize(const size_t newSize) { Resize(newSize, {}); }
+    void List<T>::Resize(const usize newSize) { Resize(newSize, {}); }
 
     template <Concepts::DynamicContainerType T>
-    void List<T>::Resize(const size_t newSize, const T& newElementsValue)
+    void List<T>::Resize(const usize newSize, const T& newElementsValue)
     {
         if (m_Size == newSize)
             return;
@@ -792,8 +792,8 @@ namespace Mountain
             Reserve(newSize); // Make sure we have enough allocated storage
 
             // Container size is increasing, we need to emplace the new elements
-            const size_t difference = newSize - m_Size;
-            for (size_t i = 0; i < difference; i++)
+            const usize difference = newSize - m_Size;
+            for (usize i = 0; i < difference; i++)
                 new (static_cast<void*>(m_Data + m_Size + i)) T{newElementsValue};
         }
 
@@ -801,7 +801,7 @@ namespace Mountain
     }
 
     template <Concepts::DynamicContainerType T>
-    void List<T>::Reserve(const size_t newMinimumCapacity)
+    void List<T>::Reserve(const usize newMinimumCapacity)
     {
         if (m_Capacity >= newMinimumCapacity)
             return;
@@ -810,7 +810,7 @@ namespace Mountain
     }
 
     template <Concepts::DynamicContainerType T>
-    size_t List<T>::GetCapacity() const { return m_Capacity; }
+    usize List<T>::GetCapacity() const { return m_Capacity; }
 
     template <Concepts::DynamicContainerType T>
     void List<T>::Shrink()
@@ -829,12 +829,12 @@ namespace Mountain
     }
 
     template <Concepts::DynamicContainerType T>
-    bool_t List<T>::IsEmpty() const { return m_Size == 0; }
+    bool List<T>::IsEmpty() const { return m_Size == 0; }
 
     template <Concepts::DynamicContainerType T>
     void List<T>::Remove(const T& value)
     {
-        for (size_t i = 0; i < m_Size; i++)
+        for (usize i = 0; i < m_Size; i++)
         {
             if (m_Data[i] != value)
                 continue;
@@ -845,7 +845,7 @@ namespace Mountain
     }
 
     template <Concepts::DynamicContainerType T>
-    void List<T>::RemoveAt(size_t index)
+    void List<T>::RemoveAt(usize index)
     {
         m_Data[index].~T();
         ShiftElements(-1, index + 1, m_Size--);
@@ -873,7 +873,7 @@ namespace Mountain
     template <Concepts::DynamicContainerType T>
     void List<T>::RemoveAll(const Predicate<T>& predicate)
     {
-        for (size_t i = 0; i < m_Size; i++)
+        for (usize i = 0; i < m_Size; i++)
         {
             if (predicate(*m_Data[i]))
                 RemoveAt(i--);
@@ -881,7 +881,7 @@ namespace Mountain
     }
 
     template <Concepts::DynamicContainerType T>
-    void List<T>::RemoveRange(const size_t index, const size_t count)
+    void List<T>::RemoveRange(const usize index, const usize count)
     {
         if (count == 0)
             return;
@@ -891,7 +891,7 @@ namespace Mountain
 
         if constexpr (!Meta::IsTriviallyDestructible<T>)
         {
-            for (size_t i = index; i < index + count; i++)
+            for (usize i = index; i < index + count; i++)
                 m_Data[i].~T();
         }
 
@@ -902,7 +902,7 @@ namespace Mountain
     }
 
     template <Concepts::DynamicContainerType T>
-    void List<T>::RemoveRange(const Iterator iterator, const size_t count)
+    void List<T>::RemoveRange(const Iterator iterator, const usize count)
     {
         CheckIteratorThrow(iterator);
 
@@ -926,7 +926,7 @@ namespace Mountain
     }
 
     template <Concepts::DynamicContainerType T>
-    T& List<T>::At(const size_t index) const
+    T& List<T>::At(const usize index) const
     {
         if (index >= m_Size)
             THROW(ThrowHelper::IndexOutOfRangeException("index"));
@@ -941,13 +941,13 @@ namespace Mountain
     }
 
     template <Concepts::DynamicContainerType T>
-    size_t List<T>::GetSize() const noexcept { return m_Size; }
+    usize List<T>::GetSize() const noexcept { return m_Size; }
 
     template <Concepts::DynamicContainerType T>
     T* List<T>::GetData() const noexcept { return m_Data; }
 
     template <Concepts::DynamicContainerType T>
-    T& List<T>::operator[](const size_t index) const noexcept
+    T& List<T>::operator[](const usize index) const noexcept
     {
 #ifdef _DEBUG
         return At(index);
@@ -975,9 +975,9 @@ namespace Mountain
     typename List<T>::ConstIterator List<T>::cend() const noexcept { return ConstIterator{m_Data, m_Size}; }
 
     template <Concepts::DynamicContainerType T>
-    void List<T>::Reallocate(const size_t targetCapacity)
+    void List<T>::Reallocate(const usize targetCapacity)
     {
-        const size_t targetCapacityBytes = targetCapacity * sizeof(T);  // NOLINT(bugprone-sizeof-expression)
+        const usize targetCapacityBytes = targetCapacity * sizeof(T);  // NOLINT(bugprone-sizeof-expression)
 
         if constexpr (Meta::IsTriviallyMoveConstructible<T>)
         {
@@ -986,7 +986,7 @@ namespace Mountain
         else
         {
             T* newData = static_cast<T*>(std::malloc(targetCapacityBytes));
-            for (size_t i = 0; i < m_Size; i++)
+            for (usize i = 0; i < m_Size; i++)
                 new (newData + i) T{std::move(m_Data[i])};
 
             std::free(m_Data);
@@ -1007,22 +1007,22 @@ namespace Mountain
     }
 
     template <Concepts::DynamicContainerType T>
-    void List<T>::DestroyElements(const size_t first, const size_t last)
+    void List<T>::DestroyElements(const usize first, const usize last)
     {
-        const size_t difference = last - first;
-        for (size_t i = 0; i < difference; i++)
+        const usize difference = last - first;
+        for (usize i = 0; i < difference; i++)
             m_Data[first + i].~T();
     }
 
     template <Concepts::DynamicContainerType T>
-    void List<T>::ShiftElements(const ptrdiff_t amount, const size_t first, const size_t last)
+    void List<T>::ShiftElements(const ptrdiff_t amount, const usize first, const usize last)
     {
         if (amount == 0)
             return;
 
         T* source = m_Data + first;
         T* destination = source + amount;
-        const size_t amountToShift = last - first;
+        const usize amountToShift = last - first;
 
         if constexpr (Meta::IsTriviallyMoveConstructible<T>)
         {
@@ -1037,7 +1037,7 @@ namespace Mountain
             }
             else // if (amount < 0)
             {
-                for (size_t i = 0; i < amountToShift; i++)
+                for (usize i = 0; i < amountToShift; i++)
                     new (destination + i) T{std::move(source[i])};
             }
         }

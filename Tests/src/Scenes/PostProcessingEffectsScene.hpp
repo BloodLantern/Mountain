@@ -10,7 +10,7 @@
 template <Concepts::Effect T>
 struct PostProcessingEffect
 {
-	bool_t enabled;
+	bool enabled;
 	T effect;
 };
 

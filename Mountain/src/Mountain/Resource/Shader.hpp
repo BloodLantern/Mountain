@@ -64,13 +64,13 @@ namespace Mountain
 		/// @brief Loads a single shader file
 		/// @param shader File
 		/// @return Whether the load succeeded
-		MOUNTAIN_API bool_t SetSourceData(const Pointer<File>& shader) override;
+		MOUNTAIN_API bool SetSourceData(const Pointer<File>& shader) override;
 
 		/// @brief Loads raw shader code
 		/// @param buffer Raw data
 		/// @param length Raw data length
 		/// @param type Shader type
-		MOUNTAIN_API bool_t Load(const char_t* buffer, int64_t length, Graphics::ShaderType type);
+		MOUNTAIN_API bool Load(const c8* buffer, s64 length, Graphics::ShaderType type);
 
 		/// @brief Creates the shader in OpenGL
 		MOUNTAIN_API void Load() override;
@@ -81,9 +81,9 @@ namespace Mountain
 		/// @brief Unloads the shader
 		MOUNTAIN_API void ResetSourceData() override;
 
-		MOUNTAIN_API bool_t Reload(bool_t reloadInBackend = true) override;
+		MOUNTAIN_API bool Reload(bool reloadInBackend = true) override;
 
-		MOUNTAIN_API bool_t Reload(const Pointer<File>& file, bool_t reloadInBackend = true) override;
+		MOUNTAIN_API bool Reload(const Pointer<File>& file, bool reloadInBackend = true) override;
 
 		ATTRIBUTE_NODISCARD
 		MOUNTAIN_API Array<Pointer<File>, magic_enum::enum_count<Graphics::ShaderType>()>& GetFiles();
@@ -107,6 +107,6 @@ namespace Mountain
 		Array<Pointer<File>, magic_enum::enum_count<Graphics::ShaderType>()> m_Files;
 		Array<ShaderCode, magic_enum::enum_count<Graphics::ShaderType>()> m_Code;
 
-		bool_t CheckCompileError(uint32_t id, Graphics::ShaderType type) const;  // NOLINT(modernize-use-nodiscard)
+		bool CheckCompileError(u32 id, Graphics::ShaderType type) const;  // NOLINT(modernize-use-nodiscard)
 	};
 }

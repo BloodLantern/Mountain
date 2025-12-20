@@ -16,7 +16,7 @@ namespace Mountain
         /// @brief The size of a tile in the grid in pixels.
         Vector2 tileSize;
         /// @brief The tile array, stored in [y, x] indices
-        List<List<bool_t>> tiles;
+        List<List<bool>> tiles;
 
         MOUNTAIN_API Grid();
         MOUNTAIN_API Grid(Vector2i size, Vector2 tileSize);
@@ -26,24 +26,24 @@ namespace Mountain
         MOUNTAIN_API void RenderDebug(const Color& color) const override;
         using Collider::CheckCollision;
         ATTRIBUTE_NODISCARD
-        MOUNTAIN_API bool_t CheckCollision(Vector2 point) const override;
+        MOUNTAIN_API bool CheckCollision(Vector2 point) const override;
         ATTRIBUTE_NODISCARD
-        MOUNTAIN_API bool_t CheckCollision(const Hitbox& hitbox) const override;
+        MOUNTAIN_API bool CheckCollision(const Hitbox& hitbox) const override;
         ATTRIBUTE_NODISCARD
-        MOUNTAIN_API bool_t CheckCollision(const Circle& circle) const override;
+        MOUNTAIN_API bool CheckCollision(const Circle& circle) const override;
         ATTRIBUTE_NODISCARD
-        MOUNTAIN_API bool_t CheckCollision(const Grid& grid) const override;
+        MOUNTAIN_API bool CheckCollision(const Grid& grid) const override;
         ATTRIBUTE_NODISCARD
-        MOUNTAIN_API bool_t CheckCollision(const ColliderList& list) const override;
+        MOUNTAIN_API bool CheckCollision(const ColliderList& list) const override;
 
         ATTRIBUTE_NODISCARD
-        MOUNTAIN_API float_t Left() const override;
+        MOUNTAIN_API f32 Left() const override;
         ATTRIBUTE_NODISCARD
-        MOUNTAIN_API float_t Right() const override;
+        MOUNTAIN_API f32 Right() const override;
         ATTRIBUTE_NODISCARD
-        MOUNTAIN_API float_t Top() const override;
+        MOUNTAIN_API f32 Top() const override;
         ATTRIBUTE_NODISCARD
-        MOUNTAIN_API float_t Bottom() const override;
+        MOUNTAIN_API f32 Bottom() const override;
 
         ATTRIBUTE_NODISCARD
         MOUNTAIN_API float AbsoluteLeft() const override;
@@ -62,14 +62,14 @@ namespace Mountain
         MOUNTAIN_API Vector2 Size() const override;
 
         ATTRIBUTE_NODISCARD
-        MOUNTAIN_API List<bool_t>& operator[](size_t y);
+        MOUNTAIN_API List<bool>& operator[](usize y);
         ATTRIBUTE_NODISCARD
-        MOUNTAIN_API const List<bool_t>& operator[](size_t y) const;
+        MOUNTAIN_API const List<bool>& operator[](usize y) const;
 
         ATTRIBUTE_NODISCARD
-        MOUNTAIN_API bool_t At(size_t y, size_t x) const;
+        MOUNTAIN_API bool At(usize y, usize x) const;
         ATTRIBUTE_NODISCARD
-        MOUNTAIN_API bool_t At(Vector2i tilePosition) const;
+        MOUNTAIN_API bool At(Vector2i tilePosition) const;
 
     private:
         void ResizeGrid();

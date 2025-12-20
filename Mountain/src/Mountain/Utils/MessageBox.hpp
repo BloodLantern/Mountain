@@ -79,20 +79,20 @@ namespace Mountain
         };
 
         /// @brief Shows a MessageBox with the given options.
-        static Result Show(const char_t* title, const char_t* text, Type type, Icon icon = Icon::None, DefaultButton defaultButton = DefaultButton::First);
+        static Result Show(const c8* title, const c8* text, Type type, Icon icon = Icon::None, DefaultButton defaultButton = DefaultButton::First);
 
     private:
-        static uint32_t TypeToWindows(Type type);
+        static u32 TypeToWindows(Type type);
 
-        static uint32_t IconToWindows(Icon icon);
+        static u32 IconToWindows(Icon icon);
 
-        static uint32_t DefaultButtonToWindows(DefaultButton defaultButton);
+        static u32 DefaultButtonToWindows(DefaultButton defaultButton);
 
-        static Result ParseResult(int32_t windowsResult);
+        static Result ParseResult(s32 windowsResult);
 
         static Result Call(
-            const char_t* text,
-            const char_t* title,
+            const c8* text,
+            const c8* title,
             Type type,
             Icon icon,
             DefaultButton defaultButton

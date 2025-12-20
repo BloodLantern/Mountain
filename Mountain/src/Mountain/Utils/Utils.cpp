@@ -13,10 +13,10 @@
 
 using namespace Mountain;
 
-void Utils::AlignImGuiCursor(const float_t objectWidth, const float_t alignment)
+void Utils::AlignImGuiCursor(const f32 objectWidth, const f32 alignment)
 {
-    const float_t avail = ImGui::GetContentRegionAvail().x;
-    const float_t off = avail * alignment - objectWidth / 2.f;
+    const f32 avail = ImGui::GetContentRegionAvail().x;
+    const f32 off = avail * alignment - objectWidth / 2.f;
 
     if (off > 0.0f)
         ImGui::SetCursorPosX(ImGui::GetCursorPosX() + off);
@@ -33,7 +33,7 @@ std::string Utils::HumanizeString(const std::string& str)
     // According to https://en.cppreference.com/w/cpp/string/byte/toupper,
     // when using the std::toupper function, to make sure the operation is executed
     // correctly, we should cast the input to unsigned char and the output to char
-    const char_t firstCharUpper = static_cast<char_t>(std::toupper(static_cast<uint8_t>(str[0])));
+    const c8 firstCharUpper = static_cast<c8>(std::toupper(static_cast<u8>(str[0])));
 
     std::sregex_iterator begin(str.begin(), str.end(), Regex);
     std::sregex_iterator end;
@@ -75,7 +75,7 @@ std::string Utils::HumanizeVariableName(const std::string& str)
     // FIXME - return HumanizeString(result);
 }
 
-float_t Utils::NormalizeAngle(float_t angle)
+f32 Utils::NormalizeAngle(f32 angle)
 {
     angle = Calc::Modulo(angle, Calc::TwoPi);
 
@@ -94,12 +94,12 @@ Vector3 Utils::GetQuaternionEulerAngles(const Quaternion& rot)
 {
     // Function taken from glm
 
-    const float_t sqw = rot.W() * rot.W();
-    const float_t sqx = rot.X() * rot.X();
-    const float_t sqy = rot.Y() * rot.Y();
-    const float_t sqz = rot.Z() * rot.Z();
-    const float_t unit = sqx + sqy + sqz + sqw; // if normalised is one, otherwise is correction factor
-    const float_t test = rot.X() * rot.W() - rot.Y() * rot.Z();
+    const f32 sqw = rot.W() * rot.W();
+    const f32 sqx = rot.X() * rot.X();
+    const f32 sqy = rot.Y() * rot.Y();
+    const f32 sqz = rot.Z() * rot.Z();
+    const f32 unit = sqx + sqy + sqz + sqw; // if normalised is one, otherwise is correction factor
+    const f32 test = rot.X() * rot.W() - rot.Y() * rot.Z();
     Vector3 v;
 
     if (test > 0.4995f * unit)
@@ -126,7 +126,7 @@ Vector3 Utils::GetQuaternionEulerAngles(const Quaternion& rot)
 
 void Utils::OpenInExplorer(const std::filesystem::path& path) { OpenInExplorer(path, !is_directory(path)); }
 
-void Utils::OpenInExplorer(const std::filesystem::path& path, const bool_t isFile)
+void Utils::OpenInExplorer(const std::filesystem::path& path, const bool isFile)
 {
     std::string command = "explorer ";
 
@@ -140,24 +140,24 @@ void Utils::OpenInExplorer(const std::filesystem::path& path, const bool_t isFil
 
 void Utils::OpenFile(const std::filesystem::path& filepath) { TerminalCommand("explorer " + ('"' + absolute(filepath).string() + '"')); }
 
-bool_t Utils::StringEqualsIgnoreCase(const std::string_view a, const std::string_view b)
+bool Utils::StringEqualsIgnoreCase(const std::string_view a, const std::string_view b)
 {
     return std::ranges::equal(
         a, b,
-        [] (const char_t& aa, const char_t& bb) -> bool_t
+        [] (const c8& aa, const c8& bb) -> bool
         {
             return std::tolower(aa) == std::tolower(bb);
         }
     );
 }
 
-bool_t Utils::StringContainsIgnoreCase(const std::string_view a, const std::string_view b)
+bool Utils::StringContainsIgnoreCase(const std::string_view a, const std::string_view b)
 {
     const std::string left = ToLower(a), right = ToLower(b);
     return left.contains(right);
 }
 
-int32_t Utils::TerminalCommand(const std::string& command, const bool_t asynchronous)
+s32 Utils::TerminalCommand(const std::string& command, const bool asynchronous)
 {
     return std::system(((asynchronous ? "start /MIN " : "") + command).c_str());  // NOLINT(concurrency-mt-unsafe)
 }
@@ -184,7 +184,7 @@ std::wstring Utils::NarrowToWide(const std::string_view str)
 {
     std::wstring result;
     result.resize(str.size());
-    MultiByteToWideChar(CP_ACP, MB_COMPOSITE, str.data(), static_cast<int32_t>(str.size()), result.data(), static_cast<int32_t>(result.size()));
+    MultiByteToWideChar(CP_ACP, MB_COMPOSITE, str.data(), static_cast<s32>(str.size()), result.data(), static_cast<s32>(result.size()));
     return result;
 }
 
@@ -192,7 +192,7 @@ std::string Utils::WideToNarrow(const std::wstring_view str)
 {
     std::string result;
     result.resize(str.size());
-    WideCharToMultiByte(CP_ACP, WC_COMPOSITECHECK, str.data(), static_cast<int32_t>(str.size()), result.data(), static_cast<int32_t>(result.size()), nullptr, nullptr);
+    WideCharToMultiByte(CP_ACP, WC_COMPOSITECHECK, str.data(), static_cast<s32>(str.size()), result.data(), static_cast<s32>(result.size()), nullptr, nullptr);
     return result;
 }
 
@@ -200,8 +200,8 @@ std::string Utils::ToLower(const std::string_view str)
 {
     std::string result;
     result.resize(str.size());
-    for (size_t i = 0; i < str.size(); i++)
-        result[i] = static_cast<char_t>(std::tolower(str[i]));
+    for (usize i = 0; i < str.size(); i++)
+        result[i] = static_cast<c8>(std::tolower(str[i]));
     return result;
 }
 
@@ -209,17 +209,17 @@ std::string Utils::ToUpper(const std::string_view str)
 {
     std::string result;
     result.resize(str.size());
-    for (size_t i = 0; i < str.size(); i++)
-        result[i] = static_cast<char_t>(std::toupper(str[i]));
+    for (usize i = 0; i < str.size(); i++)
+        result[i] = static_cast<c8>(std::toupper(str[i]));
     return result;
 }
 
-std::pair<float_t, std::string_view> Utils::ByteSizeUnit(const int64_t size)
+std::pair<f32, std::string_view> Utils::ByteSizeUnit(const s64 size)
 {
     if (size < 1000)
-        return { static_cast<float_t>(size), "B" };
+        return { static_cast<f32>(size), "B" };
 
-    float_t dividedSize = static_cast<float_t>(size) / 1000.f;
+    f32 dividedSize = static_cast<f32>(size) / 1000.f;
     if (dividedSize < 1000)
         return { dividedSize, "KB" };
 
@@ -235,7 +235,7 @@ std::pair<float_t, std::string_view> Utils::ByteSizeUnit(const int64_t size)
     if (dividedSize < 1000)
         return { dividedSize, "TB" };
 
-    return { static_cast<float_t>(size), "?" };
+    return { static_cast<f32>(size), "?" };
 }
 
 std::string Utils::GetBuiltinShadersPath() { return BuiltinShadersPath.empty() ? "shaders_internal/" : BuiltinShadersPath + '/'; }
@@ -247,17 +247,17 @@ std::string Utils::Trim(const std::string_view str, const TrimOptions options)
     std::string result{ str.data(), str.length() };
 
     if (options & TrimOptions::Start)
-        result.erase(result.begin(), std::ranges::find_if(result, [](const uint8_t c) { return !std::isspace(c); }));
+        result.erase(result.begin(), std::ranges::find_if(result, [](const u8 c) { return !std::isspace(c); }));
     if (options & TrimOptions::End)
-        result.erase(std::ranges::find_if(std::ranges::reverse_view(result), [](const uint8_t c) { return !std::isspace(c); }).base(), result.end());
+        result.erase(std::ranges::find_if(std::ranges::reverse_view(result), [](const u8 c) { return !std::isspace(c); }).base(), result.end());
 
     return result;
 }
 
-std::string Utils::GetLine(const std::string& str, const size_t lineIndex)
+std::string Utils::GetLine(const std::string& str, const usize lineIndex)
 {
     std::istringstream input{ str };
-    size_t currentIndex = 0;
+    usize currentIndex = 0;
     for (std::string line; std::getline(input, line); currentIndex++)
     {
         if (currentIndex == lineIndex)
@@ -267,12 +267,12 @@ std::string Utils::GetLine(const std::string& str, const size_t lineIndex)
     return "";
 }
 
-uint16_t Utils::Concat16(const uint8_t right, const uint8_t left)
+u16 Utils::Concat16(const u8 right, const u8 left)
 {
-    return static_cast<uint16_t>(right | left << 8);
+    return static_cast<u16>(right | left << 8);
 }
 
-uint32_t Utils::Concat32(const uint8_t right0, const uint8_t right1, const uint8_t left0, const uint8_t left1)
+u32 Utils::Concat32(const u8 right0, const u8 right1, const u8 left0, const u8 left1)
 {
     return right0 | right1 << 8 | left0 << 16 | left1 << 24;
 }
@@ -295,7 +295,7 @@ std::string Utils::RemoveByteOrderMark(const std::string& text)
         "\x84" "\x31" "\x95" "\x33"     // GB18030
     };
 
-    for (const char_t* byteOrderMark : ByteOrderMarks)
+    for (const c8* byteOrderMark : ByteOrderMarks)
     {
         if (text.starts_with(byteOrderMark))
             return text.substr(std::strlen(byteOrderMark));
@@ -304,13 +304,13 @@ std::string Utils::RemoveByteOrderMark(const std::string& text)
     return text;
 }
 
-List<std::string> Utils::Split(const std::string_view str, const char_t separator)
+List<std::string> Utils::Split(const std::string_view str, const c8 separator)
 {
     List<std::string> result;
 
-    size_t lastIndex = 0;
-    size_t currentSize = 0;
-    for (size_t i = 0; i < str.length(); i++)
+    usize lastIndex = 0;
+    usize currentSize = 0;
+    for (usize i = 0; i < str.length(); i++)
     {
         if (str[i] != separator)
         {
@@ -369,7 +369,7 @@ Easing::Easer Easing::FromType(const Type type)
     THROW(ArgumentOutOfRangeException{"Invalid easing type", "type"});
 }
 
-float_t Easing::FromType(const Type type, const float_t t)
+f32 Easing::FromType(const Type type, const f32 t)
 {
     return FromType(type)(t);
 }

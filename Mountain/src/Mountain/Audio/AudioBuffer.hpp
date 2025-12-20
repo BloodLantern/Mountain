@@ -12,7 +12,7 @@ namespace Mountain
     public:
         AudioBuffer();
 
-        explicit AudioBuffer(int32_t size);
+        explicit AudioBuffer(s32 size);
 
         explicit AudioBuffer(const AudioTrack* track);
 
@@ -22,19 +22,19 @@ namespace Mountain
 
         void SetData(const AudioTrack* track);
 
-        void SetData(const void* data, int32_t length, uint16_t channels, uint16_t bitDepth, int32_t sampleRate);
+        void SetData(const void* data, s32 length, u16 channels, u16 bitDepth, s32 sampleRate);
 
         ATTRIBUTE_NODISCARD
-        uint32_t GetHandle() const;
+        u32 GetHandle() const;
 
     private:
-        uint32_t m_Handle = 0;
+        u32 m_Handle = 0;
 
-        int32_t m_Format = 0;
+        s32 m_Format = 0;
 
         AudioContext* m_Context = nullptr;
 
         ATTRIBUTE_NODISCARD
-        static int32_t AlFormatFromData(uint16_t channels, uint16_t bitDepth);
+        static s32 AlFormatFromData(u16 channels, u16 bitDepth);
     };
 }

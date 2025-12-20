@@ -9,9 +9,9 @@
 
 using namespace Mountain;
 
-void Effect::Apply(const Vector2i textureSize, const bool_t synchronizeImageData) const
+void Effect::Apply(const Vector2i textureSize, const bool synchronizeImageData) const
 {
-    uint32_t currentRenderTargetId = Renderer::GetCurrentRenderTarget().GetTextureId();
+    u32 currentRenderTargetId = Renderer::GetCurrentRenderTarget().GetTextureId();
 
     for (const ImageBinding& binding : imageBindings)
     {
@@ -37,7 +37,7 @@ void Vignette::LoadResources()
     SetStrength(1.f);
 }
 
-void Vignette::SetStrength(const float_t newStrength) const { m_ComputeShader->SetUniform("strength", newStrength); }
+void Vignette::SetStrength(const f32 newStrength) const { m_ComputeShader->SetUniform("strength", newStrength); }
 
 void FilmGrain::LoadResources()
 {
@@ -45,7 +45,7 @@ void FilmGrain::LoadResources()
     SetIntensity(1.f);
 }
 
-void FilmGrain::SetIntensity(const float_t newIntensity) const { m_ComputeShader->SetUniform("intensity", newIntensity); }
+void FilmGrain::SetIntensity(const f32 newIntensity) const { m_ComputeShader->SetUniform("intensity", newIntensity); }
 
 void ChromaticAberrationAxial::LoadResources()
 {
@@ -53,9 +53,9 @@ void ChromaticAberrationAxial::LoadResources()
     SetIntensity(1.f);
 }
 
-void ChromaticAberrationAxial::SetIntensity(const float_t newIntensity) const { m_ComputeShader->SetUniform("intensity", newIntensity); }
+void ChromaticAberrationAxial::SetIntensity(const f32 newIntensity) const { m_ComputeShader->SetUniform("intensity", newIntensity); }
 
-void ChromaticAberrationAxial::SetAngle(const float_t newAngle) const { m_ComputeShader->SetUniform("angle", newAngle); }
+void ChromaticAberrationAxial::SetAngle(const f32 newAngle) const { m_ComputeShader->SetUniform("angle", newAngle); }
 
 void ChromaticAberrationTransverse::LoadResources()
 {
@@ -63,7 +63,7 @@ void ChromaticAberrationTransverse::LoadResources()
     SetIntensity(1.f);
 }
 
-void ChromaticAberrationTransverse::SetIntensity(const float_t newIntensity) const { m_ComputeShader->SetUniform("intensity", newIntensity); }
+void ChromaticAberrationTransverse::SetIntensity(const f32 newIntensity) const { m_ComputeShader->SetUniform("intensity", newIntensity); }
 
 GaussianBlur::GaussianBlur()
 {
@@ -84,7 +84,7 @@ void GaussianBlur::LoadResources()
     SetIntensity(1);
 }
 
-void GaussianBlur::Apply(const Vector2i textureSize, const bool_t synchronizeImageData) const
+void GaussianBlur::Apply(const Vector2i textureSize, const bool synchronizeImageData) const
 {
     Effect::Apply(textureSize, synchronizeImageData);
 
@@ -96,34 +96,34 @@ void GaussianBlur::Apply(const Vector2i textureSize, const bool_t synchronizeIma
     m_OtherComputeShader->Dispatch(textureSize.x, textureSize.y);
 }
 
-void GaussianBlur::SetIntensity(const int32_t newIntensity)
+void GaussianBlur::SetIntensity(const s32 newIntensity)
 {
     m_Radius = newIntensity * 3;
     m_ComputeShader->SetUniform("radius", m_Radius);
     m_OtherComputeShader->SetUniform("radius", m_Radius);
 
-    const List<float_t> kernel = ComputeKernel(newIntensity);
+    const List<f32> kernel = ComputeKernel(newIntensity);
 
     BindBufferBase(Graphics::BufferType::ShaderStorageBuffer, 2, m_KernelBuffer);
-    m_KernelBuffer.SetData(static_cast<int64_t>(kernel.GetSize() * sizeof(float_t)), kernel.GetData(), Graphics::BufferUsage::DynamicCopy);
+    m_KernelBuffer.SetData(static_cast<s64>(kernel.GetSize() * sizeof(f32)), kernel.GetData(), Graphics::BufferUsage::DynamicCopy);
 }
 
-List<float_t> GaussianBlur::ComputeKernel(const int32_t sigma) const
+List<f32> GaussianBlur::ComputeKernel(const s32 sigma) const
 {
-    const int32_t radius = m_Radius;
-    const size_t size = radius + 1;
+    const s32 radius = m_Radius;
+    const usize size = radius + 1;
 
-    List<float_t> kernel;
+    List<f32> kernel;
     kernel.Resize(size);
 
-    float_t k = 0.f;
+    f32 k = 0.f;
 
-    const float_t inverseTwoSigmaSquare = 1.f / static_cast<float_t>(2 * sigma * sigma);
+    const f32 inverseTwoSigmaSquare = 1.f / static_cast<f32>(2 * sigma * sigma);
 
-    for (int32_t i = 0; i <= radius; i++)
+    for (s32 i = 0; i <= radius; i++)
     {
-        const float_t fi = static_cast<float_t>(i);
-        const float_t value = std::exp(-fi * fi * inverseTwoSigmaSquare);
+        const f32 fi = static_cast<f32>(i);
+        const f32 value = std::exp(-fi * fi * inverseTwoSigmaSquare);
         kernel[i] = value;
 
         if (i == 0)
@@ -136,7 +136,7 @@ List<float_t> GaussianBlur::ComputeKernel(const int32_t sigma) const
         }
     }
 
-    kernel.ForEach([k](float_t& f) { f /= k;});
+    kernel.ForEach([k](f32& f) { f /= k;});
 
     return kernel;
 }
@@ -149,7 +149,7 @@ void BoxBlur::LoadResources()
     m_OtherComputeShader->SetUniform("radius", 1);
 }
 
-void BoxBlur::Apply(const Vector2i textureSize, const bool_t synchronizeImageData) const
+void BoxBlur::Apply(const Vector2i textureSize, const bool synchronizeImageData) const
 {
     Effect::Apply(textureSize, synchronizeImageData);
 
@@ -161,7 +161,7 @@ void BoxBlur::Apply(const Vector2i textureSize, const bool_t synchronizeImageDat
     m_OtherComputeShader->Dispatch(textureSize.x, textureSize.y);
 }
 
-void BoxBlur::SetRadius(const int32_t newRadius) const
+void BoxBlur::SetRadius(const s32 newRadius) const
 {
     m_ComputeShader->SetUniform("radius", newRadius);
     m_OtherComputeShader->SetUniform("radius", newRadius);
@@ -173,7 +173,7 @@ void Mosaic::LoadResources()
     SetBoxSize(1);
 }
 
-void Mosaic::SetBoxSize(const int32_t newSize) const { m_ComputeShader->SetUniform("blockSize", newSize); }
+void Mosaic::SetBoxSize(const s32 newSize) const { m_ComputeShader->SetUniform("blockSize", newSize); }
 
 void Grayscale::LoadResources()
 {
@@ -181,7 +181,7 @@ void Grayscale::LoadResources()
     SetIntensity(1.f);
 }
 
-void Grayscale::SetIntensity(const float_t newIntensity) const { m_ComputeShader->SetUniform("intensity", newIntensity); }
+void Grayscale::SetIntensity(const f32 newIntensity) const { m_ComputeShader->SetUniform("intensity", newIntensity); }
 
 void Negative::LoadResources()
 {
@@ -189,4 +189,4 @@ void Negative::LoadResources()
     SetIntensity(0.5f);
 }
 
-void Negative::SetIntensity(const float_t newIntensity) const { m_ComputeShader->SetUniform("intensity", newIntensity); }
+void Negative::SetIntensity(const f32 newIntensity) const { m_ComputeShader->SetUniform("intensity", newIntensity); }

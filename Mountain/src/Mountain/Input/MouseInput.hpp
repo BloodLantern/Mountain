@@ -8,7 +8,7 @@
 namespace Mountain
 {
     /// @brief %List of mouse buttons
-    enum class MouseButton : uint8_t
+    enum class MouseButton : u8
     {
         /// @brief Left click
         Left,
@@ -33,7 +33,7 @@ namespace Mountain
     };
 
     /// @brief %List of mouse button states
-    enum class MouseButtonStatus : uint8_t
+    enum class MouseButtonStatus : u8
     {
         /// @brief Pressed, e.g. @c true the first frame it is down
         Pressed,

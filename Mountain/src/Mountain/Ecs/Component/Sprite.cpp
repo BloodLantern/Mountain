@@ -12,7 +12,7 @@ Sprite::Sprite(std::string spriteName)
     SetupTextures();
 }
 
-Sprite::Sprite(std::string spriteName, const float_t frameDuration)
+Sprite::Sprite(std::string spriteName, const f32 frameDuration)
     : name(std::move(spriteName))
     , frameDuration(frameDuration)
 {
@@ -34,7 +34,7 @@ void Sprite::SetupTextures()
 {
     // Find all Textures with a name as follows: 'Sprite::name + any number'
     ResourceManager::FindAll<Texture>(
-        [this](const Pointer<Texture>& t) -> bool_t
+        [this](const Pointer<Texture>& t) -> bool
         {
             const File& f = *t->GetFile();
             const std::string& fName = f.GetPathNoExtension();
@@ -42,7 +42,7 @@ void Sprite::SetupTextures()
                 return false;
 
             const std::string& index = fName.substr(name.size());
-            if (std::ranges::find_if(index, [](auto c) -> bool_t { return !std::isdigit(c); }) != index.end())
+            if (std::ranges::find_if(index, [](auto c) -> bool { return !std::isdigit(c); }) != index.end())
                 return false;
 
             return true;
@@ -50,7 +50,7 @@ void Sprite::SetupTextures()
         &m_Textures
     );
 
-    m_Textures.Sort([](const Pointer<Texture>& a, const Pointer<Texture>& b) -> bool_t { return a->GetName() < b->GetName(); });
+    m_Textures.Sort([](const Pointer<Texture>& a, const Pointer<Texture>& b) -> bool { return a->GetName() < b->GetName(); });
 
     m_UpdateTimer = frameDuration;
 }

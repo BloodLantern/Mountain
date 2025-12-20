@@ -8,7 +8,7 @@
 
 using namespace Mountain;
 
-bool_t ComputeShader::SetSourceData(const Pointer<File>& shader)
+bool ComputeShader::SetSourceData(const Pointer<File>& shader)
 {
     m_File = shader;
 
@@ -23,9 +23,9 @@ bool_t ComputeShader::SetSourceData(const Pointer<File>& shader)
     return true;
 }
 
-bool_t ComputeShader::Load(const char_t* const buffer, const int64_t length)
+bool ComputeShader::Load(const c8* const buffer, const s64 length)
 {
-    m_Code = Utils::RemoveByteOrderMark(std::string{buffer, static_cast<size_t>(length)});
+    m_Code = Utils::RemoveByteOrderMark(std::string{buffer, static_cast<usize>(length)});
     ReplaceIncludes(m_Code, m_File->GetPath(), m_DependentShaderFiles);
 
     m_SourceDataSet = true;
@@ -35,15 +35,15 @@ bool_t ComputeShader::Load(const char_t* const buffer, const int64_t length)
 
 void ComputeShader::Load()
 {
-    const uint32_t id = glCreateShader(GL_COMPUTE_SHADER);
+    const u32 id = glCreateShader(GL_COMPUTE_SHADER);
 #ifdef _DEBUG
     std::string name = m_Name;
     const std::string& fileName = m_File ? m_File->GetName() : name;
     glObjectLabel(GL_SHADER, id, static_cast<GLsizei>(fileName.length()), fileName.c_str());
 #endif
 
-    const char_t* data = m_Code.c_str();
-    const int32_t dataLength = static_cast<int32_t>(m_Code.size());
+    const c8* data = m_Code.c_str();
+    const s32 dataLength = static_cast<s32>(m_Code.size());
     glShaderSource(id, 1, &data, &dataLength);
 
     glCompileShader(id);
@@ -90,11 +90,11 @@ void ComputeShader::ResetSourceData()
     m_Code.clear();
 }
 
-bool_t ComputeShader::Reload(const bool_t reloadInBackend)
+bool ComputeShader::Reload(const bool reloadInBackend)
 {
     m_DependentShaderFiles.clear();
 
-    const bool_t result = SetSourceData(m_File);
+    const bool result = SetSourceData(m_File);
 
     if (reloadInBackend)
         Load();
@@ -102,7 +102,7 @@ bool_t ComputeShader::Reload(const bool_t reloadInBackend)
     return result;
 }
 
-void ComputeShader::Dispatch(const uint32_t groupsX, const uint32_t groupsY, const uint32_t groupsZ) const
+void ComputeShader::Dispatch(const u32 groupsX, const u32 groupsY, const u32 groupsZ) const
 {
     if (groupsX == 0 || groupsY == 0 || groupsZ == 0)
         THROW(ArgumentException{"ComputeShader::Dispatch needs all dimension arguments to be at least 1"});
@@ -112,7 +112,7 @@ void ComputeShader::Dispatch(const uint32_t groupsX, const uint32_t groupsY, con
     glUseProgram(0);
 }
 
-bool_t ComputeShader::CheckCompileError(const uint32_t id) const
+bool ComputeShader::CheckCompileError(const u32 id) const
 {
     return ShaderBase::CheckCompileError(id, "Compute", m_Code);
 }

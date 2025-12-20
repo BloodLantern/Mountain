@@ -16,7 +16,7 @@ std::string ColorHsva::ToString() const
     return std::format("{} ; {} ; {} ; {}", h, s, v, a);
 }
 
-Color Calc::Lerp(const Color& value, const Color& target, const float_t time)
+Color Calc::Lerp(const Color& value, const Color& target, const f32 time)
 {
     return Color{Lerp(value.ToVector4(), target.ToVector4(), time)};
 }
@@ -24,14 +24,14 @@ Color Calc::Lerp(const Color& value, const Color& target, const float_t time)
 Color Calc::Lerp(
     const Color& value,
     const Color& target,
-    const float_t time,
+    const f32 time,
     const Easing::Easer easer
 )
 {
     return Color{Lerp(value.ToVector4(), target.ToVector4(), time, easer)};
 }
 
-Color Calc::LerpFixed(const Color& value, const Color& target, const float_t time)
+Color Calc::LerpFixed(const Color& value, const Color& target, const f32 time)
 {
     const Vector4 v = value.ToVector4();
     const Vector4 t = target.ToVector4();
@@ -46,7 +46,7 @@ Color Calc::LerpFixed(const Color& value, const Color& target, const float_t tim
     return Color(result);
 }
 
-Color Calc::LerpFixed(const Color& value, const Color& target, const float_t time, const Easing::Easer easer)
+Color Calc::LerpFixed(const Color& value, const Color& target, const f32 time, const Easing::Easer easer)
 {
     const Vector4 v = value.ToVector4();
     const Vector4 t = target.ToVector4();

@@ -13,10 +13,10 @@ void GpuTexture::Delete() { glDeleteTextures(1, &m_Id); m_Id = 0; }
 void GpuTexture::Recreate() { Delete(); Create(); }
 
 void GpuTexture::CreateViewFrom(
-    const uint32_t originalTextureId,
+    const u32 originalTextureId,
     const InternalFormat newInternalFormat,
-    const uint32_t minMipmapLevel,
-    const uint32_t mipmapLevels
+    const u32 minMipmapLevel,
+    const u32 mipmapLevels
 )
 {
     glGenTextures(1, &m_Id);
@@ -26,14 +26,14 @@ void GpuTexture::CreateViewFrom(
 void GpuTexture::CreateViewFrom(
     const GpuTexture originalGpuTexture,
     const InternalFormat newInternalFormat,
-    const uint32_t minMipmapLevel,
-    const uint32_t mipmapLevels
+    const u32 minMipmapLevel,
+    const u32 mipmapLevels
 )
 {
     CreateViewFrom(originalGpuTexture.m_Id, newInternalFormat, minMipmapLevel, mipmapLevels);
 }
 
-void GpuTexture::SetStorage(const InternalFormat internalFormat, const Vector2i size, const int32_t mipmapLevels) const
+void GpuTexture::SetStorage(const InternalFormat internalFormat, const Vector2i size, const s32 mipmapLevels) const
 {
     glTextureStorage2D(m_Id, mipmapLevels, ToOpenGl(internalFormat), size.x, size.y);
 }
@@ -44,7 +44,7 @@ void GpuTexture::SetSubData(
     const Format dataFormat,
     const DataType dataType,
     const void* data,
-    const int32_t mipmapLevel
+    const s32 mipmapLevel
 ) const
 {
     glTextureSubImage2D(m_Id, mipmapLevel, offset.x, offset.y, size.x, size.y, ToOpenGl(dataFormat), ToOpenGl(dataType), data); }
@@ -55,7 +55,7 @@ void GpuTexture::SetData(
     const Format dataFormat,
     const DataType dataType,
     const void* data,
-    const int32_t mipmapLevel
+    const s32 mipmapLevel
 ) const
 {
     BindTexture(m_Id);
@@ -72,7 +72,7 @@ void GpuTexture::SetDebugName(ATTRIBUTE_MAYBE_UNUSED const std::string_view name
 #endif
 }
 
-bool_t GpuTexture::GetImmutable() const
+bool GpuTexture::GetImmutable() const
 {
     GLint result;
     glGetTextureParameteriv(m_Id, GL_TEXTURE_IMMUTABLE_FORMAT, &result);
@@ -139,6 +139,6 @@ void GpuTexture::SetBorderColor(Color newBorderColor) const
     glTextureParameterfv(m_Id, GL_TEXTURE_BORDER_COLOR, newBorderColor.Data());
 }
 
-uint32_t GpuTexture::GetId() const { return m_Id; }
+u32 GpuTexture::GetId() const { return m_Id; }
 
 GpuTexture::operator unsigned int() const { return m_Id; }

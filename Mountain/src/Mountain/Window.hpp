@@ -15,7 +15,7 @@
 
 namespace Mountain
 {
-    enum class WindowMode : uint8_t
+    enum class WindowMode : u8
     {
         Windowed,
         Borderless,
@@ -34,7 +34,7 @@ namespace Mountain
         MOUNTAIN_API static inline Event<Vector2i> onSizeChanged;
 
         /// @brief Whether the window should close
-        MOUNTAIN_API static inline bool_t shouldClose = false;
+        MOUNTAIN_API static inline bool shouldClose = false;
 
         /// @brief Get the screen position in pixels of the window
         ATTRIBUTE_NODISCARD
@@ -61,42 +61,42 @@ namespace Mountain
         STATIC_GETTER(SDL_GLContext, Context, m_Context)
 
         /// @brief Get whether the window is visible or hidden.
-        STATIC_GETTER(bool_t, Visible, m_Visible)
+        STATIC_GETTER(bool, Visible, m_Visible)
 
         /// @brief Set whether the window should be visible or hidden.
-        MOUNTAIN_API static void SetVisible(bool_t newVisible);
+        MOUNTAIN_API static void SetVisible(bool newVisible);
 
         /// @brief Set the icon for the window
         MOUNTAIN_API static void SetIcon(const Pointer<Texture>& newIcon);
 
         /// @brief Handle hiding or displaying the cursor
         /// @param newCursorHidden @c true hides, @c false displays
-        MOUNTAIN_API static void SetCursorHidden(bool_t newCursorHidden);
+        MOUNTAIN_API static void SetCursorHidden(bool newCursorHidden);
 
         /// @brief Set the mouse cursor position in screen space
         MOUNTAIN_API static void SetCursorPosition(Vector2 newPosition);
 
-        STATIC_GETTER(bool_t, VSync, m_VSync)
+        STATIC_GETTER(bool, VSync, m_VSync)
 
-        MOUNTAIN_API static void SetVSync(bool_t newVsync);
+        MOUNTAIN_API static void SetVSync(bool newVsync);
 
         STATIC_GETTER(WindowMode, WindowMode, m_WindowMode)
 
         MOUNTAIN_API static void SetWindowMode(WindowMode newWindowMode);
 
         /// @brief Get the index of the screen on which this window currently is
-        STATIC_GETTER(int32_t, CurrentScreen, m_CurrentScreen)
+        STATIC_GETTER(s32, CurrentScreen, m_CurrentScreen)
 
         ATTRIBUTE_NODISCARD
         MOUNTAIN_API static std::string_view GetTitle();
 
         MOUNTAIN_API static void SetTitle(const std::string& newTitle);
 
-        STATIC_GETTER(bool_t, Minimized, m_Minimized)
+        STATIC_GETTER(bool, Minimized, m_Minimized)
 
-        STATIC_GETTER(bool_t, Resizable, m_Resizable)
+        STATIC_GETTER(bool, Resizable, m_Resizable)
 
-        MOUNTAIN_API static void SetResizable(bool_t newResizable);
+        MOUNTAIN_API static void SetResizable(bool newResizable);
 
     private:
         /// @brief Native window handle
@@ -105,17 +105,17 @@ namespace Mountain
 
         MOUNTAIN_API static inline WindowMode m_WindowMode = WindowMode::Windowed;
 
-        MOUNTAIN_API static inline int32_t m_CurrentScreen;
+        MOUNTAIN_API static inline s32 m_CurrentScreen;
 
         MOUNTAIN_API static inline Vector2i m_Position;
         MOUNTAIN_API static inline Vector2i m_Size;
 
-        MOUNTAIN_API static inline bool_t m_Visible;
-        MOUNTAIN_API static inline bool_t m_Minimized = false;
+        MOUNTAIN_API static inline bool m_Visible;
+        MOUNTAIN_API static inline bool m_Minimized = false;
 
-        MOUNTAIN_API static inline bool_t m_VSync = false;
+        MOUNTAIN_API static inline bool m_VSync = false;
 
-        MOUNTAIN_API static inline bool_t m_Resizable = false;
+        MOUNTAIN_API static inline bool m_Resizable = false;
 
         /// @brief Initializes the window
         static void Initialize(const std::string& windowTitle, Vector2i windowSize, const OpenGlVersion &glVersion);

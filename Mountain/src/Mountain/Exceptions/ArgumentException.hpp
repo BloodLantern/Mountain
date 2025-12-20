@@ -12,15 +12,15 @@ namespace Mountain
 
     public:
         ATTRIBUTE_NODISCARD
-        MOUNTAIN_API ArgumentException(const char_t* message, const char_t* parameterName) noexcept;
+        MOUNTAIN_API ArgumentException(const c8* message, const c8* parameterName) noexcept;
 
         ATTRIBUTE_NODISCARD
-        MOUNTAIN_API const char_t* GetParameterName() const noexcept;
+        MOUNTAIN_API const c8* GetParameterName() const noexcept;
 
         DECLARE_EXCEPTION_NAME(ArgumentException)
 
     private:
-        const char_t* m_ParameterName = nullptr;
+        const c8* m_ParameterName = nullptr;
     };
 
     /// @brief The exception that is thrown when a null pointer is passed to a method that does not accept it as a

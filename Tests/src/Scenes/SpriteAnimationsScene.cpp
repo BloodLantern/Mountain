@@ -35,7 +35,7 @@ void SpriteAnimationsScene::Render()
     const Vector2i windowSize = Window::GetSize();
 
     const Vector2 drawScale = 0.5f * Vector2::One()
-        * (static_cast<float_t>(std::min(windowSize.x, windowSize.y)) / static_cast<float_t>(std::min(currentTextureSize.x, currentTextureSize.y)));
+        * (static_cast<f32>(std::min(windowSize.x, windowSize.y)) / static_cast<f32>(std::min(currentTextureSize.x, currentTextureSize.y)));
 
     Draw::Texture(*currentTexture, windowSize * 0.5f - currentTextureSize * 0.5f * drawScale, drawScale, m_Rotation, m_Origin);
 }
@@ -44,7 +44,7 @@ void SpriteAnimationsScene::RenderImGui()
 {
     TestScene::RenderImGui();
 
-    float_t frameDuration = m_Sprite->frameDuration;
+    f32 frameDuration = m_Sprite->frameDuration;
     ImGui::InputFloat("Frame duration", &frameDuration, 0.001f, 0.01f);
     m_Sprite->frameDuration = std::max(frameDuration, 0.f);
 

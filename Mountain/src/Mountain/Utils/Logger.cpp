@@ -21,7 +21,7 @@ void Logger::OpenFile(const std::filesystem::path &filepath)
 {
     CloseFile();
 
-    const bool_t exists = std::filesystem::exists(filepath);
+    const bool exists = std::filesystem::exists(filepath);
     if (!exists)
     {
         create_directories(filepath.parent_path());
@@ -68,7 +68,7 @@ void Logger::OpenDefaultFile()
 
     // Count the number of existing logs to get the log index
     // Start at -1 so that we get index-like numbers, e.g., 0 for the first one, 1 for the second one, etc...
-    int32_t fileCount = -1;
+    s32 fileCount = -1;
     for (const std::filesystem::directory_entry& entry : std::filesystem::directory_iterator{directory})
     {
         if (is_regular_file(entry))
@@ -159,7 +159,7 @@ Logger::LogEntry::LogEntry(std::string&& message, const LogLevel level)
 {
 }
 
-Logger::LogEntry::LogEntry(std::string&& message, const LogLevel level, const std::string& file, const int32_t line)
+Logger::LogEntry::LogEntry(std::string&& message, const LogLevel level, const std::string& file, const s32 line)
     : LogEntry(std::move(message), level, DateTime::Now())
 {
     this->file = file;
@@ -179,7 +179,7 @@ Logger::LogEntry::LogEntry(
 {
 }
 
-bool_t Logger::LogEntry::operator==(const LogEntry& other) const
+bool Logger::LogEntry::operator==(const LogEntry& other) const
 {
     return message == other.message
         && level == other.level
@@ -246,8 +246,8 @@ void Logger::PushLog(const std::shared_ptr<LogEntry>& log)
 
 void Logger::PrintLog(const std::shared_ptr<LogEntry>& log)
 {
-    static uint64_t sameLastLogs;
-    static uint64_t oldSameLastLogs;
+    static u64 sameLastLogs;
+    static u64 oldSameLastLogs;
 
     oldSameLastLogs = sameLastLogs;
     if (log->sameAsPrevious)
@@ -257,9 +257,9 @@ void Logger::PrintLog(const std::shared_ptr<LogEntry>& log)
 
     const auto& prefix = BuildLogPrefix(log);
     const std::string& baseMessage = prefix.first;
-    const char_t* color = prefix.second;
+    const c8* color = prefix.second;
 
-    const bool_t printToFile = log->printToFile && m_File.is_open();
+    const bool printToFile = log->printToFile && m_File.is_open();
 
     // If the last log is the same as the current one, we should collapse this one
     if (sameLastLogs > 0)
@@ -311,7 +311,7 @@ void Logger::PrintLog(const std::shared_ptr<LogEntry>& log)
     log->previousLog.reset();
 }
 
-std::pair<std::string, const char_t*> Logger::BuildLogPrefix(const std::shared_ptr<LogEntry>& log)
+std::pair<std::string, const c8*> Logger::BuildLogPrefix(const std::shared_ptr<LogEntry>& log)
 {
     const TimeSpan timeOfDay = log->time.GetTimeOfDay();
     // Get the message time and format it in [hh:mm:ss:ms]
@@ -324,7 +324,7 @@ std::pair<std::string, const char_t*> Logger::BuildLogPrefix(const std::shared_p
     );
 
     std::string baseMessage;
-    const char_t* color = ANSI_RESET;
+    const c8* color = ANSI_RESET;
     switch (log->level)
     {
         case LogLevel::Debug:

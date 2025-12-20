@@ -20,42 +20,42 @@ namespace Mountain
         constexpr Rectangle ToRectangle() const;
 
         ATTRIBUTE_NODISCARD
-        bool_t Intersects(const Hitbox& other) const;
+        bool Intersects(const Hitbox& other) const;
 
         using Collider::CheckCollision;
         ATTRIBUTE_NODISCARD
-        bool_t CheckCollision(Vector2 point) const override;
+        bool CheckCollision(Vector2 point) const override;
         ATTRIBUTE_NODISCARD
-        bool_t CheckCollision(const Hitbox& hitbox) const override;
+        bool CheckCollision(const Hitbox& hitbox) const override;
         ATTRIBUTE_NODISCARD
-        bool_t CheckCollision(const Circle& circle) const override;
+        bool CheckCollision(const Circle& circle) const override;
         ATTRIBUTE_NODISCARD
-        bool_t CheckCollision(const Grid& grid) const override;
+        bool CheckCollision(const Grid& grid) const override;
         ATTRIBUTE_NODISCARD
-        bool_t CheckCollision(const ColliderList& list) const override;
+        bool CheckCollision(const ColliderList& list) const override;
 
         ATTRIBUTE_NODISCARD
-        float_t Left() const override;
+        f32 Left() const override;
         ATTRIBUTE_NODISCARD
-        float_t Right() const override;
+        f32 Right() const override;
         ATTRIBUTE_NODISCARD
-        float_t Top() const override;
+        f32 Top() const override;
         ATTRIBUTE_NODISCARD
-        float_t Bottom() const override;
+        f32 Bottom() const override;
 
         ATTRIBUTE_NODISCARD
-        float_t AbsoluteLeft() const override;
+        f32 AbsoluteLeft() const override;
         ATTRIBUTE_NODISCARD
-        float_t AbsoluteRight() const override;
+        f32 AbsoluteRight() const override;
         ATTRIBUTE_NODISCARD
-        float_t AbsoluteTop() const override;
+        f32 AbsoluteTop() const override;
         ATTRIBUTE_NODISCARD
-        float_t AbsoluteBottom() const override;
+        f32 AbsoluteBottom() const override;
 
         ATTRIBUTE_NODISCARD
-        float_t Width() const override;
+        f32 Width() const override;
         ATTRIBUTE_NODISCARD
-        float_t Height() const override;
+        f32 Height() const override;
         ATTRIBUTE_NODISCARD
         Vector2 Size() const override;
     };

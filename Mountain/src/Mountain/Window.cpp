@@ -33,7 +33,7 @@ Vector2i Window::GetFramebufferSize()
 
 void Window::MakeContextCurrent() { SDL_GL_MakeCurrent(m_Window, m_Context); }
 
-void Window::SetVisible(const bool_t newVisible)
+void Window::SetVisible(const bool newVisible)
 {
     if (newVisible)
         SDL_ShowWindow(m_Window);
@@ -58,17 +58,17 @@ void Window::SetIcon(const Pointer<Texture>& newIcon)
         .flags = SDL_SURFACE_PREALLOCATED,
         .w = size.x,
         .h = size.y,
-        .pixels = Pointer(newIcon)->GetData<uint8_t>()
+        .pixels = Pointer(newIcon)->GetData<u8>()
     };  // NOLINT(clang-diagnostic-missing-designated-field-initializers)
 
     SDL_SetWindowIcon(m_Window, &image);
 }
 
-void Window::SetCursorHidden(const bool_t newCursorHidden) { newCursorHidden ? SDL_HideCursor() : SDL_ShowCursor(); }
+void Window::SetCursorHidden(const bool newCursorHidden) { newCursorHidden ? SDL_HideCursor() : SDL_ShowCursor(); }
 
 void Window::SetCursorPosition(const Vector2 newPosition) { SDL_WarpMouseInWindow(m_Window, newPosition.x, newPosition.y); }
 
-void Window::SetVSync(const bool_t newVsync)
+void Window::SetVSync(const bool newVsync)
 {
     SDL_GL_SetSwapInterval(newVsync);
     m_VSync = newVsync;
@@ -118,7 +118,7 @@ std::string_view Window::GetTitle() { return SDL_GetWindowTitle(m_Window); }
 
 void Window::SetTitle(const std::string& newTitle) { SDL_SetWindowTitle(m_Window, newTitle.c_str()); }
 
-void Window::SetResizable(const bool_t newResizable)
+void Window::SetResizable(const bool newResizable)
 {
     SDL_SetWindowResizable(m_Window, newResizable);
     m_Resizable = newResizable;
@@ -129,7 +129,7 @@ void Window::Initialize(const std::string& windowTitle, const Vector2i windowSiz
     ZoneScoped;
 
     SDL_SetLogOutputFunction(
-        [](void* const, int32_t, const SDL_LogPriority priority, const char_t* const message)
+        [](void* const, s32, const SDL_LogPriority priority, const c8* const message)
         {
             if (priority == SDL_LOG_PRIORITY_ERROR)
                 Logger::LogError("SDL error: {}", message);
@@ -210,14 +210,14 @@ void Window::UpdateCurrentScreen()
     const Vector2i windowPosition = GetPosition();
     const Vector2i windowSize = GetSize();
 
-    int32_t bestOverlap = 0;
+    s32 bestOverlap = 0;
 
-    for (int32_t i = 0; i < Screen::GetScreenCount(); i++)
+    for (s32 i = 0; i < Screen::GetScreenCount(); i++)
     {
         Vector2i screenPosition = Screen::GetPosition(i);
         const Vector2i screenSize = Screen::GetSize(i);
 
-        const int32_t overlap = std::max(0, std::min(windowPosition.x + windowSize.x, screenPosition.x + screenSize.x) - std::max(windowPosition.x, screenPosition.x))
+        const s32 overlap = std::max(0, std::min(windowPosition.x + windowSize.x, screenPosition.x + screenSize.x) - std::max(windowPosition.x, screenPosition.x))
                               * std::max(0, std::min(windowPosition.y + windowSize.y, screenPosition.y + screenSize.y) - std::max(windowPosition.y, screenPosition.y));
 
         if (bestOverlap < overlap)
@@ -274,7 +274,7 @@ void Window::ProcessKeyboardEvents(const SDL_Event& event)
     if (key & SDLK_SCANCODE_MASK)
     {
         // Remap to 0, then map to enum values
-        key = key - SDLK_CAPSLOCK + static_cast<size_t>(Key::ScancodeBegin);
+        key = key - SDLK_CAPSLOCK + static_cast<usize>(Key::ScancodeBegin);
     }
 
     switch (event.type)
@@ -334,7 +334,7 @@ void Window::ProcessGamepadEvents(const SDL_Event& event)
             break;
 
         case SDL_EVENT_JOYSTICK_BATTERY_UPDATED:
-            Input::UpdateGamepadBattery(event.gdevice.which, static_cast<int8_t>(event.jbattery.percent),
+            Input::UpdateGamepadBattery(event.gdevice.which, static_cast<s8>(event.jbattery.percent),
                 static_cast<GamepadBatteryState>(event.jbattery.state));
             break;
 

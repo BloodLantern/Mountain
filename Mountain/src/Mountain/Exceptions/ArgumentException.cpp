@@ -5,12 +5,12 @@
 using namespace Mountain;
 
 ArgumentException::ArgumentException(
-    const char_t* message,
-    const char_t* parameterName
+    const c8* message,
+    const c8* parameterName
 ) noexcept
     : Exception(message)
     , m_ParameterName(parameterName)
 {
 }
 
-const char_t* ArgumentException::GetParameterName() const noexcept { return m_ParameterName; }
+const c8* ArgumentException::GetParameterName() const noexcept { return m_ParameterName; }

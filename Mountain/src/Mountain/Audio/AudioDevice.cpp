@@ -9,7 +9,7 @@
 
 using namespace Mountain;
 
-bool_t AudioDevice::CheckError(const AudioDevice* device)
+bool AudioDevice::CheckError(const AudioDevice* device)
 {
     ALCdevice* const handle = device ? device->m_Handle : nullptr;
 

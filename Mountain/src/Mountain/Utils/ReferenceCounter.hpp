@@ -41,10 +41,10 @@ namespace Mountain
         void DecWeak(const Pointer<T>* weakReferenceOwner);
 
         ATTRIBUTE_NODISCARD
-        uint64_t GetStrong() const;
+        u64 GetStrong() const;
 
         ATTRIBUTE_NODISCARD
-        uint64_t GetWeak() const;
+        u64 GetWeak() const;
 
         ATTRIBUTE_NODISCARD
         T* GetPointer();
@@ -53,7 +53,7 @@ namespace Mountain
         const T* GetPointer() const;
 
     private:
-        uint64_t m_Strong = 1;
+        u64 m_Strong = 1;
 
         T* m_Pointer = nullptr;
 
@@ -120,13 +120,13 @@ namespace Mountain
     }
 
     template <typename T>
-    uint64_t ReferenceCounter<T>::GetStrong() const
+    u64 ReferenceCounter<T>::GetStrong() const
     {
         return m_Strong;
     }
 
     template <typename T>
-    uint64_t ReferenceCounter<T>::GetWeak() const
+    u64 ReferenceCounter<T>::GetWeak() const
     {
         return m_WeakReferenceOwners.size();
     }

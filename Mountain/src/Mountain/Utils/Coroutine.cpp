@@ -11,7 +11,7 @@
 
 using namespace Mountain;
 
-bool_t Coroutine::Awaitable::await_ready() { return false; }
+bool Coroutine::Awaitable::await_ready() { return false; }
 
 void Coroutine::Awaitable::await_suspend(std::coroutine_handle<promise_type>) {}
 
@@ -86,11 +86,11 @@ void Coroutine::StopAll()
     m_RunningRoutines.clear();
 }
 
-bool_t Coroutine::IsRunning(const Guid& coroutineId) { return m_RunningRoutines.contains(coroutineId); }
+bool Coroutine::IsRunning(const Guid& coroutineId) { return m_RunningRoutines.contains(coroutineId); }
 
-bool_t Coroutine::IsRunningAndNotEmpty(const Guid& coroutineId) { return coroutineId != Guid::Empty() && IsRunning(coroutineId); }
+bool Coroutine::IsRunningAndNotEmpty(const Guid& coroutineId) { return coroutineId != Guid::Empty() && IsRunning(coroutineId); }
 
-size_t Coroutine::GetRunningCount() { return m_RunningRoutines.size(); }
+usize Coroutine::GetRunningCount() { return m_RunningRoutines.size(); }
 
 Coroutine Coroutine::promise_type::get_return_object() { return Coroutine(HandleType::from_promise(*this)); }
 
@@ -119,13 +119,13 @@ Coroutine::Awaitable Coroutine::promise_type::await_transform(const TimeSpan& du
     return {};
 }
 
-Coroutine::Awaitable Coroutine::promise_type::await_transform(const std::chrono::duration<double_t>& duration)
+Coroutine::Awaitable Coroutine::promise_type::await_transform(const std::chrono::duration<f64>& duration)
 {
     awaitValue = TimeSpan::FromSeconds(duration.count());
     return {};
 }
 
-Coroutine::Awaitable Coroutine::promise_type::await_transform(const float_t duration)
+Coroutine::Awaitable Coroutine::promise_type::await_transform(const f32 duration)
 {
     return await_transform(TimeSpan::FromSeconds(duration));
 }
@@ -169,9 +169,9 @@ void Coroutine::ResumeSafe() const
         Resume();
 }
 
-bool_t Coroutine::Finished() const { return m_Handle.done(); }
+bool Coroutine::Finished() const { return m_Handle.done(); }
 
-bool_t Coroutine::FinishedSafe() const
+bool Coroutine::FinishedSafe() const
 {
     if (Valid())
         return Finished();
@@ -191,7 +191,7 @@ void Coroutine::DestroySafe()
         Destroy();
 }
 
-bool_t Coroutine::Valid() const { return static_cast<bool_t>(m_Handle); }
+bool Coroutine::Valid() const { return static_cast<bool>(m_Handle); }
 
 void Coroutine::Reset()
 {

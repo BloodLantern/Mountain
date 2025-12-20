@@ -22,7 +22,7 @@ void AudioListener::Update()
     const Vector2& position = m_Entity->position * Audio::GetDistanceFactor();
 
     // Position
-    constexpr float_t positionZ = 20.f;
+    constexpr f32 positionZ = 20.f;
     alListenerfv(AL_POSITION, Vector3(position.x, position.y, positionZ * Audio::GetDistanceFactor()).Data());
     AudioContext::CheckError();
     AudioContext::CheckError();
@@ -41,12 +41,12 @@ void AudioListener::Update()
     m_LastPosition = position;
 }
 
-float_t AudioListener::GetVolume() const
+f32 AudioListener::GetVolume() const
 {
     return m_Volume;
 }
 
-void AudioListener::SetVolume(const float_t newVolume)
+void AudioListener::SetVolume(const f32 newVolume)
 {
     m_Volume = std::max(0.f, newVolume);
 

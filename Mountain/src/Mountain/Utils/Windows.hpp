@@ -27,7 +27,7 @@
 
 namespace Mountain::Windows
 {
-    MOUNTAIN_API bool_t CheckError();
+    MOUNTAIN_API bool CheckError();
 
     MOUNTAIN_API void SilenceError();
 

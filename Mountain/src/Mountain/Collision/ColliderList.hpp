@@ -29,13 +29,13 @@ namespace Mountain
 		MOUNTAIN_API bool CheckCollision(const ColliderList& otherList) const override;
 
 		ATTRIBUTE_NODISCARD
-		MOUNTAIN_API float_t Left() const override;
+		MOUNTAIN_API f32 Left() const override;
 		ATTRIBUTE_NODISCARD
-		MOUNTAIN_API float_t Right() const override;
+		MOUNTAIN_API f32 Right() const override;
 		ATTRIBUTE_NODISCARD
-		MOUNTAIN_API float_t Top() const override;
+		MOUNTAIN_API f32 Top() const override;
 		ATTRIBUTE_NODISCARD
-		MOUNTAIN_API float_t Bottom() const override;
+		MOUNTAIN_API f32 Bottom() const override;
 
 		ATTRIBUTE_NODISCARD
 		MOUNTAIN_API float AbsoluteLeft() const override;

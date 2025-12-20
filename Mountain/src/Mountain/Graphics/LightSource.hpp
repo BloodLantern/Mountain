@@ -9,10 +9,10 @@ namespace Mountain
     struct MOUNTAIN_API LightSource
     {
         Color color = Color::White();
-        float_t intensity = 0.f;
-        float_t radius = 0.f;
-        float_t angleMin = 0.f;
-        float_t angleMax = Calc::TwoPi;
+        f32 intensity = 0.f;
+        f32 radius = 0.f;
+        f32 angleMin = 0.f;
+        f32 angleMax = Calc::TwoPi;
 
         Vector2 position;
     };

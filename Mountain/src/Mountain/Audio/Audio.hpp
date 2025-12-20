@@ -28,7 +28,7 @@ namespace Mountain
         STATIC_CLASS(Audio)
 
     public:
-        MOUNTAIN_API static bool_t Initialize();
+        MOUNTAIN_API static bool Initialize();
 
         MOUNTAIN_API static void Shutdown();
 
@@ -48,9 +48,9 @@ namespace Mountain
 
         MOUNTAIN_API static void SetCurrentDevice(AudioDevice* newCurrentDevice);
 
-        MOUNTAIN_API static float_t GetDistanceFactor();
+        MOUNTAIN_API static f32 GetDistanceFactor();
 
-        MOUNTAIN_API static void SetDistanceFactor(float_t newDistanceFactor);
+        MOUNTAIN_API static void SetDistanceFactor(f32 newDistanceFactor);
 
     private:
         MOUNTAIN_API static inline AudioDevice* m_CurrentDevice = nullptr;
@@ -58,15 +58,15 @@ namespace Mountain
 
         MOUNTAIN_API static inline List<AudioBuffer*> m_Buffers;
 
-        MOUNTAIN_API static inline float_t m_DistanceFactor = 0.2f;
+        MOUNTAIN_API static inline f32 m_DistanceFactor = 0.2f;
 
-        MOUNTAIN_API static inline bool_t m_DefaultDeviceChanged = false;
+        MOUNTAIN_API static inline bool m_DefaultDeviceChanged = false;
 
         static void EventCallback(ALCenum eventType, ALCenum deviceType, ALCdevice* device, ALCsizei length, const ALCchar* message, void* userParam);
 
         /// @brief Iterates over an OpenAL string list, applying the given lambda on each string.
         ///
         /// OpenAL string lists are strings separated by null characters, and ending with two consecutive null characters.
-        static void IterateAlStringList(const char_t* list, const std::function<void(const char_t*)>& lambda);
+        static void IterateAlStringList(const c8* list, const std::function<void(const c8*)>& lambda);
     };
 }

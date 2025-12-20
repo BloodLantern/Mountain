@@ -17,7 +17,7 @@ namespace Mountain
 
         ContiguousConstIterator() = default;
 
-        ContiguousConstIterator(const T* firstElement, size_t index) noexcept;
+        ContiguousConstIterator(const T* firstElement, usize index) noexcept;
 
         /// @brief Gets the element in the container at the current position of the iterator.
         ATTRIBUTE_NODISCARD
@@ -54,7 +54,7 @@ namespace Mountain
         constexpr ContiguousConstIterator& operator-=(ptrdiff_t rhs) noexcept;
 
         ATTRIBUTE_NODISCARD
-        constexpr bool_t operator==(const ContiguousConstIterator& other) const;
+        constexpr bool operator==(const ContiguousConstIterator& other) const;
 
         ATTRIBUTE_NODISCARD
         constexpr std::strong_ordering operator<=>(const ContiguousConstIterator&) const;
@@ -63,11 +63,11 @@ namespace Mountain
         constexpr const T* GetFirstElement() const noexcept;
 
         ATTRIBUTE_NODISCARD
-        constexpr size_t GetIndex() const noexcept;
+        constexpr usize GetIndex() const noexcept;
 
     protected:
         const T* m_FirstElement = nullptr;
-        size_t m_Index = 0;
+        usize m_Index = 0;
     };
 
     template <typename T>
@@ -89,7 +89,7 @@ namespace Mountain
     /// @brief Checks whether @p lhs is compatible with @p rhs, e.g., if both are iterating over the same enumerable.
     template <typename T>
     ATTRIBUTE_NODISCARD
-    constexpr bool_t CheckCompatible(const ContiguousConstIterator<T>& lhs, const ContiguousConstIterator<T>& rhs) noexcept;
+    constexpr bool CheckCompatible(const ContiguousConstIterator<T>& lhs, const ContiguousConstIterator<T>& rhs) noexcept;
 
     /// @brief Checks whether @p lhs is compatible with @p rhs and throws an exception if they aren't compatible.
     template <typename T>
@@ -161,7 +161,7 @@ namespace Mountain
     /// @brief Checks whether @p lhs is compatible with @p rhs, e.g., if both are iterating over the same enumerable.
     template <typename T>
     ATTRIBUTE_NODISCARD
-    constexpr bool_t CheckCompatible(const ContiguousIterator<T>& lhs, const ContiguousIterator<T>& rhs) noexcept;
+    constexpr bool CheckCompatible(const ContiguousIterator<T>& lhs, const ContiguousIterator<T>& rhs) noexcept;
 
     /// @brief Checks whether @p lhs is compatible with @p rhs and throws an exception if they aren't compatible.
     template <typename T>
@@ -178,7 +178,7 @@ namespace Mountain
 namespace Mountain
 {
     template <typename T>
-    ContiguousConstIterator<T>::ContiguousConstIterator(const T* firstElement, const size_t index) noexcept
+    ContiguousConstIterator<T>::ContiguousConstIterator(const T* firstElement, const usize index) noexcept
         : m_FirstElement(firstElement), m_Index(index)
     {
     }
@@ -243,7 +243,7 @@ namespace Mountain
     }
 
     template <typename T>
-    constexpr bool_t ContiguousConstIterator<T>::operator==(const ContiguousConstIterator& other) const
+    constexpr bool ContiguousConstIterator<T>::operator==(const ContiguousConstIterator& other) const
     {
         CheckCompatibleThrow(*this, other);
         return m_Index == other.m_Index;
@@ -260,7 +260,7 @@ namespace Mountain
     constexpr const T* ContiguousConstIterator<T>::GetFirstElement() const noexcept { return m_FirstElement; }
 
     template <typename T>
-    constexpr size_t ContiguousConstIterator<T>::GetIndex() const noexcept { return m_Index; }
+    constexpr usize ContiguousConstIterator<T>::GetIndex() const noexcept { return m_Index; }
 
     template <typename T>
     constexpr ContiguousConstIterator<T> operator+(ptrdiff_t lhs, ContiguousConstIterator<T> rhs) noexcept { return rhs += lhs; }
@@ -279,7 +279,7 @@ namespace Mountain
     constexpr ContiguousConstIterator<T> operator-(ContiguousConstIterator<T> lhs, ptrdiff_t rhs) noexcept { return lhs -= rhs; }
 
     template <typename T>
-    constexpr bool_t CheckCompatible(const ContiguousConstIterator<T>& lhs, const ContiguousConstIterator<T>& rhs) noexcept
+    constexpr bool CheckCompatible(const ContiguousConstIterator<T>& lhs, const ContiguousConstIterator<T>& rhs) noexcept
     {
         return lhs.GetFirstElement() == rhs.GetFirstElement();
     }
@@ -376,7 +376,7 @@ namespace Mountain
     constexpr ContiguousIterator<T> operator-(ContiguousIterator<T> lhs, ptrdiff_t rhs) noexcept { return lhs -= rhs; }
 
     template <typename T>
-    constexpr bool_t CheckCompatible(const ContiguousIterator<T>& lhs, const ContiguousIterator<T>& rhs) noexcept
+    constexpr bool CheckCompatible(const ContiguousIterator<T>& lhs, const ContiguousIterator<T>& rhs) noexcept
     {
         return CheckCompatible(static_cast<ContiguousConstIterator<T>>(lhs), static_cast<ContiguousConstIterator<T>>(rhs));
     }

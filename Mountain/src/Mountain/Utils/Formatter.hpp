@@ -123,5 +123,5 @@ struct std::formatter<EnumT>
     }
 
 private:
-    bool_t m_PrintAsInteger = false;
+    bool m_PrintAsInteger = false;
 };

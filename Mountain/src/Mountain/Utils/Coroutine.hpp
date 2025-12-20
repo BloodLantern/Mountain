@@ -93,10 +93,10 @@ namespace Mountain
 
             /// @brief Converts an @c std::chrono::duration value to an @c Awaitable.
             /// Called when @c co_await is used with an @c std::chrono::duration value.
-            MOUNTAIN_API Awaitable await_transform(const std::chrono::duration<double_t>& duration);
+            MOUNTAIN_API Awaitable await_transform(const std::chrono::duration<f64>& duration);
 
-            /// @brief Converts a @c float_t value to an @c Awaitable. Called when @c co_await is used with a @c float_t value.
-            MOUNTAIN_API Awaitable await_transform(float_t duration);
+            /// @brief Converts a @c f32 value to an @c Awaitable. Called when @c co_await is used with a @c f32 value.
+            MOUNTAIN_API Awaitable await_transform(f32 duration);
 
             /// @brief Yields the coroutine using a @c nullptr value. The coroutine will be resumed on the next frame.
             MOUNTAIN_API std::suspend_always yield_value(nullptr_t);
@@ -106,7 +106,7 @@ namespace Mountain
         struct Awaitable
         {
             /// @brief Returns @c false if @c await_suspend should be called
-            MOUNTAIN_API bool_t await_ready();
+            MOUNTAIN_API bool await_ready();
 
             /// @brief Empty implementation
             MOUNTAIN_API void await_suspend(std::coroutine_handle<promise_type>);
@@ -139,15 +139,15 @@ namespace Mountain
         MOUNTAIN_API static void StopAll();
 
         ATTRIBUTE_NODISCARD
-        MOUNTAIN_API static bool_t IsRunning(const Guid& coroutineId);
+        MOUNTAIN_API static bool IsRunning(const Guid& coroutineId);
 
         ATTRIBUTE_NODISCARD
-        MOUNTAIN_API static bool_t IsRunningAndNotEmpty(const Guid& coroutineId);
+        MOUNTAIN_API static bool IsRunningAndNotEmpty(const Guid& coroutineId);
 
         ATTRIBUTE_NODISCARD
-        MOUNTAIN_API static size_t GetRunningCount();
+        MOUNTAIN_API static usize GetRunningCount();
 
-        bool_t useUnscaledDeltaTime = false;
+        bool useUnscaledDeltaTime = false;
 
         MOUNTAIN_API Coroutine() = default;
 
@@ -180,7 +180,7 @@ namespace Mountain
         /// @brief Returns whether the Coroutine finished its execution.
         /// @remark If @c Valid() is @c false, this is undefined behavior. Consider using @c FinishedSafe() instead.
         ATTRIBUTE_NODISCARD
-        MOUNTAIN_API bool_t Finished() const;
+        MOUNTAIN_API bool Finished() const;
 
         /// @brief Safely returns whether the Coroutine finished its execution by first checking if @c Valid() is @c true.
         ///
@@ -188,7 +188,7 @@ namespace Mountain
         ///
         /// @see @c Finished()
         ATTRIBUTE_NODISCARD
-        MOUNTAIN_API bool_t FinishedSafe() const;
+        MOUNTAIN_API bool FinishedSafe() const;
 
         /// @brief Destroys the Coroutine. It can't be resumed afterward.
         /// @remark If @c Valid() is @c false, this is undefined behavior. Consider using @c DestroySafe() instead.
@@ -201,7 +201,7 @@ namespace Mountain
         /// @brief Gets whether the Coroutine is valid, e.g. if it hasn't been default-initialized.
         /// @remark This still returns @c true even when the Coroutine is finished.
         ATTRIBUTE_NODISCARD
-        MOUNTAIN_API bool_t Valid() const;
+        MOUNTAIN_API bool Valid() const;
 
         /// @brief Resets the Coroutine.
         /// @warning <b>This does not release the allocated memory</b>, make sure to call @c Destroy() beforehand.

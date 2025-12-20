@@ -30,14 +30,14 @@
 
 namespace Mountain::ImGuiUtils
 {
-    MOUNTAIN_API void GridPlotting(std::string_view label, Vector2* value, float_t min = -1.f, float_t max = 1.f);
+    MOUNTAIN_API void GridPlotting(std::string_view label, Vector2* value, f32 min = -1.f, f32 max = 1.f);
 
     MOUNTAIN_API void DirectionVector(std::string_view label, Vector2* value);
 
     MOUNTAIN_API void DirectionVector(std::string_view label, Vector2* value, Vector2 expected);
 
     template <typename T>
-    bool_t Optional(
+    bool Optional(
         Optional<T>* value,
         const Meta::Identity<T>& defaultValue,
         Meta::Identity<T> nullValue,
@@ -52,11 +52,11 @@ namespace Mountain::ImGuiUtils
 
     MOUNTAIN_API void ShowResourceManager();
 
-    MOUNTAIN_API bool_t PushSeparatorText(const char_t* label);
+    MOUNTAIN_API bool PushSeparatorText(const c8* label);
 
     MOUNTAIN_API void PopSeparatorText();
 
-    MOUNTAIN_API bool_t PushCollapsingHeader(const char_t* label, ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_None);
+    MOUNTAIN_API bool PushCollapsingHeader(const c8* label, ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_None);
 
     MOUNTAIN_API void PopCollapsingHeader();
 
@@ -66,36 +66,36 @@ namespace Mountain::ImGuiUtils
 
     MOUNTAIN_API void ShowPerformanceMonitoring();
 
-    MOUNTAIN_API void DrawEasingFunction(const char_t* label, Easing::Easer function, int32_t pointCount = 30);
+    MOUNTAIN_API void DrawEasingFunction(const c8* label, Easing::Easer function, s32 pointCount = 30);
 
     MOUNTAIN_API void OpenPointerPopupModal();
 
     template <typename T>
-    bool_t FilterPointerPopupModal(
+    bool FilterPointerPopupModal(
         Pointer<T>* value,
         const List<Pointer<T>>& pointers,
         std::string& filter,
-        const std::function<const char_t*(const Pointer<T>&)>& getNameFunction
+        const std::function<const c8*(const Pointer<T>&)>& getNameFunction
     );
 
-    MOUNTAIN_API bool_t FilterFilePopupModal(Pointer<File>* value, std::string_view extension = "");
+    MOUNTAIN_API bool FilterFilePopupModal(Pointer<File>* value, std::string_view extension = "");
 
     template <Concepts::Resource T>
-    bool_t FilterResourcePopupModal(Pointer<T>* value);
+    bool FilterResourcePopupModal(Pointer<T>* value);
 
     template <typename T>
-    bool_t SelectPointer(
-        const char_t* label,
+    bool SelectPointer(
+        const c8* label,
         Pointer<T>* value,
-        bool_t enableResetButton,
-        const std::function<bool_t(Pointer<T>*)>& filterFunction,
-        const std::function<const char_t*(const Pointer<T>&)>& getNameFunction
+        bool enableResetButton,
+        const std::function<bool(Pointer<T>*)>& filterFunction,
+        const std::function<const c8*(const Pointer<T>&)>& getNameFunction
     );
 
-    MOUNTAIN_API bool_t SelectFile(const char_t* label, Pointer<File>* value, bool_t enableResetButton, std::string_view extension = "");
+    MOUNTAIN_API bool SelectFile(const c8* label, Pointer<File>* value, bool enableResetButton, std::string_view extension = "");
 
     template <Concepts::Resource T>
-    bool_t SelectResource(const char_t* label, Pointer<T>* value, bool_t enableResetButton);
+    bool SelectResource(const c8* label, Pointer<T>* value, bool enableResetButton);
 }
 
 // ReSharper disable CppInconsistentNaming
@@ -136,14 +136,14 @@ namespace ImGui
 namespace Mountain
 {
     template <typename T>
-    bool_t ImGuiUtils::Optional(
+    bool ImGuiUtils::Optional(
         Mountain::Optional<T>* value,
         const Meta::Identity<T>& defaultValue,
         Meta::Identity<T> nullValue,
-        const Meta::Identity<std::function<bool_t(T& value)>>& displayFunction
+        const Meta::Identity<std::function<bool(T& value)>>& displayFunction
     )
     {
-        bool_t result = false;
+        bool result = false;
         if (value->HasValue())
         {
             if (ImGui::Button("Unset value"))
@@ -176,11 +176,11 @@ namespace Mountain
     }
 
     template <typename T>
-    bool_t ImGuiUtils::FilterPointerPopupModal(
+    bool ImGuiUtils::FilterPointerPopupModal(
         Pointer<T>* value,
         const List<Pointer<T>>& pointers,
         std::string& filter,
-        const std::function<const char_t*(const Pointer<T>&)>& getNameFunction
+        const std::function<const c8*(const Pointer<T>&)>& getNameFunction
     )
     {
         ENSURE_NOT_NULL(value);
@@ -190,7 +190,7 @@ namespace Mountain
         if (!ImGui::BeginPopupModal("PointerFilter"))
             return false;
 
-        static size_t selectedIndex = 0;
+        static usize selectedIndex = 0;
 
         if (ImGui::IsWindowAppearing())
         {
@@ -201,7 +201,7 @@ namespace Mountain
 
             if (*value)
             {
-                for (size_t i = 0; i < pointers.GetSize(); i++)
+                for (usize i = 0; i < pointers.GetSize(); i++)
                 {
                     if (pointers[i] != *value)
                         continue;
@@ -223,7 +223,7 @@ namespace Mountain
             selectedIndex = (selectedIndex - 1) % pointers.GetSize();
 
         Pointer<T> selectedPointer;
-        for (size_t i = 0; i < pointers.GetSize(); i++)
+        for (usize i = 0; i < pointers.GetSize(); i++)
         {
             const Pointer<T>& pointer = pointers[i];
 
@@ -261,7 +261,7 @@ namespace Mountain
     }
 
     template <Concepts::Resource T>
-    bool_t ImGuiUtils::FilterResourcePopupModal(Pointer<T>* value)
+    bool ImGuiUtils::FilterResourcePopupModal(Pointer<T>* value)
     {
         static std::string filter;
 
@@ -276,12 +276,12 @@ namespace Mountain
     }
 
     template <typename T>
-    bool_t ImGuiUtils::SelectPointer(
-        const char_t* label,
+    bool ImGuiUtils::SelectPointer(
+        const c8* label,
         Pointer<T>* value,
-        const bool_t enableResetButton,
-        const std::function<bool_t(Pointer<T>*)>& filterFunction,
-        const std::function<const char_t*(const Pointer<T>&)>& getNameFunction
+        const bool enableResetButton,
+        const std::function<bool(Pointer<T>*)>& filterFunction,
+        const std::function<const c8*(const Pointer<T>&)>& getNameFunction
     )
     {
         ENSURE_NOT_NULL(value);
@@ -295,7 +295,7 @@ namespace Mountain
         // Display resource name
         if (*value != nullptr)
         {
-            const float_t textSize = Calc::Clamp(ImGui::CalcTextSize(getNameFunction(*value)).x, 0.f, 5.f);
+            const f32 textSize = Calc::Clamp(ImGui::CalcTextSize(getNameFunction(*value)).x, 0.f, 5.f);
             ImGui::SetNextItemWidth(textSize);
             ImGui::Text("%s", getNameFunction(*value));
         }
@@ -313,7 +313,7 @@ namespace Mountain
         {
             ImGui::SameLine();
 
-            const bool_t resetButtonDisabled = *value == nullptr;
+            const bool resetButtonDisabled = *value == nullptr;
 
             if (resetButtonDisabled)
                 ImGui::BeginDisabled();
@@ -325,7 +325,7 @@ namespace Mountain
                 ImGui::EndDisabled();
         }
 
-        const bool_t result = filterFunction(value);
+        const bool result = filterFunction(value);
 
         ImGui::PopID();
 
@@ -333,7 +333,7 @@ namespace Mountain
     }
 
     template <Concepts::Resource T>
-    bool_t ImGuiUtils::SelectResource(const char_t* label, Pointer<T>* value, const bool_t enableResetButton)
+    bool ImGuiUtils::SelectResource(const c8* label, Pointer<T>* value, const bool enableResetButton)
     {
         return SelectPointer<T>(label, value, enableResetButton, FilterResourcePopupModal<T>, [](const Pointer<T>& p) { return p->GetName().c_str(); });
     }
@@ -345,7 +345,7 @@ namespace ImGui
     template <Mountain::Concepts::Enum T>
     bool ComboEnum(const char* label, T* const v, const ImGuiComboFlags flags)
     {
-        bool_t result = false;
+        bool result = false;
         if (BeginCombo(label, magic_enum::enum_name(*v).data(), flags))
         {
             for (const T value : magic_enum::enum_values<T>())

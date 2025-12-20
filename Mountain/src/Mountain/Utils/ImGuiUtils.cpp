@@ -28,11 +28,11 @@ namespace
     };
 }
 
-void ImGuiUtils::GridPlotting(const std::string_view label, Vector2* const value, const float_t min, const float_t max)
+void ImGuiUtils::GridPlotting(const std::string_view label, Vector2* const value, const f32 min, const f32 max)
 {
     ImGui::PushID(STRING_VIEW_TO_C_STR(label));
 
-    ImGui::Text("%.*s", static_cast<int32_t>(label.length()), label.data());
+    ImGui::Text("%.*s", static_cast<s32>(label.length()), label.data());
     ImDrawList* drawList = ImGui::GetWindowDrawList();
 
     constexpr Vector2 size(100.f, 100.f);
@@ -89,7 +89,7 @@ void ImGuiUtils::DirectionVector(const std::string_view label, Vector2* const va
 {
     ImGui::PushID(STRING_VIEW_TO_C_STR(label));
 
-    ImGui::Text("%.*s", static_cast<int32_t>(label.length()), label.data());
+    ImGui::Text("%.*s", static_cast<s32>(label.length()), label.data());
     ImDrawList* drawList = ImGui::GetWindowDrawList();
 
     constexpr Vector2 size(100.f, 100.f);
@@ -146,7 +146,7 @@ void ImGuiUtils::DirectionVector(const std::string_view label, Vector2* const va
 {
     ImGui::PushID(value);
 
-    ImGui::Text("%.*s", static_cast<int32_t>(label.length()), label.data());
+    ImGui::Text("%.*s", static_cast<s32>(label.length()), label.data());
     ImDrawList* drawList = ImGui::GetWindowDrawList();
 
     constexpr Vector2 size = Vector2::One() * 100.f;
@@ -256,9 +256,9 @@ bool ImGuiUtils::ComboEaser(const std::string& label, Easing::Easer* v, const Im
     };
 
     const auto current = std::ranges::find_if(Functions, [&](auto element) { return element.second == *v; });
-    const char_t* const value = current == Functions.end() ? "Linear" : current->first;
+    const c8* const value = current == Functions.end() ? "Linear" : current->first;
 
-    bool_t result = false;
+    bool result = false;
     if (ImGui::BeginCombo(label.data(), value, flags))
     {
         for (const auto& pair : Functions)
@@ -288,7 +288,7 @@ void ImGuiUtils::ShowInputsWindow()
         ImGui::Text("Position: %d, %d", mousePos.x, mousePos.y);
         ImGui::Text("Button down right: %d", Input::GetMouseButton(MouseButton::Right));
         ImGui::Text("Button release right: %d", Input::GetMouseButton(MouseButton::Right, MouseButtonStatus::Release));
-        for (uint32_t i = 0; i < magic_enum::enum_count<MouseButton>(); i++)
+        for (u32 i = 0; i < magic_enum::enum_count<MouseButton>(); i++)
         {
             ImGui::Text("Button down %u: %d", i + 1, Input::GetMouseButton(static_cast<MouseButton>(i)));
             ImGui::Text("Button release %u: %d", i + 1, Input::GetMouseButton(static_cast<MouseButton>(i), MouseButtonStatus::Release));
@@ -315,7 +315,7 @@ void ImGuiUtils::ShowInputsWindow()
     }
 
     ImGui::Text("Gamepads connected: %u", Input::GetGamepadsConnected());
-    for (uint32_t i = 0; i < Input::GamepadMax; i++)
+    for (u32 i = 0; i < Input::GamepadMax; i++)
     {
         const GamepadInput& gamepad = Input::GetGamepad(i);
 
@@ -338,11 +338,11 @@ void ImGuiUtils::ShowInputsWindow()
             ImGui::Text("Right trigger axis: %f", gamepad.GetAxis(GamepadAxis::RightTrigger));
             ImGui::EndDisabled();
 
-            for (uint32_t j = 0; j < magic_enum::enum_count<GamepadButton>(); j++)
+            for (u32 j = 0; j < magic_enum::enum_count<GamepadButton>(); j++)
             {
                 const GamepadButton button = static_cast<GamepadButton>(j);
                 const std::string_view name = magic_enum::enum_name(button);
-                ImGui::Text("Button %u - %.*s: %d", j, static_cast<int32_t>(name.length()), name.data(), gamepad.GetButton(button));
+                ImGui::Text("Button %u - %.*s: %d", j, static_cast<s32>(name.length()), name.data(), gamepad.GetButton(button));
             }
 
             ImGui::BeginDisabled();
@@ -364,13 +364,13 @@ void ImGuiUtils::ShowInputsWindow()
 
             if (gamepad.HasCapability(GamepadCapabilities::Touchpad))
             {
-                for (size_t j = 0; j < gamepad.GetTouchpadAmount(); j++)
+                for (usize j = 0; j < gamepad.GetTouchpadAmount(); j++)
                 {
                     const GamepadInput::TouchpadInfo& touchpad = gamepad.GetTouchpad(j);
 
                     ImGui::Text("Touchpad %ud: ", i);
                     ImGui::Text("\tMax fingers: %d", touchpad.nbrOfFingersMax);
-                    for (size_t k = 0; k < touchpad.fingerLocations.GetSize(); k++)
+                    for (usize k = 0; k < touchpad.fingerLocations.GetSize(); k++)
                     {
                         const Vector2& finger = touchpad.fingerLocations[k];
                         ImGui::Text("\tFinger %zu: %f, %f", k, finger.x, finger.y);
@@ -380,7 +380,7 @@ void ImGuiUtils::ShowInputsWindow()
 
             ImGui::Text("Battery level: %d%%", gamepad.GetBattery());
             const std::string_view batteryState = magic_enum::enum_name(gamepad.GetBatteryState());
-            ImGui::Text("Battery status: %*s", static_cast<int32_t>(batteryState.length()), batteryState.data());
+            ImGui::Text("Battery status: %*s", static_cast<s32>(batteryState.length()), batteryState.data());
 
             if (gamepad.HasCapability(GamepadCapabilities::Rumble))
             {
@@ -416,13 +416,13 @@ void ImGuiUtils::ShowFileManager()
 
     ImGui::Separator();
 
-    for (Pointer file : FileManager::FindAll<File>([&] (Pointer<File> f) -> bool_t { return Utils::StringContainsIgnoreCase(f->GetPathString(), filter); }))
+    for (Pointer file : FileManager::FindAll<File>([&] (Pointer<File> f) -> bool { return Utils::StringContainsIgnoreCase(f->GetPathString(), filter); }))
     {
         if (!ImGui::TreeNode(file->GetPathString().c_str()))
             continue;
 
         const std::string_view format = magic_enum::enum_name(file->GetType());
-        ImGui::Text("Format: %.*s", static_cast<int32_t>(format.length()), format.data());
+        ImGui::Text("Format: %.*s", static_cast<s32>(format.length()), format.data());
         ImGui::BeginDisabled();
         if (file->GetSize() < 1000)
         {
@@ -431,7 +431,7 @@ void ImGuiUtils::ShowFileManager()
         else
         {
             const auto byteSize = Utils::ByteSizeUnit(file->GetSize());
-            ImGui::Text("Size: %.2f %.*s", byteSize.first, static_cast<int32_t>(byteSize.second.length()), byteSize.second.data());
+            ImGui::Text("Size: %.2f %.*s", byteSize.first, static_cast<s32>(byteSize.second.length()), byteSize.second.data());
         }
         ImGui::EndDisabled();
 
@@ -471,8 +471,8 @@ namespace
         const std::function<void(Pointer<T> resource)>& additionalAction = std::identity{}
     )
     {
-        const List<Pointer<T>> resources = ResourceManager::FindAll<T>([&] (Pointer<T> r) -> bool_t { return Utils::StringContainsIgnoreCase(r->GetName(), resourceNameFilter); });
-        const List<Pointer<T>> packagedResources = FindAll(resources, [] (const Pointer<T>& r) -> bool_t { return ResourceManager::IsBinary(r->GetName()); });
+        const List<Pointer<T>> resources = ResourceManager::FindAll<T>([&] (Pointer<T> r) -> bool { return Utils::StringContainsIgnoreCase(r->GetName(), resourceNameFilter); });
+        const List<Pointer<T>> packagedResources = FindAll(resources, [] (const Pointer<T>& r) -> bool { return ResourceManager::IsBinary(r->GetName()); });
         if (ImGui::TreeNode(std::format("{} ({}, {} packaged in binary)", typeName, resources.GetSize(), packagedResources.GetSize()).c_str()))
         {
             for (Pointer resource : resources)
@@ -500,9 +500,9 @@ namespace
         const std::function<void(Pointer<Shader> resource)>& additionalAction
     )
     {
-        const List<Pointer<Shader>> shaders = ResourceManager::FindAll<Shader>([&] (Pointer<Shader> r) -> bool_t { return Utils::StringContainsIgnoreCase(r->GetName(), resourceNameFilter); });
+        const List<Pointer<Shader>> shaders = ResourceManager::FindAll<Shader>([&] (Pointer<Shader> r) -> bool { return Utils::StringContainsIgnoreCase(r->GetName(), resourceNameFilter); });
         const List<Pointer<Shader>> packagedShaders = FindAll(shaders,
-            [](const Pointer<Shader>& r) -> bool_t
+            [](const Pointer<Shader>& r) -> bool
             {
                 return ResourceManager::IsBinary(First(r->GetFiles())->GetPathString());
             }
@@ -515,7 +515,7 @@ namespace
                 if (!ImGui::TreeNode(shader->GetName().c_str()))
                     continue;
 
-                for (size_t i = 0; i < shader->GetFiles().GetSize(); i++)
+                for (usize i = 0; i < shader->GetFiles().GetSize(); i++)
                 {
                     Pointer<File>& shaderFile = shader->GetFiles()[i];
 
@@ -555,7 +555,7 @@ void ImGuiUtils::ShowResourceManager()
         [](const Pointer<AudioTrack>& audioTrack)
         {
             const std::string_view format = magic_enum::enum_name(audioTrack->GetFormat());
-            ImGui::Text("Format: %.*s", static_cast<int32_t>(format.length()), format.data());
+            ImGui::Text("Format: %.*s", static_cast<s32>(format.length()), format.data());
         }
     );
 
@@ -580,7 +580,7 @@ void ImGuiUtils::ShowResourceManager()
     ImGui::End();
 }
 
-bool_t ImGuiUtils::PushSeparatorText(const char_t* label)
+bool ImGuiUtils::PushSeparatorText(const c8* label)
 {
     ImGui::SeparatorText(label);
     ImGui::PushID(label);
@@ -592,7 +592,7 @@ void ImGuiUtils::PopSeparatorText()
     ImGui::PopID();
 }
 
-bool_t ImGuiUtils::PushCollapsingHeader(const char_t* label, const ImGuiTreeNodeFlags flags)
+bool ImGuiUtils::PushCollapsingHeader(const c8* label, const ImGuiTreeNodeFlags flags)
 {
     if (ImGui::CollapsingHeader(label, flags))
     {
@@ -616,20 +616,20 @@ void ImGuiUtils::ShowPerformanceMonitoring()
 {
     ImGui::Begin("Performance Monitoring");
 
-    static float_t updateInterval = 0.25f;
+    static f32 updateInterval = 0.25f;
 
     ImGui::SeparatorText("Settings");
 
     ImGui::DragFloat("Monitoring update interval", &updateInterval, 0.01f, 0.f, 1.f);
 
     auto targetFps = Time::targetFps;
-    const double_t refreshRate = Screen::GetRefreshRate();
-    constexpr double_t zero = 0;
+    const f64 refreshRate = Screen::GetRefreshRate();
+    constexpr f64 zero = 0;
     if (Optional(
         &targetFps,
         refreshRate,
         refreshRate,
-        [&](double_t& value) -> bool_t
+        [&](f64& value) -> bool
         {
             return ImGui::DragScalar("Target FPS", ImGuiDataType_Double, &value, 1.f, &zero, nullptr, "%.0f");
         }
@@ -637,32 +637,32 @@ void ImGuiUtils::ShowPerformanceMonitoring()
     {
         Time::targetFps = targetFps;
     }
-    bool_t vsync = Window::GetVSync();
+    bool vsync = Window::GetVSync();
     ImGui::Checkbox("Vertical Synchronization", &vsync);
     Window::SetVSync(vsync);
 
     ImGui::SeparatorText("Statistics");
 
-    static float_t fps = 0.f;
-    static double_t memory = 0.f;
-    static float_t deltaTime = 0.f;
-    static float_t frameDuration = 0.f;
-    static float_t frameDurationLeft = 0.f;
+    static f32 fps = 0.f;
+    static f64 memory = 0.f;
+    static f32 deltaTime = 0.f;
+    static f32 frameDuration = 0.f;
+    static f32 frameDurationLeft = 0.f;
     static Vector2i framebufferSize;
 
-    static float_t lastUpdateTime = 0.f;
-    static uint64_t lastUpdateTotalFrames = 0;
+    static f32 lastUpdateTime = 0.f;
+    static u64 lastUpdateTotalFrames = 0;
 
-    static List<float_t> frameDurationList;
-    static constexpr size_t MaxFrameDurations = 200;
+    static List<f32> frameDurationList;
+    static constexpr usize MaxFrameDurations = 200;
 
     if (Time::OnIntervalUnscaled(updateInterval))
     {
-        const float_t updateTime = Time::GetTotalTimeUnscaled();
-        const uint64_t totalFrames = Time::GetTotalFrameCount();
+        const f32 updateTime = Time::GetTotalTimeUnscaled();
+        const u64 totalFrames = Time::GetTotalFrameCount();
 
         deltaTime = Time::GetDeltaTimeUnscaled();
-        fps = Calc::Round(static_cast<float_t>(totalFrames - lastUpdateTotalFrames) / (updateTime - lastUpdateTime));
+        fps = Calc::Round(static_cast<f32>(totalFrames - lastUpdateTotalFrames) / (updateTime - lastUpdateTime));
         frameDuration = Time::GetLastFrameDuration();
         frameDurationLeft = Time::GetTargetDeltaTime() == 0.f ? 0.f : (Time::GetTargetDeltaTime() - frameDuration);
         framebufferSize = Window::GetSize();
@@ -671,7 +671,7 @@ void ImGuiUtils::ShowPerformanceMonitoring()
         GetProcessMemoryInfo(GetCurrentProcess(), reinterpret_cast<PPROCESS_MEMORY_COUNTERS>(&memoryCounter), sizeof(memoryCounter));
         Windows::CheckError();
 
-        memory = static_cast<double_t>(memoryCounter.PrivateWorkingSetSize) * 1e-6; // Convert to MB
+        memory = static_cast<f64>(memoryCounter.PrivateWorkingSetSize) * 1e-6; // Convert to MB
 
         frameDurationList.Add(frameDuration * 1000.f);
 
@@ -695,23 +695,23 @@ void ImGuiUtils::ShowPerformanceMonitoring()
 
     if (ImGui::TreeNode("Frame duration graph"))
     {
-        ImGui::PlotHistogram("Frame durations (in ms)", frameDurationList.GetData(), static_cast<int32_t>(frameDurationList.GetSize()), 0, nullptr, 0.f, Time::GetTargetDeltaTime() * 10000.f, {0.f, 200.f});
+        ImGui::PlotHistogram("Frame durations (in ms)", frameDurationList.GetData(), static_cast<s32>(frameDurationList.GetSize()), 0, nullptr, 0.f, Time::GetTargetDeltaTime() * 10000.f, {0.f, 200.f});
         ImGui::TreePop();
     }
 
     ImGui::End();
 }
 
-void ImGuiUtils::DrawEasingFunction(const char_t* label, const Easing::Easer function, const int32_t pointCount)
+void ImGuiUtils::DrawEasingFunction(const c8* label, const Easing::Easer function, const s32 pointCount)
 {
-    float_t* data = static_cast<float_t*>(_malloca(pointCount * sizeof(float_t)));
+    f32* data = static_cast<f32*>(_malloca(pointCount * sizeof(f32)));
 
-    float_t min = std::numeric_limits<float_t>::max();
-    float_t max = std::numeric_limits<float_t>::min();
+    f32 min = std::numeric_limits<f32>::max();
+    f32 max = std::numeric_limits<f32>::min();
 
-    for (int32_t i = 0; i < pointCount; i++)
+    for (s32 i = 0; i < pointCount; i++)
     {
-        const float_t value = function(static_cast<float_t>(i) / static_cast<float_t>(pointCount));
+        const f32 value = function(static_cast<f32>(i) / static_cast<f32>(pointCount));
         data[i] = value;
 
         if (value < min)
@@ -730,7 +730,7 @@ void ImGuiUtils::OpenPointerPopupModal()
     ImGui::OpenPopup("PointerFilter");
 }
 
-bool_t ImGuiUtils::FilterFilePopupModal(Pointer<File>* value, const std::string_view extension)
+bool ImGuiUtils::FilterFilePopupModal(Pointer<File>* value, const std::string_view extension)
 {
     static std::string filter;
     const std::string f = filter + std::string{extension};
@@ -745,7 +745,7 @@ bool_t ImGuiUtils::FilterFilePopupModal(Pointer<File>* value, const std::string_
     return FilterPointerPopupModal<File>(value, resources, filter, [](const Pointer<File>& p) { return p->GetName().c_str(); });
 }
 
-bool_t ImGuiUtils::SelectFile(const char_t* label, Pointer<File>* value, const bool_t enableResetButton, const std::string_view extension)
+bool ImGuiUtils::SelectFile(const c8* label, Pointer<File>* value, const bool enableResetButton, const std::string_view extension)
 {
     return SelectPointer<File>(
         label,
@@ -767,8 +767,8 @@ bool ImGui::DragAngle(
     const ImGuiSliderFlags flags
 )
 {
-    float_t degreeAngle = *v_rad * Calc::Rad2Deg;
-    const bool_t result = DragFloat(label, &degreeAngle, v_speed, v_degrees_min, v_degrees_max, format, flags);
+    f32 degreeAngle = *v_rad * Calc::Rad2Deg;
+    const bool result = DragFloat(label, &degreeAngle, v_speed, v_degrees_min, v_degrees_max, format, flags);
     *v_rad = degreeAngle * Calc::Deg2Rad;
     return result;
 }
@@ -784,7 +784,7 @@ bool ImGui::DragAngle3(
 )
 {
     Vector3 degreeAngle = Vector3{v_rad} * Calc::Rad2Deg;
-    const bool_t result = DragFloat3(label, degreeAngle.Data(), v_speed, v_degrees_min, v_degrees_max, format, flags);
+    const bool result = DragFloat3(label, degreeAngle.Data(), v_speed, v_degrees_min, v_degrees_max, format, flags);
     *reinterpret_cast<Vector3*>(v_rad) = degreeAngle * Calc::Deg2Rad;
     return result;
 }
@@ -792,7 +792,7 @@ bool ImGui::DragAngle3(
 template <>
 bool ImGui::ComboEnum<Easing::Type>(const char* label, Easing::Type* v, const ImGuiComboFlags flags)
 {
-    bool_t result = false;
+    bool result = false;
     if (BeginCombo(label, STRING_VIEW_TO_C_STR(magic_enum::enum_name(*v)), flags))
     {
         for (const Easing::Type value : magic_enum::enum_values<Easing::Type>())

@@ -32,7 +32,7 @@ namespace Mountain::Graphics
         /// @see <a href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/glGenTextures.xhtml">glGenTextures()</a>
         /// <a href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/glTextureView.xhtml">glTextureView()</a>
         /// @note The original texture <b>must</b> be immutable
-        void CreateViewFrom(uint32_t originalTextureId, InternalFormat newInternalFormat, uint32_t minMipmapLevel, uint32_t mipmapLevels);
+        void CreateViewFrom(u32 originalTextureId, InternalFormat newInternalFormat, u32 minMipmapLevel, u32 mipmapLevels);
 
         /// @brief Create a view texture on the GPU from the given immutable texture
         /// @param originalGpuTexture The texture whose data is to be what this texture will view
@@ -44,7 +44,7 @@ namespace Mountain::Graphics
         /// @see <a href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/glGenTextures.xhtml">glGenTextures()</a>
         /// <a href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/glTextureView.xhtml">glTextureView()</a>
         /// @note The original texture <b>must</b> be immutable
-        void CreateViewFrom(GpuTexture originalGpuTexture, InternalFormat newInternalFormat, uint32_t minMipmapLevel, uint32_t mipmapLevels);
+        void CreateViewFrom(GpuTexture originalGpuTexture, InternalFormat newInternalFormat, u32 minMipmapLevel, u32 mipmapLevels);
 
         /// @brief Initialize the immutable data storage on the GPU
         /// @param mipmapLevels The number of mipmap levels to initialize
@@ -53,7 +53,7 @@ namespace Mountain::Graphics
         /// @note This will fail if the texture data is already immutable, e.g. a call to @c SetStorage() was already made.
         /// If you want to use this function again, you first need to @c Recreate() the texture.
         /// @see <a href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/glTexStorage2D.xhtml">glTexStorage2D()</a>
-        void SetStorage(InternalFormat internalFormat, Vector2i size, int32_t mipmapLevels = 1) const;
+        void SetStorage(InternalFormat internalFormat, Vector2i size, s32 mipmapLevels = 1) const;
 
         /// @brief Set a portion of the texture data
         /// @param offset The offset from in the texture to set the data from
@@ -69,7 +69,7 @@ namespace Mountain::Graphics
             Format dataFormat,
             DataType dataType,
             const void* data,
-            int32_t mipmapLevel = 0
+            s32 mipmapLevel = 0
         ) const;
 
         /// @brief Initialize and set the initial texture data
@@ -88,7 +88,7 @@ namespace Mountain::Graphics
             Format dataFormat,
             DataType dataType,
             const void* data,
-            int32_t mipmapLevel = 0
+            s32 mipmapLevel = 0
         ) const;
 
         /// @see <a href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/glGenerateMipmap.xhtml">glGenerateTextureMipmap()</a>
@@ -104,7 +104,7 @@ namespace Mountain::Graphics
         /// @brief Get whether the GpuTexture data is immutable
         /// @see <a href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/glGetTexParameter.xhtml">glGetTexParameteriv()</a>
         ATTRIBUTE_NODISCARD
-        bool_t GetImmutable() const;
+        bool GetImmutable() const;
 
         /// @see <a href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/glGetTexParameter.xhtml">glGetTexParameteriv()</a>
         ATTRIBUTE_NODISCARD
@@ -137,12 +137,12 @@ namespace Mountain::Graphics
         void SetBorderColor(Color newBorderColor) const;
 
         ATTRIBUTE_NODISCARD
-        uint32_t GetId() const;
+        u32 GetId() const;
 
         ATTRIBUTE_NODISCARD
-        explicit operator uint32_t() const;
+        explicit operator u32() const;
 
     private:
-        uint32_t m_Id = 0;
+        u32 m_Id = 0;
     };
 }

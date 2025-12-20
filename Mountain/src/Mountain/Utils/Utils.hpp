@@ -22,7 +22,7 @@
 /// @brief Namespace containing utility functions that don't belong anywhere else
 namespace Mountain::Utils
 {
-    enum class TrimOptions : uint8_t
+    enum class TrimOptions : u8
     {
         None    = 0,
         Start   = 1 << 0,
@@ -40,14 +40,14 @@ namespace Mountain::Utils
     constexpr PtrT* IntToPointer(IntT number);
 
     ATTRIBUTE_NODISCARD
-    constexpr size_t PointerToInt(const void* pointer);
+    constexpr usize PointerToInt(const void* pointer);
 
     /// @brief Gets the hash code of a specified type
     /// @tparam T Type
     /// @return Hash
     template <typename T>
     ATTRIBUTE_NODISCARD
-    size_t GetTypeHash();
+    usize GetTypeHash();
 
     /// @brief Gets the hash code of a specified polymorphic pointer type
     /// @tparam T Type
@@ -55,12 +55,12 @@ namespace Mountain::Utils
     /// @return Hash
     template <typename T>
     ATTRIBUTE_NODISCARD
-    size_t GetTypeHash(const T* ptr);
+    usize GetTypeHash(const T* ptr);
 
     /// @brief Horizontally aligns the cursor of ImGui to be centered around a specific portion of the available space
     /// @param objectWidth Width of the element to align
     /// @param alignment In window alignment, 0.5f by default to center the object
-    MOUNTAIN_API void AlignImGuiCursor(float_t objectWidth, float_t alignment = 0.5f);
+    MOUNTAIN_API void AlignImGuiCursor(f32 objectWidth, f32 alignment = 0.5f);
 
     /// @brief Humanizes the provided string
     /// @details The process converts a PascalCase styled word to a humanized version
@@ -89,7 +89,7 @@ namespace Mountain::Utils
     /// @details E.g., Mountain::MyClass will become MyClass
     /// @param str String to modify
     ATTRIBUTE_NODISCARD
-    MOUNTAIN_API constexpr const char_t* RemoveNamespaces(const char_t* str);
+    MOUNTAIN_API constexpr const c8* RemoveNamespaces(const c8* str);
 
     /// @brief Remaps a value from one range to another
     /// @details E.g., the number 5 in the range [0;10] will become .5 if remapped to the range [0;1]
@@ -97,7 +97,7 @@ namespace Mountain::Utils
     /// @param oldRange Old range
     /// @param newRange New range
     ATTRIBUTE_NODISCARD
-    MOUNTAIN_API constexpr float_t RemapValue(float_t oldValue, Vector2 oldRange, Vector2 newRange);
+    MOUNTAIN_API constexpr f32 RemapValue(f32 oldValue, Vector2 oldRange, Vector2 newRange);
 
     /// @brief Remaps a value from one range to another
     /// @details E.g., the number 5 in the range [0;10] will become .5 if remapped to the range [0;1]
@@ -107,7 +107,7 @@ namespace Mountain::Utils
     /// @param newMin New range min
     /// @param newMax New range max
     ATTRIBUTE_NODISCARD
-    MOUNTAIN_API constexpr float_t RemapValue(float_t oldValue, float_t oldMin, float_t oldMax, float_t newMin, float_t newMax);
+    MOUNTAIN_API constexpr f32 RemapValue(f32 oldValue, f32 oldMin, f32 oldMax, f32 newMin, f32 newMax);
 
     /// @brief Remaps a value from one range to another
     /// @details E.g., the number 5 in the range [0;10] will become 1 if remapped to the range [0;2]
@@ -115,7 +115,7 @@ namespace Mountain::Utils
     /// @param oldRange Old range
     /// @param newRange New range
     ATTRIBUTE_NODISCARD
-    MOUNTAIN_API constexpr size_t RemapValue(size_t oldValue, Vector2i oldRange, Vector2i newRange);
+    MOUNTAIN_API constexpr usize RemapValue(usize oldValue, Vector2i oldRange, Vector2i newRange);
 
     /// @brief Remaps a value from one range to another
     /// @details E.g., the number 5 in the range [0;10] will become 1 if remapped to the range [0;2]
@@ -125,12 +125,12 @@ namespace Mountain::Utils
     /// @param newMin New range min
     /// @param newMax New range max
     ATTRIBUTE_NODISCARD
-    MOUNTAIN_API constexpr size_t RemapValue(size_t oldValue, size_t oldMin, size_t oldMax, size_t newMin, size_t newMax);
+    MOUNTAIN_API constexpr usize RemapValue(usize oldValue, usize oldMin, usize oldMax, usize newMin, usize newMax);
 
     /// @brief Normalizes an angle (clamps its value between 0 and 2 * PI)
     /// @param angle Angle to normalize
     /// @return Normalized representation
-    MOUNTAIN_API float_t NormalizeAngle(float_t angle);
+    MOUNTAIN_API f32 NormalizeAngle(f32 angle);
 
     /// @brief Normalizes a set of three angles in a @c Vector3 (clamps their value between 0 and 2 * PI)
     /// @param angles @c Vector3 of angles to normalize
@@ -163,7 +163,7 @@ namespace Mountain::Utils
     /// @brief Opens the specified path in the file explorer
     /// @param path File system path
     /// @param isFile Whether path is a file or a directory
-    MOUNTAIN_API void OpenInExplorer(const std::filesystem::path& path, bool_t isFile);
+    MOUNTAIN_API void OpenInExplorer(const std::filesystem::path& path, bool isFile);
 
     /// @brief Opens the specified file on the user's computer
     /// @param filepath File system path
@@ -172,25 +172,25 @@ namespace Mountain::Utils
     /// @brief Returns whether an array contains an element
     template <Concepts::StandardContainer ContainerT, typename T>
     ATTRIBUTE_NODISCARD
-    bool_t ArrayContains(const ContainerT& container, T element);
+    bool ArrayContains(const ContainerT& container, T element);
 
     /// @brief Returns whether a string array contains an element using @c Utils::StringEqualsIgnoreCase.
     template <Concepts::StandardContainer ContainerT>
     ATTRIBUTE_NODISCARD
-    bool_t StringArrayContains(const ContainerT& container, const std::string& element);
+    bool StringArrayContains(const ContainerT& container, const std::string& element);
 
     /// @brief Returns whether a string enumerable contains an element using @c Utils::StringEqualsIgnoreCase.
     template <Requirements::MountainEnumerable EnumerableT>
     ATTRIBUTE_NODISCARD
-    bool_t StringEnumerableContains(const EnumerableT& enumerable, const std::string& element);
+    bool StringEnumerableContains(const EnumerableT& enumerable, const std::string& element);
 
     /// @brief Checks if two strings are equal, case-insensitive.
     ATTRIBUTE_NODISCARD
-    MOUNTAIN_API bool_t StringEqualsIgnoreCase(std::string_view a, std::string_view b);
+    MOUNTAIN_API bool StringEqualsIgnoreCase(std::string_view a, std::string_view b);
 
     /// @brief Checks if a string contains another one, case-insensitive.
     ATTRIBUTE_NODISCARD
-    MOUNTAIN_API bool_t StringContainsIgnoreCase(std::string_view a, std::string_view b);
+    MOUNTAIN_API bool StringContainsIgnoreCase(std::string_view a, std::string_view b);
 
     /// @brief Gets the address of a function
     /// @tparam Ret Function return type
@@ -199,9 +199,9 @@ namespace Mountain::Utils
     /// @return Address
     template <typename Ret, typename... Args>
     ATTRIBUTE_NODISCARD
-    constexpr size_t FunctionAddress(std::function<Ret(Args...)> f);
+    constexpr usize FunctionAddress(std::function<Ret(Args...)> f);
 
-    MOUNTAIN_API int32_t TerminalCommand(const std::string& command, bool_t asynchronous = true);
+    MOUNTAIN_API s32 TerminalCommand(const std::string& command, bool asynchronous = true);
 
     MOUNTAIN_API void CreateEmptyFile(const std::filesystem::path& path);
 
@@ -218,7 +218,7 @@ namespace Mountain::Utils
 
     MOUNTAIN_API std::string ToUpper(std::string_view str);
 
-    MOUNTAIN_API std::pair<float_t, std::string_view> ByteSizeUnit(int64_t size);
+    MOUNTAIN_API std::pair<f32, std::string_view> ByteSizeUnit(s64 size);
 
     MOUNTAIN_API std::string GetBuiltinShadersPath();
 
@@ -226,26 +226,26 @@ namespace Mountain::Utils
 
     MOUNTAIN_API std::string Trim(std::string_view str, TrimOptions options = TrimOptions::Both);
 
-    MOUNTAIN_API std::string GetLine(const std::string& str, size_t lineIndex);
+    MOUNTAIN_API std::string GetLine(const std::string& str, usize lineIndex);
 
-    MOUNTAIN_API uint16_t Concat16(uint8_t right, uint8_t left);
+    MOUNTAIN_API u16 Concat16(u8 right, u8 left);
 
-    MOUNTAIN_API uint32_t Concat32(uint8_t right0, uint8_t right1, uint8_t left0, uint8_t left1);
+    MOUNTAIN_API u32 Concat32(u8 right0, u8 right1, u8 left0, u8 left1);
 
-    template <uint64_t Offset, uint64_t Count>
-    constexpr uint64_t GetBits(uint64_t value);
+    template <u64 Offset, u64 Count>
+    constexpr u64 GetBits(u64 value);
 
     template <Concepts::Enum T>
     constexpr Meta::Flags<T> ToFlags(T enumValue);
 
     MOUNTAIN_API std::string RemoveByteOrderMark(const std::string& text);
 
-    MOUNTAIN_API List<std::string> Split(std::string_view str, char_t separator);
+    MOUNTAIN_API List<std::string> Split(std::string_view str, c8 separator);
 }
 
 namespace Easing
 {
-    enum class Type : uint8_t
+    enum class Type : u8
     {
         Linear,
 
@@ -292,7 +292,7 @@ namespace Easing
 
     MOUNTAIN_API Easer FromType(Type type);
 
-    MOUNTAIN_API float_t FromType(Type type, float_t t);
+    MOUNTAIN_API f32 FromType(Type type, f32 t);
 }
 
 ENUM_FLAGS(Mountain::Utils::TrimOptions)
@@ -304,13 +304,13 @@ ENUM_FLAGS(Mountain::Utils::TrimOptions)
 namespace Mountain
 {
     template <typename PtrT, Concepts::Integral IntT>
-    constexpr PtrT* Utils::IntToPointer(const IntT number) { return reinterpret_cast<PtrT*>(reinterpret_cast<uint8_t*>(1) + static_cast<const size_t>(number) - 1); }
+    constexpr PtrT* Utils::IntToPointer(const IntT number) { return reinterpret_cast<PtrT*>(reinterpret_cast<u8*>(1) + static_cast<const usize>(number) - 1); }
 
-    constexpr size_t Utils::PointerToInt(const void* pointer) { return std::bit_cast<size_t>(pointer); }
+    constexpr usize Utils::PointerToInt(const void* pointer) { return std::bit_cast<usize>(pointer); }
 
     constexpr std::string Utils::RemoveNamespaces(const std::string& str)
     {
-        const size_t pos = str.find_last_of(':');
+        const usize pos = str.find_last_of(':');
 
         if (pos == std::string::npos)
             return str;
@@ -318,10 +318,10 @@ namespace Mountain
         return str.substr(pos + 1);
     }
 
-    constexpr const char_t* Utils::RemoveNamespaces(const char_t* const str)
+    constexpr const c8* Utils::RemoveNamespaces(const c8* const str)
     {
-        const char_t* s = str;
-        size_t l = 0;
+        const c8* s = str;
+        usize l = 0;
 
         while (*s++)
             l++;
@@ -337,34 +337,34 @@ namespace Mountain
         return str;
     }
 
-    constexpr float_t Utils::RemapValue(const float_t oldValue, const Vector2 oldRange, const Vector2 newRange)
+    constexpr f32 Utils::RemapValue(const f32 oldValue, const Vector2 oldRange, const Vector2 newRange)
     {
         return (oldValue - oldRange.x) * (newRange.y - newRange.x) / (oldRange.y - oldRange.x) + newRange.x;
     }
 
-    constexpr float_t Utils::RemapValue(const float_t oldValue, const float_t oldMin, const float_t oldMax, const float_t newMin, const float_t newMax)
+    constexpr f32 Utils::RemapValue(const f32 oldValue, const f32 oldMin, const f32 oldMax, const f32 newMin, const f32 newMax)
     {
         return RemapValue(oldValue, Vector2{oldMin, oldMax}, Vector2{newMin, newMax});
     }
 
-    constexpr size_t Utils::RemapValue(const size_t oldValue, const Vector2i oldRange, const Vector2i newRange)
+    constexpr usize Utils::RemapValue(const usize oldValue, const Vector2i oldRange, const Vector2i newRange)
     {
         return (oldValue - oldRange.x) * (newRange.y - newRange.x) / (oldRange.y - oldRange.x) + newRange.x;
     }
 
-    constexpr size_t Utils::RemapValue(const size_t oldValue, const size_t oldMin, const size_t oldMax, const size_t newMin, const size_t newMax)
+    constexpr usize Utils::RemapValue(const usize oldValue, const usize oldMin, const usize oldMax, const usize newMin, const usize newMax)
     {
         return (oldValue - oldMin) * (newMax - newMin) / (oldMax - oldMin) + newMin;
     }
 
     template <typename T>
-    size_t Utils::GetTypeHash()
+    usize Utils::GetTypeHash()
     {
         return typeid(T).hash_code();
     }
 
     template <typename T>
-    size_t Utils::GetTypeHash(ATTRIBUTE_MAYBE_UNUSED const T* const ptr)
+    usize Utils::GetTypeHash(ATTRIBUTE_MAYBE_UNUSED const T* const ptr)
     {
         return typeid(*ptr).hash_code();
     }
@@ -382,32 +382,32 @@ namespace Mountain
     }
 
     template <Concepts::StandardContainer Container, typename T>
-    bool_t Utils::ArrayContains(const Container& container, T element)
+    bool Utils::ArrayContains(const Container& container, T element)
     {
         return std::ranges::find(container, element) != container.end();
     }
 
     template <Concepts::StandardContainer Container>
-    bool_t Utils::StringArrayContains(const Container& container, const std::string& element)
+    bool Utils::StringArrayContains(const Container& container, const std::string& element)
     {
         return std::ranges::any_of(container, [&](const std::string& elem) { return StringEqualsIgnoreCase(elem, element); });
     }
 
     template <Requirements::MountainEnumerable EnumerableT>
-    bool_t Utils::StringEnumerableContains(const EnumerableT& enumerable, const std::string& element)
+    bool Utils::StringEnumerableContains(const EnumerableT& enumerable, const std::string& element)
     {
         return Any(enumerable, [&](const std::string& elem) { return StringEqualsIgnoreCase(elem, element); });
     }
 
     template <typename Ret, typename... Args>
-    constexpr size_t Utils::FunctionAddress(std::function<Ret(Args...)> f)
+    constexpr usize Utils::FunctionAddress(std::function<Ret(Args...)> f)
     {
         using Func = Ret(Args...);
         Func** fnPointer = f.template target<Func*>();
         if (!fnPointer)
             return 0;
 
-        return reinterpret_cast<size_t>(*fnPointer);
+        return reinterpret_cast<usize>(*fnPointer);
     }
 
     template <typename R, typename ... Args>
@@ -419,10 +419,10 @@ namespace Mountain
         return R{}; // Might not compile if R isn't default-constructible
     }
 
-    template <uint64_t Offset, uint64_t Count>
-    constexpr uint64_t Utils::GetBits(const uint64_t value)
+    template <u64 Offset, u64 Count>
+    constexpr u64 Utils::GetBits(const u64 value)
     {
-        constexpr uint64_t mask = (1ull << Count) - 1;
+        constexpr u64 mask = (1ull << Count) - 1;
         return value >> Offset & mask;
     }
 

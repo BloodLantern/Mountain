@@ -28,7 +28,7 @@ namespace Mountain
         /// @brief Loads the contents of this Entry.
         ///
         /// @returns @c false if an error occured while loading.
-        MOUNTAIN_API virtual bool_t Load() = 0;
+        MOUNTAIN_API virtual bool Load() = 0;
 
         /// @brief Unloads the contents of this Entry.
         MOUNTAIN_API virtual void Unload() = 0;
@@ -36,7 +36,7 @@ namespace Mountain
         /// @brief Reloads the contents of this Entry.
         ///
         /// This is effectively the same as calling Unload() and then Load().
-        MOUNTAIN_API virtual bool_t Reload();
+        MOUNTAIN_API virtual bool Reload();
 
         /// @brief Opens this Entry in the file explorer
         MOUNTAIN_API virtual void OpenInExplorer() const;
@@ -58,7 +58,7 @@ namespace Mountain
         MOUNTAIN_API virtual void SetName(const std::string& newName);
 
         /// @brief Returns whether this Entry has been loaded.
-        GETTER(bool_t, Loaded, m_Loaded)
+        GETTER(bool, Loaded, m_Loaded)
 
         /// @brief Sets the new path of this Entry.
         virtual void SetParent(Pointer<Directory>&& newParent);
@@ -79,7 +79,7 @@ namespace Mountain
         /// Default implementation of Preload and PostUnload functions in the Entry class already change this value accordingly.
         /// Any override of such function must either call the parent implementation or update this variable so that GetLoaded
         /// returns the correct state.
-        bool_t m_Loaded = false;
+        bool m_Loaded = false;
 
         /// @brief The parent of this Entry.
         Pointer<Directory> m_Parent;

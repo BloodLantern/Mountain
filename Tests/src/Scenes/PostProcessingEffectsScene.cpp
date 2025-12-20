@@ -34,7 +34,7 @@ void PostProcessingEffectsScene::Begin()
     TestScene::Begin();
 
     const RenderTarget& renderTarget = Renderer::GetCurrentRenderTarget();
-    const uint32_t renderTargetId = renderTarget.GetTextureId();
+    const u32 renderTargetId = renderTarget.GetTextureId();
 
     m_IntermediateTexture.Create();
     m_IntermediateTexture.SetStorage(Graphics::InternalFormat::RedGreenBlueAlpha32Float, renderTarget.GetSize());
@@ -52,7 +52,7 @@ void PostProcessingEffectsScene::Begin()
     m_Greyscale.effect.imageBindings.Emplace(renderTargetId, 0u, Graphics::ImageShaderAccess::WriteOnly);
     m_Negative.effect.imageBindings.Emplace(renderTargetId, 0u, Graphics::ImageShaderAccess::WriteOnly);
 
-    const uint32_t intermediateTextureId = m_IntermediateTexture.GetId();
+    const u32 intermediateTextureId = m_IntermediateTexture.GetId();
 
     m_ChromaticAberrationAxial.effect.imageBindings.Emplace(intermediateTextureId, 0u, Graphics::ImageShaderAccess::ReadOnly);
     m_ChromaticAberrationTransverse.effect.imageBindings.Emplace(intermediateTextureId, 0u, Graphics::ImageShaderAccess::ReadOnly);
@@ -91,19 +91,19 @@ void PostProcessingEffectsScene::RenderImGui()
 
     ShowEffectImGui("Vignette", m_Vignette, [](auto& e)
     {
-        static float_t strength = 1.f;
+        static f32 strength = 1.f;
         ImGui::DragFloat("strength", &strength, 0.01f, 0.f, 10.f);
         e.SetStrength(strength);
     });
     ShowEffectImGui("Film Grain", m_FilmGrain, [](auto& e)
     {
-        static float_t intensity = 1.f;
+        static f32 intensity = 1.f;
         ImGui::DragFloat("intensity", &intensity, 0.01f, 0.f, 10.f);
         e.SetIntensity(intensity);
     });
     ShowEffectImGui("Chromatic Aberration Axial", m_ChromaticAberrationAxial, [](auto& e)
     {
-        static float_t intensity = 1.f;
+        static f32 intensity = 1.f;
         ImGui::DragFloat("intensity", &intensity, 0.01f, 0.f, 10.f);
         static float angle = 0;
         ImGui::DragAngle("angle", &angle);
@@ -112,37 +112,37 @@ void PostProcessingEffectsScene::RenderImGui()
     });
     ShowEffectImGui("Chromatic Aberration Transverse", m_ChromaticAberrationTransverse, [](auto& e)
     {
-        static float_t intensity = 1.f;
+        static f32 intensity = 1.f;
         ImGui::DragFloat("intensity", &intensity, 0.01f, 0.f, 10.f);
         e.SetIntensity(intensity);
     });
     ShowEffectImGui("Box Blur", m_BoxBlur, [](auto& e)
     {
-        static int32_t radius = 1;
+        static s32 radius = 1;
         ImGui::DragInt("radius", &radius, 0.1f, 0, 10);
         e.SetRadius(radius);
     });
     ShowEffectImGui("Gaussian Blur ", m_GaussianBlur, [](auto& e)
     {
-        static int32_t intensity = 1;
+        static s32 intensity = 1;
         ImGui::DragInt("intensity", &intensity, 0.01f, 0, 10);
         e.SetIntensity(intensity);
     });
     ShowEffectImGui("Mosaic ", m_Mosaic, [](auto& e)
     {
-        static int32_t size = 1;
+        static s32 size = 1;
         ImGui::DragInt("intensity", &size, 0.1f, 1, 150);
         e.SetBoxSize(size);
     });
     ShowEffectImGui("Greyscale", m_Greyscale, [](auto& e)
     {
-        static float_t intensity = 0.5f;
+        static f32 intensity = 0.5f;
         ImGui::DragFloat("intensity", &intensity, 0.001f, 0.f, 1.f);
         e.SetIntensity(intensity);
     });
     ShowEffectImGui("Negative", m_Negative, [](auto& e)
     {
-        static float_t intensity = 0.5f;
+        static f32 intensity = 0.5f;
         ImGui::DragFloat("intensity", &intensity, 0.001f, 0.f, 1.f);
         e.SetIntensity(intensity);
     });

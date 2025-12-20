@@ -31,19 +31,19 @@ namespace Mountain
 
         /// @brief Creates the Resource corresponding to the given @p file and loads it.
         template <Concepts::LoadableResource T>
-        static Pointer<T> Load(const Pointer<File>& file, bool_t loadInInterface = true);
+        static Pointer<T> Load(const Pointer<File>& file, bool loadInInterface = true);
 
         /// @brief Creates the Resource corresponding to the given @p file and loads it.
         /// @note If the file hasn't been loaded yet, this will load it beforehand.
         template <Concepts::LoadableResource T>
-        static Pointer<T> Load(const std::string& name, bool_t loadInInterface = true);
+        static Pointer<T> Load(const std::string& name, bool loadInInterface = true);
 
         /// @brief Creates the Font corresponding to the given @p file and loads it with the given @p size.
-        MOUNTAIN_API static Pointer<Font> LoadFont(const Pointer<File>& file, uint32_t size);
+        MOUNTAIN_API static Pointer<Font> LoadFont(const Pointer<File>& file, u32 size);
 
         /// @brief Creates the Font corresponding to the given @p name and loads it with the given @p size.
         /// @note If the file hasn't been loaded yet, this will load it beforehand.
-        MOUNTAIN_API static Pointer<Font> LoadFont(const std::string& name, uint32_t size);
+        MOUNTAIN_API static Pointer<Font> LoadFont(const std::string& name, u32 size);
 
         /// @brief Creates one Resource for each @c FileManager entry.
         MOUNTAIN_API static void LoadAll();
@@ -54,16 +54,16 @@ namespace Mountain
 
         /// @brief Checks whether the ResourceManager contains the specified Resource name.
         ATTRIBUTE_NODISCARD
-        MOUNTAIN_API static bool_t Contains(const std::string& name);
+        MOUNTAIN_API static bool Contains(const std::string& name);
 
         /// @brief Checks whether the ResourceManager contains the specified Resource file name.
         ATTRIBUTE_NODISCARD
-        MOUNTAIN_API static bool_t Contains(const Pointer<File>& file);
+        MOUNTAIN_API static bool Contains(const Pointer<File>& file);
 
         /// @brief Checks whether the given Resource name is an embedded binary Resource.
         /// @see LoadAllBinaries()
         ATTRIBUTE_NODISCARD
-        MOUNTAIN_API static bool_t IsBinary(const std::string& name);
+        MOUNTAIN_API static bool IsBinary(const std::string& name);
 
         /// @brief Returns the Resource that was either added or loaded using the given @p name.
         template <Concepts::Resource T = Resource>
@@ -77,11 +77,11 @@ namespace Mountain
 
         /// @brief Returns the Font loaded using the given @p name and @p size.
         ATTRIBUTE_NODISCARD
-        MOUNTAIN_API static Pointer<Font> GetFont(const std::string& name, uint32_t size);
+        MOUNTAIN_API static Pointer<Font> GetFont(const std::string& name, u32 size);
 
         /// @brief Returns the Font loaded using the given @p file and @p size.
         ATTRIBUTE_NODISCARD
-        MOUNTAIN_API static Pointer<Font> GetFont(const Pointer<File>& file, uint32_t size);
+        MOUNTAIN_API static Pointer<Font> GetFont(const Pointer<File>& file, u32 size);
 
         /// @brief Returns the Resource that was either added or loaded using the given file name.
         template <Concepts::Resource T = Resource>
@@ -154,7 +154,7 @@ namespace Mountain
         static Pointer<T> AddNoCheck(std::string name);
 
         template <Concepts::Resource T>
-        static Pointer<T> LoadNoCheck(Pointer<File> file, bool_t loadInRhi = true);
+        static Pointer<T> LoadNoCheck(Pointer<File> file, bool loadInRhi = true);
 
         template <Concepts::Resource T>
         ATTRIBUTE_NODISCARD
@@ -196,14 +196,14 @@ namespace Mountain
     }
 
     template <Concepts::LoadableResource T>
-    Pointer<T> ResourceManager::Load(const Pointer<File>& file, const bool_t loadInInterface)
+    Pointer<T> ResourceManager::Load(const Pointer<File>& file, const bool loadInInterface)
     {
         Logger::LogVerbose("Loading resource {}", file->GetPath());
 
         if (Contains(file->GetPathString()))
         {
             Pointer<T> resource = GetNoCheck<T>(file->GetPathString());
-            const bool_t loaded = resource->IsSourceDataSet();
+            const bool loaded = resource->IsSourceDataSet();
             Logger::LogWarning(
                 "This resource has already been {}, consider using ResourceManager::Get instead{}",
                 loaded ? "loaded" : "added but isn't loaded",
@@ -220,7 +220,7 @@ namespace Mountain
     }
 
     template <Concepts::LoadableResource T>
-    Pointer<T> ResourceManager::Load(const std::string& name, const bool_t loadInInterface)
+    Pointer<T> ResourceManager::Load(const std::string& name, const bool loadInInterface)
     {
         return Load<T>(FileManager::Contains(name) ? FileManager::Get(name) : FileManager::Load(name), loadInInterface);
     }
@@ -320,7 +320,7 @@ namespace Mountain
 
         Logger::LogVerbose("Unloading resource {}", resource->GetName());
 
-        const size_t oldSize = m_Resources.size();
+        const usize oldSize = m_Resources.size();
 
         for (decltype(m_Resources)::iterator it = m_Resources.begin(); it != m_Resources.end(); it++)
         {
@@ -363,7 +363,7 @@ namespace Mountain
     }
 
     template <Concepts::Resource T>
-    Pointer<T> ResourceManager::LoadNoCheck(Pointer<File> file, const bool_t loadInRhi)
+    Pointer<T> ResourceManager::LoadNoCheck(Pointer<File> file, const bool loadInRhi)
     {
         Pointer<T> resource = Pointer<T>::New(file->GetPathString());
 

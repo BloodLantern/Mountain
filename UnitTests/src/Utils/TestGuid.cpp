@@ -28,7 +28,7 @@ TEST(Utils_Guid, DataAccess)
 
 TEST(Utils_Guid, StringConversions)
 {
-    constexpr const char_t* str = "FFFFFFFF-EEEE-DDDD-CC-BB-AA-99-88-77-66-55";
+    constexpr const c8* str = "FFFFFFFF-EEEE-DDDD-CC-BB-AA-99-88-77-66-55";
     const Guid guid = Guid::FromString(str);
 
     EXPECT_EQ(guid.ToString(), str);

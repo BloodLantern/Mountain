@@ -18,59 +18,59 @@ Random::Random(const std::default_random_engine::result_type seed)
 {
 }
 
-int8_t Random::SByte(const int8_t minInclusive, const int8_t maxExclusive)
+s8 Random::SByte(const s8 minInclusive, const s8 maxExclusive)
 {
-    return static_cast<int8_t>(Short(minInclusive, maxExclusive));
+    return static_cast<s8>(Short(minInclusive, maxExclusive));
 }
 
-uint8_t Random::Byte(const uint8_t minInclusive, const uint8_t maxExclusive)
+u8 Random::Byte(const u8 minInclusive, const u8 maxExclusive)
 {
-    return static_cast<uint8_t>(Short(minInclusive, maxExclusive));
+    return static_cast<u8>(Short(minInclusive, maxExclusive));
 }
 
-int16_t Random::Short(const int16_t minInclusive, const int16_t maxExclusive)
+s16 Random::Short(const s16 minInclusive, const s16 maxExclusive)
 {
-    std::uniform_int_distribution dist{minInclusive, static_cast<int16_t>(maxExclusive - 1)};
+    std::uniform_int_distribution dist{minInclusive, static_cast<s16>(maxExclusive - 1)};
     return dist(m_Engine);
 }
 
-uint16_t Random::UShort(const uint16_t minInclusive, const uint16_t maxExclusive)
+u16 Random::UShort(const u16 minInclusive, const u16 maxExclusive)
 {
-    std::uniform_int_distribution dist{minInclusive, static_cast<uint16_t>(maxExclusive - 1)};
+    std::uniform_int_distribution dist{minInclusive, static_cast<u16>(maxExclusive - 1)};
     return dist(m_Engine);
 }
 
-int32_t Random::Int(const int32_t minInclusive, const int32_t maxExclusive)
+s32 Random::Int(const s32 minInclusive, const s32 maxExclusive)
 {
     std::uniform_int_distribution dist{minInclusive, maxExclusive - 1};
     return dist(m_Engine);
 }
 
-uint32_t Random::UInt(const uint32_t minInclusive, const uint32_t maxExclusive)
+u32 Random::UInt(const u32 minInclusive, const u32 maxExclusive)
 {
     std::uniform_int_distribution dist{minInclusive, maxExclusive - 1};
     return dist(m_Engine);
 }
 
-int64_t Random::Long(const int64_t minInclusive, const int64_t maxExclusive)
+s64 Random::Long(const s64 minInclusive, const s64 maxExclusive)
 {
     std::uniform_int_distribution dist{minInclusive, maxExclusive - 1};
     return dist(m_Engine);
 }
 
-uint64_t Random::ULong(const uint64_t minInclusive, const uint64_t maxExclusive)
+u64 Random::ULong(const u64 minInclusive, const u64 maxExclusive)
 {
     std::uniform_int_distribution dist{minInclusive, maxExclusive - 1};
     return dist(m_Engine);
 }
 
-float_t Random::Float(const float_t minInclusive, const float_t maxExclusive)
+f32 Random::Float(const f32 minInclusive, const f32 maxExclusive)
 {
     std::uniform_real_distribution dist{minInclusive, maxExclusive};
     return dist(m_Engine);
 }
 
-double_t Random::Double(const double_t minInclusive, const double_t maxExclusive)
+f64 Random::Double(const f64 minInclusive, const f64 maxExclusive)
 {
     std::uniform_real_distribution dist{minInclusive, maxExclusive};
     return dist(m_Engine);
@@ -96,13 +96,13 @@ ColorHsva Random::ColorHsva(const Mountain::ColorHsva minValuesInclusive, const 
     };
 }
 
-bool_t Random::Chance(const float_t probability)
+bool Random::Chance(const f32 probability)
 {
     std::bernoulli_distribution dist{probability};
     return dist(m_Engine);
 }
 
-Vector2 Random::PointInCircle(const Vector2& center, const float_t radius)
+Vector2 Random::PointInCircle(const Vector2& center, const f32 radius)
 {
     // See https://youtu.be/4y_nmpv-9lI
     while (true)
@@ -120,6 +120,6 @@ Vector2 Random::PointInRectangle(const Vector2& position, const Vector2& size)
 
 Vector2 Random::Direction()
 {
-    const float_t angle = Float(0.f, Calc::TwoPi);
+    const f32 angle = Float(0.f, Calc::TwoPi);
     return { std::cos(angle), std::sin(angle) };
 }

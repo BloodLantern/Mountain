@@ -14,7 +14,7 @@ Circle::Circle()
 {
 }
 
-Circle::Circle(const Vector2 off, const float_t radius)
+Circle::Circle(const Vector2 off, const f32 radius)
     : Collider(ColliderType::Circle, off)
     , radius(radius)
 {
@@ -73,13 +73,13 @@ bool Circle::Intersect(const Vector2 p1, const Vector2 p2) const
     );
 }
 
-float_t Circle::Left() const { return offset.x - radius; }
+f32 Circle::Left() const { return offset.x - radius; }
 
-float_t Circle::Right() const { return offset.x + radius; }
+f32 Circle::Right() const { return offset.x + radius; }
 
-float_t Circle::Top() const { return offset.y - radius; }
+f32 Circle::Top() const { return offset.y - radius; }
 
-float_t Circle::Bottom() const { return offset.y + radius; }
+f32 Circle::Bottom() const { return offset.y + radius; }
 
 Vector2 Circle::Center() const { return offset; }
 

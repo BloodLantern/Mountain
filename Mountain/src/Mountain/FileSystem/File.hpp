@@ -19,7 +19,7 @@ namespace Mountain
     {
     public:
         /// @brief Type of file according to file extension.
-        enum class Type : uint8_t
+        enum class Type : u8
         {
             Unknown,
             AudioTrack,
@@ -46,11 +46,11 @@ namespace Mountain
         /// @brief Loads the contents of this File.
         ///
         /// @returns @c false if an error occured while loading.
-        MOUNTAIN_API bool_t Load() override;
+        MOUNTAIN_API bool Load() override;
 
         /// @brief Loads the given contents in this File.
         /// Note: This doesn't have anything to do with the file system. This only loads the given data in this resource.
-        MOUNTAIN_API void Load(const char_t* data, size_t size);
+        MOUNTAIN_API void Load(const c8* data, usize size);
 
         /// @brief Unloads the contents of this File.
         MOUNTAIN_API void Unload() override;
@@ -68,7 +68,7 @@ namespace Mountain
         MOUNTAIN_API void Destroy() const;
 
         /// @brief Get whether this file exists on the file system or is just a virtual file representation
-        MOUNTAIN_API bool_t Exists() const;
+        MOUNTAIN_API bool Exists() const;
 
         /// @brief Returns the name of this File without the file extension.
         GETTER(const std::string&, NameNoExtension, m_NameNoExtension)
@@ -80,17 +80,17 @@ namespace Mountain
         GETTER(const std::string&, Extension, m_Extension)
 
         /// @brief Returns a @c const pointer to the raw loaded data.
-        template <typename T = char_t>
+        template <typename T = c8>
         ATTRIBUTE_NODISCARD
         const T* GetData() const;
 
         /// @brief Returns a pointer to the raw loaded data.
-        template <typename T = char_t>
+        template <typename T = c8>
         ATTRIBUTE_NODISCARD
         T* GetData();
 
         /// @brief Returns the size of the loaded data.
-        GETTER(int64_t, Size, m_Size)
+        GETTER(s64, Size, m_Size)
 
         /// @brief Sets the name of this File.
         MOUNTAIN_API void SetName(const std::string& newName) override;
@@ -110,8 +110,8 @@ namespace Mountain
         std::string m_PathNoExtension;
         Type m_Type = Type::Unknown;
 
-        int8_t* m_Data = nullptr;
-        int64_t m_Size = 0;
+        s8* m_Data = nullptr;
+        s64 m_Size = 0;
 
         /// Null if the file isn't linked to a specific resource or if it is a font file, in which case it can be loaded into
         /// fonts of different sizes

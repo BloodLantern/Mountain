@@ -30,30 +30,30 @@ namespace Mountain
 
         MOUNTAIN_API void SetBuffer(const AudioBuffer* buffer);
 
-        MOUNTAIN_API float_t GetVolume() const;
+        MOUNTAIN_API f32 GetVolume() const;
 
-        MOUNTAIN_API void SetVolume(float_t newVolume);
+        MOUNTAIN_API void SetVolume(f32 newVolume);
 
-        MOUNTAIN_API float_t GetPitch() const;
+        MOUNTAIN_API f32 GetPitch() const;
 
-        MOUNTAIN_API void SetPitch(float_t newPitch);
+        MOUNTAIN_API void SetPitch(f32 newPitch);
 
-        MOUNTAIN_API bool_t GetLooping() const;
+        MOUNTAIN_API bool GetLooping() const;
 
-        MOUNTAIN_API void SetLooping(bool_t newLooping);
+        MOUNTAIN_API void SetLooping(bool newLooping);
 
     private:
-        uint32_t m_Handle = 0;
+        u32 m_Handle = 0;
 
         /// @brief Volume in the range [0, inf]. Default value is 1.
-        float_t m_Volume = 1.f;
+        f32 m_Volume = 1.f;
 
         /// @brief Pitch in the range [0, inf]. Default value is 1.
-        float_t m_Pitch = 1.f;
+        f32 m_Pitch = 1.f;
 
-        bool_t m_Looping = false;
+        bool m_Looping = false;
 
-        bool_t m_PlayOnAdded = true;
+        bool m_PlayOnAdded = true;
 
         Vector2 m_LastPosition;
     };

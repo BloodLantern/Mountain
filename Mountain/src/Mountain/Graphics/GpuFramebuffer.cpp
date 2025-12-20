@@ -10,12 +10,12 @@ void GpuFramebuffer::Delete() { glDeleteFramebuffers(1, &m_Id); m_Id = 0; }
 
 void GpuFramebuffer::Recreate() { Delete(); Create(); }
 
-void GpuFramebuffer::SetTexture(const uint32_t textureId, const FramebufferAttachment attachment, const int32_t mipmapLevel) const
+void GpuFramebuffer::SetTexture(const u32 textureId, const FramebufferAttachment attachment, const s32 mipmapLevel) const
 {
     glNamedFramebufferTexture(m_Id, ToOpenGl(attachment), textureId, mipmapLevel);
 }
 
-void GpuFramebuffer::SetTexture(const GpuTexture gpuTexture, const FramebufferAttachment attachment, const int32_t mipmapLevel) const
+void GpuFramebuffer::SetTexture(const GpuTexture gpuTexture, const FramebufferAttachment attachment, const s32 mipmapLevel) const
 {
     SetTexture(gpuTexture.GetId(), attachment, mipmapLevel);
 }
@@ -32,4 +32,4 @@ void GpuFramebuffer::SetDebugName(ATTRIBUTE_MAYBE_UNUSED const std::string_view 
 #endif
 }
 
-GpuFramebuffer::operator uint32_t() const { return m_Id; }
+GpuFramebuffer::operator u32() const { return m_Id; }

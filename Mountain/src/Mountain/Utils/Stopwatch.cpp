@@ -10,9 +10,9 @@ using namespace Mountain;
 
 namespace
 {
-    int64_t InitializeFrequency()
+    s64 InitializeFrequency()
     {
-        int64_t result;
+        s64 result;
         QueryPerformanceFrequency(reinterpret_cast<LARGE_INTEGER*>(&result));
         return result;
     }
@@ -22,10 +22,10 @@ namespace
     // Otherwise, it will store TicksPerSecond.
     // The frequency cannot change while the system is running,
     // so we only need to initialize it once.
-    int64_t frequency = InitializeFrequency();
+    s64 frequency = InitializeFrequency();
 }
 
-const double_t Stopwatch::TickFrequency = static_cast<double_t>(TicksPerSecond) / static_cast<double_t>(frequency);
+const f64 Stopwatch::TickFrequency = static_cast<f64>(TicksPerSecond) / static_cast<f64>(frequency);
 
 Stopwatch Stopwatch::StartNew()
 {
@@ -34,23 +34,23 @@ Stopwatch Stopwatch::StartNew()
     return s;
 }
 
-int64_t Stopwatch::GetFrequency() { return frequency; }
+s64 Stopwatch::GetFrequency() { return frequency; }
 
-int64_t Stopwatch::GetTimestamp()
+s64 Stopwatch::GetTimestamp()
 {
-    int64_t timestamp;
+    s64 timestamp;
     QueryPerformanceCounter(reinterpret_cast<LARGE_INTEGER*>(&timestamp));
     return timestamp;
 }
 
-TimeSpan Stopwatch::GetElapsedTime(const int64_t startingTimestamp)
+TimeSpan Stopwatch::GetElapsedTime(const s64 startingTimestamp)
 {
     return GetElapsedTime(startingTimestamp, GetTimestamp());
 }
 
-TimeSpan Stopwatch::GetElapsedTime(const int64_t startingTimestamp, const int64_t endingTimestamp)
+TimeSpan Stopwatch::GetElapsedTime(const s64 startingTimestamp, const s64 endingTimestamp)
 {
-    return TimeSpan{static_cast<int64_t>(static_cast<double_t>(endingTimestamp - startingTimestamp) * TickFrequency)};
+    return TimeSpan{static_cast<s64>(static_cast<f64>(endingTimestamp - startingTimestamp) * TickFrequency)};
 }
 
 void Stopwatch::Start()
@@ -67,8 +67,8 @@ void Stopwatch::Stop()
     if (!m_IsRunning)
         return;
 
-    const int64_t endTimestamp = GetTimestamp();
-    const int64_t elapsedPeriod = endTimestamp - m_StartTimestamp;
+    const s64 endTimestamp = GetTimestamp();
+    const s64 elapsedPeriod = endTimestamp - m_StartTimestamp;
     m_Elapsed += elapsedPeriod;
     m_IsRunning = false;
 
@@ -77,7 +77,7 @@ void Stopwatch::Stop()
     // This is due to bugs in the basic input/output system (BIOS)
     // or the hardware abstraction layer (HAL) on machines with
     // variable-speed CPUs (e.g., Intel SpeedStep).
-    m_Elapsed = std::max<int64_t>(m_Elapsed, 0);
+    m_Elapsed = std::max<s64>(m_Elapsed, 0);
 }
 
 void Stopwatch::Reset()
@@ -99,37 +99,37 @@ TimeSpan Stopwatch::GetElapsed() const
     return TimeSpan{GetElapsedDateTimeTicks()};
 }
 
-int64_t Stopwatch::GetElapsedTicks() const
+s64 Stopwatch::GetElapsedTicks() const
 {
     return GetRawElapsedTicks();
 }
 
-double_t Stopwatch::GetElapsedMilliseconds() const
+f64 Stopwatch::GetElapsedMilliseconds() const
 {
-    return static_cast<double_t>(GetElapsedDateTimeTicks()) / TicksPerMillisecond;
+    return static_cast<f64>(GetElapsedDateTimeTicks()) / TicksPerMillisecond;
 }
 
-double_t Stopwatch::GetElapsedSeconds() const
+f64 Stopwatch::GetElapsedSeconds() const
 {
-    return static_cast<double_t>(GetElapsedDateTimeTicks()) / TicksPerSecond;
+    return static_cast<f64>(GetElapsedDateTimeTicks()) / TicksPerSecond;
 }
 
 std::string Stopwatch::ToString() const { return GetElapsed().ToString(); }
 
-int64_t Stopwatch::GetRawElapsedTicks() const
+s64 Stopwatch::GetRawElapsedTicks() const
 {
-    int64_t timeElapsed = m_Elapsed;
+    s64 timeElapsed = m_Elapsed;
 
     if (m_IsRunning)
     {
-        const int64_t elapsedUntilNow = GetTimestamp() - m_StartTimestamp;
+        const s64 elapsedUntilNow = GetTimestamp() - m_StartTimestamp;
         timeElapsed += elapsedUntilNow;
     }
 
     return timeElapsed;
 }
 
-int64_t Stopwatch::GetElapsedDateTimeTicks() const
+s64 Stopwatch::GetElapsedDateTimeTicks() const
 {
-    return static_cast<int64_t>(static_cast<double_t>(GetRawElapsedTicks()) * TickFrequency);
+    return static_cast<s64>(static_cast<f64>(GetRawElapsedTicks()) * TickFrequency);
 }

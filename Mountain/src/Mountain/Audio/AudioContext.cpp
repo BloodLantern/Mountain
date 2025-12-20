@@ -26,7 +26,7 @@ AudioContext::AudioContext(AudioDevice& device)
     MakeCurrent();
 
     // Get the context attribute values
-    int32_t size = 0;
+    s32 size = 0;
     alcGetIntegerv(m_Device->m_Handle, ALC_ATTRIBUTES_SIZE, 1, &size);
     m_Attributes.Resize(size);
     alcGetIntegerv(m_Device->m_Handle, ALC_ALL_ATTRIBUTES, size, m_Attributes.GetData());
@@ -41,7 +41,7 @@ AudioContext::~AudioContext()
 
 void AudioContext::MakeCurrent() const { alcMakeContextCurrent(m_Handle); }
 
-bool_t AudioContext::CheckError()
+bool AudioContext::CheckError()
 {
     const ALCenum error = alGetError();
 
@@ -54,11 +54,11 @@ bool_t AudioContext::CheckError()
     return false;
 }
 
-int32_t AudioContext::GetMaxSourceCount(const AudioSourceType sourceType) const
+s32 AudioContext::GetMaxSourceCount(const AudioSourceType sourceType) const
 {
-    int32_t result = 0;
+    s32 result = 0;
 
-    for (size_t i = 0; i < m_Attributes.GetSize(); i++)
+    for (usize i = 0; i < m_Attributes.GetSize(); i++)
     {
         if ((sourceType == AudioSourceType::Mono && m_Attributes[i] == ALC_MONO_SOURCES) || (sourceType == AudioSourceType::Stereo && m_Attributes[i] == ALC_STEREO_SOURCES))
             result += m_Attributes[i + 1];
@@ -67,25 +67,25 @@ int32_t AudioContext::GetMaxSourceCount(const AudioSourceType sourceType) const
     return result;
 }
 
-uint32_t AudioContext::GetSource(const AudioSourceType type)
+u32 AudioContext::GetSource(const AudioSourceType type)
 {
-    List<uint32_t>& sources = type == AudioSourceType::Mono ? m_SourcesMono : m_SourcesStereo;
+    List<u32>& sources = type == AudioSourceType::Mono ? m_SourcesMono : m_SourcesStereo;
 
-    List<int32_t> states(sources.GetSize());
+    List<s32> states(sources.GetSize());
 
     MakeCurrent();
 
     ForEach(sources,
-        [&] (const uint32_t& s)
+        [&] (const u32& s)
         {
-            int32_t value = 0;
+            s32 value = 0;
             alGetSourcei(s, AL_SOURCE_STATE, &value);
             states.Add(value);
         }
     );
 
-    uint32_t source = 0;
-    for (size_t i = 0; i < sources.GetSize(); i++)
+    u32 source = 0;
+    for (usize i = 0; i < sources.GetSize(); i++)
     {
         if (states[i] != AL_INITIAL)
             continue;
@@ -97,7 +97,7 @@ uint32_t AudioContext::GetSource(const AudioSourceType type)
     if (source != 0)
         return source;
 
-    for (size_t i = 0; i < sources.GetSize(); i++)
+    for (usize i = 0; i < sources.GetSize(); i++)
     {
         if (states[i] != AL_STOPPED)
             continue;
@@ -113,9 +113,9 @@ uint32_t AudioContext::GetSource(const AudioSourceType type)
         return source;
     }
 
-    const int32_t maxCount = GetMaxSourceCount(type);
+    const s32 maxCount = GetMaxSourceCount(type);
 
-    if (sources.GetSize() >= static_cast<uint32_t>(maxCount))
+    if (sources.GetSize() >= static_cast<u32>(maxCount))
     {
         Logger::LogWarning("The maximum amount of audio sources of type {} has been reached, resetting the first one", magic_enum::enum_name(type));
         return sources[0];

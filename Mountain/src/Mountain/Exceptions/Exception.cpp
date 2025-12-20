@@ -23,7 +23,7 @@ void Mountain::SetCurrentExceptionState(const ExceptionState& state)
     Logger::Synchronize();
 }
 
-void Mountain::SetCurrentExceptionState(const char_t* function, const char_t* file, int32_t line)
+void Mountain::SetCurrentExceptionState(const c8* function, const c8* file, s32 line)
 {
     return SetCurrentExceptionState(ExceptionState{function, file, line});
 }
@@ -44,9 +44,9 @@ Exception& Exception::operator=(const Exception& other) noexcept
     return *this;
 }
 
-Exception::Exception(const char_t* message) noexcept : exception(message) { SetStateCurrent(); }
+Exception::Exception(const c8* message) noexcept : exception(message) { SetStateCurrent(); }
 
-const char_t* Exception::GetMessage() const noexcept { return what(); }
+const c8* Exception::GetMessage() const noexcept { return what(); }
 
 const ExceptionState& Exception::GetState() const noexcept { return m_State; }
 

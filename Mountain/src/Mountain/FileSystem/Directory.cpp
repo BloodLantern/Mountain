@@ -10,7 +10,7 @@ Directory::Directory(std::filesystem::path&& filepath)
 {
 }
 
-bool_t Directory::Load()
+bool Directory::Load()
 {
     try
     {

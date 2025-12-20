@@ -17,7 +17,7 @@ void ShapesScene::Render()
 {
     TestScene::Render();
 
-    size_t index = 0;
+    usize index = 0;
 
     const Vector2 drawSize = GetDrawSize();
 
@@ -126,15 +126,15 @@ void ShapesScene::RenderDebug()
 
         const Vector2 firstPosition = GetDrawPosition(0) - drawSize * 0.5f;
 
-        for (size_t i = 1; i < ShapesRowSize; i++)
+        for (usize i = 1; i < ShapesRowSize; i++)
         {
-            const float_t x = static_cast<float_t>(i) * drawSize.x;
+            const f32 x = static_cast<f32>(i) * drawSize.x;
             Draw::Line(firstPosition + Vector2{x, 0.f}, firstPosition + Vector2{x, drawSize.y * ShapesRowCount}, 1.f, Color::Lime());
         }
 
-        for (size_t i = 0; i <= ActualShapesCount / ShapesRowSize; i++)
+        for (usize i = 0; i <= ActualShapesCount / ShapesRowSize; i++)
         {
-            const float_t y = static_cast<float_t>(i) * drawSize.y;
+            const f32 y = static_cast<f32>(i) * drawSize.y;
             Draw::Line(firstPosition + Vector2{0.f, y}, firstPosition + Vector2{drawSize.x * ShapesRowSize, y}, 1.f, Color::Lime());
         }
     }
@@ -153,25 +153,25 @@ void ShapesScene::RenderImGui()
     ImGui::ColorEdit4("Color 2", m_Color2.Data());
     ImGui::ColorEdit4("Color 3", m_Color3.Data());
 
-    ImGui::DragFloat("Thickness", &m_Thickness, 0.1f, 1.f, std::numeric_limits<float_t>::max());
+    ImGui::DragFloat("Thickness", &m_Thickness, 0.1f, 1.f, std::numeric_limits<f32>::max());
     ImGui::DragFloat2("Scale", m_Scale.Data(), 0.01f);
 
     ImGui::DragAngle("Arc starting angle", &m_ArcStartingAngle);
     ImGui::DragAngle("Arc delta angle", &m_ArcDeltaAngle, 0.1f, 0.f);
 }
 
-Vector2 ShapesScene::GetDrawPosition(const size_t index)
+Vector2 ShapesScene::GetDrawPosition(const usize index)
 {
-    const size_t xIndex = index % ShapesRowSize;
-    const size_t yIndex = index / ShapesRowSize;
+    const usize xIndex = index % ShapesRowSize;
+    const usize yIndex = index / ShapesRowSize;
 
     const Vector2 drawSize = GetDrawSize();
-    const float_t remainingVerticalSpace = static_cast<float_t>(Renderer::GetCurrentRenderTarget().GetSize().y) - drawSize.y * ShapesRowCount;
+    const f32 remainingVerticalSpace = static_cast<f32>(Renderer::GetCurrentRenderTarget().GetSize().y) - drawSize.y * ShapesRowCount;
 
-    return Vector2{drawSize.x * static_cast<float_t>(xIndex), drawSize.y * static_cast<float_t>(yIndex) + remainingVerticalSpace * 0.5f} + drawSize * 0.5f;
+    return Vector2{drawSize.x * static_cast<f32>(xIndex), drawSize.y * static_cast<f32>(yIndex) + remainingVerticalSpace * 0.5f} + drawSize * 0.5f;
 }
 
 Vector2 ShapesScene::GetDrawSize()
 {
-    return Vector2::One() * (static_cast<float_t>(Renderer::GetCurrentRenderTarget().GetSize().x) / static_cast<float_t>(ShapesRowSize));
+    return Vector2::One() * (static_cast<f32>(Renderer::GetCurrentRenderTarget().GetSize().x) / static_cast<f32>(ShapesRowSize));
 }

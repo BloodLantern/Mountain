@@ -53,7 +53,7 @@ namespace Mountain
 
     public:
         /// @brief Describes the severity of a log.
-        enum class LogLevel : uint8_t
+        enum class LogLevel : u8
         {
             /// @brief Log intended for temporary debugging only.
             ///
@@ -92,12 +92,12 @@ namespace Mountain
             LogLevel level;
             DateTime time;
 
-            bool_t printToConsole, printToFile;
+            bool printToConsole, printToFile;
 
             std::string file;
-            int32_t line = -1;
+            s32 line = -1;
 
-            bool_t sameAsPrevious = false;
+            bool sameAsPrevious = false;
 
             std::shared_ptr<LogEntry> previousLog = nullptr;
 
@@ -105,11 +105,11 @@ namespace Mountain
 
             MOUNTAIN_API LogEntry(std::string&& message, LogLevel level);
 
-            MOUNTAIN_API LogEntry(std::string&& message, LogLevel level, const std::string& file, int32_t line);
+            MOUNTAIN_API LogEntry(std::string&& message, LogLevel level, const std::string& file, s32 line);
 
             MOUNTAIN_API LogEntry(std::string&& message, LogLevel level, DateTime timePoint);
 
-            MOUNTAIN_API bool_t operator==(const LogEntry& other) const;
+            MOUNTAIN_API bool operator==(const LogEntry& other) const;
         };
 
         // We thought about using std::list here instead, but because the allocations are made on the logger thread anyway, we can make it a std::vector
@@ -148,7 +148,7 @@ namespace Mountain
         /// @see Log
         /// @see LogLevel::Debug
         template <Requirements::Formattable... Args>
-        static void LogDebug(const std::string& format, const char_t* file, int32_t line, Args&&... args);
+        static void LogDebug(const std::string& format, const c8* file, s32 line, Args&&... args);
 
         /// @brief Logs a debug message using the specified format string and arguments.
         /// @see Log
@@ -213,7 +213,7 @@ namespace Mountain
 
         MOUNTAIN_API static inline std::shared_ptr<LogEntry> m_LastLog;
 
-        MOUNTAIN_API static inline bool_t m_LastLogCollapsed = false;
+        MOUNTAIN_API static inline bool m_LastLogCollapsed = false;
 
         MOUNTAIN_API static inline std::condition_variable m_CondVar;
 
@@ -223,15 +223,15 @@ namespace Mountain
 
         MOUNTAIN_API static inline std::mutex m_Mutex;
 
-        MOUNTAIN_API static inline bool_t m_Running = false;
+        MOUNTAIN_API static inline bool m_Running = false;
 
-        MOUNTAIN_API static inline bool_t m_Synchronizing = false;
+        MOUNTAIN_API static inline bool m_Synchronizing = false;
 
         MOUNTAIN_API static inline std::ofstream m_File;
 
         MOUNTAIN_API static inline std::filesystem::path m_Filepath;
 
-        MOUNTAIN_API static inline uint32_t m_LogIndex = 0;
+        MOUNTAIN_API static inline u32 m_LogIndex = 0;
 
         MOUNTAIN_API static void PushLog(const std::shared_ptr<LogEntry>& log);
 
@@ -239,7 +239,7 @@ namespace Mountain
         MOUNTAIN_API static void PrintLog(const std::shared_ptr<LogEntry>& log);
 
         /// @brief Builds the given log's prefix. Returns the [prefix, color] pair.
-        MOUNTAIN_API static std::pair<std::string, const char_t*> BuildLogPrefix(const std::shared_ptr<LogEntry>& log);
+        MOUNTAIN_API static std::pair<std::string, const c8*> BuildLogPrefix(const std::shared_ptr<LogEntry>& log);
     };
 }
 
@@ -260,7 +260,7 @@ namespace Mountain
     }
 
     template <Requirements::Formattable... Args>
-    void Logger::LogDebug(const std::string& format, const char_t* file, const int32_t line, Args&&... args)
+    void Logger::LogDebug(const std::string& format, const c8* file, const s32 line, Args&&... args)
     {
         if (LogLevel::Debug < minimumConsoleLevel && LogLevel::Debug < minimumFileLevel)
             return;

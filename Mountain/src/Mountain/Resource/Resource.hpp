@@ -14,7 +14,7 @@ namespace Mountain
     /// @brief Interface for resources, which encapsulates most objects used in the framework that come from a file
     ///
     /// A Resource is loaded in two steps:
-    /// - @code SetSourceData(const Pointer<File>&) @endcode or @code SetSourceData(const uint8_t*, int64_t) @endcode
+    /// - @code SetSourceData(const Pointer<File>&) @endcode or @code SetSourceData(const u8*, s64) @endcode
     /// - @c Load()
     ///
     /// And is also unloaded in two steps:
@@ -38,12 +38,12 @@ namespace Mountain
         /// @brief Loads data from memory.
         ///
         /// @returns @c true if the loading succeeded, @c false otherwise.
-        MOUNTAIN_API virtual bool_t SetSourceData(const uint8_t* buffer, int64_t length);
+        MOUNTAIN_API virtual bool SetSourceData(const u8* buffer, s64 length);
 
         /// @brief Loads data from a @p file.
         ///
         /// @returns @c true if the loading succeeded, @c false otherwise.
-        MOUNTAIN_API virtual bool_t SetSourceData(const Pointer<File>& file);
+        MOUNTAIN_API virtual bool SetSourceData(const Pointer<File>& file);
 
         /// @brief Loads the Resource in the backend.
         MOUNTAIN_API virtual void Load();
@@ -56,17 +56,17 @@ namespace Mountain
 
         /// @brief Unloads and then loads back this Resource.
         ///
-        /// This is effectively equivalent to calling ResetSourceData and then @c SetSourceData(const uint8_t* buffer, int64_t length).
+        /// This is effectively equivalent to calling ResetSourceData and then @c SetSourceData(const u8* buffer, s64 length).
         ///
         /// @returns @c true if the loading succeeded, @c false otherwise.
-        MOUNTAIN_API virtual bool_t Reload(const uint8_t* buffer, int64_t length, bool_t reloadInBackend = true);
+        MOUNTAIN_API virtual bool Reload(const u8* buffer, s64 length, bool reloadInBackend = true);
 
         /// @brief Unloads and then loads back this Resource.
         ///
         /// This is effectively equivalent to calling ResetSourceData and then @c SetSourceData(const Pointer<File>&).
         ///
         /// @returns @c true if the loading succeeded, @c false otherwise.
-        MOUNTAIN_API virtual bool_t Reload(const Pointer<File>& file, bool_t reloadInBackend = true);
+        MOUNTAIN_API virtual bool Reload(const Pointer<File>& file, bool reloadInBackend = true);
 
         /// @brief Unloads and then loads back this Resource.
         ///
@@ -75,15 +75,15 @@ namespace Mountain
         /// using @code FileManager::Get(const std::filesystem::path&)@endcode as a parameter.
         ///
         /// @returns @c true if the loading succeeded, @c false otherwise.
-        MOUNTAIN_API virtual bool_t Reload(bool_t reloadInBackend = true);
+        MOUNTAIN_API virtual bool Reload(bool reloadInBackend = true);
 
         /// @brief Returns whether the Resource has its source data set.
         ATTRIBUTE_NODISCARD
-        MOUNTAIN_API bool_t IsSourceDataSet() const;
+        MOUNTAIN_API bool IsSourceDataSet() const;
 
         /// @brief Returns whether the Resource has already been loaded in the backend.
         ATTRIBUTE_NODISCARD
-        MOUNTAIN_API bool_t IsLoaded() const;
+        MOUNTAIN_API bool IsLoaded() const;
 
         /// @brief Returns the name of this Resource.
         ATTRIBUTE_NODISCARD
@@ -109,9 +109,9 @@ namespace Mountain
 
     protected:
         /// @brief Whether the Resource has its source data set
-        bool_t m_SourceDataSet = false;
+        bool m_SourceDataSet = false;
         /// @brief Whether the Resource was loaded in the backend
-        bool_t m_Loaded = false;
+        bool m_Loaded = false;
 
         /// @brief Name of the Resource
         std::string m_Name;

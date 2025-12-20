@@ -89,7 +89,7 @@ namespace Mountain
     template <typename ... Args>
     Event<Args...>& Event<Args...>::operator-=(const StdFunctionT& func)
     {
-        for (size_t i = 0; i < m_Functions.GetSize(); i++)
+        for (usize i = 0; i < m_Functions.GetSize(); i++)
         {
             if (Utils::FunctionAddress(m_Functions[i]) == Utils::FunctionAddress(func))
             {

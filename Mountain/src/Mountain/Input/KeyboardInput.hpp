@@ -8,7 +8,7 @@
 namespace Mountain
 {
     /// @brief %List of keyboard buttons
-    enum class Key : uint16_t
+    enum class Key : u16
     {
         /// @brief '\r'
         Return = 0x0000000du,
@@ -346,7 +346,7 @@ namespace Mountain
     };
 
     /// @brief %List of keyboard button states
-    enum class KeyStatus : uint8_t
+    enum class KeyStatus : u8
     {
         /// @brief Pressed
         Pressed,
@@ -358,7 +358,7 @@ namespace Mountain
         Repeat
     };
 
-    enum class KeyAction : uint8_t
+    enum class KeyAction : u8
     {
         Release,
         Press,

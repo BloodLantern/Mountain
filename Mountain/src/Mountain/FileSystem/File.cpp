@@ -28,7 +28,7 @@ File::~File()
         File::Unload();
 }
 
-bool_t File::Load()
+bool File::Load()
 {
     std::ifstream file(m_Path, std::ios::in | std::ios::ate | std::ios::binary);
 
@@ -41,18 +41,18 @@ bool_t File::Load()
     m_Size = file.tellg();
     file.seekg(0);
 
-    m_Data = new int8_t[m_Size];
+    m_Data = new s8[m_Size];
 
-    file.read(reinterpret_cast<char_t*>(m_Data), m_Size);
+    file.read(reinterpret_cast<c8*>(m_Data), m_Size);
 
     m_Loaded = true;
     return true;
 }
 
-void File::Load(const char_t* data, const size_t size)
+void File::Load(const c8* data, const usize size)
 {
-    m_Size = static_cast<int64_t>(size);
-    m_Data = new int8_t[m_Size];
+    m_Size = static_cast<s64>(size);
+    m_Data = new s8[m_Size];
     std::memcpy(m_Data, data, m_Size);
 
     m_Loaded = true;
@@ -89,7 +89,7 @@ void File::Destroy() const
         ResourceManager::Unload(resource);
 }
 
-bool_t File::Exists() const
+bool File::Exists() const
 {
     return exists(m_Path);
 }

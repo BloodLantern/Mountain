@@ -56,7 +56,7 @@ namespace Mountain
 
         /// @brief Get the number of items in the queue
         /// @returns Count
-        size_t Count();
+        usize Count();
 
         /// @brief Pops the item on the front of the queue
         /// @returns Item
@@ -127,7 +127,7 @@ namespace Mountain
     }
 
     template <typename T>
-    size_t TsQueue<T>::Count()
+    usize TsQueue<T>::Count()
     {
         std::scoped_lock lock(m_QueueMutex);
         return m_Queue.size();

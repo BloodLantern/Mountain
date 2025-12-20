@@ -46,7 +46,7 @@ namespace Mountain::Requirements
     using DefaultType = int;
 
     /// @brief Default size for template instantiation in the @c CHECK_REQUIREMENT() macro.
-    constexpr size_t DefaultSize = 1;
+    constexpr usize DefaultSize = 1;
 
     /// @brief Requires a type to be formattable.
     /// @details A type @p T is considered formattable if a template specialization of @c std::formatter exists for @p T.
@@ -63,11 +63,11 @@ namespace Mountain::Requirements
         REQUIRES_FUNCTION(cv, ToString, std::string);
     };
 
-    /// @brief Requires a type to have a member @c GetHashCode() function that returns a @c size_t.
+    /// @brief Requires a type to have a member @c GetHashCode() function that returns a @c usize.
     template <typename T>
     concept Hashable = requires (const T& cv)
     {
-        REQUIRES_FUNCTION(cv, GetHashCode, size_t);
+        REQUIRES_FUNCTION(cv, GetHashCode, usize);
     };
 
     template <typename T>
@@ -75,8 +75,8 @@ namespace Mountain::Requirements
     {
         typename T::ContainedType;
         requires Concepts::ContainerType<typename T::ContainedType>;
-        REQUIRES_FUNCTION(cv, GetSize, size_t);
-        REQUIRES_FUNCTION(cv, IsEmpty, bool_t);
+        REQUIRES_FUNCTION(cv, GetSize, usize);
+        REQUIRES_FUNCTION(cv, IsEmpty, bool);
     };
 
     template <typename T>
@@ -157,7 +157,7 @@ namespace Mountain::Requirements
     template <typename T, typename U = T>
     concept Equatable = requires (const T& t, const U& u)
     {
-        REQUIRES_OPERATOR(t, ==, bool_t, u);
+        REQUIRES_OPERATOR(t, ==, bool, u);
     };
 
     template <typename T, typename U = T>
@@ -272,7 +272,7 @@ namespace Mountain::Meta
 
     /// @brief Checks whether @p T is sortable.
     template <Concepts::Iterator Iterator, typename Comparer, typename Projection = Mountain::Identity>
-    constexpr bool_t IsSortable = std::sortable<Iterator, Comparer, Projection>;
+    constexpr bool IsSortable = std::sortable<Iterator, Comparer, Projection>;
 }
 
 #include "Mountain/Exceptions/Exception.hpp"

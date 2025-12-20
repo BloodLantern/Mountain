@@ -19,7 +19,6 @@ TEST(Utils_Stopwatch, BasicFlow)
     EXPECT_FALSE(sw.GetIsRunning());
     EXPECT_GT(sw.GetElapsedMilliseconds(), 0);
 
-    const double_t elapsed = sw.GetElapsedMilliseconds();
     sw.Reset();
     EXPECT_EQ(sw.GetElapsedTicks(), 0);
     EXPECT_FALSE(sw.GetIsRunning());

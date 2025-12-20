@@ -15,49 +15,49 @@ namespace Mountain
     struct MOUNTAIN_API TimeSpan
     {
         /// @brief Represents the number of nanoseconds per tick
-        static constexpr int64_t NanosecondsPerTick = 100;
+        static constexpr s64 NanosecondsPerTick = 100;
         /// @brief Represents the number of ticks in 1 microsecond
-        static constexpr int64_t TicksPerMicrosecond = 10;
+        static constexpr s64 TicksPerMicrosecond = 10;
         /// @brief Represents the number of ticks in 1 millisecond
-        static constexpr int64_t TicksPerMillisecond = TicksPerMicrosecond * 1000;
+        static constexpr s64 TicksPerMillisecond = TicksPerMicrosecond * 1000;
         /// @brief Represents the number of ticks in 1 second
-        static constexpr int64_t TicksPerSecond = TicksPerMillisecond * 1000;
+        static constexpr s64 TicksPerSecond = TicksPerMillisecond * 1000;
         /// @brief Represents the number of ticks in 1 minute
-        static constexpr int64_t TicksPerMinute = TicksPerSecond * 60;
+        static constexpr s64 TicksPerMinute = TicksPerSecond * 60;
         /// @brief Represents the number of ticks in 1 hour
-        static constexpr int64_t TicksPerHour = TicksPerMinute * 60;
+        static constexpr s64 TicksPerHour = TicksPerMinute * 60;
         /// @brief Represents the number of ticks in 1 day
-        static constexpr int64_t TicksPerDay = TicksPerHour * 24;
+        static constexpr s64 TicksPerDay = TicksPerHour * 24;
         /// @brief Represents the number of microseconds in 1 millisecond.
-        static constexpr int64_t MicrosecondsPerMillisecond = TicksPerMillisecond / TicksPerMicrosecond;
+        static constexpr s64 MicrosecondsPerMillisecond = TicksPerMillisecond / TicksPerMicrosecond;
         /// @brief Represents the number of microseconds in 1 second.
-        static constexpr int64_t MicrosecondsPerSecond = TicksPerSecond / TicksPerMicrosecond;
+        static constexpr s64 MicrosecondsPerSecond = TicksPerSecond / TicksPerMicrosecond;
         /// @brief Represents the number of microseconds in 1 minute.
-        static constexpr int64_t MicrosecondsPerMinute = TicksPerMinute / TicksPerMicrosecond;
+        static constexpr s64 MicrosecondsPerMinute = TicksPerMinute / TicksPerMicrosecond;
         /// @brief Represents the number of microseconds in 1 hour.
-        static constexpr int64_t MicrosecondsPerHour = TicksPerHour / TicksPerMicrosecond;
+        static constexpr s64 MicrosecondsPerHour = TicksPerHour / TicksPerMicrosecond;
         /// @brief Represents the number of microseconds in 1 day.
-        static constexpr int64_t MicrosecondsPerDay = TicksPerDay / TicksPerMicrosecond;
+        static constexpr s64 MicrosecondsPerDay = TicksPerDay / TicksPerMicrosecond;
         /// @brief Represents the number of milliseconds in 1 second.
-        static constexpr int64_t MillisecondsPerSecond = TicksPerSecond / TicksPerMillisecond;
+        static constexpr s64 MillisecondsPerSecond = TicksPerSecond / TicksPerMillisecond;
         /// @brief Represents the number of milliseconds in 1 minute.
-        static constexpr int64_t MillisecondsPerMinute = TicksPerMinute / TicksPerMillisecond;
+        static constexpr s64 MillisecondsPerMinute = TicksPerMinute / TicksPerMillisecond;
         /// @brief Represents the number of milliseconds in 1 hour.
-        static constexpr int64_t MillisecondsPerHour = TicksPerHour / TicksPerMillisecond;
+        static constexpr s64 MillisecondsPerHour = TicksPerHour / TicksPerMillisecond;
         /// @brief Represents the number of milliseconds in 1 day.
-        static constexpr int64_t MillisecondsPerDay = TicksPerDay / TicksPerMillisecond;
+        static constexpr s64 MillisecondsPerDay = TicksPerDay / TicksPerMillisecond;
         /// @brief Represents the number of seconds in 1 minute.
-        static constexpr int64_t SecondsPerMinute = TicksPerMinute / TicksPerSecond;
+        static constexpr s64 SecondsPerMinute = TicksPerMinute / TicksPerSecond;
         /// @brief Represents the number of seconds in 1 hour.
-        static constexpr int64_t SecondsPerHour = TicksPerHour / TicksPerSecond;
+        static constexpr s64 SecondsPerHour = TicksPerHour / TicksPerSecond;
         /// @brief Represents the number of seconds in 1 day.
-        static constexpr int64_t SecondsPerDay = TicksPerDay / TicksPerSecond;
+        static constexpr s64 SecondsPerDay = TicksPerDay / TicksPerSecond;
         /// @brief Represents the number of minutes in 1 hour.
-        static constexpr int64_t MinutesPerHour = TicksPerHour / TicksPerMinute;
+        static constexpr s64 MinutesPerHour = TicksPerHour / TicksPerMinute;
         /// @brief Represents the number of minutes in 1 day.
-        static constexpr int64_t MinutesPerDay = TicksPerDay / TicksPerMinute;
+        static constexpr s64 MinutesPerDay = TicksPerDay / TicksPerMinute;
         /// @brief Represents the number of hours in 1 day.
-        static constexpr int32_t HoursPerDay = TicksPerDay / TicksPerHour;
+        static constexpr s32 HoursPerDay = TicksPerDay / TicksPerHour;
 
         ATTRIBUTE_NODISCARD
         static constexpr TimeSpan Zero();
@@ -67,55 +67,55 @@ namespace Mountain
         static constexpr TimeSpan MinValue();
 
         ATTRIBUTE_NODISCARD
-        static constexpr TimeSpan FromDays(double_t days);
+        static constexpr TimeSpan FromDays(f64 days);
         ATTRIBUTE_NODISCARD
-        static constexpr TimeSpan FromHours(double_t hours);
+        static constexpr TimeSpan FromHours(f64 hours);
         ATTRIBUTE_NODISCARD
-        static constexpr TimeSpan FromMinutes(double_t minutes);
+        static constexpr TimeSpan FromMinutes(f64 minutes);
         ATTRIBUTE_NODISCARD
-        static constexpr TimeSpan FromSeconds(double_t seconds);
+        static constexpr TimeSpan FromSeconds(f64 seconds);
         ATTRIBUTE_NODISCARD
-        static constexpr TimeSpan FromMilliseconds(double_t milliseconds);
+        static constexpr TimeSpan FromMilliseconds(f64 milliseconds);
         ATTRIBUTE_NODISCARD
-        static constexpr TimeSpan FromMicroseconds(double_t microseconds);
+        static constexpr TimeSpan FromMicroseconds(f64 microseconds);
         ATTRIBUTE_NODISCARD
-        static constexpr TimeSpan FromTicks(int64_t ticks);
+        static constexpr TimeSpan FromTicks(s64 ticks);
 
-        explicit constexpr TimeSpan(int64_t ticks);
-        constexpr TimeSpan(int32_t hours, int32_t minutes, int32_t seconds);
-        constexpr TimeSpan(int32_t days, int32_t hours, int32_t minutes, int32_t seconds, int32_t milliseconds = 0, int32_t microseconds = 0);
+        explicit constexpr TimeSpan(s64 ticks);
+        constexpr TimeSpan(s32 hours, s32 minutes, s32 seconds);
+        constexpr TimeSpan(s32 days, s32 hours, s32 minutes, s32 seconds, s32 milliseconds = 0, s32 microseconds = 0);
 
-        GETTER(int64_t, Ticks, m_Ticks)
-
-        ATTRIBUTE_NODISCARD
-        constexpr int32_t GetDays() const;
-        ATTRIBUTE_NODISCARD
-        constexpr int32_t GetHours() const;
-        ATTRIBUTE_NODISCARD
-        constexpr int32_t GetMinutes() const;
-        ATTRIBUTE_NODISCARD
-        constexpr int32_t GetSeconds() const;
-        ATTRIBUTE_NODISCARD
-        constexpr int32_t GetMilliseconds() const;
-        ATTRIBUTE_NODISCARD
-        constexpr int32_t GetMicroseconds() const;
-        ATTRIBUTE_NODISCARD
-        constexpr int32_t GetNanoseconds() const;
+        GETTER(s64, Ticks, m_Ticks)
 
         ATTRIBUTE_NODISCARD
-        constexpr double_t GetTotalDays() const;
+        constexpr s32 GetDays() const;
         ATTRIBUTE_NODISCARD
-        constexpr double_t GetTotalHours() const;
+        constexpr s32 GetHours() const;
         ATTRIBUTE_NODISCARD
-        constexpr double_t GetTotalMinutes() const;
+        constexpr s32 GetMinutes() const;
         ATTRIBUTE_NODISCARD
-        constexpr double_t GetTotalSeconds() const;
+        constexpr s32 GetSeconds() const;
         ATTRIBUTE_NODISCARD
-        constexpr double_t GetTotalMilliseconds() const;
+        constexpr s32 GetMilliseconds() const;
         ATTRIBUTE_NODISCARD
-        constexpr double_t GetTotalMicroseconds() const;
+        constexpr s32 GetMicroseconds() const;
         ATTRIBUTE_NODISCARD
-        constexpr double_t GetTotalNanoseconds() const;
+        constexpr s32 GetNanoseconds() const;
+
+        ATTRIBUTE_NODISCARD
+        constexpr f64 GetTotalDays() const;
+        ATTRIBUTE_NODISCARD
+        constexpr f64 GetTotalHours() const;
+        ATTRIBUTE_NODISCARD
+        constexpr f64 GetTotalMinutes() const;
+        ATTRIBUTE_NODISCARD
+        constexpr f64 GetTotalSeconds() const;
+        ATTRIBUTE_NODISCARD
+        constexpr f64 GetTotalMilliseconds() const;
+        ATTRIBUTE_NODISCARD
+        constexpr f64 GetTotalMicroseconds() const;
+        ATTRIBUTE_NODISCARD
+        constexpr f64 GetTotalNanoseconds() const;
 
         /// @brief Returns a new @c TimeSpan whose value is the absolute value of the current @c TimeSpan.
         ATTRIBUTE_NODISCARD
@@ -134,43 +134,43 @@ namespace Mountain
         ATTRIBUTE_NODISCARD
         friend constexpr TimeSpan operator-(TimeSpan lhs, TimeSpan rhs);
         ATTRIBUTE_NODISCARD
-        friend constexpr TimeSpan operator*(TimeSpan lhs, double_t rhs);
+        friend constexpr TimeSpan operator*(TimeSpan lhs, f64 rhs);
         ATTRIBUTE_NODISCARD
-        friend constexpr TimeSpan operator*(double_t lhs, TimeSpan rhs);
+        friend constexpr TimeSpan operator*(f64 lhs, TimeSpan rhs);
         ATTRIBUTE_NODISCARD
-        friend constexpr TimeSpan operator/(TimeSpan lhs, double_t rhs);
+        friend constexpr TimeSpan operator/(TimeSpan lhs, f64 rhs);
         ATTRIBUTE_NODISCARD
-        friend constexpr double_t operator/(TimeSpan lhs, TimeSpan rhs);
+        friend constexpr f64 operator/(TimeSpan lhs, TimeSpan rhs);
 
         friend constexpr TimeSpan& operator+=(TimeSpan& lhs, TimeSpan rhs);
         friend constexpr TimeSpan& operator-=(TimeSpan& lhs, TimeSpan rhs);
-        friend constexpr TimeSpan& operator*=(TimeSpan& lhs, double_t rhs);
-        friend constexpr TimeSpan& operator/=(TimeSpan& lhs, double_t rhs);
+        friend constexpr TimeSpan& operator*=(TimeSpan& lhs, f64 rhs);
+        friend constexpr TimeSpan& operator/=(TimeSpan& lhs, f64 rhs);
 
         ATTRIBUTE_NODISCARD
         std::string ToString() const;
 
         ATTRIBUTE_NODISCARD
-        constexpr size_t GetHashCode() const;
+        constexpr usize GetHashCode() const;
 
     private:
-        static constexpr int64_t MaxSeconds = std::numeric_limits<int64_t>::max() / TicksPerSecond;
-        static constexpr int64_t MinSeconds = std::numeric_limits<int64_t>::min() / TicksPerSecond;
+        static constexpr s64 MaxSeconds = std::numeric_limits<s64>::max() / TicksPerSecond;
+        static constexpr s64 MinSeconds = std::numeric_limits<s64>::min() / TicksPerSecond;
 
-        static constexpr int64_t MaxMilliSeconds = std::numeric_limits<int64_t>::max() / TicksPerMillisecond;
-        static constexpr int64_t MinMilliSeconds = std::numeric_limits<int64_t>::min() / TicksPerMillisecond;
+        static constexpr s64 MaxMilliSeconds = std::numeric_limits<s64>::max() / TicksPerMillisecond;
+        static constexpr s64 MinMilliSeconds = std::numeric_limits<s64>::min() / TicksPerMillisecond;
 
-        static constexpr int64_t MaxMicroSeconds = std::numeric_limits<int64_t>::max() / TicksPerMicrosecond;
-        static constexpr int64_t MinMicroSeconds = std::numeric_limits<int64_t>::min() / TicksPerMicrosecond;
+        static constexpr s64 MaxMicroSeconds = std::numeric_limits<s64>::max() / TicksPerMicrosecond;
+        static constexpr s64 MinMicroSeconds = std::numeric_limits<s64>::min() / TicksPerMicrosecond;
 
-        static constexpr int64_t TicksPerTenthSecond = TicksPerMillisecond * 100;
+        static constexpr s64 TicksPerTenthSecond = TicksPerMillisecond * 100;
 
         ATTRIBUTE_NODISCARD
-        static constexpr TimeSpan Interval(double_t ticks, double_t scale);
+        static constexpr TimeSpan Interval(f64 ticks, f64 scale);
         ATTRIBUTE_NODISCARD
-        static constexpr TimeSpan IntervalFromDoubleTicks(double_t ticks);
+        static constexpr TimeSpan IntervalFromDoubleTicks(f64 ticks);
 
-        int64_t m_Ticks = 0;
+        s64 m_Ticks = 0;
     };
 
     CHECK_REQUIREMENT(Requirements::StringConvertible, TimeSpan);
@@ -186,50 +186,50 @@ namespace Mountain
 namespace Mountain
 {
     constexpr TimeSpan TimeSpan::Zero() { return TimeSpan{0}; }
-    constexpr TimeSpan TimeSpan::MaxValue() { return TimeSpan{std::numeric_limits<int64_t>::max()}; }
-    constexpr TimeSpan TimeSpan::MinValue() { return TimeSpan{std::numeric_limits<int64_t>::min()}; }
+    constexpr TimeSpan TimeSpan::MaxValue() { return TimeSpan{std::numeric_limits<s64>::max()}; }
+    constexpr TimeSpan TimeSpan::MinValue() { return TimeSpan{std::numeric_limits<s64>::min()}; }
 
     // ReSharper disable CppClangTidyReadabilitySuspiciousCallArgument
-    constexpr TimeSpan TimeSpan::FromDays(const double_t days) { return Interval(days, TicksPerDay); }
+    constexpr TimeSpan TimeSpan::FromDays(const f64 days) { return Interval(days, TicksPerDay); }
 
-    constexpr TimeSpan TimeSpan::FromHours(const double_t hours) { return Interval(hours, TicksPerHour); }
+    constexpr TimeSpan TimeSpan::FromHours(const f64 hours) { return Interval(hours, TicksPerHour); }
 
-    constexpr TimeSpan TimeSpan::FromMinutes(const double_t minutes) { return Interval(minutes, TicksPerMinute); }
+    constexpr TimeSpan TimeSpan::FromMinutes(const f64 minutes) { return Interval(minutes, TicksPerMinute); }
 
-    constexpr TimeSpan TimeSpan::FromSeconds(const double_t seconds) { return Interval(seconds, TicksPerSecond); }
+    constexpr TimeSpan TimeSpan::FromSeconds(const f64 seconds) { return Interval(seconds, TicksPerSecond); }
 
-    constexpr TimeSpan TimeSpan::FromMilliseconds(const double_t milliseconds) { return Interval(milliseconds, TicksPerMillisecond); }
+    constexpr TimeSpan TimeSpan::FromMilliseconds(const f64 milliseconds) { return Interval(milliseconds, TicksPerMillisecond); }
 
-    constexpr TimeSpan TimeSpan::FromMicroseconds(const double_t microseconds) { return Interval(microseconds, TicksPerMicrosecond); }
+    constexpr TimeSpan TimeSpan::FromMicroseconds(const f64 microseconds) { return Interval(microseconds, TicksPerMicrosecond); }
     // ReSharper restore CppClangTidyReadabilitySuspiciousCallArgument
 
-    constexpr TimeSpan TimeSpan::FromTicks(const int64_t ticks) { return TimeSpan{ticks}; }
+    constexpr TimeSpan TimeSpan::FromTicks(const s64 ticks) { return TimeSpan{ticks}; }
 
-    constexpr int32_t TimeSpan::GetDays() const { return static_cast<int32_t>(m_Ticks / TicksPerDay); }
+    constexpr s32 TimeSpan::GetDays() const { return static_cast<s32>(m_Ticks / TicksPerDay); }
 
-    constexpr int32_t TimeSpan::GetHours() const { return static_cast<int32_t>(m_Ticks / TicksPerHour % 24); }
+    constexpr s32 TimeSpan::GetHours() const { return static_cast<s32>(m_Ticks / TicksPerHour % 24); }
 
-    constexpr int32_t TimeSpan::GetMinutes() const { return static_cast<int32_t>(m_Ticks / TicksPerMinute % 60); }
+    constexpr s32 TimeSpan::GetMinutes() const { return static_cast<s32>(m_Ticks / TicksPerMinute % 60); }
 
-    constexpr int32_t TimeSpan::GetSeconds() const { return static_cast<int32_t>(m_Ticks / TicksPerSecond % 60); }
+    constexpr s32 TimeSpan::GetSeconds() const { return static_cast<s32>(m_Ticks / TicksPerSecond % 60); }
 
-    constexpr int32_t TimeSpan::GetMilliseconds() const { return static_cast<int32_t>(m_Ticks / TicksPerMillisecond % 1000); }
+    constexpr s32 TimeSpan::GetMilliseconds() const { return static_cast<s32>(m_Ticks / TicksPerMillisecond % 1000); }
 
-    constexpr int32_t TimeSpan::GetMicroseconds() const { return static_cast<int32_t>(m_Ticks / TicksPerMicrosecond % 1000); }
+    constexpr s32 TimeSpan::GetMicroseconds() const { return static_cast<s32>(m_Ticks / TicksPerMicrosecond % 1000); }
 
-    constexpr int32_t TimeSpan::GetNanoseconds() const { return static_cast<int32_t>(m_Ticks % TicksPerMicrosecond * NanosecondsPerTick); }
+    constexpr s32 TimeSpan::GetNanoseconds() const { return static_cast<s32>(m_Ticks % TicksPerMicrosecond * NanosecondsPerTick); }
 
-    constexpr double_t TimeSpan::GetTotalDays() const { return static_cast<double_t>(m_Ticks) / TicksPerDay; }
+    constexpr f64 TimeSpan::GetTotalDays() const { return static_cast<f64>(m_Ticks) / TicksPerDay; }
 
-    constexpr double_t TimeSpan::GetTotalHours() const { return static_cast<double_t>(m_Ticks) / TicksPerHour; }
+    constexpr f64 TimeSpan::GetTotalHours() const { return static_cast<f64>(m_Ticks) / TicksPerHour; }
 
-    constexpr double_t TimeSpan::GetTotalMinutes() const { return static_cast<double_t>(m_Ticks) / TicksPerMinute; }
+    constexpr f64 TimeSpan::GetTotalMinutes() const { return static_cast<f64>(m_Ticks) / TicksPerMinute; }
 
-    constexpr double_t TimeSpan::GetTotalSeconds() const { return static_cast<double_t>(m_Ticks) / TicksPerSecond; }
+    constexpr f64 TimeSpan::GetTotalSeconds() const { return static_cast<f64>(m_Ticks) / TicksPerSecond; }
 
-    constexpr double_t TimeSpan::GetTotalMilliseconds() const
+    constexpr f64 TimeSpan::GetTotalMilliseconds() const
     {
-        const double_t temp = static_cast<double_t>(m_Ticks) / TicksPerMillisecond;
+        const f64 temp = static_cast<f64>(m_Ticks) / TicksPerMillisecond;
 
         if (temp > MaxMilliSeconds)
             return MaxMilliSeconds;
@@ -240,9 +240,9 @@ namespace Mountain
         return temp;
     }
 
-    constexpr double_t TimeSpan::GetTotalMicroseconds() const { return static_cast<double_t>(m_Ticks) / TicksPerMicrosecond; }
+    constexpr f64 TimeSpan::GetTotalMicroseconds() const { return static_cast<f64>(m_Ticks) / TicksPerMicrosecond; }
 
-    constexpr double_t TimeSpan::GetTotalNanoseconds() const { return static_cast<double_t>(m_Ticks) * NanosecondsPerTick; }
+    constexpr f64 TimeSpan::GetTotalNanoseconds() const { return static_cast<f64>(m_Ticks) * NanosecondsPerTick; }
 
     constexpr TimeSpan TimeSpan::Duration() const
     {
@@ -254,12 +254,12 @@ namespace Mountain
 
     constexpr std::chrono::nanoseconds TimeSpan::ToChrono() const
     {
-        return std::chrono::nanoseconds{static_cast<int64_t>(GetTotalNanoseconds())};
+        return std::chrono::nanoseconds{static_cast<s64>(GetTotalNanoseconds())};
     }
 
     constexpr TimeSpan operator+(const TimeSpan lhs, const TimeSpan rhs)
     {
-        const int64_t result = lhs.m_Ticks + rhs.m_Ticks;
+        const s64 result = lhs.m_Ticks + rhs.m_Ticks;
 
         // Overflow if signs of operands was identical and result's
         // sign was opposite.
@@ -280,7 +280,7 @@ namespace Mountain
 
     constexpr TimeSpan operator-(const TimeSpan lhs, const TimeSpan rhs)
     {
-        const int64_t result = lhs.m_Ticks - rhs.m_Ticks;
+        const s64 result = lhs.m_Ticks - rhs.m_Ticks;
 
         // Overflow if signs of operands was different and result's
         // sign was opposite from the first argument's sign.
@@ -291,41 +291,41 @@ namespace Mountain
         return TimeSpan{result};
     }
 
-    constexpr TimeSpan operator*(const TimeSpan lhs, const double_t rhs)
+    constexpr TimeSpan operator*(const TimeSpan lhs, const f64 rhs)
     {
         if (Calc::IsNan(rhs))
             THROW(ArgumentException{"Cannot multiply a TimeSpan by a NaN", "rhs"});
 
-        const double_t ticks = Calc::Round(static_cast<double_t>(lhs.m_Ticks) * rhs);
+        const f64 ticks = Calc::Round(static_cast<f64>(lhs.m_Ticks) * rhs);
         return TimeSpan::IntervalFromDoubleTicks(ticks);
     }
 
-    constexpr TimeSpan operator*(const double_t lhs, const TimeSpan rhs) { return rhs * lhs; }
+    constexpr TimeSpan operator*(const f64 lhs, const TimeSpan rhs) { return rhs * lhs; }
 
-    constexpr TimeSpan operator/(const TimeSpan lhs, const double_t rhs)
+    constexpr TimeSpan operator/(const TimeSpan lhs, const f64 rhs)
     {
         if (Calc::IsNan(rhs))
             THROW(ArgumentException{"Cannot divide a TimeSpan by a NaN", "rhs"});
 
-        const double_t ticks = Calc::Round(static_cast<double_t>(lhs.m_Ticks) / rhs);
+        const f64 ticks = Calc::Round(static_cast<f64>(lhs.m_Ticks) / rhs);
         return TimeSpan::IntervalFromDoubleTicks(ticks);
     }
 
-    constexpr double_t operator/(const TimeSpan lhs, const TimeSpan rhs) { return static_cast<double_t>(lhs.m_Ticks) / static_cast<double_t>(rhs.m_Ticks); }
+    constexpr f64 operator/(const TimeSpan lhs, const TimeSpan rhs) { return static_cast<f64>(lhs.m_Ticks) / static_cast<f64>(rhs.m_Ticks); }
 
     constexpr TimeSpan& operator+=(TimeSpan& lhs, const TimeSpan rhs) { return lhs = lhs + rhs; }
 
     constexpr TimeSpan& operator-=(TimeSpan& lhs, const TimeSpan rhs) { return lhs = lhs - rhs; }
 
-    constexpr TimeSpan& operator*=(TimeSpan& lhs, const double_t rhs) { return lhs = lhs * rhs; }
+    constexpr TimeSpan& operator*=(TimeSpan& lhs, const f64 rhs) { return lhs = lhs * rhs; }
 
-    constexpr TimeSpan& operator/=(TimeSpan& lhs, const double_t rhs) { return lhs = lhs / rhs; }
+    constexpr TimeSpan& operator/=(TimeSpan& lhs, const f64 rhs) { return lhs = lhs / rhs; }
 
-    constexpr TimeSpan::TimeSpan(const int64_t ticks) : m_Ticks(ticks) {}
+    constexpr TimeSpan::TimeSpan(const s64 ticks) : m_Ticks(ticks) {}
 
-    constexpr TimeSpan::TimeSpan(const int32_t hours, const int32_t minutes, const int32_t seconds)
+    constexpr TimeSpan::TimeSpan(const s32 hours, const s32 minutes, const s32 seconds)
     {
-        const int64_t totalSeconds = static_cast<int64_t>(hours) * 3600 + static_cast<int64_t>(minutes) * 60 + static_cast<int64_t>(seconds);
+        const s64 totalSeconds = static_cast<s64>(hours) * 3600 + static_cast<s64>(minutes) * 60 + static_cast<s64>(seconds);
 
         if (totalSeconds > MaxSeconds || totalSeconds < MinSeconds)
             THROW(ArgumentOutOfRangeException{"Invalid TimeSpan values"});
@@ -334,16 +334,16 @@ namespace Mountain
     }
 
     constexpr TimeSpan::TimeSpan(
-        const int32_t days,
-        const int32_t hours,
-        const int32_t minutes,
-        const int32_t seconds,
-        const int32_t milliseconds,
-        const int32_t microseconds
+        const s32 days,
+        const s32 hours,
+        const s32 minutes,
+        const s32 seconds,
+        const s32 milliseconds,
+        const s32 microseconds
     )
     {
-        const int64_t totalMicroseconds = ((static_cast<int64_t>(days) * 3600 * 24 + static_cast<int64_t>(hours) * 3600 +
-                                            static_cast<int64_t>(minutes) * 60 + seconds) * 1000 + milliseconds) * 1000 +
+        const s64 totalMicroseconds = ((static_cast<s64>(days) * 3600 * 24 + static_cast<s64>(hours) * 3600 +
+                                            static_cast<s64>(minutes) * 60 + seconds) * 1000 + milliseconds) * 1000 +
                                           microseconds;
 
         if (totalMicroseconds > MaxMicroSeconds || totalMicroseconds < MinMicroSeconds)
@@ -352,9 +352,9 @@ namespace Mountain
         m_Ticks = totalMicroseconds * TicksPerMicrosecond;
     }
 
-    constexpr size_t TimeSpan::GetHashCode() const { return m_Ticks ^ (m_Ticks >> 32); }
+    constexpr usize TimeSpan::GetHashCode() const { return m_Ticks ^ (m_Ticks >> 32); }
 
-    constexpr TimeSpan TimeSpan::Interval(const double_t ticks, const double_t scale)
+    constexpr TimeSpan TimeSpan::Interval(const f64 ticks, const f64 scale)
     {
         if (Calc::IsNan(ticks))
             THROW(ArgumentException{"Cannot create an interval from a NaN amount of ticks", "ticks"});
@@ -362,14 +362,14 @@ namespace Mountain
         return IntervalFromDoubleTicks(ticks * scale);
     }
 
-    constexpr TimeSpan TimeSpan::IntervalFromDoubleTicks(const double_t ticks)
+    constexpr TimeSpan TimeSpan::IntervalFromDoubleTicks(const f64 ticks)
     {
-        if (ticks > static_cast<double_t>(std::numeric_limits<int64_t>::max()) || ticks < static_cast<double_t>(std::numeric_limits<int64_t>::min()) || Calc::IsNan(ticks))
+        if (ticks > static_cast<f64>(std::numeric_limits<s64>::max()) || ticks < static_cast<f64>(std::numeric_limits<s64>::min()) || Calc::IsNan(ticks))
             THROW(OverflowException{"Invalid TimeSpan ticks"});
 
-        if (ticks == static_cast<double_t>(std::numeric_limits<int64_t>::max()))
+        if (ticks == static_cast<f64>(std::numeric_limits<s64>::max()))
             return MaxValue();
 
-        return TimeSpan{static_cast<int64_t>(ticks)};
+        return TimeSpan{static_cast<s64>(ticks)};
     }
 }

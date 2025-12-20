@@ -8,7 +8,7 @@
 
 namespace Mountain
 {
-    enum class ColliderType : uint8_t
+    enum class ColliderType : u8
     {
         Hitbox,
         Circle,
@@ -45,28 +45,28 @@ namespace Mountain
         virtual Vector2 GetActualPosition() const;
 
         ATTRIBUTE_NODISCARD
-        bool_t CheckCollision(const Entity& e) const;
+        bool CheckCollision(const Entity& e) const;
         ATTRIBUTE_NODISCARD
-        bool_t CheckCollision(const Collider& collider) const;
+        bool CheckCollision(const Collider& collider) const;
         ATTRIBUTE_NODISCARD
-        virtual bool_t CheckCollision(Vector2 point) const = 0;
+        virtual bool CheckCollision(Vector2 point) const = 0;
         ATTRIBUTE_NODISCARD
-        virtual bool_t CheckCollision(const Hitbox& hitbox) const = 0;
+        virtual bool CheckCollision(const Hitbox& hitbox) const = 0;
         ATTRIBUTE_NODISCARD
-        virtual bool_t CheckCollision(const Circle& circle) const = 0;
+        virtual bool CheckCollision(const Circle& circle) const = 0;
         ATTRIBUTE_NODISCARD
-        virtual bool_t CheckCollision(const Grid& grid) const = 0;
+        virtual bool CheckCollision(const Grid& grid) const = 0;
         ATTRIBUTE_NODISCARD
-        virtual bool_t CheckCollision(const ColliderList& list) const = 0;
+        virtual bool CheckCollision(const ColliderList& list) const = 0;
 
         ATTRIBUTE_NODISCARD
-        virtual float_t Left() const = 0;
+        virtual f32 Left() const = 0;
         ATTRIBUTE_NODISCARD
-        virtual float_t Right() const = 0;
+        virtual f32 Right() const = 0;
         ATTRIBUTE_NODISCARD
-        virtual float_t Top() const = 0;
+        virtual f32 Top() const = 0;
         ATTRIBUTE_NODISCARD
-        virtual float_t Bottom() const = 0;
+        virtual f32 Bottom() const = 0;
         ATTRIBUTE_NODISCARD
         virtual Vector2 Center() const;
         ATTRIBUTE_NODISCARD
@@ -79,13 +79,13 @@ namespace Mountain
         virtual Vector2 BottomRight() const;
 
         ATTRIBUTE_NODISCARD
-        virtual float_t AbsoluteLeft() const = 0;
+        virtual f32 AbsoluteLeft() const = 0;
         ATTRIBUTE_NODISCARD
-        virtual float_t AbsoluteRight() const = 0;
+        virtual f32 AbsoluteRight() const = 0;
         ATTRIBUTE_NODISCARD
-        virtual float_t AbsoluteTop() const = 0;
+        virtual f32 AbsoluteTop() const = 0;
         ATTRIBUTE_NODISCARD
-        virtual float_t AbsoluteBottom() const = 0;
+        virtual f32 AbsoluteBottom() const = 0;
         ATTRIBUTE_NODISCARD
         virtual Vector2 AbsoluteCenter() const;
         ATTRIBUTE_NODISCARD
@@ -98,9 +98,9 @@ namespace Mountain
         virtual Vector2 AbsoluteBottomRight() const;
 
         ATTRIBUTE_NODISCARD
-        virtual float_t Width() const;
+        virtual f32 Width() const;
         ATTRIBUTE_NODISCARD
-        virtual float_t Height() const;
+        virtual f32 Height() const;
         ATTRIBUTE_NODISCARD
         virtual Vector2 Size() const;
     };

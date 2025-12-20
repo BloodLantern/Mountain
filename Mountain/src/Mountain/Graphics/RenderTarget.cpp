@@ -85,7 +85,7 @@ LightSource& RenderTarget::NewLightSource() { return m_LightSources.Emplace(); }
 
 void RenderTarget::DeleteLightSource(const LightSource& lightSource)
 {
-    for (size_t i = 0; i < m_LightSources.GetSize(); ++i)
+    for (usize i = 0; i < m_LightSources.GetSize(); ++i)
     {
         if (&m_LightSources[i] != &lightSource)
             continue;
@@ -153,13 +153,13 @@ void RenderTarget::SetCameraMatrix(const Matrix& newCameraMatrix)
     m_CameraScale = { (b - a).Length() * 0.5f, (c - b).Length() * 0.5f };
 
     // Update the Draw class fields only if this RenderTarget is the current one
-    int32_t framebuffer;
+    s32 framebuffer;
     Graphics::GetConstant(Graphics::Constant::DrawFramebufferBinding, &framebuffer);
-    if (static_cast<uint32_t>(framebuffer) == m_Framebuffer.GetId())
+    if (static_cast<u32>(framebuffer) == m_Framebuffer.GetId())
         UpdateDrawCamera();
 }
 
 Matrix RenderTarget::ComputeDefaultProjection() const
 {
-    return Matrix::Orthographic(0.f, static_cast<float_t>(m_Size.x), static_cast<float_t>(m_Size.y), 0.f, -1000.f, 1000.f);
+    return Matrix::Orthographic(0.f, static_cast<f32>(m_Size.x), static_cast<f32>(m_Size.y), 0.f, -1000.f, 1000.f);
 }

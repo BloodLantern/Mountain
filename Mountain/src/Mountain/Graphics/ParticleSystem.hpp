@@ -22,15 +22,15 @@ namespace Mountain
     struct ParticleSystemBurst
     {
         /// @brief The time at which the burst should occur
-        float_t time = 0.f;
+        f32 time = 0.f;
         /// @brief The number of particles to spawn in the burst
-        uint32_t count = 30;
+        u32 count = 30;
         /// @brief How many times the burst should repeat
-        uint32_t cycles = 1;
+        u32 cycles = 1;
         /// @brief The time interval between each burst cycle
-        float_t interval = 0.01f;
+        f32 interval = 0.01f;
         /// @brief The probability for the burst to happen
-        float_t probability = 1.f;
+        f32 probability = 1.f;
     };
 
     class ParticleSystem
@@ -39,36 +39,36 @@ namespace Mountain
         // Particle system settings
 
         Vector2 position;
-        float_t rotation;
-        float_t duration = 5.f;
-        bool_t looping = true;
-        float_t startDelay;
-        bool_t useUnscaledDeltaTime = false;
+        f32 rotation;
+        f32 duration = 5.f;
+        bool looping = true;
+        f32 startDelay;
+        bool useUnscaledDeltaTime = false;
 
         // Emission settings
 
         /// @brief The number of particles to spawn each second
-        float_t emissionRateOverTime = 10.f;
+        f32 emissionRateOverTime = 10.f;
         /// @brief The number of particles to spawn for every pixel traveled by the system
-        float_t emissionRateOverDistance = 0.f;
+        f32 emissionRateOverDistance = 0.f;
         /// @brief Bursts of particles to spawn
         List<ParticleSystemBurst> emissionBursts;
 
         // Particle settings
 
-        float_t particleLifetime = 5.f;
-        float_t particleSpeed = 5.f;
+        f32 particleLifetime = 5.f;
+        f32 particleSpeed = 5.f;
         Color particleStartColor = Color::White();
-        float_t particleStartSize = 1.f;
+        f32 particleStartSize = 1.f;
 
         // Modules
 
         ParticleSystemModules::Types enabledModules = ParticleSystemModules::Types::Default;
 
         /// @brief Constructs a ParticleSystem with 1000 max particles
-        /// @remark This simply calls @c ParticleSystem(uint32_t) with @c 1000 as a parameter
+        /// @remark This simply calls @c ParticleSystem(u32) with @c 1000 as a parameter
         MOUNTAIN_API ParticleSystem();
-        MOUNTAIN_API explicit ParticleSystem(uint32_t maxParticles);
+        MOUNTAIN_API explicit ParticleSystem(u32 maxParticles);
         MOUNTAIN_API virtual ~ParticleSystem();
 
         DEFAULT_COPY_MOVE_OPERATIONS(ParticleSystem)
@@ -99,30 +99,30 @@ namespace Mountain
         /// @brief Get the current living particle count.
         /// @details This can vary a lot from frame to frame because we count the particles on the CPU from the GPU memory.
         ATTRIBUTE_NODISCARD
-        MOUNTAIN_API uint32_t GetCurrentParticles();
+        MOUNTAIN_API u32 GetCurrentParticles();
 
         /// @brief Get whether the system has finished playing.
         /// @details E.g., whether it is not spawning particles anymore and @code GetCurrentParticles() == 0@endcode.
         ATTRIBUTE_NODISCARD
-        MOUNTAIN_API bool_t IsComplete();
+        MOUNTAIN_API bool IsComplete();
 
-        GETTER(uint32_t, MaxParticles, m_MaxParticles)
+        GETTER(u32, MaxParticles, m_MaxParticles)
         /// @brief Set the new maximum particle count
         /// @warning This can be a quite heavy operation depending on the requested new max particle, avoid doing this every frame
-        MOUNTAIN_API void SetMaxParticles(uint32_t newMaxParticles);
+        MOUNTAIN_API void SetMaxParticles(u32 newMaxParticles);
 
-        GETTER(bool_t, Playing, m_Playing)
+        GETTER(bool, Playing, m_Playing)
         GETTER(const List<std::shared_ptr<ParticleSystemModules::ModuleBase>>&, Modules, m_Modules)
 
     private:
-        uint32_t m_MaxParticles = 0;
-        int32_t* m_LiveParticles = nullptr;
+        u32 m_MaxParticles = 0;
+        s32* m_LiveParticles = nullptr;
         __GLsync* m_SyncObject = nullptr;
 
-        float_t m_PlaybackTime = 0.f; // System lifetime
-        float_t m_LastPlaybackTime = 0.f;
-        double_t m_SpawnTimer = 0.0;
-        bool_t m_Playing = true;
+        f32 m_PlaybackTime = 0.f; // System lifetime
+        f32 m_LastPlaybackTime = 0.f;
+        f64 m_SpawnTimer = 0.0;
+        bool m_Playing = true;
         Vector2 m_LastPosition;
 
         Pointer<ComputeShader> m_UpdateComputeShader;
@@ -130,23 +130,23 @@ namespace Mountain
         Pointer<Shader> m_DrawShader;
         Graphics::GpuBuffer m_LiveSsbo, m_ParticleSsbo;
 
-        bool_t m_GuiParticleBurstTimeHeld = false;
+        bool m_GuiParticleBurstTimeHeld = false;
         Vector2 m_RenderTargetSize;
 
         List<std::shared_ptr<ParticleSystemModules::ModuleBase>> m_Modules;
 
         std::shared_ptr<ParticleSystemModules::Renderer> m_RendererModule;
 
-        bool_t m_LastUseTexture = false;
+        bool m_LastUseTexture = false;
 
-        MOUNTAIN_API void Update(float_t deltaTime);
+        MOUNTAIN_API void Update(f32 deltaTime);
 
-        MOUNTAIN_API void SetComputeShaderUniforms(float_t deltaTime) const;
+        MOUNTAIN_API void SetComputeShaderUniforms(f32 deltaTime) const;
         MOUNTAIN_API void SpawnNewParticles();
 
-        MOUNTAIN_API void AddModule(const std::shared_ptr<ParticleSystemModules::ModuleBase>& module, bool_t sort);
-        MOUNTAIN_API void AddModules(const List<std::shared_ptr<ParticleSystemModules::ModuleBase>>& modules, bool_t sort);
-        MOUNTAIN_API void RemoveModule(size_t index);
+        MOUNTAIN_API void AddModule(const std::shared_ptr<ParticleSystemModules::ModuleBase>& module, bool sort);
+        MOUNTAIN_API void AddModules(const List<std::shared_ptr<ParticleSystemModules::ModuleBase>>& modules, bool sort);
+        MOUNTAIN_API void RemoveModule(usize index);
 
         MOUNTAIN_API void SortModules();
 
@@ -155,8 +155,8 @@ namespace Mountain
         /// @brief Lock the buffer to GPU read/write-only. After that call, the CPU cannot access that buffer anymore.
         MOUNTAIN_API static void LockBuffer(__GLsync*& syncObject);
 
-        MOUNTAIN_API uint8_t* CreateRawDataCopy();
-        MOUNTAIN_API bool_t CheckAndDeleteRawDataCopy(const uint8_t* copy);
+        MOUNTAIN_API u8* CreateRawDataCopy();
+        MOUNTAIN_API bool CheckAndDeleteRawDataCopy(const u8* copy);
     };
 
     template <Concepts::ParticleSystemModule ModuleT>

@@ -71,7 +71,7 @@ namespace Mountain
         Pointer() = default;
 
         /// @brief Creates a copy of another @ref Pointer, specifying whether it is a weak or strong reference.
-        Pointer(const Pointer& other, bool_t strongReference = false);
+        Pointer(const Pointer& other, bool strongReference = false);
 
         /// @brief Creates a Pointer by moving all the values of an existing one.
         Pointer(Pointer&& other) noexcept;
@@ -84,11 +84,11 @@ namespace Mountain
         ///
         /// @tparam U The type of the existing Pointer. This type must be convertible to Type.
         template <typename U>
-        explicit Pointer(const Pointer<U>& other, bool_t strongReference = false);
+        explicit Pointer(const Pointer<U>& other, bool strongReference = false);
 
         /// @brief Creates a copy of an existing Pointer of a different Type, specifying whether it is a strong reference.
         template <typename U>
-        explicit Pointer(Pointer<U>& other, bool_t strongReference = false);
+        explicit Pointer(Pointer<U>& other, bool strongReference = false);
 
         /// @brief Creates a Pointer by moving the value of another one of a different Type.
         template <typename U>
@@ -115,7 +115,7 @@ namespace Mountain
 
         /// @brief Returns whether this Pointer is @c nullptr.
         ATTRIBUTE_NODISCARD
-        bool_t IsValid() const;
+        bool IsValid() const;
 
         /// @brief Converts this @ref Pointer to a strong reference.
         void ToStrongReference();
@@ -129,7 +129,7 @@ namespace Mountain
 
         /// @brief Returns whether this Pointer is holding a strong reference.
         ATTRIBUTE_NODISCARD
-        bool_t GetIsStrongReference() const;
+        bool GetIsStrongReference() const;
 
         /// @brief Resets this Pointer to a @c nullptr.
         ///
@@ -169,9 +169,9 @@ namespace Mountain
         explicit operator T*();
 
         // ReSharper disable once CppNonExplicitConversionOperator
-        /// @brief Converts this @ref Pointer to a @c bool_t the same way a raw pointer would.
+        /// @brief Converts this @ref Pointer to a @c bool the same way a raw pointer would.
         ATTRIBUTE_NODISCARD
-        operator bool_t() const;
+        operator bool() const;
 
         /// @brief Dereferences this Pointer, which gives a reference to the underlying Type.
         ATTRIBUTE_NODISCARD
@@ -193,14 +193,14 @@ namespace Mountain
         std::string ToString() const;
 
         ATTRIBUTE_NODISCARD
-        size_t GetHashCode() const;
+        usize GetHashCode() const;
 
     private:
         ReferenceCounter<T>* m_ReferenceCounter = nullptr;
 
-        bool_t m_IsStrongReference = false;
+        bool m_IsStrongReference = false;
 
-        explicit Pointer(ReferenceCounter<T>*&& referenceCounter, bool_t strongReference);
+        explicit Pointer(ReferenceCounter<T>*&& referenceCounter, bool strongReference);
 
         void SetReferenceCounter(ReferenceCounter<T>* newReferenceCounter);
 
@@ -210,17 +210,17 @@ namespace Mountain
     /// @brief Compares two @c Pointer by checking if they point to the same address.
     template <typename T>
     ATTRIBUTE_NODISCARD
-    bool_t operator==(const Pointer<T>& lhs, const Pointer<T>& rhs);
+    bool operator==(const Pointer<T>& lhs, const Pointer<T>& rhs);
 
     /// @brief Compares two @c Pointer by checking if they point to the same address.
     template <typename T, typename U>
     ATTRIBUTE_NODISCARD
-    bool_t operator==(const Pointer<T>& lhs, const Pointer<U>& rhs);
+    bool operator==(const Pointer<T>& lhs, const Pointer<U>& rhs);
 
     /// @brief Checks if a @ref Pointer is null.
     template <typename T>
     ATTRIBUTE_NODISCARD
-    bool_t operator==(const Pointer<T>& lhs, nullptr_t);
+    bool operator==(const Pointer<T>& lhs, nullptr_t);
 
     CHECK_REQUIREMENT(Requirements::StringConvertible, Pointer<Requirements::DefaultType>);
     CHECK_REQUIREMENT(Requirements::Hashable, Pointer<Requirements::DefaultType>);
@@ -244,7 +244,7 @@ namespace Mountain
     }
 
     template <typename T>
-    Pointer<T>::Pointer(const Pointer& other, const bool_t strongReference)
+    Pointer<T>::Pointer(const Pointer& other, const bool strongReference)
         : m_ReferenceCounter(other.m_ReferenceCounter)
         , m_IsStrongReference(strongReference)
     {
@@ -281,7 +281,7 @@ namespace Mountain
 
     template <typename T>
     template <typename U>
-    Pointer<T>::Pointer(const Pointer<U>& other, const bool_t strongReference)
+    Pointer<T>::Pointer(const Pointer<U>& other, const bool strongReference)
         : m_ReferenceCounter(reinterpret_cast<ReferenceCounter<T>*>(const_cast<ReferenceCounter<U>*>(other.GetReferenceCounter())))
         , m_IsStrongReference(strongReference)
     {
@@ -296,7 +296,7 @@ namespace Mountain
 
     template <typename T>
     template <typename U>
-    Pointer<T>::Pointer(Pointer<U>& other, const bool_t strongReference)
+    Pointer<T>::Pointer(Pointer<U>& other, const bool strongReference)
         : Pointer(const_cast<const Pointer<U>&>(other), strongReference)
     {
     }
@@ -390,7 +390,7 @@ namespace Mountain
     template <typename U>
     Pointer<T>& Pointer<T>::operator=(const Pointer<U>& other)
     {
-        if (reinterpret_cast<const int8_t*>(this) == reinterpret_cast<const int8_t*>(&other))
+        if (reinterpret_cast<const s8*>(this) == reinterpret_cast<const s8*>(&other))
             return *this;
 
         SetReferenceCounter(reinterpret_cast<ReferenceCounter<T>*>(const_cast<ReferenceCounter<U>*>(other.GetReferenceCounter())));
@@ -403,7 +403,7 @@ namespace Mountain
     template <typename U>
     Pointer<T>& Pointer<T>::operator=(Pointer<U>&& other) noexcept  // NOLINT(cppcoreguidelines-rvalue-reference-param-not-moved)
     {
-        if (reinterpret_cast<const int8_t*>(this) == reinterpret_cast<const int8_t*>(&other))
+        if (reinterpret_cast<const s8*>(this) == reinterpret_cast<const s8*>(&other))
             return *this;
 
         SetReferenceCounter(reinterpret_cast<ReferenceCounter<T>*>(const_cast<ReferenceCounter<U>*>(other.GetReferenceCounter())));
@@ -438,7 +438,7 @@ namespace Mountain
     }
 
     template <typename T>
-    Pointer<T>::operator bool_t() const { return IsValid(); }
+    Pointer<T>::operator bool() const { return IsValid(); }
 
     template <typename T>
     T& Pointer<T>::operator*()
@@ -471,22 +471,22 @@ namespace Mountain
     template <typename T>
     std::string Pointer<T>::ToString() const
     {
-        return m_ReferenceCounter ? std::format("0x{}", std::bit_cast<size_t>(m_ReferenceCounter->GetPointer())) : "null";
+        return m_ReferenceCounter ? std::format("0x{}", std::bit_cast<usize>(m_ReferenceCounter->GetPointer())) : "null";
     }
 
     template <typename T>
-    size_t Pointer<T>::GetHashCode() const
+    usize Pointer<T>::GetHashCode() const
     {
-        const size_t h1 = std::hash<ReferenceCounter<T>*>{}(const_cast<ReferenceCounter<T>*>(m_ReferenceCounter));
-        const size_t h2 = std::hash<bool_t>{}(m_IsStrongReference);
+        const usize h1 = std::hash<ReferenceCounter<T>*>{}(const_cast<ReferenceCounter<T>*>(m_ReferenceCounter));
+        const usize h2 = std::hash<bool>{}(m_IsStrongReference);
         return h1 ^ (h2 << 1);
     }
 
     template <typename T>
-    bool_t Pointer<T>::IsValid() const { return m_ReferenceCounter != nullptr; }
+    bool Pointer<T>::IsValid() const { return m_ReferenceCounter != nullptr; }
 
     template <typename T>
-    bool_t Pointer<T>::GetIsStrongReference() const { return m_IsStrongReference; }
+    bool Pointer<T>::GetIsStrongReference() const { return m_IsStrongReference; }
 
     template <typename T>
     void Pointer<T>::ToStrongReference()
@@ -521,7 +521,7 @@ namespace Mountain
     const ReferenceCounter<T>* Pointer<T>::GetReferenceCounter() const { return m_ReferenceCounter; }
 
     template <typename T>
-    Pointer<T>::Pointer(ReferenceCounter<T>*&& referenceCounter, const bool_t strongReference)  // NOLINT(cppcoreguidelines-rvalue-reference-param-not-moved)
+    Pointer<T>::Pointer(ReferenceCounter<T>*&& referenceCounter, const bool strongReference)  // NOLINT(cppcoreguidelines-rvalue-reference-param-not-moved)
         : m_ReferenceCounter(std::move(referenceCounter))
         , m_IsStrongReference(strongReference)
     {
@@ -560,9 +560,9 @@ namespace Mountain
     }
 
     template <typename T>
-    bool_t operator==(const Pointer<T>& lhs, const Pointer<T>& rhs)
+    bool operator==(const Pointer<T>& lhs, const Pointer<T>& rhs)
     {
-        const bool_t lhsNull = !lhs.IsValid(), rhsNull = !rhs.IsValid();
+        const bool lhsNull = !lhs.IsValid(), rhsNull = !rhs.IsValid();
         if (lhsNull && rhsNull)
             return true;
 
@@ -573,9 +573,9 @@ namespace Mountain
     }
 
     template <typename T, typename U>
-    bool_t operator==(const Pointer<T>& lhs, const Pointer<U>& rhs)
+    bool operator==(const Pointer<T>& lhs, const Pointer<U>& rhs)
     {
-        const bool_t lhsNull = !lhs.IsValid(), rhsNull = !rhs.IsValid();
+        const bool lhsNull = !lhs.IsValid(), rhsNull = !rhs.IsValid();
         if (lhsNull && rhsNull)
             return true;
 
@@ -586,5 +586,5 @@ namespace Mountain
     }
 
     template <typename T>
-    bool_t operator==(const Pointer<T>& lhs, const nullptr_t) { return !lhs.IsValid(); }
+    bool operator==(const Pointer<T>& lhs, const nullptr_t) { return !lhs.IsValid(); }
 }

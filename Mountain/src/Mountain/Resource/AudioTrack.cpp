@@ -16,9 +16,9 @@ AudioTrack::~AudioTrack()
     AudioTrack::ResetSourceData();
 }
 
-bool_t AudioTrack::SetSourceData(const uint8_t* const buffer, const int64_t length)
+bool AudioTrack::SetSourceData(const u8* const buffer, const s64 length)
 {
-    const char_t* const type = reinterpret_cast<const char_t*>(buffer);
+    const c8* const type = reinterpret_cast<const c8*>(buffer);
 
     if (std::strncmp(type, "RIFF", 4) == 0)
         return LoadWavefront(buffer, length);
@@ -63,7 +63,7 @@ void AudioTrack::ResetSourceData()
         case AudioTrackFormat::OggVorbis:
         case AudioTrackFormat::Mp3:
             // The buffer was malloc-ed from the third-party library
-            free(const_cast<uint8_t*>(m_Data));
+            free(const_cast<u8*>(m_Data));
             break;
     }
 
@@ -75,24 +75,24 @@ void AudioTrack::ResetSourceData()
     m_SourceDataSet = false;
 }
 
-int32_t AudioTrack::GetDataSize() const { return m_DataSize; }
+s32 AudioTrack::GetDataSize() const { return m_DataSize; }
 
-uint16_t AudioTrack::GetChannels() const { return m_Channels; }
+u16 AudioTrack::GetChannels() const { return m_Channels; }
 
-int32_t AudioTrack::GetSampleRate() const { return m_SampleRate; }
+s32 AudioTrack::GetSampleRate() const { return m_SampleRate; }
 
-uint16_t AudioTrack::GetBitDepth() const { return m_BitDepth; }
+u16 AudioTrack::GetBitDepth() const { return m_BitDepth; }
 
 const AudioBuffer* AudioTrack::GetBuffer() const { return m_Buffer; }
 
 AudioTrackFormat AudioTrack::GetFormat() const { return m_Format; }
 
-bool_t AudioTrack::LoadWavefront(const uint8_t* const buffer, const int64_t length)
+bool AudioTrack::LoadWavefront(const u8* const buffer, const s64 length)
 {
     m_Format = AudioTrackFormat::Wavefront;
 
-    int64_t offset = 8; // 4 because 'RIFF' has already been checked and 4 because of the file size that we don't need
-    const char_t* const str = reinterpret_cast<const char_t*>(buffer);
+    s64 offset = 8; // 4 because 'RIFF' has already been checked and 4 because of the file size that we don't need
+    const c8* const str = reinterpret_cast<const c8*>(buffer);
 
     if (std::strncmp(str + offset, "WAVE", 4) != 0)
         return false;
@@ -112,11 +112,11 @@ bool_t AudioTrack::LoadWavefront(const uint8_t* const buffer, const int64_t leng
     return true;
 }
 
-int64_t AudioTrack::LoadWavefrontFormat(const uint8_t* const data)
+s64 AudioTrack::LoadWavefrontFormat(const u8* const data)
 {
-    int64_t offset = 8; // 4 because 'fmt ' has already been checked and 4 because of the chunk size that we don't need
+    s64 offset = 8; // 4 because 'fmt ' has already been checked and 4 because of the chunk size that we don't need
 
-    offset += sizeof(uint16_t); // Skip the format type - we don't care about it
+    offset += sizeof(u16); // Skip the format type - we don't care about it
 
     m_Channels = *reinterpret_cast<const decltype(m_Channels)*>(data + offset);
     offset += sizeof(m_Channels);
@@ -124,9 +124,9 @@ int64_t AudioTrack::LoadWavefrontFormat(const uint8_t* const data)
     m_SampleRate = *reinterpret_cast<const decltype(m_SampleRate)*>(data + offset);
     offset += sizeof(m_SampleRate);
 
-    offset += sizeof(uint32_t); // Skip whatever is this value
+    offset += sizeof(u32); // Skip whatever is this value
 
-    offset += sizeof(uint16_t); // As well as this one
+    offset += sizeof(u16); // As well as this one
 
     m_BitDepth = *reinterpret_cast<const decltype(m_BitDepth)*>(data + offset);
     offset += sizeof(m_BitDepth);
@@ -134,16 +134,16 @@ int64_t AudioTrack::LoadWavefrontFormat(const uint8_t* const data)
     return offset;
 }
 
-int64_t AudioTrack::LoadWavefrontData(const uint8_t* const data)
+s64 AudioTrack::LoadWavefrontData(const u8* const data)
 {
-    const int32_t length = *reinterpret_cast<const int32_t*>(data + 4);
-    m_Data = const_cast<uint8_t*>(data + 8);
+    const s32 length = *reinterpret_cast<const s32*>(data + 4);
+    m_Data = const_cast<u8*>(data + 8);
     m_DataSize = length;
 
     return length + 8;
 }
 
-bool_t AudioTrack::LoadOggVorbis(const uint8_t* buffer, const int64_t length)
+bool AudioTrack::LoadOggVorbis(const u8* buffer, const s64 length)
 {
     m_Format = AudioTrackFormat::OggVorbis;
 
@@ -159,15 +159,15 @@ bool_t AudioTrack::LoadOggVorbis(const uint8_t* buffer, const int64_t length)
     if (decodedSamples == -1)
         return false;
 
-    m_Channels = static_cast<uint16_t>(channels);
-    m_DataSize = static_cast<int32_t>(decodedSamples * sizeof(short) * channels);
+    m_Channels = static_cast<u16>(channels);
+    m_DataSize = static_cast<s32>(decodedSamples * sizeof(short) * channels);
     m_BitDepth = 16;
 
     m_SourceDataSet = true;
     return true;
 }
 
-bool_t AudioTrack::LoadMp3(const uint8_t* buffer, const int64_t length)
+bool AudioTrack::LoadMp3(const u8* buffer, const s64 length)
 {
     m_Format = AudioTrackFormat::Mp3;
 
@@ -176,9 +176,9 @@ bool_t AudioTrack::LoadMp3(const uint8_t* buffer, const int64_t length)
     if (mp3dec_load_buf(&mp3, buffer, length, &fileInfo, nullptr, nullptr))
         return false;
 
-    m_Data = reinterpret_cast<uint8_t*>(fileInfo.buffer);
-    m_DataSize = static_cast<int32_t>(fileInfo.samples * sizeof(mp3d_sample_t));
-    m_Channels = static_cast<uint16_t>(fileInfo.channels);
+    m_Data = reinterpret_cast<u8*>(fileInfo.buffer);
+    m_DataSize = static_cast<s32>(fileInfo.samples * sizeof(mp3d_sample_t));
+    m_Channels = static_cast<u16>(fileInfo.channels);
     m_SampleRate = fileInfo.hz;
     m_BitDepth = 16;
 

@@ -36,7 +36,7 @@ namespace Mountain
 
         MOUNTAIN_API ~Texture() override;
 
-        MOUNTAIN_API bool_t SetSourceData(const uint8_t* buffer, int64_t length) override;
+        MOUNTAIN_API bool SetSourceData(const u8* buffer, s64 length) override;
 
         MOUNTAIN_API void Load() override;
 
@@ -47,14 +47,14 @@ namespace Mountain
         /// @brief Gets the raw data of the texture
         /// @tparam T Type
         /// @return Data
-        template <typename T = char_t>
+        template <typename T = c8>
         ATTRIBUTE_NODISCARD
         const T* GetData() const;
 
         /// @brief Gets the raw data of the texture
         /// @tparam T Type
         /// @return Data
-        template <typename T = char_t>
+        template <typename T = c8>
         ATTRIBUTE_NODISCARD
         T* GetData();
 
@@ -77,14 +77,14 @@ namespace Mountain
 
         /// @brief Get the ID of this texture on the GPU
         ATTRIBUTE_NODISCARD
-        MOUNTAIN_API uint32_t GetId() const;
+        MOUNTAIN_API u32 GetId() const;
 
         /// @brief Gets the underlying GpuTexture
         ATTRIBUTE_NODISCARD
         MOUNTAIN_API Graphics::GpuTexture GetGpuTexture() const;
 
     private:
-        uint8_t* m_Data = nullptr;
+        u8* m_Data = nullptr;
         Vector2i m_Size;
         Graphics::GpuTexture m_GpuTexture;
         Graphics::MagnificationFilter m_Filter = Graphics::MagnificationFilter::Nearest;

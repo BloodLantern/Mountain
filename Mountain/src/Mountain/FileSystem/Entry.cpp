@@ -13,7 +13,7 @@ Entry::Entry(std::filesystem::path&& path)
     Entry::UpdateUtilityValues();
 }
 
-bool_t Entry::Reload()
+bool Entry::Reload()
 {
     if (m_Loaded)
         Unload();

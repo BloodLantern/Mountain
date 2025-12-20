@@ -21,6 +21,7 @@ struct B : A
 
 struct C { virtual ~C() = 0; };
 
+// ReSharper disable once CppNonExplicitConvertingConstructor
 struct D { D(int) {} };
 
 enum E {};

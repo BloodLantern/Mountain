@@ -8,7 +8,7 @@
 
 using namespace Mountain;
 
-bool_t Windows::CheckError()
+bool Windows::CheckError()
 {
     const DWORD error = GetLastError();
 

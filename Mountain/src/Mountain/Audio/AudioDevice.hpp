@@ -12,7 +12,7 @@ namespace Mountain
     class AudioDevice
     {
     public:
-        MOUNTAIN_API static bool_t CheckError(const AudioDevice* device = nullptr);
+        MOUNTAIN_API static bool CheckError(const AudioDevice* device = nullptr);
 
         ATTRIBUTE_NODISCARD
         MOUNTAIN_API explicit AudioDevice(std::string&& name);

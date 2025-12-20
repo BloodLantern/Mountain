@@ -17,7 +17,7 @@
 
 namespace Mountain
 {
-    enum class DrawMode : uint8_t
+    enum class DrawMode : u8
     {
         /// @brief Everything is drawn when @c Draw::Flush() is called (or @c Renderer::PushRenderTarget() / @c Renderer::PopRenderTarget()),
         /// in order of the draw call sequence.
@@ -48,7 +48,7 @@ namespace Mountain
         /// @param color The color of the line
         /// @throws ArgumentOutOfRangeException If @p thickness is less than @c 1.f.
         /// @remark If @p thickness is greater than @c 1.f, this will instead draw a filled rectangle.
-        MOUNTAIN_API static void Line(Vector2 point1, Vector2 point2, float_t thickness = 1.f, const Color& color = Color::White());
+        MOUNTAIN_API static void Line(Vector2 point1, Vector2 point2, f32 thickness = 1.f, const Color& color = Color::White());
         /// @brief Draw a line
         /// @param point1 The first point of the line
         /// @param point2 The second point of the line
@@ -119,7 +119,7 @@ namespace Mountain
         MOUNTAIN_API static void Rectangle(
             Vector2 position,
             Vector2 size,
-            float_t rotation = 0.f,
+            f32 rotation = 0.f,
             Vector2 origin = Vector2::Zero(),
             const Color& color = Color::White()
         );
@@ -131,7 +131,7 @@ namespace Mountain
         /// @throws ArgumentOutOfRangeException If @p origin is outside the range @code [{0, 0}, {1, 1}]@endcode.
         MOUNTAIN_API static void Rectangle(
             const Mountain::Rectangle& rectangle,
-            float_t rotation = 0.f,
+            f32 rotation = 0.f,
             Vector2 origin = Vector2::Zero(),
             const Color& color = Color::White()
         );
@@ -145,7 +145,7 @@ namespace Mountain
         MOUNTAIN_API static void RectangleFilled(
             Vector2 position,
             Vector2 size,
-            float_t rotation = 0.f,
+            f32 rotation = 0.f,
             Vector2 origin = Vector2::Zero(),
             const Color& color = Color::White()
         );
@@ -157,7 +157,7 @@ namespace Mountain
         /// @throws ArgumentOutOfRangeException If @p origin is outside the range @code [{0, 0}, {1, 1}]@endcode.
         MOUNTAIN_API static void RectangleFilled(
             const Mountain::Rectangle& rectangle,
-            float_t rotation = 0.f,
+            f32 rotation = 0.f,
             Vector2 origin = Vector2::Zero(),
             const Color& color = Color::White()
         );
@@ -171,8 +171,8 @@ namespace Mountain
         /// @throws ArgumentOutOfRangeException If @p thickness is less than @c 1.f.
         MOUNTAIN_API static void Circle(
             Vector2 center,
-            float_t radius,
-            float_t thickness = 1.f,
+            f32 radius,
+            f32 thickness = 1.f,
             Vector2 scale = Vector2::One(),
             const Color& color = Color::White()
         );
@@ -185,7 +185,7 @@ namespace Mountain
         /// @throws ArgumentOutOfRangeException If @p thickness is less than @c 1.f.
         MOUNTAIN_API static void CircleFilled(
             Vector2 center,
-            float_t radius,
+            f32 radius,
             Vector2 scale = Vector2::One(),
             const Color& color = Color::White()
         );
@@ -201,10 +201,10 @@ namespace Mountain
         /// @throws ArgumentOutOfRangeException If @p thickness is less than @c 1.f.
         MOUNTAIN_API static void Arc(
             Vector2 center,
-            float_t radius,
-            float_t startingAngle,
-            float_t deltaAngle,
-            float_t thickness = 1.f,
+            f32 radius,
+            f32 startingAngle,
+            f32 deltaAngle,
+            f32 thickness = 1.f,
             Vector2 scale = Vector2::One(),
             const Color& color = Color::White()
         );
@@ -219,9 +219,9 @@ namespace Mountain
         /// @throws ArgumentOutOfRangeException If @p thickness is less than @c 1.f.
         MOUNTAIN_API static void ArcFilled(
             Vector2 center,
-            float_t radius,
-            float_t startingAngle,
-            float_t deltaAngle,
+            f32 radius,
+            f32 startingAngle,
+            f32 deltaAngle,
             Vector2 scale = Vector2::One(),
             const Color& color = Color::White()
         );
@@ -240,7 +240,7 @@ namespace Mountain
             const Texture& texture,
             Vector2 position,
             Vector2 scale = Vector2::One(),
-            float_t rotation = 0.f,
+            f32 rotation = 0.f,
             Vector2 origin = Vector2::Zero(),
             Vector2 uv0 = Vector2::Zero(),
             Vector2 uv1 = Vector2::One(),
@@ -257,7 +257,7 @@ namespace Mountain
             const Font& font,
             const std::string& text,
             Vector2 position,
-            float_t scale = 1.f,
+            f32 scale = 1.f,
             const Color& color = Color::White()
         );
 
@@ -275,7 +275,7 @@ namespace Mountain
             const RenderTarget& renderTarget,
             Vector2 position = Vector2::Zero(),
             Vector2 scale = Vector2::One(),
-            float_t rotation = 0,
+            f32 rotation = 0,
             Vector2 origin = Vector2::Zero(),
             Vector2 uv0 = Vector2::Zero(),
             Vector2 uv1 = Vector2::One(),
@@ -337,24 +337,24 @@ namespace Mountain
         {
             Matrix transformation;
             Vector2 center;
-            float_t radius;
-            float_t thickness;
+            f32 radius;
+            f32 thickness;
             Vector2 scale;
             Color color;
-            int32_t filled; // 32-bit boolean for GLSL
+            s32 filled; // 32-bit boolean for GLSL
         };
 
         struct ArcData
         {
             Matrix transformation;
             Vector2 center;
-            float_t radius;
-            float_t startingAngle;
-            float_t deltaAngle;
-            float_t thickness;
+            f32 radius;
+            f32 startingAngle;
+            f32 deltaAngle;
+            f32 thickness;
             Vector2 scale;
             Color color;
-            int32_t filled; // 32-bit boolean for GLSL
+            s32 filled; // 32-bit boolean for GLSL
         };
 
         struct TextureData
@@ -368,7 +368,7 @@ namespace Mountain
             const Font* font;
             std::string text;
             Vector2 position;
-            float_t scale;
+            f32 scale;
             Color color;
         };
 
@@ -380,7 +380,7 @@ namespace Mountain
             Color color;
         };
 
-        enum class DrawDataType : uint8_t
+        enum class DrawDataType : u8
         {
             Point,
             Line,
@@ -401,7 +401,7 @@ namespace Mountain
         struct CommandData
         {
             DrawDataType type;
-            size_t count;
+            usize count;
         };
 
         class DrawList
@@ -419,7 +419,7 @@ namespace Mountain
             List<CircleData> circle;
             List<ArcData> arc;
             List<TextureData> texture;
-            List<uint32_t> textureId;
+            List<u32> textureId;
             List<TextData> text;
             List<RenderTargetData> renderTarget;
 
@@ -462,37 +462,37 @@ namespace Mountain
         static void InitializeRenderTargetBuffers();
         static void InitializeParticleBuffers();
 
-        static void SetProjectionMatrix(const Matrix& newProjectionMatrix, bool_t updateUniforms);
-        static void SetCamera(const Matrix& newCameraMatrix, Vector2 newCameraScale, bool_t updateUniforms);
+        static void SetProjectionMatrix(const Matrix& newProjectionMatrix, bool updateUniforms);
+        static void SetCamera(const Matrix& newCameraMatrix, Vector2 newCameraScale, bool updateUniforms);
         static void UpdateShaderMatrices();
 
-        static void RectangleInternal(const Mountain::Rectangle& rectangle, float_t rotation, Vector2 origin, bool_t filled, const Color& color);
-        static void CircleInternal(Vector2 center, float_t radius, float_t thickness, bool_t filled, Vector2 scale, const Color& color);
-        static void ArcInternal(Vector2 center, float_t radius, float_t startingAngle, float_t deltaAngle, float_t thickness, bool_t filled, Vector2 scale, const Color& color);
+        static void RectangleInternal(const Mountain::Rectangle& rectangle, f32 rotation, Vector2 origin, bool filled, const Color& color);
+        static void CircleInternal(Vector2 center, f32 radius, f32 thickness, bool filled, Vector2 scale, const Color& color);
+        static void ArcInternal(Vector2 center, f32 radius, f32 startingAngle, f32 deltaAngle, f32 thickness, bool filled, Vector2 scale, const Color& color);
 
         static void RenderPointData(const PointData& point);
         static void RenderLineData(const LineData& line);
         static void RenderLineColoredData(const LineColoredData& lineColored);
-        static void RenderTriangleData(const TriangleData& triangle, bool_t filled);
-        static void RenderTriangleColoredData(const TriangleColoredData& triangleColored, bool_t filled);
-        static void RenderRectangleData(const RectangleData& rectangle, bool_t filled);
+        static void RenderTriangleData(const TriangleData& triangle, bool filled);
+        static void RenderTriangleColoredData(const TriangleColoredData& triangleColored, bool filled);
+        static void RenderRectangleData(const RectangleData& rectangle, bool filled);
         static void RenderCircleData(const CircleData& circle);
         static void RenderArcData(const ArcData& arc);
-        static void RenderTextureData(const TextureData& texture, uint32_t textureId);
+        static void RenderTextureData(const TextureData& texture, u32 textureId);
         static void RenderTextData(const TextData& text);
         static void RenderRenderTargetData(const RenderTargetData& renderTarget);
 
-        static void RenderPointData(const List<PointData>& points, size_t index, size_t count);
-        static void RenderLineData(const List<LineData>& lines, size_t index, size_t count);
-        static void RenderLineColoredData(const List<LineColoredData>& linesColored, size_t index, size_t count);
-        static void RenderTriangleData(const List<TriangleData>& triangles, bool_t filled, size_t index, size_t count);
-        static void RenderTriangleColoredData(const List<TriangleColoredData>& trianglesColored, bool_t filled, size_t index, size_t count);
-        static void RenderRectangleData(const List<RectangleData>& rectangles, bool_t filled, size_t index, size_t count);
-        static void RenderCircleData(const List<CircleData>& circles, size_t index, size_t count);
-        static void RenderArcData(const List<ArcData>& arcs, size_t index, size_t count);
-        static void RenderTextureData(const List<TextureData>& textures, uint32_t textureId, size_t index, size_t count);
-        static void RenderTextData(const List<TextData>& texts, size_t index, size_t count);
-        static void RenderRenderTargetData(const List<RenderTargetData>& renderTargets, size_t index, size_t count);
+        static void RenderPointData(const List<PointData>& points, usize index, usize count);
+        static void RenderLineData(const List<LineData>& lines, usize index, usize count);
+        static void RenderLineColoredData(const List<LineColoredData>& linesColored, usize index, usize count);
+        static void RenderTriangleData(const List<TriangleData>& triangles, bool filled, usize index, usize count);
+        static void RenderTriangleColoredData(const List<TriangleColoredData>& trianglesColored, bool filled, usize index, usize count);
+        static void RenderRectangleData(const List<RectangleData>& rectangles, bool filled, usize index, usize count);
+        static void RenderCircleData(const List<CircleData>& circles, usize index, usize count);
+        static void RenderArcData(const List<ArcData>& arcs, usize index, usize count);
+        static void RenderTextureData(const List<TextureData>& textures, u32 textureId, usize index, usize count);
+        static void RenderTextData(const List<TextData>& texts, usize index, usize count);
+        static void RenderRenderTargetData(const List<RenderTargetData>& renderTargets, usize index, usize count);
 
         friend class Renderer;
         friend class RenderTarget;

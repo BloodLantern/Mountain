@@ -25,7 +25,7 @@ Font::~Font()
         Font::ResetSourceData();
 }
 
-bool_t Font::SetSourceData(const Pointer<File>& file, const uint32_t size)
+bool Font::SetSourceData(const Pointer<File>& file, const u32 size)
 {
     if (m_SourceDataSet)
         return false;
@@ -55,13 +55,13 @@ Vector2 Font::CalcTextSize(const std::string_view text) const
 {
     Vector2 result;
 
-    for (const char_t c : text)
+    for (const c8 c : text)
     {
         const Character& character = m_Characters.at(c);
 
-        result.x += static_cast<float_t>(character.advance >> 6);
+        result.x += static_cast<f32>(character.advance >> 6);
 
-        result.y = std::max(static_cast<float_t>(character.size.y), result.y);
+        result.y = std::max(static_cast<f32>(character.size.y), result.y);
     }
 
     return result;
@@ -73,7 +73,7 @@ void Font::Load()
         return;
 
     FT_Face face = nullptr;
-    if (FT_New_Memory_Face(Renderer::m_Freetype, m_File->GetData<uint8_t>(), static_cast<FT_Long>(m_File->GetSize()), 0, &face))
+    if (FT_New_Memory_Face(Renderer::m_Freetype, m_File->GetData<u8>(), static_cast<FT_Long>(m_File->GetSize()), 0, &face))
     {
         Logger::LogError("Failed to load Font {}", m_Name);
         return;
@@ -83,7 +83,7 @@ void Font::Load()
 
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
-    for (uint8_t c = 0; c < 128; c++)
+    for (u8 c = 0; c < 128; c++)
     {
         if (FT_Load_Char(face, c, FT_LOAD_RENDER))
         {
@@ -91,12 +91,12 @@ void Font::Load()
             continue;
         }
 
-        const Vector2i glyphSize = Vector2i(static_cast<int32_t>(face->glyph->bitmap.width), static_cast<int32_t>(face->glyph->bitmap.rows));
+        const Vector2i glyphSize = Vector2i(static_cast<s32>(face->glyph->bitmap.width), static_cast<s32>(face->glyph->bitmap.rows));
 
         Character character {
             .size = glyphSize,
             .bearing = { face->glyph->bitmap_left, face->glyph->bitmap_top },
-            .advance = static_cast<uint32_t>(face->glyph->advance.x)
+            .advance = static_cast<u32>(face->glyph->advance.x)
         };
 
         if (glyphSize != Vector2i::Zero())

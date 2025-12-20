@@ -55,10 +55,10 @@ namespace Mountain
 
         GETTER_M(const List<LightSource>&, LightSources)
         GETTER(Graphics::GpuFramebuffer, GpuFramebuffer, m_Framebuffer)
-        GETTER(uint32_t, FramebufferId, m_Framebuffer.GetId())
+        GETTER(u32, FramebufferId, m_Framebuffer.GetId())
         GETTER(Graphics::GpuTexture, GpuTexture, m_Texture)
-        GETTER(uint32_t, TextureId, m_Texture.GetId())
-        GETTER_M(bool_t, Initialized)
+        GETTER(u32, TextureId, m_Texture.GetId())
+        GETTER_M(bool, Initialized)
         GETTER_M(Vector2i, Size)
         GETTER_M(Graphics::MagnificationFilter, Filter)
         GETTER_M(const Matrix&, CameraMatrix)
@@ -72,12 +72,12 @@ namespace Mountain
         Graphics::GpuTexture m_Texture;
         Graphics::GpuFramebuffer m_Framebuffer;
 
-        bool_t m_Initialized = false;
+        bool m_Initialized = false;
 
         Vector2i m_Size;
         Graphics::MagnificationFilter m_Filter;
 
-        bool_t m_CustomProjection = false;
+        bool m_CustomProjection = false;
         Matrix m_Projection;
 
         List<LightSource> m_LightSources;

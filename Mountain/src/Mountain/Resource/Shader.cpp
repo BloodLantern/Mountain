@@ -25,28 +25,28 @@ Graphics::ShaderType Shader::FileExtensionToType(const std::string& extension)
     THROW(ArgumentException{"Invalid file extension for shader", "extension"});
 }
 
-bool_t Shader::SetSourceData(const Pointer<File>& file)
+bool Shader::SetSourceData(const Pointer<File>& file)
 {
     const Graphics::ShaderType type = FileExtensionToType(file->GetExtension());
 
     m_File = file;
-    const bool_t loadResult = Load(file->GetData(), file->GetSize(), type);
+    const bool loadResult = Load(file->GetData(), file->GetSize(), type);
     m_File = nullptr;
 
     if (!loadResult)
         return false;
 
-    m_Files[static_cast<size_t>(type)] = file;
+    m_Files[static_cast<usize>(type)] = file;
 
     m_SourceDataSet = true;
 
     return true;
 }
 
-bool_t Shader::Load(const char_t* const buffer, const int64_t length, const Graphics::ShaderType type)
+bool Shader::Load(const c8* const buffer, const s64 length, const Graphics::ShaderType type)
 {
-    ShaderCode& code = m_Code[static_cast<size_t>(type)];
-    code.code = Utils::RemoveByteOrderMark(std::string{buffer, static_cast<size_t>(length)});
+    ShaderCode& code = m_Code[static_cast<usize>(type)];
+    code.code = Utils::RemoveByteOrderMark(std::string{buffer, static_cast<usize>(length)});
     ReplaceIncludes(code.code, m_File->GetPath(), m_DependentShaderFiles);
     code.type = type;
 
@@ -57,15 +57,15 @@ bool_t Shader::Load(const char_t* const buffer, const int64_t length, const Grap
 
 void Shader::Load()
 {
-    Array<uint32_t, magic_enum::enum_count<Graphics::ShaderType>()> shaderIds{0};
-    bool_t compileError = false;
-    for (size_t i = 0; i < shaderIds.GetSize(); i++)
+    Array<u32, magic_enum::enum_count<Graphics::ShaderType>()> shaderIds{0};
+    bool compileError = false;
+    for (usize i = 0; i < shaderIds.GetSize(); i++)
     {
         const ShaderCode& code = m_Code[i];
         if (code.code.empty())
             continue;
 
-        uint32_t& id = shaderIds[i];
+        u32& id = shaderIds[i];
         id = glCreateShader(ToOpenGl(code.type));
 #ifdef _DEBUG
         const Pointer file = m_Files[i];
@@ -73,8 +73,8 @@ void Shader::Load()
         glObjectLabel(GL_SHADER, id, static_cast<GLsizei>(fileName.length()), fileName.c_str());
 #endif
 
-        const char_t* data = code.code.c_str();
-        int32_t dataLength = static_cast<int32_t>(code.code.size());
+        const c8* data = code.code.c_str();
+        s32 dataLength = static_cast<s32>(code.code.size());
         glShaderSource(id, 1, &data, &dataLength);
 
         glCompileShader(id);
@@ -96,7 +96,7 @@ void Shader::Load()
     glObjectLabel(GL_PROGRAM, m_Id, static_cast<GLsizei>(m_Name.length()), m_Name.c_str());
 #endif
 
-    for (size_t i = 0; i < shaderIds.GetSize(); i++)
+    for (usize i = 0; i < shaderIds.GetSize(); i++)
     {
         if (shaderIds[i] != 0)
             glAttachShader(m_Id, shaderIds[i]);
@@ -104,7 +104,7 @@ void Shader::Load()
 
     glLinkProgram(m_Id);
 
-    for (const uint32_t shaderId : shaderIds)
+    for (const u32 shaderId : shaderIds)
     {
         if (glIsShader(shaderId))
         {
@@ -134,7 +134,7 @@ void Shader::ResetSourceData()
     m_Code.Fill({});
 }
 
-bool_t Shader::Reload(const bool_t reloadInBackend)
+bool Shader::Reload(const bool reloadInBackend)
 {
     m_DependentShaderFiles.clear();
 
@@ -147,7 +147,7 @@ bool_t Shader::Reload(const bool_t reloadInBackend)
     return true;
 }
 
-bool_t Shader::Reload(const Pointer<File>& file, const bool_t reloadInBackend) { return Resource::Reload(file, reloadInBackend); }
+bool Shader::Reload(const Pointer<File>& file, const bool reloadInBackend) { return Resource::Reload(file, reloadInBackend); }
 
 Array<Pointer<File>, magic_enum::enum_count<Graphics::ShaderType>()>& Shader::GetFiles() { return m_Files; }
 
@@ -162,7 +162,7 @@ void Shader::Use() const { glUseProgram(m_Id); }
 // ReSharper disable once CppMemberFunctionMayBeStatic
 void Shader::Unuse() const { glUseProgram(0); }
 
-bool_t Shader::CheckCompileError(const uint32_t id, const Graphics::ShaderType type) const
+bool Shader::CheckCompileError(const u32 id, const Graphics::ShaderType type) const
 {
-    return ShaderBase::CheckCompileError(id, magic_enum::enum_name(type), m_Code[static_cast<size_t>(type)].code);
+    return ShaderBase::CheckCompileError(id, magic_enum::enum_name(type), m_Code[static_cast<usize>(type)].code);
 }

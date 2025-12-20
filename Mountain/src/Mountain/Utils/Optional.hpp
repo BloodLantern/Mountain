@@ -39,7 +39,7 @@ namespace Mountain
 
         /// @brief Returns whether this Optional contains a value.
         ATTRIBUTE_NODISCARD
-        constexpr bool_t HasValue() const noexcept;
+        constexpr bool HasValue() const noexcept;
 
         ATTRIBUTE_NODISCARD
         constexpr T& Value() &;
@@ -72,12 +72,12 @@ namespace Mountain
 
         /// @brief Equivalent to @c HasValue().
         ATTRIBUTE_NODISCARD
-        constexpr explicit operator bool_t() const noexcept;
+        constexpr explicit operator bool() const noexcept;
 
     private:
         struct Dummy{};
 
-        bool_t m_HasValue = false;
+        bool m_HasValue = false;
         union
         {
             Dummy dummy;
@@ -180,7 +180,7 @@ namespace Mountain
     }
 
     template <typename T>
-    constexpr bool_t Optional<T>::HasValue() const noexcept { return m_HasValue; }
+    constexpr bool Optional<T>::HasValue() const noexcept { return m_HasValue; }
 
     template <typename T>
     constexpr T& Optional<T>::Value() & { OPTIONAL_VALUE_BODY }

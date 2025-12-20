@@ -601,16 +601,16 @@ namespace Mountain
 #pragma endregion
 
         ATTRIBUTE_NODISCARD
-        static constexpr Color FromHex(uint32_t rgba);
+        static constexpr Color FromHex(u32 rgba);
 
         /// @brief Red component
-        float_t r = 0.f;
+        f32 r = 0.f;
         /// @brief Green component
-        float_t g = 0.f;
+        f32 g = 0.f;
         /// @brief Blue component
-        float_t b = 0.f;
+        f32 b = 0.f;
         /// @brief Alpha component
-        float_t a = 1.f;
+        f32 a = 1.f;
 
         ATTRIBUTE_NODISCARD
         Color() = default;
@@ -619,7 +619,7 @@ namespace Mountain
         /// @param rgb Red, Green and Blue components
         /// @param a Alpha component
         ATTRIBUTE_NODISCARD
-        explicit constexpr Color(float_t rgb, float_t a = 1.f);
+        explicit constexpr Color(f32 rgb, f32 a = 1.f);
 
         /// @brief Constructs a color with each specified component
         /// @param r Red component
@@ -627,13 +627,13 @@ namespace Mountain
         /// @param b Blue component
         /// @param a Alpha component
         ATTRIBUTE_NODISCARD
-        constexpr Color(float_t r, float_t g, float_t b, float_t a = 1.f);
+        constexpr Color(f32 r, f32 g, f32 b, f32 a = 1.f);
 
         /// @brief Constructs a color from a Vector3 and an alpha value
         /// @param rgb Red, Green and Blue components
         /// @param a Alpha component
         ATTRIBUTE_NODISCARD
-        explicit constexpr Color(const Vector3& rgb, float_t a = 1.f);
+        explicit constexpr Color(const Vector3& rgb, f32 a = 1.f);
 
         /// @brief Constructs a color from a Vector4
         /// @param rgba Color components
@@ -643,22 +643,22 @@ namespace Mountain
         /// @brief Constructs a color from four floats at the given pointer address
         /// @param data Color components
         ATTRIBUTE_NODISCARD
-        explicit constexpr Color(const float_t* data);
+        explicit constexpr Color(const f32* data);
 
         /// @brief Constructs a color from a 32-bit packed color value
         /// @param packedValue Packed color value, e.g., @c 0xFFFF0000 for @c Color::Blue()
         ATTRIBUTE_NODISCARD
-        explicit constexpr Color(uint32_t packedValue);
+        explicit constexpr Color(u32 packedValue);
 
         /// @brief Get a 32-bit packed value for this color in the following order: @c 0xAABBGGRR
         ATTRIBUTE_NODISCARD
-        constexpr uint32_t GetPackedValue() const;
+        constexpr u32 GetPackedValue() const;
 
         ATTRIBUTE_NODISCARD
-        constexpr float_t* Data();
+        constexpr f32* Data();
 
         ATTRIBUTE_NODISCARD
-        constexpr const float_t* Data() const;
+        constexpr const f32* Data() const;
 
         /// @brief Converts the @c Color to a @c ColorHsva
         ATTRIBUTE_NODISCARD
@@ -725,13 +725,13 @@ namespace Mountain
         static constexpr ColorHsva Magenta();
 
         /// @brief Hue component
-        float_t h = 0;
+        f32 h = 0;
         /// @brief Saturation component
-        float_t s = 0;
+        f32 s = 0;
         /// @brief Value component
-        float_t v = 0;
+        f32 v = 0;
         /// @brief Alpha component
-        float_t a = 1.f;
+        f32 a = 1.f;
 
         ColorHsva() = default;
 
@@ -741,7 +741,7 @@ namespace Mountain
         /// @param v Value component
         /// @param a Alpha component
         ATTRIBUTE_NODISCARD
-        constexpr ColorHsva(float_t h, float_t s, float_t v, float_t a = 1.f);
+        constexpr ColorHsva(f32 h, f32 s, f32 v, f32 a = 1.f);
 
         /// @brief Converts the @c ColorHsva to a @c Color
         ATTRIBUTE_NODISCARD
@@ -780,57 +780,57 @@ namespace Mountain
     /// @param alphaFactor Alpha factor
     /// @return Color.a * alphaFactor
     ATTRIBUTE_NODISCARD
-    constexpr Color operator*(Color color, float_t alphaFactor);
+    constexpr Color operator*(Color color, f32 alphaFactor);
 
     /// @brief Compares two Color component-wise
     /// @param c1 A
     /// @param c2 B
     /// @return A == B
     ATTRIBUTE_NODISCARD
-    constexpr bool_t operator==(const Color& c1, const Color& c2);
+    constexpr bool operator==(const Color& c1, const Color& c2);
 
     /// @brief Compares two Color component-wise
     /// @param c1 A
     /// @param c2 B
     /// @return A != B
     ATTRIBUTE_NODISCARD
-    constexpr bool_t operator!=(const Color& c1, const Color& c2);
+    constexpr bool operator!=(const Color& c1, const Color& c2);
 
     /// @brief Multiplies the alpha component of a ColorHsva
     /// @param color Color
     /// @param alphaFactor Alpha factor
     /// @return Color.a * alphaFactor
     ATTRIBUTE_NODISCARD
-    constexpr ColorHsva operator*(const ColorHsva& color, float_t alphaFactor);
+    constexpr ColorHsva operator*(const ColorHsva& color, f32 alphaFactor);
 
     /// @brief Compares two ColorHsva component-wise
     /// @param c1 A
     /// @param c2 B
     /// @return A == B
     ATTRIBUTE_NODISCARD
-    constexpr bool_t operator==(const ColorHsva& c1, const ColorHsva& c2);
+    constexpr bool operator==(const ColorHsva& c1, const ColorHsva& c2);
 
     /// @brief Compares two ColorHsva component-wise
     /// @param c1 A
     /// @param c2 B
     /// @return A != B
     ATTRIBUTE_NODISCARD
-    constexpr bool_t operator!=(const ColorHsva& c1, const ColorHsva& c2);
+    constexpr bool operator!=(const ColorHsva& c1, const ColorHsva& c2);
 }
 
 namespace Calc
 {
     ATTRIBUTE_NODISCARD
-    MOUNTAIN_API Mountain::Color Lerp(const Mountain::Color& value, const Mountain::Color& target, float_t time);
+    MOUNTAIN_API Mountain::Color Lerp(const Mountain::Color& value, const Mountain::Color& target, f32 time);
 
     ATTRIBUTE_NODISCARD
-    MOUNTAIN_API Mountain::Color Lerp(const Mountain::Color& value, const Mountain::Color& target, float_t time, Easing::Easer easer);
+    MOUNTAIN_API Mountain::Color Lerp(const Mountain::Color& value, const Mountain::Color& target, f32 time, Easing::Easer easer);
 
     ATTRIBUTE_NODISCARD
-    MOUNTAIN_API Mountain::Color LerpFixed(const Mountain::Color& value, const Mountain::Color& target, float_t time);
+    MOUNTAIN_API Mountain::Color LerpFixed(const Mountain::Color& value, const Mountain::Color& target, f32 time);
 
     ATTRIBUTE_NODISCARD
-    MOUNTAIN_API Mountain::Color LerpFixed(const Mountain::Color& value, const Mountain::Color& target, float_t time, Easing::Easer easer);
+    MOUNTAIN_API Mountain::Color LerpFixed(const Mountain::Color& value, const Mountain::Color& target, f32 time, Easing::Easer easer);
 }
 
 // Start of Color.inl
@@ -841,9 +841,9 @@ namespace Calc
 
 namespace Mountain
 {
-    static constexpr float_t HueCircle = 1.f; // A circle is 360 degrees, normalized as 1 here
-    static constexpr float_t HueCircleOver3 = HueCircle / 3.f;
-    static constexpr float_t HueCircleOver6 = HueCircle / 6.f;
+    static constexpr f32 HueCircle = 1.f; // A circle is 360 degrees, normalized as 1 here
+    static constexpr f32 HueCircleOver3 = HueCircle / 3.f;
+    static constexpr f32 HueCircleOver6 = HueCircle / 6.f;
 
 #pragma region ConstantsImplemetation
     constexpr Color Color::Transparent() { return Color{0.f, 0.f, 0.f, 0.f}; }
@@ -990,50 +990,50 @@ namespace Mountain
     constexpr Color Color::YellowGreen() { return Color{0x9A / 255.f, 0xCD / 255.f, 0x32 / 255.f}; }
 #pragma endregion
 
-    constexpr Color Color::FromHex(const uint32_t rgba)
+    constexpr Color Color::FromHex(const u32 rgba)
     {
-        return Color{static_cast<uint32_t>(_byteswap_ulong(rgba))};
+        return Color{static_cast<u32>(_byteswap_ulong(rgba))};
     }
 
-    constexpr Color::Color(const float_t rgb, const float_t a): r(rgb), g(rgb), b(rgb), a(a) {}
+    constexpr Color::Color(const f32 rgb, const f32 a): r(rgb), g(rgb), b(rgb), a(a) {}
 
-    constexpr Color::Color(const float_t r, const float_t g, const float_t b, const float_t a): r(r), g(g), b(b), a(a) {}
+    constexpr Color::Color(const f32 r, const f32 g, const f32 b, const f32 a): r(r), g(g), b(b), a(a) {}
 
-    constexpr Color::Color(const Vector3& rgb, const float_t a): r(rgb.x), g(rgb.y), b(rgb.z), a(a) {}
+    constexpr Color::Color(const Vector3& rgb, const f32 a): r(rgb.x), g(rgb.y), b(rgb.z), a(a) {}
 
     constexpr Color::Color(const Vector4& rgba): r(rgba.x), g(rgba.y), b(rgba.z), a(rgba.w) {}
 
-    constexpr Color::Color(const float_t* data): r(data[0]), g(data[1]), b(data[2]), a(data[3]) {}
+    constexpr Color::Color(const f32* data): r(data[0]), g(data[1]), b(data[2]), a(data[3]) {}
 
-    constexpr Color::Color(const uint32_t packedValue)
-        : r(static_cast<float_t>(packedValue & 0xFF) / std::numeric_limits<uint8_t>::max())
-        , g(static_cast<float_t>(packedValue >> 8 & 0xFF) / std::numeric_limits<uint8_t>::max())
-        , b(static_cast<float_t>(packedValue >> 16 & 0xFF) / std::numeric_limits<uint8_t>::max())
-        , a(static_cast<float_t>(packedValue >> 24) / std::numeric_limits<uint8_t>::max())
+    constexpr Color::Color(const u32 packedValue)
+        : r(static_cast<f32>(packedValue & 0xFF) / std::numeric_limits<u8>::max())
+        , g(static_cast<f32>(packedValue >> 8 & 0xFF) / std::numeric_limits<u8>::max())
+        , b(static_cast<f32>(packedValue >> 16 & 0xFF) / std::numeric_limits<u8>::max())
+        , a(static_cast<f32>(packedValue >> 24) / std::numeric_limits<u8>::max())
     {
     }
 
-    constexpr uint32_t Color::GetPackedValue() const
+    constexpr u32 Color::GetPackedValue() const
     {
-        const uint8_t byteR = static_cast<uint8_t>(Calc::Round(r * std::numeric_limits<uint8_t>::max()));
-        const uint8_t byteG = static_cast<uint8_t>(Calc::Round(g * std::numeric_limits<uint8_t>::max()));
-        const uint8_t byteB = static_cast<uint8_t>(Calc::Round(b * std::numeric_limits<uint8_t>::max()));
-        const uint8_t byteA = static_cast<uint8_t>(Calc::Round(a * std::numeric_limits<uint8_t>::max()));
+        const u8 byteR = static_cast<u8>(Calc::Round(r * std::numeric_limits<u8>::max()));
+        const u8 byteG = static_cast<u8>(Calc::Round(g * std::numeric_limits<u8>::max()));
+        const u8 byteB = static_cast<u8>(Calc::Round(b * std::numeric_limits<u8>::max()));
+        const u8 byteA = static_cast<u8>(Calc::Round(a * std::numeric_limits<u8>::max()));
 
         return byteA << 24 | byteB << 16 | byteG << 8 | byteR;
     }
 
-    constexpr float_t* Color::Data() { return &r; }
+    constexpr f32* Color::Data() { return &r; }
 
-    constexpr const float_t* Color::Data() const { return &r; }
+    constexpr const f32* Color::Data() const { return &r; }
 
     constexpr ColorHsva Color::ToHsva() const
     {
         ColorHsva hsv = { 0.f, 0.f, 0.f, a };
-        const float_t minVal = std::min({r, g, b});
-        const float_t maxVal = std::max({r, g, b});
+        const f32 minVal = std::min({r, g, b});
+        const f32 maxVal = std::max({r, g, b});
         hsv.v = maxVal;
-        const float_t delta = maxVal - minVal;
+        const f32 delta = maxVal - minVal;
 
         if (Calc::IsZero(delta)) // Black
         {
@@ -1043,7 +1043,7 @@ namespace Mountain
         else
         {
             hsv.s = delta / maxVal;
-            const float_t deltaInverse = 1.f / delta;
+            const f32 deltaInverse = 1.f / delta;
             if (Calc::Equals(r, maxVal))
                 hsv.h = HueCircleOver3 * 0 + HueCircleOver6 * (g - b) * deltaInverse;
             else if (Calc::Equals(g, maxVal))
@@ -1051,7 +1051,7 @@ namespace Mountain
             else
                 hsv.h = HueCircleOver3 * 2 + HueCircleOver6 * (r - g) * deltaInverse;
 
-            const float_t floor = Calc::Floor(hsv.h);
+            const f32 floor = Calc::Floor(hsv.h);
             if (hsv.h < 0.f)
                 hsv.h += Calc::Abs(floor);
             else
@@ -1082,18 +1082,18 @@ namespace Mountain
 
     constexpr ColorHsva ColorHsva::Magenta() { return ColorHsva{HueCircleOver3 * 2 + HueCircleOver6, 1.f, 1.f}; }
 
-    constexpr ColorHsva::ColorHsva(const float_t h, const float_t s, const float_t v, const float_t a): h(h), s(s), v(v), a(a) {}
+    constexpr ColorHsva::ColorHsva(const f32 h, const f32 s, const f32 v, const f32 a): h(h), s(s), v(v), a(a) {}
 
     constexpr Color ColorHsva::ToRgba() const
     {
         if (Calc::IsZero(s)) // Grayscale
             return { v, v, v, a };
 
-        const uint8_t hi = static_cast<uint8_t>(h / HueCircleOver6);
-        const float_t f = Calc::Modulo(h, HueCircleOver6) * 6.f;
-        const float_t p = v * (1.f - s);
-        const float_t q = v * (1.f - s * f);
-        const float_t t = v * (1.f - s * (1.f - f));
+        const u8 hi = static_cast<u8>(h / HueCircleOver6);
+        const f32 f = Calc::Modulo(h, HueCircleOver6) * 6.f;
+        const f32 p = v * (1.f - s);
+        const f32 q = v * (1.f - s * f);
+        const f32 t = v * (1.f - s * (1.f - f));
 
         switch (hi)
         {
@@ -1120,15 +1120,15 @@ namespace Mountain
 
     constexpr Color operator*(const Color& c1, const Color& c2) { return Color(c1.r * c2.r, c1.g * c2.g, c1.b * c2.b, c1.a * c2.a); }
 
-    constexpr Color operator*(const Color color, const float_t alphaFactor) { return Color(color.r, color.g, color.b, color.a * alphaFactor); }
+    constexpr Color operator*(const Color color, const f32 alphaFactor) { return Color(color.r, color.g, color.b, color.a * alphaFactor); }
 
-    constexpr bool_t operator==(const Color& c1, const Color& c2) { return Calc::Equals(c1.r, c2.r) && Calc::Equals(c1.g, c2.g) && Calc::Equals(c1.b, c2.b) && Calc::Equals(c1.a, c2.a); }
+    constexpr bool operator==(const Color& c1, const Color& c2) { return Calc::Equals(c1.r, c2.r) && Calc::Equals(c1.g, c2.g) && Calc::Equals(c1.b, c2.b) && Calc::Equals(c1.a, c2.a); }
 
-    constexpr bool_t operator!=(const Color& c1, const Color& c2) { return !(c1 == c2); }
+    constexpr bool operator!=(const Color& c1, const Color& c2) { return !(c1 == c2); }
 
-    constexpr ColorHsva operator*(const ColorHsva& color, const float_t alphaFactor) { return ColorHsva(color.h, color.s, color.v, std::clamp(color.a * alphaFactor, 0.f, 1.f)); }
+    constexpr ColorHsva operator*(const ColorHsva& color, const f32 alphaFactor) { return ColorHsva(color.h, color.s, color.v, std::clamp(color.a * alphaFactor, 0.f, 1.f)); }
 
-    constexpr bool_t operator==(const ColorHsva& c1, const ColorHsva& c2) { return Calc::Equals(c1.h, c2.h) && Calc::Equals(c1.s, c2.s) && Calc::Equals(c1.v, c2.v) && Calc::Equals(c1.a, c2.a); }
+    constexpr bool operator==(const ColorHsva& c1, const ColorHsva& c2) { return Calc::Equals(c1.h, c2.h) && Calc::Equals(c1.s, c2.s) && Calc::Equals(c1.v, c2.v) && Calc::Equals(c1.a, c2.a); }
 
-    constexpr bool_t operator!=(const ColorHsva& c1, const ColorHsva& c2) { return !(c1 == c2); }
+    constexpr bool operator!=(const ColorHsva& c1, const ColorHsva& c2) { return !(c1 == c2); }
 }

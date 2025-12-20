@@ -17,9 +17,9 @@ Texture::~Texture()
         Texture::ResetSourceData();
 }
 
-bool_t Texture::SetSourceData(const uint8_t* const buffer, const int64_t length)
+bool Texture::SetSourceData(const u8* const buffer, const s64 length)
 {
-    m_Data = stbi_load_from_memory(buffer, static_cast<int32_t>(length), &m_Size.x, &m_Size.y, nullptr, STBI_rgb_alpha);
+    m_Data = stbi_load_from_memory(buffer, static_cast<s32>(length), &m_Size.x, &m_Size.y, nullptr, STBI_rgb_alpha);
 
     m_SourceDataSet = true;
 
@@ -89,6 +89,6 @@ void Texture::Use() const { Graphics::BindTexture(m_GpuTexture); }
 // ReSharper disable once CppMemberFunctionMayBeStatic
 void Texture::Unuse() const { Graphics::BindTexture(0); }
 
-uint32_t Texture::GetId() const { return m_GpuTexture.GetId(); }
+u32 Texture::GetId() const { return m_GpuTexture.GetId(); }
 
 Graphics::GpuTexture Texture::GetGpuTexture() const { return m_GpuTexture; }

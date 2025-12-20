@@ -115,7 +115,7 @@ namespace
         if (Mountain::BreakOnGraphicsError && level == Mountain::Logger::LogLevel::Error)
             __debugbreak();
 
-        Mountain::Logger::Log(level, "[OpenGL] Log of type {} received from {}: {}", t, src, std::string_view{message, static_cast<size_t>(length)});
+        Mountain::Logger::Log(level, "[OpenGL] Log of type {} received from {}: {}", t, src, std::string_view{message, static_cast<usize>(length)});
     }
 }
 
@@ -152,7 +152,7 @@ Mountain::RenderTarget& Mountain::Renderer::GetCurrentRenderTarget()
 
 Mountain::RenderTarget& Mountain::Renderer::GetDefaultRenderTarget() { return *m_RenderTarget; }
 
-void Mountain::Renderer::DebugString(std::string str, const float_t duration, const Color& color)
+void Mountain::Renderer::DebugString(std::string str, const f32 duration, const Color& color)
 {
     m_DebugStringsMutex.lock();
     m_DebugStrings.Insert(
@@ -176,7 +176,7 @@ void Mountain::Renderer::DebugString(DebugStringData data)
 
 Mountain::OpenGlVersion& Mountain::Renderer::GetOpenGlVersion() { return m_GlVersion; }
 
-bool_t Mountain::Renderer::Initialize(const std::string& windowTitle, const Vector2i windowSize, const OpenGlVersion& glVersion)
+bool Mountain::Renderer::Initialize(const std::string& windowTitle, const Vector2i windowSize, const OpenGlVersion& glVersion)
 {
     ZoneScoped;
 
@@ -292,7 +292,7 @@ void Mountain::Renderer::PostFrame()
 
     // Draw debug strings
     const DateTime now = DateTime::Now();
-    for (size_t i = 0; i < m_DebugStrings.GetSize(); i++)
+    for (usize i = 0; i < m_DebugStrings.GetSize(); i++)
     {
         const DebugStringData& data = m_DebugStrings[i];
         if ((now - data.time).GetTotalSeconds() > data.duration)
@@ -301,7 +301,7 @@ void Mountain::Renderer::PostFrame()
             continue;
         }
 
-        Draw::Text(*m_DefaultFont, data.str, Vector2{20.f, 20.f + static_cast<float_t>(i) * 20.f}, 1.f, data.color);
+        Draw::Text(*m_DefaultFont, data.str, Vector2{20.f, 20.f + static_cast<f32>(i) * 20.f}, 1.f, data.color);
     }
 
     if (m_DebugStrings.GetSize() > 2 && m_DebugStrings.GetSize() * 2 < m_DebugStrings.GetCapacity())

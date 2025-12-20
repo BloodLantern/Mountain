@@ -39,13 +39,13 @@ TEST(Utils_Utils, NormalizeAngle)
 
 TEST(Utils_Utils, DynamicPointerCast)
 {
-    struct A
+    struct A  // NOLINT(clang-diagnostic-padded)
     {
-        int32_t i = 1;
+        s32 i = 1;
 
         A() = default;
 
-        explicit A(const int32_t i) : i(i) {}
+        explicit A(const s32 i) : i(i) {}
 
         virtual ~A() = default;
 
@@ -133,7 +133,7 @@ TEST(Utils_Utils, CallSafe)
 
 TEST(Utils_Utils, GetBits)
 {
-    constexpr uint8_t i = 0b01110000;
+    constexpr u8 i = 0b01110000;
 
     auto result = Utils::GetBits<4, 1>(i);
 

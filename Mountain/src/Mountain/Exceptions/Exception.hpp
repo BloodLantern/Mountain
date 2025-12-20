@@ -5,7 +5,7 @@
 #include "Mountain/Core.hpp"
 
 // ReSharper disable CppClangTidyBugproneMacroParentheses
-#define DECLARE_EXCEPTION_NAME(exceptionType) ATTRIBUTE_NODISCARD const char_t* GetName() const noexcept override { return #exceptionType; }
+#define DECLARE_EXCEPTION_NAME(exceptionType) ATTRIBUTE_NODISCARD const c8* GetName() const noexcept override { return #exceptionType; }
 
 #define DECLARE_DEFAULT_EXCEPTION(exceptionType, parentType) \
     class exceptionType : public parentType \
@@ -20,16 +20,16 @@ namespace Mountain
 {
     struct MOUNTAIN_API ExceptionState
     {
-        const char_t* function = nullptr;
-        const char_t* file = nullptr;
-        int32_t line = -1;
+        const c8* function = nullptr;
+        const c8* file = nullptr;
+        s32 line = -1;
 
         ATTRIBUTE_NODISCARD
         std::string ToString() const;
     };
 
     MOUNTAIN_API void SetCurrentExceptionState(const ExceptionState& state);
-    MOUNTAIN_API void SetCurrentExceptionState(const char_t* function, const char_t* file, int32_t line);
+    MOUNTAIN_API void SetCurrentExceptionState(const c8* function, const c8* file, s32 line);
 
     /// @brief Represents errors that occur during application execution.
     class Exception : public std::exception
@@ -49,15 +49,15 @@ namespace Mountain
         MOUNTAIN_API Exception& operator=(const Exception& other) noexcept;
 
         ATTRIBUTE_NODISCARD
-        MOUNTAIN_API explicit Exception(const char_t* message) noexcept;
+        MOUNTAIN_API explicit Exception(const c8* message) noexcept;
 
         ATTRIBUTE_NODISCARD
-        MOUNTAIN_API const char_t* GetMessage() const noexcept;
+        MOUNTAIN_API const c8* GetMessage() const noexcept;
         ATTRIBUTE_NODISCARD
         MOUNTAIN_API const ExceptionState& GetState() const noexcept;
 
         ATTRIBUTE_NODISCARD
-        virtual const char_t* GetName() const noexcept { return "Exception"; }
+        virtual const c8* GetName() const noexcept { return "Exception"; }
 
         ATTRIBUTE_NODISCARD
         MOUNTAIN_API std::string ToString() const;

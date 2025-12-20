@@ -29,7 +29,7 @@ ColliderList::ColliderList(const Vector2& position, const std::initializer_list<
 
 void ColliderList::RenderDebug(const Color& color) const
 {
-    Vector2 topLeft = Vector2::One() * std::numeric_limits<float_t>::max(), bottomRight = Vector2::One() * std::numeric_limits<float_t>::min();
+    Vector2 topLeft = Vector2::One() * std::numeric_limits<f32>::max(), bottomRight = Vector2::One() * std::numeric_limits<f32>::min();
 
     for (const Collider* const c : list)
     {
@@ -44,90 +44,90 @@ void ColliderList::RenderDebug(const Color& color) const
     Draw::Rectangle(topLeft, bottomRight - topLeft, 0.f, Vector2::Zero(), color);
 }
 
-bool_t ColliderList::CheckCollision(const Vector2 point) const
+bool ColliderList::CheckCollision(const Vector2 point) const
 {
-    return Any(list, [&] (const Collider* c) -> bool_t { return c->CheckCollision(point - GetActualPosition()); });
+    return Any(list, [&] (const Collider* c) -> bool { return c->CheckCollision(point - GetActualPosition()); });
 }
 
-bool_t ColliderList::CheckCollision(const Hitbox& hitbox) const
+bool ColliderList::CheckCollision(const Hitbox& hitbox) const
 {
-    return Any(list, [&] (const Collider* c) -> bool_t { return c->CheckCollision(hitbox); });
+    return Any(list, [&] (const Collider* c) -> bool { return c->CheckCollision(hitbox); });
 }
 
-bool_t ColliderList::CheckCollision(const Circle& circle) const
+bool ColliderList::CheckCollision(const Circle& circle) const
 {
-    return Any(list, [&] (const Collider* c) -> bool_t { return c->CheckCollision(circle); });
+    return Any(list, [&] (const Collider* c) -> bool { return c->CheckCollision(circle); });
 }
 
-bool_t ColliderList::CheckCollision(const Grid& grid) const
+bool ColliderList::CheckCollision(const Grid& grid) const
 {
-    return Any(list, [&] (const Collider* c) -> bool_t { return c->CheckCollision(grid); });
+    return Any(list, [&] (const Collider* c) -> bool { return c->CheckCollision(grid); });
 }
 
-bool_t ColliderList::CheckCollision(const ColliderList& otherList) const
+bool ColliderList::CheckCollision(const ColliderList& otherList) const
 {
-    return Any(list, [&] (const Collider* c) -> bool_t { return c->CheckCollision(otherList); });
+    return Any(list, [&] (const Collider* c) -> bool { return c->CheckCollision(otherList); });
 }
 
-float_t ColliderList::Left() const
+f32 ColliderList::Left() const
 {
-    float_t left = std::numeric_limits<float_t>::max();
+    f32 left = std::numeric_limits<f32>::max();
     for (const Collider* const c : list)
         left = std::min(left, c->Left());
     return left;
 }
 
-float_t ColliderList::Right() const
+f32 ColliderList::Right() const
 {
-    float_t right = std::numeric_limits<float_t>::min();
+    f32 right = std::numeric_limits<f32>::min();
     for (const Collider* const c : list)
         right = std::max(right, c->Right());
     return right;
 }
 
-float_t ColliderList::Top() const
+f32 ColliderList::Top() const
 {
-    float_t top = std::numeric_limits<float_t>::min();
+    f32 top = std::numeric_limits<f32>::min();
     for (const Collider* const c : list)
         top = std::max(top, c->Top());
     return top;
 }
 
-float_t ColliderList::Bottom() const
+f32 ColliderList::Bottom() const
 {
-    float_t bottom = std::numeric_limits<float_t>::max();
+    f32 bottom = std::numeric_limits<f32>::max();
     for (const Collider* const c : list)
         bottom = std::min(bottom, c->Bottom());
     return bottom;
 }
 
-float_t ColliderList::AbsoluteLeft() const
+f32 ColliderList::AbsoluteLeft() const
 {
-    float_t left = std::numeric_limits<float_t>::max();
+    f32 left = std::numeric_limits<f32>::max();
     for (const Collider* const c : list)
         left = std::min(left, c->AbsoluteLeft());
     return left;
 }
 
-float_t ColliderList::AbsoluteRight() const
+f32 ColliderList::AbsoluteRight() const
 {
-    float_t right = std::numeric_limits<float_t>::min();
+    f32 right = std::numeric_limits<f32>::min();
     for (const Collider* const c : list)
         right = std::max(right, c->AbsoluteRight());
     return right;
 }
 
-float_t ColliderList::AbsoluteTop() const
+f32 ColliderList::AbsoluteTop() const
 {
-    float_t top = std::numeric_limits<float_t>::min();
+    f32 top = std::numeric_limits<f32>::min();
     for (const Collider* const c : list)
         top = std::max(top, c->AbsoluteTop());
     return top;
 }
 
-float_t ColliderList::AbsoluteBottom() const
+f32 ColliderList::AbsoluteBottom() const
 {
-    float_t bottom = std::numeric_limits<float_t>::max();
+    f32 bottom = std::numeric_limits<f32>::max();
     for (const Collider* const c : list)
         bottom = std::min(bottom, c->AbsoluteBottom());
     return bottom;
@@ -138,5 +138,5 @@ Vector2 ColliderList::AbsoluteCenter() const
     Vector2 center;
     for (const Collider* const c : list)
         center += c->AbsoluteCenter();
-    return center / static_cast<float_t>(list.GetSize());
+    return center / static_cast<f32>(list.GetSize());
 }

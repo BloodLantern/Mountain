@@ -23,7 +23,7 @@
 
 using namespace Mountain;
 
-TestGame::TestGame(const char_t* const windowTitle)
+TestGame::TestGame(const c8* const windowTitle)
     : Game(windowTitle, {1600, 900})
 {
     ZoneScoped;
@@ -172,10 +172,10 @@ void TestGame::RenderImGui()
         ImGuiUtils::PopCollapsingHeader();
     }
 
-    static bool_t showDemoWindow = false;
-    static bool_t showResourceManagerWindows = false;
-    static bool_t showInputsWindow = false;
-    static bool_t showPerformanceMonitoringWindow = false;
+    static bool showDemoWindow = false;
+    static bool showResourceManagerWindows = false;
+    static bool showInputsWindow = false;
+    static bool showPerformanceMonitoringWindow = false;
 
     if (ImGuiUtils::PushCollapsingHeader("Tests"))
     {
@@ -192,7 +192,7 @@ void TestGame::RenderImGui()
 
     if (ImGuiUtils::PushCollapsingHeader("Scene", ImGuiTreeNodeFlags_DefaultOpen))
     {
-        const char_t* sceneComboPreview = "None";
+        const c8* sceneComboPreview = "None";
         if (m_ActiveScene)
             sceneComboPreview = m_ActiveScene->GetName().c_str();
 
@@ -319,7 +319,7 @@ void TestGame::ReloadShader(const std::filesystem::path& path)
             m_ShadersToReload.Add(shaderBase);
     }
 
-    const bool_t isDrawShader = Utils::StringEnumerableContains(Shader::VertexFileExtensions, extension) ||
+    const bool isDrawShader = Utils::StringEnumerableContains(Shader::VertexFileExtensions, extension) ||
                                 Utils::StringEnumerableContains(Shader::FragmentFileExtensions, extension);
     const std::string name = isDrawShader ? path.parent_path().generic_string() : path.generic_string();
 

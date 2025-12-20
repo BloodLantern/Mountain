@@ -15,7 +15,7 @@
 
 using namespace Mountain;
 
-bool_t Audio::Initialize()
+bool Audio::Initialize()
 {
     if (NoBuiltinAudio)
         return true;
@@ -93,9 +93,9 @@ void Audio::SetCurrentDevice(AudioDevice* newCurrentDevice)
     UpdateContext();
 }
 
-float_t Audio::GetDistanceFactor() { return m_DistanceFactor; }
+f32 Audio::GetDistanceFactor() { return m_DistanceFactor; }
 
-void Audio::SetDistanceFactor(const float_t newDistanceFactor) { m_DistanceFactor = newDistanceFactor; }
+void Audio::SetDistanceFactor(const f32 newDistanceFactor) { m_DistanceFactor = newDistanceFactor; }
 
 void Audio::EventCallback(
     const ALCenum eventType,
@@ -111,9 +111,9 @@ void Audio::EventCallback(
         m_DefaultDeviceChanged = true;
 }
 
-void Audio::IterateAlStringList(const char_t* list, const std::function<void(const char_t*)>& lambda)
+void Audio::IterateAlStringList(const c8* list, const std::function<void(const c8*)>& lambda)
 {
-    for (int32_t i = 0; list[i] != '\0' || list[i + 1] != '\0'; i++)
+    for (s32 i = 0; list[i] != '\0' || list[i + 1] != '\0'; i++)
     {
         if (i == 0 || list[i - 1] == '\0')
             lambda(list + i);

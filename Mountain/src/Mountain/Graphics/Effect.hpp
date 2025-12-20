@@ -13,8 +13,8 @@ namespace Mountain
     public:
         struct MOUNTAIN_API ImageBinding
         {
-            uint32_t textureId;
-            uint32_t shaderBinding;
+            u32 textureId;
+            u32 shaderBinding;
             Graphics::ImageShaderAccess shaderAccess;
         };
 
@@ -34,7 +34,7 @@ namespace Mountain
         /// This effectively means that the CPU will wait for the compute shader to finish executing before returning from this function.
         /// If this is @c false, and you want to access the modified GPU image, you need to manually synchronize the GPU data afterward using
         /// @c Graphics::SynchronizeGpuData() with @c GpuDataSynchronizationFlags::ShaderImageAccess.
-        MOUNTAIN_API virtual void Apply(Vector2i textureSize, bool_t synchronizeImageData) const;
+        MOUNTAIN_API virtual void Apply(Vector2i textureSize, bool synchronizeImageData) const;
 
     protected:
         Pointer<ComputeShader> m_ComputeShader;
@@ -45,7 +45,7 @@ namespace Mountain
     public:
         MOUNTAIN_API void LoadResources() override;
 
-        MOUNTAIN_API void SetStrength(float_t newStrength) const;
+        MOUNTAIN_API void SetStrength(f32 newStrength) const;
     };
 
     class FilmGrain : public Effect
@@ -53,7 +53,7 @@ namespace Mountain
     public:
         MOUNTAIN_API void LoadResources() override;
 
-        MOUNTAIN_API void SetIntensity(float_t newIntensity) const;
+        MOUNTAIN_API void SetIntensity(f32 newIntensity) const;
     };
 
     class ChromaticAberrationAxial : public Effect
@@ -61,9 +61,9 @@ namespace Mountain
     public:
         MOUNTAIN_API void LoadResources() override;
 
-        MOUNTAIN_API void SetIntensity(float_t newIntensity) const;
+        MOUNTAIN_API void SetIntensity(f32 newIntensity) const;
 
-        MOUNTAIN_API void SetAngle(float_t newAngle) const;
+        MOUNTAIN_API void SetAngle(f32 newAngle) const;
     };
 
     class ChromaticAberrationTransverse : public Effect
@@ -71,7 +71,7 @@ namespace Mountain
     public:
         MOUNTAIN_API void LoadResources() override;
 
-        MOUNTAIN_API void SetIntensity(float_t newIntensity) const;
+        MOUNTAIN_API void SetIntensity(f32 newIntensity) const;
     };
 
     // Effect will be applied on the first texture. The second one is only used as a temporary buffer.
@@ -86,18 +86,18 @@ namespace Mountain
 
         MOUNTAIN_API void LoadResources() override;
 
-        MOUNTAIN_API void Apply(Vector2i textureSize, bool_t synchronizeImageData) const override;
+        MOUNTAIN_API void Apply(Vector2i textureSize, bool synchronizeImageData) const override;
 
-        MOUNTAIN_API void SetIntensity(int32_t newIntensity);
+        MOUNTAIN_API void SetIntensity(s32 newIntensity);
 
         ATTRIBUTE_NODISCARD
-        MOUNTAIN_API List<float_t> ComputeKernel(int32_t sigma) const;
+        MOUNTAIN_API List<f32> ComputeKernel(s32 sigma) const;
 
     private:
         Pointer<ComputeShader> m_OtherComputeShader;
         Graphics::GpuBuffer m_KernelBuffer;
 
-        int32_t m_Radius = 1;
+        s32 m_Radius = 1;
     };
 
     // Effect will be applied on the first texture. The second one is only used as a temporary buffer.
@@ -106,9 +106,9 @@ namespace Mountain
     public:
         MOUNTAIN_API void LoadResources() override;
 
-        MOUNTAIN_API void Apply(Vector2i textureSize, bool_t synchronizeImageData) const override;
+        MOUNTAIN_API void Apply(Vector2i textureSize, bool synchronizeImageData) const override;
 
-        MOUNTAIN_API void SetRadius(int32_t newRadius) const;
+        MOUNTAIN_API void SetRadius(s32 newRadius) const;
 
     private:
         Pointer<ComputeShader> m_OtherComputeShader;
@@ -120,7 +120,7 @@ namespace Mountain
     public:
         MOUNTAIN_API void LoadResources() override;
 
-        MOUNTAIN_API void SetBoxSize(int32_t newSize) const;
+        MOUNTAIN_API void SetBoxSize(s32 newSize) const;
     };
 
     class Grayscale : public Effect
@@ -128,7 +128,7 @@ namespace Mountain
     public:
         MOUNTAIN_API void LoadResources() override;
 
-        MOUNTAIN_API void SetIntensity(float_t newIntensity) const;
+        MOUNTAIN_API void SetIntensity(f32 newIntensity) const;
     };
 
     class Negative : public Effect
@@ -136,6 +136,6 @@ namespace Mountain
     public:
         MOUNTAIN_API void LoadResources() override;
 
-        MOUNTAIN_API void SetIntensity(float_t newIntensity) const;
+        MOUNTAIN_API void SetIntensity(f32 newIntensity) const;
     };
 }

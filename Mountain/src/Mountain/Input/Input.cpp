@@ -8,17 +8,17 @@
 
 using namespace Mountain;
 
-bool_t Input::GetKey(const Key key, const KeyStatus status)
+bool Input::GetKey(const Key key, const KeyStatus status)
 {
-    return m_Keyboard.At(static_cast<size_t>(key)).At(static_cast<size_t>(status));
+    return m_Keyboard.At(static_cast<usize>(key)).At(static_cast<usize>(status));
 }
 
-bool_t Input::GetMouseButton(const MouseButton mouseButton, const MouseButtonStatus status)
+bool Input::GetMouseButton(const MouseButton mouseButton, const MouseButtonStatus status)
 {
-    return m_Mouse.At(static_cast<size_t>(mouseButton)).At(static_cast<size_t>(status));
+    return m_Mouse.At(static_cast<usize>(mouseButton)).At(static_cast<usize>(status));
 }
 
-const GamepadInput& Input::GetGamepad(const uint32_t gamepadId)
+const GamepadInput& Input::GetGamepad(const u32 gamepadId)
 {
     if (gamepadId > GamepadMax)
         THROW(ArgumentException{"Invalid gamepad ID", "gamepadId"});
@@ -26,16 +26,16 @@ const GamepadInput& Input::GetGamepad(const uint32_t gamepadId)
     return m_Gamepads.At(gamepadId);
 }
 
-uint32_t Input::GetGamepadsConnected()
+u32 Input::GetGamepadsConnected()
 {
-    return static_cast<uint32_t>(std::ranges::count_if(m_Gamepads, [](auto&& gamepad) -> bool_t { return gamepad.m_IsConnected; }));
+    return static_cast<u32>(std::ranges::count_if(m_Gamepads, [](auto&& gamepad) -> bool { return gamepad.m_IsConnected; }));
 }
 
-bool_t Input::IsGamepadConnected(const uint32_t index) { return m_Gamepads[index].m_IsConnected; }
+bool Input::IsGamepadConnected(const u32 index) { return m_Gamepads[index].m_IsConnected; }
 
 Vector2 Input::GetMousePosition() { return m_MousePosition; }
 
-void Input::HandleKeyboard(const size_t key, const KeyAction action)
+void Input::HandleKeyboard(const usize key, const KeyAction action)
 {
     if (key > m_Keyboard.GetSize())
         return;
@@ -45,35 +45,35 @@ void Input::HandleKeyboard(const size_t key, const KeyAction action)
     switch (action)
     {
         case KeyAction::Release:
-            keyStatuses.At(static_cast<size_t>(KeyStatus::Down)) = false;
-            keyStatuses.At(static_cast<size_t>(KeyStatus::Release)) = true;
-            keyStatuses.At(static_cast<size_t>(KeyStatus::Repeat)) = false;
+            keyStatuses.At(static_cast<usize>(KeyStatus::Down)) = false;
+            keyStatuses.At(static_cast<usize>(KeyStatus::Release)) = true;
+            keyStatuses.At(static_cast<usize>(KeyStatus::Repeat)) = false;
             break;
 
         case KeyAction::Press:
-            keyStatuses.At(static_cast<size_t>(KeyStatus::Pressed)) = true;
-            keyStatuses.At(static_cast<size_t>(KeyStatus::Down)) = true;
+            keyStatuses.At(static_cast<usize>(KeyStatus::Pressed)) = true;
+            keyStatuses.At(static_cast<usize>(KeyStatus::Down)) = true;
             break;
 
         case KeyAction::Repeat:
-            keyStatuses.At(static_cast<size_t>(KeyStatus::Repeat)) = true;
+            keyStatuses.At(static_cast<usize>(KeyStatus::Repeat)) = true;
             break;
     }
 }
 
-void Input::HandleMouseButton(const size_t mouseButton, const bool_t pressed)
+void Input::HandleMouseButton(const usize mouseButton, const bool pressed)
 {
     MouseStatuses& keyStatuses = m_Mouse.At(mouseButton);
 
     if (pressed)
     {
-        keyStatuses.At(static_cast<size_t>(MouseButtonStatus::Pressed)) = true;
-        keyStatuses.At(static_cast<size_t>(MouseButtonStatus::Down)) = true;
+        keyStatuses.At(static_cast<usize>(MouseButtonStatus::Pressed)) = true;
+        keyStatuses.At(static_cast<usize>(MouseButtonStatus::Down)) = true;
     }
     else
     {
-        keyStatuses.At(static_cast<size_t>(MouseButtonStatus::Down)) = false;
-        keyStatuses.At(static_cast<size_t>(MouseButtonStatus::Release)) = true;
+        keyStatuses.At(static_cast<usize>(MouseButtonStatus::Down)) = false;
+        keyStatuses.At(static_cast<usize>(MouseButtonStatus::Release)) = true;
     }
 }
 
@@ -85,12 +85,12 @@ void Input::HandleMouseMovement(const Vector2 newPosition)
     m_MouseDelta = m_MousePosition - m_LastMousePosition;
 }
 
-void Input::HandleMouseWheel(const int32_t wheelX, const int32_t wheelY)
+void Input::HandleMouseWheel(const s32 wheelX, const s32 wheelY)
 {
-    m_MouseWheel += { static_cast<float_t>(wheelX), static_cast<float_t>(wheelY) };
+    m_MouseWheel += { static_cast<f32>(wheelX), static_cast<f32>(wheelY) };
 }
 
-void Input::ConnectGamepad(const uint32_t id)
+void Input::ConnectGamepad(const u32 id)
 {
     if (id == 0)
         return;
@@ -124,15 +124,15 @@ void Input::ConnectGamepad(const uint32_t id)
         capabilities |= GamepadCapabilities::Rumble;
     }
 
-    const int32_t nbrTouchpads = SDL_GetNumGamepadTouchpads(gamepad->m_Handle);
+    const s32 nbrTouchpads = SDL_GetNumGamepadTouchpads(gamepad->m_Handle);
     if (nbrTouchpads != 0)
     {
         capabilities |= GamepadCapabilities::Touchpad;
         gamepad->m_Touchpads.Resize(nbrTouchpads);
 
-        for (int32_t i = 0; i < nbrTouchpads; i++)
+        for (s32 i = 0; i < nbrTouchpads; i++)
         {
-            gamepad->m_Touchpads[i].nbrOfFingersMax = static_cast<uint8_t>(SDL_GetNumGamepadTouchpadFingers(gamepad->m_Handle, i));
+            gamepad->m_Touchpads[i].nbrOfFingersMax = static_cast<u8>(SDL_GetNumGamepadTouchpadFingers(gamepad->m_Handle, i));
             gamepad->m_Touchpads[i].fingerLocations.Fill({ -1, -1 });
         }
     }
@@ -157,7 +157,7 @@ void Input::ConnectGamepad(const uint32_t id)
     Logger::LogInfo("Connected controller : {}", gamepad->GetName());
 }
 
-void Input::DisconnectGamepad(const uint32_t id)
+void Input::DisconnectGamepad(const u32 id)
 {
     GamepadInput* const gamepad = m_Gamepads.FindFirst([id](const GamepadInput& g) { return g.m_Id == id; });
 
@@ -175,47 +175,47 @@ void Input::DisconnectGamepad(const uint32_t id)
     gamepad->m_Buttons.Fill({});
 }
 
-void Input::UpdateGamepadButton(const uint32_t id, const GamepadButton button, const bool_t down)
+void Input::UpdateGamepadButton(const u32 id, const GamepadButton button, const bool down)
 {
     GamepadInput* const gamepad = m_Gamepads.FindFirst([id](const GamepadInput& g) { return g.m_Id == id; });
 
     if (!gamepad)
         return;
 
-    GamepadButtonStatuses& statuses = gamepad->m_Buttons.At(static_cast<size_t>(button));
-    const bool_t wasDown = statuses.At(static_cast<size_t>(GamepadButtonStatus::Down));
-    const bool_t wasUp = statuses.At(static_cast<size_t>(GamepadButtonStatus::Up));
+    GamepadButtonStatuses& statuses = gamepad->m_Buttons.At(static_cast<usize>(button));
+    const bool wasDown = statuses.At(static_cast<usize>(GamepadButtonStatus::Down));
+    const bool wasUp = statuses.At(static_cast<usize>(GamepadButtonStatus::Up));
     if (down)
     {
         if (!wasDown)
         {
-            statuses.At(static_cast<size_t>(GamepadButtonStatus::Down)) = true;
-            statuses.At(static_cast<size_t>(GamepadButtonStatus::Up)) = false;
-            statuses.At(static_cast<size_t>(GamepadButtonStatus::Pressed)) = wasUp;
-            statuses.At(static_cast<size_t>(GamepadButtonStatus::Released)) = false;
+            statuses.At(static_cast<usize>(GamepadButtonStatus::Down)) = true;
+            statuses.At(static_cast<usize>(GamepadButtonStatus::Up)) = false;
+            statuses.At(static_cast<usize>(GamepadButtonStatus::Pressed)) = wasUp;
+            statuses.At(static_cast<usize>(GamepadButtonStatus::Released)) = false;
         }
     }
     else
     {
         if (!wasUp)
         {
-            statuses.At(static_cast<size_t>(GamepadButtonStatus::Down)) = false;
-            statuses.At(static_cast<size_t>(GamepadButtonStatus::Up)) = true;
-            statuses.At(static_cast<size_t>(GamepadButtonStatus::Pressed)) = false;
-            statuses.At(static_cast<size_t>(GamepadButtonStatus::Released)) = wasDown;
+            statuses.At(static_cast<usize>(GamepadButtonStatus::Down)) = false;
+            statuses.At(static_cast<usize>(GamepadButtonStatus::Up)) = true;
+            statuses.At(static_cast<usize>(GamepadButtonStatus::Pressed)) = false;
+            statuses.At(static_cast<usize>(GamepadButtonStatus::Released)) = wasDown;
         }
     }
 }
 
-void Input::UpdateGamepadAxis(const uint32_t id, const GamepadAxis axis, const int16_t value)
+void Input::UpdateGamepadAxis(const u32 id, const GamepadAxis axis, const s16 value)
 {
     GamepadInput* const gamepad = m_Gamepads.FindFirst([id](const GamepadInput& g) { return g.m_Id == id; });
 
     if (!gamepad)
         return;
 
-    const float_t floatValue = Utils::RemapValue(static_cast<float_t>(value), { -32768.f, 32767.f }, { -1, 1 });
-    const size_t idx = static_cast<size_t>(axis);
+    const f32 floatValue = Utils::RemapValue(static_cast<f32>(value), { -32768.f, 32767.f }, { -1, 1 });
+    const usize idx = static_cast<usize>(axis);
 
     gamepad->m_Axes[idx] = Calc::MakeZero(floatValue, GamepadInput::nullAnalogValue);
 
@@ -224,15 +224,15 @@ void Input::UpdateGamepadAxis(const uint32_t id, const GamepadAxis axis, const i
         gamepad->m_Axes[idx] = std::max(0.f, gamepad->m_Axes[idx]);
         const GamepadButton button = static_cast<GamepadButton>(
             idx
-            - static_cast<int32_t>(GamepadAxis::LeftTrigger)
-            + static_cast<int32_t>(GamepadButton::LeftTrigger)
+            - static_cast<s32>(GamepadAxis::LeftTrigger)
+            + static_cast<s32>(GamepadButton::LeftTrigger)
         );
 
         UpdateGamepadButton(id, button, gamepad->m_Axes[idx] > GamepadInput::nullAnalogValue);
     }
 }
 
-void Input::UpdateGamepadBattery(const uint32_t id, const int8_t percent, const GamepadBatteryState state)
+void Input::UpdateGamepadBattery(const u32 id, const s8 percent, const GamepadBatteryState state)
 {
     GamepadInput* const gamepad = m_Gamepads.FindFirst([id](const GamepadInput& g) { return g.m_Id == id; });
 
@@ -243,7 +243,7 @@ void Input::UpdateGamepadBattery(const uint32_t id, const int8_t percent, const 
     gamepad->m_BatteryState = state;
 }
 
-void Input::UpdateGamepadGyro(uint32_t id, const Vector3& gyro)
+void Input::UpdateGamepadGyro(u32 id, const Vector3& gyro)
 {
     GamepadInput* const gamepad = m_Gamepads.FindFirst([id](const GamepadInput& g) { return g.m_Id == id; });
     if (!gamepad)
@@ -252,7 +252,7 @@ void Input::UpdateGamepadGyro(uint32_t id, const Vector3& gyro)
     gamepad->m_Gyroscope = gyro;
 }
 
-void Input::UpdateGamepadAccel(uint32_t id, const Vector3& accel)
+void Input::UpdateGamepadAccel(u32 id, const Vector3& accel)
 {
     GamepadInput* const gamepad = m_Gamepads.FindFirst([id](const GamepadInput& g) { return g.m_Id == id; });
     if (!gamepad)
@@ -261,7 +261,7 @@ void Input::UpdateGamepadAccel(uint32_t id, const Vector3& accel)
     gamepad->m_Accelerometer = accel;
 }
 
-void Input::UpdateGamepadTouchpad(const uint32_t id, const size_t touchpad, const size_t finger, const Vector2 location)
+void Input::UpdateGamepadTouchpad(const u32 id, const usize touchpad, const usize finger, const Vector2 location)
 {
     const GamepadInput* const gamepad = m_Gamepads.FindFirst([id](const GamepadInput& g) { return g.m_Id == id; });
     if (!gamepad)
@@ -274,8 +274,8 @@ void Input::Reset()
 {
     for (auto& button : m_Mouse)
     {
-        button.At(static_cast<size_t>(MouseButtonStatus::Pressed)) = false;
-        button.At(static_cast<size_t>(MouseButtonStatus::Release)) = false;
+        button.At(static_cast<usize>(MouseButtonStatus::Pressed)) = false;
+        button.At(static_cast<usize>(MouseButtonStatus::Release)) = false;
     }
 
     m_MouseDelta = Vector2::Zero();
@@ -283,17 +283,17 @@ void Input::Reset()
 
     for (auto& key : m_Keyboard)
     {
-        key.At(static_cast<size_t>(KeyStatus::Pressed)) = false;
-        key.At(static_cast<size_t>(KeyStatus::Release)) = false;
-        key.At(static_cast<size_t>(KeyStatus::Repeat)) = false;
+        key.At(static_cast<usize>(KeyStatus::Pressed)) = false;
+        key.At(static_cast<usize>(KeyStatus::Release)) = false;
+        key.At(static_cast<usize>(KeyStatus::Repeat)) = false;
     }
 
     for (auto& gamepad : m_Gamepads)
     {
         for (auto& button : gamepad.m_Buttons)
         {
-            button.At(static_cast<size_t>(GamepadButtonStatus::Pressed)) = false;
-            button.At(static_cast<size_t>(GamepadButtonStatus::Released)) = false;
+            button.At(static_cast<usize>(GamepadButtonStatus::Pressed)) = false;
+            button.At(static_cast<usize>(GamepadButtonStatus::Released)) = false;
         }
     }
 }

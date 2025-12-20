@@ -17,9 +17,9 @@ Mountain::Collider::Collider(const ColliderType type, const Vector2 offset)
 
 Vector2 Mountain::Collider::GetActualPosition() const { return basePosition ? *basePosition + offset : offset; }
 
-bool_t Mountain::Collider::CheckCollision(const Entity& e) const { return CheckCollision(*e.GetCollider()); }
+bool Mountain::Collider::CheckCollision(const Entity& e) const { return CheckCollision(*e.GetCollider()); }
 
-bool_t Mountain::Collider::CheckCollision(const Collider& collider) const
+bool Mountain::Collider::CheckCollision(const Collider& collider) const
 {
     switch (collider.type)
     {
@@ -56,8 +56,8 @@ Vector2 Mountain::Collider::AbsoluteBottomLeft() const { return { AbsoluteLeft()
 
 Vector2 Mountain::Collider::AbsoluteBottomRight() const { return { AbsoluteRight(), AbsoluteBottom() }; }
 
-float_t Mountain::Collider::Width() const { return AbsoluteRight() - AbsoluteLeft(); }
+f32 Mountain::Collider::Width() const { return AbsoluteRight() - AbsoluteLeft(); }
 
-float_t Mountain::Collider::Height() const { return AbsoluteBottom() - AbsoluteTop(); }
+f32 Mountain::Collider::Height() const { return AbsoluteBottom() - AbsoluteTop(); }
 
 Vector2 Mountain::Collider::Size() const { return { Width(), Height() }; }

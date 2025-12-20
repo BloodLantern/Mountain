@@ -69,7 +69,7 @@ namespace Mountain
         template <Concepts::Collider T, typename... Args>
         T* SetCollider(Args&&... args) noexcept;
 
-        GETTER(float_t, Depth, m_Depth)
+        GETTER(f32, Depth, m_Depth)
 
         GETTER(Scene*, Scene, m_Scene)
 
@@ -77,7 +77,7 @@ namespace Mountain
         Collider* m_Collider = nullptr;
 
         /// @brief The rendering depth of the Entity. The higher the depth, the earlier it will get rendered in @c Scene::Render().
-        float_t m_Depth = 0.f;
+        f32 m_Depth = 0.f;
 
     private:
         List<Component*> m_Components;

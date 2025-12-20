@@ -15,11 +15,11 @@ namespace Mountain
     {
     public:
         std::string name;
-        float_t frameDuration = 0.1f;
+        f32 frameDuration = 0.1f;
 
         MOUNTAIN_API Sprite() = default;
         MOUNTAIN_API explicit Sprite(std::string spriteName);
-        MOUNTAIN_API Sprite(std::string spriteName, float_t frameDuration);
+        MOUNTAIN_API Sprite(std::string spriteName, f32 frameDuration);
 
         /// @brief Initialize the Texture vector
         /// @warning This is a quite heavy operation as it loops over all loaded textures to find the right ones
@@ -30,16 +30,16 @@ namespace Mountain
         MOUNTAIN_API const Pointer<Texture>& Get() const;
 
         GETTER(const List<Pointer<Texture>>&, Textures, m_Textures)
-        GETTER(size_t, CurrentIndex, m_CurrentIndex)
-        GETTER(float_t, UpdateTimer, m_UpdateTimer)
+        GETTER(usize, CurrentIndex, m_CurrentIndex)
+        GETTER(f32, UpdateTimer, m_UpdateTimer)
 
     protected:
         void Update() override;
 
     private:
         List<Pointer<Texture>> m_Textures;
-        size_t m_CurrentIndex = 0;
+        usize m_CurrentIndex = 0;
 
-        float_t m_UpdateTimer = 0.f;
+        f32 m_UpdateTimer = 0.f;
     };
 }

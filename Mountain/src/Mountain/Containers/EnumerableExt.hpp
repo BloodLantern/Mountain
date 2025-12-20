@@ -8,14 +8,14 @@
 /// @brief Defines member functions for all enumerable extensions
 #define ENUMERABLE_EXTENSIONS_IMPLEMENTATION \
     ATTRIBUTE_NODISCARD \
-    bool_t All(const ::Mountain::Predicate<EnumeratedType>& predicate) const { return ::Mountain::All(*this, predicate); } \
+    bool All(const ::Mountain::Predicate<EnumeratedType>& predicate) const { return ::Mountain::All(*this, predicate); } \
     \
     ATTRIBUTE_NODISCARD \
-    bool_t Any(const ::Mountain::Predicate<EnumeratedType>& predicate) const { return ::Mountain::Any(*this, predicate); } \
+    bool Any(const ::Mountain::Predicate<EnumeratedType>& predicate) const { return ::Mountain::Any(*this, predicate); } \
     \
     template <typename = ::Mountain::Meta::EnableIf<::Mountain::Meta::IsIntegralOrFloating<EnumeratedType>>> \
     ATTRIBUTE_NODISCARD \
-    float_t Average() const { return ::Mountain::Average<::Mountain::Meta::RemoveCvRefSpecifier<decltype(*this)>, EnumeratedType>(*this); } \
+    f32 Average() const { return ::Mountain::Average<::Mountain::Meta::RemoveCvRefSpecifier<decltype(*this)>, EnumeratedType>(*this); } \
     \
     template <::Mountain::Requirements::MountainEnumerable EnumerableT, typename = ::Mountain::Meta::EnableIf<::Mountain::Meta::IsSame<EnumeratedType, ::Mountain::Meta::EnumerableType<EnumerableT>>>> \
     ATTRIBUTE_NODISCARD \
@@ -23,13 +23,13 @@
     \
     template <typename U, typename = ::Mountain::Meta::EnableIf<::Mountain::Meta::IsEqualityComparableWith<U, EnumeratedType>>> \
     ATTRIBUTE_NODISCARD \
-    bool_t Contains(const U& element) const { return ::Mountain::Contains(*this, element); } \
+    bool Contains(const U& element) const { return ::Mountain::Contains(*this, element); } \
     \
     ATTRIBUTE_NODISCARD \
-    bool_t Contains(const ::Mountain::Predicate<EnumeratedType>& predicate) const { return ::Mountain::Contains(*this, predicate); } \
+    bool Contains(const ::Mountain::Predicate<EnumeratedType>& predicate) const { return ::Mountain::Contains(*this, predicate); } \
     \
     ATTRIBUTE_NODISCARD \
-    size_t Count(const ::Mountain::Predicate<EnumeratedType>& predicate) const { return ::Mountain::Count(*this, predicate); } \
+    usize Count(const ::Mountain::Predicate<EnumeratedType>& predicate) const { return ::Mountain::Count(*this, predicate); } \
     \
     ATTRIBUTE_NODISCARD \
     ::Mountain::List<EnumeratedType> FindAll(const ::Mountain::Predicate<EnumeratedType>& predicate) const \
@@ -48,7 +48,7 @@
     const EnumeratedType* FindLast(const ::Mountain::Predicate<EnumeratedType>& predicate) const { return ::Mountain::FindLast(*this, predicate); } \
     \
     ATTRIBUTE_NODISCARD \
-    ::Mountain::Optional<size_t> FindIndex(const ::Mountain::Predicate<EnumeratedType>& predicate) const { return ::Mountain::FindIndex(*this, predicate); } \
+    ::Mountain::Optional<usize> FindIndex(const ::Mountain::Predicate<EnumeratedType>& predicate) const { return ::Mountain::FindIndex(*this, predicate); } \
     \
     ATTRIBUTE_NODISCARD \
     EnumeratedType& First() { return ::Mountain::First(*this); } \
@@ -89,32 +89,32 @@
     void StableSort(const ::Mountain::Comparer<EnumeratedType>& comparer) { return ::Mountain::StableSort(*this, comparer); } \
     \
     ATTRIBUTE_NODISCARD \
-    bool_t IsValidIndex(const size_t index) const { return ::Mountain::IsValidIndex(*this, index); }
+    bool IsValidIndex(const usize index) const { return ::Mountain::IsValidIndex(*this, index); }
 
 namespace Mountain
 {
     template <Concepts::DynamicContainerType T>
     class List;
 
-    template <Concepts::ContainerType T, size_t Size>
+    template <Concepts::ContainerType T, usize Size>
     struct Array;
 
     /// @brief Determines whether all elements of a sequence satisfy a condition.
     template <Requirements::MountainEnumerable EnumerableT, typename T = Meta::MountainEnumerableType<EnumerableT>>
     ATTRIBUTE_NODISCARD
-    bool_t All(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate);
+    bool All(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate);
 
     /// @brief Determines whether any element of a sequence satisfies a condition.
     template <Requirements::MountainEnumerable EnumerableT, typename T = Meta::MountainEnumerableType<EnumerableT>>
     ATTRIBUTE_NODISCARD
-    bool_t Any(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate);
+    bool Any(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate);
 
     /// @brief Computes the average of a sequence of integral or floating values.
     template <Requirements::MountainEnumerable EnumerableT,
         typename T = Meta::MountainEnumerableType<EnumerableT>,
         typename = Meta::EnableIf<Meta::IsIntegralOrFloating<T>>>
     ATTRIBUTE_NODISCARD
-    float_t Average(const EnumerableT& enumerable);
+    f32 Average(const EnumerableT& enumerable);
 
     template <Requirements::MountainEnumerable EnumerableT,
         Requirements::MountainEnumerable EnumerableU,
@@ -123,7 +123,7 @@ namespace Mountain
     ATTRIBUTE_NODISCARD
     List<T> Concat(const EnumerableT& firstEnumerable, const EnumerableU& secondEnumerable);
 
-    template <typename T, size_t Size>
+    template <typename T, usize Size>
     ATTRIBUTE_NODISCARD
     Array<T, Size * 2> Concat(const Array<T, Size>& firstEnumerable, const Array<T, Size>& secondEnumerable);
 
@@ -131,15 +131,15 @@ namespace Mountain
         typename T,
         typename = Meta::EnableIf<Meta::IsEqualityComparableWith<T, Meta::MountainEnumerableType<EnumerableT>>>>
     ATTRIBUTE_NODISCARD
-    bool_t Contains(const EnumerableT& enumerable, const T& element);
+    bool Contains(const EnumerableT& enumerable, const T& element);
 
     template <Requirements::MountainEnumerable EnumerableT, typename T = Meta::EnumerableType<EnumerableT>>
     ATTRIBUTE_NODISCARD
-    bool_t Contains(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate);
+    bool Contains(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate);
 
     template <Requirements::MountainEnumerable EnumerableT, typename T = Meta::EnumerableType<EnumerableT>>
     ATTRIBUTE_NODISCARD
-    size_t Count(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate);
+    usize Count(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate);
 
     template <Requirements::MountainEnumerable EnumerableT, typename T = Meta::MountainEnumerableType<EnumerableT>>
     ATTRIBUTE_NODISCARD
@@ -163,7 +163,7 @@ namespace Mountain
 
     template <Requirements::MountainEnumerable EnumerableT, typename T = Meta::MountainEnumerableType<EnumerableT>>
     ATTRIBUTE_NODISCARD
-    Optional<size_t> FindIndex(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate);
+    Optional<usize> FindIndex(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate);
 
     /// @brief Returns the first element of a sequence.
     template <Requirements::MountainEnumerable EnumerableT, typename T = Meta::MountainEnumerableType<EnumerableT>>
@@ -222,7 +222,7 @@ namespace Mountain
     void StableSort(EnumerableT& enumerable, const Comparer<Meta::Identity<T>>& comparer);
 
     template <Requirements::MountainEnumerable EnumerableT>
-    bool_t IsValidIndex(const EnumerableT& enumerable, size_t index);
+    bool IsValidIndex(const EnumerableT& enumerable, usize index);
 }
 
 // Start of EnumerableExt.inl
@@ -233,7 +233,7 @@ namespace Mountain
 namespace Mountain
 {
     template <Requirements::MountainEnumerable EnumerableT, typename T>
-    bool_t All(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate)
+    bool All(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate)
     {
         for (const T& e : enumerable)
         {
@@ -245,7 +245,7 @@ namespace Mountain
     }
 
     template <Requirements::MountainEnumerable EnumerableT, typename T>
-    bool_t Any(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate)
+    bool Any(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate)
     {
         for (const T& e : enumerable)  // NOLINT(readability-use-anyofallof)
         {
@@ -257,9 +257,9 @@ namespace Mountain
     }
 
     template <Requirements::MountainEnumerable EnumerableT, typename T, typename>
-    float_t Average(const EnumerableT& enumerable)
+    f32 Average(const EnumerableT& enumerable)
     {
-        float_t result = 0.f;
+        f32 result = 0.f;
 
         for (const T& e : enumerable)
         {
@@ -281,11 +281,11 @@ namespace Mountain
         return result;
     }
 
-    template <typename T, size_t Size>
+    template <typename T, usize Size>
     Array<T, Size * 2> Concat(const Array<T, Size>& firstEnumerable, const Array<T, Size>& secondEnumerable)
     {
         Array<T, Size * 2> result;
-        size_t i = 0;
+        usize i = 0;
 
         for (const T& e : firstEnumerable)
         {
@@ -302,21 +302,21 @@ namespace Mountain
     }
 
     template <Requirements::MountainEnumerable EnumerableT, typename T, typename>
-    bool_t Contains(const EnumerableT& enumerable, const T& element)
+    bool Contains(const EnumerableT& enumerable, const T& element)
     {
         return Any(enumerable, [&](const Meta::MountainEnumerableType<EnumerableT>& e) { return e == element; });
     }
 
     template <Requirements::MountainEnumerable EnumerableT, typename T>
-    bool_t Contains(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate)
+    bool Contains(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate)
     {
         return FindFirst(enumerable, predicate) != nullptr;
     }
 
     template <Requirements::MountainEnumerable EnumerableT, typename T>
-    size_t Count(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate)
+    usize Count(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate)
     {
-        size_t result = 0;
+        usize result = 0;
 
         for (const T& e : enumerable)
         {
@@ -328,13 +328,13 @@ namespace Mountain
     }
 
     template <Requirements::MountainEnumerable EnumerableT>
-    size_t GetSize(const EnumerableT& enumerable)
+    usize GetSize(const EnumerableT& enumerable)
     {
         return enumerable.cend() - enumerable.cbegin();
     }
 
     template <Requirements::MountainEnumerable EnumerableT>
-    bool_t IsEmpty(const EnumerableT& enumerable)
+    bool IsEmpty(const EnumerableT& enumerable)
     {
         return GetSize(enumerable) == 0;
     }
@@ -404,7 +404,7 @@ namespace Mountain
     }
 
     template <Requirements::MountainEnumerable EnumerableT, typename T>
-    Optional<size_t> FindIndex(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate)
+    Optional<usize> FindIndex(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate)
     {
         for (typename EnumerableT::ConstIterator it = enumerable.cbegin(); it != enumerable.cend(); it++)
         {
@@ -496,7 +496,7 @@ namespace Mountain
     }
 
     template <Requirements::MountainEnumerable EnumerableT>
-    bool_t IsValidIndex(const EnumerableT& enumerable, const size_t index)
+    bool IsValidIndex(const EnumerableT& enumerable, const usize index)
     {
         return !IsEmpty(enumerable) && index < GetSize(enumerable);
     }

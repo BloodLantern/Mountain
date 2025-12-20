@@ -17,7 +17,7 @@ class TestGame : public Game
 public:
 	STATIC_GETTER(TestGame&, , *m_Instance)
 
-    explicit TestGame(const char_t* windowTitle);
+    explicit TestGame(const c8* windowTitle);
 
 	// Inherited from Game
 	void LoadResources() override;
@@ -42,7 +42,7 @@ private:
 
 	Color m_ClearColor = Color::Black();
 
-	bool_t m_EnableDebugRendering = true;
+	bool m_EnableDebugRendering = true;
 
 	FileSystemWatcher m_AssetsWatcher{ "assets" };
 

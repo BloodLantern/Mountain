@@ -20,7 +20,7 @@ namespace Mountain
     /// @details If this is @c true, @c BuiltinShadersPath and @c BuiltinAssetsPath must be set.
     /// This means that instead of using the packaged shader files within the Mountain DLL, the files will instead be loaded from the file system.
     /// This can be useful in case you need to edit the builtin shaders because you can then use hot-reloading.
-    PUBLIC_GLOBAL(bool_t, NoBinaryResources, false);
+    PUBLIC_GLOBAL(bool, NoBinaryResources, false);
     /// @brief The path to the Mountain builtin shaders directory.
     /// @see NoBinaryResources
     PUBLIC_GLOBAL(std::string, BuiltinShadersPath, "");
@@ -28,12 +28,12 @@ namespace Mountain
     /// @see NoBinaryResources
     PUBLIC_GLOBAL(std::string, BuiltinAssetsPath, "");
     /// @brief Whether to debug break when an OpenGL error is reported.
-    PUBLIC_GLOBAL(bool_t, BreakOnGraphicsError, false);
+    PUBLIC_GLOBAL(bool, BreakOnGraphicsError, false);
     /// @brief Whether to still call @c Game::Update() when @code Time::freezeTimer > 0.f@endcode.
-    PUBLIC_GLOBAL(bool_t, ManualFreezeFrames, false);
+    PUBLIC_GLOBAL(bool, ManualFreezeFrames, false);
     /// @brief Whether <b>not</b> to call @c Coroutine::UpdateAll() every frame.
-    PUBLIC_GLOBAL(bool_t, ManualCoroutineUpdates, false);
+    PUBLIC_GLOBAL(bool, ManualCoroutineUpdates, false);
     /// @brief Whether to disable the default Mountain audio API.
     /// @details This can be used if you want another audio API or if you want to manage the audio yourself.
-    PUBLIC_GLOBAL(bool_t, NoBuiltinAudio, false);
+    PUBLIC_GLOBAL(bool, NoBuiltinAudio, false);
 }

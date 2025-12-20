@@ -71,7 +71,7 @@ void FileSystemWatcher::SetPath(const std::filesystem::path& newPath)
     m_PathChanged = true;
 }
 
-bool_t FileSystemWatcher::GetRunning() const { return m_Running; }
+bool FileSystemWatcher::GetRunning() const { return m_Running; }
 
 void FileSystemWatcher::Run()
 {
@@ -110,12 +110,12 @@ void FileSystemWatcher::Run()
             m_PathChanged = false;
         }
 
-        static constexpr size_t BufferSize = 0x2000;
-        std::array<uint8_t, BufferSize> buffer;
+        static constexpr usize BufferSize = 0x2000;
+        std::array<u8, BufferSize> buffer;
         ReadDirectoryChangesW(file, buffer.data(), BufferSize, m_IsDirectory && checkContents, NotifyFiltersToWindows(notifyFilters), nullptr, &overlapped, nullptr);
         Windows::SilenceError(); // Windows would return an error because the 0ms timeout of WaitForSingleObject expired
 
-        m_CondVar.wait_for(lock, std::chrono::nanoseconds{static_cast<int64_t>(updateRate.GetTotalNanoseconds())});
+        m_CondVar.wait_for(lock, std::chrono::nanoseconds{static_cast<s64>(updateRate.GetTotalNanoseconds())});
 
         const DWORD waitResult = WaitForSingleObject(overlapped.hEvent, 0);
         Windows::SilenceError(); // Same here
@@ -136,7 +136,7 @@ void FileSystemWatcher::Run()
             {
                 const std::filesystem::path path = watchedPath / std::wstring_view(information->FileName, information->FileNameLength / sizeof(WCHAR));
 
-                bool_t validFile;
+                bool validFile;
                 if (m_IsDirectory)
                 {
                     validFile = path.string().starts_with(pathAbs);
@@ -184,7 +184,7 @@ void FileSystemWatcher::Run()
 
                 // Are there more events to handle?
                 if (information->NextEntryOffset)
-                    *reinterpret_cast<const uint8_t**>(&information) += information->NextEntryOffset;  // NOLINT(clang-diagnostic-undefined-reinterpret-cast)
+                    *reinterpret_cast<const u8**>(&information) += information->NextEntryOffset;  // NOLINT(clang-diagnostic-undefined-reinterpret-cast)
                 else
                     break;
             }

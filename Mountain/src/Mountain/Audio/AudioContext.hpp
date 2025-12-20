@@ -28,22 +28,22 @@ namespace Mountain
 
         MOUNTAIN_API void MakeCurrent() const;
 
-        MOUNTAIN_API static bool_t CheckError();
+        MOUNTAIN_API static bool CheckError();
 
         ATTRIBUTE_NODISCARD
-        MOUNTAIN_API int32_t GetMaxSourceCount(AudioSourceType sourceType) const;
+        MOUNTAIN_API s32 GetMaxSourceCount(AudioSourceType sourceType) const;
 
         /// @brief Returns the next available source of the given type.
         ATTRIBUTE_NODISCARD
-        MOUNTAIN_API uint32_t GetSource(AudioSourceType type = AudioSourceType::Mono);
+        MOUNTAIN_API u32 GetSource(AudioSourceType type = AudioSourceType::Mono);
 
     private:
         ALCcontext* m_Handle = nullptr;
         AudioDevice* m_Device = nullptr;
 
-        List<int32_t> m_Attributes;
+        List<s32> m_Attributes;
 
-        List<uint32_t> m_SourcesMono;
-        List<uint32_t> m_SourcesStereo;
+        List<u32> m_SourcesMono;
+        List<u32> m_SourcesStereo;
     };
 }

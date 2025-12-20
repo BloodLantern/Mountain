@@ -157,7 +157,7 @@ Pointer<Directory> FileManager::LoadDirectory(std::filesystem::path path)
     return directory;
 }
 
-bool_t FileManager::Contains(const std::filesystem::path& path)
+bool FileManager::Contains(const std::filesystem::path& path)
 {
     return m_Entries.contains(path);
 }
@@ -191,7 +191,7 @@ void FileManager::Unload(const std::filesystem::path& path)
         return;
     }
 
-    const size_t oldSize = m_Entries.size();
+    const usize oldSize = m_Entries.size();
 
     for (decltype(m_Entries)::iterator it = m_Entries.begin(); it != m_Entries.end(); it++)
     {

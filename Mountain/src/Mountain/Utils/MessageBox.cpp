@@ -9,12 +9,12 @@
 
 using namespace Mountain;
 
-MessageBox::Result MessageBox::Show(const char_t* title, const char_t* text, const Type type, const Icon icon, const DefaultButton defaultButton)
+MessageBox::Result MessageBox::Show(const c8* title, const c8* text, const Type type, const Icon icon, const DefaultButton defaultButton)
 {
     return Call(text, title, type, icon, defaultButton);
 }
 
-uint32_t MessageBox::TypeToWindows(const Type type)
+u32 MessageBox::TypeToWindows(const Type type)
 {
     switch (type)
     {
@@ -29,7 +29,7 @@ uint32_t MessageBox::TypeToWindows(const Type type)
     THROW(ArgumentOutOfRangeException{"Invalid MessageBox type", "type"});
 }
 
-uint32_t MessageBox::IconToWindows(const Icon icon)
+u32 MessageBox::IconToWindows(const Icon icon)
 {
     switch (icon)
     {
@@ -42,7 +42,7 @@ uint32_t MessageBox::IconToWindows(const Icon icon)
     THROW(ArgumentOutOfRangeException{"Invalid MessageBox icon", "icon"});
 }
 
-uint32_t MessageBox::DefaultButtonToWindows(const DefaultButton defaultButton)
+u32 MessageBox::DefaultButtonToWindows(const DefaultButton defaultButton)
 {
     switch (defaultButton)
     {
@@ -54,7 +54,7 @@ uint32_t MessageBox::DefaultButtonToWindows(const DefaultButton defaultButton)
     THROW(ArgumentOutOfRangeException{"Invalid MessageBox default button", "defaultButton"});
 }
 
-MessageBox::Result MessageBox::ParseResult(const int32_t windowsResult)
+MessageBox::Result MessageBox::ParseResult(const s32 windowsResult)
 {
     switch (windowsResult)
     {
@@ -71,7 +71,7 @@ MessageBox::Result MessageBox::ParseResult(const int32_t windowsResult)
     }
 }
 
-MessageBox::Result MessageBox::Call(const char_t* const text, const char_t* const title, const Type type, const Icon icon, const DefaultButton defaultButton)
+MessageBox::Result MessageBox::Call(const c8* const text, const c8* const title, const Type type, const Icon icon, const DefaultButton defaultButton)
 {
     const Result result = ParseResult(MessageBoxA(nullptr, text, title, TypeToWindows(type) | IconToWindows(icon) | DefaultButtonToWindows(defaultButton)));
     Windows::CheckError();

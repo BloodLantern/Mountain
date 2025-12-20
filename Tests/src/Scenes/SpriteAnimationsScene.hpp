@@ -24,6 +24,6 @@ private:
     Entity* m_Entity = nullptr;
     Sprite* m_Sprite = nullptr;
 
-    float_t m_Rotation = 0;
+    f32 m_Rotation = 0.f;
     Vector2 m_Origin = Vector2::One() * 0.5f;
 };

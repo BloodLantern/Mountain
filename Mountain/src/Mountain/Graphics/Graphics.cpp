@@ -14,12 +14,12 @@
 
 using namespace Mountain;
 
-void Graphics::BindImage(const uint32_t textureId, const uint32_t shaderBinding, const ImageShaderAccess access)
+void Graphics::BindImage(const u32 textureId, const u32 shaderBinding, const ImageShaderAccess access)
 {
-    glBindImageTexture(shaderBinding, textureId, 0, GL_FALSE, 0, GL_READ_ONLY + static_cast<int32_t>(access), GL_RGBA32F);
+    glBindImageTexture(shaderBinding, textureId, 0, GL_FALSE, 0, GL_READ_ONLY + static_cast<s32>(access), GL_RGBA32F);
 }
 
-void Graphics::SetActiveTexture(const uint8_t activeTexture)
+void Graphics::SetActiveTexture(const u8 activeTexture)
 {
     glActiveTexture(GL_TEXTURE0 + activeTexture);
 }
@@ -28,27 +28,27 @@ void Graphics::SynchronizeGpuData(const GpuDataSynchronizationFlags flags) { glM
 
 void Graphics::MemoryBarrier(const MemoryBarrierFlags flags) { glMemoryBarrier(static_cast<GLbitfield>(flags)); }
 
-void Graphics::DrawArrays(const DrawMode mode, const int32_t first, const int32_t vertexCount)
+void Graphics::DrawArrays(const DrawMode mode, const s32 first, const s32 vertexCount)
 {
     glDrawArrays(ToOpenGl(mode), first, vertexCount);
 }
 
-void Graphics::DrawArraysInstanced(const DrawMode mode, const int32_t first, const int32_t vertexCount, const int32_t instanceCount)
+void Graphics::DrawArraysInstanced(const DrawMode mode, const s32 first, const s32 vertexCount, const s32 instanceCount)
 {
     glDrawArraysInstanced(ToOpenGl(mode), first, vertexCount, instanceCount);
 }
 
-void Graphics::DrawElements(const DrawMode mode, const int32_t vertexCount, const DataType type, const void* indices)
+void Graphics::DrawElements(const DrawMode mode, const s32 vertexCount, const DataType type, const void* indices)
 {
     glDrawElements(ToOpenGl(mode), vertexCount, ToOpenGl(type), indices);
 }
 
 void Graphics::DrawElementsInstanced(
     const DrawMode mode,
-    const int32_t vertexCount,
+    const s32 vertexCount,
     const DataType type,
     const void* indices,
-    const int32_t instanceCount
+    const s32 instanceCount
 )
 {
     glDrawElementsInstanced(ToOpenGl(mode), vertexCount, ToOpenGl(type), indices, instanceCount);
@@ -64,34 +64,34 @@ void Graphics::Clear(const ClearFlags flags)
     glClear(static_cast<GLbitfield>(flags));
 }
 
-void Graphics::BindTexture(const uint32_t textureId) { glBindTexture(GL_TEXTURE_2D, textureId); }
+void Graphics::BindTexture(const u32 textureId) { glBindTexture(GL_TEXTURE_2D, textureId); }
 
 void Graphics::BindTexture(const GpuTexture gpuTexture) { BindTexture(gpuTexture.GetId()); }
 
-void Graphics::BindBuffer(const BufferType type, const uint32_t bufferId) { glBindBuffer(ToOpenGl(type), bufferId); }
+void Graphics::BindBuffer(const BufferType type, const u32 bufferId) { glBindBuffer(ToOpenGl(type), bufferId); }
 
 void Graphics::BindBuffer(const BufferType type, const GpuBuffer gpuBuffer) { BindBuffer(type, gpuBuffer.GetId()); }
 
-void Graphics::BindBufferBase(const BufferType type, const uint32_t index, const GpuBuffer gpuBuffer)
+void Graphics::BindBufferBase(const BufferType type, const u32 index, const GpuBuffer gpuBuffer)
 {
     BindBufferBase(type, index, gpuBuffer.GetId());
 }
 
-void Graphics::BindBufferBase(const BufferType type, const uint32_t index, const uint32_t bufferId)
+void Graphics::BindBufferBase(const BufferType type, const u32 index, const u32 bufferId)
 {
     glBindBufferBase(ToOpenGl(type), index, bufferId);
 }
 
-void Graphics::BindVertexArray(const uint32_t vertexArrayId) { glBindVertexArray(vertexArrayId); }
+void Graphics::BindVertexArray(const u32 vertexArrayId) { glBindVertexArray(vertexArrayId); }
 
 void Graphics::BindVertexArray(const GpuVertexArray gpuVertexArray) { BindVertexArray(gpuVertexArray.GetId()); }
 
 void Graphics::SetVertexAttribute(
-    const uint32_t index,
-    const int32_t size,
-    const int32_t stride,
-    const size_t offset,
-    const uint32_t divisor
+    const u32 index,
+    const s32 size,
+    const s32 stride,
+    const usize offset,
+    const u32 divisor
 )
 {
     glVertexAttribPointer(index, size, GL_FLOAT, GL_FALSE, stride, Utils::IntToPointer<void>(offset));
@@ -101,11 +101,11 @@ void Graphics::SetVertexAttribute(
 }
 
 void Graphics::SetVertexAttributeInt(
-    const uint32_t index,
-    const int32_t size,
-    const int32_t stride,
-    const size_t offset,
-    const uint32_t divisor
+    const u32 index,
+    const s32 size,
+    const s32 stride,
+    const usize offset,
+    const u32 divisor
 )
 {
     glVertexAttribIPointer(index, size, GL_INT, stride, Utils::IntToPointer<void>(offset));
@@ -114,16 +114,16 @@ void Graphics::SetVertexAttributeInt(
         glVertexBindingDivisor(index, divisor);
 }
 
-void Graphics::BindFramebuffer(const FramebufferType type, const uint32_t framebufferId) { glBindFramebuffer(ToOpenGl(type), framebufferId); }
+void Graphics::BindFramebuffer(const FramebufferType type, const u32 framebufferId) { glBindFramebuffer(ToOpenGl(type), framebufferId); }
 
 void Graphics::BindFramebuffer(const FramebufferType type, const GpuFramebuffer gpuFramebuffer) { BindFramebuffer(type, gpuFramebuffer.GetId()); }
 
 void Graphics::CopyTextureData(
-    const uint32_t sourceTextureId,
-    const int32_t sourceMipmapLevel,
+    const u32 sourceTextureId,
+    const s32 sourceMipmapLevel,
     const Vector2i sourceOffset,
-    const uint32_t destinationTextureId,
-    const int32_t destinationMipmapLevel,
+    const u32 destinationTextureId,
+    const s32 destinationMipmapLevel,
     const Vector2i destinationOffset,
     const Vector2i size
 )
@@ -147,90 +147,90 @@ void Graphics::CopyTextureData(
     );
 }
 
-int32_t Graphics::GetProgramUniformLocation(const uint32_t shaderProgramId, const char_t* uniformName) { return glGetUniformLocation(shaderProgramId, uniformName); }
+s32 Graphics::GetProgramUniformLocation(const u32 shaderProgramId, const c8* uniformName) { return glGetUniformLocation(shaderProgramId, uniformName); }
 
-void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const char_t* uniformName, const int32_t value) { SetProgramUniform(shaderProgramId, GetProgramUniformLocation(shaderProgramId, uniformName), value); }
+void Graphics::SetProgramUniform(const u32 shaderProgramId, const c8* uniformName, const s32 value) { SetProgramUniform(shaderProgramId, GetProgramUniformLocation(shaderProgramId, uniformName), value); }
 
-void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const char_t* uniformName, const uint32_t value) { SetProgramUniform(shaderProgramId, GetProgramUniformLocation(shaderProgramId, uniformName), value); }
+void Graphics::SetProgramUniform(const u32 shaderProgramId, const c8* uniformName, const u32 value) { SetProgramUniform(shaderProgramId, GetProgramUniformLocation(shaderProgramId, uniformName), value); }
 
-void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const char_t* uniformName, const bool_t value) { SetProgramUniform(shaderProgramId, GetProgramUniformLocation(shaderProgramId, uniformName), value); }
+void Graphics::SetProgramUniform(const u32 shaderProgramId, const c8* uniformName, const bool value) { SetProgramUniform(shaderProgramId, GetProgramUniformLocation(shaderProgramId, uniformName), value); }
 
-void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const char_t* uniformName, const float_t value) { SetProgramUniform(shaderProgramId, GetProgramUniformLocation(shaderProgramId, uniformName), value); }
+void Graphics::SetProgramUniform(const u32 shaderProgramId, const c8* uniformName, const f32 value) { SetProgramUniform(shaderProgramId, GetProgramUniformLocation(shaderProgramId, uniformName), value); }
 
-void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const char_t* uniformName, const Vector2i value) { SetProgramUniform(shaderProgramId, GetProgramUniformLocation(shaderProgramId, uniformName), value); }
+void Graphics::SetProgramUniform(const u32 shaderProgramId, const c8* uniformName, const Vector2i value) { SetProgramUniform(shaderProgramId, GetProgramUniformLocation(shaderProgramId, uniformName), value); }
 
-void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const char_t* uniformName, const Vector2 value) { SetProgramUniform(shaderProgramId, GetProgramUniformLocation(shaderProgramId, uniformName), value); }
+void Graphics::SetProgramUniform(const u32 shaderProgramId, const c8* uniformName, const Vector2 value) { SetProgramUniform(shaderProgramId, GetProgramUniformLocation(shaderProgramId, uniformName), value); }
 
-void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const char_t* uniformName, const Vector3& value) { SetProgramUniform(shaderProgramId, GetProgramUniformLocation(shaderProgramId, uniformName), value); }
+void Graphics::SetProgramUniform(const u32 shaderProgramId, const c8* uniformName, const Vector3& value) { SetProgramUniform(shaderProgramId, GetProgramUniformLocation(shaderProgramId, uniformName), value); }
 
-void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const char_t* uniformName, const Vector4& value) { SetProgramUniform(shaderProgramId, GetProgramUniformLocation(shaderProgramId, uniformName), value); }
+void Graphics::SetProgramUniform(const u32 shaderProgramId, const c8* uniformName, const Vector4& value) { SetProgramUniform(shaderProgramId, GetProgramUniformLocation(shaderProgramId, uniformName), value); }
 
-void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const char_t* uniformName, const Color& value) { SetProgramUniform(shaderProgramId, GetProgramUniformLocation(shaderProgramId, uniformName), value); }
+void Graphics::SetProgramUniform(const u32 shaderProgramId, const c8* uniformName, const Color& value) { SetProgramUniform(shaderProgramId, GetProgramUniformLocation(shaderProgramId, uniformName), value); }
 
-void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const char_t* uniformName, const Matrix2& value) { SetProgramUniform(shaderProgramId, GetProgramUniformLocation(shaderProgramId, uniformName), value); }
+void Graphics::SetProgramUniform(const u32 shaderProgramId, const c8* uniformName, const Matrix2& value) { SetProgramUniform(shaderProgramId, GetProgramUniformLocation(shaderProgramId, uniformName), value); }
 
-void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const char_t* uniformName, const Matrix3& value) { SetProgramUniform(shaderProgramId, GetProgramUniformLocation(shaderProgramId, uniformName), value); }
+void Graphics::SetProgramUniform(const u32 shaderProgramId, const c8* uniformName, const Matrix3& value) { SetProgramUniform(shaderProgramId, GetProgramUniformLocation(shaderProgramId, uniformName), value); }
 
-void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const char_t* uniformName, const Matrix& value) { SetProgramUniform(shaderProgramId, GetProgramUniformLocation(shaderProgramId, uniformName), value); }
+void Graphics::SetProgramUniform(const u32 shaderProgramId, const c8* uniformName, const Matrix& value) { SetProgramUniform(shaderProgramId, GetProgramUniformLocation(shaderProgramId, uniformName), value); }
 
-void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const int32_t uniformLocation, const int32_t value) { glProgramUniform1i(shaderProgramId, uniformLocation, value); }
+void Graphics::SetProgramUniform(const u32 shaderProgramId, const s32 uniformLocation, const s32 value) { glProgramUniform1i(shaderProgramId, uniformLocation, value); }
 
-void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const int32_t uniformLocation, const uint32_t value) { glProgramUniform1ui(shaderProgramId, uniformLocation, value); }
+void Graphics::SetProgramUniform(const u32 shaderProgramId, const s32 uniformLocation, const u32 value) { glProgramUniform1ui(shaderProgramId, uniformLocation, value); }
 
-void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const int32_t uniformLocation, const bool_t value) { SetProgramUniform(shaderProgramId, uniformLocation, static_cast<int32_t>(value)); }
+void Graphics::SetProgramUniform(const u32 shaderProgramId, const s32 uniformLocation, const bool value) { SetProgramUniform(shaderProgramId, uniformLocation, static_cast<s32>(value)); }
 
-void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const int32_t uniformLocation, const float_t value) { glProgramUniform1f(shaderProgramId, uniformLocation, value); }
+void Graphics::SetProgramUniform(const u32 shaderProgramId, const s32 uniformLocation, const f32 value) { glProgramUniform1f(shaderProgramId, uniformLocation, value); }
 
-void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const int32_t uniformLocation, const Vector2i value) { glProgramUniform2iv(shaderProgramId, uniformLocation, 1, value.Data()); }
+void Graphics::SetProgramUniform(const u32 shaderProgramId, const s32 uniformLocation, const Vector2i value) { glProgramUniform2iv(shaderProgramId, uniformLocation, 1, value.Data()); }
 
-void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const int32_t uniformLocation, const Vector2 value) { glProgramUniform2fv(shaderProgramId, uniformLocation, 1, value.Data()); }
+void Graphics::SetProgramUniform(const u32 shaderProgramId, const s32 uniformLocation, const Vector2 value) { glProgramUniform2fv(shaderProgramId, uniformLocation, 1, value.Data()); }
 
-void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const int32_t uniformLocation, const Vector3& value) { glProgramUniform3fv(shaderProgramId, uniformLocation, 1, value.Data()); }
+void Graphics::SetProgramUniform(const u32 shaderProgramId, const s32 uniformLocation, const Vector3& value) { glProgramUniform3fv(shaderProgramId, uniformLocation, 1, value.Data()); }
 
-void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const int32_t uniformLocation, const Vector4& value) { glProgramUniform4fv(shaderProgramId, uniformLocation, 1, value.Data()); }
+void Graphics::SetProgramUniform(const u32 shaderProgramId, const s32 uniformLocation, const Vector4& value) { glProgramUniform4fv(shaderProgramId, uniformLocation, 1, value.Data()); }
 
-void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const int32_t uniformLocation, const Color& value) { SetProgramUniform(shaderProgramId, uniformLocation, value.ToVector4()); }
+void Graphics::SetProgramUniform(const u32 shaderProgramId, const s32 uniformLocation, const Color& value) { SetProgramUniform(shaderProgramId, uniformLocation, value.ToVector4()); }
 
-void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const int32_t uniformLocation, const Matrix2& value) { glProgramUniformMatrix2fv(shaderProgramId, uniformLocation, 1, GL_FALSE, value.Data()); }
+void Graphics::SetProgramUniform(const u32 shaderProgramId, const s32 uniformLocation, const Matrix2& value) { glProgramUniformMatrix2fv(shaderProgramId, uniformLocation, 1, GL_FALSE, value.Data()); }
 
-void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const int32_t uniformLocation, const Matrix3& value) { glProgramUniformMatrix3fv(shaderProgramId, uniformLocation, 1, GL_FALSE, value.Data()); }
+void Graphics::SetProgramUniform(const u32 shaderProgramId, const s32 uniformLocation, const Matrix3& value) { glProgramUniformMatrix3fv(shaderProgramId, uniformLocation, 1, GL_FALSE, value.Data()); }
 
-void Graphics::SetProgramUniform(const uint32_t shaderProgramId, const int32_t uniformLocation, const Matrix& value) { glProgramUniformMatrix4fv(shaderProgramId, uniformLocation, 1, GL_FALSE, value.Data()); }
+void Graphics::SetProgramUniform(const u32 shaderProgramId, const s32 uniformLocation, const Matrix& value) { glProgramUniformMatrix4fv(shaderProgramId, uniformLocation, 1, GL_FALSE, value.Data()); }
 
 void Graphics::SetViewport(const Vector2i position, const Vector2i size)
 {
     glViewport(position.x, position.y, size.x, size.y);
 }
 
-uint32_t Graphics::GetLastError() { return glGetError(); }
+u32 Graphics::GetLastError() { return glGetError(); }
 
-const char_t* Graphics::GetLastErrorString() { return reinterpret_cast<const char_t*>(glGetString(glGetError())); }
+const c8* Graphics::GetLastErrorString() { return reinterpret_cast<const c8*>(glGetString(glGetError())); }
 
-bool_t Graphics::IsConstantEnabled(const Constant constant) { return glIsEnabled(ToOpenGl(constant)); }
+bool Graphics::IsConstantEnabled(const Constant constant) { return glIsEnabled(ToOpenGl(constant)); }
 
-bool_t Graphics::IsConstantEnabled(const Constant constant, const uint32_t index) { return glIsEnabledi(ToOpenGl(constant), index); }
+bool Graphics::IsConstantEnabled(const Constant constant, const u32 index) { return glIsEnabledi(ToOpenGl(constant), index); }
 
-void Graphics::GetConstant(const Constant constant, bool_t* outData) { glGetBooleanv(ToOpenGl(constant), reinterpret_cast<GLboolean*>(outData)); }
+void Graphics::GetConstant(const Constant constant, bool* outData) { glGetBooleanv(ToOpenGl(constant), reinterpret_cast<GLboolean*>(outData)); }
 
-void Graphics::GetConstant(const Constant constant, double_t* outData) { glGetDoublev(ToOpenGl(constant), outData); }
+void Graphics::GetConstant(const Constant constant, f64* outData) { glGetDoublev(ToOpenGl(constant), outData); }
 
-void Graphics::GetConstant(const Constant constant, float_t* outData) { glGetFloatv(ToOpenGl(constant), outData); }
+void Graphics::GetConstant(const Constant constant, f32* outData) { glGetFloatv(ToOpenGl(constant), outData); }
 
-void Graphics::GetConstant(const Constant constant, int32_t* outData) { glGetIntegerv(ToOpenGl(constant), outData); }
+void Graphics::GetConstant(const Constant constant, s32* outData) { glGetIntegerv(ToOpenGl(constant), outData); }
 
-void Graphics::GetConstant(const Constant constant, int64_t* outData) { glGetInteger64v(ToOpenGl(constant), outData); }
+void Graphics::GetConstant(const Constant constant, s64* outData) { glGetInteger64v(ToOpenGl(constant), outData); }
 
-void Graphics::GetConstant(const Constant constant, const uint32_t index, bool_t* outData) { glGetBooleani_v(ToOpenGl(constant), index, reinterpret_cast<GLboolean*>(outData)); }
+void Graphics::GetConstant(const Constant constant, const u32 index, bool* outData) { glGetBooleani_v(ToOpenGl(constant), index, reinterpret_cast<GLboolean*>(outData)); }
 
-void Graphics::GetConstant(const Constant constant, const uint32_t index, double_t* outData) { glGetDoublei_v(ToOpenGl(constant), index, outData); }
+void Graphics::GetConstant(const Constant constant, const u32 index, f64* outData) { glGetDoublei_v(ToOpenGl(constant), index, outData); }
 
-void Graphics::GetConstant(const Constant constant, const uint32_t index, float_t* outData) { glGetFloati_v(ToOpenGl(constant), index, outData); }
+void Graphics::GetConstant(const Constant constant, const u32 index, f32* outData) { glGetFloati_v(ToOpenGl(constant), index, outData); }
 
-void Graphics::GetConstant(const Constant constant, const uint32_t index, int32_t* outData) { glGetIntegeri_v(ToOpenGl(constant), index, outData); }
+void Graphics::GetConstant(const Constant constant, const u32 index, s32* outData) { glGetIntegeri_v(ToOpenGl(constant), index, outData); }
 
-void Graphics::GetConstant(const Constant constant, const uint32_t index, int64_t* outData) { glGetInteger64i_v(ToOpenGl(constant), index, outData); }
+void Graphics::GetConstant(const Constant constant, const u32 index, s64* outData) { glGetInteger64i_v(ToOpenGl(constant), index, outData); }
 
-void Graphics::SetConstantEnabled(const Constant constant, const bool_t enabled)
+void Graphics::SetConstantEnabled(const Constant constant, const bool enabled)
 {
     if (enabled)
         EnableConstant(constant);
@@ -238,7 +238,7 @@ void Graphics::SetConstantEnabled(const Constant constant, const bool_t enabled)
         DisableConstant(constant);
 }
 
-void Graphics::SetConstantEnabled(const Constant constant, const uint32_t index, const bool_t enabled)
+void Graphics::SetConstantEnabled(const Constant constant, const u32 index, const bool enabled)
 {
     if (enabled)
         EnableConstant(constant, index);
@@ -248,23 +248,23 @@ void Graphics::SetConstantEnabled(const Constant constant, const uint32_t index,
 
 void Graphics::EnableConstant(const Constant constant) { glEnable(ToOpenGl(constant)); }
 
-void Graphics::EnableConstant(const Constant constant, const uint32_t index) { glEnablei(ToOpenGl(constant), index); }
+void Graphics::EnableConstant(const Constant constant, const u32 index) { glEnablei(ToOpenGl(constant), index); }
 
 void Graphics::DisableConstant(const Constant constant) { glDisable(ToOpenGl(constant)); }
 
-void Graphics::DisableConstant(const Constant constant, const uint32_t index) { glDisablei(ToOpenGl(constant), index); }
+void Graphics::DisableConstant(const Constant constant, const u32 index) { glDisablei(ToOpenGl(constant), index); }
 
 void Graphics::SetBlendFunction(const BlendFunction sourceFactors, const BlendFunction destinationFactors)
 {
     glBlendFunc(ToOpenGl(sourceFactors), ToOpenGl(destinationFactors));
 }
 
-void Graphics::SetBlendFunction(const uint32_t drawBuffer, const BlendFunction sourceFactors, const BlendFunction destinationFactors)
+void Graphics::SetBlendFunction(const u32 drawBuffer, const BlendFunction sourceFactors, const BlendFunction destinationFactors)
 {
     glBlendFunci(drawBuffer, ToOpenGl(sourceFactors), ToOpenGl(destinationFactors));
 }
 
-void Graphics::SetViewport(const int32_t x, const int32_t y, const int32_t width, const int32_t height) { glViewport(x, y, width, height); }
+void Graphics::SetViewport(const s32 x, const s32 y, const s32 width, const s32 height) { glViewport(x, y, width, height); }
 
 void Graphics::Flush()
 {
@@ -277,7 +277,7 @@ void Graphics::Finish()
 }
 
 template <>
-Graphics::MagnificationFilter Graphics::FromOpenGl<Graphics::MagnificationFilter>(const int32_t value)
+Graphics::MagnificationFilter Graphics::FromOpenGl<Graphics::MagnificationFilter>(const s32 value)
 {
     switch (value)
     {
@@ -289,7 +289,7 @@ Graphics::MagnificationFilter Graphics::FromOpenGl<Graphics::MagnificationFilter
 }
 
 template <>
-Graphics::Wrapping Graphics::FromOpenGl<Graphics::Wrapping>(const int32_t value)
+Graphics::Wrapping Graphics::FromOpenGl<Graphics::Wrapping>(const s32 value)
 {
     switch (value)
     {
@@ -303,7 +303,7 @@ Graphics::Wrapping Graphics::FromOpenGl<Graphics::Wrapping>(const int32_t value)
 }
 
 template <>
-Graphics::ShaderType Graphics::FromOpenGl<Graphics::ShaderType>(const int32_t value)
+Graphics::ShaderType Graphics::FromOpenGl<Graphics::ShaderType>(const s32 value)
 {
     switch (value)
     {
@@ -316,7 +316,7 @@ Graphics::ShaderType Graphics::FromOpenGl<Graphics::ShaderType>(const int32_t va
 }
 
 template <>
-Graphics::InternalFormat Graphics::FromOpenGl<Graphics::InternalFormat>(const int32_t value)
+Graphics::InternalFormat Graphics::FromOpenGl<Graphics::InternalFormat>(const s32 value)
 {
     switch (value)
     {
@@ -398,7 +398,7 @@ Graphics::InternalFormat Graphics::FromOpenGl<Graphics::InternalFormat>(const in
 }
 
 template <>
-Graphics::Format Graphics::FromOpenGl<Graphics::Format>(const int32_t value)
+Graphics::Format Graphics::FromOpenGl<Graphics::Format>(const s32 value)
 {
     switch (value)
     {
@@ -415,7 +415,7 @@ Graphics::Format Graphics::FromOpenGl<Graphics::Format>(const int32_t value)
 }
 
 template <>
-Graphics::DataType Graphics::FromOpenGl<Graphics::DataType>(const int32_t value)
+Graphics::DataType Graphics::FromOpenGl<Graphics::DataType>(const s32 value)
 {
     switch (value)
     {
@@ -447,7 +447,7 @@ Graphics::DataType Graphics::FromOpenGl<Graphics::DataType>(const int32_t value)
 }
 
 template <>
-Graphics::Constant Graphics::FromOpenGl<Graphics::Constant>(const int32_t value)
+Graphics::Constant Graphics::FromOpenGl<Graphics::Constant>(const s32 value)
 {
     switch (value)
     {
@@ -699,7 +699,7 @@ Graphics::Constant Graphics::FromOpenGl<Graphics::Constant>(const int32_t value)
 }
 
 template <>
-Graphics::BufferType Graphics::FromOpenGl<Graphics::BufferType>(const int32_t value)
+Graphics::BufferType Graphics::FromOpenGl<Graphics::BufferType>(const s32 value)
 {
     switch (value)
     {
@@ -723,7 +723,7 @@ Graphics::BufferType Graphics::FromOpenGl<Graphics::BufferType>(const int32_t va
 }
 
 template <>
-Graphics::BufferUsage Graphics::FromOpenGl<Graphics::BufferUsage>(const int32_t value)
+Graphics::BufferUsage Graphics::FromOpenGl<Graphics::BufferUsage>(const s32 value)
 {
     switch (value)
     {
@@ -742,7 +742,7 @@ Graphics::BufferUsage Graphics::FromOpenGl<Graphics::BufferUsage>(const int32_t 
 }
 
 template <>
-Graphics::DrawMode Graphics::FromOpenGl<Graphics::DrawMode>(const int32_t value)
+Graphics::DrawMode Graphics::FromOpenGl<Graphics::DrawMode>(const s32 value)
 {
     switch (value)
     {
@@ -764,7 +764,7 @@ Graphics::DrawMode Graphics::FromOpenGl<Graphics::DrawMode>(const int32_t value)
 }
 
 template <>
-Graphics::BlendFunction Graphics::FromOpenGl<Graphics::BlendFunction>(const int32_t value)
+Graphics::BlendFunction Graphics::FromOpenGl<Graphics::BlendFunction>(const s32 value)
 {
     switch (value)
     {
@@ -788,7 +788,7 @@ Graphics::BlendFunction Graphics::FromOpenGl<Graphics::BlendFunction>(const int3
 }
 
 template <>
-Graphics::FramebufferType Graphics::FromOpenGl<Graphics::FramebufferType>(const int32_t value)
+Graphics::FramebufferType Graphics::FromOpenGl<Graphics::FramebufferType>(const s32 value)
 {
     switch (value)
     {
@@ -801,7 +801,7 @@ Graphics::FramebufferType Graphics::FromOpenGl<Graphics::FramebufferType>(const 
 }
 
 template <>
-Graphics::FramebufferStatus Graphics::FromOpenGl<Graphics::FramebufferStatus>(const int32_t value)
+Graphics::FramebufferStatus Graphics::FromOpenGl<Graphics::FramebufferStatus>(const s32 value)
 {
     switch (value)
     {
@@ -820,7 +820,7 @@ Graphics::FramebufferStatus Graphics::FromOpenGl<Graphics::FramebufferStatus>(co
 }
 
 template <>
-Graphics::FramebufferAttachment Graphics::FromOpenGl<Graphics::FramebufferAttachment>(const int32_t value)
+Graphics::FramebufferAttachment Graphics::FromOpenGl<Graphics::FramebufferAttachment>(const s32 value)
 {
     switch (value)
     {
@@ -864,7 +864,7 @@ Graphics::FramebufferAttachment Graphics::FromOpenGl<Graphics::FramebufferAttach
     }
 }
 
-int32_t Graphics::ToOpenGl(const MagnificationFilter value)
+s32 Graphics::ToOpenGl(const MagnificationFilter value)
 {
     switch (value)
     {
@@ -875,7 +875,7 @@ int32_t Graphics::ToOpenGl(const MagnificationFilter value)
     THROW(ArgumentOutOfRangeException{"Invalid magnification filter", "value"});
 }
 
-int32_t Graphics::ToOpenGl(const Wrapping value)
+s32 Graphics::ToOpenGl(const Wrapping value)
 {
     switch (value)
     {
@@ -888,7 +888,7 @@ int32_t Graphics::ToOpenGl(const Wrapping value)
     THROW(ArgumentOutOfRangeException{"Invalid wrapping", "value"});
 }
 
-int32_t Graphics::ToOpenGl(const ShaderType value)
+s32 Graphics::ToOpenGl(const ShaderType value)
 {
     switch (value)
     {
@@ -900,7 +900,7 @@ int32_t Graphics::ToOpenGl(const ShaderType value)
     THROW(ArgumentOutOfRangeException{"Invalid shader type", "value"});
 }
 
-int32_t Graphics::ToOpenGl(const InternalFormat value)
+s32 Graphics::ToOpenGl(const InternalFormat value)
 {
     switch (value)
     {
@@ -981,7 +981,7 @@ int32_t Graphics::ToOpenGl(const InternalFormat value)
     THROW(ArgumentOutOfRangeException{"Invalid internal format", "value"});
 }
 
-int32_t Graphics::ToOpenGl(const Format value)
+s32 Graphics::ToOpenGl(const Format value)
 {
     switch (value)
     {
@@ -997,7 +997,7 @@ int32_t Graphics::ToOpenGl(const Format value)
     THROW(ArgumentOutOfRangeException{"Invalid format", "value"});
 }
 
-int32_t Graphics::ToOpenGl(const DataType value)
+s32 Graphics::ToOpenGl(const DataType value)
 {
     switch (value)
     {
@@ -1028,7 +1028,7 @@ int32_t Graphics::ToOpenGl(const DataType value)
     THROW(ArgumentOutOfRangeException{"Invalid data type", "value"});
 }
 
-int32_t Graphics::ToOpenGl(const Constant value)
+s32 Graphics::ToOpenGl(const Constant value)
 {
     switch (value)
     {
@@ -1279,7 +1279,7 @@ int32_t Graphics::ToOpenGl(const Constant value)
     THROW(ArgumentOutOfRangeException{"Invalid constant", "value"});
 }
 
-int32_t Graphics::ToOpenGl(const BufferType value)
+s32 Graphics::ToOpenGl(const BufferType value)
 {
     switch (value)
     {
@@ -1302,7 +1302,7 @@ int32_t Graphics::ToOpenGl(const BufferType value)
     THROW(ArgumentOutOfRangeException{"Invalid buffer type", "value"});
 }
 
-int32_t Graphics::ToOpenGl(const BufferUsage value)
+s32 Graphics::ToOpenGl(const BufferUsage value)
 {
     switch (value)
     {
@@ -1320,7 +1320,7 @@ int32_t Graphics::ToOpenGl(const BufferUsage value)
     THROW(ArgumentOutOfRangeException{"Invalid buffer usage", "value"});
 }
 
-int32_t Graphics::ToOpenGl(const DrawMode value)
+s32 Graphics::ToOpenGl(const DrawMode value)
 {
     switch (value)
     {
@@ -1341,7 +1341,7 @@ int32_t Graphics::ToOpenGl(const DrawMode value)
     THROW(ArgumentOutOfRangeException{"Invalid draw mode", "value"});
 }
 
-int32_t Graphics::ToOpenGl(const BlendFunction value)
+s32 Graphics::ToOpenGl(const BlendFunction value)
 {
     switch (value)
     {
@@ -1364,7 +1364,7 @@ int32_t Graphics::ToOpenGl(const BlendFunction value)
     THROW(ArgumentOutOfRangeException{"Invalid blend function", "value"});
 }
 
-int32_t Graphics::ToOpenGl(const FramebufferType value)
+s32 Graphics::ToOpenGl(const FramebufferType value)
 {
     switch (value)
     {
@@ -1376,7 +1376,7 @@ int32_t Graphics::ToOpenGl(const FramebufferType value)
     THROW(ArgumentOutOfRangeException{"Invalid blend function", "value"});
 }
 
-int32_t Graphics::ToOpenGl(const FramebufferStatus value)
+s32 Graphics::ToOpenGl(const FramebufferStatus value)
 {
     switch (value)
     {
@@ -1394,7 +1394,7 @@ int32_t Graphics::ToOpenGl(const FramebufferStatus value)
     THROW(ArgumentOutOfRangeException{"Invalid framebuffer status", "value"});
 }
 
-int32_t Graphics::ToOpenGl(const FramebufferAttachment value)
+s32 Graphics::ToOpenGl(const FramebufferAttachment value)
 {
     switch (value)
     {

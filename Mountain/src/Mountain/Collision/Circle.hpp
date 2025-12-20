@@ -9,10 +9,10 @@ namespace Mountain
     class MOUNTAIN_API Circle : public Collider
     {
     public:
-        float_t radius = 0.f;
+        f32 radius = 0.f;
 
         Circle();
-        Circle(Vector2 off, float_t radius);
+        Circle(Vector2 off, f32 radius);
 
         void RenderDebug(const Color& color) const override;
 
@@ -32,13 +32,13 @@ namespace Mountain
         bool Intersect(Vector2 p1, Vector2 p2) const;
 
         ATTRIBUTE_NODISCARD
-        float_t Left() const override;
+        f32 Left() const override;
         ATTRIBUTE_NODISCARD
-        float_t Right() const override;
+        f32 Right() const override;
         ATTRIBUTE_NODISCARD
-        float_t Top() const override;
+        f32 Top() const override;
         ATTRIBUTE_NODISCARD
-        float_t Bottom() const override;
+        f32 Bottom() const override;
         ATTRIBUTE_NODISCARD
         Vector2 Center() const override;
         ATTRIBUTE_NODISCARD

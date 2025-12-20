@@ -17,13 +17,13 @@ Resource::Resource(std::string name)
 
 Resource::~Resource() = default;
 
-bool_t Resource::SetSourceData(const uint8_t* const, const int64_t) { return false; }
+bool Resource::SetSourceData(const u8* const, const s64) { return false; }
 
-bool_t Resource::SetSourceData(const Pointer<File>& file)
+bool Resource::SetSourceData(const Pointer<File>& file)
 {
     m_File = file;
 
-    return SetSourceData(file->GetData<uint8_t>(), file->GetSize());
+    return SetSourceData(file->GetData<u8>(), file->GetSize());
 }
 
 void Resource::Load() {}
@@ -32,14 +32,14 @@ void Resource::Unload() {}
 
 void Resource::ResetSourceData() {}
 
-bool_t Resource::Reload(const uint8_t* buffer, const int64_t length, const bool_t reloadInBackend)
+bool Resource::Reload(const u8* buffer, const s64 length, const bool reloadInBackend)
 {
     if (reloadInBackend)
         Unload();
 
     ResetSourceData();
 
-    const bool_t result = SetSourceData(buffer, length);
+    const bool result = SetSourceData(buffer, length);
 
     if (reloadInBackend)
         Load();
@@ -47,14 +47,14 @@ bool_t Resource::Reload(const uint8_t* buffer, const int64_t length, const bool_
     return result;
 }
 
-bool_t Resource::Reload(const Pointer<File>& file, const bool_t reloadInBackend)
+bool Resource::Reload(const Pointer<File>& file, const bool reloadInBackend)
 {
     if (reloadInBackend)
         Unload();
 
     ResetSourceData();
 
-    const bool_t result = SetSourceData(file);
+    const bool result = SetSourceData(file);
 
     if (reloadInBackend)
         Load();
@@ -62,11 +62,11 @@ bool_t Resource::Reload(const Pointer<File>& file, const bool_t reloadInBackend)
     return result;
 }
 
-bool_t Resource::Reload(const bool_t reloadInBackend) { return Reload(m_File, reloadInBackend); }
+bool Resource::Reload(const bool reloadInBackend) { return Reload(m_File, reloadInBackend); }
 
-bool_t Resource::IsSourceDataSet() const { return m_SourceDataSet; }
+bool Resource::IsSourceDataSet() const { return m_SourceDataSet; }
 
-bool_t Resource::IsLoaded() const { return m_Loaded; }
+bool Resource::IsLoaded() const { return m_Loaded; }
 
 const std::string& Resource::GetName() const { return m_Name; }
 

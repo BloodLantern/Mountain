@@ -16,7 +16,7 @@ namespace Mountain
 
 namespace Mountain::ParticleSystemModules
 {
-    enum class MOUNTAIN_API Types : uint32_t
+    enum class MOUNTAIN_API Types : u32
     {
         None = 0,
 
@@ -60,7 +60,7 @@ namespace Mountain::ParticleSystemModules
         GETTER(Types, Type, m_Type)
 
     private:
-        bool_t BeginImGui(Types* enabledModulesInt) const;
+        bool BeginImGui(Types* enabledModulesInt) const;
         void EndImGui() const;
 
         Types m_Type = Types::None;
@@ -68,14 +68,14 @@ namespace Mountain::ParticleSystemModules
         friend ParticleSystem; // Needs to call BeginImGui() and EndImGui()
     };
 
-    enum class ShapeType : uint8_t
+    enum class ShapeType : u8
     {
         Circle,
         Line,
         Rectangle,
     };
 
-    enum class ShapeArcMode : uint8_t
+    enum class ShapeArcMode : u8
     {
         Random,
         Loop,
@@ -86,22 +86,22 @@ namespace Mountain::ParticleSystemModules
     struct ShapeArc
     {
         ShapeArcMode mode = ShapeArcMode::Random;
-        float_t spread = 0.f;
+        f32 spread = 0.f;
     };
 
     struct ShapeCircle
     {
-        float_t radius = 1.f;
+        f32 radius = 1.f;
         /// @brief A value of 0 means the particles can only spawn on the edge of the radius, while 1 means they can spawn everywhere within the given radius
-        float_t radiusThickness = 1.f;
+        f32 radiusThickness = 1.f;
         /// @brief Angle in radians in the range [0, 2pi]
-        float_t arcAngle = Calc::TwoPi;
+        f32 arcAngle = Calc::TwoPi;
         ShapeArc arc;
     };
 
     struct ShapeLine
     {
-        float_t radius = 1.f;
+        f32 radius = 1.f;
         ShapeArc arc;
     };
 
@@ -125,14 +125,14 @@ namespace Mountain::ParticleSystemModules
         ShapeRectangle rectangle;
 
         Vector2 offset;
-        float_t rotation = 0.f;
+        f32 rotation = 0.f;
         Vector2 scale = Vector2::One();
 
-        float_t randomizeDirection = 0.f;
-        float_t randomizeRotation = 0.f;
-        float_t randomizePosition = 0.f;
+        f32 randomizeDirection = 0.f;
+        f32 randomizeRotation = 0.f;
+        f32 randomizePosition = 0.f;
 
-        bool_t showSpawnArea = false;
+        bool showSpawnArea = false;
 
     private:
         MOUNTAIN_API void SetComputeShaderUniforms(const ComputeShader& computeShader) const override;
@@ -197,8 +197,8 @@ namespace Mountain::ParticleSystemModules
 
         Color colorMin = Color::White();
         Color colorMax = Color::White();
-        float_t speedMin = 0.f;
-        float_t speedMax = 1.f;
+        f32 speedMin = 0.f;
+        f32 speedMax = 1.f;
         Easing::Type easingType = Easing::Type::Linear;
 
     private:
