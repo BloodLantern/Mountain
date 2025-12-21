@@ -11,18 +11,18 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\MathToolbox\src\Math\calc.hpp" />
-    <ClInclude Include="..\MathToolbox\src\Math\core.hpp" />
-    <ClInclude Include="..\MathToolbox\src\Math\easing.hpp" />
-    <ClInclude Include="..\MathToolbox\src\Math\math.hpp" />
-    <ClInclude Include="..\MathToolbox\src\Math\matrix.hpp" />
-    <ClInclude Include="..\MathToolbox\src\Math\matrix2.hpp" />
-    <ClInclude Include="..\MathToolbox\src\Math\matrix3.hpp" />
-    <ClInclude Include="..\MathToolbox\src\Math\quaternion.hpp" />
-    <ClInclude Include="..\MathToolbox\src\Math\vector2.hpp" />
-    <ClInclude Include="..\MathToolbox\src\Math\vector2i.hpp" />
-    <ClInclude Include="..\MathToolbox\src\Math\vector3.hpp" />
-    <ClInclude Include="..\MathToolbox\src\Math\vector4.hpp" />
+    <ClInclude Include="..\MathToolbox\Source\Math\calc.hpp" />
+    <ClInclude Include="..\MathToolbox\Source\Math\core.hpp" />
+    <ClInclude Include="..\MathToolbox\Source\Math\easing.hpp" />
+    <ClInclude Include="..\MathToolbox\Source\Math\math.hpp" />
+    <ClInclude Include="..\MathToolbox\Source\Math\matrix.hpp" />
+    <ClInclude Include="..\MathToolbox\Source\Math\matrix2.hpp" />
+    <ClInclude Include="..\MathToolbox\Source\Math\matrix3.hpp" />
+    <ClInclude Include="..\MathToolbox\Source\Math\quaternion.hpp" />
+    <ClInclude Include="..\MathToolbox\Source\Math\vector2.hpp" />
+    <ClInclude Include="..\MathToolbox\Source\Math\vector2i.hpp" />
+    <ClInclude Include="..\MathToolbox\Source\Math\vector3.hpp" />
+    <ClInclude Include="..\MathToolbox\Source\Math\vector4.hpp" />
     <ClInclude Include="externals\src\AL\al.h" />
     <ClInclude Include="externals\src\AL\alc.h" />
     <ClInclude Include="externals\src\AL\alext.h" />
@@ -195,16 +195,16 @@
     <ClInclude Include="src\Mountain\Window.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\MathToolbox\src\Math\calc.cpp" PrecompiledHeader="NotUsing" />
-    <ClCompile Include="..\MathToolbox\src\Math\easing.cpp" PrecompiledHeader="NotUsing" />
-    <ClCompile Include="..\MathToolbox\src\Math\matrix.cpp" PrecompiledHeader="NotUsing" />
-    <ClCompile Include="..\MathToolbox\src\Math\matrix2.cpp" PrecompiledHeader="NotUsing" />
-    <ClCompile Include="..\MathToolbox\src\Math\matrix3.cpp" PrecompiledHeader="NotUsing" />
-    <ClCompile Include="..\MathToolbox\src\Math\quaternion.cpp" PrecompiledHeader="NotUsing" />
-    <ClCompile Include="..\MathToolbox\src\Math\vector2.cpp" PrecompiledHeader="NotUsing" />
-    <ClCompile Include="..\MathToolbox\src\Math\vector2i.cpp" PrecompiledHeader="NotUsing" />
-    <ClCompile Include="..\MathToolbox\src\Math\vector3.cpp" PrecompiledHeader="NotUsing" />
-    <ClCompile Include="..\MathToolbox\src\Math\vector4.cpp" PrecompiledHeader="NotUsing" />
+    <ClCompile Include="..\MathToolbox\Source\Math\calc.cpp" PrecompiledHeader="NotUsing" />
+    <ClCompile Include="..\MathToolbox\Source\Math\easing.cpp" PrecompiledHeader="NotUsing" />
+    <ClCompile Include="..\MathToolbox\Source\Math\matrix.cpp" PrecompiledHeader="NotUsing" />
+    <ClCompile Include="..\MathToolbox\Source\Math\matrix2.cpp" PrecompiledHeader="NotUsing" />
+    <ClCompile Include="..\MathToolbox\Source\Math\matrix3.cpp" PrecompiledHeader="NotUsing" />
+    <ClCompile Include="..\MathToolbox\Source\Math\quaternion.cpp" PrecompiledHeader="NotUsing" />
+    <ClCompile Include="..\MathToolbox\Source\Math\vector2.cpp" PrecompiledHeader="NotUsing" />
+    <ClCompile Include="..\MathToolbox\Source\Math\vector2i.cpp" PrecompiledHeader="NotUsing" />
+    <ClCompile Include="..\MathToolbox\Source\Math\vector3.cpp" PrecompiledHeader="NotUsing" />
+    <ClCompile Include="..\MathToolbox\Source\Math\vector4.cpp" PrecompiledHeader="NotUsing" />
     <ClCompile Include="externals\src\glad.c" PrecompiledHeader="NotUsing" />
     <ClCompile Include="externals\src\ImGui\imgui.cpp" PrecompiledHeader="NotUsing" />
     <ClCompile Include="externals\src\ImGui\imgui_demo.cpp" PrecompiledHeader="NotUsing" />
