@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+#include <Mountain/Tween/Tweener.hpp>
+
 #include "TestGame.hpp"
 #include "Mountain/globals.hpp"
 
@@ -38,8 +40,6 @@ int main(int, char**)
 #endif
 {
 	ZoneScoped;
-
-	auto str = Utils::NarrowToWide("Hello");
 
 #ifdef LPP_PATH
 	std::println(std::cout, "Starting program, waiting for Live++ initialization...");

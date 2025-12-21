@@ -377,7 +377,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>src;externals\src;..\MathToolbox\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;externals\src;..\MathToolbox\Source</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <AdditionalOptions>/Gw %(AdditionalOptions)</AdditionalOptions>
@@ -407,7 +407,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>src;externals\src;..\MathToolbox\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;externals\src;..\MathToolbox\Source</AdditionalIncludeDirectories>
       <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>Mountain/PrecompiledHeader.hpp</PrecompiledHeaderFile>

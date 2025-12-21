@@ -32,7 +32,7 @@ Both require to have [vcpkg](https://vcpkg.io) installed.
 In a directory of your choice within your project, run `git submodule add https://github.com/BloodLantern/Mountain.git` and then `git submodule update --init --recursive`.
 
 Add the `Mountain/Mountain.vcxproj` project to your solution and set it as a reference to your project using `Add > Reference...`.
-In your project configuration, add the `Mountain/src`, `Mountain/externals/src` and `MathToolbox/src` folders to your include path.
+In your project configuration, add the `Mountain/src`, `Mountain/externals/src` and `MathToolbox/Source` folders to your include path.
 
 ### 2. Build from source
 
@@ -44,7 +44,7 @@ All the binaries can be found in the `x64/(Debug|Release)` folder.
 Additionally, copy the header files from `Mountain/src`.
 As the framework changes, you might also need to get some header files from `Mountain/externals/src`.
 In its current state, you need the `ImGui` and `magic_enum` folders, but you might want to take everything just in case.
-You also need the math headers, which are located in `MathToolbox/src`.
+You also need the math headers, which are located in `MathToolbox/Source`.
 
 To then use the framework in any of your projects, do as you would usually: include the necessary headers,
 compile by statically linking against the corresponding `Mountain.lib`

@@ -68,7 +68,7 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <EnableModules>true</EnableModules>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>src;..\Mountain\src;..\Mountain\externals\src;..\MathToolbox\src;$(LivePPDir)API\x64</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;..\Mountain\src;..\Mountain\externals\src;..\MathToolbox\Source;$(LivePPDir)API\x64</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <AdditionalOptions>/Gw %(AdditionalOptions)</AdditionalOptions>
@@ -92,7 +92,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;$(LivePPMacro);%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>src;..\Mountain\src;..\Mountain\externals\src;..\MathToolbox\src;$(LivePPDir)API\x64</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;..\Mountain\src;..\Mountain\externals\src;..\MathToolbox\Source;$(LivePPDir)API\x64</AdditionalIncludeDirectories>
       <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>Common.hpp</PrecompiledHeaderFile>
