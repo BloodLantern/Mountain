@@ -115,7 +115,7 @@ The last thing to do is to edit the `Mountain/src/Mountain/Configuration.hpp` fi
 - ~~Compute shader API~~
 - ~~Custom exceptions~~
 - Built-in shader hot-reloading
-- \[WIP] Real unit tests
+- ~~Real unit tests~~
 - ~~Replace all `std::array` and `std::vector` usages with `Mountain::Array` and `Mountain::List`~~
 - True text rendering
 - ~~Add an instanced Random API to have both a static and instanced way of generating random numbers~~
@@ -124,4 +124,5 @@ The last thing to do is to edit the `Mountain/src/Mountain/Configuration.hpp` fi
 - ~~Replace all `std::chrono` usages by `Stopwatch`, `TimeSpan` and `DateTime`~~
 - ~~Credit external dependencies in README~~
 - Add a way to use stereo audio files as mono sources and vice-versa
-- Add an API to edit compute shaders local size from C++
+- Add an API to procedurally generate shaders
+- Add a tweening system
