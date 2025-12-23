@@ -1,10 +1,5 @@
 #pragma once
 
-#include <Math/vector2i.hpp>
-
-#include <SDL3/SDL_events.h>
-#include <SDL3/SDL_video.h>
-
 #include "Mountain/Core.hpp"
 #include "Mountain/Graphics/Renderer.hpp"
 #include "Mountain/Resource/Texture.hpp"
@@ -12,6 +7,10 @@
 
 /// @file window.hpp
 /// @brief Defines the Mountain::Window class.
+
+struct SDL_Window;
+typedef struct SDL_GLContextState* SDL_GLContext;
+union SDL_Event;
 
 namespace Mountain
 {

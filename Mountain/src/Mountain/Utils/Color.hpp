@@ -3,13 +3,12 @@
 #include <format>
 #include <sstream>
 
-#include <Math/easing.hpp>
-#include <Math/vector3.hpp>
-#include <Math/vector4.hpp>
-
 #include <ImGui/imgui.h>
 
 #include "Mountain/Core.hpp"
+#include "Mountain/Math/Easing.hpp"
+#include "Mountain/Math/Vector3.hpp"
+#include "Mountain/Math/Vector4.hpp"
 #include "Mountain/Utils/Requirements.hpp"
 
 // Undef windows min and max macros in case they were defined
@@ -837,7 +836,7 @@ namespace Calc
 
 #include <algorithm>
 
-#include "Math/calc.hpp"
+#include "Mountain/Math/Calc.hpp"
 
 namespace Mountain
 {

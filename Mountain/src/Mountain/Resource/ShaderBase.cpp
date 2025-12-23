@@ -1,13 +1,10 @@
-﻿#include "Mountain/PrecompiledHeader.hpp"
-
-#include "Mountain/Resource/ShaderBase.hpp"
+﻿#include "Mountain/Resource/ShaderBase.hpp"
 
 #include <glad/glad.h>
 
-#include <Math/math.hpp>
-
 #include "Mountain/FileSystem/FileManager.hpp"
 #include "Mountain/Graphics/Graphics.hpp"
+#include "Mountain/Math/Math.hpp"
 #include "Mountain/Utils/Logger.hpp"
 
 using namespace Mountain;

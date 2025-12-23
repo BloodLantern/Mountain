@@ -2,8 +2,6 @@
 
 #include "Mountain/Core.hpp"
 
-#include <Math/vector2i.hpp>
-
 namespace Mountain
 {
     /// @brief Base class for a Mountain application.

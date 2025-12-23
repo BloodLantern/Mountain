@@ -1,7 +1,5 @@
 ﻿#pragma once
 
-#include <Math/math.hpp>
-
 #include "Mountain/Core.hpp"
 #include "Mountain/Containers/Array.hpp"
 #include "Mountain/Resource/ShaderBase.hpp"

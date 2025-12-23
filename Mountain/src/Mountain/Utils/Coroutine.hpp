@@ -7,6 +7,7 @@
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Utils/Guid.hpp"
+#include "Mountain/Utils/TimeSpan.hpp"
 
 /// @file coroutine.hpp
 /// @brief Defines the Coroutine class.

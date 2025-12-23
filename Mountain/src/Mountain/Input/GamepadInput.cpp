@@ -1,6 +1,6 @@
-#include "Mountain/PrecompiledHeader.hpp"
-
 #include "Mountain/Input/GamepadInput.hpp"
+
+#include <SDL3/SDL_gamepad.h>
 
 #include "Mountain/Utils/Color.hpp"
 #include "Mountain/Utils/Logger.hpp"

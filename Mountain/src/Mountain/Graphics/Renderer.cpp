@@ -1,5 +1,3 @@
-#include "Mountain/PrecompiledHeader.hpp"
-
 #include "Mountain/Graphics/Renderer.hpp"
 
 #include <glad/glad.h>
@@ -10,11 +8,12 @@
 
 #include <ft2build.h>
 
+#include <SDL3/SDL_video.h>
+
 #include "Mountain/Globals.hpp"
 
 #include FT_FREETYPE_H
 
-#include "Mountain/Screen.hpp"
 #include "Mountain/Window.hpp"
 #include "Mountain/FileSystem/FileManager.hpp"
 #include "Mountain/Graphics/Draw.hpp"

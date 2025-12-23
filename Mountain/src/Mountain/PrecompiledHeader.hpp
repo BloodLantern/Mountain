@@ -1,8 +1,10 @@
-﻿#pragma once
+﻿#ifndef MOUNTAIN_PRECOMPILED_HEADER_HPP
+#define MOUNTAIN_PRECOMPILED_HEADER_HPP
 
 #include "Mountain/Core.hpp"
 
 #include <chrono>
+#include <cstring>
 #include <filesystem>
 #include <map>
 #include <utility>
@@ -12,12 +14,11 @@
 
 #include <ImGui/imgui.h>
 
-#include <Math/math.hpp>
-
+#include "Math/Math.hpp"
+#include "Mountain/Profiler.hpp"
 #include "Mountain/Containers/Array.hpp"
 #include "Mountain/Containers/EnumerableExt.hpp"
 #include "Mountain/Containers/List.hpp"
-
 #include "Mountain/Utils/Color.hpp"
 #include "Mountain/Utils/Formatter.hpp"
 #include "Mountain/Utils/Guid.hpp"
@@ -26,4 +27,4 @@
 #include "Mountain/Utils/Pointer.hpp"
 #include "Mountain/Utils/Requirements.hpp"
 
-#include "Mountain/Profiler.hpp"
+#endif

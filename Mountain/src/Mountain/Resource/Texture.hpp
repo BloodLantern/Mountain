@@ -1,12 +1,9 @@
 #pragma once
 
-#include <array>
-
-#include <Math/vector2i.hpp>
-
 #include "Mountain/Core.hpp"
 #include "Mountain/Graphics/GpuTexture.hpp"
 #include "Mountain/Graphics/Graphics.hpp"
+#include "Mountain/Math/Vector2i.hpp"
 #include "Mountain/Resource/Resource.hpp"
 
 /// @file texture.hpp

@@ -2,13 +2,12 @@
 
 #include <magic_enum/magic_enum.hpp>
 
-#include <Math/vector2.hpp>
-
 #include "Mountain/Core.hpp"
 #include "Mountain/Containers/List.hpp"
 #include "Mountain/Graphics/GpuBuffer.hpp"
 #include "Mountain/Graphics/GpuVertexArray.hpp"
 #include "Mountain/Graphics/RenderTarget.hpp"
+#include "Mountain/Math/Vector2.hpp"
 #include "Mountain/Resource/Shader.hpp"
 #include "Mountain/Resource/Texture.hpp"
 #include "Mountain/Utils/Color.hpp"

@@ -4,15 +4,16 @@
 #include <cmath>
 #include <string>
 
-#include <Math/vector2.hpp>
-#include <Math/vector2i.hpp>
-
 #include <magic_enum/magic_enum.hpp>
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Containers/Array.hpp"
+#include "Mountain/Math/Vector2.hpp"
+#include "Mountain/Math/Vector2i.hpp"
 #include "Mountain/Utils/Color.hpp"
-#include "SDL3/SDL_gamepad.h"
+
+typedef u32 SDL_JoystickID;
+struct SDL_Gamepad;
 
 /// @file GamepadInput.hpp
 /// @brief Defines gamepad input types and enumerations.

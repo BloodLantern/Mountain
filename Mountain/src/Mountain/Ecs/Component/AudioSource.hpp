@@ -1,10 +1,8 @@
 #pragma once
 
 #include "Mountain/Core.hpp"
-
-#include <Math/vector2.hpp>
-
 #include "Mountain/Ecs/Component/Component.hpp"
+#include "Mountain/Math/Vector2.hpp"
 #include "Mountain/Resource/AudioTrack.hpp"
 
 namespace Mountain

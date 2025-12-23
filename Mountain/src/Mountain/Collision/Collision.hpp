@@ -1,8 +1,7 @@
 #pragma once
 
-#include <Math/vector2.hpp>
-
 #include "Mountain/Core.hpp"
+#include "Mountain/Math/Vector2.hpp"
 
 namespace Mountain::Collision
 {

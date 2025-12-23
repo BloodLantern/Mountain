@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include "Mountain/Core.hpp"
+#include "Mountain/Exceptions/ThrowHelper.hpp"
 
 namespace Mountain
 {

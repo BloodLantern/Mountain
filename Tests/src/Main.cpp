@@ -3,7 +3,7 @@
 #include <iostream>
 
 #include "TestGame.hpp"
-#include "Mountain/globals.hpp"
+#include "Mountain/Globals.hpp"
 
 USE_DEDICATED_GPU
 

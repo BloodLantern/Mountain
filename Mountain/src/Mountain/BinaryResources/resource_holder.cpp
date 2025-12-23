@@ -1,4 +1,4 @@
-﻿#include "Mountain/PrecompiledHeader.hpp"
+﻿
 
 #include "Mountain/BinaryResources/resource_holder.hpp"
 

@@ -3,6 +3,7 @@
 #include "Common.hpp"
 
 #include <Mountain/Game.hpp>
+#include <Mountain/Profiler.hpp>
 #include <Mountain/Containers/List.hpp>
 #include <Mountain/Resource/ShaderBase.hpp>
 #include <Mountain/Utils/Color.hpp>

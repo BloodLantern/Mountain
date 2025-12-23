@@ -1,10 +1,8 @@
 #pragma once
 
 #include "Mountain/Core.hpp"
-
-#include <Math/vector3.hpp>
-
 #include "Mountain/Ecs/Component/Component.hpp"
+#include "Mountain/Math/Vector2.hpp"
 
 namespace Mountain
 {

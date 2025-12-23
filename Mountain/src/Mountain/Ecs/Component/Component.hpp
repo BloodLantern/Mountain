@@ -4,6 +4,7 @@
 
 namespace Mountain
 {
+    class Entity;
     class Scene;
 
     /// @brief Represents a behavior that can be attached to an Entity.

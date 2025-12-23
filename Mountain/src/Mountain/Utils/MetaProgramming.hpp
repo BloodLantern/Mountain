@@ -2,16 +2,15 @@
 
 /// @file MetaProgramming.hpp
 ///
-/// @brief Defines utilities for meta-programming and template manipulation as well as some concepts.
-
-#include "Mountain/Core.hpp"
+/// @brief Defines utilities for metaprogramming and template manipulation as well as some concepts.
 
 #include <functional>
 #include <type_traits>
 
-#include <Math/quaternion.hpp>
-#include <Math/vector2.hpp>
-#include <Math/vector3.hpp>
+#include "Mountain/Core.hpp"
+#include "Mountain/Math/Quaternion.hpp"
+#include "Mountain/Math/Vector2.hpp"
+#include "Mountain/Math/Vector3.hpp"
 
 #define DECLARING_TYPE(value) ::Mountain::Meta::RemoveCvRefSpecifier<decltype(value)>
 
@@ -159,8 +158,8 @@ namespace Mountain
         template <typename T>
         constexpr bool IsReference = std::is_reference_v<T>;
 
-        template <bool Condition>
-        using EnableIf = std::enable_if_t<Condition>;
+        template <bool Condition, typename Type = void>
+        using EnableIf = std::enable_if_t<Condition, Type>;
 
         /// @brief Removes the array specification from @p T
         /// @details e.g., if @p T is @code int[4]@endcode, then @c RemoveArraySpecifier<T> will be @c int

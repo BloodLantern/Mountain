@@ -1,10 +1,8 @@
 #pragma once
 
 #include "Mountain/Collision/Collider.hpp"
-
-#include <Math/vector2i.hpp>
-
 #include "Mountain/Containers/List.hpp"
+#include "Mountain/Math/Vector2i.hpp"
 
 namespace Mountain
 {

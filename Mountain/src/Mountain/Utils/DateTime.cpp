@@ -1,4 +1,4 @@
-﻿#include "Mountain/PrecompiledHeader.hpp"
+﻿
 
 #include "Mountain/Utils/DateTime.hpp"
 

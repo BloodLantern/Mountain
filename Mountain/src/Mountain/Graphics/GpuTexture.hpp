@@ -1,7 +1,5 @@
 ﻿#pragma once
 
-#include <Math/vector2i.hpp>
-
 #include "Mountain/Core.hpp"
 #include "Mountain/Graphics/Graphics.hpp"
 #include "Mountain/Utils/Color.hpp"

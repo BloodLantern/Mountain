@@ -1,9 +1,7 @@
 #pragma once
 
 #include "Mountain/Core.hpp"
-
-#include <Math/vector2.hpp>
-
+#include "Mountain/Math/Vector2.hpp"
 #include "Mountain/Utils/Color.hpp"
 
 namespace Mountain

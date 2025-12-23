@@ -39,6 +39,8 @@ using f64 = double;
 /// @brief Contains all declarations of the Mountain Framework.
 namespace Mountain {}
 
+#define SQ(x) (x * x)
+
 /// @brief Creates default copy and move operations for a given @p type.
 ///
 /// This macro should be used for any type that defines at least one of:
@@ -143,15 +145,28 @@ namespace Mountain {}
         _declspec(dllexport) s32 AmdPowerXpressRequestHighPerformance = 1; \
     }
 
+/// @brief Defines a getter for the field @p internalName, of type @p type, with the name @c Get##name and the given specifiers
+#define GETTER_HELPER(type, preSpecifiers, postSpecifiers, name, internalName) ATTRIBUTE_NODISCARD preSpecifiers type Get##name() postSpecifiers noexcept { return internalName; }
+
 /// @brief Defines a getter for the field @p internalName, of type @p type, with the name @c Get##name
-#define GETTER(type, name, internalName) ATTRIBUTE_NODISCARD type Get##name() const noexcept { return internalName; }
+#define GETTER(type, name, internalName) GETTER_HELPER(type, , const, name, internalName)
 /// @brief Defines a getter for the field @c m_##name, of type @p type, with the name @c Get##name
 #define GETTER_M(type, name) GETTER(type, name, m_##name)
 
 /// @brief Defines a static getter for the field @p internalName, of type @p type, with the name @c Get##name
-#define STATIC_GETTER(type, name, internalName) ATTRIBUTE_NODISCARD static type Get##name() noexcept { return internalName; }
+#define STATIC_GETTER(type, name, internalName) GETTER_HELPER(type, static, , name, internalName)
 /// @brief Defines a static getter for the field @c m_##name, of type @p type, with the name @c Get##name
 #define STATIC_GETTER_M(type, name, internalName) STATIC_GETTER(type, name, m_##name)
+
+/// @brief Defines a constexpr getter for the field @p internalName, of type @p type, with the name @c Get##name
+#define CONSTEXPR_GETTER(type, name, internalName) GETTER_HELPER(type, constexpr, const, name, internalName)
+/// @brief Defines a constexpr getter for the field @c m_##name, of type @p type, with the name @c Get##name
+#define CONSTEXPR_GETTER_M(type, name) CONSTEXPR_GETTER(type, name, m_##name)
+
+/// @brief Defines a static constexpr getter for the field @p internalName, of type @p type, with the name @c Get##name
+#define STATIC_CONSTEXPR_GETTER(type, name, internalName) GETTER_HELPER(type, static constexpr, , name, internalName)
+/// @brief Defines a static constexpr getter for the field @c m_##name, of type @p type, with the name @c Get##name
+#define STATIC_CONSTEXPR_GETTER_M(type, name, internalName) STATIC_CONSTEXPR_GETTER(type, name, m_##name)
 
 /// @brief Defines getters for the field @p internalName, of type @p type, with the name @c Get##name.
 /// One getter is @c const and returns a @c const value.

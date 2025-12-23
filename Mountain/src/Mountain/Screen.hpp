@@ -2,12 +2,11 @@
 
 #include "Mountain/Core.hpp"
 
-#include <Math/vector2i.hpp>
-
-#include <SDL3/SDL_video.h>
-
 /// @file screen.hpp
 /// @brief Defines the Mountain::Screen class.
+
+typedef u32 SDL_DisplayID;
+struct SDL_DisplayMode;
 
 namespace Mountain
 {

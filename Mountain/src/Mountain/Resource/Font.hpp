@@ -1,12 +1,10 @@
 #pragma once
 
-#include <array>
 #include <map>
-
-#include <Math/vector2i.hpp>
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Graphics/GpuTexture.hpp"
+#include "Mountain/Math/Vector2i.hpp"
 #include "Mountain/Resource/Resource.hpp"
 
 namespace Mountain

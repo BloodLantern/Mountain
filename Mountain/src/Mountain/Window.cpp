@@ -1,8 +1,8 @@
-#include "Mountain/PrecompiledHeader.hpp"
-
 #include "Mountain/Window.hpp"
 
 #include <SDL3/SDL.h>
+#include <SDL3/SDL_events.h>
+#include <SDL3/SDL_video.h>
 
 #include <ImGui/imgui_impl_sdl3.h>
 

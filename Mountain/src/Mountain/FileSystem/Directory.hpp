@@ -3,6 +3,7 @@
 #include <filesystem>
 
 #include "Mountain/Core.hpp"
+#include "Mountain/Containers/List.hpp"
 #include "Mountain/FileSystem/Entry.hpp"
 #include "Mountain/Utils/Pointer.hpp"
 

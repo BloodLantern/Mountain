@@ -126,7 +126,7 @@ namespace Mountain
         ATTRIBUTE_NODISCARD
         constexpr DateTimeKind GetKind() const;
 
-        constexpr GETTER(u64, DateData, m_DateData)
+        CONSTEXPR_GETTER_M(u64, DateData)
 
     private:
         /// @brief Number of days in a non-leap year

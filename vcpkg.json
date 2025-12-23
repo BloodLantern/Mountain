@@ -1,10 +1,6 @@
 {
-  "dependencies": [
-    "freetype",
-    "minimp3",
-    "rapidxml",
-    "sdl3",
-    "stb",
-    "magic-enum"
-  ]
+  "dependencies" : [ "minimp3", "rapidxml", "sdl3", "stb", "magic-enum", "gtest", {
+    "name" : "freetype",
+    "version>=" : "2.13.3"
+  } ]
 }

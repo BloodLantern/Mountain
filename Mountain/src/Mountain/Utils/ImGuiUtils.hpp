@@ -1,15 +1,12 @@
 #pragma once
 
-#include "Mountain/Core.hpp"
-
-#include <Math/vector2.hpp>
-
 #include <ImGui/imgui.h>
 #include <ImGui/imgui_stdlib.h>
 
+#include "Mountain/Core.hpp"
 #include "Mountain/Window.hpp"
+#include "Mountain/Math/Vector2.hpp"
 #include "Mountain/Resource/ResourceManager.hpp"
-#include "Mountain/Utils/Optional.hpp"
 #include "Mountain/Utils/Utils.hpp"
 
 /// @brief Calls the given @p imguiFunction using the get/set accessors to the given @p field of @p variableAccess.

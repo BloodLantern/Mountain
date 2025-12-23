@@ -3,15 +3,13 @@
 #include <filesystem>
 #include <functional>
 #include <thread>
-
 #include <magic_enum/magic_enum.hpp>
-
-#include <Math/quaternion.hpp>
-#include <Math/vector2.hpp>
-#include <Math/vector3.hpp>
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Containers/EnumerableExt.hpp"
+#include "Mountain/Math/Quaternion.hpp"
+#include "Mountain/Math/Vector2.hpp"
+#include "Mountain/Math/Vector3.hpp"
 #include "Mountain/Utils/MetaProgramming.hpp"
 #include "Mountain/Utils/Pointer.hpp"
 
@@ -282,7 +280,7 @@ ENUM_FLAGS(Mountain::Utils::TrimOptions)
 
 // Start of Utils.inl
 
-#include "Math/vector2i.hpp"
+#include "Mountain/Math/Vector2i.hpp"
 
 namespace Mountain
 {
@@ -290,6 +288,18 @@ namespace Mountain
     constexpr PtrT* Utils::IntToPointer(const IntT number) { return reinterpret_cast<PtrT*>(reinterpret_cast<u8*>(1) + static_cast<const usize>(number) - 1); }
 
     constexpr usize Utils::PointerToInt(const void* pointer) { return std::bit_cast<usize>(pointer); }
+
+    template <typename T>
+    usize Utils::GetTypeHash()
+    {
+        return typeid(T).hash_code();
+    }
+
+    template <typename T>
+    usize Utils::GetTypeHash(ATTRIBUTE_MAYBE_UNUSED const T* const ptr)
+    {
+        return typeid(*ptr).hash_code();
+    }
 
     constexpr f32 Utils::RemapValue(const f32 oldValue, const Vector2 oldRange, const Vector2 newRange)
     {
@@ -309,18 +319,6 @@ namespace Mountain
     constexpr usize Utils::RemapValue(const usize oldValue, const usize oldMin, const usize oldMax, const usize newMin, const usize newMax)
     {
         return (oldValue - oldMin) * (newMax - newMin) / (oldMax - oldMin) + newMin;
-    }
-
-    template <typename T>
-    usize Utils::GetTypeHash()
-    {
-        return typeid(T).hash_code();
-    }
-
-    template <typename T>
-    usize Utils::GetTypeHash(ATTRIBUTE_MAYBE_UNUSED const T* const ptr)
-    {
-        return typeid(*ptr).hash_code();
     }
 
     template <typename T, typename U>

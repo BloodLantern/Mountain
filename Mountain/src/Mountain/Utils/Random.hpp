@@ -1,12 +1,10 @@
 #pragma once
 
-#include "Mountain/Core.hpp"
-
 #include <limits>
 #include <random>
 
-#include <Math/vector2.hpp>
-
+#include "Mountain/Core.hpp"
+#include "Mountain/Math/Vector2.hpp"
 #include "Mountain/Utils/Color.hpp"
 
 namespace Mountain

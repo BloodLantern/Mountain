@@ -1,15 +1,13 @@
 ﻿#pragma once
 
 #include "Mountain/Core.hpp"
-
-#include <Math/matrix.hpp>
-#include <Math/vector2i.hpp>
-
 #include "Mountain/Containers/List.hpp"
 #include "Mountain/Graphics/GpuFramebuffer.hpp"
 #include "Mountain/Graphics/GpuTexture.hpp"
 #include "Mountain/Graphics/Graphics.hpp"
 #include "Mountain/Graphics/LightSource.hpp"
+#include "Mountain/Math/Matrix.hpp"
+#include "Mountain/Math/Vector2i.hpp"
 #include "Mountain/Utils/Color.hpp"
 
 namespace Mountain

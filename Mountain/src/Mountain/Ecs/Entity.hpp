@@ -1,11 +1,9 @@
 #pragma once
 
 #include "Mountain/Core.hpp"
-
-#include <Math/vector2.hpp>
-
 #include "Mountain/Collision/Collider.hpp"
 #include "Mountain/Containers/List.hpp"
+#include "Mountain/Math/Vector2.hpp"
 #include "Mountain/Utils/MetaProgramming.hpp"
 
 namespace Mountain

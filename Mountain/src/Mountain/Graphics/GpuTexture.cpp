@@ -1,4 +1,4 @@
-﻿#include "Mountain/PrecompiledHeader.hpp"
+﻿
 
 #include "Mountain/Graphics/GpuTexture.hpp"
 
