@@ -1,5 +1,3 @@
-
-
 #include "Mountain/Audio/Audio.hpp"
 
 #include <set>
@@ -15,6 +13,9 @@
 
 using namespace Mountain;
 
+LPALCEVENTCALLBACKSOFT alcEventCallbackSoft = nullptr;
+LPALCEVENTCONTROLSOFT alcEventControlSoft = nullptr;
+
 bool Audio::Initialize()
 {
     if (NoBuiltinAudio)
@@ -26,11 +27,12 @@ bool Audio::Initialize()
 
     m_CurrentDevice = new AudioDevice(alcGetString(nullptr, ALC_DEFAULT_ALL_DEVICES_SPECIFIER));
 
-    constexpr std::array enabledEvents = {
-        ALC_EVENT_TYPE_DEFAULT_DEVICE_CHANGED_SOFT
-    };
-    alcEventControlSOFT(static_cast<ALCsizei>(enabledEvents.size()), enabledEvents.data(), ALC_TRUE);
-    alcEventCallbackSOFT(EventCallback, nullptr);
+    alcEventCallbackSoft = reinterpret_cast<LPALCEVENTCALLBACKSOFT>(m_CurrentDevice->GetProcAddress("alcEventCallbackSOFT"));
+    alcEventControlSoft = reinterpret_cast<LPALCEVENTCONTROLSOFT>(m_CurrentDevice->GetProcAddress("alcEventControlSOFT"));
+
+    constexpr Array enabledEvents{ALC_EVENT_TYPE_DEFAULT_DEVICE_CHANGED_SOFT};
+    alcEventControlSoft(static_cast<ALCsizei>(enabledEvents.GetSize()), enabledEvents.GetData(), ALC_TRUE);
+    alcEventCallbackSoft(EventCallback, nullptr);
 
     m_CurrentContext = new AudioContext(*m_CurrentDevice);
 
@@ -104,7 +106,7 @@ void Audio::EventCallback(
     ALCsizei,
     const ALCchar*,
     void*
-)
+) noexcept
 {
     // We cannot use OpenAL calls on this thread, so we need to update a flag instead
     if (eventType == ALC_EVENT_TYPE_DEFAULT_DEVICE_CHANGED_SOFT)

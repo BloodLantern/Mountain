@@ -2,5 +2,10 @@
   "dependencies" : [ "minimp3", "rapidxml", "sdl3", "stb", "magic-enum", "gtest", {
     "name" : "freetype",
     "version>=" : "2.13.3"
-  } ]
+  }, {
+    "name" : "openal-soft",
+    "version>=" : "1.24.3#1"
+  } ],
+  "version-string" : "0.1.0",
+  "name" : "mountain"
 }

@@ -1,5 +1,3 @@
-
-
 #include "Mountain/Audio/AudioDevice.hpp"
 
 #include <AL/alc.h>
@@ -8,6 +6,8 @@
 #include "Mountain/Utils/Logger.hpp"
 
 using namespace Mountain;
+
+LPALCREOPENDEVICESOFT alcReopenDeviceSoft = nullptr;
 
 bool AudioDevice::CheckError(const AudioDevice* device)
 {
@@ -39,8 +39,13 @@ AudioDevice::~AudioDevice() { alcCloseDevice(m_Handle); }
 
 void AudioDevice::Reopen(const std::string& newName)
 {
-    alcReopenDeviceSOFT(m_Handle, newName.c_str(), nullptr);
+    alcReopenDeviceSoft(m_Handle, newName.c_str(), nullptr);
     m_Name = newName;
+}
+
+void* AudioDevice::GetProcAddress(const c8* functionName) const
+{
+    return alcGetProcAddress(m_Handle, functionName);
 }
 
 std::string AudioDevice::GetName() const { return m_Name; }

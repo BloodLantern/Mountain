@@ -14,9 +14,7 @@ endif ()
 find_package(freetype CONFIG REQUIRED)
 find_package(SDL3 CONFIG REQUIRED)
 find_package(magic_enum CONFIG REQUIRED)
-# stb and minimp3 are usually header-only or custom-built from vcpkg,
-# but they might not provide CONFIG files.
-# Looking at vcpkg.json, they are listed.
+find_package(OpenAL CONFIG REQUIRED)
 
 # Common options
 #add_compile_options(/MP /Gw)
@@ -25,5 +23,5 @@ find_package(magic_enum CONFIG REQUIRED)
 # Subdirectories
 add_subdirectory(Profiler)
 add_subdirectory(Mountain)
-add_subdirectory(Tests)
+add_subdirectory(TestProject)
 add_subdirectory(UnitTests)

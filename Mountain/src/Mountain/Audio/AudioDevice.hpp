@@ -23,6 +23,8 @@ namespace Mountain
 
         MOUNTAIN_API void Reopen(const std::string& newName);
 
+        MOUNTAIN_API void* GetProcAddress(const c8* functionName) const;
+
         ATTRIBUTE_NODISCARD
         MOUNTAIN_API std::string GetName() const;
 

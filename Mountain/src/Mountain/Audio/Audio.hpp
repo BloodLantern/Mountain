@@ -62,7 +62,7 @@ namespace Mountain
 
         MOUNTAIN_API static inline bool m_DefaultDeviceChanged = false;
 
-        static void EventCallback(ALCenum eventType, ALCenum deviceType, ALCdevice* device, ALCsizei length, const ALCchar* message, void* userParam);
+        static void EventCallback(ALCenum eventType, ALCenum deviceType, ALCdevice* device, ALCsizei length, const ALCchar* message, void* userParam) noexcept;
 
         /// @brief Iterates over an OpenAL string list, applying the given lambda on each string.
         ///
