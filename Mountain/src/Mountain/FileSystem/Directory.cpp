@@ -12,6 +12,9 @@ Directory::Directory(std::filesystem::path&& filepath)
 
 bool Directory::Load()
 {
+    if (!exists(m_Path))
+        THROW(InvalidOperationException{"Path doesn't exist"});
+
     try
     {
         for (const auto& entry : std::filesystem::directory_iterator(m_Path))

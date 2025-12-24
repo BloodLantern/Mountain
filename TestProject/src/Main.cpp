@@ -59,14 +59,14 @@ int main(int, char**)
 #endif
 
 	NoBinaryResources = true;
-	BuiltinShadersPath = "../Mountain/shaders_internal";
-	BuiltinAssetsPath = "../Mountain/assets_internal";
+	BuiltinShadersPath = "shaders_internal";
+	BuiltinAssetsPath = "assets_internal";
 
 #ifdef _DEBUG
 	BreakOnGraphicsError = true;
 #endif
 
-	TestGame* game = new TestGame("Mountain tests");
+	const auto game = new TestGame("Mountain tests");
 
 #ifdef LPP_PATH
 	game->LoadResources();

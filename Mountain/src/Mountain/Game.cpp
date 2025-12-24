@@ -66,6 +66,7 @@ Game::Game(const std::string& windowTitle, const Vector2i windowSize)
     );
 
     Logger::LogInfo("Initializing Mountain Framework");
+    Logger::LogVerbose("Working directory: {}", std::filesystem::current_path());
 
     if (!Renderer::Initialize(windowTitle, windowSize))
         THROW(InvalidOperationException{"Failed to initialize renderer"});

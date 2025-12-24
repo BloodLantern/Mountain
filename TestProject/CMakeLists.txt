@@ -19,9 +19,16 @@ add_custom_command(TARGET TestProject POST_BUILD
         ${CMAKE_SOURCE_DIR}/Mountain/shaders_internal
         $<TARGET_FILE_DIR:TestProject>/shaders_internal
 )
+add_custom_command(TARGET TestProject POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_SOURCE_DIR}/Mountain/assets_internal
+        $<TARGET_FILE_DIR:TestProject>/assets_internal
+)
 
 add_custom_command(TARGET TestProject POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory
         ${CMAKE_SOURCE_DIR}/TestProject/assets
         $<TARGET_FILE_DIR:TestProject>/assets
 )
+
+set_target_properties(TestProject PROPERTIES DEBUGGER_WORKING_DIRECTORY $<TARGET_FILE_DIR:TestProject>)

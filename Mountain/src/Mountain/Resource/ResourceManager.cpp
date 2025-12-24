@@ -257,7 +257,8 @@ bool ResourceManager::Contains(const Pointer<File>& file)
 
 bool ResourceManager::IsBinary(const std::string& name)
 {
-    return Utils::StringArrayContains(rh::embed.ListFiles(), std::filesystem::path(name).make_preferred().string());
+    return !FileManager::Contains(name) &&
+        Utils::StringArrayContains(rh::embed.ListFiles(), std::filesystem::path(name).make_preferred().string());
 }
 
 Pointer<Font> ResourceManager::GetFont(const std::string& name, u32 size)
