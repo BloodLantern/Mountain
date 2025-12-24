@@ -15,6 +15,8 @@ public:
 
     AudioScene();
 
+    ~AudioScene() override;
+
     void LoadPersistentResources() override;
 
     void Begin() override;

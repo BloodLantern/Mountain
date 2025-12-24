@@ -27,6 +27,12 @@ AudioScene::AudioScene()
     m_AudioListenerEntity->position = Window::GetSize() * 0.5f;
 }
 
+AudioScene::~AudioScene()
+{
+    delete m_MouseEntity;
+    delete m_AudioListenerEntity;
+}
+
 void AudioScene::LoadPersistentResources()
 {
     TestScene::LoadPersistentResources();

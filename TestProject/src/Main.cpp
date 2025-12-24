@@ -116,10 +116,10 @@ int main(int, char**)
 #ifdef LPP_PATH
 	// destroy the Live++ agent
 	LppDestroySynchronizedAgent(&lppAgent);
-#endif
 
 	std::println(std::cout, "Exiting process");
 	std::flush(std::cout);
+#endif
 
     return EXIT_SUCCESS;
 }

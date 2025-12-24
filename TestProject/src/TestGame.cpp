@@ -75,6 +75,12 @@ void TestGame::Shutdown()
     m_AssetsWatcher.Stop();
     m_ShadersWatcher.Stop();
 
+    if (m_ActiveScene)
+    {
+        m_ActiveScene->UnloadResources();
+        m_ActiveScene->End();
+    }
+
     m_Scenes.ForEach(OperationDelete<TestScene*>);
 }
 
