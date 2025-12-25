@@ -26,7 +26,7 @@ namespace Mountain
     {
     public:
         /// @brief Constructs a default Resource.
-        MOUNTAIN_API Resource() = default;
+        Resource() = default;
 
         /// @brief Creates a Resource with the given @p name.
         MOUNTAIN_API explicit Resource(std::string name);

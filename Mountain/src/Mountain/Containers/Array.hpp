@@ -137,6 +137,7 @@ namespace Mountain
 
     template <Concepts::ContainerType T, usize Size>
     constexpr T* Array<T, Size>::GetData() noexcept { return data; }
+
     template <Concepts::ContainerType T, usize Size>
     constexpr const T* Array<T, Size>::GetData() const noexcept { return data; }
 
@@ -154,20 +155,20 @@ namespace Mountain
     constexpr const T& Array<T, Size>::operator[](usize index) const noexcept { return data[index]; }
 
     template <Concepts::ContainerType T, usize Size>
-    constexpr typename Array<T, Size>::Iterator Array<T, Size>::begin() noexcept { return Iterator{data, 0}; }
+    constexpr Array<T, Size>::Iterator Array<T, Size>::begin() noexcept { return Iterator{data, 0}; }
 
     template <Concepts::ContainerType T, usize Size>
-    constexpr typename Array<T, Size>::Iterator Array<T, Size>::end() noexcept { return Iterator{data, Size}; }
+    constexpr Array<T, Size>::Iterator Array<T, Size>::end() noexcept { return Iterator{data, Size}; }
 
     template <Concepts::ContainerType T, usize Size>
-    constexpr typename Array<T, Size>::ConstIterator Array<T, Size>::begin() const noexcept { return cbegin(); }
+    constexpr Array<T, Size>::ConstIterator Array<T, Size>::begin() const noexcept { return cbegin(); }
 
     template <Concepts::ContainerType T, usize Size>
-    constexpr typename Array<T, Size>::ConstIterator Array<T, Size>::end() const noexcept { return cend(); }
+    constexpr Array<T, Size>::ConstIterator Array<T, Size>::end() const noexcept { return cend(); }
 
     template <Concepts::ContainerType T, usize Size>
-    constexpr typename Array<T, Size>::ConstIterator Array<T, Size>::cbegin() const noexcept { return ConstIterator{data, 0}; }
+    constexpr Array<T, Size>::ConstIterator Array<T, Size>::cbegin() const noexcept { return ConstIterator{data, 0}; }
 
     template <Concepts::ContainerType T, usize Size>
-    constexpr typename Array<T, Size>::ConstIterator Array<T, Size>::cend() const noexcept { return ConstIterator{data, Size}; }
+    constexpr Array<T, Size>::ConstIterator Array<T, Size>::cend() const noexcept { return ConstIterator{data, Size}; }
 }

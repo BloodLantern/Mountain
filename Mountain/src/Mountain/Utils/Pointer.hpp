@@ -1,7 +1,6 @@
 ﻿#pragma once
 
 #include <format>
-#include <sstream>
 #include <utility>
 
 #include "Mountain/Core.hpp"

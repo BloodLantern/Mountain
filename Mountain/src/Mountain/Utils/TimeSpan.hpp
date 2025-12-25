@@ -127,19 +127,12 @@ namespace Mountain
         ATTRIBUTE_NODISCARD
         friend std::strong_ordering operator<=>(TimeSpan, TimeSpan) = default;
 
-        ATTRIBUTE_NODISCARD
         friend constexpr TimeSpan operator+(TimeSpan lhs, TimeSpan rhs);
-        ATTRIBUTE_NODISCARD
         friend constexpr TimeSpan operator-(TimeSpan value);
-        ATTRIBUTE_NODISCARD
         friend constexpr TimeSpan operator-(TimeSpan lhs, TimeSpan rhs);
-        ATTRIBUTE_NODISCARD
         friend constexpr TimeSpan operator*(TimeSpan lhs, f64 rhs);
-        ATTRIBUTE_NODISCARD
         friend constexpr TimeSpan operator*(f64 lhs, TimeSpan rhs);
-        ATTRIBUTE_NODISCARD
         friend constexpr TimeSpan operator/(TimeSpan lhs, f64 rhs);
-        ATTRIBUTE_NODISCARD
         friend constexpr f64 operator/(TimeSpan lhs, TimeSpan rhs);
 
         friend constexpr TimeSpan& operator+=(TimeSpan& lhs, TimeSpan rhs);
@@ -257,6 +250,7 @@ namespace Mountain
         return std::chrono::nanoseconds{static_cast<s64>(GetTotalNanoseconds())};
     }
 
+    ATTRIBUTE_NODISCARD
     constexpr TimeSpan operator+(const TimeSpan lhs, const TimeSpan rhs)
     {
         const s64 result = lhs.m_Ticks + rhs.m_Ticks;
@@ -270,6 +264,7 @@ namespace Mountain
         return TimeSpan{result};
     }
 
+    ATTRIBUTE_NODISCARD
     constexpr TimeSpan operator-(const TimeSpan value)
     {
         if (value.m_Ticks == TimeSpan::MinValue().m_Ticks)
@@ -278,6 +273,7 @@ namespace Mountain
         return TimeSpan{-value.m_Ticks};
     }
 
+    ATTRIBUTE_NODISCARD
     constexpr TimeSpan operator-(const TimeSpan lhs, const TimeSpan rhs)
     {
         const s64 result = lhs.m_Ticks - rhs.m_Ticks;
@@ -291,6 +287,7 @@ namespace Mountain
         return TimeSpan{result};
     }
 
+    ATTRIBUTE_NODISCARD
     constexpr TimeSpan operator*(const TimeSpan lhs, const f64 rhs)
     {
         if (Calc::IsNan(rhs))
@@ -300,8 +297,10 @@ namespace Mountain
         return TimeSpan::IntervalFromDoubleTicks(ticks);
     }
 
+    ATTRIBUTE_NODISCARD
     constexpr TimeSpan operator*(const f64 lhs, const TimeSpan rhs) { return rhs * lhs; }
 
+    ATTRIBUTE_NODISCARD
     constexpr TimeSpan operator/(const TimeSpan lhs, const f64 rhs)
     {
         if (Calc::IsNan(rhs))
@@ -311,6 +310,7 @@ namespace Mountain
         return TimeSpan::IntervalFromDoubleTicks(ticks);
     }
 
+    ATTRIBUTE_NODISCARD
     constexpr f64 operator/(const TimeSpan lhs, const TimeSpan rhs) { return static_cast<f64>(lhs.m_Ticks) / static_cast<f64>(rhs.m_Ticks); }
 
     constexpr TimeSpan& operator+=(TimeSpan& lhs, const TimeSpan rhs) { return lhs = lhs + rhs; }

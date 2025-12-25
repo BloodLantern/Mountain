@@ -21,7 +21,7 @@ namespace Mountain
         Color ambientLight = Color::White();
 
         /// @brief Create an uninitialized RenderTarget
-        MOUNTAIN_API RenderTarget() = default;
+        RenderTarget() = default;
         /// @brief Create a RenderTarget and initialize it with the given values
         /// @param size The pixel size of the RenderTarget
         /// @param filter The MagnificationFilter to apply when rescaling the RenderTarget

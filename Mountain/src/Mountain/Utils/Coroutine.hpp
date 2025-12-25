@@ -150,7 +150,7 @@ namespace Mountain
 
         bool useUnscaledDeltaTime = false;
 
-        MOUNTAIN_API Coroutine() = default;
+        Coroutine() = default;
 
         /// @brief Constructs a new Coroutine from the given handle.
         ATTRIBUTE_NODISCARD

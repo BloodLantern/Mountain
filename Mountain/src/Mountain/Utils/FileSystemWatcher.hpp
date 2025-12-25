@@ -54,7 +54,7 @@ namespace Mountain
 
         FswNotifyFilters notifyFilters = FswNotifyFilters::Default;
 
-        MOUNTAIN_API FileSystemWatcher() = default;
+        FileSystemWatcher() = default;
 
         MOUNTAIN_API explicit FileSystemWatcher(const std::string& path);
 

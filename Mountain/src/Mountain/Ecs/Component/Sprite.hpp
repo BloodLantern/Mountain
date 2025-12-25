@@ -17,7 +17,7 @@ namespace Mountain
         std::string name;
         f32 frameDuration = 0.1f;
 
-        MOUNTAIN_API Sprite() = default;
+        Sprite() = default;
         MOUNTAIN_API explicit Sprite(std::string spriteName);
         MOUNTAIN_API Sprite(std::string spriteName, f32 frameDuration);
 
@@ -34,7 +34,7 @@ namespace Mountain
         GETTER(f32, UpdateTimer, m_UpdateTimer)
 
     protected:
-        void Update() override;
+        MOUNTAIN_API void Update() override;
 
     private:
         List<Pointer<Texture>> m_Textures;

@@ -29,6 +29,7 @@ using c8 = char;
 using c16 = wchar_t;
 using f32 = float;
 using f64 = double;
+using nullptr_t = std::nullptr_t;
 
 /// @brief Macro used for DLL export/import.
 /// @details This macro should be used at the beginning of static member variable and non-inline function declarations.

@@ -21,7 +21,7 @@ namespace Mountain
         MOUNTAIN_API explicit Entry(std::filesystem::path&& path);
 
         /// @brief Default Entry destruction.
-        MOUNTAIN_API virtual ~Entry() = default;
+        virtual ~Entry() = default;
 
         DEFAULT_COPY_MOVE_OPERATIONS(Entry)
 

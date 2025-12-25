@@ -1,5 +1,3 @@
-
-
 #include "Mountain/Game.hpp"
 
 #include "Mountain/Window.hpp"

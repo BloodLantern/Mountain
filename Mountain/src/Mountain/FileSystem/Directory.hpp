@@ -25,7 +25,7 @@ namespace Mountain
         MOUNTAIN_API explicit Directory(std::filesystem::path&& filepath);
 
         /// @brief Default Directory destruction.
-        MOUNTAIN_API ~Directory() override = default;
+        ~Directory() override = default;
 
         DEFAULT_COPY_MOVE_OPERATIONS(Directory)
 

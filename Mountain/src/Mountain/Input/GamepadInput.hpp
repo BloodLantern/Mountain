@@ -182,7 +182,7 @@ namespace Mountain
         /// @brief Threshold that dictates that an axis analog value becomes 0
         static inline f32 nullAnalogValue = 1.5259022e-05f;
 
-        MOUNTAIN_API GETTER(bool, Connected, m_IsConnected)
+        GETTER(bool, Connected, m_IsConnected)
 
         ATTRIBUTE_NODISCARD
         MOUNTAIN_API const std::string& GetName() const;
@@ -221,17 +221,17 @@ namespace Mountain
         ATTRIBUTE_NODISCARD
         MOUNTAIN_API bool HasCapability(GamepadCapabilities capability) const;
 
-        MOUNTAIN_API GETTER(const ButtonsArray&, Buttons, m_Buttons)
+        GETTER(const ButtonsArray&, Buttons, m_Buttons)
 
-        MOUNTAIN_API GETTER(const AxesArray&, Axes, m_Axes)
+        GETTER(const AxesArray&, Axes, m_Axes)
 
-        MOUNTAIN_API GETTER(const Color&, Light, m_ColorLight)
+        GETTER(const Color&, Light, m_ColorLight)
 
-        MOUNTAIN_API GETTER(const Vector3&, Gyroscope, m_Gyroscope)
-        MOUNTAIN_API GETTER(const Vector3&, Accelerometer, m_Accelerometer)
+        GETTER(const Vector3&, Gyroscope, m_Gyroscope)
+        GETTER(const Vector3&, Accelerometer, m_Accelerometer)
 
-        MOUNTAIN_API GETTER(s8, Battery, m_Battery)
-        MOUNTAIN_API GETTER(GamepadBatteryState, BatteryState, m_BatteryState)
+        GETTER(s8, Battery, m_Battery)
+        GETTER(GamepadBatteryState, BatteryState, m_BatteryState)
 
     private:
         /// @brief Whether the gamepad is connected

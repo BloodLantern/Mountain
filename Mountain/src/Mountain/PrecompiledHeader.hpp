@@ -1,4 +1,6 @@
-﻿#ifndef MOUNTAIN_PRECOMPILED_HEADER_HPP
+#pragma once
+
+#ifndef MOUNTAIN_PRECOMPILED_HEADER_HPP
 #define MOUNTAIN_PRECOMPILED_HEADER_HPP
 
 #include "Mountain/Core.hpp"

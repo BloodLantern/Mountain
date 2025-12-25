@@ -1,11 +1,22 @@
 {
-  "dependencies" : [ "minimp3", "rapidxml", "sdl3", "stb", "magic-enum", "gtest", {
-    "name" : "freetype",
-    "version>=" : "2.13.3"
-  }, {
-    "name" : "openal-soft",
-    "version>=" : "1.24.3#1"
-  } ],
-  "version-string" : "0.1.0",
-  "name" : "mountain"
+  "name": "mountain",
+  "version": "1.0.0",
+  "description": "A simple game framework similar to MonoGame written in C++23.",
+  "homepage": "https://github.com/BloodLantern/Mountain",
+  "license": "zlib",
+  "dependencies": [
+    "magic-enum",
+    "minimp3",
+    "sdl3",
+    "stb",
+    "gtest",
+    {
+      "name": "freetype",
+      "version>=": "2.13.3"
+    },
+    {
+      "name": "openal-soft",
+      "version>=": "1.24.3#1"
+    }
+  ]
 }

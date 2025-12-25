@@ -13,7 +13,7 @@ namespace Mountain
 	public:
 		using Resource::Resource;
 
-		void Unload() override;
+		MOUNTAIN_API void Unload() override;
 
 		/// @brief Sets an int (signed, 32 bits) variable in the shader
 		MOUNTAIN_API void SetUniform(const c8* uniformName, s32 value) const;

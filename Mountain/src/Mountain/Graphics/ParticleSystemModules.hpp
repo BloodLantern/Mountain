@@ -16,7 +16,7 @@ namespace Mountain
 
 namespace Mountain::ParticleSystemModules
 {
-    enum class MOUNTAIN_API Types : u32
+    enum class Types : u32
     {
         None = 0,
 

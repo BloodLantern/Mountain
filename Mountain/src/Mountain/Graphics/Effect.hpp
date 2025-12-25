@@ -20,8 +20,8 @@ namespace Mountain
 
         List<ImageBinding> imageBindings;
 
-        MOUNTAIN_API Effect() = default;
-        MOUNTAIN_API virtual ~Effect() = default;
+        Effect() = default;
+        virtual ~Effect() = default;
 
         DEFAULT_COPY_MOVE_OPERATIONS(Effect)
 

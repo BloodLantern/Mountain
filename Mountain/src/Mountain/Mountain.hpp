@@ -91,7 +91,7 @@
 #include "Mountain/Utils/TimeSpan.hpp"
 #include "Mountain/Utils/TsQueue.hpp"
 #include "Mountain/Utils/Utils.hpp"
-//#include "Mountain/Utils/Windows.hpp" We do not include Windows to avoid any naming conflicts
+//#include "Mountain/Utils/Windows.hpp" We don't include Windows to avoid any naming conflicts
 
 #include "Mountain/Attributes.hpp"
 #include "Mountain/CompilerSpecific.hpp"

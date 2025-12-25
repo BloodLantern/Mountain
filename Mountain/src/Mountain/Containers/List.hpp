@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cstring>
+
 #include "Mountain/Core.hpp"
 #include "Mountain/Containers/ContiguousIterator.hpp"
 // ReSharper disable once CppUnusedIncludeDirective
@@ -91,8 +93,7 @@ namespace Mountain
         T& Add(const T& element);
 
         /// @brief Adds a range of elements to the end of the List.
-        template <typename = Meta::EnableIf<Meta::IsTriviallyCopyable<T>>>
-        void AddRange(const T* data, usize count);
+        void AddRange(const T* data, usize count) requires Meta::IsTriviallyCopyable<T>;
 
         /// @brief Adds a range of elements to the end of the List.
         template <Concepts::Iterator InputIterator>
@@ -469,8 +470,7 @@ namespace Mountain
     }
 
     template <Concepts::DynamicContainerType T>
-    template <typename>
-    void List<T>::AddRange(const T* data, const usize count)
+    void List<T>::AddRange(const T* data, const usize count) requires Meta::IsTriviallyCopyable<T>
     {
         Reserve(m_Size + count);
 
@@ -957,22 +957,22 @@ namespace Mountain
     }
 
     template <Concepts::DynamicContainerType T>
-    typename List<T>::Iterator List<T>::begin() noexcept { return Iterator{m_Data, 0}; }
+    List<T>::Iterator List<T>::begin() noexcept { return Iterator{m_Data, 0}; }
 
     template <Concepts::DynamicContainerType T>
-    typename List<T>::Iterator List<T>::end() noexcept { return Iterator{m_Data, m_Size}; }
+    List<T>::Iterator List<T>::end() noexcept { return Iterator{m_Data, m_Size}; }
 
     template <Concepts::DynamicContainerType T>
-    typename List<T>::ConstIterator List<T>::begin() const noexcept { return cbegin(); }
+    List<T>::ConstIterator List<T>::begin() const noexcept { return cbegin(); }
 
     template <Concepts::DynamicContainerType T>
-    typename List<T>::ConstIterator List<T>::end() const noexcept { return cend(); }
+    List<T>::ConstIterator List<T>::end() const noexcept { return cend(); }
 
     template <Concepts::DynamicContainerType T>
-    typename List<T>::ConstIterator List<T>::cbegin() const noexcept { return ConstIterator{m_Data, 0}; }
+    List<T>::ConstIterator List<T>::cbegin() const noexcept { return ConstIterator{m_Data, 0}; }
 
     template <Concepts::DynamicContainerType T>
-    typename List<T>::ConstIterator List<T>::cend() const noexcept { return ConstIterator{m_Data, m_Size}; }
+    List<T>::ConstIterator List<T>::cend() const noexcept { return ConstIterator{m_Data, m_Size}; }
 
     template <Concepts::DynamicContainerType T>
     void List<T>::Reallocate(const usize targetCapacity)
@@ -1032,7 +1032,7 @@ namespace Mountain
         {
             if (amount > 0)
             {
-                for (ptrdiff_t i = static_cast<ptrdiff_t>(amountToShift - 1); i >= 0; i--)
+                for (auto i = static_cast<ptrdiff_t>(amountToShift - 1); i >= 0; i--)
                     new (destination + i) T{std::move(source[i])};
             }
             else // if (amount < 0)

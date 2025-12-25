@@ -19,9 +19,9 @@
 #define IMGUI_GET_SET(imguiFunction, label, variableAccess, field, ...) \
     do \
     { \
-        auto var = variableAccess##Get##field(); \
+        auto var = variableAccess Get##field(); \
         imguiFunction(label, &var, __VA_ARGS__); \
-        variableAccess##Set##field(var); \
+        variableAccess Set##field(var); \
     } \
     while (false)
 

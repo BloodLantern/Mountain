@@ -38,10 +38,10 @@ namespace Mountain
         ATTRIBUTE_NODISCARD
         MOUNTAIN_API Exception() noexcept;
         ATTRIBUTE_NODISCARD
-        MOUNTAIN_API Exception(Exception&& other) noexcept = default;
+        Exception(Exception&& other) noexcept = default;
         ATTRIBUTE_NODISCARD
-        MOUNTAIN_API Exception& operator=(Exception&& other) noexcept = default;
-        MOUNTAIN_API ~Exception() override = default;
+        Exception& operator=(Exception&& other) noexcept = default;
+        ~Exception() override = default;
 
         ATTRIBUTE_NODISCARD
         MOUNTAIN_API Exception(const Exception& other) noexcept;
