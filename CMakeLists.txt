@@ -10,11 +10,11 @@ project(
 
 include(GNUInstallDirs)
 
-if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
+if (CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
     set(IS_TOPLEVEL_PROJECT TRUE)
-else()
+else ()
     set(IS_TOPLEVEL_PROJECT FALSE)
-endif()
+endif ()
 
 option(MOUNTAIN_OPT_BUILD_EXAMPLES "Build Mountain example projects" OFF)
 option(MOUNTAIN_OPT_BUILD_TESTS "Build and perform Mountain unit tests" OFF)
@@ -59,8 +59,13 @@ if (MOUNTAIN_OPT_BUILD_TESTS)
 endif ()
 
 if (MOUNTAIN_OPT_INSTALL)
+    # Install the library and its headers
     install(
-            TARGETS "${PROJECT_NAME}"
-            EXPORT ${PROJECT_NAME}
+            TARGETS ${PROJECT_NAME}
+            EXPORT ${PROJECT_NAME}Targets
+            ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+            LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+            RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
     )
+    install(FILES ${MOUNTAIN_HEADERS} DESTINATION "include")
 endif ()
