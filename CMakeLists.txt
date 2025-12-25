@@ -1,5 +1,16 @@
 cmake_minimum_required(VERSION 3.20)
 
+include(GNUInstallDirs)
+
+option(MOUNTAIN_OPT_BUILD_EXAMPLES "Build Mountain example projects" OFF)
+option(MOUNTAIN_OPT_BUILD_TESTS "Build and perform Mountain unit tests" OFF)
+option(MOUNTAIN_OPT_INSTALL "Generate and install Mountain targets" OFF)
+option(MOUNTAIN_OPT_PROFILE "Enable profiling with Tracy" OFF)
+
+if (MOUNTAIN_OPT_BUILD_TESTS)
+    set(VCPKG_MANIFEST_FEATURES "tests")
+endif ()
+
 project(
         Mountain
         VERSION "1.0.0"
@@ -8,18 +19,11 @@ project(
         LANGUAGES C CXX
 )
 
-include(GNUInstallDirs)
-
 if (CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
     set(IS_TOPLEVEL_PROJECT TRUE)
 else ()
     set(IS_TOPLEVEL_PROJECT FALSE)
 endif ()
-
-option(MOUNTAIN_OPT_BUILD_EXAMPLES "Build Mountain example projects" OFF)
-option(MOUNTAIN_OPT_BUILD_TESTS "Build and perform Mountain unit tests" OFF)
-option(MOUNTAIN_OPT_INSTALL "Generate and install Mountain targets" OFF)
-option(MOUNTAIN_OPT_PROFILE "Enable profiling with Tracy" OFF)
 
 set(EXPORT_NAMESPACE "${PROJECT_NAME}::")
 
@@ -37,10 +41,13 @@ if (NOT CMAKE_TOOLCHAIN_FILE AND DEFINED ENV{VCPKG_ROOT})
 endif ()
 
 # Find dependencies via vcpkg
-find_package(freetype CONFIG REQUIRED)
+find_package(Freetype REQUIRED)
 find_package(SDL3 CONFIG REQUIRED)
 find_package(magic_enum CONFIG REQUIRED)
 find_package(OpenAL CONFIG REQUIRED)
+find_package(OpenGL REQUIRED)
+find_path(MINIMP3_INCLUDE_DIRS "minimp3/minimp3.h")
+find_path(Stb_INCLUDE_DIR "stb_image.h")
 
 # Subdirectories
 add_subdirectory(Mountain)
@@ -54,39 +61,5 @@ if (MOUNTAIN_OPT_BUILD_EXAMPLES)
 endif ()
 
 if (MOUNTAIN_OPT_BUILD_TESTS)
-    enable_testing()
     add_subdirectory(Tests)
-endif ()
-
-if (MOUNTAIN_OPT_INSTALL)
-    # Install the library and its headers
-    install(
-            TARGETS ${PROJECT_NAME}
-            EXPORT ${PROJECT_NAME}_Targets
-            ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
-            LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
-            RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
-    )
-    install(FILES ${MOUNTAIN_HEADERS} DESTINATION "include")
-
-    # Generate and install *-targets.cmake
-    install(
-            EXPORT ${PROJECT_NAME}_Targets
-            FILE ${PROJECT_NAME}-targets.cmake
-            NAMESPACE ${EXPORT_NAMESPACE}
-            DESTINATION share/${PROJECT_NAME})
-
-    # Generate the config file in the current binary dir (this ensures it's not placed directly in source)
-    file(
-            WRITE "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config.cmake"
-            "include(CMakeFindDependencyMacro)\n"
-#            "find_dependency(magic_enum CONFIG REQUIRED)\n"
-            "include(\"\${CMAKE_CURRENT_LIST_DIR}/${PROJECT_NAME}-targets.cmake\")\n"
-    )
-
-    # Install the generated config file
-    install(
-            FILES "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config.cmake"
-            DESTINATION share/${PROJECT_NAME}
-    )
 endif ()

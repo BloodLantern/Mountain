@@ -1,3 +1,5 @@
+enable_testing()
+
 find_package(GTest CONFIG REQUIRED)
 
 file(GLOB_RECURSE MOUNTAIN_TESTS_SOURCES "src/*.cpp")
@@ -9,10 +11,13 @@ target_include_directories(Tests PRIVATE src)
 
 target_link_libraries(Tests PRIVATE
     Mountain
-    Profiler
     GTest::gtest
     GTest::gtest_main
 )
+
+if (MOUNTAIN_OPT_PROFILE)
+    target_link_libraries(Tests PRIVATE Profiler)
+endif ()
 
 # Precompiled headers
 target_precompile_headers(Tests PRIVATE src/Common.hpp)

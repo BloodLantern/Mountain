@@ -21,8 +21,14 @@ add_library(${EXPORT_NAMESPACE}${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 set_target_properties(${PROJECT_NAME} PROPERTIES SOVERSION ${PROJECT_VERSION_MAJOR})
 
 target_include_directories(${PROJECT_NAME} PUBLIC
-        src
-        externals/src
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>   # for headers when building
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/externals/src>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>  # for client in install mode
+)
+
+target_include_directories(${PROJECT_NAME} PRIVATE
+        ${Stb_INCLUDE_DIR}
+        ${MINIMP3_INCLUDE_DIRS}
 )
 
 target_link_libraries(${PROJECT_NAME} PUBLIC
@@ -30,9 +36,9 @@ target_link_libraries(${PROJECT_NAME} PUBLIC
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
-        freetype
+        Freetype::Freetype
         SDL3::SDL3
-        opengl32.lib
+        OpenGL::GL
         OpenAL::OpenAL
 )
 
@@ -60,5 +66,45 @@ set_source_files_properties(${MOUNTAIN_EXTERNALS_SOURCES} PROPERTIES SKIP_PRECOM
 if (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
     target_link_options(${PROJECT_NAME} PRIVATE
             /NATVIS:${CMAKE_CURRENT_LIST_DIR}/${PROJECT_NAME}.natvis
+    )
+endif ()
+
+if (MOUNTAIN_OPT_INSTALL)
+    include(CMakePackageConfigHelpers)
+
+    # Install the library and its headers
+    install(TARGETS ${PROJECT_NAME}
+            EXPORT ${PROJECT_NAME}_Targets
+            ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+            LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+            RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
+    )
+    install(FILES ${MOUNTAIN_HEADERS} DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}")
+
+    # Generate and install *-targets.cmake
+    install(
+            EXPORT ${PROJECT_NAME}_Targets
+            FILE ${PROJECT_NAME}Targets.cmake
+            NAMESPACE ${EXPORT_NAMESPACE}
+            DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}"
+    )
+
+    # Generate *Config.cmake and *ConfigVersion.cmake
+    write_basic_package_version_file(
+            "${PROJECT_NAME}ConfigVersion.cmake"
+            VERSION ${PROJECT_VERSION}
+            COMPATIBILITY SameMajorVersion
+    )
+
+    configure_package_config_file(
+            "${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}Config.cmake.in"
+            "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
+            INSTALL_DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}"
+    )
+
+    install(FILES
+            "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
+            "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake"
+            DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}"
     )
 endif ()

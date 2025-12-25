@@ -5,11 +5,11 @@
   "homepage": "https://github.com/BloodLantern/Mountain",
   "license": "zlib",
   "dependencies": [
+    "opengl",
     "magic-enum",
     "minimp3",
     "sdl3",
     "stb",
-    "gtest",
     {
       "name": "freetype",
       "version>=": "2.13.3"
@@ -18,5 +18,13 @@
       "name": "openal-soft",
       "version>=": "1.24.3#1"
     }
-  ]
+  ],
+  "features": {
+    "tests": {
+      "description": "Build and perform Mountain unit tests",
+      "dependencies": [
+        "gtest"
+      ]
+    }
+  }
 }
