@@ -62,10 +62,31 @@ if (MOUNTAIN_OPT_INSTALL)
     # Install the library and its headers
     install(
             TARGETS ${PROJECT_NAME}
-            EXPORT ${PROJECT_NAME}Targets
+            EXPORT ${PROJECT_NAME}_Targets
             ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
             LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
             RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
     )
     install(FILES ${MOUNTAIN_HEADERS} DESTINATION "include")
+
+    # Generate and install *-targets.cmake
+    install(
+            EXPORT ${PROJECT_NAME}_Targets
+            FILE ${PROJECT_NAME}-targets.cmake
+            NAMESPACE ${EXPORT_NAMESPACE}
+            DESTINATION share/${PROJECT_NAME})
+
+    # Generate the config file in the current binary dir (this ensures it's not placed directly in source)
+    file(
+            WRITE "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config.cmake"
+            "include(CMakeFindDependencyMacro)\n"
+#            "find_dependency(magic_enum CONFIG REQUIRED)\n"
+            "include(\"\${CMAKE_CURRENT_LIST_DIR}/${PROJECT_NAME}-targets.cmake\")\n"
+    )
+
+    # Install the generated config file
+    install(
+            FILES "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config.cmake"
+            DESTINATION share/${PROJECT_NAME}
+    )
 endif ()
