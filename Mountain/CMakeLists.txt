@@ -79,11 +79,13 @@ if (MOUNTAIN_OPT_INSTALL)
             LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
             RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
     )
-    install(FILES ${MOUNTAIN_HEADERS} DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}")
+    install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/src/"
+            DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
+            FILES_MATCHING PATTERN "*.hpp"
+    )
 
     # Generate and install *-targets.cmake
-    install(
-            EXPORT ${PROJECT_NAME}_Targets
+    install(EXPORT ${PROJECT_NAME}_Targets
             FILE ${PROJECT_NAME}Targets.cmake
             NAMESPACE ${EXPORT_NAMESPACE}
             DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}"
