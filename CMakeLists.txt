@@ -13,7 +13,7 @@ endif ()
 
 project(
         Mountain
-        VERSION "1.0.0"
+        VERSION "1.0.1"
         HOMEPAGE_URL "https://github.com/BloodLantern/Mountain"
         DESCRIPTION "A simple game framework similar to MonoGame written in C++23."
         LANGUAGES C CXX
