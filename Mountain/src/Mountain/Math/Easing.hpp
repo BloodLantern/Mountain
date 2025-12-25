@@ -13,217 +13,217 @@ namespace Easing
     using Easer = f32(*)(f32);
 
     /// @brief Returns the given value unchanged.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API constexpr f32 Linear(f32 t);
 
     /// @brief The <a href="https://easings.net/#easeInSine">SineIn</a> easing function.
     ///
     /// @param t The current time. Must be between 0 and 1 inclusive.
     /// @return The transformed time.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API f32 SineIn(f32 t);
 
     /// @brief The <a href="https://easings.net/#easeOutSine">SineOut</a> easing function.
     ///
     /// @param t The current time. Must be between 0 and 1 inclusive.
     /// @return The transformed time.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API f32 SineOut(f32 t);
 
     /// @brief The <a href="https://easings.net/#easeInOutSine">SineInOut</a> easing function.
     ///
     /// @param t The current time. Must be between 0 and 1 inclusive.
     /// @return The transformed time.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API f32 SineInOut(f32 t);
 
     /// @brief The <a href="https://easings.net/#easeInQuad">QuadIn</a> easing function.
     ///
     /// @param t The current time. Must be between 0 and 1 inclusive.
     /// @return The transformed time.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr f32 QuadIn(f32 t);
 
     /// @brief The <a href="https://easings.net/#easeOutQuad">QuadOut</a> easing function.
     ///
     /// @param t The current time. Must be between 0 and 1 inclusive.
     /// @return The transformed time.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr f32 QuadOut(f32 t);
 
     /// @brief The <a href="https://easings.net/#easeInOutQuad">QuadInOut</a> easing function.
     ///
     /// @param t The current time. Must be between 0 and 1 inclusive.
     /// @return The transformed time.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr f32 QuadInOut(f32 t);
 
     /// @brief The <a href="https://easings.net/#easeInCubic">CubicIn</a> easing function.
     ///
     /// @param t The current time. Must be between 0 and 1 inclusive.
     /// @return The transformed time.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr f32 CubicIn(f32 t);
 
     /// @brief The <a href="https://easings.net/#easeOutCubic">CubicOut</a> easing function.
     ///
     /// @param t The current time. Must be between 0 and 1 inclusive.
     /// @return The transformed time.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr f32 CubicOut(f32 t);
 
     /// @brief The <a href="https://easings.net/#easeInOutCubic">CubicInOut</a> easing function.
     ///
     /// @param t The current time. Must be between 0 and 1 inclusive.
     /// @return The transformed time.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr f32 CubicInOut(f32 t);
 
     /// @brief The <a href="https://easings.net/#easeInQuart">QuartIn</a> easing function.
     ///
     /// @param t The current time. Must be between 0 and 1 inclusive.
     /// @return The transformed time.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr f32 QuartIn(f32 t);
 
     /// @brief The <a href="https://easings.net/#easeOutQuart">QuartOut</a> easing function.
     ///
     /// @param t The current time. Must be between 0 and 1 inclusive.
     /// @return The transformed time.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr f32 QuartOut(f32 t);
 
     /// @brief The <a href="https://easings.net/#easeInOutQuart">QuartInOut</a> easing function.
     ///
     /// @param t The current time. Must be between 0 and 1 inclusive.
     /// @return The transformed time.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr f32 QuartInOut(f32 t);
 
     /// @brief The <a href="https://easings.net/#easeInQuint">QuintIn</a> easing function.
     ///
     /// @param t The current time. Must be between 0 and 1 inclusive.
     /// @return The transformed time.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr f32 QuintIn(f32 t);
 
     /// @brief The <a href="https://easings.net/#easeOutQuint">QuintOut</a> easing function.
     ///
     /// @param t The current time. Must be between 0 and 1 inclusive.
     /// @return The transformed time.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr f32 QuintOut(f32 t);
 
     /// @brief The <a href="https://easings.net/#easeInOutQuint">QuintInOut</a> easing function.
     ///
     /// @param t The current time. Must be between 0 and 1 inclusive.
     /// @return The transformed time.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr f32 QuintInOut(f32 t);
 
     /// @brief The <a href="https://easings.net/#easeInExpo">ExpoIn</a> easing function.
     ///
     /// @param t The current time. Must be between 0 and 1 inclusive.
     /// @return The transformed time.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API f32 ExpoIn(f32 t);
 
     /// @brief The <a href="https://easings.net/#easeOutExpo">ExpoOut</a> easing function.
     ///
     /// @param t The current time. Must be between 0 and 1 inclusive.
     /// @return The transformed time.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API f32 ExpoOut(f32 t);
 
     /// @brief The <a href="https://easings.net/#easeInOutExpo">ExpoInOut</a> easing function.
     ///
     /// @param t The current time. Must be between 0 and 1 inclusive.
     /// @return The transformed time.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API f32 ExpoInOut(f32 t);
 
     /// @brief The <a href="https://easings.net/#easeInCirc">CircIn</a> easing function.
     ///
     /// @param t The current time. Must be between 0 and 1 inclusive.
     /// @return The transformed time.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API f32 CircIn(f32 t);
 
     /// @brief The <a href="https://easings.net/#easeOutCirc">CircOut</a> easing function.
     ///
     /// @param t The current time. Must be between 0 and 1 inclusive.
     /// @return The transformed time.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API f32 CircOut(f32 t);
 
     /// @brief The <a href="https://easings.net/#easeInOutCirc">CircInOut</a> easing function.
     ///
     /// @param t The current time. Must be between 0 and 1 inclusive.
     /// @return The transformed time.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API f32 CircInOut(f32 t);
 
     /// @brief The <a href="https://easings.net/#easeInBack">BackIn</a> easing function.
     ///
     /// @param t The current time. Must be between 0 and 1 inclusive.
     /// @return The transformed time.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr f32 BackIn(f32 t);
 
     /// @brief The <a href="https://easings.net/#easeOutBack">BackOut</a> easing function.
     ///
     /// @param t The current time. Must be between 0 and 1 inclusive.
     /// @return The transformed time.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr f32 BackOut(f32 t);
 
     /// @brief The <a href="https://easings.net/#easeInOutBack">BackInOut</a> easing function.
     ///
     /// @param t The current time. Must be between 0 and 1 inclusive.
     /// @return The transformed time.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr f32 BackInOut(f32 t);
 
     /// @brief The <a href="https://easings.net/#easeInElastic">ElasticIn</a> easing function.
     ///
     /// @param t The current time. Must be between 0 and 1 inclusive.
     /// @return The transformed time.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API f32 ElasticIn(f32 t);
 
     /// @brief The <a href="https://easings.net/#easeOutElastic">ElasticOut</a> easing function.
     ///
     /// @param t The current time. Must be between 0 and 1 inclusive.
     /// @return The transformed time.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API f32 ElasticOut(f32 t);
 
     /// @brief The <a href="https://easings.net/#easeInOutElastic">ElasticInOut</a> easing function.
     ///
     /// @param t The current time. Must be between 0 and 1 inclusive.
     /// @return The transformed time.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API f32 ElasticInOut(f32 t);
 
     /// @brief The <a href="https://easings.net/#easeInBounce">BounceIn</a> easing function.
     ///
     /// @param t The current time. Must be between 0 and 1 inclusive.
     /// @return The transformed time.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API f32 BounceIn(f32 t);
 
     /// @brief The <a href="https://easings.net/#easeOutBounce">BounceOut</a> easing function.
     ///
     /// @param t The current time. Must be between 0 and 1 inclusive.
     /// @return The transformed time.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API f32 BounceOut(f32 t);
 
     /// @brief The <a href="https://easings.net/#easeInOutBounce">BounceInOut</a> easing function.
     ///
     /// @param t The current time. Must be between 0 and 1 inclusive.
     /// @return The transformed time.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API f32 BounceInOut(f32 t);
 }
 

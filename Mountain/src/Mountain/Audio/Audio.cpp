@@ -5,7 +5,7 @@
 #include <AL/alc.h>
 #include <AL/alext.h>
 
-#include <ImGui/imgui.h>
+#include <imgui.h>
 
 #include "Mountain/Globals.hpp"
 #include "Mountain/Audio/AudioContext.hpp"

@@ -573,7 +573,7 @@ void ImGuiUtils::ShowResourceManager()
             const Vector2i size = texture->GetSize();
             ImGui::Text("Size: %dx%d", size.x, size.y);
             ImGui::Text("Preview:");
-            ImGui::Image(Utils::IntToPointer<void>(texture->GetId()), static_cast<Vector2>(texture->GetSize()));
+            ImGui::Image(/*Will be needed for 1.92: Utils::IntToPointer<void>*/(texture->GetId()), static_cast<Vector2>(texture->GetSize()));
         }
     );
 

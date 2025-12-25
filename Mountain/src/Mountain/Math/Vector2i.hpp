@@ -22,33 +22,33 @@ struct MOUNTAIN_API Vector2i
     s32 y = 0;
 
     /// @brief Equivalent to calling the default constructor.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     static constexpr Vector2i Zero() noexcept;
 
     /// @brief Returns a Vector2i with @c x @c = @c 1, @c y @c = @c 0.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     static constexpr Vector2i UnitX() noexcept;
 
     /// @brief Returns a Vector2i with @c x @c = @c 0, @c y @c = @c 1.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     static constexpr Vector2i UnitY() noexcept;
 
     /// @brief Returns a Vector2i with both its components set to @c 1.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     static constexpr Vector2i One() noexcept;
 
     /// @brief Returns a · b.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     static constexpr f32 Dot(Vector2i a, Vector2i b) noexcept;
 
     /// @brief Returns a x b.
     ///
     /// For a Vector2i this is only the determinant.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     static constexpr f32 Cross(Vector2i a, Vector2i b) noexcept;
 
     /// @brief Returns the determinant of 'a' and 'b'.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     static constexpr f32 Determinant(Vector2i a, Vector2i b) noexcept;
 
     constexpr Vector2i() = default;
@@ -71,33 +71,33 @@ struct MOUNTAIN_API Vector2i
 
     /// @brief 	Gets a pointer to the first component of this vector.
     /// @returns A pointer to the first component of this vector.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr const s32* Data() const noexcept;
 
     /// @brief 	Gets a pointer to the first component of this vector.
     ///
     /// @returns A pointer to the first component of this vector.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr s32* Data() noexcept;
 
     /// @brief Returns the length of the vector.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     f32 Length() const noexcept;
 
     /// @brief Returns the squared length of the vector.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr f32 SquaredLength() const noexcept;
 
     /// @brief Returns a normalized vector.
     ///
     /// @returns A vector with the same direction but a length of one.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     Vector2 Normalized() const;
 
     /// @brief Returns the normal vector to this one.
     ///
     /// @returns A vector with the same length but a normal direction.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     Vector2 Normal() const;
 
     /// @brief 	Retrieves this vector's component at index i.
@@ -105,7 +105,7 @@ struct MOUNTAIN_API Vector2i
     /// @param i The index of the component to get. It would be 0 for x, 1 for y, etc...
     ///
     /// @returns The value of the component at index i.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr s32 operator[](size_t i) const;
 
     /// @brief 	Retrieves this vector's component at index i.
@@ -113,7 +113,7 @@ struct MOUNTAIN_API Vector2i
     /// @param i The index of the component to get. It would be 0 for x, 1 for y, etc...
     ///
     /// @returns The value of the component at index i.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr s32& operator[](size_t i);
 
     /// @brief Converts this Vector2i to a Vector2.
@@ -160,71 +160,71 @@ constexpr f32 Vector2i::SquaredLength() const noexcept { return static_cast<f32>
 
 constexpr s32 Vector2i::operator[](const size_t i) const
 {
-    if (i < 2) [[likely]]
+    if (i < 2) ATTRIBUTE_LIKELY
         return *(Data() + i);
-    [[unlikely]]
+    ATTRIBUTE_UNLIKELY
         throw std::out_of_range("Vector2i subscript out of range");
 }
 
 constexpr s32& Vector2i::operator[](const size_t i)
 {
-    if (i < 2) [[likely]]
+    if (i < 2) ATTRIBUTE_LIKELY
         return *(Data() + i);
-    [[unlikely]]
+    ATTRIBUTE_UNLIKELY
         throw std::out_of_range("Vector2i subscript out of range");
 }
 
 /// @brief Adds two Vector2i together.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr Vector2i operator+(const Vector2i a, const Vector2i b) noexcept { return Vector2i(a.x + b.x, a.y + b.y); }
 
 /// @brief Returns the opposite of a Vector2i.
 ///
 /// This effectively means replacing all values of this Vector2i with their opposite.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr Vector2i operator-(const Vector2i a) noexcept { return Vector2i(-a.x, -a.y); }
 
 /// @brief Subtracts a Vector2i from another one.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr Vector2i operator-(const Vector2i a, const Vector2i b) noexcept { return a + -b; }
 
 /// @brief Multiplies two Vector2i component-wise.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr Vector2i operator*(const Vector2i a, const Vector2i b) noexcept { return Vector2i(a.x * b.x, a.y * b.y); }
 
 /// @brief Multiplies a Vector2i by a @p factor.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr Vector2i operator*(const Vector2i v, const s32 factor) noexcept { return Vector2i(v.x * factor, v.y * factor); }
 
 /// @brief Multiplies a Vector2i by a @p factor.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr Vector2i operator*(const s32 factor, const Vector2i v) noexcept { return v * factor; }
 
 /// @brief Multiplies a Vector2i by a @p factor.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr Vector2 operator*(const Vector2i v, const f32 factor) noexcept
 {
     return Vector2(static_cast<f32>(v.x) * factor, static_cast<f32>(v.y) * factor);
 }
 
 /// @brief Multiplies a Vector2i by a @p factor.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr Vector2 operator*(const f32 factor, const Vector2i v) noexcept { return v * factor; }
 
 /// @brief Divides a Vector2i by another one.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr Vector2i operator/(const Vector2i a, const Vector2i b) noexcept { return Vector2i(a.x / b.x, a.y / b.y); }
 
 /// @brief Divides a Vector2i by a @p factor.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr Vector2i operator/(const Vector2i v, const s32 factor) noexcept { return Vector2i(v.x / factor, v.y / factor); }
 
 /// @brief Divides a Vector2i by another one.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr Vector2 operator/(const Vector2i a, const Vector2 b) noexcept { return Vector2(static_cast<f32>(a.x) / static_cast<f32>(b.x), static_cast<f32>(a.y) / static_cast<f32>(b.y)); }
 
 /// @brief Divides a Vector2i by a @p factor.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr Vector2 operator/(const Vector2i v, const f32 factor) noexcept { return Vector2(static_cast<f32>(v.x) / factor, static_cast<f32>(v.y) / factor); }
 
 /// @brief Adds two Vector2i according to @ref operator+(const Vector2i, const Vector2i), placing the result in @p a.
@@ -243,11 +243,11 @@ constexpr Vector2i& operator*=(Vector2i& v, const s32 factor) noexcept { return 
 constexpr Vector2i& operator/=(Vector2i& v, const s32 factor) noexcept { return v = v / factor; }
 
 /// @brief Checks if two Vector2i are considered equal using @c Calc::Equals.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr bool operator==(const Vector2i a, const Vector2i b) noexcept { return a.x == b.x && a.y == b.y; }
 
 /// @brief Checks if two Vector2i are considered different using @c Calc::Equals.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr bool operator!=(const Vector2i a, const Vector2i b) noexcept { return !(a == b); }
 
 /// @brief Streams a Vector2i into @p out, printing its values one by one on a single line.

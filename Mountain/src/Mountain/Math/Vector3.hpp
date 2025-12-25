@@ -25,46 +25,46 @@ struct MOUNTAIN_API Vector3
     f32 z = 0.f;
 
 	/// @brief Equivalent to calling the default constructor.
-	[[nodiscard]]
+	ATTRIBUTE_NODISCARD
 	static constexpr Vector3 Zero() noexcept;
 
 	/// @brief Equivalent to calling the default constructor.
 	static constexpr void Zero(Vector3* result) noexcept;
 
     /// @brief Returns a Vector3 with @c x @c = @c 1, @c y @c = @c 0, @c z @c = @c 0.
-	[[nodiscard]]
+	ATTRIBUTE_NODISCARD
 	static constexpr Vector3 UnitX() noexcept;
 
     /// @brief Returns a Vector3 with @c x @c = @c 1, @c y @c = @c 0, @c z @c = @c 0.
 	static constexpr void UnitX(Vector3* result) noexcept;
 
     /// @brief Returns a Vector3 with @c x @c = @c 0, @c y @c = @c 1, @c z @c = @c 0.
-	[[nodiscard]]
+	ATTRIBUTE_NODISCARD
 	static constexpr Vector3 UnitY() noexcept;
 
     /// @brief Returns a Vector3 with @c x @c = @c 0, @c y @c = @c 1, @c z @c = @c 0.
 	static constexpr void UnitY(Vector3* result) noexcept;
 
     /// @brief Returns a Vector3 with @c x @c = @c 0, @c y @c = @c 0, @c z @c = @c 1.
-	[[nodiscard]]
+	ATTRIBUTE_NODISCARD
 	static constexpr Vector3 UnitZ() noexcept;
 
     /// @brief Returns a Vector3 with @c x @c = @c 0, @c y @c = @c 0, @c z @c = @c 1.
 	static constexpr void UnitZ(Vector3* result) noexcept;
 
     /// @brief Returns a Vector3 with all of its components set to @c 1.
-	[[nodiscard]]
+	ATTRIBUTE_NODISCARD
 	static constexpr Vector3 One() noexcept;
 
     /// @brief Returns a Vector3 with all of its components set to @c 1.
 	static constexpr void One(Vector3* result) noexcept;
 
 	/// @brief Returns a · b.
-	[[nodiscard]]
+	ATTRIBUTE_NODISCARD
 	static constexpr f32 Dot(const Vector3& a, const Vector3& b) noexcept;
 
 	/// @brief Returns a x b.
-	[[nodiscard]]
+	ATTRIBUTE_NODISCARD
 	static constexpr Vector3 Cross(const Vector3& a, const Vector3& b) noexcept;
 
 	/// @brief Returns a x b.
@@ -76,7 +76,7 @@ struct MOUNTAIN_API Vector3
     /// @param aScale First vector scale
     /// @param bScale Second vector scale
     /// @result Result
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr static Vector3 Combine(const Vector3& a, const Vector3& b, f32 aScale, f32 bScale) noexcept;
 
 	/// @brief Constructs a Vector3 with both its components set to 0.
@@ -104,17 +104,17 @@ struct MOUNTAIN_API Vector3
 	/// @brief Gets a pointer to the first component of this vector.
 	///
 	/// @returns A pointer to the first component of this vector.
-	[[nodiscard]]
+	ATTRIBUTE_NODISCARD
 	constexpr const f32* Data() const noexcept;
 
 	/// @brief Gets a pointer to the first component of this vector.
 	///
 	/// @returns A pointer to the first component of this vector.
-	[[nodiscard]]
+	ATTRIBUTE_NODISCARD
 	constexpr f32* Data() noexcept;
 
 	/// @brief Returns the length of the vector.
-	[[nodiscard]]
+	ATTRIBUTE_NODISCARD
 	f32 Length() const noexcept;
 
     /// @brief Creates a rescaled version of this Vector3.
@@ -122,17 +122,17 @@ struct MOUNTAIN_API Vector3
     /// @param newLength The new length to give to the Vector3.
     ///
     /// @see Length
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     Vector3 Rescaled(f32 newLength) const noexcept;
 
 	/// @brief Returns the squared length of the vector.
-	[[nodiscard]]
+	ATTRIBUTE_NODISCARD
 	constexpr f32 SquaredLength() const noexcept;
 
 	/// @brief Returns a normalized vector.
 	///
 	/// @returns A vector with the same direction but a length of one.
-	[[nodiscard]]
+	ATTRIBUTE_NODISCARD
 	Vector3 Normalized() const noexcept;
 
 	/// @brief Returns a normalized vector.
@@ -141,11 +141,11 @@ struct MOUNTAIN_API Vector3
 	void Normalized(Vector3* result) const noexcept;
 
 	/// @brief Check whether all of this vector's components are infinite.
-	[[nodiscard]]
+	ATTRIBUTE_NODISCARD
 	bool IsInfinity() const noexcept;
 
 	/// @brief Check whether all of this vector's components are NaN.
-	[[nodiscard]]
+	ATTRIBUTE_NODISCARD
 	bool IsNaN() const noexcept;
 
 	/// @brief Retrieves this vector's component at index i.
@@ -153,7 +153,7 @@ struct MOUNTAIN_API Vector3
 	/// @param i The index of the component to get. It would be 0 for x, 1 for y, etc...
 	///
 	/// @returns The value of the component at index i.
-	[[nodiscard]]
+	ATTRIBUTE_NODISCARD
 	constexpr f32 operator[](size_t i) const;
 
 	/// @brief Retrieves this vector's component at index i.
@@ -161,7 +161,7 @@ struct MOUNTAIN_API Vector3
 	/// @param i The index of the component to get. It would be 0 for x, 1 for y, etc...
 	///
 	/// @returns The value of the component at index i.
-	[[nodiscard]]
+	ATTRIBUTE_NODISCARD
 	constexpr f32& operator[](size_t i);
 
     /// @brief Converts this Vector3 to a Vector2.
@@ -217,52 +217,52 @@ constexpr f32 Vector3::SquaredLength() const noexcept { return SQ(x) + SQ(y) + S
 
 constexpr f32 Vector3::operator[](const size_t i) const
 {
-	if (i < 3) [[likely]]
+	if (i < 3) ATTRIBUTE_LIKELY
 		return *(Data() + i);
-	[[unlikely]]
+	ATTRIBUTE_UNLIKELY
 	throw std::out_of_range("Vector3 subscript out of range");
 }
 
 constexpr f32& Vector3::operator[](const size_t i)
 {
-	if (i < 3) [[likely]]
+	if (i < 3) ATTRIBUTE_LIKELY
 		return *(Data() + i);
-	[[unlikely]]
+	ATTRIBUTE_UNLIKELY
 	throw std::out_of_range("Vector3 subscript out of range");
 }
 
 /// @brief Adds two Vector3 together.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr Vector3 operator+(const Vector3& a, const Vector3& b) noexcept { return Vector3(a.x + b.x, a.y + b.y, a.z + b.z); }
 
 /// @brief Returns the opposite of a Vector3.
 ///
 /// This effectively means replacing all values of this Vector3 with their opposite.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr Vector3 operator-(const Vector3& a) noexcept { return Vector3(-a.x, -a.y, -a.z); }
 
 /// @brief Subtracts a Vector3 from another one.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr Vector3 operator-(const Vector3& a, const Vector3& b) noexcept { return a + -b; }
 
 /// @brief Multiplies two Vector3 component-wise.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr Vector3 operator*(const Vector3& a, const Vector3& b) noexcept { return Vector3(a.x * b.x, a.y * b.y, a.z * b.z); }
 
 /// @brief Multiplies a Vector3 by a @p factor.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr Vector3 operator*(const Vector3& v, const f32 factor) noexcept { return Vector3(v.x * factor, v.y * factor, v.z * factor); }
 
 /// @brief Multiplies a Vector3 by a @p factor.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr Vector3 operator*(const f32 factor, const Vector3 v) noexcept { return v * factor; }
 
 /// @brief Divides a Vector3 by another one.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr Vector3 operator/(const Vector3& a, const Vector3& b) noexcept { return Vector3(a.x / b.x, a.y / b.y, a.z / b.z); }
 
 /// @brief Divides a Vector3 by a @p factor.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr Vector3 operator/(const Vector3& v, const f32 factor) noexcept { const f32 invFactor = 1.f / factor; return Vector3(v.x * invFactor, v.y * invFactor, v.z * invFactor); }
 
 /// @brief Adds two Vector3 according to @ref operator+(const Vector3&, const Vector3&), placing the result in @p a.
@@ -284,7 +284,7 @@ constexpr Vector3 &operator/=(Vector3 &a, const Vector3& b) noexcept { return a 
 constexpr Vector3& operator/=(Vector3& v, const f32 factor) noexcept { return v = v / factor; }
 
 /// @brief Checks if two Vector3 are equal.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr bool operator==(const Vector3 a, const Vector3 b) noexcept
 {
 	return a.x == b.x
@@ -293,7 +293,7 @@ constexpr bool operator==(const Vector3 a, const Vector3 b) noexcept
 }
 
 /// @brief Checks if two Vector3 are different.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr bool operator!=(const Vector3 a, const Vector3 b) noexcept { return !(a == b); }
 
 /// @brief Streams a Vector3 into @p out, printing its values one by one on a single line.

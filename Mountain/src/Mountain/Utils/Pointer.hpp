@@ -247,7 +247,7 @@ namespace Mountain
         : m_ReferenceCounter(other.m_ReferenceCounter)
         , m_IsStrongReference(strongReference)
     {
-        if (!m_ReferenceCounter)
+        if (!other.m_ReferenceCounter)
             return;
 
         if (strongReference)

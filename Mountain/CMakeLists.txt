@@ -33,6 +33,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 
 target_link_libraries(${PROJECT_NAME} PUBLIC
         magic_enum::magic_enum
+        imgui::imgui
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE

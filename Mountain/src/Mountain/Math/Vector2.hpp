@@ -10,6 +10,12 @@
 /// @file vector2.hpp
 /// @brief Defines the Vector2 struct.
 
+/// @brief Declare ImGui Vector2 conversions
+/// @note This file needs to be included before ImGui for this macro to work.
+#define IM_VEC2_CLASS_EXTRA \
+    constexpr ImVec2(const Vector2& f) : x(f.x), y(f.y) {} \
+    operator Vector2() const { return Vector2(x, y); }
+
 struct Vector2i;
 struct Vector3;
 struct Vector4;
@@ -24,33 +30,33 @@ struct MOUNTAIN_API Vector2
     f32 y = 0.f;
 
     /// @brief Equivalent to calling the default constructor.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     static constexpr Vector2 Zero() noexcept;
 
     /// @brief Returns a Vector2 with @c x @c = @c 1, @c y @c = @c 0.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     static constexpr Vector2 UnitX() noexcept;
 
     /// @brief Returns a Vector2 with @c x @c = @c 0, @c y @c = @c 1.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     static constexpr Vector2 UnitY() noexcept;
 
     /// @brief Returns a Vector2 with both its components set to @c 1.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     static constexpr Vector2 One() noexcept;
 
     /// @brief Returns a · b.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     static constexpr f32 Dot(Vector2 a, Vector2 b) noexcept;
 
     /// @brief Returns a x b.
     ///
     /// For a Vector2, this is simply the determinant.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     static constexpr f32 Cross(Vector2 a, Vector2 b) noexcept;
 
     /// @brief Returns the determinant of 'a' and 'b'.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     static constexpr f32 Determinant(Vector2 a, Vector2 b) noexcept;
 
     /// @brief Constructs a Vector2 with both its components set to 0.
@@ -77,17 +83,17 @@ struct MOUNTAIN_API Vector2
     /// @brief	Gets a pointer to the first component of this vector.
     ///
     /// @returns A pointer to the first component of this vector.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr const f32* Data() const noexcept;
 
     /// @brief 	Gets a pointer to the first component of this vector.
     ///
     /// @returns A pointer to the first component of this vector.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr f32* Data() noexcept;
 
     /// @brief Returns the length of the vector.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     f32 Length() const noexcept;
 
     /// @brief Creates a rescaled version of this Vector2.
@@ -95,44 +101,44 @@ struct MOUNTAIN_API Vector2
     /// @param newLength The new length to give to the Vector2.
     ///
     /// @see Length
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     Vector2 Rescaled(f32 newLength) const noexcept;
 
     /// @brief Returns the squared length of the vector.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr f32 SquaredLength() const noexcept;
 
     /// @brief Returns a normalized vector.
     ///
     /// @returns A vector with the same direction but a length of one.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     Vector2 Normalized() const noexcept;
 
     /// @brief Returns the normal vector to this one.
     ///
     /// @returns A vector with a perpendical direction and a length of 1.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     Vector2 Normal() const noexcept;
 
     /// @brief Returns this vector, rotated by @p angle radians.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     Vector2 Rotated(f32 angle) const noexcept;
 
     /// @brief Returns this vector, rotated using the given cos and sin values.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     Vector2 Rotated(f32 c, f32 s) const noexcept;
 
     /// @brief Get the rotation angle represented by this vector.
     /// @returns @code std::atan2(y, x)@endcode
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     f32 GetAngle() const noexcept;
 
     /// @brief 	Check whether all of this vector's components are infinite.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     bool IsInfinity() const noexcept;
 
     /// @brief 	Check whether all of this vector's components are NaN.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     bool IsNaN() const noexcept;
 
     /// @brief 	Retrieves this vector's component at index i.
@@ -140,7 +146,7 @@ struct MOUNTAIN_API Vector2
     /// @param i The index of the component to get. It would be 0 for x, 1 for y, etc...
     ///
     /// @returns The value of the component at index i.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr f32 operator[](size_t i) const;
 
     /// @brief 	Retrieves this vector's component at index i.
@@ -148,7 +154,7 @@ struct MOUNTAIN_API Vector2
     /// @param i The index of the component to get. It would be 0 for x, 1 for y, etc...
     ///
     /// @returns The value of the component at index i.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr f32& operator[](size_t i);
 
     /// @brief Converts this Vector2 to a Vector2i by casting its components to @c s32.
@@ -167,12 +173,6 @@ static_assert(std::is_move_constructible_v<Vector2>, "Class Vector2 must be move
 static_assert(std::is_copy_assignable_v<Vector2>, "Class Vector2 must be copy assignable.");
 static_assert(std::is_move_assignable_v<Vector2>, "Class Vector2 must be move assignable.");
 
-constexpr Vector2::Vector2(const f32 xy) noexcept : x(xy), y(xy) {}
-
-constexpr Vector2::Vector2(const f32* const data) noexcept : x(data[0]), y(data[1]) {}
-
-constexpr Vector2::Vector2(const f32 x, const f32 y) noexcept : x(x), y(y) {}
-
 constexpr Vector2 Vector2::Zero() noexcept { return Vector2(); }
 
 constexpr Vector2 Vector2::UnitX() noexcept { return Vector2(1.f, 0.f); }
@@ -187,6 +187,12 @@ constexpr f32 Vector2::Cross(const Vector2 a, const Vector2 b) noexcept { return
 
 constexpr f32 Vector2::Determinant(const Vector2 a, const Vector2 b) noexcept { return a.x * b.y - b.x * a.y; }
 
+constexpr Vector2::Vector2(const f32 xy) noexcept : x(xy), y(xy) {}
+
+constexpr Vector2::Vector2(const f32* const data) noexcept : x(data[0]), y(data[1]) {}
+
+constexpr Vector2::Vector2(const f32 x, const f32 y) noexcept : x(x), y(y) {}
+
 constexpr const f32* Vector2::Data() const noexcept { return& x; }
 
 constexpr f32* Vector2::Data() noexcept { return& x; }
@@ -195,52 +201,52 @@ constexpr f32 Vector2::SquaredLength() const noexcept { return SQ(x) + SQ(y); }
 
 constexpr f32 Vector2::operator[](const size_t i) const
 {
-    if (i < 2) [[likely]]
+    if (i < 2) ATTRIBUTE_LIKELY
         return *(Data() + i);
-    [[unlikely]]
-    throw std::out_of_range("Vector2 subscript out of range");
+    ATTRIBUTE_UNLIKELY
+        throw std::out_of_range("Vector2 subscript out of range");
 }
 
 constexpr f32& Vector2::operator[](const size_t i)
 {
-    if (i < 2) [[likely]]
+    if (i < 2) ATTRIBUTE_LIKELY
         return *(Data() + i);
-    [[unlikely]]
-    throw std::out_of_range("Vector2 subscript out of range");
+    ATTRIBUTE_UNLIKELY
+        throw std::out_of_range("Vector2 subscript out of range");
 }
 
 /// @brief Adds two Vector2 together.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr Vector2 operator+(const Vector2 a, const Vector2 b) noexcept { return Vector2(a.x + b.x, a.y + b.y); }
 
 /// @brief Returns the opposite of a Vector2.
 ///
 /// This effectively means replacing all values of this Vector2 with their opposite.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr Vector2 operator-(const Vector2 a) noexcept { return Vector2(-a.x, -a.y); }
 
 /// @brief Subtracts a Vector2 from another one.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr Vector2 operator-(const Vector2 a, const Vector2 b) noexcept { return a + -b; }
 
 /// @brief Multiplies two Vector2 component-wise.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr Vector2 operator*(const Vector2 a, const Vector2 b) noexcept { return Vector2(a.x * b.x, a.y * b.y); }
 
 /// @brief Multiplies a Vector2 by a @p factor.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr Vector2 operator*(const Vector2 v, const f32 factor) noexcept { return Vector2(v.x * factor, v.y * factor); }
 
 /// @brief Multiplies a Vector2 by a @p factor.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr Vector2 operator*(const f32 factor, const Vector2 v) noexcept { return v * factor; }
 
 /// @brief Divides a Vector2 by another one.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr Vector2 operator/(const Vector2 a, const Vector2 b) noexcept { return Vector2(a.x / b.x, a.y / b.y); }
 
 /// @brief Divides a Vector2 by a @p factor.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr Vector2 operator/(const Vector2 v, const f32 factor) noexcept { const f32 invFactor = 1.f / factor; return Vector2(v.x * invFactor, v.y * invFactor); }
 
 /// @brief Adds two Vector2 according to @ref operator+(const Vector2, const Vector2), placing the result in @p a.
@@ -262,7 +268,7 @@ constexpr Vector2& operator/=(Vector2& a, const Vector2 b) noexcept { return a =
 constexpr Vector2& operator/=(Vector2& v, const f32 factor) noexcept { return v = v / factor; }
 
 /// @brief Checks if two Vector2 are equal.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr bool operator==(const Vector2 a, const Vector2 b) noexcept
 {
     return a.x == b.x
@@ -270,7 +276,7 @@ constexpr bool operator==(const Vector2 a, const Vector2 b) noexcept
 }
 
 /// @brief Checks if two Vector2 are different.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr bool operator!=(const Vector2 a, const Vector2 b) noexcept { return !(a == b); }
 
 /// @brief Streams a Vector2 into @p out, printing its values one by one on a single line.

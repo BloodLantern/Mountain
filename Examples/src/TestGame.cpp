@@ -4,7 +4,7 @@
 
 #include <iostream>
 
-#include <ImGui/imgui.h>
+#include <imgui.h>
 
 #include <Mountain/Globals.hpp>
 #include <Mountain/Window.hpp>

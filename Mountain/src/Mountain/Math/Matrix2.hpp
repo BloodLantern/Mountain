@@ -32,7 +32,7 @@ struct MOUNTAIN_API Matrix2
     /// @brief Returns the identity %Matrix.
     ///
     /// The identity %Matrix is one with its diagonal set to one and everything else set to zero.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     static constexpr Matrix2 Identity() noexcept;
 
     /// @brief Returns the identity %Matrix.
@@ -43,7 +43,7 @@ struct MOUNTAIN_API Matrix2
     /// @brief Creates a 2D rotation %Matrix around the Z axis from the given angle.
     ///
     /// @param angle The angle in radians.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     static Matrix2 RotationZ(f32 angle) noexcept;
 
     /// @brief Creates a 2D rotation %Matrix around the Z axis from the given angle.
@@ -56,7 +56,7 @@ struct MOUNTAIN_API Matrix2
     ///
     /// @param cos The cosine of the angle in radians.
     /// @param sin The sine of the angle in radians.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     static constexpr Matrix2 RotationZ(f32 cos, f32 sin) noexcept;
 
     /// @brief Creates a 2D rotation %Matrix around the Z axis from the given angle.
@@ -67,7 +67,7 @@ struct MOUNTAIN_API Matrix2
     static constexpr void RotationZ(f32 cos, f32 sin, Matrix2* result) noexcept;
 
     /// @brief Creates a 2D scaling %Matrix from the given Vector2.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     static constexpr Matrix2 Scaling(const Vector2& scale) noexcept;
 
     /// @brief Creates a 2D scaling %Matrix from the given Vector2.
@@ -101,64 +101,64 @@ struct MOUNTAIN_API Matrix2
     /// @brief Gets a pointer to the first value of this Matrix2.
     ///
     /// @returns A pointer to the first value of this Matrix2.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr const f32* Data() const noexcept;
 
     /// @brief Gets a pointer to the first value of this Matrix2.
     ///
     /// @returns A pointer to the first value of this Matrix2.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr f32* Data() noexcept;
 
     /// @brief Uses the @c std::cout stream to print the values of this matrix in a square-like shape, e.g. by using newlines to make it easier to read.
     void DebugPrint() const noexcept;
 
     /// @brief Returns whether the Matrix2 has everything except its diagonal set to zero.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr bool IsDiagonal() const noexcept;
 
     /// @brief Returns whether the Matrix2 is the identity matrix.
     ///
     /// If this returns true, Matrix2::Identity() == *this should be true.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr bool IsIdentity() const noexcept;
 
     /// @brief Returns whether this Matrix2 has everything set to zero.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr bool IsNull() const noexcept;
 
     /// @brief Returns whether the Matrix2 is symmetric by its diagonal elements.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr bool IsSymmetric() const noexcept;
 
     /// @brief Returns whether the Matrix2 is symmetric by its diagonal elements but one of the sides is the opposite of the other.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr bool IsAntisymmetric() const noexcept;
 
     /// @brief Returns the diagonal elements of the Matrix2.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr Vector2 Diagonal() const noexcept;
 
     /// @brief Returns the diagonal elements of the Matrix2.
     constexpr void Diagonal(Vector2* result) const noexcept;
 
     /// @brief Returns the sum of the diagonal elements of the Matrix2.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr f32 Trace() const noexcept;
 
     /// @brief Returns the determinant of this Matrix2.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr f32 Determinant() const noexcept;
 
     /// @brief Switches the Matrix2 by its diagonal elements.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr Matrix2 Transposed() const noexcept;
 
     /// @brief Switches the Matrix2 by its diagonal elements.
     constexpr void Transposed(Matrix2* result) const noexcept;
 
     /// @brief Computes the invert of this Matrix2, e.g. @c *this * Inverted() == Identity() is true.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr Matrix2 Inverted() const;
 
     /// @brief Computes the invert of this Matrix2, e.g. @c *this * Inverted() == Identity() is true.
@@ -169,7 +169,7 @@ struct MOUNTAIN_API Matrix2
     /// @param row The index of the col to get.
     /// @param col The index of the column to get.
     /// @returns The value at position @c [col, row].
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr f32 At(size_t row, size_t col) const;
 
     /// @brief Retrieves this matrix's col at position @c [col, row].
@@ -177,7 +177,7 @@ struct MOUNTAIN_API Matrix2
     /// @param row The index of the col to get.
     /// @param col The index of the column to get.
     /// @returns The value at position @c [col, row].
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr f32& At(size_t row, size_t col);
 
     /// @brief	Retrieves this matrix's column vector at position @c col.
@@ -187,7 +187,7 @@ struct MOUNTAIN_API Matrix2
     ///
     /// @param col The index of the column to get.
     /// @returns The column vector at index @c col.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr Vector3 operator[](size_t col) const;
 
     /// @brief	Retrieves this matrix's column vector at position @c col.
@@ -197,15 +197,15 @@ struct MOUNTAIN_API Matrix2
     ///
     /// @param col The index of the column to get.
     /// @returns The column vector at index @c col.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr Vector3& operator[](size_t col);
 
     /// @brief Converts this Matrix2 to a Matrix3, homogenizing the new row and column.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     explicit operator Matrix3() const;
 
     /// @brief Converts this Matrix2 to a Matrix, homogenizing the new row and column.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     explicit operator Matrix() const;
 };
 
@@ -245,7 +245,7 @@ constexpr Matrix2::Matrix2(
 /// @brief Returns the opposite of a Matrix2.
 ///
 /// This effectively means replacing all values of this Matrix2 with their opposite.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr Matrix2 operator-(const Matrix2& matrix) noexcept
 {
     return Matrix2(
@@ -255,7 +255,7 @@ constexpr Matrix2 operator-(const Matrix2& matrix) noexcept
 }
 
 /// @brief Adds the values of two @ref Matrix2 "3x3 Matrices" one by one.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr Matrix2 operator+(const Matrix2& m1, const Matrix2& m2) noexcept
 {
     return Matrix2(
@@ -265,11 +265,11 @@ constexpr Matrix2 operator+(const Matrix2& m1, const Matrix2& m2) noexcept
 }
 
 /// @brief Subtracts the values of two @ref Matrix2 "Matrices" one by one.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr Matrix2 operator-(const Matrix2& m1, const Matrix2& m2) noexcept { return m1 + -m2; }
 
 /// @brief Multiplies all values of a Matrix by a @p scalar.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr Matrix2 operator*(const Matrix2& m, const f32 scalar) noexcept
 {
     return Matrix2(
@@ -279,11 +279,11 @@ constexpr Matrix2 operator*(const Matrix2& m, const f32 scalar) noexcept
 }
 
 /// @brief Multiplies all values of a Matrix by a @p scalar.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr Matrix2 operator*(const f32 factor, const Matrix2 m) noexcept { return m * factor; }
 
 /// @brief Multiplies a Vector2 by a Matrix2.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr Vector2 operator*(const Matrix2& m, Vector2 v) noexcept
 {
     return Vector2(
@@ -293,7 +293,7 @@ constexpr Vector2 operator*(const Matrix2& m, Vector2 v) noexcept
 }
 
 /// @brief Multiplies two @ref Matrix2 "Matrices".
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr Matrix2 operator*(const Matrix2& m1, const Matrix2& m2) noexcept
 {
     return Matrix2(
@@ -321,7 +321,7 @@ constexpr Vector2& operator*=(const Matrix2& m, Vector2& v) noexcept { return v 
 constexpr Matrix2& operator*=(Matrix2& m1, const Matrix2& m2) noexcept { return m1 = m1 * m2; }
 
 /// @brief	Checks if two Matrices are equal.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr bool operator==(const Matrix2& a, const Matrix2& b)
 {
     return a.m00 == b.m00 && a.m01 == b.m01
@@ -329,7 +329,7 @@ constexpr bool operator==(const Matrix2& a, const Matrix2& b)
 }
 
 /// @brief Checks if two Matrices are different.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr bool operator!=(const Matrix2& a, const Matrix2& b) { return !(a == b); }
 
 constexpr Matrix2 Matrix2::Identity() noexcept
@@ -453,7 +453,7 @@ constexpr void Matrix2::Inverted(Matrix2* result) const
 {
     const f32 determinant = Determinant();
 
-    if (determinant == 0.f) [[unlikely]]
+    if (determinant == 0.f) ATTRIBUTE_UNLIKELY
         throw std::invalid_argument("Matrix2 isn't invertible");
 
     *result = Matrix2(m11, -m10, -m01, m00) * (1.f / determinant);
@@ -461,19 +461,19 @@ constexpr void Matrix2::Inverted(Matrix2* result) const
 
 constexpr f32 Matrix2::At(const size_t row, const size_t col) const
 {
-    if (row < 2 && col < 2) [[likely]]
+    if (row < 2 && col < 2) ATTRIBUTE_LIKELY
         return Data()[col * 2 + row];
 
-    [[unlikely]]
+    ATTRIBUTE_UNLIKELY
     throw std::out_of_range("Matrix2 subscript out of range");
 }
 
 constexpr f32& Matrix2::At(const size_t row, const size_t col)
 {
-    if (row < 2 && col < 2) [[likely]]
+    if (row < 2 && col < 2) ATTRIBUTE_LIKELY
         return Data()[col * 2 + row];
 
-    [[unlikely]]
+    ATTRIBUTE_UNLIKELY
     throw std::out_of_range("Matrix2 subscript out of range");
 }
 

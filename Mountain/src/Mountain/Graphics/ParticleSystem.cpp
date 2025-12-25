@@ -4,7 +4,7 @@
 
 #include <glad/glad.h>
 
-#include <ImGui/imgui_stdlib.h>
+#include <imgui_stdlib.h>
 
 #include "Mountain/Input/Time.hpp"
 #include "Mountain/Graphics/Draw.hpp"

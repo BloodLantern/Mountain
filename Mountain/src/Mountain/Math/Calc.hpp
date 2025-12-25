@@ -64,7 +64,7 @@ namespace Calc
     ///
     /// @param number The number to get the sign of.
     /// @returns -1 if the value is negative, 1 if it is positive. 0 Otherwise.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
 	MOUNTAIN_API constexpr f32 Sign(f32 number) noexcept;
 
 	/// @brief	A constexpr version of the @c std::abs function.
@@ -72,28 +72,28 @@ namespace Calc
 	/// @param number The number to get the absolute value of.
 	/// @returns The absolute value of @p number.
 	template <std::floating_point T>
-	[[nodiscard]]
+	ATTRIBUTE_NODISCARD
 	MOUNTAIN_API constexpr T Abs(T number) noexcept;
 
 	/// @brief	A constexpr version of the @c std::abs function for @c Vector2.
 	///
 	/// @param vector The vector to get the absolute value of.
 	/// @returns A Vector2 whose components are the absolute values of @p vector.
-	[[nodiscard]]
+	ATTRIBUTE_NODISCARD
 	MOUNTAIN_API constexpr Vector2 Abs(Vector2 vector) noexcept;
 
 	/// @brief	A constexpr version of the @c std::abs function for @c Vector3.
 	///
 	/// @param vector The vector to get the absolute value of.
 	/// @returns A Vector3 whose components are the absolute values of @p vector.
-	[[nodiscard]]
+	ATTRIBUTE_NODISCARD
 	MOUNTAIN_API constexpr Vector3 Abs(const Vector3& vector) noexcept;
 
 	/// @brief	A constexpr version of the @c std::abs function for @c Vector4.
 	///
 	/// @param vector The vector to get the absolute value of.
 	/// @returns A Vector4 whose components are the absolute values of @p vector.
-	[[nodiscard]]
+	ATTRIBUTE_NODISCARD
 	MOUNTAIN_API constexpr Vector4 Abs(const Vector4& vector) noexcept;
 
 	/// @brief	A constexpr version of the @c std::round function.
@@ -101,28 +101,28 @@ namespace Calc
 	/// @param number The number to round to the nearest integer value.
 	/// @returns The rounded value of @p number.
 	template <std::floating_point T>
-	[[nodiscard]]
+	ATTRIBUTE_NODISCARD
 	MOUNTAIN_API constexpr T Round(T number) noexcept;
 
 	/// @brief	A constexpr version of the @c std::round function for @c Vector2.
 	///
 	/// @param vector The vector to round to the nearest integer value.
 	/// @returns A Vector2 whose components are the rounded values of @p vector.
-	[[nodiscard]]
+	ATTRIBUTE_NODISCARD
 	MOUNTAIN_API constexpr Vector2 Round(Vector2 vector) noexcept;
 
 	/// @brief	A constexpr version of the @c std::round function for @c Vector3.
 	///
 	/// @param vector The vector to round to the nearest integer value.
 	/// @returns A Vector3 whose components are the rounded values of @p vector.
-	[[nodiscard]]
+	ATTRIBUTE_NODISCARD
 	MOUNTAIN_API constexpr Vector3 Round(const Vector3& vector) noexcept;
 
 	/// @brief	A constexpr version of the @c std::round function for @c Vector4.
 	///
 	/// @param vector The vector to round to the nearest integer value.
 	/// @returns A Vector4 whose components are the rounded values of @p vector.
-	[[nodiscard]]
+	ATTRIBUTE_NODISCARD
 	MOUNTAIN_API constexpr Vector4 Round(const Vector4& vector) noexcept;
 
     /// @brief	A constexpr version of the @c std::floor function.
@@ -130,28 +130,28 @@ namespace Calc
     /// @param number The number to floor.
     /// @returns The floor value of @p number.
 	template <std::floating_point T>
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
 	MOUNTAIN_API constexpr T Floor(T number) noexcept;
 
 	/// @brief	A constexpr version of the @c std::floor function for @c Vector2.
 	///
 	/// @param vector The vector to round to the nearest integer value.
 	/// @returns A Vector2 whose components are the floored values of @p vector.
-	[[nodiscard]]
+	ATTRIBUTE_NODISCARD
 	MOUNTAIN_API constexpr Vector2 Floor(Vector2 vector) noexcept;
 
 	/// @brief	A constexpr version of the @c std::floor function for @c Vector3.
 	///
 	/// @param vector The vector to round to the nearest integer value.
 	/// @returns A Vector3 whose components are the floored values of @p vector.
-	[[nodiscard]]
+	ATTRIBUTE_NODISCARD
 	MOUNTAIN_API constexpr Vector3 Floor(const Vector3& vector) noexcept;
 
 	/// @brief	A constexpr version of the @c std::floor function for @c Vector4.
 	///
 	/// @param vector The vector to round to the nearest integer value.
 	/// @returns A Vector4 whose components are the floored values of @p vector.
-	[[nodiscard]]
+	ATTRIBUTE_NODISCARD
 	MOUNTAIN_API constexpr Vector4 Floor(const Vector4& vector) noexcept;
 
     /// @brief	A constexpr version of the @c std::ceil function.
@@ -159,28 +159,28 @@ namespace Calc
     /// @param number The number to ceil.
     /// @returns The ceil value of @p number.
 	template <std::floating_point T>
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
 	MOUNTAIN_API constexpr T Ceil(T number) noexcept;
 
 	/// @brief	A constexpr version of the @c std::ceil function for @c Vector2.
 	///
 	/// @param vector The vector to round to the nearest integer value.
 	/// @returns A Vector2 whose components are the ceiled values of @p vector.
-	[[nodiscard]]
+	ATTRIBUTE_NODISCARD
 	MOUNTAIN_API constexpr Vector2 Ceil(Vector2 vector) noexcept;
 
 	/// @brief	A constexpr version of the @c std::ceil function for @c Vector3.
 	///
 	/// @param vector The vector to round to the nearest integer value.
 	/// @returns A Vector3 whose components are the ceiled values of @p vector.
-	[[nodiscard]]
+	ATTRIBUTE_NODISCARD
 	MOUNTAIN_API constexpr Vector3 Ceil(const Vector3& vector) noexcept;
 
 	/// @brief	A constexpr version of the @c std::ceil function for @c Vector4.
 	///
 	/// @param vector The vector to round to the nearest integer value.
 	/// @returns A Vector4 whose components are the ceiled values of @p vector.
-	[[nodiscard]]
+	ATTRIBUTE_NODISCARD
 	MOUNTAIN_API constexpr Vector4 Ceil(const Vector4& vector) noexcept;
 
 	/// @brief	A constexpr version of the @c std::clamp function.
@@ -190,7 +190,7 @@ namespace Calc
 	/// @param max The maximum value.
 	/// @returns The clamped number.
 	template <std::floating_point T>
-	[[nodiscard]]
+	ATTRIBUTE_NODISCARD
 	MOUNTAIN_API constexpr T Clamp(T number, T min, T max) noexcept;
 
 	/// @brief	A constexpr version of the @c std::clamp function for @c Vector2.
@@ -199,7 +199,7 @@ namespace Calc
 	/// @param min The minimum position.
 	/// @param max The maximum position.
 	/// @returns The clamped vector.
-	[[nodiscard]]
+	ATTRIBUTE_NODISCARD
 	MOUNTAIN_API constexpr Vector2 Clamp(Vector2 vector, Vector2 min, Vector2 max) noexcept;
 
 	/// @brief	A constexpr version of the @c std::clamp function for @c Vector3.
@@ -208,7 +208,7 @@ namespace Calc
 	/// @param min The minimum position.
 	/// @param max The maximum position.
 	/// @returns The clamped vector.
-	[[nodiscard]]
+	ATTRIBUTE_NODISCARD
 	MOUNTAIN_API constexpr Vector3 Clamp(const Vector3& vector, const Vector3& min, const Vector3& max) noexcept;
 
 	/// @brief	A constexpr version of the @c std::clamp function for @c Vector4.
@@ -217,7 +217,7 @@ namespace Calc
 	/// @param min The minimum position.
 	/// @param max The maximum position.
 	/// @returns The clamped vector.
-	[[nodiscard]]
+	ATTRIBUTE_NODISCARD
 	MOUNTAIN_API constexpr Vector4 Clamp(const Vector4& vector, const Vector4& min, const Vector4& max) noexcept;
 
 	/// @brief	A constexpr version of the @c std::fmodf function.
@@ -226,7 +226,7 @@ namespace Calc
 	/// @param b The right-hand side of the modulo.
 	/// @returns The modulo of @p a by @p b.
 	template <std::floating_point T>
-	[[nodiscard]]
+	ATTRIBUTE_NODISCARD
 	MOUNTAIN_API constexpr T Modulo(T a, T b) noexcept;
 
 	/// @brief	A constexpr version of the @c std::isnan function.
@@ -234,7 +234,7 @@ namespace Calc
 	/// @param value The floating-point value to check.
 	/// @returns @c true if @p value is NaN, @c false otherwise.
 	template <std::floating_point T>
-	[[nodiscard]]
+	ATTRIBUTE_NODISCARD
 	MOUNTAIN_API constexpr bool IsNan(T value) noexcept;
 
 	/// @brief Approaches the target value by the given step size without ever exceeding it.
@@ -269,7 +269,7 @@ namespace Calc
 	///
 	/// @param value The YoYo value.
 	/// @returns A value between 0 and 1, closer to 1 if the input value is close to 0.5.
-	[[nodiscard]]
+	ATTRIBUTE_NODISCARD
 	MOUNTAIN_API constexpr f32 YoYo(f32 value) noexcept;
 
 	/// @brief Returns true on an interval.
@@ -277,11 +277,11 @@ namespace Calc
 	/// @param value The current time value.
 	/// @param lastValue The last time value. (last call)
 	/// @param interval The interval.
-	[[nodiscard]]
+	ATTRIBUTE_NODISCARD
 	MOUNTAIN_API constexpr bool OnInterval(f32 value, f32 lastValue, f32 interval);
 
 	/// @brief Clamps the given @p value between @p min and @p max and remaps the result between @p newMin and @p newMax
-	[[nodiscard]]
+	ATTRIBUTE_NODISCARD
 	MOUNTAIN_API constexpr f32 ClampedMap(
 		f32 value,
 		f32 min,
@@ -294,7 +294,7 @@ namespace Calc
     ///
     /// @param value The value to check.
     /// @returns Whether the value is considered to be zero.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API constexpr bool IsZero(f32 value) noexcept;
 
     /// @brief Checks if a value is less than what is considered to be zero, e.g. if its absolute value is smaller than @p zero.
@@ -302,14 +302,14 @@ namespace Calc
     /// @param value The value to check.
     /// @param zero The value under which a number is considered to be zero.
     /// @returns Whether the value is considered to be zero.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API constexpr bool IsZero(f32 value, f32 zero) noexcept;
 
     /// @brief If a value is considered zero using @c IsZero(), returns 0. Otherwise, returns the given value.
     ///
     /// @param value The value to check.
     /// @returns Whether the value is considered to be zero.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API constexpr f32 MakeZero(f32 value) noexcept;
 
     /// @brief If a value is considered zero using @c IsZero(), returns 0. Otherwise, returns the given value.
@@ -317,7 +317,7 @@ namespace Calc
     /// @param value The value to check.
     /// @param zero The value under which a number is considered to be zero.
     /// @returns Whether the value is considered to be zero.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
 	MOUNTAIN_API constexpr f32 MakeZero(f32 value, f32 zero) noexcept;
 
 	/// @brief Checks if two values are considered equal using @ref IsZero(f32).
@@ -325,7 +325,7 @@ namespace Calc
 	/// @param a The first value.
 	/// @param b The second value.
 	/// @returns Whether the values are considered equal.
-	[[nodiscard]]
+	ATTRIBUTE_NODISCARD
 	MOUNTAIN_API constexpr bool Equals(f32 a, f32 b) noexcept;
 
 	/// @brief Checks if two values are considered equal using @c IsZero().
@@ -333,7 +333,7 @@ namespace Calc
 	/// @param a The first value.
 	/// @param b The second value.
 	/// @returns Whether the values are considered equal.
-	[[nodiscard]]
+	ATTRIBUTE_NODISCARD
 	MOUNTAIN_API constexpr bool Equals(Vector2 a, Vector2 b) noexcept;
 
 	/// @brief Checks if two values are considered equal using @c IsZero().
@@ -341,7 +341,7 @@ namespace Calc
 	/// @param a The first value.
 	/// @param b The second value.
 	/// @returns Whether the values are considered equal.
-	[[nodiscard]]
+	ATTRIBUTE_NODISCARD
 	MOUNTAIN_API constexpr bool Equals(const Vector3& a, const Vector3& b) noexcept;
 
 	/// @brief Checks if two values are considered equal using @c IsZero().
@@ -349,7 +349,7 @@ namespace Calc
 	/// @param a The first value.
 	/// @param b The second value.
 	/// @returns Whether the values are considered equal.
-	[[nodiscard]]
+	ATTRIBUTE_NODISCARD
 	MOUNTAIN_API constexpr bool Equals(const Vector4& a, const Vector4& b) noexcept;
 
 	/// @brief Checks if two values are considered equal using @c IsZero().
@@ -357,7 +357,7 @@ namespace Calc
 	/// @param a The first value.
 	/// @param b The second value.
 	/// @returns Whether the values are considered equal.
-	[[nodiscard]]
+	ATTRIBUTE_NODISCARD
 	MOUNTAIN_API bool Equals(const Matrix2& a, const Matrix2& b) noexcept;
 
 	/// @brief Checks if two values are considered equal using @c IsZero().
@@ -365,7 +365,7 @@ namespace Calc
 	/// @param a The first value.
 	/// @param b The second value.
 	/// @returns Whether the values are considered equal.
-	[[nodiscard]]
+	ATTRIBUTE_NODISCARD
 	MOUNTAIN_API bool Equals(const Matrix3& a, const Matrix3& b) noexcept;
 
 	/// @brief Checks if two values are considered equal using @c IsZero().
@@ -373,7 +373,7 @@ namespace Calc
 	/// @param a The first value.
 	/// @param b The second value.
 	/// @returns Whether the values are considered equal.
-	[[nodiscard]]
+	ATTRIBUTE_NODISCARD
 	MOUNTAIN_API bool Equals(const Matrix& a, const Matrix& b) noexcept;
 
 	/// @brief Checks if two values are considered equal using @c IsZero().
@@ -381,31 +381,31 @@ namespace Calc
 	/// @param a The first value.
 	/// @param b The second value.
 	/// @returns Whether the values are considered equal.
-	[[nodiscard]]
+	ATTRIBUTE_NODISCARD
 	MOUNTAIN_API bool Equals(const Quaternion& a, const Quaternion& b) noexcept;
 
-	[[nodiscard]]
+	ATTRIBUTE_NODISCARD
 	constexpr f32 Lerp(f32 value, f32 target, f32 time);
 
-	[[nodiscard]]
+	ATTRIBUTE_NODISCARD
 	constexpr f32 Lerp(f32 value, f32 target, f32 time, Easing::Easer easer);
 
-	[[nodiscard]]
+	ATTRIBUTE_NODISCARD
 	constexpr Vector2 Lerp(Vector2 value, Vector2 target, f32 time);
 
-	[[nodiscard]]
+	ATTRIBUTE_NODISCARD
 	constexpr Vector2 Lerp(Vector2 value, Vector2 target, f32 time, Easing::Easer easer);
 
-	[[nodiscard]]
+	ATTRIBUTE_NODISCARD
 	constexpr Vector3 Lerp(const Vector3& value, const Vector3& target, f32 time);
 
-	[[nodiscard]]
+	ATTRIBUTE_NODISCARD
 	constexpr Vector3 Lerp(const Vector3& value, const Vector3& target, f32 time, Easing::Easer easer);
 
-	[[nodiscard]]
+	ATTRIBUTE_NODISCARD
 	constexpr Vector4 Lerp(const Vector4& value, const Vector4& target, f32 time);
 
-	[[nodiscard]]
+	ATTRIBUTE_NODISCARD
 	constexpr Vector4 Lerp(const Vector4& value, const Vector4& target, f32 time, Easing::Easer easer);
 }
 

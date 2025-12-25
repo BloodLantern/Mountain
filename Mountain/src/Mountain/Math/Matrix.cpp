@@ -136,7 +136,7 @@ Matrix Matrix::Perspective(const f32 fov, const f32 aspectRatio, const f32 near,
 
 void Matrix::Perspective(const f32 fov, const f32 aspectRatio, const f32 near, const f32 far, Matrix* result)
 {
-    if (near > far) [[unlikely]]
+    if (near > far) ATTRIBUTE_UNLIKELY
         throw std::invalid_argument("Near must be smaller than far.");
 
     const f32 range = far - near;

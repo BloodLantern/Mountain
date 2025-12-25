@@ -1,4 +1,3 @@
-
 #include "Mountain/Math/Easing.hpp"
 
 #include "Mountain/Math/Calc.hpp"

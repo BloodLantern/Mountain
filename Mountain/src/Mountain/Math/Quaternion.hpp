@@ -24,7 +24,7 @@ struct MOUNTAIN_API Quaternion
     ///
     /// @returns A Quaternion with everything set to 0.
     /// @see Quaternion()
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     static constexpr Quaternion Zero() noexcept;
 
     /// @brief Equivalent to calling the default constructor.
@@ -36,7 +36,7 @@ struct MOUNTAIN_API Quaternion
     /// @brief Create a constant Quaternion of value @c { x = 1, y = 0, z = 0, w = 0 }.
     ///
     /// @returns A Quaternion with and @c x value of @c 1, and everything else set to 0.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     static constexpr Quaternion UnitX() noexcept;
 
     /// @brief Create a constant Quaternion of value @c { x = 1, y = 0, z = 0, w = 0 }.
@@ -48,7 +48,7 @@ struct MOUNTAIN_API Quaternion
     /// @brief Create a constant Quaternion of value @c { x = 0, y = 1, z = 0, w = 0 }.
     ///
     /// @returns A Quaternion with and @c y value of @c 1, and everything else set to 0.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     static constexpr Quaternion UnitY() noexcept;
 
     /// @brief Create a constant Quaternion of value @c { x = 0, y = 1, z = 0, w = 0 }.
@@ -60,7 +60,7 @@ struct MOUNTAIN_API Quaternion
     /// @brief Create a constant Quaternion of value @c { x = 0, y = 0, z = 1, w = 0 }.
     ///
     /// @returns A Quaternion with and @c z value of @c 1, and everything else set to 0.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     static constexpr Quaternion UnitZ() noexcept;
 
     /// @brief Create a constant Quaternion of value @c { x = 0, y = 0, z = 1, w = 0 }.
@@ -72,7 +72,7 @@ struct MOUNTAIN_API Quaternion
     /// @brief Create a constant Quaternion of value @c { x = 0, y = 0, z = 0, w = 1 }.
     ///
     /// @returns A Quaternion with and @c w value of @c 1, and everything else set to 0.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     static constexpr Quaternion UnitW() noexcept;
 
     /// @brief Create a constant Quaternion of value @c { x = 0, y = 0, z = 0, w = 1 }.
@@ -84,7 +84,7 @@ struct MOUNTAIN_API Quaternion
     /// @brief Equivalent to calling @ref UnitW().
     ///
     /// @returns A Quaternion with and @c w value of @c 1, and everything else set to @c 0.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     static constexpr Quaternion Identity() noexcept;
 
     /// @brief Equivalent to calling @ref Quaternion::UnitW().
@@ -98,7 +98,7 @@ struct MOUNTAIN_API Quaternion
     /// @param axis The axis around which the rotation occurs.
     /// @param angle The rotation angle.
     /// @returns A rotation Quaternion equivalent to the given axis-angle rotation.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     static Quaternion FromAxisAngle(const Vector3& axis, f32 angle) noexcept;
 
     /// @brief Create a rotation Quaternion from an axis-angle rotation.
@@ -113,7 +113,7 @@ struct MOUNTAIN_API Quaternion
     ///
     /// @param rotation The euler rotation vector.
     /// @returns A rotation Quaternion equivalent to the given axis-angle rotation.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     static Quaternion FromEuler(const Vector3& rotation) noexcept;
 
     /// @brief Create a rotation Quaternion from an axis-angle rotation.
@@ -127,7 +127,7 @@ struct MOUNTAIN_API Quaternion
     ///
     /// @param rotation The rotation Matrix.
     /// @returns A rotation Quaternion equivalent to the given axis-angle rotation.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     static Quaternion FromRotationMatrix(const Matrix& rotation) noexcept;
 
     /// @brief Create a rotation Quaternion from an axis-angle rotation.
@@ -141,7 +141,7 @@ struct MOUNTAIN_API Quaternion
     ///
     /// @param rotation The euler rotation vector.
     /// @returns A rotation Quaternion equivalent to the given axis-angle rotation.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     static Vector3 ToEuler(const Quaternion& rotation) noexcept;
 
     /// @brief Converts a Quaternion to an euler-angle Vector3.
@@ -156,7 +156,7 @@ struct MOUNTAIN_API Quaternion
     /// @param a The left-hand side argument.
     /// @param b The right-hand side argument.
     /// @returns The result of @p a · @p b.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     static constexpr f32 Dot(const Quaternion& a, const Quaternion& b) noexcept;
 
     /// @brief Compute the linear interpolation between two Quaternions.
@@ -165,7 +165,7 @@ struct MOUNTAIN_API Quaternion
     /// @param target The target position.
     /// @param t The time to lerp.
     /// @returns The lerp position.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     static Quaternion Lerp(const Quaternion& value, const Quaternion& target, f32 t) noexcept;
 
     /// @brief Compute the linear interpolation between two Quaternions.
@@ -183,7 +183,7 @@ struct MOUNTAIN_API Quaternion
     /// @param target The target position.
     /// @param t The time to slerp.
     /// @returns The slerp position.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     static Quaternion Slerp(const Quaternion& value, const Quaternion& target, f32 t) noexcept;
 
     /// @brief Compute the spherical linear interpolation between two Quaternions.
@@ -206,7 +206,7 @@ struct MOUNTAIN_API Quaternion
     /// @param point The current position.
     /// @param rotation The target position.
     /// @returns The rotated point.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     static constexpr Vector3 Rotate(const Vector3& point, const Quaternion& rotation) noexcept;
 
     /// @brief Rotate a point using a rotation quaternion.
@@ -224,7 +224,7 @@ struct MOUNTAIN_API Quaternion
     static constexpr void Rotate(const Vector3& point, const Quaternion& rotation, Vector3* result) noexcept;
 
     /// @brief Rotates an object positioned at @p sourcePosition to face @p targetPosition
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     static Quaternion LookAt(
         const Vector3& sourcePosition,
         const Vector3& targetPosition,
@@ -257,51 +257,51 @@ struct MOUNTAIN_API Quaternion
     /// @brief Gets a pointer to the first component of this vector.
     ///
     /// @returns A pointer to the first component of this vector.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr const f32* Data() const noexcept;
 
     /// @brief Gets a pointer to the first component of this vector.
     ///
     /// @returns A pointer to the first component of this vector.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr f32* Data() noexcept;
 
     /// @brief Returns a copy of the @c x component of this Quaternion.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr f32 X() const noexcept;
 
     /// @brief Returns a copy of the @c y component of this Quaternion.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr f32 Y() const noexcept;
 
     /// @brief Returns a copy of the @c z component of this Quaternion.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr f32 Z() const noexcept;
 
     /// @brief Returns a copy of the @c w component of this Quaternion.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr f32 W() const noexcept;
 
     /// @brief Returns a reference to the @c x component of this Quaternion.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr f32& X() noexcept;
 
     /// @brief Returns a reference to the @c y component of this Quaternion.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr f32& Y() noexcept;
 
     /// @brief Returns a reference to the @c z component of this Quaternion.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr f32& Z() noexcept;
 
     /// @brief Returns a reference to the @c w component of this Quaternion.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr f32& W() noexcept;
 
     /// @brief Computes the conjugate of this Quaternion.
     ///
     /// The conjugate of a Quaternion is one with the opposite of its imaginary part.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr Quaternion Conjugate() const noexcept;
 
     /// @brief Computes the conjugate of this Quaternion.
@@ -310,30 +310,30 @@ struct MOUNTAIN_API Quaternion
     constexpr void Conjugate(Quaternion* result) const noexcept;
 
     /// @brief Returns a normalized version of this Quaternion.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     Quaternion Normalized() const noexcept;
 
     /// @brief Returns a normalized version of this Quaternion.
     void Normalized(Quaternion* result) const noexcept;
 
     /// @brief Returns the length of this Quaternion.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     f32 Length() const noexcept;
 
     /// @brief Returns the squared length of this Quaternion.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr f32 SquaredLength() const noexcept;
 
     /// @brief Check whether all of this vector's components are infinite.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     bool IsInfinity() const noexcept;
 
     /// @brief Check whether all of this vector's components are NaN.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     bool IsNaN() const noexcept;
 
     /// @brief Returns an inverted version of this Quaternion.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr Quaternion Inverted() const noexcept;
 
     /// @brief Returns an inverted version of this Quaternion.
@@ -343,14 +343,14 @@ struct MOUNTAIN_API Quaternion
     ///
     /// @param i The index of the component to get. It would be 0 for x, 1 for y, etc...
     /// @returns The value of the component at index i.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr f32 operator[](size_t i) const;
 
     /// @brief Retrieves this vector's component at index i.
     ///
     /// @param i The index of the component to get. It would be 0 for x, 1 for y, etc...
     /// @returns The value of the component at index i.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr f32& operator[](size_t i);
 
     /// @brief Converts this Quaternion to a Vector3 by returning its imaginary part.
@@ -430,17 +430,17 @@ constexpr f32 Quaternion::SquaredLength() const noexcept { return SQ(imaginary.x
 
 constexpr f32 Quaternion::operator[](const size_t i) const
 {
-    if (i < 4) [[likely]]
+    if (i < 4) ATTRIBUTE_LIKELY
         return *(Data() + i);
-    [[unlikely]]
+    ATTRIBUTE_UNLIKELY
         throw std::out_of_range("Quaternion subscript out of range");
 }
 
 constexpr f32& Quaternion::operator[](const size_t i)
 {
-    if (i < 4) [[likely]]
+    if (i < 4) ATTRIBUTE_LIKELY
         return *(Data() + i);
-    [[unlikely]]
+    ATTRIBUTE_UNLIKELY
         throw std::out_of_range("Quaternion subscript out of range");
 }
 
@@ -449,21 +449,21 @@ constexpr Quaternion::operator Vector3() const noexcept { return imaginary; }
 constexpr Quaternion::operator Vector4() const noexcept { return Vector4(imaginary.x, imaginary.y, imaginary.z, real); }
 
 /// @brief Adds two @ref Quaternion "Quaternions" together.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr Quaternion operator+(const Quaternion& a, const Quaternion& b) noexcept { return Quaternion(a.imaginary + b.imaginary, a.real + b.real); }
 
 /// @brief Returns the opposite of a Quaternion.
 ///
 /// This effectively means replacing all values of this Quaternion with their opposite.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr Quaternion operator-(const Quaternion& a) noexcept { return Quaternion(-a.imaginary, -a.real); }
 
 /// @brief Subtracts a Quaternion from another one.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr Quaternion operator-(const Quaternion& a, const Quaternion& b) noexcept { return Quaternion(a + -b); }
 
 /// @brief Multiplies two @ref Quaternion "Quaternions" together.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr Quaternion operator*(const Quaternion& a, const Quaternion& b) noexcept
 {
     Quaternion result;
@@ -484,19 +484,19 @@ constexpr Quaternion operator*(const Quaternion& a, const Quaternion& b) noexcep
 }
 
 /// @brief Multiplies a Quaternion with a Vector3.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr Quaternion operator*(const Quaternion& q, const Vector3& v) noexcept { return q * Quaternion(v, 1.f); }
 
 /// @brief Multiplies a Quaternion by a @p factor.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr Quaternion operator*(const Quaternion& q, const f32 factor) noexcept { return Quaternion(q.imaginary * factor, q.real * factor); }
 
 /// @brief Multiplies a Quaternion by a @p factor.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr Quaternion operator*(const f32 factor, const Quaternion q) noexcept { return q * factor; }
 
 /// @brief Divides a Quaternion by a @p factor.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr Quaternion operator/(const Quaternion& v, const f32 factor) noexcept { return Quaternion(v.imaginary / factor, v.real / factor); }
 
 /// @brief Adds two @ref Quaternion "Quaternions" according to @ref operator+(const Quaternion&, const Quaternion&), placing the result in @p a.
@@ -515,7 +515,7 @@ constexpr Quaternion& operator*=(Quaternion& q, const f32 factor) noexcept { ret
 constexpr Quaternion& operator/=(Quaternion& q, const f32 factor) noexcept { return q = q / factor; }
 
 /// @brief Checks if two Quaternions are considered equal.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr bool operator==(const Quaternion& a, const Quaternion& b)
 {
     return a.imaginary.x == b.imaginary.x
@@ -525,7 +525,7 @@ constexpr bool operator==(const Quaternion& a, const Quaternion& b)
 }
 
 /// @brief Checks if two Quaternions are considered equal.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr bool operator!=(const Quaternion& a, const Quaternion& b) { return !(a == b); }
 
 /// @brief Streams a Quaternion into @p out, printing its values one by one on a single line.

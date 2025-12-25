@@ -1,7 +1,7 @@
 #pragma once
 
-#include <ImGui/imgui.h>
-#include <ImGui/imgui_stdlib.h>
+#include <imgui.h>
+#include <imgui_stdlib.h>
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Window.hpp"

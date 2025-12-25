@@ -6,7 +6,7 @@
 
 #include <AL/al.h>
 
-#include <ImGui/imgui.h>
+#include <imgui.h>
 
 #include "Mountain/Audio/Audio.hpp"
 #include "Mountain/Audio/AudioContext.hpp"

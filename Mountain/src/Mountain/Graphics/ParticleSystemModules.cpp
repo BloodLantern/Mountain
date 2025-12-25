@@ -2,7 +2,7 @@
 
 #include "Mountain/Graphics/ParticleSystemModules.hpp"
 
-#include <ImGui/imgui.h>
+#include <imgui.h>
 
 #include "Mountain/Graphics/Draw.hpp"
 #include "Mountain/Graphics/ParticleSystem.hpp"

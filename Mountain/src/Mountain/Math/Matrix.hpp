@@ -69,7 +69,7 @@ struct MOUNTAIN_API Matrix
     /// @brief Returns the identity Matrix.
     ///
     /// The identity Matrix is one with its diagonal set to one and everything else set to zero.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     static constexpr Matrix Identity() noexcept;
 
     /// @brief Returns the identity Matrix.
@@ -78,7 +78,7 @@ struct MOUNTAIN_API Matrix
     static constexpr void Identity(Matrix* result) noexcept;
 
     /// @brief Creates a 3D translation Matrix from the given angle for each of the x, y, and z axis.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     static constexpr Matrix Translation(const Vector3& translation) noexcept;
 
     /// @brief Creates a 3D translation Matrix from the given angle for each of the x, y, and z axis.
@@ -88,7 +88,7 @@ struct MOUNTAIN_API Matrix
     ///
     /// @param angle The angle in radians.
     /// @param axis The axis around which the rotation occurs.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     static Matrix Rotation(f32 angle, const Vector3& axis) noexcept;
 
     /// @brief Creates a 3D rotation Matrix from the given angle and axis.
@@ -101,7 +101,7 @@ struct MOUNTAIN_API Matrix
     /// @brief Creates a 3D rotation Matrix around the X axis from the given angle.
     ///
     /// @param angle The angle in radians.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     static Matrix RotationX(f32 angle) noexcept;
 
     /// @brief Creates a 3D rotation Matrix around the X axis from the given angle.
@@ -114,7 +114,7 @@ struct MOUNTAIN_API Matrix
     ///
     /// @param cos The cosine of the angle in radians.
     /// @param sin The sine of the angle in radians.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     static constexpr Matrix RotationX(f32 cos, f32 sin) noexcept;
 
     /// @brief Creates a 3D rotation Matrix around the X axis from the given angle.
@@ -127,7 +127,7 @@ struct MOUNTAIN_API Matrix
     /// @brief Creates a 3D rotation Matrix around the Y axis from the given angle.
     ///
     /// @param angle The angle in radians.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     static Matrix RotationY(f32 angle) noexcept;
 
     /// @brief Creates a 3D rotation Matrix around the Y axis from the given angle.
@@ -140,7 +140,7 @@ struct MOUNTAIN_API Matrix
     ///
     /// @param cos The cosine of the angle in radians.
     /// @param sin The sine of the angle in radians.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     static constexpr Matrix RotationY(f32 cos, f32 sin) noexcept;
 
     /// @brief Creates a 3D rotation Matrix around the Y axis from the given angle.
@@ -153,7 +153,7 @@ struct MOUNTAIN_API Matrix
     /// @brief Creates a 3D rotation Matrix around the Z axis from the given angle.
     ///
     /// @param angle The angle in radians.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     static Matrix RotationZ(f32 angle) noexcept;
 
     /// @brief Creates a 3D rotation Matrix around the Z axis from the given angle.
@@ -166,7 +166,7 @@ struct MOUNTAIN_API Matrix
     ///
     /// @param cos The cosine of the angle in radians.
     /// @param sin The sine of the angle in radians.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     static constexpr Matrix RotationZ(f32 cos, f32 sin) noexcept;
 
     /// @brief Creates a 3D rotation Matrix around the Z axis from the given angle.
@@ -177,14 +177,14 @@ struct MOUNTAIN_API Matrix
     static constexpr void RotationZ(f32 cos, f32 sin, Matrix* result) noexcept;
 
     /// @brief Creates a 3D rotation Matrix from the given angle for each of the x, y, and z axis.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     static Matrix Rotation(const Vector3& rotation) noexcept;
 
     /// @brief Creates a 3D rotation Matrix from the given angle for each of the x, y, and z axis.
     static void Rotation(const Vector3& rotation, Matrix* result) noexcept;
 
     /// @brief	Creates a 3D rotation Matrix from the given rotation Quaternion.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     static constexpr Matrix Rotation(const Quaternion& rotation) noexcept;
 
     /// @brief	Creates a 3D rotation Matrix from the given rotation Quaternion.
@@ -195,7 +195,7 @@ struct MOUNTAIN_API Matrix
     /// @param cos The cosine of the angle in radians.
     /// @param sin The sine of the angle in radians.
     /// @param axis The axis around which the rotation occurs.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     static Matrix Rotation(f32 cos, f32 sin, const Vector3& axis) noexcept;
 
     /// @brief Creates a 3D rotation matrix from the given cosine, sine and axis.
@@ -207,42 +207,42 @@ struct MOUNTAIN_API Matrix
     static void Rotation(f32 cos, f32 sin, const Vector3& axis, Matrix* result) noexcept;
 
     /// @brief Creates a 3D scaling matrix from the given Vector3.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     static constexpr Matrix Scaling(const Vector3& scale) noexcept;
 
     /// @brief Creates a 3D scaling matrix from the given Vector3.
     static constexpr void Scaling(const Vector3& scale, Matrix* result) noexcept;
 
     /// @brief Creates a Translation-Rotation-Scaling (TRS) matrix from the given translation, rotation and scaling.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     static Matrix Trs(const Vector3& translation, const Vector3& rotation, const Vector3& scale) noexcept;
 
     /// @brief Creates a Translation-Rotation-Scaling (TRS) matrix from the given translation, rotation and scaling.
     static void Trs(const Vector3& translation, const Vector3& rotation, const Vector3& scale, Matrix* result) noexcept;
 
     /// @brief Creates a Translation-Rotation-Scaling (TRS) matrix from the given translation, rotation and scaling.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     static Matrix Trs(const Vector3& translation, f32 rotationAngle, const Vector3& rotationAxis, const Vector3& scale) noexcept;
 
     /// @brief Creates a Translation-Rotation-Scaling (TRS) matrix from the given translation, rotation and scaling.
     static void Trs(const Vector3& translation, f32 rotationAngle, const Vector3& rotationAxis, const Vector3& scale, Matrix* result) noexcept;
 
     /// @brief Creates a Translation-Rotation-Scaling (TRS) matrix from the given translation, rotation and scaling.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     static constexpr Matrix Trs(const Vector3& translation, const Matrix& rotation, const Vector3& scale) noexcept;
 
     /// @brief Creates a Translation-Rotation-Scaling (TRS) matrix from the given translation, rotation and scaling.
     static constexpr void Trs(const Vector3& translation, const Matrix& rotation, const Vector3& scale, Matrix* result) noexcept;
 
     /// @brief Creates a Translation-Rotation-Scaling (TRS) matrix from the given translation, rotation and scaling.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     static constexpr Matrix Trs(const Vector3& translation, const Quaternion& rotation, const Vector3& scale) noexcept;
 
     /// @brief Creates a Translation-Rotation-Scaling (TRS) matrix from the given translation, rotation and scaling.
     static constexpr void Trs(const Vector3& translation, const Quaternion& rotation, const Vector3& scale, Matrix* result) noexcept;
 
     /// @brief Creates a view Matrix, looking from an @c eye to a @c center using an @c up vector.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     static Matrix LookAt(const Vector3& eye, const Vector3& center, const Vector3& up) noexcept;
 
     /// @brief Creates a view Matrix, looking from an @c eye to a @c center using an @c up vector.
@@ -251,7 +251,7 @@ struct MOUNTAIN_API Matrix
     /// @brief Creates a perspective projection Matrix from the given @c fov (Field Of View) and aspect ratio.
     ///
     ///	Anything closer than @c near or further than @c far is discarded.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     static Matrix Perspective(f32 fov, f32 aspectRatio, f32 near, f32 far);
 
     /// @brief Creates a perspective projection Matrix from the given @c fov (Field Of View) and aspect ratio.
@@ -262,7 +262,7 @@ struct MOUNTAIN_API Matrix
     /// @brief Creates an orthographic projection Matrix from the given @c left, @c right, @c bottom, and @c top screen positions.
     ///
     ///	Anything closer than @c near or further than @c far is discarded.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     static constexpr Matrix Orthographic(f32 left, f32 right, f32 bottom, f32 top, f32 near, f32 far);
 
     /// @brief Creates an orthographic projection Matrix from the given @c left, @c right, @c bottom, and @c top screen positions.
@@ -302,64 +302,64 @@ struct MOUNTAIN_API Matrix
     /// @brief Gets a pointer to the first value of this Matrix.
     ///
     /// @returns A pointer to the first value of this Matrix.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr const f32* Data() const noexcept;
 
     /// @brief Gets a pointer to the first value of this Matrix.
     ///
     /// @returns A pointer to the first value of this Matrix.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr f32* Data() noexcept;
 
     /// @brief Uses the @c std::cout stream to print the values of this matrix in a square-like shape, e.g. by using newlines to make it easier to read.
     void DebugPrint() const noexcept;
 
     /// @brief Returns whether the Matrix has everything except its diagonal set to zero.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr bool IsDiagonal() const noexcept;
 
     /// @brief Returns whether the Matrix is the identity matrix.
     ///
     /// If this returns true, Matrix::Identity() == *this should be true.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr bool IsIdentity() const noexcept;
 
     /// @brief Returns whether this Matrix has everything set to zero.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr bool IsNull() const noexcept;
 
     /// @brief Returns whether the Matrix is symmetric by its diagonal elements.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr bool IsSymmetric() const noexcept;
 
     /// @brief Returns whether the Matrix is symmetric by its diagonal elements but one of the sides is the opposite of the other.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr bool IsAntisymmetric() const noexcept;
 
     /// @brief Returns the diagonal elements of the Matrix.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr Vector4 Diagonal() const noexcept;
 
     /// @brief Returns the diagonal elements of the Matrix.
     constexpr void Diagonal(Vector4* result) const noexcept;
 
     /// @brief Returns the sum of the diagonal elements of the Matrix.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr f32 Trace() const noexcept;
 
     /// @brief Returns the determinant of this Matrix.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr f32 Determinant() const noexcept;
 
     /// @brief Switches the Matrix by its diagonal elements.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr Matrix Transposed() const noexcept;
 
     /// @brief Switches the Matrix by its diagonal elements.
     constexpr void Transposed(Matrix* result) const noexcept;
 
     /// @brief Computes the invert of this Matrix, e.g. @c *this * Inverted() == Identity() is true.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr Matrix Inverted() const;
 
     /// @brief Computes the invert of this Matrix, e.g. @c *this * Inverted() == Identity() is true.
@@ -382,7 +382,7 @@ struct MOUNTAIN_API Matrix
     /// @param row The index of the col to get.
     /// @param col The index of the column to get.
     /// @returns The value at position @c [col, row].
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr f32 At(size_t row, size_t col) const;
 
     /// @brief Retrieves this matrix's col at position @c [col, row].
@@ -390,7 +390,7 @@ struct MOUNTAIN_API Matrix
     /// @param row The index of the col to get.
     /// @param col The index of the column to get.
     /// @returns The value at position @c [col, row].
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr f32& At(size_t row, size_t col);
 
     /// @brief Retrieves this matrix's column vector at position @c col.
@@ -400,7 +400,7 @@ struct MOUNTAIN_API Matrix
     ///
     /// @param col The index of the column to get.
     /// @returns The column vector at index @c col.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr Vector4 operator[](size_t col) const;
 
     /// @brief Retrieves this matrix's column vector at position @c col.
@@ -410,11 +410,11 @@ struct MOUNTAIN_API Matrix
     ///
     /// @param col The index of the column to get.
     /// @returns The column vector at index @c col.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr Vector4& operator[](size_t col);
 
     /// @brief Converts this Matrix to a Matrix3 by cropping its last row and column.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr explicit operator Matrix3() const;
 };
 
@@ -473,7 +473,7 @@ constexpr Matrix::operator Matrix3() const
 /// @brief Returns the opposite of a Matrix.
 ///
 /// This effectively means replacing all values of this Matrix with their opposite.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr Matrix operator-(const Matrix& matrix) noexcept
 {
     return Matrix(
@@ -485,7 +485,7 @@ constexpr Matrix operator-(const Matrix& matrix) noexcept
 }
 
 /// @brief Adds the values of two @ref Matrix "Matrices" one by one.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr Matrix operator+(const Matrix& m1, const Matrix& m2) noexcept
 {
     return Matrix(
@@ -497,11 +497,11 @@ constexpr Matrix operator+(const Matrix& m1, const Matrix& m2) noexcept
 }
 
 /// @brief Subtracts the values of two @ref Matrix "Matrices" one by one.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr Matrix operator-(const Matrix& m1, const Matrix& m2) noexcept { return m1 + -m2; }
 
 /// @brief Multiplies all values of a Matrix by a @p scalar.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr Matrix operator*(const Matrix& m, const f32 scalar) noexcept
 {
     return Matrix(
@@ -513,11 +513,11 @@ constexpr Matrix operator*(const Matrix& m, const f32 scalar) noexcept
 }
 
 /// @brief Multiplies all values of a Matrix by a @p scalar.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr Matrix operator*(const f32 factor, const Matrix& m) noexcept { return m * factor; }
 
 /// @brief Multiplies a Vector2 by a Matrix.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr Vector2 operator*(const Matrix& m, Vector2 v) noexcept
 {
     return Vector2(
@@ -527,7 +527,7 @@ constexpr Vector2 operator*(const Matrix& m, Vector2 v) noexcept
 }
 
 /// @brief Multiplies a Vector3 by a Matrix.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr Vector3 operator*(const Matrix& m, const Vector3& v) noexcept
 {
     return Vector3(
@@ -538,7 +538,7 @@ constexpr Vector3 operator*(const Matrix& m, const Vector3& v) noexcept
 }
 
 /// @brief Multiplies a Vector4 by a Matrix.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr Vector4 operator*(const Matrix& m, const Vector4& v) noexcept
 {
     return Vector4(
@@ -550,7 +550,7 @@ constexpr Vector4 operator*(const Matrix& m, const Vector4& v) noexcept
 }
 
 /// @brief Multiplies two @ref Matrix "Matrices".
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr Matrix operator*(const Matrix& m1, const Matrix& m2) noexcept
 {
     return Matrix(
@@ -589,7 +589,7 @@ constexpr Matrix& operator*=(Matrix& m, const f32 scalar) noexcept { return m = 
 constexpr Matrix& operator*=(Matrix& m1, const Matrix& m2) noexcept { return m1 = m1 * m2; }
 
 /// @brief	Checks if two Matrices are equal.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr bool operator==(const Matrix& a, const Matrix& b)
 {
     return a.m00 == b.m00 && a.m01 == b.m01 && a.m02 == b.m02 && a.m03 == b.m03
@@ -599,7 +599,7 @@ constexpr bool operator==(const Matrix& a, const Matrix& b)
 }
 
 /// @brief	Checks if two Matrices are different.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr bool operator!=(const Matrix& a, const Matrix& b) { return !(a == b); }
 
 constexpr Matrix Matrix::Identity() noexcept
@@ -756,7 +756,7 @@ constexpr void Matrix::Trs(const Vector3& translation, const Quaternion& rotatio
 
 constexpr Matrix Matrix::Orthographic(const f32 left, const f32 right, const f32 bottom, const f32 top, const f32 near, const f32 far)
 {
-    if (near > far) [[unlikely]]
+    if (near > far) ATTRIBUTE_UNLIKELY
         throw std::invalid_argument("Near must be smaller than far.");
 
     return Matrix(
@@ -769,7 +769,7 @@ constexpr Matrix Matrix::Orthographic(const f32 left, const f32 right, const f32
 
 constexpr void Matrix::Orthographic(const f32 left, const f32 right, const f32 bottom, const f32 top, const f32 near, const f32 far, Matrix* result)
 {
-    if (near > far) [[unlikely]]
+    if (near > far) ATTRIBUTE_UNLIKELY
         throw std::invalid_argument("Near must be smaller than far.");
 
     *result = Matrix(
@@ -874,7 +874,7 @@ constexpr Matrix Matrix::Inverted() const
 
 constexpr void Matrix::Inverted(Matrix* result) const
 {
-    if (Determinant() == 0.f) [[unlikely]]
+    if (Determinant() == 0.f) ATTRIBUTE_UNLIKELY
         throw std::invalid_argument("Matrix isn't invertible");
 
     // Definition from MonoGame/XNA: https://github.com/MonoGame/MonoGame/blob/b30122c99597eaf81b81f32ab1d467a7b4185c73/MonoGame.Framework/Matrix.cs
@@ -930,19 +930,19 @@ constexpr void Matrix::Inverted(Matrix* result) const
 
 constexpr f32 Matrix::At(const size_t row, const size_t col) const
 {
-    if (row < 4 && col < 4) [[likely]]
+    if (row < 4 && col < 4) ATTRIBUTE_LIKELY
         return Data()[row * 4 + col];
 
-    [[unlikely]]
+    ATTRIBUTE_UNLIKELY
     throw std::out_of_range("Matrix subscript out of range");
 }
 
 constexpr f32& Matrix::At(const size_t row, const size_t col)
 {
-    if (row < 4 && col < 4) [[likely]]
+    if (row < 4 && col < 4) ATTRIBUTE_LIKELY
         return Data()[row * 4 + col];
 
-    [[unlikely]]
+    ATTRIBUTE_UNLIKELY
     throw std::out_of_range("Matrix subscript out of range");
 }
 

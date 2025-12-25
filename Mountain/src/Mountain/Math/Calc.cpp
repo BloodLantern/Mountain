@@ -1,4 +1,3 @@
-
 #include "Mountain/Math/Calc.hpp"
 
 #include "Mountain/Math/Matrix.hpp"

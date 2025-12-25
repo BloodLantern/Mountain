@@ -6,7 +6,7 @@
 #include <ranges>
 #include <regex>
 
-#include <ImGui/imgui.h>
+#include <imgui.h>
 
 #include "Mountain/Globals.hpp"
 #include "Mountain/Utils/Windows.hpp"

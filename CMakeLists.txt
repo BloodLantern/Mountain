@@ -46,6 +46,7 @@ find_package(SDL3 CONFIG REQUIRED)
 find_package(magic_enum CONFIG REQUIRED)
 find_package(OpenAL CONFIG REQUIRED)
 find_package(OpenGL REQUIRED)
+find_package(imgui CONFIG REQUIRED)
 find_path(MINIMP3_INCLUDE_DIRS "minimp3/minimp3.h")
 find_path(Stb_INCLUDE_DIR "stb_image.h")
 

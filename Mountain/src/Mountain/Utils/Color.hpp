@@ -3,7 +3,7 @@
 #include <format>
 #include <sstream>
 
-#include <ImGui/imgui.h>
+#include <imgui.h>
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Math/Easing.hpp"

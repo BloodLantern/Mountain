@@ -10,6 +10,12 @@
 /// @file vector4.hpp
 /// @brief Defines the Vector4 struct.
 
+/// @brief Declare ImGui Vector4 conversions
+/// @note This file needs to be included before ImGui for this macro to work.
+#define IM_VEC4_CLASS_EXTRA \
+    constexpr ImVec4(const Vector4& f) : x(f.x), y(f.y), z(f.z), w(f.w) {} \
+    operator Vector4() const { return Vector4(x, y, z, w); }
+
 struct Matrix;
 
 /// @brief The Vector4 struct represents either a four-dimensional vector or a point.
@@ -25,42 +31,42 @@ struct MOUNTAIN_API Vector4
     f32 w = 0.f;
 
     /// @brief Equivalent to calling the default constructor.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     static constexpr Vector4 Zero() noexcept;
 
     /// @brief Equivalent to calling the default constructor.
     static constexpr void Zero(Vector4* result) noexcept;
 
     /// @brief Returns a Vector4 with @c x @c = @c 1, @c y @c = @c 0, @c z @c = @c 0, @c w @c = @c 0.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     static constexpr Vector4 UnitX() noexcept;
 
     /// @brief Returns a Vector4 with @c x @c = @c 1, @c y @c = @c 0, @c z @c = @c 0, @c w @c = @c 0.
     static constexpr void UnitX(Vector4* result) noexcept;
 
     /// @brief Returns a Vector4 with @c x @c = @c 0, @c y @c = @c 1, @c z @c = @c 0, @c w @c = @c 0.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     static constexpr Vector4 UnitY() noexcept;
 
     /// @brief Returns a Vector4 with @c x @c = @c 0, @c y @c = @c 1, @c z @c = @c 0, @c w @c = @c 0.
     static constexpr void UnitY(Vector4* result) noexcept;
 
     /// @brief Returns a Vector4 with @c x @c = @c 0, @c y @c = @c 0, @c z @c = @c 1, @c w @c = @c 0.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     static constexpr Vector4 UnitZ() noexcept;
 
     /// @brief Returns a Vector4 with @c x @c = @c 0, @c y @c = @c 0, @c z @c = @c 1, @c w @c = @c 0.
     static constexpr void UnitZ(Vector4* result) noexcept;
 
     /// @brief Returns a Vector4 with @c x @c = @c 0, @c y @c = @c 0, @c z @c = @c 0, @c w @c = @c 1.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     static constexpr Vector4 UnitW() noexcept;
 
     /// @brief Returns a Vector4 with @c x @c = @c 0, @c y @c = @c 0, @c z @c = @c 0, @c w @c = @c 1.
     static constexpr void UnitW(Vector4* result) noexcept;
 
     /// @brief Returns a Vector4 with all of its components set to @c 1.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     static constexpr Vector4 One() noexcept;
 
     /// @brief Returns a Vector4 with all of its components set to @c 1.
@@ -90,17 +96,17 @@ struct MOUNTAIN_API Vector4
     /// @brief Gets a pointer to the first component of this vector.
     ///
     /// @returns A pointer to the first component of this vector.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr const f32* Data() const noexcept;
 
     /// @brief Gets a pointer to the first component of this vector.
     ///
     /// @returns A pointer to the first component of this vector.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr f32* Data() noexcept;
 
     /// @brief Returns the length of the vector.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     f32 Length() const noexcept;
 
     /// @brief Creates a rescaled version of this Vector4.
@@ -108,17 +114,17 @@ struct MOUNTAIN_API Vector4
     /// @param newLength The new length to give to the Vector4.
     ///
     /// @see Length
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     Vector4 Rescaled(f32 newLength) const noexcept;
 
     /// @brief Returns the squared length of the vector.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr f32 SquaredLength() const noexcept;
 
     /// @brief Returns a normalized vector.
     ///
     /// @returns A vector with the same direction but a length of one.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     Vector4 Normalized() const noexcept;
 
     /// @brief Returns a normalized vector.
@@ -127,15 +133,15 @@ struct MOUNTAIN_API Vector4
     void Normalized(Vector4* result) const noexcept;
 
     /// @brief Check whether all of this vector's components are infinite.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     bool IsInfinity() const noexcept;
 
     /// @brief Check whether all of this vector's components are NaN.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     bool IsNaN() const noexcept;
 
     /// @brief Returns a · b.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     static constexpr f32 Dot(const Vector4& a, const Vector4& b) noexcept;
 
     /// @brief Retrieves this vector's component at index i.
@@ -143,7 +149,7 @@ struct MOUNTAIN_API Vector4
     /// @param i The index of the component to get. It would be 0 for x, 1 for y, etc...
     ///
     /// @returns The value of the component at index i.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr f32 operator[](size_t i) const;
 
     /// @brief Retrieves this vector's component at index i.
@@ -151,7 +157,7 @@ struct MOUNTAIN_API Vector4
     /// @param i The index of the component to get. It would be 0 for x, 1 for y, etc...
     ///
     /// @returns The value of the component at index i.
-    [[nodiscard]]
+    ATTRIBUTE_NODISCARD
     constexpr f32& operator[](size_t i);
 
     /// @brief Converts this Vector4 to a Vector2.
@@ -210,52 +216,52 @@ constexpr f32 Vector4::Dot(const Vector4& a, const Vector4& b) noexcept {	return
 
 constexpr f32 Vector4::operator[](const size_t i) const
 {
-    if (i < 4) [[likely]]
+    if (i < 4) ATTRIBUTE_LIKELY
         return *(Data() + i);
-    [[unlikely]]
+    ATTRIBUTE_UNLIKELY
         throw std::out_of_range("Vector4 subscript out of range");
 }
 
 constexpr f32& Vector4::operator[](const size_t i)
 {
-    if (i < 4) [[likely]]
+    if (i < 4) ATTRIBUTE_LIKELY
         return *(Data() + i);
-    [[unlikely]]
+    ATTRIBUTE_UNLIKELY
         throw std::out_of_range("Vector4 subscript out of range");
 }
 
 /// @brief Adds two Vector4 together.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr Vector4 operator+(const Vector4& a, const Vector4& b) noexcept { return Vector4(a.x + b.x, a.y + b.y, a.z + b.z, a.w + b.w); }
 
 /// @brief Returns the opposite of a Vector4.
 ///
 /// This effectively means replacing all values of this Vector4 with their opposite.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr Vector4 operator-(const Vector4& a) noexcept { return Vector4(-a.x, -a.y, -a.z, -a.w); }
 
 /// @brief Subtracts a Vector4 from another one.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr Vector4 operator-(const Vector4& a, const Vector4& b) noexcept { return a + -b; }
 
 /// @brief Multiplies two Vector4 component-wise.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr Vector4 operator*(const Vector4& a, const Vector4& b) noexcept { return Vector4(a.x * b.x, a.y * b.y, a.z * b.z, a.w * b.w); }
 
 /// @brief Multiplies a Vector4 by a @p factor.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr Vector4 operator*(const Vector4& v, const f32 factor) noexcept { return Vector4(v.x * factor, v.y * factor, v.z * factor, v.w * factor); }
 
 /// @brief Multiplies a Vector4 by a @p factor.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr Vector4 operator*(const f32 factor, const Vector4 v) noexcept { return v * factor; }
 
 /// @brief Divides a Vector4 by another one.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr Vector4 operator/(const Vector4& a, const Vector4& b) noexcept { return Vector4(a.x / b.x, a.y / b.y, a.z / b.z, a.w / b.w); }
 
 /// @brief Divides a Vector4 by a @p factor.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr Vector4 operator/(const Vector4& v, const f32 factor) noexcept { const f32 invFactor = 1.f / factor; return Vector4(v.x * invFactor, v.y * invFactor, v.z * invFactor, v.w * invFactor); }
 
 /// @brief Adds two Vector4 according to @ref operator+(const Vector4&, const Vector4&), placing the result in @p a.
@@ -277,7 +283,7 @@ constexpr Vector4 &operator/=(Vector4 &a, const Vector4& b) noexcept { return a 
 constexpr Vector4& operator/=(Vector4& v, const f32 factor) noexcept { return v = v / factor; }
 
 /// @brief Checks if two Vector4 are equal.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr bool operator==(const Vector4 a, const Vector4 b) noexcept
 {
     return a.x == b.x
@@ -287,7 +293,7 @@ constexpr bool operator==(const Vector4 a, const Vector4 b) noexcept
 }
 
 /// @brief Checks if two Vector4 are different.
-[[nodiscard]]
+ATTRIBUTE_NODISCARD
 constexpr bool operator!=(const Vector4 a, const Vector4 b) noexcept { return !(a == b); }
 
 /// @brief Streams a Vector4 into @p out, printing its values one by one on a single line.
