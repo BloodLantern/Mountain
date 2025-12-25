@@ -1,7 +1,5 @@
 cmake_minimum_required(VERSION 3.20)
 
-include(GNUInstallDirs)
-
 option(MOUNTAIN_OPT_BUILD_EXAMPLES "Build Mountain example projects" OFF)
 option(MOUNTAIN_OPT_BUILD_TESTS "Build and perform Mountain unit tests" OFF)
 option(MOUNTAIN_OPT_INSTALL "Generate and install Mountain targets" OFF)
@@ -13,11 +11,13 @@ endif ()
 
 project(
         Mountain
-        VERSION "1.0.1"
+        VERSION "1.0.2"
         HOMEPAGE_URL "https://github.com/BloodLantern/Mountain"
         DESCRIPTION "A simple game framework similar to MonoGame written in C++23."
         LANGUAGES C CXX
 )
+
+include(GNUInstallDirs)
 
 if (CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
     set(IS_TOPLEVEL_PROJECT TRUE)

@@ -5,11 +5,6 @@
   "homepage": "https://github.com/BloodLantern/Mountain",
   "license": "zlib",
   "dependencies": [
-    "opengl",
-    "magic-enum",
-    "minimp3",
-    "sdl3",
-    "stb",
     {
       "name": "freetype",
       "version>=": "2.13.3"
@@ -26,6 +21,26 @@
         "sdl3-binding",
         "opengl3-binding"
       ]
+    },
+    {
+      "name": "magic-enum",
+      "version>=": "0.9.7#1"
+    },
+    {
+      "name": "minimp3",
+      "version>=": "2021-11-30"
+    },
+    {
+      "name": "opengl",
+      "version>=": "2022-12-04#3"
+    },
+    {
+      "name": "sdl3",
+      "version>=": "3.2.22"
+    },
+    {
+      "name": "stb",
+      "version>=": "2024-07-29#1"
     }
   ],
   "features": {
