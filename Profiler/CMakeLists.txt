@@ -1,10 +1,8 @@
-set(
-        MOUNTAIN_PROFILER_SOURCES
+set(MOUNTAIN_PROFILER_SOURCES
         "src/Profiler.cpp"
         "src/TracyClient.cpp"
 )
-set(
-        MOUNTAIN_PROFILER_HEADERS
+set(MOUNTAIN_PROFILER_HEADERS
         "src/Profiler.hpp"
 )
 

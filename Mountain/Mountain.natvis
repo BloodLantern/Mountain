@@ -70,7 +70,7 @@
 
   <!--Utils-->
   <Type Name="Mountain::Event&lt;*&gt;">
-    <DisplayString>{{Registered functions = {m_Functions.m_Size}}}</DisplayString>
+    <DisplayString>{{Listeners = {m_Functions.m_Size}}}</DisplayString>
   </Type>
   <Type Name="Mountain::FileSystemWatcher">
     <DisplayString>{{Path = {m_Path}}}</DisplayString>

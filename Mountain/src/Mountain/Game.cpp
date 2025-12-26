@@ -17,60 +17,9 @@
 
 using namespace Mountain;
 
-Game::Game(const std::string& windowTitle, const Vector2i windowSize)
+namespace
 {
-    TracyNoop; // Make sure Tracy is correctly initialized
-
-    ZoneScoped;
-
-    Logger::Start();
-    Logger::OpenDefaultFile();
-
-    std::set_terminate(
-        []
-        ATTRIBUTE_NORETURN
-        {
-            Logger::LogWarning("std::terminate called, this might be because of an uncaught exception");
-
-            try
-            {
-                const std::exception_ptr exceptionPtr = std::current_exception();
-                if (exceptionPtr)
-                    std::rethrow_exception(exceptionPtr);
-
-                Logger::LogInfo("Exiting without exception");
-                Logger::Stop();
-            }
-            catch (const Exception& e)
-            {
-                Logger::LogFatal("Uncaught Mountain exception: {}", e);
-                Logger::Stop();
-                MessageBox::Show(std::format("Unhandled exception of type {}", e.GetName()).c_str(), std::format("{}", e).c_str(), MessageBox::Type::Ok, MessageBox::Icon::Error);
-            }
-            catch (const std::exception& e)
-            {
-                const c8* t = typeid(e).name();
-                Logger::LogFatal("Uncaught std exception of type {}: {}", t, e);
-                Logger::Stop();
-                MessageBox::Show(std::format("Unhandled exception of type {}", t).c_str(), std::format("{}", e).c_str(), MessageBox::Type::Ok, MessageBox::Icon::Error);
-            }
-
-#ifdef _DEBUG
-            std::abort();
-#else
-            std::exit(-1);  // NOLINT(concurrency-mt-unsafe)
-#endif
-        }
-    );
-
-    Logger::LogInfo("Initializing Mountain Framework");
-    Logger::LogVerbose("Working directory: {}", std::filesystem::current_path());
-
-    if (!Renderer::Initialize(windowTitle, windowSize))
-        THROW(InvalidOperationException{"Failed to initialize renderer"});
-
-    if (!Audio::Initialize())
-        Logger::LogError("Failed to initialize audio {}", windowSize);
+    bool initialized = false;
 }
 
 Game::~Game()
@@ -88,6 +37,8 @@ Game::~Game()
     Renderer::Shutdown();
 
     Logger::Stop();
+
+    initialized = false;
 }
 
 void Game::Play()
@@ -154,4 +105,65 @@ bool Game::NextFrame()
     Time::WaitForNextFrame();
 
     return !Window::shouldClose;
+}
+
+void Game::InitializeInternal(const std::string& windowTitle, const Vector2i windowSize)
+{
+    if (initialized)
+        THROW(InvalidOperationException{"A Game instance has already been constructed"});
+
+    initialized = true;
+
+    TracyNoop; // Make sure Tracy is correctly initialized
+
+    ZoneScoped;
+
+    Logger::Start();
+    Logger::OpenDefaultFile();
+
+    std::set_terminate(
+        []
+        ATTRIBUTE_NORETURN
+        {
+            Logger::LogWarning("std::terminate called, this might be because of an uncaught exception");
+
+            try
+            {
+                const std::exception_ptr exceptionPtr = std::current_exception();
+                if (exceptionPtr)
+                    std::rethrow_exception(exceptionPtr);
+
+                Logger::LogInfo("Exiting without exception");
+                Logger::Stop();
+            }
+            catch (const Exception& e)
+            {
+                Logger::LogFatal("Uncaught Mountain exception: {}", e);
+                Logger::Stop();
+                MessageBox::Show(std::format("Unhandled exception of type {}", e.GetName()).c_str(), std::format("{}", e).c_str(), MessageBox::Type::Ok, MessageBox::Icon::Error);
+            }
+            catch (const std::exception& e)
+            {
+                const c8* t = typeid(e).name();
+                Logger::LogFatal("Uncaught std exception of type {}: {}", t, e);
+                Logger::Stop();
+                MessageBox::Show(std::format("Unhandled exception of type {}", t).c_str(), std::format("{}", e).c_str(), MessageBox::Type::Ok, MessageBox::Icon::Error);
+            }
+
+#ifdef _DEBUG
+            std::abort();
+#else
+            std::exit(-1);  // NOLINT(concurrency-mt-unsafe)
+#endif
+        }
+    );
+
+    Logger::LogInfo("Initializing Mountain Framework");
+    Logger::LogVerbose("Working directory: {}", std::filesystem::current_path());
+
+    if (!Renderer::Initialize(windowTitle, windowSize))
+        THROW(InvalidOperationException{"Failed to initialize renderer"});
+
+    if (!Audio::Initialize())
+        Logger::LogError("Failed to initialize audio {}", windowSize);
 }

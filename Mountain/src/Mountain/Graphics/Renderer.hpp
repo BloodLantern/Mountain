@@ -9,11 +9,9 @@
 #include "Mountain/Utils/DateTime.hpp"
 #include "Mountain/Utils/Pointer.hpp"
 
-// ReSharper disable once CppInconsistentNaming
-struct FT_LibraryRec_;
 // ReSharper disable once CppEnforceTypeAliasCodeStyle
 // ReSharper disable once CppInconsistentNaming
-typedef FT_LibraryRec_* FT_Library;
+typedef struct FT_LibraryRec_* FT_Library;
 
 namespace Mountain
 {
@@ -44,6 +42,8 @@ namespace Mountain
         MOUNTAIN_API static void DebugString(DebugStringData data);
 
         MOUNTAIN_API static OpenGlVersion& GetOpenGlVersion();
+
+        MOUNTAIN_API static ImGuiContext* GetImGuiContext();
 
     private:
         static inline OpenGlVersion m_GlVersion;

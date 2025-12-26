@@ -24,10 +24,12 @@
 namespace
 {
     ATTRIBUTE_MAYBE_UNUSED
-    void OpenGlDebugCallback(const GLenum source, const GLenum type, GLuint, const GLenum severity, const GLsizei length, const GLchar* message, const void*)
+    void OpenGlDebugCallback(const GLenum source, const GLenum type, GLuint, const GLenum severity, const GLsizei length,
+                             const GLchar* message, const void*)
     {
         Mountain::Logger::LogLevel level;
-        switch (severity) {
+        switch (severity)
+        {
             case GL_DEBUG_SEVERITY_HIGH:
                 level = Mountain::Logger::LogLevel::Error;
                 break;
@@ -48,7 +50,8 @@ namespace
         }
 
         std::string_view src;
-        switch (source) {
+        switch (source)
+        {
             case GL_DEBUG_SOURCE_API:
                 src = "API";
                 break;
@@ -78,7 +81,8 @@ namespace
         }
 
         std::string_view t;
-        switch (type) {
+        switch (type)
+        {
             case GL_DEBUG_TYPE_ERROR:
                 t = "Error";
                 break;
@@ -114,7 +118,8 @@ namespace
         if (Mountain::BreakOnGraphicsError && level == Mountain::Logger::LogLevel::Error)
             __debugbreak();
 
-        Mountain::Logger::Log(level, "[OpenGL] Log of type {} received from {}: {}", t, src, std::string_view{message, static_cast<usize>(length)});
+        Mountain::Logger::Log(level, "[OpenGL] Log of type {} received from {}: {}", t, src,
+                              std::string_view{message, static_cast<usize>(length)});
     }
 }
 
@@ -175,6 +180,8 @@ void Mountain::Renderer::DebugString(DebugStringData data)
 
 Mountain::OpenGlVersion& Mountain::Renderer::GetOpenGlVersion() { return m_GlVersion; }
 
+ImGuiContext* Mountain::Renderer::GetImGuiContext() { return ImGui::GetCurrentContext(); }
+
 bool Mountain::Renderer::Initialize(const std::string& windowTitle, const Vector2i windowSize, const OpenGlVersion& glVersion)
 {
     ZoneScoped;
@@ -186,7 +193,7 @@ bool Mountain::Renderer::Initialize(const std::string& windowTitle, const Vector
     Window::Initialize(windowTitle, windowSize, glVersion);
 
     // Setup GLAD: load all OpenGL function pointers
-    if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(SDL_GL_GetProcAddress)))  // NOLINT(clang-diagnostic-cast-function-type-strict)
+    if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(SDL_GL_GetProcAddress))) // NOLINT(clang-diagnostic-cast-function-type-strict)
         THROW(Exception{"Failed to initialize GLAD"});
 
     TracyGpuContext
@@ -223,7 +230,8 @@ bool Mountain::Renderer::Initialize(const std::string& windowTitle, const Vector
     if (NoBinaryResources)
     {
         if (BuiltinShadersPath.empty() || BuiltinAssetsPath.empty())
-            THROW(InvalidGlobalValueException{"NoBinaryResources is true but at least one of BuiltinShadersPath and BuiltinAssetsPath hasn't been specified"});
+            THROW(InvalidGlobalValueException{
+            "NoBinaryResources is true but at least one of BuiltinShadersPath and BuiltinAssetsPath hasn't been specified"});
 
         FileManager::LoadDirectory(BuiltinShadersPath);
         FileManager::LoadDirectory(BuiltinAssetsPath);
@@ -331,10 +339,10 @@ void Mountain::Renderer::Shutdown()
     Logger::LogVerbose("Shutting down renderer");
 
     // Cleanup
-	ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplSDL3_Shutdown();
-	ImGui::DestroyPlatformWindows();
-	ImGui::DestroyContext();
+    ImGui::DestroyPlatformWindows();
+    ImGui::DestroyContext();
 
     Draw::Shutdown();
     FT_Done_FreeType(m_Freetype);

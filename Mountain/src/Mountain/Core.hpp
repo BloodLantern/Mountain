@@ -9,7 +9,7 @@
 #include "Mountain/Configuration.hpp"
 
 /// @file Core.hpp
-/// @brief This file is meant to be included by every single other header file of this project.
+/// @brief This file is meant to be included in every single other header file of this project.
 ///
 /// It declares typedefs for all numeric types such as @c s8, @c u32, @c f32, @c c8, @c usize...
 ///
@@ -195,7 +195,13 @@ namespace Mountain {}
 /// @param type The type to default the destructor of.
 #define DEFAULT_VIRTUAL_DESTRUCTOR(type) virtual ~type() = default;
 
+/// @brief Returns the given parameter converted to string, as if double-quotes had been put around it.
+/// @details For example, see the @c MOUNTAIN_VERSION_STRING macro. It is declared as @c STRINGIFY(MOUNTAIN_VERSION).
+/// If the declaration was using @c TO_STRING() instead, the result would've been @c "MOUNTAIN_VERSION".
 #define TO_STRING(x) #x
+/// @brief Returns the given parameter's value converted to string, as if double-quotes had been put around its result.
+/// @details For example, see the @c MOUNTAIN_VERSION_STRING macro. It is declared as @c STRINGIFY(MOUNTAIN_VERSION).
+/// Because the declaration is using @c STRINGIFY(), the result is the value of @c MOUNTAIN_VERSION, converted to string.
 #define STRINGIFY(x) TO_STRING(x)
 
 #define TO_WSTRING(x) L#x
@@ -212,3 +218,9 @@ namespace Mountain {}
 
 /// @brief Gets a temporary C null-terminated string from a @c std::wstring_view.
 #define WSTRING_VIEW_TO_C_STR(view) ::std::wstring{view}.c_str()
+
+/// @brief Override default ImGui config header
+#define IMGUI_USER_CONFIG "Mountain/ImGuiConfig.hpp"
+
+#define MOUNTAIN_VERSION_STRING STRINGIFY(MOUNTAIN_VERSION)
+#define MOUNTAIN_VERSION_WSTRING WSTRINGIFY(MOUNTAIN_VERSION)

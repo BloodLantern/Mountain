@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "Common.hpp"
+#include "PrecompiledHeader.hpp"
 
 #include <Mountain/Graphics/Effect.hpp>
 #include <Mountain/Graphics/Renderer.hpp>

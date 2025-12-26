@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "Common.hpp"
+#include "PrecompiledHeader.hpp"
 
 #include <Mountain/Ecs/Entity.hpp>
 #include <Mountain/Ecs/Component/Sprite.hpp>

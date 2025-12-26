@@ -1,5 +1,11 @@
 ﻿#pragma once
 
+// Because we #include this file kind of in a loop through Array and List
+// Clang seems to wrongly generate errors/warnings on all template type declarations
+// so we need this additional header guard
+#ifndef ENUMERABLE_EXTENSIONS_HPP
+#define ENUMERABLE_EXTENSIONS_HPP
+
 #include "Mountain/Core.hpp"
 #include "Mountain/Containers/FunctionTypes.hpp"
 #include "Mountain/Utils/Optional.hpp"
@@ -227,6 +233,7 @@ namespace Mountain
 // Start of EnumerableExt.inl
 
 #include "Mountain/Containers/Array.hpp"
+// ReSharper disable once CppUnusedIncludeDirective
 #include "Mountain/Containers/List.hpp"
 
 namespace Mountain
@@ -379,7 +386,7 @@ namespace Mountain
     template <Requirements::MountainEnumerable EnumerableT, typename T>
     T* FindLast(EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate)
     {
-        for (typename EnumerableT::Iterator it = enumerable.end() - 1; it + 1 != enumerable.begin(); it--)
+        for (typename EnumerableT::Iterator it = enumerable.end() - 1; it + 1 != enumerable.begin(); --it)
         {
             T& value = *it;
             if (predicate(value))
@@ -392,7 +399,7 @@ namespace Mountain
     template <Requirements::MountainEnumerable EnumerableT, typename T>
     const T* FindLast(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate)
     {
-        for (typename EnumerableT::ConstIterator it = enumerable.cend() - 1; it + 1 != enumerable.cbegin(); it--)
+        for (typename EnumerableT::ConstIterator it = enumerable.cend() - 1; it + 1 != enumerable.cbegin(); --it)
         {
             const T& value = *it;
             if (predicate(value))
@@ -405,7 +412,7 @@ namespace Mountain
     template <Requirements::MountainEnumerable EnumerableT, typename T>
     Optional<usize> FindIndex(const EnumerableT& enumerable, const Predicate<Meta::Identity<T>>& predicate)
     {
-        for (typename EnumerableT::ConstIterator it = enumerable.cbegin(); it != enumerable.cend(); it++)
+        for (typename EnumerableT::ConstIterator it = enumerable.cbegin(); it != enumerable.cend(); ++it)
         {
             if (predicate(*it))
                 return it - enumerable.cbegin();
@@ -500,3 +507,5 @@ namespace Mountain
         return !IsEmpty(enumerable) && index < GetSize(enumerable);
     }
 }
+
+#endif

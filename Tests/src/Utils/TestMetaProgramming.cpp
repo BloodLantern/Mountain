@@ -1,4 +1,4 @@
-﻿#include "Common.hpp"
+﻿#include "PrecompiledHeader.hpp"
 
 #include <Mountain/Window.hpp>
 #include <Mountain/Containers/Array.hpp>
@@ -161,7 +161,7 @@ TEST(Utils_MetaProgramming, Meta_IsTriviallyCopyable)
     EXPECT_TRUE(Meta::IsTriviallyCopyable<A>);
     EXPECT_TRUE(Meta::IsTriviallyCopyable<E>);
     EXPECT_FALSE(Meta::IsTriviallyCopyable<B>);
-    EXPECT_FALSE(Meta::IsTriviallyCopyable<Window>);
+    EXPECT_FALSE(Meta::IsTriviallyCopyable<Pointer<int>>);
 }
 
 TEST(Utils_MetaProgramming, Meta_IsTriviallyAssignable)

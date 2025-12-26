@@ -1,7 +1,5 @@
 #pragma once
 
-#include <cstring>
-
 #include "Mountain/Core.hpp"
 #include "Mountain/Containers/ContiguousIterator.hpp"
 // ReSharper disable once CppUnusedIncludeDirective
@@ -385,7 +383,7 @@ namespace Mountain
         const usize newSize = last - first;
         Reserve(newSize);
         m_Size = newSize;
-        for (InputIterator it = first; it != last; it++)
+        for (InputIterator it = first; it != last; ++it)
         {
             const usize index = it - first;
             new (m_Data + index) T{*it};
@@ -497,7 +495,7 @@ namespace Mountain
 
         Reserve(m_Size + additionalSize);
 
-        for (InputIterator it = first; it != last; it++)
+        for (InputIterator it = first; it != last; ++it)
         {
             const usize index = it - first;
             new (static_cast<void*>(m_Data + m_Size + index)) T{*it};
@@ -681,7 +679,7 @@ namespace Mountain
         Reserve(m_Size + additionalSize);
         ShiftElements(additionalSize, index, m_Size);
 
-        for (InputIterator it = first; it != last; it++)
+        for (InputIterator it = first; it != last; ++it)
         {
             const usize i = it - first;
             new (static_cast<void*>(m_Data + index + i)) T{*it};

@@ -1,5 +1,5 @@
 ﻿// ReSharper disable CppNoDiscardExpression
-#include "Common.hpp"
+#include "PrecompiledHeader.hpp"
 
 #include <array>
 

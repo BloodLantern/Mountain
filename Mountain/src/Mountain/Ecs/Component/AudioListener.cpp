@@ -11,6 +11,7 @@
 #include "Mountain/Audio/Audio.hpp"
 #include "Mountain/Audio/AudioContext.hpp"
 #include "Mountain/Ecs/Entity.hpp"
+#include "Mountain/Graphics/Renderer.hpp"
 #include "Mountain/Input/Time.hpp"
 
 using namespace Mountain;
@@ -23,12 +24,11 @@ void AudioListener::Update()
 
     // Position
     constexpr f32 positionZ = 20.f;
-    alListenerfv(AL_POSITION, Vector3(position.x, position.y, positionZ * Audio::GetDistanceFactor()).Data());
-    AudioContext::CheckError();
+    alListenerfv(AL_POSITION, Vector3{position.x, position.y, positionZ * Audio::GetDistanceFactor()}.Data());
     AudioContext::CheckError();
 
     const Vector2 velocity = dopplerEffect ? (position - m_LastPosition) / Time::GetDeltaTime() : Vector2::Zero();
-    constexpr std::array orientation = { -Vector3::UnitZ(), Vector3::UnitY() };
+    constexpr Array orientation = { -Vector3::UnitZ(), Vector3::UnitY() };
 
     // Velocity
     alListenerfv(AL_VELOCITY, static_cast<Vector3>(velocity).Data());

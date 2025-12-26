@@ -8,8 +8,8 @@ It will become available for Linux as well at some point.
 
 ## Language version and architecture
 
-This project is compiled using C++23 features (`/std:c++latest`), on MSVC, for the `x64` architecture.
-Also, it uses some very recent features from the Windows API (as recent as September 2023), so if the code doesn't compile, make sure to update to the latest Visual Studio version.
+This project is compiled using C++23 features
+Also, it uses some very recent features from the Windows API (if compiling under Windows), so if the code doesn't compile, make sure to update Visual Studio.
 
 ## Samples
 
@@ -23,20 +23,24 @@ Most types and functions have documentation in their respective header files, so
 
 ## How to use this library
 
-You can choose between two ways of using this framework for your projects.
+You need to have [vcpkg](https://vcpkg.io) installed. See their [get started documentation](https://learn.microsoft.com/en-us/vcpkg/get_started/overview#get-started-with-vcpkg).
 
-Both require to have [vcpkg](https://vcpkg.io) installed.
+### 1. Use the vcpkg package manager
 
-### 1. Use this as a submodule (recommended)
+If using manifest mode, run `vcpkg add port mountain`, otherwise run `vcpkg install mountain`.
 
-In a directory of your choice within your project, run `git submodule add https://github.com/BloodLantern/Mountain.git` and then `git submodule update --init --recursive`.
+This is the best way to use the framework as it is available both for CMake and MSBuild projects.
+
+### 2. Use this as a submodule
+
+In a directory of your choice within your project, run `git submodule add https://github.com/BloodLantern/Mountain.git` and then `git submodule update --init`.
 
 Add the `Mountain/Mountain.vcxproj` project to your solution and set it as a reference to your project using `Add > Reference...`.
 In your project configuration, add the `Mountain/src`, `Mountain/externals/src` and `MathToolbox/Source` folders to your include path.
 
-### 2. Build from source
+### 3. Build from source
 
-Clone the project using `git clone --recurse-submodules https://github.com/BloodLantern/Mountain.git`.
+Clone the project using `git clone https://github.com/BloodLantern/Mountain.git`.
 Open the Visual Studio solution file found in the root directory.
 After opening it, the only thing you have to do is to build the framework (Mountain project) in both the`Debug` and `Release` configuration.
 

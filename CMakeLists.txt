@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.20)
 
+set(MOUNTAIN_VERSION 1.0.3)
+
 option(MOUNTAIN_OPT_BUILD_EXAMPLES "Build Mountain example projects" OFF)
 option(MOUNTAIN_OPT_BUILD_TESTS "Build and perform Mountain unit tests" OFF)
 option(MOUNTAIN_OPT_INSTALL "Generate and install Mountain targets" OFF)
@@ -9,21 +11,14 @@ if (MOUNTAIN_OPT_BUILD_TESTS)
     set(VCPKG_MANIFEST_FEATURES "tests")
 endif ()
 
-project(
-        Mountain
-        VERSION "1.0.2"
+project(Mountain
+        VERSION ${MOUNTAIN_VERSION}
         HOMEPAGE_URL "https://github.com/BloodLantern/Mountain"
         DESCRIPTION "A simple game framework similar to MonoGame written in C++23."
         LANGUAGES C CXX
 )
 
 include(GNUInstallDirs)
-
-if (CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
-    set(IS_TOPLEVEL_PROJECT TRUE)
-else ()
-    set(IS_TOPLEVEL_PROJECT FALSE)
-endif ()
 
 set(EXPORT_NAMESPACE "${PROJECT_NAME}::")
 
@@ -36,8 +31,13 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
 # Enable vcpkg integration if the toolchain file is not provided via command line
-if (NOT CMAKE_TOOLCHAIN_FILE AND DEFINED ENV{VCPKG_ROOT})
-    set(CMAKE_TOOLCHAIN_FILE "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake" CACHE STRING "")
+if (DEFINED ENV{VCPKG_ROOT})
+    if (NOT DEFINED ${CMAKE_TOOLCHAIN_FILE})
+        set(CMAKE_TOOLCHAIN_FILE "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake" CACHE STRING "Path to the vcpkg CMake toolchain file")
+
+        # Just setting vcpkg.cmake as toolchain file does not seem to actually pull in the code
+        include($ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake)
+    endif ()
 endif ()
 
 # Find dependencies via vcpkg

@@ -1,4 +1,4 @@
-#include "Common.hpp"
+#include "PrecompiledHeader.hpp"
 
 #include "TestGame.hpp"
 
@@ -24,7 +24,7 @@
 using namespace Mountain;
 
 TestGame::TestGame(const c8* const windowTitle)
-    : Game(windowTitle, {1600, 900})
+    : Game{windowTitle, {1600, 900}}
 {
     ZoneScoped;
 

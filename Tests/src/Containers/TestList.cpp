@@ -1,5 +1,5 @@
 ﻿// ReSharper disable CppNoDiscardExpression
-#include "Common.hpp"
+#include "PrecompiledHeader.hpp"
 
 #include <list>
 
@@ -76,8 +76,8 @@ TEST(Containers_List, Enumerable_Average)
 
     const List floatList = intList.Cast<float_t>();
 
-    const float_t result1 = intList.Average<>();
-    const float_t result2 = floatList.Average<>();
+    const float_t result1 = intList.Average();
+    const float_t result2 = floatList.Average();
 
     EXPECT_EQ(result1, 3.f);
     EXPECT_EQ(result2, 3.f);

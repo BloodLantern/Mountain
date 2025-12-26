@@ -1,4 +1,4 @@
-﻿#include "Common.hpp"
+﻿#include "PrecompiledHeader.hpp"
 
 #include "Scenes/AudioScene.hpp"
 
@@ -12,24 +12,23 @@
 AudioScene::AudioScene()
     : Base{"Audio"}
 {
-    m_MouseEntity = new Entity;
-    m_AudioSource = m_MouseEntity->AddComponent<AudioSource>();
+    m_AudioSourceEntity = new Entity;
+    m_AudioSource = m_AudioSourceEntity->AddComponent<AudioSource>();
     m_AudioSource->SetLooping(true);
+    m_AudioSourceCollider = m_AudioSourceEntity->SetCollider<Circle>(Vector2::Zero(), 5.f);
+    m_AudioSourceEntity->position = Window::GetSize() * 0.5f;
 
-    m_Entities.AddNow(m_MouseEntity);
+    m_Entities.AddNow(m_AudioSourceEntity);
 
     m_AudioListenerEntity = new Entity;
     m_AudioListener = m_AudioListenerEntity->AddComponent<AudioListener>();
-    m_AudioListenerCollider = m_AudioListenerEntity->SetCollider<Circle>(Vector2::Zero(), 5.f);
 
     m_Entities.AddNow(m_AudioListenerEntity);
-
-    m_AudioListenerEntity->position = Window::GetSize() * 0.5f;
 }
 
 AudioScene::~AudioScene()
 {
-    delete m_MouseEntity;
+    delete m_AudioSourceEntity;
     delete m_AudioListenerEntity;
 }
 
@@ -53,50 +52,51 @@ void AudioScene::Update()
 {
     TestScene::Update();
 
-    m_MouseEntity->position = Input::GetMousePosition();
+    m_AudioListenerEntity->position = Input::GetMousePosition();
 
-    if (Input::GetMouseButton(MouseButton::Left, MouseButtonStatus::Pressed) && m_AudioListenerCollider->CheckCollision(Input::GetMousePosition()))
+    if (Input::GetMouseButton(MouseButton::Left, MouseButtonStatus::Pressed) && m_AudioSourceCollider->CheckCollision(Input::GetMousePosition()))
     {
-        m_AudioListenerDragStart = Input::GetMousePosition();
-        m_AudioListenerDragStartPosition = m_AudioListenerEntity->position;
+        m_AudioSourceDragStart = Input::GetMousePosition();
+        m_AudioSourceDragStartPosition = m_AudioSourceEntity->position;
     }
 
-    if (m_AudioListenerDragStart.HasValue() && Input::GetMouseButton(MouseButton::Left, MouseButtonStatus::Down))
-        m_AudioListenerEntity->position = m_AudioListenerDragStartPosition + Input::GetMousePosition() - m_AudioListenerDragStart.Value();
+    if (m_AudioSourceDragStart.HasValue() && Input::GetMouseButton(MouseButton::Left, MouseButtonStatus::Down))
+        m_AudioSourceEntity->position = m_AudioSourceDragStartPosition + Input::GetMousePosition() - m_AudioSourceDragStart.Value();
 
     if (Input::GetMouseButton(MouseButton::Left, MouseButtonStatus::Release))
-        m_AudioListenerDragStart.Reset();
+        m_AudioSourceDragStart.Reset();
 }
 
 void AudioScene::Render()
 {
     TestScene::Render();
 
-    Draw::CircleFilled(m_AudioListenerEntity->position + m_AudioListenerCollider->offset, m_AudioListenerCollider->radius);
+    Draw::CircleFilled(m_AudioSourceEntity->position + m_AudioSourceCollider->offset, m_AudioSourceCollider->radius);
 }
 
 void AudioScene::RenderImGui()
 {
     TestScene::RenderImGui();
 
-    ImGui::TextWrapped("The white dot is where the audio listener is located. Your mouse is a spatialized audio source, try moving it near the dot!");
+    ImGui::TextWrapped("The white dot is where the spatialized audio source is located. Your mouse is an audio listener, try moving it near the dot!");
 
-    if (ImGuiUtils::PushSeparatorText("Listener"))
+    if (ImGuiUtils::PushSeparatorText("Listener (mouse)"))
     {
         ImGui::DragFloat2("Position", m_AudioListenerEntity->position.Data());
-        ImGui::SetItemTooltip("You can also drag and drop the dot");
         ImGui::Checkbox("Doppler effect", &m_AudioListener->dopplerEffect);
         IMGUI_GET_SET(ImGui::SliderFloat, "Volume", m_AudioListener->, Volume, 0.f, 1.f);
 
         ImGuiUtils::PopSeparatorText();
     }
 
-    if (ImGuiUtils::PushSeparatorText("Spatialized source (mouse)"))
+    if (ImGuiUtils::PushSeparatorText("Spatialized source"))
     {
         if (ImGui::Button("Play"))
             m_AudioSource->Play();
         /*if (ImGui::Button("Stop")) // TODO - Stop m_AudioSource
             m_AudioSource->Stop();*/
+        ImGui::DragFloat2("Position", m_AudioSourceEntity->position.Data());
+        ImGui::SetItemTooltip("You can also drag and drop the dot");
         IMGUI_GET_SET(ImGui::SliderFloat, "Volume", m_AudioSource->, Volume, 0.f, 1.f);
         IMGUI_GET_SET(ImGui::SliderFloat, "Pitch", m_AudioSource->, Pitch, 0.f, 2.f);
         IMGUI_GET_SET(ImGui::Checkbox, "Looping", m_AudioSource->, Looping);

@@ -66,8 +66,9 @@ namespace Mountain
         Array<u8, Data4Size> m_Data4{};
     };
 
-    CHECK_REQUIREMENT(Requirements::StringConvertible, Guid);
+    CHECK_REQUIREMENT(Requirements::Equatable, Guid);
     CHECK_REQUIREMENT(Requirements::Hashable, Guid);
+    CHECK_REQUIREMENT(Requirements::StringConvertible, Guid);
 }
 
 // Start of Guid.inl

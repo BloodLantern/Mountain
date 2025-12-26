@@ -82,6 +82,13 @@ namespace Mountain
         THROW_HELPER_FUNC(InvalidIterator, InvalidOperationException, "The given iterator is invalid for this container.")
         THROW_HELPER_FUNC_ARG(IndexOutOfRange, ArgumentOutOfRangeException, "The given index is out of range for this container.")
         THROW_HELPER_FUNC(OptionalNoValue, EmptyOptionalAccess, "Cannot get the value of an empty Optional.")
+        THROW_HELPER_FUNC_ARG(VersionComponentNegative, ArgumentOutOfRangeException, "The given Version component is negative.")
+
+        static constexpr void VersionThrowIfComponentNegative(const s32 componentValue, const c8* componentName)
+        {
+            if (componentValue < 0)
+                throw VersionComponentNegativeException(componentName);
+        }
     };
 }
 

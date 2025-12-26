@@ -1,5 +1,5 @@
 ﻿// ReSharper disable CppNoDiscardExpression
-#include "Common.hpp"
+#include "PrecompiledHeader.hpp"
 
 #include <Mountain/Utils/TimeSpan.hpp>
 

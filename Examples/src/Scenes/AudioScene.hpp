@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "Common.hpp"
+#include "PrecompiledHeader.hpp"
 
 #include <Mountain/Ecs/Entity.hpp>
 #include <Mountain/Ecs/Component/AudioListener.hpp>
@@ -30,9 +30,9 @@ public:
     void End() override;
 
 private:
-    Entity* m_MouseEntity = nullptr;
+    Entity* m_AudioSourceEntity = nullptr;
     Entity* m_AudioListenerEntity = nullptr;
-    Circle* m_AudioListenerCollider = nullptr;
+    Circle* m_AudioSourceCollider = nullptr;
 
     AudioListener* m_AudioListener = nullptr;
     AudioSource* m_AudioSource = nullptr;
@@ -41,6 +41,6 @@ private:
     Pointer<AudioTrack> m_AudioPlayTrack;
     Pointer<AudioTrack> m_StereoAudioTrack;
 
-    Optional<Vector2> m_AudioListenerDragStart;
-    Vector2 m_AudioListenerDragStartPosition;
+    Optional<Vector2> m_AudioSourceDragStart;
+    Vector2 m_AudioSourceDragStartPosition;
 };

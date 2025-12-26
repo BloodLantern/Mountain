@@ -10,12 +10,6 @@
 /// @file vector2.hpp
 /// @brief Defines the Vector2 struct.
 
-/// @brief Declare ImGui Vector2 conversions
-/// @note This file needs to be included before ImGui for this macro to work.
-#define IM_VEC2_CLASS_EXTRA \
-    constexpr ImVec2(const Vector2& f) : x(f.x), y(f.y) {} \
-    operator Vector2() const { return Vector2(x, y); }
-
 struct Vector2i;
 struct Vector3;
 struct Vector4;

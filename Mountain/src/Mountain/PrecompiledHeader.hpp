@@ -14,9 +14,9 @@
 
 #include <magic_enum/magic_enum.hpp>
 
-#include "Math/Math.hpp" // We need Vector2 and Vector4 before ImGui
-
 #include <imgui.h>
+
+#include "Math/Math.hpp"
 
 #include "Mountain/Profiler.hpp"
 #include "Mountain/Containers/Array.hpp"

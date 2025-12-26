@@ -1,5 +1,24 @@
-file(GLOB_RECURSE MOUNTAIN_EXAMPLES_SOURCES "src/*.cpp")
-file(GLOB_RECURSE MOUNTAIN_EXAMPLES_HEADERS "src/*.hpp")
+set(MOUNTAIN_EXAMPLES_SOURCES
+        src/Main.cpp
+        src/Scenes/AudioScene.cpp
+        src/Scenes/ParticleSystemScene.cpp
+        src/Scenes/PostProcessingEffectsScene.cpp
+        src/Scenes/ShapesScene.cpp
+        src/Scenes/SpriteAnimationsScene.cpp
+        src/Scenes/TestScene.cpp
+        src/TestGame.cpp
+)
+
+set(MOUNTAIN_EXAMPLES_HEADERS
+        src/PrecompiledHeader.hpp
+        src/Scenes/AudioScene.hpp
+        src/Scenes/ParticleSystemScene.hpp
+        src/Scenes/PostProcessingEffectsScene.hpp
+        src/Scenes/ShapesScene.hpp
+        src/Scenes/SpriteAnimationsScene.hpp
+        src/Scenes/TestScene.hpp
+        src/TestGame.hpp
+)
 
 add_executable(Examples ${MOUNTAIN_EXAMPLES_SOURCES} ${MOUNTAIN_EXAMPLES_HEADERS})
 
@@ -8,7 +27,7 @@ target_include_directories(Examples PRIVATE src)
 target_link_libraries(Examples PRIVATE Mountain)
 
 # Precompiled headers
-target_precompile_headers(Examples PRIVATE src/Common.hpp)
+target_precompile_headers(Examples PRIVATE src/PrecompiledHeader.hpp)
 
 # Copy shaders and assets to output directory
 add_custom_command(

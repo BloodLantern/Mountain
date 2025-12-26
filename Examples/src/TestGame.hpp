@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Common.hpp"
+#include "PrecompiledHeader.hpp"
 
 #include <Mountain/Game.hpp>
 #include <Mountain/Profiler.hpp>

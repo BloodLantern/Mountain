@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Graphics/Renderer.hpp"
 #include "Mountain/Core.hpp"
 
 namespace Mountain
@@ -28,15 +29,17 @@ namespace Mountain
     /// @c Window::SetShouldClose()), @c Shutdown() gets called. This is where the user application can
     /// clean up everything it needs before closing.
     /// The last thing that happens is the @c Game destructor in which the framework cleans up.
-    class MOUNTAIN_API Game
+    class Game
     {
     public:
-        explicit Game(const std::string& windowTitle, Vector2i windowSize = { 1280, 720 });
-        virtual ~Game();
+        explicit inline Game(const std::string& windowTitle, Vector2i windowSize = { 1280, 720 });
+        MOUNTAIN_API virtual ~Game();
 
         DEFAULT_COPY_MOVE_OPERATIONS(Game)
 
-        void Play();
+        /// @brief Handles the whole @c Game lifetime.
+        /// @details Equivalent to calling @c LoadResources(), @c Initialize(), @c MainLoop(), and @c Shutdown().
+        MOUNTAIN_API void Play();
 
         /// @brief Used to load any necessary @c Resource using the @c FileManager and @c ResourceManager
         /// static classes.
@@ -47,13 +50,13 @@ namespace Mountain
 
         /// @brief Called once. Runs until the window is closed and calls all the
         /// necessary functions of the game.
-        void MainLoop();
+        MOUNTAIN_API void MainLoop();
 
         /// @brief Called once before the first @c NextFrame() call.
-        void Start();
+        MOUNTAIN_API void Start();
 
         /// @brief Runs a single frame. Automatically called in @c MainLoop().
-        bool NextFrame();
+        MOUNTAIN_API bool NextFrame();
 
         /// @brief Used to clean everything up before the application closes.
         virtual void Shutdown() = 0;
@@ -63,5 +66,22 @@ namespace Mountain
 
         /// @brief Called each frame once after @c Update(). Used to render the current state of the game.
         virtual void Render() = 0;
+
+    private:
+        MOUNTAIN_API static void InitializeInternal(const std::string& windowTitle, Vector2i windowSize);
     };
+}
+
+// Start of Game.inl
+
+namespace Mountain
+{
+    inline Game::Game(const std::string& windowTitle, const Vector2i windowSize)
+    {
+        InitializeInternal(windowTitle, windowSize);
+
+        // By inlining the constructor, we force these functions to be called from the client application,
+        // which in turn sets the client's ImGui context to the Mountain shared object one.
+        ImGui::SetCurrentContext(Renderer::GetImGuiContext());
+    }
 }

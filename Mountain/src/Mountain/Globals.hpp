@@ -6,19 +6,21 @@
 #include "Core.hpp"
 
 /// @file Globals.hpp
-/// @brief This file contains global configuration variables that can be modified before any calls to the framework functions.
+/// @brief This file contains global configuration variables that can be modified before
+/// any calls are made to the framework functions.
 
 #ifdef MOUNTAIN_EXPORT
-#define PUBLIC_GLOBAL(varType, varName, defaultValue) MOUNTAIN_API inline varType varName = defaultValue;
+#define PUBLIC_GLOBAL(varType, varName, defaultValue) MOUNTAIN_API inline varType varName = defaultValue
 #else
-#define PUBLIC_GLOBAL(varType, varName, defaultValue) MOUNTAIN_API varType varName;
+#define PUBLIC_GLOBAL(varType, varName, defaultValue) MOUNTAIN_API extern varType varName
 #endif
 
 namespace Mountain
 {
-    /// @brief Whether to <b>not</b> use packaged binary resources.
+    /// @brief Whether <b>not</b> to use packaged binary resources.
     /// @details If this is @c true, @c BuiltinShadersPath and @c BuiltinAssetsPath must be set.
-    /// This means that instead of using the packaged shader files within the Mountain DLL, the files will instead be loaded from the file system.
+    /// This means that instead of using the packaged shader files within the Mountain DLL,
+    /// the files will instead be loaded from the file system.
     /// This can be useful in case you need to edit the builtin shaders because you can then use hot-reloading.
     PUBLIC_GLOBAL(bool, NoBinaryResources, false);
     /// @brief The path to the Mountain builtin shaders directory.
@@ -34,6 +36,6 @@ namespace Mountain
     /// @brief Whether <b>not</b> to call @c Coroutine::UpdateAll() every frame.
     PUBLIC_GLOBAL(bool, ManualCoroutineUpdates, false);
     /// @brief Whether to disable the default Mountain audio API.
-    /// @details This can be used if you want another audio API or if you want to manage the audio yourself.
+    /// @details This can be used if you want to use another audio API or if you want to manage the audio yourself.
     PUBLIC_GLOBAL(bool, NoBuiltinAudio, false);
 }

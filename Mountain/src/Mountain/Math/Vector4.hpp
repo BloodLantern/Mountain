@@ -10,12 +10,6 @@
 /// @file vector4.hpp
 /// @brief Defines the Vector4 struct.
 
-/// @brief Declare ImGui Vector4 conversions
-/// @note This file needs to be included before ImGui for this macro to work.
-#define IM_VEC4_CLASS_EXTRA \
-    constexpr ImVec4(const Vector4& f) : x(f.x), y(f.y), z(f.z), w(f.w) {} \
-    operator Vector4() const { return Vector4(x, y, z, w); }
-
 struct Matrix;
 
 /// @brief The Vector4 struct represents either a four-dimensional vector or a point.
