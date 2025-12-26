@@ -5,11 +5,7 @@
 
 A (currently) Windows-only **C++ Framework for making 2D games**.
 It will become available for Linux as well at some point.
-
-## Language version and architecture
-
-This project is compiled using C++23 features
-Also, it uses some very recent features from the Windows API (if compiling under Windows), so if the code doesn't compile, make sure to update Visual Studio.
+This project uses C++23 features.
 
 ## Samples
 
@@ -23,7 +19,9 @@ Most types and functions have documentation in their respective header files, so
 
 ## How to use this library
 
-You need to have [vcpkg](https://vcpkg.io) installed. See their [get started documentation](https://learn.microsoft.com/en-us/vcpkg/get_started/overview#get-started-with-vcpkg).
+First, you need to have [vcpkg](https://vcpkg.io) installed. See their [get started documentation](https://learn.microsoft.com/en-us/vcpkg/get_started/overview#get-started-with-vcpkg).
+
+Then, you can choose between either using vcpkg or building the framework from source.
 
 ### 1. Use the vcpkg package manager
 
@@ -31,35 +29,26 @@ If using manifest mode, run `vcpkg add port mountain`, otherwise run `vcpkg inst
 
 This is the best way to use the framework as it is available both for CMake and MSBuild projects.
 
-### 2. Use this as a submodule
-
-In a directory of your choice within your project, run `git submodule add https://github.com/BloodLantern/Mountain.git` and then `git submodule update --init`.
-
-Add the `Mountain/Mountain.vcxproj` project to your solution and set it as a reference to your project using `Add > Reference...`.
-In your project configuration, add the `Mountain/src`, `Mountain/externals/src` and `MathToolbox/Source` folders to your include path.
-
-### 3. Build from source
+### 2. Build from source
 
 Clone the project using `git clone https://github.com/BloodLantern/Mountain.git`.
-Open the Visual Studio solution file found in the root directory.
-After opening it, the only thing you have to do is to build the framework (Mountain project) in both the`Debug` and `Release` configuration.
 
-All the binaries can be found in the `x64/(Debug|Release)` folder.
-Additionally, copy the header files from `Mountain/src`.
-As the framework changes, you might also need to get some header files from `Mountain/externals/src`.
-In its current state, you need the `ImGui` and `magic_enum` folders, but you might want to take everything just in case.
-You also need the math headers, which are located in `MathToolbox/Source`.
+Run `cmake -S . -B build`, then `cmake --build build --config Debug` or `cmake --build build --config Release` depending on your preferred configuration.
+
+All the binaries can be found in the `build/bin` folder.
+Additionally, copy the `Mountain` directory from `Mountain/src` containing the header files.
+As the framework changes, you might also need to get some header files from `build/vcpkg_installed/<your-triplet>/include`.
+In its current state, you need all the `ImGui` headers and the `magic_enum` folder, but you might want to take everything just in case.
 
 To then use the framework in any of your projects, do as you would usually: include the necessary headers,
 compile by statically linking against the corresponding `Mountain.lib`
-(`Debug` or `Release`) and add the correct `Mountain.dll` to your executable file directory.
+(`Debug` or `Release`) and add the related `Mountain.dll` to your executable file directory.
 
 ## Profiling
 
 This project uses the [Tracy](https://github.com/wolfpld/tracy) profiler.
 To enable profiling of the framework,
-add the `Profiler/Profiler.vcxproj` project to your solution and set it as a reference to both your project and Mountain.
-The last thing to do is to edit the `Mountain/src/Mountain/Configuration.hpp` file and define `MOUNTAIN_USE_PROFILER`.
+set the `MOUNTAIN_OPT_PROFILE` CMake option to `ON`.
 
 ## External dependencies used
 
@@ -71,9 +60,8 @@ The last thing to do is to edit the `Mountain/src/Mountain/Configuration.hpp` fi
 - [magic_enum](https://github.com/Neargye/magic_enum)
 - [SDL3](https://wiki.libsdl.org/SDL3/FrontPage)
 - [minimp3](https://github.com/lieff/minimp3)
-- [stb_image](https://github.com/nothings/stb/blob/master/stb_image.h)
-- [stb_vorbis](https://github.com/nothings/stb/blob/master/stb_vorbis.h)
-- [MathToolbox](https://github.com/BloodLantern/MathToolbox) (Submodule)
+- [stb](https://github.com/nothings/stb)
+- [MathToolbox](https://github.com/BloodLantern/MathToolbox) (Now merged into this repository)
 
 ## Roadmap
 
@@ -130,3 +118,5 @@ The last thing to do is to edit the `Mountain/src/Mountain/Configuration.hpp` fi
 - Add a way to use stereo audio files as mono sources and vice-versa
 - Add an API to procedurally generate shaders
 - Add a tweening system
+- ~~Switch to CMake~~
+- Publish to vcpkg
