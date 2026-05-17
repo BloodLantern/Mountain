@@ -474,7 +474,7 @@ namespace Mountain
 
         if constexpr (Meta::IsTriviallyCopyConstructible<T>)
         {
-            std::memcpy(static_cast<void*>(m_Data + m_Size), static_cast<const void*>(data), count * sizeof(T));  // NOLINT(bugprone-sizeof-expression)
+            memcpy(static_cast<void*>(m_Data + m_Size), static_cast<const void*>(data), count * sizeof(T));  // NOLINT(bugprone-sizeof-expression)
         }
         else
         {
@@ -657,7 +657,7 @@ namespace Mountain
 
         if constexpr (Meta::IsTriviallyCopyConstructible<T>)
         {
-            std::memcpy(static_cast<void*>(m_Data + index), static_cast<const void*>(data), count * sizeof(T));  // NOLINT(bugprone-sizeof-expression)
+            memcpy(static_cast<void*>(m_Data + index), static_cast<const void*>(data), count * sizeof(T));  // NOLINT(bugprone-sizeof-expression)
         }
         else
         {
@@ -995,7 +995,7 @@ namespace Mountain
     }
 
     template <Concepts::DynamicContainerType T>
-    void List<T>::IncreaseCapacity() { Reserve(std::max(m_Capacity * 2, 2ull)); }
+    void List<T>::IncreaseCapacity() { Reserve(std::max(m_Capacity * 2, static_cast<usize>(2))); }
 
     template <Concepts::DynamicContainerType T>
     void List<T>::IncreaseCapacityIfFull()
@@ -1024,7 +1024,7 @@ namespace Mountain
 
         if constexpr (Meta::IsTriviallyMoveConstructible<T>)
         {
-            std::memmove(static_cast<void*>(destination), static_cast<void*>(source), amountToShift * sizeof(T));  // NOLINT(bugprone-sizeof-expression)
+            memmove(static_cast<void*>(destination), static_cast<void*>(source), amountToShift * sizeof(T));  // NOLINT(bugprone-sizeof-expression)
         }
         else
         {

@@ -1,6 +1,4 @@
-﻿
-
-#include "Mountain/Utils/Windows.hpp"
+﻿#include "Mountain/Platform/Windows/Windows.hpp"
 
 #ifdef ENVIRONMENT_WINDOWS
 

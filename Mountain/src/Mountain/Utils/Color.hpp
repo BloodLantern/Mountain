@@ -991,7 +991,7 @@ namespace Mountain
 
     constexpr Color Color::FromHex(const u32 rgba)
     {
-        return Color{static_cast<u32>(_byteswap_ulong(rgba))};
+        return Color{static_cast<u32>(std::byteswap(rgba))};
     }
 
     constexpr Color::Color(const f32 rgb, const f32 a): r(rgb), g(rgb), b(rgb), a(a) {}

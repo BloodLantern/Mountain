@@ -64,6 +64,9 @@ namespace Mountain
 
     private:
         ExceptionState m_State;
+#ifndef COMPILER_MSVC
+        const c8* m_Message = "";
+#endif
 
         void SetStateCurrent() noexcept;
     };

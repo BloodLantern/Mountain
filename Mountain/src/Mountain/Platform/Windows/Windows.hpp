@@ -6,7 +6,7 @@
 
 #include <string>
 
-/// @file windows.hpp
+/// @file Windows.hpp
 /// @brief A way to include the @c <Windows.h> header without some of its conflicting macros.
 
 #undef APIENTRY

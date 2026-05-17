@@ -48,6 +48,9 @@ set(MOUNTAIN_SOURCES
         src/Mountain/Math/Vector2i.cpp
         src/Mountain/Math/Vector3.cpp
         src/Mountain/Math/Vector4.cpp
+        src/Mountain/Platform/Windows/Windows.cpp
+        src/Mountain/Platform/Linux/Linux.cpp
+        src/Mountain/Platform/Platform.cpp
         src/Mountain/Resource/AudioTrack.cpp
         src/Mountain/Resource/ComputeShader.cpp
         src/Mountain/Resource/Font.cpp
@@ -69,7 +72,6 @@ set(MOUNTAIN_SOURCES
         src/Mountain/Utils/Stopwatch.cpp
         src/Mountain/Utils/TimeSpan.cpp
         src/Mountain/Utils/Utils.cpp
-        src/Mountain/Utils/Windows.cpp
         src/Mountain/Window.cpp
         src/Mountain/Utils/Version.cpp
 )
@@ -191,6 +193,9 @@ set(MOUNTAIN_HEADERS
         src/Mountain/Math/Vector2i.hpp
         src/Mountain/Math/Vector3.hpp
         src/Mountain/Math/Vector4.hpp
+        src/Mountain/Platform/Windows/Windows.hpp
+        src/Mountain/Platform/Linux/Linux.hpp
+        src/Mountain/Platform/Platform.hpp
         src/Mountain/Mountain.hpp
         src/Mountain/PrecompiledHeader.hpp
         src/Mountain/Profiler.hpp
@@ -224,7 +229,6 @@ set(MOUNTAIN_HEADERS
         src/Mountain/Utils/TimeSpan.hpp
         src/Mountain/Utils/TsQueue.hpp
         src/Mountain/Utils/Utils.hpp
-        src/Mountain/Utils/Windows.hpp
         src/Mountain/Window.hpp
         src/Mountain/Utils/Version.hpp
 )

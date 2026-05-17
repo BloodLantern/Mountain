@@ -3,6 +3,5 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/MathToolbox" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/../vcpkg" vcs="Git" />
   </component>
 </project>

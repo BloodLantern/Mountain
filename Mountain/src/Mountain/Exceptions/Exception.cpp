@@ -4,7 +4,7 @@ using namespace Mountain;
 
 namespace
 {
-    ExceptionState currentException;
+    thread_local ExceptionState currentException;
 }
 
 std::string ExceptionState::ToString() const
@@ -21,7 +21,7 @@ void Mountain::SetCurrentExceptionState(const ExceptionState& state)
     Logger::Synchronize();
 }
 
-void Mountain::SetCurrentExceptionState(const c8* function, const c8* file, s32 line)
+void Mountain::SetCurrentExceptionState(const c8* function, const c8* file, const s32 line)
 {
     return SetCurrentExceptionState(ExceptionState{function, file, line});
 }
@@ -42,7 +42,15 @@ Exception& Exception::operator=(const Exception& other) noexcept
     return *this;
 }
 
-Exception::Exception(const c8* message) noexcept : exception(message) { SetStateCurrent(); }
+Exception::Exception(const c8* message) noexcept
+#ifdef COMPILER_MSVC
+    : exception(message)
+#else
+    : m_Message{message}
+#endif
+{
+    SetStateCurrent();
+}
 
 const c8* Exception::GetMessage() const noexcept { return what(); }
 
