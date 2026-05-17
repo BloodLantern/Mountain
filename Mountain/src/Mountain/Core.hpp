@@ -137,6 +137,7 @@ namespace Mountain {}
         static constexpr bool is_flags = true; \
     };
 
+#ifdef ENVIRONMENT_WINDOWS
 /// @brief Defines global definitions that make OpenGL use the dedicated GPU instead of the integrated one
 /// Source: https://www.reddit.com/r/opengl/comments/unc3fy/comment/i8728y3/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
 #define USE_DEDICATED_GPU \
@@ -145,6 +146,11 @@ namespace Mountain {}
         _declspec(dllexport) u32 NvOptimusEnablement = 1; \
         _declspec(dllexport) s32 AmdPowerXpressRequestHighPerformance = 1; \
     }
+#else
+/// @brief On Windows, this makes OpenGL use the dedicated GPU instead of the integrated one. Has no effect on Linux.
+/// Source: https://www.reddit.com/r/opengl/comments/unc3fy/comment/i8728y3/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
+#define USE_DEDICATED_GPU
+#endif
 
 /// @brief Defines a getter for the field @p internalName, of type @p type, with the name @c Get##name and the given specifiers
 #define GETTER_HELPER(type, preSpecifiers, postSpecifiers, name, internalName) ATTRIBUTE_NODISCARD preSpecifiers type Get##name() postSpecifiers noexcept { return internalName; }

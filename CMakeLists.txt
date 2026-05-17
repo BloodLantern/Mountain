@@ -30,16 +30,6 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
-# Enable vcpkg integration if the toolchain file is not provided via command line
-if (DEFINED ENV{VCPKG_ROOT})
-    if (NOT DEFINED ${CMAKE_TOOLCHAIN_FILE})
-        set(CMAKE_TOOLCHAIN_FILE "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake" CACHE STRING "Path to the vcpkg CMake toolchain file")
-
-        # Just setting vcpkg.cmake as toolchain file does not seem to actually pull in the code
-        include($ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake)
-    endif ()
-endif ()
-
 # Find dependencies via vcpkg
 find_package(Freetype REQUIRED)
 find_package(SDL3 CONFIG REQUIRED)

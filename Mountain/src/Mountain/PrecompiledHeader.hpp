@@ -1,8 +1,5 @@
 #pragma once
 
-#ifndef MOUNTAIN_PRECOMPILED_HEADER_HPP
-#define MOUNTAIN_PRECOMPILED_HEADER_HPP
-
 #include "Mountain/Core.hpp"
 
 #include <chrono>
@@ -29,5 +26,3 @@
 #include "Mountain/Utils/MetaProgramming.hpp"
 #include "Mountain/Utils/Pointer.hpp"
 #include "Mountain/Utils/Requirements.hpp"
-
-#endif
