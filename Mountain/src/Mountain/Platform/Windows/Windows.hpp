@@ -6,6 +6,8 @@
 
 #include <string>
 
+#include "Mountain/Utils/TimeSpan.hpp"
+
 /// @file Windows.hpp
 /// @brief A way to include the @c <Windows.h> header without some of its conflicting macros.
 
@@ -30,6 +32,10 @@ namespace Mountain::Windows
     MOUNTAIN_API bool CheckError();
 
     MOUNTAIN_API void SilenceError();
+
+    MOUNTAIN_API bool Sleep(TimeSpan duration);
+
+    MOUNTAIN_API void Cleanup();
 
     ATTRIBUTE_NODISCARD
     MOUNTAIN_API std::string GetAppdataLocalPath();

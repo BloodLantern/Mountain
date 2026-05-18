@@ -6,6 +6,9 @@
 
 namespace Mountain::Linux
 {
+    MOUNTAIN_API bool Sleep(TimeSpan duration);
+
+    MOUNTAIN_API void Cleanup();
 }
 
 #endif

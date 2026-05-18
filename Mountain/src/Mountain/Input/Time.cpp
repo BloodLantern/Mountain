@@ -6,9 +6,15 @@
 
 #include "Mountain/Screen.hpp"
 #include "Mountain/Window.hpp"
-#include "Mountain/Utils/Windows.hpp"
+#include "Mountain/Platform/Platform.hpp"
 
 using namespace Mountain;
+
+namespace
+{
+    f64 accumulatedSleepError = 0.0;
+    f64 timeSlept = 0.0;
+}
 
 f32 Time::GetTargetDeltaTime()
 {
@@ -21,62 +27,11 @@ bool Time::OnInterval(const f32 interval) { return Calc::OnInterval(m_TotalTime,
 
 bool Time::OnIntervalUnscaled(const f32 interval) { return Calc::OnInterval(m_TotalTimeUnscaled, m_LastTotalTimeUnscaled, interval); }
 
-namespace
-{
-    HANDLE waitableTimer = nullptr;
-    f64 accumulatedSleepError = 0.0;
-    f64 timeSlept = 0.0;
-
-    bool WaitWaitableTimer(const TimeSpan timeSpan)
-    {
-        if (!waitableTimer)
-            return false;
-
-        const u64 ul = static_cast<u64>(-timeSpan.GetTicks());
-        const FILETIME waitDuration{
-            .dwLowDateTime = static_cast<DWORD>(ul & 0xFFFFFFFF),
-            .dwHighDateTime = static_cast<DWORD>(ul >> 32)
-        };
-
-        if (SetWaitableTimerEx(waitableTimer, reinterpret_cast<const LARGE_INTEGER*>(&waitDuration), 0, nullptr, nullptr, nullptr, 0))
-        {
-            WaitForSingleObject(waitableTimer, INFINITE);
-            Windows::CheckError();
-            return true;
-        }
-
-        Windows::SilenceError();
-
-        return false;
-    }
-}
-
 void Time::Initialize()
 {
     ZoneScoped;
 
     m_Stopwatch.Start();
-
-    // Attempt to create a high-resolution timer, only available since Windows 10, version 1803
-    waitableTimer = CreateWaitableTimerEx(nullptr, nullptr, CREATE_WAITABLE_TIMER_MANUAL_RESET | CREATE_WAITABLE_TIMER_HIGH_RESOLUTION, TIMER_ALL_ACCESS);
-
-    // Fall back to a more supported version if not available.
-    // This is still far more accurate than std::this_thread::sleep_for.
-    if (!waitableTimer)
-        waitableTimer = CreateWaitableTimerEx(nullptr, nullptr, CREATE_WAITABLE_TIMER_MANUAL_RESET, TIMER_ALL_ACCESS);
-
-    Windows::SilenceError();
-}
-
-void Time::Shutdown()
-{
-    ZoneScoped;
-
-    if (waitableTimer)
-    {
-        CloseHandle(waitableTimer);
-        Windows::CheckError();
-    }
 }
 
 void Time::Update()
@@ -146,7 +101,7 @@ f64 Time::SleepFor(const f64 milliseconds)
 
     const TimeSpan timeSpan = TimeSpan::FromMilliseconds(milliseconds);
 
-    if (!WaitWaitableTimer(timeSpan))
+    if (!Platform::Sleep(timeSpan))
         std::this_thread::sleep_for(timeSpan.ToChrono());
 
     return m_Stopwatch.GetElapsedMilliseconds() - before;

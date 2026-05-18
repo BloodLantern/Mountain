@@ -94,7 +94,6 @@ namespace Mountain
         MOUNTAIN_API static inline Stopwatch m_Stopwatch;
 
         static void Initialize();
-        static void Shutdown();
 
         /// @brief Updates the time variables
         /// @remark This is called at the beginning of a frame by the Game class
