@@ -2,6 +2,7 @@
 #pragma once
 
 #include <cmath>
+#include <csignal>
 #include <cstdint>
 
 #include "Mountain/Attributes.hpp"
@@ -230,3 +231,5 @@ namespace Mountain {}
 
 #define MOUNTAIN_VERSION_STRING STRINGIFY(MOUNTAIN_VERSION)
 #define MOUNTAIN_VERSION_WSTRING WSTRINGIFY(MOUNTAIN_VERSION)
+
+#define DEBUG_BREAK() raise(SIGTRAP)

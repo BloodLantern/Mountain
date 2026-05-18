@@ -156,7 +156,7 @@ void ParticleSystem::RenderImGui()
     {
         ImGui::DragFloat("Rate over time", &emissionRateOverTime, 1.f, 0.f, std::numeric_limits<f32>::max(), "%.2f", ImGuiSliderFlags_AlwaysClamp);
         ImGui::DragFloat("Rate over distance", &emissionRateOverDistance, 1.f, 0.f, std::numeric_limits<f32>::max(), "%.2f", ImGuiSliderFlags_AlwaysClamp);
-        ImGui::Text("Bursts: %llu", emissionBursts.GetSize());
+        ImGui::Text("Bursts: %zu", emissionBursts.GetSize());
         ImGui::SameLine();
         if (ImGui::Button("-"))
             emissionBursts.RemoveLast();
@@ -187,7 +187,7 @@ void ParticleSystem::RenderImGui()
                     ImGui::TableNextRow();
 
                     ImGui::TableSetColumnIndex(0);
-                    ImGui::Text("%llu", i);
+                    ImGui::Text("%zu", i);
 
                     ImGui::TableSetColumnIndex(1);
                     ImGuiUtils::SetNextItemWidthAvail();

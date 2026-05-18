@@ -5,7 +5,7 @@ using namespace Mountain;
 Version Version::FromString(const c8* str)
 {
     s32 major, minor, patch;
-    sscanf_s(str, "%d.%d.%d", &major, &minor, &patch);
+    SCANF(str, "%d.%d.%d", &major, &minor, &patch);
     return Version{major, minor, patch};
 }
 
