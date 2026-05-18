@@ -6,99 +6,28 @@
 
 using namespace Mountain;
 
-constexpr int InterruptError = 4;
-
-/*
-
-Generate cryptographically strong random bytes.
-
-Return 0 on success, -1 on failure.
-*/
-int32_t minipal_get_cryptographically_secure_random_bytes(uint8_t* buffer, int32_t bufferLength)
+/// @brief Generate cryptographically strong random bytes.
+/// @details Source: https://github.com/dotnet/runtime/blob/0cf1906b274d5ab7d3ea1e11aa43af98ecb87d48/src/native/minipal/random.c#L79
+/// @return 0 on success, -1 on failure.
+s32 GetCryptographicallySecureRandomBytes(u8* buffer, const s32 bufferLength)
 {
-    assert(buffer != NULL);
+    ENSURE_NOT_NULL(buffer);
 
-#ifdef __EMSCRIPTEN__
-    extern int32_t SystemJS_RandomBytes(uint8_t* buffer, int32_t bufferLength);
-    static bool sMissingBrowserCrypto;
-    if (!sMissingBrowserCrypto)
-    {
-        int32_t bff = SystemJS_RandomBytes(buffer, bufferLength);
-        if (bff == -1)
-            sMissingBrowserCrypto = true;
-        else
-            return 0;
-    }
-#elif defined(__APPLE__) && __APPLE__
-    CCRNGStatus status = CCRandomGenerateBytes(buffer, (size_t)bufferLength);
-
-    if (status == kCCSuccess)
-    {
-        return 0;
-    }
-#elif HAVE_BCRYPT_H
-    NTSTATUS status = BCryptGenRandom(NULL, buffer, (ULONG)bufferLength, BCRYPT_USE_SYSTEM_PREFERRED_RNG);
-    return BCRYPT_SUCCESS(status) ? 0 : -1;
-#else
-
-#if HAVE_GETRANDOM
-    // Try getrandom() first - it's faster than /dev/urandom as it avoids file descriptor overhead.
-    // getrandom() was added in Linux 3.17 (2014) and glibc 2.25 (2017).
-    static volatile bool sMissingGetrandom;
-
-    if (!sMissingGetrandom)
-    {
-        int32_t offset = 0;
-        while (offset != bufferLength)
-        {
-            ssize_t n = getrandom(buffer + offset, (size_t)(bufferLength - offset), 0);
-            if (n == -1)
-            {
-                if (errno == EINTR)
-                {
-                    continue;
-                }
-                // ENOSYS: syscall not available (old kernel or blocked by seccomp)
-                // EPERM: operation not permitted (some container environments)
-                // Fall back to /dev/urandom for these errors
-                if (errno == ENOSYS || errno == EPERM)
-                {
-                    sMissingGetrandom = true;
-                    break;
-                }
-                return -1;
-            }
-
-            offset += (int32_t)n;
-        }
-
-        if (offset == bufferLength)
-        {
-            return 0;
-        }
-    }
-#endif
-
-#if HAVE_GETENTROPY
     // getentropy() is available on platforms like WASI (via wasi-libc, backed by
     // __wasi_random_get()) and other libc implementations. Used as a fallback when
     // getrandom() is not available or fails.
     {
-        int32_t offset = 0;
+        s32 offset = 0;
         while (offset < bufferLength)
         {
             // getentropy() is limited to 256 bytes per call
-            size_t chunk = (size_t)(bufferLength - offset);
+            usize chunk = static_cast<usize>(bufferLength - offset);
             if (chunk > 256)
-            {
                 chunk = 256;
-            }
             if (getentropy(buffer + offset, chunk) < 0)
-            {
                 break; // fallback to /dev/urandom
-            }
 
-            offset += (int32_t)chunk;
+            offset += static_cast<s32>(chunk);
         }
 
         if (offset == bufferLength)
@@ -106,33 +35,25 @@ int32_t minipal_get_cryptographically_secure_random_bytes(uint8_t* buffer, int32
             return 0;
         }
     }
-#endif
 
     // Fallback to /dev/urandom
-    static volatile int rand_des = -1;
+    static volatile int randDes = -1;
     static bool sMissingDevURandom;
 
     if (!sMissingDevURandom)
     {
-        if (rand_des == -1)
+        if (randDes == -1)
         {
             int fd;
 
             do
-            {
-#if HAVE_O_CLOEXEC
                 fd = open("/dev/urandom", O_RDONLY | O_CLOEXEC);
-#else
-                fd = open("/dev/urandom", O_RDONLY);
-                fcntl(fd, F_SETFD, FD_CLOEXEC);
-#endif
-            }
-            while ((fd == -1) && (errno == EINTR));
+            while (fd == -1 && errno == EINTR);
 
             if (fd != -1)
             {
                 int expected = -1;
-                if (!__atomic_compare_exchange_n(&rand_des, &expected, fd, false, __ATOMIC_SEQ_CST, __ATOMIC_SEQ_CST))
+                if (!__atomic_compare_exchange_n(&randDes, &expected, fd, false, __ATOMIC_SEQ_CST, __ATOMIC_SEQ_CST))
                 {
                     // Another thread has already set the rand_des
                     close(fd);
@@ -144,86 +65,65 @@ int32_t minipal_get_cryptographically_secure_random_bytes(uint8_t* buffer, int32
             }
         }
 
-        if (rand_des != -1)
+        if (randDes != -1)
         {
-            int32_t offset = 0;
+            s32 offset = 0;
             do
             {
-                ssize_t n = read(rand_des, buffer + offset , (size_t)(bufferLength - offset));
+                const ssize_t n = read(randDes, buffer + offset, static_cast<usize>(bufferLength - offset));
                 if (n == -1)
                 {
                     if (errno == EINTR)
-                    {
                         continue;
-                    }
+
                     return -1;
                 }
 
                 offset += n;
             }
+
             while (offset != bufferLength);
+
             return 0;
         }
     }
-#endif
+
     return -1;
 }
 
-
-/*
-
-Generate random bytes. The generated bytes are not cryptographically strong.
-
-*/
-
-void minipal_get_non_cryptographically_secure_random_bytes(uint8_t* buffer, int32_t bufferLength)
+/// @brief Generate random bytes. The generated bytes are not cryptographically strong.
+/// @details Source: https://github.com/dotnet/runtime/blob/0cf1906b274d5ab7d3ea1e11aa43af98ecb87d48/src/native/minipal/random.c#L35
+void GetNonCryptographicallySecureRandomBytes(u8* buffer, const s32 bufferLength)
 {
-    assert(buffer != NULL);
+    ENSURE_NOT_NULL(buffer);
 
-#if HAVE_ARC4RANDOM_BUF
-    arc4random_buf(buffer, (size_t)bufferLength);
-#elif HAVE_BCRYPT_H
-    // Fall back to the secure version
-    minipal_get_cryptographically_secure_random_bytes(buffer, bufferLength);
-#else
-    long num = 0;
-    static bool sInitializedMRand;
+    arc4random_buf(buffer, static_cast<usize>(bufferLength));
+}
 
-    // Fall back to the secure version
-    minipal_get_cryptographically_secure_random_bytes(buffer, bufferLength);
+/// @details Source: https://github.com/dotnet/runtime/blob/8400ed35dc58c12e80d49cd0254f34e89a7af447/src/native/minipal/time.c#L140
+u64 GetSystemTime()
+{
+    timespec ts;
+    if (clock_gettime(CLOCK_REALTIME, &ts) != 0)
+        THROW(Exception{"clock_gettime(CLOCK_REALTIME) failed"});
 
-    if (!sInitializedMRand)
-    {
-        srand48((long int)time(NULL));
-        sInitializedMRand = true;
-    }
+    static constexpr u64 SecsBetween1601And1970Epochs = 11644473600LL;
+    static constexpr s32 TccSecondsTo100Ns = 10000000;
 
-    // always xor srand48 over the whole buffer to get some randomness
-    // in case /dev/urandom is not really random
-
-    for (int i = 0; i < bufferLength; i++)
-    {
-        if (i % 4 == 0)
-        {
-            num = lrand48();
-        }
-
-        *(buffer + i) ^= num;
-        num >>= 8;
-    }
-#endif // HAVE_ARC4RANDOM_BUF
+    return (static_cast<u64>(ts.tv_sec) + SecsBetween1601And1970Epochs) * TccSecondsTo100Ns + (ts.tv_nsec / 100);
 }
 
 bool Linux::Sleep(const TimeSpan duration)
 {
-    constexpr int nanosecondsPerSecond = 1000 * 1000 * 1000;
+    static constexpr int InterruptError = 4;
+    static constexpr int NanosecondsPerSecond = 1000 * 1000 * 1000;
 
     const s64 nanoseconds = static_cast<s64>(duration.GetTotalNanoseconds());
 
     timespec timeSpec
     {
-        .tv_sec = nanoseconds / nanosecondsPerSecond,
-        .tv_nsec = nanoseconds % nanosecondsPerSecond,
+        .tv_sec = nanoseconds / NanosecondsPerSecond,
+        .tv_nsec = nanoseconds % NanosecondsPerSecond,
     };
     timespec remaining;
 
@@ -242,8 +142,12 @@ bool Linux::Sleep(const TimeSpan duration)
 Guid Linux::NewGuid()
 {
     Guid guid;
-    minipal_get_cryptographically_secure_random_bytes(reinterpret_cast<uint8_t*>(&guid), sizeof(guid));
+    GetCryptographicallySecureRandomBytes(reinterpret_cast<u8*>(&guid), sizeof(guid));
     return guid;
+}
+
+DateTime Linux::UtcNow()
+{
 }
 
 void Linux::Cleanup()

@@ -94,6 +94,14 @@ Guid Linux::NewGuid()
     return guid;
 }
 
+DateTime Windows::UtcNow()
+{
+    u64 fileTime; // mark only the temp local as address-taken
+    GetSystemTimeAsFileTime(reinterpret_cast<LPFILETIME>(&fileTime));
+
+    return DateTime{(fileTime + (DateTime::FileTimeOffset | DateTime::KindUtc))};
+}
+
 void Windows::Cleanup()
 {
     if (waitableTimer)

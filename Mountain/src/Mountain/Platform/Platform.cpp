@@ -1,36 +1,25 @@
 #include "Mountain/Platform/Platform.hpp"
 
 #ifdef ENVIRONMENT_LINUX
+
 #include "Mountain/Platform/Linux/Linux.hpp"
+
+#define PLATFORM_DEPENDENT_CALL(function, ...) Linux::function(__VA_ARGS__)
+
 #else
+
 #include "Mountain/Platform/Windows/Windows.hpp"
+
+#define PLATFORM_DEPENDENT_CALL(function, ...) Windows::function(__VA_ARGS__)
+
 #endif
 
 using namespace Mountain;
 
-bool Platform::Sleep(const TimeSpan duration)
-{
-#ifdef ENVIRONMENT_LINUX
-    return Linux::Sleep(duration);
-#else
-    return Windows::Sleep(duration);
-#endif
-}
+bool Platform::Sleep(const TimeSpan duration) { return PLATFORM_DEPENDENT_CALL(Sleep, duration); }
 
-Guid Platform::NewGuid()
-{
-#ifdef ENVIRONMENT_LINUX
-    return Linux::NewGuid();
-#else
-    return Windows::NewGuid();
-#endif
-}
+Guid Platform::NewGuid() { return PLATFORM_DEPENDENT_CALL(NewGuid); }
 
-void Platform::Cleanup()
-{
-#ifdef ENVIRONMENT_LINUX
-    return Linux::Cleanup();
-#else
-    return Windows::Cleanup();
-#endif
-}
+DateTime Platform::UtcNow() { return PLATFORM_DEPENDENT_CALL(UtcNow); }
+
+void Platform::Cleanup() { return PLATFORM_DEPENDENT_CALL(Cleanup); }

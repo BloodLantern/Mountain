@@ -59,6 +59,17 @@ namespace Mountain
         /// @brief Represents the number of hours in 1 day.
         static constexpr s32 HoursPerDay = TicksPerDay / TicksPerHour;
 
+        static constexpr s64 MaxSeconds = std::numeric_limits<s64>::max() / TicksPerSecond;
+        static constexpr s64 MinSeconds = std::numeric_limits<s64>::min() / TicksPerSecond;
+
+        static constexpr s64 MaxMilliSeconds = std::numeric_limits<s64>::max() / TicksPerMillisecond;
+        static constexpr s64 MinMilliSeconds = std::numeric_limits<s64>::min() / TicksPerMillisecond;
+
+        static constexpr s64 MaxMicroSeconds = std::numeric_limits<s64>::max() / TicksPerMicrosecond;
+        static constexpr s64 MinMicroSeconds = std::numeric_limits<s64>::min() / TicksPerMicrosecond;
+
+        static constexpr s64 TicksPerTenthSecond = TicksPerMillisecond * 100;
+
         ATTRIBUTE_NODISCARD
         static constexpr TimeSpan Zero();
         ATTRIBUTE_NODISCARD
@@ -147,17 +158,6 @@ namespace Mountain
         constexpr usize GetHashCode() const;
 
     private:
-        static constexpr s64 MaxSeconds = std::numeric_limits<s64>::max() / TicksPerSecond;
-        static constexpr s64 MinSeconds = std::numeric_limits<s64>::min() / TicksPerSecond;
-
-        static constexpr s64 MaxMilliSeconds = std::numeric_limits<s64>::max() / TicksPerMillisecond;
-        static constexpr s64 MinMilliSeconds = std::numeric_limits<s64>::min() / TicksPerMillisecond;
-
-        static constexpr s64 MaxMicroSeconds = std::numeric_limits<s64>::max() / TicksPerMicrosecond;
-        static constexpr s64 MinMicroSeconds = std::numeric_limits<s64>::min() / TicksPerMicrosecond;
-
-        static constexpr s64 TicksPerTenthSecond = TicksPerMillisecond * 100;
-
         ATTRIBUTE_NODISCARD
         static constexpr TimeSpan Interval(f64 ticks, f64 scale);
         ATTRIBUTE_NODISCARD

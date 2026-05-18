@@ -1,8 +1,6 @@
-﻿
+﻿#include "Mountain/Utils/DateTime.hpp"
 
-#include "Mountain/Utils/DateTime.hpp"
-
-#include "Mountain/Utils/Windows.hpp"
+#include "Mountain/Platform/Platform.hpp"
 
 using namespace Mountain;
 
@@ -16,18 +14,9 @@ DateTime DateTime::Now()
     return DateTime{ticks < 0 ? KindLocal : MaxTicks | KindLocal};
 }
 
-DateTime DateTime::UtcNow()
-{
-    u64 fileTime; // mark only the temp local as address-taken
-    GetSystemTimeAsFileTime(reinterpret_cast<LPFILETIME>(&fileTime));
+DateTime DateTime::UtcNow() { return Platform::UtcNow(); }
 
-    return DateTime{(fileTime + (FileTimeOffset | KindUtc))};
-}
-
-DateTime DateTime::Today()
-{
-    return Now().GetDate();
-}
+DateTime DateTime::Today() { return Now().GetDate(); }
 
 std::string DateTime::ToString() const
 {

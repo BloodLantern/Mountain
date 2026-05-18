@@ -9,7 +9,11 @@ namespace Mountain::Platform
     /// @return Whether the operation succeeded
     MOUNTAIN_API bool Sleep(TimeSpan duration);
 
+    ATTRIBUTE_NODISCARD
     MOUNTAIN_API Guid NewGuid();
+
+    ATTRIBUTE_NODISCARD
+    MOUNTAIN_API DateTime UtcNow();
 
     MOUNTAIN_API void Cleanup();
 }

@@ -116,7 +116,7 @@ namespace
         }
 
         if (Mountain::BreakOnGraphicsError && level == Mountain::Logger::LogLevel::Error)
-            DEBUG_BREAK();
+            DEBUG_BREAK;
 
         Mountain::Logger::Log(level, "[OpenGL] Log of type {} received from {}: {}", t, src,
                               std::string_view{message, static_cast<usize>(length)});

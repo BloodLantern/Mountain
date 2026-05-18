@@ -58,7 +58,13 @@
 #endif
 
 #ifdef COMPILER_MSVC
-#define SCANF(...) sscanf_s(__VA_ARGS__)
+    #define SCANF(...) sscanf_s(__VA_ARGS__)
 #else
-#define SCANF(...) sscanf(__VA_ARGS__)
+    #define SCANF(...) sscanf(__VA_ARGS__)
+#endif
+
+#ifdef COMPILER_MSVC
+    #define DEBUG_BREAK __debugbreak()
+#elifdef ENVIRONMENT_LINUX
+    #define DEBUG_BREAK raise(SIGTRAP)
 #endif

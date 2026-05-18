@@ -29,6 +29,58 @@ namespace Mountain
     /// @see Source: https://github.com/dotnet/runtime/blob/release/8.0/src/libraries/System.Private.CoreLib/src/System/DateTime.cs
     struct DateTime
     {
+        /// @brief Number of days in a non-leap year
+        static constexpr s32 DaysPerYear = 365;
+        /// @brief Number of days in 4 years
+        static constexpr s32 DaysPer4Years = DaysPerYear * 4 + 1;       // 1,461
+        /// @brief Number of days in 100 years
+        static constexpr s32 DaysPer100Years = DaysPer4Years * 25 - 1;  // 36,524
+        /// @brief Number of days in 400 years
+        static constexpr s32 DaysPer400Years = DaysPer100Years * 4 + 1; // 146,097
+
+        /// @brief Number of days from 1/1/0001 to 12/31/1600
+        static constexpr s32 DaysTo1601 = DaysPer400Years * 4;          // 584,388
+        /// @brief Number of days from 1/1/0001 to 12/30/1899
+        static constexpr s32 DaysTo1899 = DaysPer400Years * 4 + DaysPer100Years * 3 - 367;
+        /// @brief Number of days from 1/1/0001 to 12/31/1969
+        static constexpr s32 DaysTo1970 = DaysPer400Years * 4 + DaysPer100Years * 3 + DaysPer4Years * 17 + DaysPerYear; // 719,162
+        /// @brief Number of days from 1/1/0001 to 12/31/9999
+        static constexpr s32 DaysTo10000 = DaysPer400Years * 25 - 366;  // 3,652,059
+
+        static constexpr s64 MinTicks = 0;
+        static constexpr s64 MaxTicks = DaysTo10000 * TimeSpan::TicksPerDay - 1;
+        static constexpr s64 MaxMicroseconds = MaxTicks / TimeSpan::TicksPerMicrosecond;
+        static constexpr s64 MaxMillis = MaxTicks / TimeSpan::TicksPerMillisecond;
+        static constexpr s64 MaxSeconds = MaxTicks / TimeSpan::TicksPerSecond;
+        static constexpr s64 MaxMinutes = MaxTicks / TimeSpan::TicksPerMinute;
+        static constexpr s64 MaxHours = MaxTicks / TimeSpan::TicksPerHour;
+        static constexpr s64 MaxDays = static_cast<s64>(DaysTo10000) - 1;
+
+        static constexpr s64 UnixEpochTicks = DaysTo1970 * TimeSpan::TicksPerDay;
+        static constexpr s64 FileTimeOffset = DaysTo1601 * TimeSpan::TicksPerDay;
+        static constexpr s64 DoubleDateOffset = DaysTo1899 * TimeSpan::TicksPerDay;
+
+        static constexpr Array<u32, 13> DaysToMonth365 = {0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365};
+        static constexpr Array<u32, 13> DaysToMonth366 = {0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366};
+
+        static constexpr Array<u8, 12> DaysInMonth365 = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+        static constexpr Array<u8, 12> DaysInMonth366 = {31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
+        static constexpr u64 TicksMask = 0x3FFFFFFFFFFFFFFF;
+        static constexpr u64 FlagsMask = 0xC000000000000000;
+        static constexpr s64 TicksCeiling = 0x4000000000000000;
+        static constexpr u64 KindUtc = 0x4000000000000000;
+        static constexpr u64 KindLocal = 0x8000000000000000;
+        static constexpr u64 KindLocalAmbiguousDst = 0xC000000000000000;
+        static constexpr s32 KindShift = 62;
+
+        static constexpr u32 EafMultiplier = ((1ull << 32) + DaysPer4Years - 1) / DaysPer4Years;
+        static constexpr u32 EafDivider = EafMultiplier * 4;
+
+        static constexpr u64 TicksPer6Hours = TimeSpan::TicksPerHour * 6;
+        /// @brief Days between March 1 and January 1
+        static constexpr s32 March1BasedDayOfNewYear = 306;
+
         static constexpr DateTime MinValue();
         static constexpr DateTime MaxValue();
         static constexpr DateTime UnixEpoch();
@@ -129,58 +181,6 @@ namespace Mountain
         CONSTEXPR_GETTER_M(u64, DateData)
 
     private:
-        /// @brief Number of days in a non-leap year
-        static constexpr s32 DaysPerYear = 365;
-        /// @brief Number of days in 4 years
-        static constexpr s32 DaysPer4Years = DaysPerYear * 4 + 1;       // 1,461
-        /// @brief Number of days in 100 years
-        static constexpr s32 DaysPer100Years = DaysPer4Years * 25 - 1;  // 36,524
-        /// @brief Number of days in 400 years
-        static constexpr s32 DaysPer400Years = DaysPer100Years * 4 + 1; // 146,097
-
-        /// @brief Number of days from 1/1/0001 to 12/31/1600
-        static constexpr s32 DaysTo1601 = DaysPer400Years * 4;          // 584,388
-        /// @brief Number of days from 1/1/0001 to 12/30/1899
-        static constexpr s32 DaysTo1899 = DaysPer400Years * 4 + DaysPer100Years * 3 - 367;
-        /// @brief Number of days from 1/1/0001 to 12/31/1969
-        static constexpr s32 DaysTo1970 = DaysPer400Years * 4 + DaysPer100Years * 3 + DaysPer4Years * 17 + DaysPerYear; // 719,162
-        /// @brief Number of days from 1/1/0001 to 12/31/9999
-        static constexpr s32 DaysTo10000 = DaysPer400Years * 25 - 366;  // 3,652,059
-
-        static constexpr s64 MinTicks = 0;
-        static constexpr s64 MaxTicks = DaysTo10000 * TimeSpan::TicksPerDay - 1;
-        static constexpr s64 MaxMicroseconds = MaxTicks / TimeSpan::TicksPerMicrosecond;
-        static constexpr s64 MaxMillis = MaxTicks / TimeSpan::TicksPerMillisecond;
-        static constexpr s64 MaxSeconds = MaxTicks / TimeSpan::TicksPerSecond;
-        static constexpr s64 MaxMinutes = MaxTicks / TimeSpan::TicksPerMinute;
-        static constexpr s64 MaxHours = MaxTicks / TimeSpan::TicksPerHour;
-        static constexpr s64 MaxDays = static_cast<s64>(DaysTo10000) - 1;
-
-        static constexpr s64 UnixEpochTicks = DaysTo1970 * TimeSpan::TicksPerDay;
-        static constexpr s64 FileTimeOffset = DaysTo1601 * TimeSpan::TicksPerDay;
-        static constexpr s64 DoubleDateOffset = DaysTo1899 * TimeSpan::TicksPerDay;
-
-        static constexpr Array<u32, 13> DaysToMonth365 = {0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365};
-        static constexpr Array<u32, 13> DaysToMonth366 = {0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366};
-
-        static constexpr Array<u8, 12> DaysInMonth365 = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-        static constexpr Array<u8, 12> DaysInMonth366 = {31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-
-        static constexpr u64 TicksMask = 0x3FFFFFFFFFFFFFFF;
-        static constexpr u64 FlagsMask = 0xC000000000000000;
-        static constexpr s64 TicksCeiling = 0x4000000000000000;
-        static constexpr u64 KindUtc = 0x4000000000000000;
-        static constexpr u64 KindLocal = 0x8000000000000000;
-        static constexpr u64 KindLocalAmbiguousDst = 0xC000000000000000;
-        static constexpr s32 KindShift = 62;
-
-        static constexpr u32 EafMultiplier = ((1ull << 32) + DaysPer4Years - 1) / DaysPer4Years;
-        static constexpr u32 EafDivider = EafMultiplier * 4;
-
-        static constexpr u64 TicksPer6Hours = TimeSpan::TicksPerHour * 6;
-        /// @brief Days between March 1 and January 1
-        static constexpr s32 March1BasedDayOfNewYear = 306;
-
         ATTRIBUTE_NODISCARD
         constexpr u64 GetUTicks() const;
 
