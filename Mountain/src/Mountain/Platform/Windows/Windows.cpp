@@ -82,6 +82,18 @@ void Windows::SilenceError() { (void) GetLastError(); }
 
 bool Windows::Sleep(const TimeSpan duration) { return WaitWaitableTimer(duration); }
 
+Guid Linux::NewGuid()
+{
+    Guid guid;
+
+    const HRESULT result = CoCreateGuid(reinterpret_cast<UUID*>(&guid));
+
+    if (result != S_OK)
+        Logger::LogError("Couldn't create GUID");
+
+    return guid;
+}
+
 void Windows::Cleanup()
 {
     if (waitableTimer)

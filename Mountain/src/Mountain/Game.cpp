@@ -14,6 +14,7 @@
 #include "Mountain/Profiler.hpp"
 
 #include "Mountain/Globals.hpp"
+#include "Mountain/Platform/Platform.hpp"
 
 using namespace Mountain;
 
@@ -35,6 +36,8 @@ Game::~Game()
 
     Audio::Shutdown();
     Renderer::Shutdown();
+
+    Platform::Cleanup();
 
     Logger::Stop();
 

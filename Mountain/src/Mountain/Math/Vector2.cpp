@@ -1,4 +1,3 @@
-
 #include "Mountain/Math/Vector2.hpp"
 
 #include <format>
@@ -24,7 +23,7 @@ Vector2 Vector2::Normalized() const noexcept
 	if (Calc::IsZero(length))
 		return Zero();
 
-    __assume(length != 0.f);
+    ASSUME(length != 0.f);
 	const f32 invLength = 1.f / length;
 	return Vector2(x * invLength, y * invLength);
 }

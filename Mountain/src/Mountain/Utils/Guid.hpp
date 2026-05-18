@@ -1,11 +1,10 @@
 #pragma once
 
-
 #include "Mountain/Core.hpp"
 #include "Mountain/Containers/Array.hpp"
 #include "Mountain/Utils/Requirements.hpp"
 
-/// @file guid.hpp
+/// @file Guid.hpp
 /// @brief Defines the Mountain::Guid class.
 
 namespace Mountain
@@ -13,10 +12,15 @@ namespace Mountain
     /// @brief Stands for Global Unique Identifier, it represents a unique ID.
     struct MOUNTAIN_API Guid final
     {
-    private:
-        static constexpr usize Data4Size = 8;
+        // ReSharper disable once CppInconsistentNaming
+        static constexpr u8 Variant10xxMask = 0xC0;
+        // ReSharper disable once CppInconsistentNaming
+        static constexpr u8 Variant10xxValue = 0x80;
 
-    public:
+        static constexpr u16 VersionMask = 0xF000;
+        static constexpr u16 Version4Value = 0x4000;
+        static constexpr u16 Version7Value = 0x7000;
+
         /// @brief Empty guid
         static constexpr Guid Empty();
 
@@ -39,7 +43,7 @@ namespace Mountain
         u16 GetData3() const;
 
         ATTRIBUTE_NODISCARD
-        const Array<u8, Data4Size>& GetData4() const;
+        const Array<u8, 8>& GetData4() const;
 
         /// @brief Compares 2 @ref Guid
         /// @param other Other guid
@@ -63,7 +67,7 @@ namespace Mountain
         u32 m_Data1 = 0;
         u16 m_Data2 = 0;
         u16 m_Data3 = 0;
-        Array<u8, Data4Size> m_Data4{};
+        Array<u8, 8> m_Data4{};
     };
 
     CHECK_REQUIREMENT(Requirements::Equatable, Guid);

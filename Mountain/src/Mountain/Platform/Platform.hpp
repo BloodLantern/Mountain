@@ -9,5 +9,7 @@ namespace Mountain::Platform
     /// @return Whether the operation succeeded
     MOUNTAIN_API bool Sleep(TimeSpan duration);
 
+    MOUNTAIN_API Guid NewGuid();
+
     MOUNTAIN_API void Cleanup();
 }

@@ -1,4 +1,3 @@
-
 #include "Mountain/Math/Vector3.hpp"
 
 #include <cassert>
@@ -25,7 +24,7 @@ Vector3 Vector3::Normalized() const noexcept
 	if (Calc::IsZero(length))
 		return Zero();
 
-	__assume(length != 0.f);
+	ASSUME(length != 0.f);
 	const f32 invLength = 1.f / length;
 	return Vector3(x * invLength, y * invLength, z * invLength);
 }
@@ -39,7 +38,7 @@ void Vector3::Normalized(Vector3* result) const noexcept
 		return;
 	}
 
-	__assume(length != 0.f);
+	ASSUME(length != 0.f);
 	const f32 invLength = 1.f / length;
 	*result = Vector3(x * invLength, y * invLength, z * invLength);
 }

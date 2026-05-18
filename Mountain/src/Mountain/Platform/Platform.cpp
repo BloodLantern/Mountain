@@ -17,6 +17,15 @@ bool Platform::Sleep(const TimeSpan duration)
 #endif
 }
 
+Guid Platform::NewGuid()
+{
+#ifdef ENVIRONMENT_LINUX
+    return Linux::NewGuid();
+#else
+    return Windows::NewGuid();
+#endif
+}
+
 void Platform::Cleanup()
 {
 #ifdef ENVIRONMENT_LINUX

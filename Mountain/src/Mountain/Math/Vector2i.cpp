@@ -1,4 +1,3 @@
-
 #include "Mountain/Math/Vector2i.hpp"
 
 #include <format>
@@ -19,7 +18,7 @@ Vector2 Vector2i::Normalized() const
 	if (Calc::IsZero(length))
 		return Vector2::Zero();
 
-    __assume(length != 0.f);
+    ASSUME(length != 0.f);
 	const float invLength = 1.f / length;
 	return Vector2(static_cast<float>(x) * invLength, static_cast<float>(y) * invLength);
 }

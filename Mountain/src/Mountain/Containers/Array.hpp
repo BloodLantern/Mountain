@@ -32,9 +32,13 @@ namespace Mountain
         ATTRIBUTE_NODISCARD
         constexpr const T& At(usize index) const;
 
-        /// @brief Get the size of the array. Returns @c Size.
+        /// @brief Get the size of the array. Returns @c Size. Equivalent to @c GetLength().
         ATTRIBUTE_NODISCARD
         constexpr usize GetSize() const noexcept;
+
+        /// @brief Get the length of the array. Returns @c Size. Equivalent to @c GetSize().
+        ATTRIBUTE_NODISCARD
+        constexpr usize GetLength() const noexcept;
 
         /// @brief Get whether the array is empty, i.e., whether its size is 0.
         ATTRIBUTE_NODISCARD
@@ -131,6 +135,9 @@ namespace Mountain
 
     template <Concepts::ContainerType T, usize Size>
     constexpr usize Array<T, Size>::GetSize() const noexcept { return Size; }
+
+    template <Concepts::ContainerType T, usize Size>
+    constexpr usize Array<T, Size>::GetLength() const noexcept { return Size; }
 
     template <Concepts::ContainerType T, usize Size>
     constexpr bool Array<T, Size>::IsEmpty() const noexcept { return Size == 0; }

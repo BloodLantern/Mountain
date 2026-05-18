@@ -2,27 +2,17 @@
 
 #include "Mountain/Utils/Guid.hpp"
 
+#include "Mountain/Platform/Platform.hpp"
 #include "Mountain/Utils/Logger.hpp"
-#include "Mountain/Utils/Windows.hpp"
 
 using namespace Mountain;
 
-Guid Guid::New()
-{
-	Guid guid;
-
-	const HRESULT result = CoCreateGuid(reinterpret_cast<UUID*>(&guid));
-
-	if (result != S_OK)
-		Logger::LogError("Couldn't create GUID");
-
-	return guid;
-}
+Guid Guid::New() { return Platform::NewGuid(); }
 
 Guid Guid::FromString(const c8* str)
 {
 	Guid g;
-	(void) sscanf_s(
+	(void) SCANF(
 		str,
 		"%x-%hx-%hx-%hhx-%hhx-%hhx-%hhx-%hhx-%hhx-%hhx-%hhx",
 		&g.m_Data1,
@@ -47,7 +37,7 @@ u16 Guid::GetData2() const { return m_Data2; }
 
 u16 Guid::GetData3() const { return m_Data3; }
 
-const Array<u8, Guid::Data4Size>& Guid::GetData4() const { return m_Data4; }
+const Array<u8, 8>& Guid::GetData4() const { return m_Data4; }
 
 bool Guid::operator==(const Guid& other) const
 {
@@ -84,7 +74,7 @@ usize Guid::GetHashCode() const
 	result ^= std::hash<u16>{}(m_Data2) + RandomValue + (result << 6) + (result >> 2);
 	result ^= std::hash<u16>{}(m_Data3) + RandomValue + (result << 6) + (result >> 2);
 
-	for (usize i = 0; i < Data4Size; i++)
+	for (usize i = 0; i < m_Data4.GetSize(); i++)
 		result ^= std::hash<u8>{}(m_Data4[i]) + RandomValue + (result << 6) + (result >> 2);
 
 	return result;

@@ -56,3 +56,9 @@
     /// @details This allows compiler optimizations based on the information given.
     #define ASSUME(trueExpression) __builtin_assume(trueExpression)
 #endif
+
+#ifdef COMPILER_MSVC
+#define SCANF(...) sscanf_s(__VA_ARGS__)
+#else
+#define SCANF(...) sscanf(__VA_ARGS__)
+#endif
