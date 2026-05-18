@@ -704,7 +704,7 @@ void ImGuiUtils::ShowPerformanceMonitoring()
 
 void ImGuiUtils::DrawEasingFunction(const c8* label, const Easing::Easer function, const s32 pointCount)
 {
-    f32* data = static_cast<f32*>(_malloca(pointCount * sizeof(f32)));
+    f32* data = new f32[pointCount * sizeof(f32)];
 
     f32 min = std::numeric_limits<f32>::max();
     f32 max = std::numeric_limits<f32>::min();
@@ -722,7 +722,7 @@ void ImGuiUtils::DrawEasingFunction(const c8* label, const Easing::Easer functio
 
     ImGui::PlotLines(label, data, pointCount, 0, nullptr, min, max, {100, 100});
 
-    _freea(data);
+    delete data;
 }
 
 void ImGuiUtils::OpenPointerPopupModal()
