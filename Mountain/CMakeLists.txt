@@ -82,55 +82,6 @@ set(MOUNTAIN_HEADERS
         src/Mountain/Audio/AudioBuffer.hpp
         src/Mountain/Audio/AudioContext.hpp
         src/Mountain/Audio/AudioDevice.hpp
-        src/Mountain/BinaryResources/embedded_resources/resource_10604039599264331763.hpp
-        src/Mountain/BinaryResources/embedded_resources/resource_10671969735137121559.hpp
-        src/Mountain/BinaryResources/embedded_resources/resource_11431338934652808651.hpp
-        src/Mountain/BinaryResources/embedded_resources/resource_11774202807359543870.hpp
-        src/Mountain/BinaryResources/embedded_resources/resource_11952871429675989627.hpp
-        src/Mountain/BinaryResources/embedded_resources/resource_12442680368039291515.hpp
-        src/Mountain/BinaryResources/embedded_resources/resource_1291378986966553985.hpp
-        src/Mountain/BinaryResources/embedded_resources/resource_13070826838953012323.hpp
-        src/Mountain/BinaryResources/embedded_resources/resource_13177006652388307822.hpp
-        src/Mountain/BinaryResources/embedded_resources/resource_14338357782030755284.hpp
-        src/Mountain/BinaryResources/embedded_resources/resource_14381367057370009788.hpp
-        src/Mountain/BinaryResources/embedded_resources/resource_1453103019202383270.hpp
-        src/Mountain/BinaryResources/embedded_resources/resource_15258004472844539140.hpp
-        src/Mountain/BinaryResources/embedded_resources/resource_15961880810884371948.hpp
-        src/Mountain/BinaryResources/embedded_resources/resource_16126662360900569018.hpp
-        src/Mountain/BinaryResources/embedded_resources/resource_16222346625001150542.hpp
-        src/Mountain/BinaryResources/embedded_resources/resource_16311089013737800627.hpp
-        src/Mountain/BinaryResources/embedded_resources/resource_16451689749247673836.hpp
-        src/Mountain/BinaryResources/embedded_resources/resource_1659229443278887099.hpp
-        src/Mountain/BinaryResources/embedded_resources/resource_1682259173912325418.hpp
-        src/Mountain/BinaryResources/embedded_resources/resource_17150819399866535910.hpp
-        src/Mountain/BinaryResources/embedded_resources/resource_17163117651341958810.hpp
-        src/Mountain/BinaryResources/embedded_resources/resource_17404448839198764618.hpp
-        src/Mountain/BinaryResources/embedded_resources/resource_17495974214214295230.hpp
-        src/Mountain/BinaryResources/embedded_resources/resource_17880426697011385839.hpp
-        src/Mountain/BinaryResources/embedded_resources/resource_18011218881129316092.hpp
-        src/Mountain/BinaryResources/embedded_resources/resource_310597202658876699.hpp
-        src/Mountain/BinaryResources/embedded_resources/resource_3126981312599726777.hpp
-        src/Mountain/BinaryResources/embedded_resources/resource_332208238769912247.hpp
-        src/Mountain/BinaryResources/embedded_resources/resource_4319606583867259020.hpp
-        src/Mountain/BinaryResources/embedded_resources/resource_5284316122615694636.hpp
-        src/Mountain/BinaryResources/embedded_resources/resource_5513601353699197311.hpp
-        src/Mountain/BinaryResources/embedded_resources/resource_6180361286818081308.hpp
-        src/Mountain/BinaryResources/embedded_resources/resource_6423258116736183732.hpp
-        src/Mountain/BinaryResources/embedded_resources/resource_6733528840531529029.hpp
-        src/Mountain/BinaryResources/embedded_resources/resource_6826460111274356971.hpp
-        src/Mountain/BinaryResources/embedded_resources/resource_6975910120903775418.hpp
-        src/Mountain/BinaryResources/embedded_resources/resource_7369051294668265954.hpp
-        src/Mountain/BinaryResources/embedded_resources/resource_7556603881106790027.hpp
-        src/Mountain/BinaryResources/embedded_resources/resource_7736256087137476443.hpp
-        src/Mountain/BinaryResources/embedded_resources/resource_8867495104694417582.hpp
-        src/Mountain/BinaryResources/embedded_resources/resource_908422867440665036.hpp
-        src/Mountain/BinaryResources/embedded_resources/resource_9162261963507646339.hpp
-        src/Mountain/BinaryResources/embedded_resources/resource_9225507554395683774.hpp
-        src/Mountain/BinaryResources/embedded_resources/resource_9508759643910089710.hpp
-        src/Mountain/BinaryResources/embedded_resources/resource_9550955058371070276.hpp
-        src/Mountain/BinaryResources/embedded_resources/resource_9582143994837232440.hpp
-        src/Mountain/BinaryResources/embedded_resources/resource_9699825830242037512.hpp
-        src/Mountain/BinaryResources/embedded_resources/resource_9926314955806432672.hpp
         src/Mountain/BinaryResources/resource.hpp
         src/Mountain/BinaryResources/resource_holder.hpp
         src/Mountain/BinaryResources/span.hpp

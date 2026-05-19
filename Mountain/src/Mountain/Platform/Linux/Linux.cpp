@@ -100,17 +100,19 @@ void GetNonCryptographicallySecureRandomBytes(u8* buffer, const s32 bufferLength
     arc4random_buf(buffer, static_cast<usize>(bufferLength));
 }
 
-/// @details Source: https://github.com/dotnet/runtime/blob/8400ed35dc58c12e80d49cd0254f34e89a7af447/src/native/minipal/time.c#L140
-u64 GetSystemTime()
+/// @brief @c GetSystemTimeAsTicks() return the system time as ticks (100 nanoseconds) since 00:00 01 January 1970 UTC (Unix epoch)
+/// @details Source: https://github.com/dotnet/runtime/blob/286dc1501f7bc16b2b170ec68d70bb755476d4ea/src/native/libs/System.Native/pal_datetime.c#L28
+s64 GetSystemTimeAsTicks()
 {
-    timespec ts;
-    if (clock_gettime(CLOCK_REALTIME, &ts) != 0)
-        THROW(Exception{"clock_gettime(CLOCK_REALTIME) failed"});
+    static constexpr int64_t TicksPerSecond = 10000000; /* 10^7 */
+    static constexpr int64_t NanosecondsPerTick = 100;
 
-    static constexpr u64 SecsBetween1601And1970Epochs = 11644473600LL;
-    static constexpr s32 TccSecondsTo100Ns = 10000000;
+    timespec time;
+    if (clock_gettime(CLOCK_REALTIME, &time) == 0)
+        return time.tv_sec * TicksPerSecond + time.tv_nsec / NanosecondsPerTick;
 
-    return (static_cast<u64>(ts.tv_sec) + SecsBetween1601And1970Epochs) * TccSecondsTo100Ns + (ts.tv_nsec / 100);
+    // in failure we return 00:00 01 January 1970 UTC (Unix epoch)
+    return 0;
 }
 
 bool Linux::Sleep(const TimeSpan duration)
@@ -146,9 +148,7 @@ Guid Linux::NewGuid()
     return guid;
 }
 
-DateTime Linux::UtcNow()
-{
-}
+DateTime Linux::UtcNow() { return DateTime{static_cast<u64>(GetSystemTimeAsTicks() + DateTime::UnixEpochTicks) | DateTime::KindUtc}; }
 
 void Linux::Cleanup()
 {
