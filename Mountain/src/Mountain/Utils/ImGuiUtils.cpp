@@ -8,10 +8,10 @@
 #include "Mountain/FileSystem/FileManager.hpp"
 #include "Mountain/Input/Input.hpp"
 #include "Mountain/Input/Time.hpp"
+#include "Mountain/Platform/Platform.hpp"
 #include "Mountain/Resource/AudioTrack.hpp"
 #include "Mountain/Resource/Font.hpp"
 #include "Mountain/Utils/FileSystemWatcher.hpp"
-#include "Mountain/Utils/Windows.hpp"
 
 using namespace Mountain;
 
@@ -667,11 +667,7 @@ void ImGuiUtils::ShowPerformanceMonitoring()
         frameDurationLeft = Time::GetTargetDeltaTime() == 0.f ? 0.f : (Time::GetTargetDeltaTime() - frameDuration);
         framebufferSize = Window::GetSize();
 
-        PROCESS_MEMORY_COUNTERS_EX2 memoryCounter;
-        GetProcessMemoryInfo(GetCurrentProcess(), reinterpret_cast<PPROCESS_MEMORY_COUNTERS>(&memoryCounter), sizeof(memoryCounter));
-        Windows::CheckError();
-
-        memory = static_cast<f64>(memoryCounter.PrivateWorkingSetSize) * 1e-6; // Convert to MB
+        memory = static_cast<f64>(Platform::GetMemoryUsage()) * 1e-6; // Convert to MB
 
         frameDurationList.Add(frameDuration * 1000.f);
 

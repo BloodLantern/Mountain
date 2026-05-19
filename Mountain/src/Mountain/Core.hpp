@@ -32,7 +32,7 @@ using f32 = float;
 using f64 = double;
 using nullptr_t = std::nullptr_t;
 
-/// @brief Macro used for DLL export/import.
+/// @brief Macro used for shared library export/import.
 /// @details This macro should be used at the beginning of static member variable and non-inline function declarations.
 #define MOUNTAIN_API SHARED_PUBLIC
 #define MOUNTAIN_PRIVATE_API SHARED_PRIVATE

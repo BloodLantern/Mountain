@@ -150,6 +150,21 @@ Guid Linux::NewGuid()
 
 DateTime Linux::UtcNow() { return DateTime{static_cast<u64>(GetSystemTimeAsTicks() + DateTime::UnixEpochTicks) | DateTime::KindUtc}; }
 
+usize Linux::GetMemoryUsage()
+{
+    std::ifstream file{"/proc/self/statm", std::ios::in | std::ios::binary};
+
+    Array<c8, 20> buffer;
+    file.read(buffer.GetData(), sizeof(buffer));
+
+    file.close();
+
+    usize result = 0;
+    SCANF(buffer.GetData(), "%zu", &result);
+
+    return result;
+}
+
 void Linux::Cleanup()
 {
 }

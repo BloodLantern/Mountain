@@ -14,6 +14,9 @@ namespace Mountain::Linux
     ATTRIBUTE_NODISCARD
     MOUNTAIN_API DateTime UtcNow();
 
+    ATTRIBUTE_NODISCARD
+    MOUNTAIN_API usize GetMemoryUsage();
+
     MOUNTAIN_API void Cleanup();
 }
 

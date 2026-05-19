@@ -22,4 +22,6 @@ Guid Platform::NewGuid() { return PLATFORM_DEPENDENT_CALL(NewGuid); }
 
 DateTime Platform::UtcNow() { return PLATFORM_DEPENDENT_CALL(UtcNow); }
 
+usize Platform::GetMemoryUsage() { return PLATFORM_DEPENDENT_CALL(GetMemoryUsage); }
+
 void Platform::Cleanup() { return PLATFORM_DEPENDENT_CALL(Cleanup); }

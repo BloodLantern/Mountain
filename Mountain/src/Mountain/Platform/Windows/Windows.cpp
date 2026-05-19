@@ -102,6 +102,15 @@ DateTime Windows::UtcNow()
     return DateTime{(fileTime + (DateTime::FileTimeOffset | DateTime::KindUtc))};
 }
 
+usize Windows::GetMemoryUsage()
+{
+    PROCESS_MEMORY_COUNTERS_EX2 memoryCounter;
+    GetProcessMemoryInfo(GetCurrentProcess(), reinterpret_cast<PPROCESS_MEMORY_COUNTERS>(&memoryCounter), sizeof(memoryCounter));
+    Windows::CheckError();
+
+    return memoryCounter.PrivateWorkingSetSize;
+}
+
 void Windows::Cleanup()
 {
     if (waitableTimer)
