@@ -58,7 +58,7 @@ void Window::SetIcon(const Pointer<Texture>& newIcon)
         .flags = SDL_SURFACE_PREALLOCATED,
         .w = size.x,
         .h = size.y,
-        .pixels = Pointer(newIcon)->GetData<u8>()
+        .pixels = Pointer{newIcon}->GetData<u8>()
     };  // NOLINT(clang-diagnostic-missing-designated-field-initializers)
 
     SDL_SetWindowIcon(m_Window, &image);
@@ -129,10 +129,15 @@ void Window::Initialize(const std::string& windowTitle, const Vector2i windowSiz
     ZoneScoped;
 
     SDL_SetLogOutputFunction(
-        [](void* const, s32, const SDL_LogPriority priority, const c8* const message)
+        [](void*, s32, const SDL_LogPriority priority, const c8* message)
         {
-            if (priority == SDL_LOG_PRIORITY_ERROR)
-                Logger::LogError("SDL error: {}", message);
+            switch (priority)
+            {
+                case SDL_LOG_PRIORITY_WARN: Logger::LogWarning("SDL warning: {}", message); break;
+                case SDL_LOG_PRIORITY_ERROR: Logger::LogError("SDL error: {}", message); break;
+                case SDL_LOG_PRIORITY_CRITICAL: Logger::LogFatal("SDL critical error: {}", message); break;
+                default: break;
+            }
         },
         nullptr
     );

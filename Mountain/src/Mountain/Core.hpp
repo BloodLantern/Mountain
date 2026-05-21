@@ -1,6 +1,7 @@
 ﻿// ReSharper disable CppClangTidyBugproneMacroParentheses
 #pragma once
 
+#include <cinttypes>
 #include <cmath>
 #include <csignal>
 #include <cstdint>

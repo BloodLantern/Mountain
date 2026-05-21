@@ -1,8 +1,9 @@
 #pragma once
 
+#include <cstring>
+
 #include "Mountain/Core.hpp"
 #include "Mountain/Containers/ContiguousIterator.hpp"
-// ReSharper disable once CppUnusedIncludeDirective
 #include "Mountain/Containers/EnumerableExt.hpp"
 #include "Mountain/Exceptions/ThrowHelper.hpp"
 
@@ -16,14 +17,14 @@ namespace Mountain
 
     /// @brief A dynamic array implementation.
     ///
-    /// A more user-friendly list than @c std::vector, based on how @c List is in C#.
+    /// A more user-friendly list than @c std::vector, based on how @c List is in .NET.
     /// The internal structure and workings are similar to how std::vector works,
     /// it uses a capacity that grows exponentially based on powers of 2.
     ///
     /// @tparam T Type stored
     ///
     /// @see <a href="https://en.cppreference.com/w/cpp/container/vector">std::vector</a>
-    /// @see <a href="https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1">C# List</a>
+    /// @see <a href="https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1">.NET List</a>
     template <Concepts::DynamicContainerType T>
     class List
     {
@@ -126,7 +127,7 @@ namespace Mountain
         void AddRange(const EnumerableT& enumerable);
 
         /// @brief Fills the List with a specified value.
-        void Fill(const T& value);
+        void Fill(const T& value = T{});
 
         /// @brief Constructs a new element with the given arguments and adds it to the end of the list.
         /// @tparam Args Constructor element types

@@ -1,11 +1,11 @@
-
-
 #include "Mountain/Utils/FileSystemWatcher.hpp"
 
 #include <regex>
 
+#ifdef ENVIRONMENT_WINDOWS
 #include "Mountain/Utils/Logger.hpp"
 #include "Mountain/Utils/Windows.hpp"
+#endif
 
 using namespace Mountain;
 
@@ -77,6 +77,7 @@ void FileSystemWatcher::Run()
 {
     ZoneScoped;
 
+#ifdef ENVIRONMENT_WINDOWS
     Utils::SetThreadName(m_Thread, "FileSystemWatcher Thread");
 
     std::unique_lock lock(m_Mutex);
@@ -190,12 +191,14 @@ void FileSystemWatcher::Run()
             }
         }
     }
+#endif
 }
 
 DWORD FileSystemWatcher::NotifyFiltersToWindows(const FswNotifyFilters filters)
 {
     DWORD result = 0;
 
+#ifdef ENVIRONMENT_WINDOWS
     if (filters & FswNotifyFilters::FileName)
         result |= FILE_NOTIFY_CHANGE_FILE_NAME;
     if (filters & FswNotifyFilters::DirectoryName)
@@ -212,6 +215,7 @@ DWORD FileSystemWatcher::NotifyFiltersToWindows(const FswNotifyFilters filters)
         result |= FILE_NOTIFY_CHANGE_CREATION;
     if (filters & FswNotifyFilters::Security)
         result |= FILE_NOTIFY_CHANGE_SECURITY;
+#endif
 
     return result;
 }

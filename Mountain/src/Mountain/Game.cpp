@@ -143,14 +143,14 @@ void Game::InitializeInternal(const std::string& windowTitle, const Vector2i win
             {
                 Logger::LogFatal("Uncaught Mountain exception: {}", e);
                 Logger::Stop();
-                MessageBox::Show(std::format("Unhandled exception of type {}", e.GetName()).c_str(), std::format("{}", e).c_str(), MessageBox::Type::Ok, MessageBox::Icon::Error);
+                MessageBox::Show(std::format("Unhandled exception of type {}", e.GetName()).c_str(), std::format("{}", e).c_str(), MessageBox::ButtonConfiguration::Ok, MessageBox::Type::Error);
             }
             catch (const std::exception& e)
             {
                 const c8* t = typeid(e).name();
                 Logger::LogFatal("Uncaught std exception of type {}: {}", t, e);
                 Logger::Stop();
-                MessageBox::Show(std::format("Unhandled exception of type {}", t).c_str(), std::format("{}", e).c_str(), MessageBox::Type::Ok, MessageBox::Icon::Error);
+                MessageBox::Show(std::format("Unhandled exception of type {}", t).c_str(), std::format("{}", e).c_str(), MessageBox::ButtonConfiguration::Ok, MessageBox::Type::Error);
             }
 
 #ifdef _DEBUG

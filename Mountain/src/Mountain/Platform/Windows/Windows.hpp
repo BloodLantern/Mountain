@@ -44,6 +44,12 @@ namespace Mountain::Windows
     ATTRIBUTE_NODISCARD
     MOUNTAIN_API usize GetMemoryUsage();
 
+    ATTRIBUTE_NODISCARD
+    MOUNTAIN_API s64 GetTimerFrequency();
+
+    ATTRIBUTE_NODISCARD
+    MOUNTAIN_API s64 GetTimestamp();
+
     MOUNTAIN_API void Cleanup();
 
     ATTRIBUTE_NODISCARD

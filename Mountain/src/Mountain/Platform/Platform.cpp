@@ -24,4 +24,8 @@ DateTime Platform::UtcNow() { return PLATFORM_DEPENDENT_CALL(UtcNow); }
 
 usize Platform::GetMemoryUsage() { return PLATFORM_DEPENDENT_CALL(GetMemoryUsage); }
 
+s64 Platform::GetTimerFrequency() { return PLATFORM_DEPENDENT_CALL(GetTimerFrequency); }
+
+s64 Platform::GetTimestamp() { return PLATFORM_DEPENDENT_CALL(GetTimestamp); }
+
 void Platform::Cleanup() { return PLATFORM_DEPENDENT_CALL(Cleanup); }

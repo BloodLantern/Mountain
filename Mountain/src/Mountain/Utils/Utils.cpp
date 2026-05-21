@@ -1,6 +1,4 @@
-﻿
-
-#include "Mountain/Utils/Utils.hpp"
+﻿#include "Mountain/Utils/Utils.hpp"
 
 #include <fstream>
 #include <ranges>
@@ -9,6 +7,10 @@
 #include <imgui.h>
 
 #include "Mountain/Globals.hpp"
+
+#ifdef ENVIRONMENT_WINDOWS
+#include "Mountain/Platform/Windows.hpp"
+#endif
 
 using namespace Mountain;
 
@@ -34,8 +36,8 @@ std::string Utils::HumanizeString(const std::string& str)
     // correctly, we should cast the input to unsigned char and the output to char
     const c8 firstCharUpper = static_cast<c8>(std::toupper(static_cast<u8>(str[0])));
 
-    std::sregex_iterator begin(str.begin(), str.end(), Regex);
-    std::sregex_iterator end;
+    const std::sregex_iterator begin(str.begin(), str.end(), Regex);
+    const std::sregex_iterator end;
 
     std::string result = firstCharUpper + str.substr(1);
 
@@ -123,7 +125,17 @@ bool Utils::StringContainsIgnoreCase(const std::string_view a, const std::string
 
 s32 Utils::TerminalCommand(const std::string& command, const bool asynchronous)
 {
-    return std::system(((asynchronous ? "start /MIN " : "") + command).c_str());  // NOLINT(concurrency-mt-unsafe)
+    return std::system(
+        (asynchronous
+             ?
+#ifdef ENVIRONMENT_LINUX
+             command + '&'
+#else
+             "start /MIN " + command
+#endif
+             : command)
+        .c_str()
+    );
 }
 
 void Utils::CreateEmptyFile(const std::filesystem::path& path)

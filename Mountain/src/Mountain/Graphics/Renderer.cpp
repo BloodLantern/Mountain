@@ -254,7 +254,7 @@ bool Mountain::Renderer::Initialize(const std::string& windowTitle, const Vector
 
     ImGui::StyleColorsDark();
 
-    ImGui_ImplSDL3_InitForOpenGL(Window::GetHandle(), Window::GetContext());
+    ImGui_ImplSDL3_InitForOpenGL(Window::GetSdlHandle(), Window::GetSdlContextHandle());
     ImGui_ImplOpenGL3_Init(glVersion.glsl);
 
     io.Fonts->AddFontDefault();

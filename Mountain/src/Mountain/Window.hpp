@@ -5,12 +5,14 @@
 #include "Mountain/Resource/Texture.hpp"
 #include "Mountain/Utils/Event.hpp"
 
-/// @file window.hpp
+/// @file Window.hpp
 /// @brief Defines the Mountain::Window class.
 
+// ReSharper disable CppInconsistentNaming
 struct SDL_Window;
-typedef struct SDL_GLContextState* SDL_GLContext;
+using SDL_GLContext = struct SDL_GLContextState*;
 union SDL_Event;
+// ReSharper restore CppInconsistentNaming
 
 namespace Mountain
 {
@@ -53,11 +55,11 @@ namespace Mountain
         /// @brief Set the window to be the current context
         MOUNTAIN_API static void MakeContextCurrent();
 
-        /// @brief Get the native handle of the window
-        STATIC_GETTER(SDL_Window*, Handle, m_Window)
+        /// @brief Get the SDL window handle
+        STATIC_GETTER(SDL_Window*, SdlHandle, m_Window)
 
-        /// @brief Get the native handle of the window
-        STATIC_GETTER(SDL_GLContext, Context, m_Context)
+        /// @brief Get the SDL context handle
+        STATIC_GETTER(SDL_GLContext, SdlContextHandle, m_Context)
 
         /// @brief Get whether the window is visible or hidden.
         STATIC_GETTER(bool, Visible, m_Visible)

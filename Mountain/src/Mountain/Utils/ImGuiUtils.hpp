@@ -20,7 +20,7 @@
     do \
     { \
         auto var = variableAccess Get##field(); \
-        imguiFunction(label, &var, __VA_ARGS__); \
+        imguiFunction(label, &var, ##__VA_ARGS__); \
         variableAccess Set##field(var); \
     } \
     while (false)
@@ -63,7 +63,7 @@ namespace Mountain::ImGuiUtils
 
     MOUNTAIN_API void ShowPerformanceMonitoring();
 
-    MOUNTAIN_API void DrawEasingFunction(const c8* label, Easing::Easer function, s32 pointCount = 30);
+    MOUNTAIN_API void DrawEasingFunction(const c8* label, Easing::Easer easer, usize pointCount = 30);
 
     MOUNTAIN_API void OpenPointerPopupModal();
 

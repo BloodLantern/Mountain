@@ -32,6 +32,7 @@ namespace Mountain
         All             = FileName | DirectoryName | Attributes | Size | LastWrite | LastAccess | Creation | Security
     };
 
+    // Currently only available on Windows.
     class ATTRIBUTE_NODISCARD FileSystemWatcher
     {
     public:

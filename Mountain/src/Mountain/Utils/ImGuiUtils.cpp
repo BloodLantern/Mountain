@@ -426,7 +426,7 @@ void ImGuiUtils::ShowFileManager()
         ImGui::BeginDisabled();
         if (file->GetSize() < 1000)
         {
-            ImGui::Text("Size: %zi B", file->GetSize());
+            ImGui::Text("Size: %" PRIi64 " B", file->GetSize());
         }
         else
         {
@@ -678,7 +678,7 @@ void ImGuiUtils::ShowPerformanceMonitoring()
         lastUpdateTotalFrames = totalFrames;
     }
 
-    ImGui::Text("Frame #%zu", lastUpdateTotalFrames);
+    ImGui::Text("Frame #%" PRIu64, lastUpdateTotalFrames);
     Color fpsColor = Color::LightGreen();
     if (fps < 60.f)
         fpsColor = Color::Orange();
@@ -698,17 +698,17 @@ void ImGuiUtils::ShowPerformanceMonitoring()
     ImGui::End();
 }
 
-void ImGuiUtils::DrawEasingFunction(const c8* label, const Easing::Easer function, const s32 pointCount)
+void ImGuiUtils::DrawEasingFunction(const c8* label, const Easing::Easer easer, const usize pointCount)
 {
-    f32* data = new f32[pointCount * sizeof(f32)];
+    const List<f32> points = List<f32>(pointCount);
 
     f32 min = std::numeric_limits<f32>::max();
     f32 max = std::numeric_limits<f32>::min();
 
-    for (s32 i = 0; i < pointCount; i++)
+    for (usize i = 0; i < pointCount; i++)
     {
-        const f32 value = function(static_cast<f32>(i) / static_cast<f32>(pointCount));
-        data[i] = value;
+        const f32 value = easer(static_cast<f32>(i) / static_cast<f32>(pointCount));
+        points[i] = value;
 
         if (value < min)
             min = value;
@@ -716,9 +716,7 @@ void ImGuiUtils::DrawEasingFunction(const c8* label, const Easing::Easer functio
             max = value;
     }
 
-    ImGui::PlotLines(label, data, pointCount, 0, nullptr, min, max, {100, 100});
-
-    delete[] data;
+    ImGui::PlotLines(label, points.GetData(), static_cast<int>(pointCount), 0, nullptr, min, max, {100, 100});
 }
 
 void ImGuiUtils::OpenPointerPopupModal()

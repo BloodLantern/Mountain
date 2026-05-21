@@ -6,113 +6,109 @@
 
 using namespace Mountain;
 
-/// @brief Generate cryptographically strong random bytes.
-/// @details Source: https://github.com/dotnet/runtime/blob/0cf1906b274d5ab7d3ea1e11aa43af98ecb87d48/src/native/minipal/random.c#L79
-/// @return 0 on success, -1 on failure.
-s32 GetCryptographicallySecureRandomBytes(u8* buffer, const s32 bufferLength)
+namespace
 {
-    ENSURE_NOT_NULL(buffer);
+    constexpr long SecondsToNanoSeconds = 1'000'000'000;
 
-    // getentropy() is available on platforms like WASI (via wasi-libc, backed by
-    // __wasi_random_get()) and other libc implementations. Used as a fallback when
-    // getrandom() is not available or fails.
+    /// @brief Generate cryptographically strong random bytes.
+    /// @details Source: https://github.com/dotnet/runtime/blob/0cf1906b274d5ab7d3ea1e11aa43af98ecb87d48/src/native/minipal/random.c#L79
+    /// @return 0 on success, -1 on failure.
+    s32 GetCryptographicallySecureRandomBytes(u8* buffer, const s32 bufferLength)
     {
-        s32 offset = 0;
-        while (offset < bufferLength)
-        {
-            // getentropy() is limited to 256 bytes per call
-            usize chunk = static_cast<usize>(bufferLength - offset);
-            if (chunk > 256)
-                chunk = 256;
-            if (getentropy(buffer + offset, chunk) < 0)
-                break; // fallback to /dev/urandom
+        ENSURE_NOT_NULL(buffer);
 
-            offset += static_cast<s32>(chunk);
-        }
-
-        if (offset == bufferLength)
-        {
-            return 0;
-        }
-    }
-
-    // Fallback to /dev/urandom
-    static volatile int randDes = -1;
-    static bool sMissingDevURandom;
-
-    if (!sMissingDevURandom)
-    {
-        if (randDes == -1)
-        {
-            int fd;
-
-            do
-                fd = open("/dev/urandom", O_RDONLY | O_CLOEXEC);
-            while (fd == -1 && errno == EINTR);
-
-            if (fd != -1)
-            {
-                int expected = -1;
-                if (!__atomic_compare_exchange_n(&randDes, &expected, fd, false, __ATOMIC_SEQ_CST, __ATOMIC_SEQ_CST))
-                {
-                    // Another thread has already set the rand_des
-                    close(fd);
-                }
-            }
-            else if (errno == ENOENT)
-            {
-                sMissingDevURandom = true;
-            }
-        }
-
-        if (randDes != -1)
+        // getentropy() is available on platforms like WASI (via wasi-libc, backed by
+        // __wasi_random_get()) and other libc implementations. Used as a fallback when
+        // getrandom() is not available or fails.
         {
             s32 offset = 0;
-            do
+            while (offset < bufferLength)
             {
-                const ssize_t n = read(randDes, buffer + offset, static_cast<usize>(bufferLength - offset));
-                if (n == -1)
-                {
-                    if (errno == EINTR)
-                        continue;
+                // getentropy() is limited to 256 bytes per call
+                usize chunk = static_cast<usize>(bufferLength - offset);
+                if (chunk > 256)
+                    chunk = 256;
+                if (getentropy(buffer + offset, chunk) < 0)
+                    break; // fallback to /dev/urandom
 
-                    return -1;
-                }
-
-                offset += n;
+                offset += static_cast<s32>(chunk);
             }
 
-            while (offset != bufferLength);
-
-            return 0;
+            if (offset == bufferLength)
+            {
+                return 0;
+            }
         }
+
+        // Fallback to /dev/urandom
+        static volatile int randDes = -1;
+        static bool sMissingDevURandom;
+
+        if (!sMissingDevURandom)
+        {
+            if (randDes == -1)
+            {
+                int fd;
+
+                do
+                    fd = open("/dev/urandom", O_RDONLY | O_CLOEXEC);
+                while (fd == -1 && errno == EINTR);
+
+                if (fd != -1)
+                {
+                    int expected = -1;
+                    if (!__atomic_compare_exchange_n(&randDes, &expected, fd, false, __ATOMIC_SEQ_CST, __ATOMIC_SEQ_CST))
+                    {
+                        // Another thread has already set the rand_des
+                        close(fd);
+                    }
+                }
+                else if (errno == ENOENT)
+                {
+                    sMissingDevURandom = true;
+                }
+            }
+
+            if (randDes != -1)
+            {
+                s32 offset = 0;
+                do
+                {
+                    const ssize_t n = read(randDes, buffer + offset, static_cast<usize>(bufferLength - offset));
+                    if (n == -1)
+                    {
+                        if (errno == EINTR)
+                            continue;
+
+                        return -1;
+                    }
+
+                    offset += n;
+                }
+
+                while (offset != bufferLength);
+
+                return 0;
+            }
+        }
+
+        return -1;
     }
 
-    return -1;
-}
+    /// @brief @c GetSystemTimeAsTicks() return the system time as ticks (100 nanoseconds) since 00:00 01 January 1970 UTC (Unix epoch)
+    /// @details Source: https://github.com/dotnet/runtime/blob/286dc1501f7bc16b2b170ec68d70bb755476d4ea/src/native/libs/System.Native/pal_datetime.c#L28
+    s64 GetSystemTimeAsTicks()
+    {
+        static constexpr int64_t TicksPerSecond = 10000000; /* 10^7 */
+        static constexpr int64_t NanosecondsPerTick = 100;
 
-/// @brief Generate random bytes. The generated bytes are not cryptographically strong.
-/// @details Source: https://github.com/dotnet/runtime/blob/0cf1906b274d5ab7d3ea1e11aa43af98ecb87d48/src/native/minipal/random.c#L35
-void GetNonCryptographicallySecureRandomBytes(u8* buffer, const s32 bufferLength)
-{
-    ENSURE_NOT_NULL(buffer);
+        timespec time;
+        if (clock_gettime(CLOCK_REALTIME, &time) == 0)
+            return time.tv_sec * TicksPerSecond + time.tv_nsec / NanosecondsPerTick;
 
-    arc4random_buf(buffer, static_cast<usize>(bufferLength));
-}
-
-/// @brief @c GetSystemTimeAsTicks() return the system time as ticks (100 nanoseconds) since 00:00 01 January 1970 UTC (Unix epoch)
-/// @details Source: https://github.com/dotnet/runtime/blob/286dc1501f7bc16b2b170ec68d70bb755476d4ea/src/native/libs/System.Native/pal_datetime.c#L28
-s64 GetSystemTimeAsTicks()
-{
-    static constexpr int64_t TicksPerSecond = 10000000; /* 10^7 */
-    static constexpr int64_t NanosecondsPerTick = 100;
-
-    timespec time;
-    if (clock_gettime(CLOCK_REALTIME, &time) == 0)
-        return time.tv_sec * TicksPerSecond + time.tv_nsec / NanosecondsPerTick;
-
-    // in failure we return 00:00 01 January 1970 UTC (Unix epoch)
-    return 0;
+        // in failure we return 00:00 01 January 1970 UTC (Unix epoch)
+        return 0;
+    }
 }
 
 bool Linux::Sleep(const TimeSpan duration)
@@ -165,8 +161,21 @@ usize Linux::GetMemoryUsage()
     return result;
 }
 
-void Linux::Cleanup()
+s64 Linux::GetTimerFrequency() { return SecondsToNanoSeconds; }
+
+s64 Linux::GetTimestamp()
 {
+    // Source: https://github.com/dotnet/runtime/blob/96959a64df6ba4e5c62c4c68d9b91881f8141e79/src/native/minipal/time.c#L96
+
+    timespec ts;
+    const int result = clock_gettime(CLOCK_MONOTONIC, &ts);
+
+    if (result != 0)
+        THROW(Exception{"clock_gettime(CLOCK_MONOTONIC) failed"});
+
+    return ts.tv_sec * static_cast<int64_t>(SecondsToNanoSeconds) + ts.tv_nsec;
 }
+
+void Linux::Cleanup() { }
 
 #endif

@@ -251,19 +251,19 @@ void ParticleSystem::RenderImGui()
         ImGuiUtils::PopSeparatorText();
     }
 
-    if (CheckAndDeleteRawDataCopy(dataCopy))
-    {
-        const f32 oldTime = m_PlaybackTime;
-        const f32 restartTime = m_PlaybackTime > duration ? m_PlaybackTime - duration - Calc::Modulo(m_PlaybackTime, duration) : 0.f;
-
-        Restart();
-        m_PlaybackTime = restartTime;
-
-        while (m_PlaybackTime < oldTime)
-            Update(std::min(oldTime - m_PlaybackTime, useUnscaledDeltaTime ? Time::GetDeltaTimeUnscaled() : Time::GetDeltaTime()));
-
-        m_PlaybackTime = oldTime;
-    }
+    // if (CheckAndDeleteRawDataCopy(dataCopy))
+    // {
+    //     const f32 oldTime = m_PlaybackTime;
+    //     const f32 restartTime = m_PlaybackTime > duration ? m_PlaybackTime - duration - Calc::Modulo(m_PlaybackTime, duration) : 0.f;
+    //
+    //     Restart();
+    //     m_PlaybackTime = restartTime;
+    //
+    //     while (m_PlaybackTime < oldTime)
+    //         Update(std::min(oldTime - m_PlaybackTime, useUnscaledDeltaTime ? Time::GetDeltaTimeUnscaled() : Time::GetDeltaTime()));
+    //
+    //     m_PlaybackTime = oldTime;
+    // }
 
     ImGui::PopID();
 }

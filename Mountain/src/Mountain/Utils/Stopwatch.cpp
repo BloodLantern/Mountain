@@ -1,28 +1,17 @@
-﻿
-
-#include "Mountain/Utils/Stopwatch.hpp"
+﻿#include "Mountain/Utils/Stopwatch.hpp"
 
 #include <algorithm>
 
-#include "Mountain/Utils/Windows.hpp"
+#include "Mountain/Platform/Platform.hpp"
 
 using namespace Mountain;
 
 namespace
 {
-    s64 InitializeFrequency()
-    {
-        s64 result;
-        QueryPerformanceFrequency(reinterpret_cast<LARGE_INTEGER*>(&result));
-        return result;
-    }
-
-    // "Frequency" stores the frequency of the high-resolution performance counter
-    // if one exists.
+    // "Frequency" stores the frequency of the high-resolution performance counter if one exists.
     // Otherwise, it will store TicksPerSecond.
-    // The frequency cannot change while the system is running,
-    // so we only need to initialize it once.
-    s64 frequency = InitializeFrequency();
+    // The frequency cannot change while the system is running, so we only need to initialize it once.
+    s64 frequency = Platform::GetTimerFrequency();
 }
 
 const f64 Stopwatch::TickFrequency = static_cast<f64>(TicksPerSecond) / static_cast<f64>(frequency);
@@ -36,12 +25,7 @@ Stopwatch Stopwatch::StartNew()
 
 s64 Stopwatch::GetFrequency() { return frequency; }
 
-s64 Stopwatch::GetTimestamp()
-{
-    s64 timestamp;
-    QueryPerformanceCounter(reinterpret_cast<LARGE_INTEGER*>(&timestamp));
-    return timestamp;
-}
+s64 Stopwatch::GetTimestamp() { return Platform::GetTimestamp(); }
 
 TimeSpan Stopwatch::GetElapsedTime(const s64 startingTimestamp)
 {

@@ -96,7 +96,7 @@ Guid Linux::NewGuid()
 
 DateTime Windows::UtcNow()
 {
-    u64 fileTime; // mark only the temp local as address-taken
+    u64 fileTime;
     GetSystemTimeAsFileTime(reinterpret_cast<LPFILETIME>(&fileTime));
 
     return DateTime{(fileTime + (DateTime::FileTimeOffset | DateTime::KindUtc))};
@@ -109,6 +109,20 @@ usize Windows::GetMemoryUsage()
     Windows::CheckError();
 
     return memoryCounter.PrivateWorkingSetSize;
+}
+
+s64 Windows::GetTimerFrequency()
+{
+    s64 result;
+    QueryPerformanceFrequency(reinterpret_cast<LARGE_INTEGER*>(&result));
+    return result;
+}
+
+s64 Windows::GetTimestamp()
+{
+    s64 timestamp;
+    QueryPerformanceCounter(reinterpret_cast<LARGE_INTEGER*>(&timestamp));
+    return timestamp;
 }
 
 void Windows::Cleanup()

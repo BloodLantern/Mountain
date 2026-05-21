@@ -22,5 +22,11 @@ namespace Mountain::Platform
 
     MOUNTAIN_API void SetCurrentThreadName();
 
+    ATTRIBUTE_NODISCARD
+    MOUNTAIN_API s64 GetTimerFrequency();
+
+    ATTRIBUTE_NODISCARD
+    MOUNTAIN_API s64 GetTimestamp();
+
     MOUNTAIN_API void Cleanup();
 }
