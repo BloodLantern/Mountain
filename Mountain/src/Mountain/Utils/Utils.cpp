@@ -9,7 +9,6 @@
 #include <imgui.h>
 
 #include "Mountain/Globals.hpp"
-#include "Mountain/Utils/Windows.hpp"
 
 using namespace Mountain;
 
@@ -142,6 +141,8 @@ void Utils::SetThreadName(ATTRIBUTE_MAYBE_UNUSED std::thread& thread, ATTRIBUTE_
 #ifdef ENVIRONMENT_WINDOWS
     (void) SetThreadDescription(thread.native_handle(), NarrowToWide(name).c_str());
     Windows::SilenceError();
+#else
+	(void) pthread_setname_np(thread.native_handle(), name.c_str());
 #endif
 }
 

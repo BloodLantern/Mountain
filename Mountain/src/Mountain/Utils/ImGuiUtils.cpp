@@ -426,7 +426,7 @@ void ImGuiUtils::ShowFileManager()
         ImGui::BeginDisabled();
         if (file->GetSize() < 1000)
         {
-            ImGui::Text("Size: %lld B", file->GetSize());
+            ImGui::Text("Size: %zi B", file->GetSize());
         }
         else
         {
@@ -678,7 +678,7 @@ void ImGuiUtils::ShowPerformanceMonitoring()
         lastUpdateTotalFrames = totalFrames;
     }
 
-    ImGui::Text("Frame #%llu", lastUpdateTotalFrames);
+    ImGui::Text("Frame #%zu", lastUpdateTotalFrames);
     Color fpsColor = Color::LightGreen();
     if (fps < 60.f)
         fpsColor = Color::Orange();
@@ -718,7 +718,7 @@ void ImGuiUtils::DrawEasingFunction(const c8* label, const Easing::Easer functio
 
     ImGui::PlotLines(label, data, pointCount, 0, nullptr, min, max, {100, 100});
 
-    delete data;
+    delete[] data;
 }
 
 void ImGuiUtils::OpenPointerPopupModal()

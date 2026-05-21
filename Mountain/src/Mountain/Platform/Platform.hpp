@@ -18,5 +18,9 @@ namespace Mountain::Platform
     ATTRIBUTE_NODISCARD
     MOUNTAIN_API usize GetMemoryUsage();
 
+    MOUNTAIN_API void SetThreadName(const std::thread& thread);
+
+    MOUNTAIN_API void SetCurrentThreadName();
+
     MOUNTAIN_API void Cleanup();
 }
