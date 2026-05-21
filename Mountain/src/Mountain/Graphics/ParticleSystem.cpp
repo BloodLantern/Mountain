@@ -103,7 +103,7 @@ void ParticleSystem::RenderImGui()
 {
     ImGui::PushID(this);
 
-    const u8* dataCopy = CreateRawDataCopy();
+    // const u8* dataCopy = CreateRawDataCopy();
 
     if (ImGuiUtils::PushSeparatorText("System controls"))
     {
