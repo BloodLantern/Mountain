@@ -1,11 +1,15 @@
 cmake_minimum_required(VERSION 3.20)
 
 set(vcpkg "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake")
-if(NOT CMAKE_TOOLCHAIN_FILE AND EXISTS "${vcpkg}")
-    set(CMAKE_TOOLCHAIN_FILE "${vcpkg}"
-            CACHE FILEPATH "CMake toolchain file")
-    message(STATUS "vcpkg toolchain found: ${CMAKE_TOOLCHAIN_FILE}")
-endif()
+if (NOT CMAKE_TOOLCHAIN_FILE)
+    if (EXISTS "${vcpkg}")
+        set(CMAKE_TOOLCHAIN_FILE "${vcpkg}"
+                CACHE FILEPATH "CMake toolchain file")
+        message(STATUS "vcpkg toolchain found: ${CMAKE_TOOLCHAIN_FILE}")
+    else ()
+        message(FATAL_ERROR "vcpkg toolchain not found. Make sure vcpkg is installed and the 'VCPKG_ROOT' environment variable is set.")
+    endif ()
+endif ()
 
 set(MOUNTAIN_VERSION 1.0.3)
 
