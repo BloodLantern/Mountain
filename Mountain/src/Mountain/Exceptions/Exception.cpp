@@ -9,7 +9,7 @@ namespace
 
 std::string ExceptionState::ToString() const
 {
-    return std::format("{}:{} (Function {})", file, line, function);
+    return std::format("{}:{} ({})", file, line, function);
 }
 
 void Mountain::SetCurrentExceptionState(const ExceptionState& state)
@@ -28,7 +28,14 @@ void Mountain::SetCurrentExceptionState(const c8* function, const c8* file, cons
 
 Exception::Exception() noexcept { SetStateCurrent(); }
 
-Exception::Exception(const Exception& other) noexcept : exception(other) { m_State = other.m_State; }
+Exception::Exception(const Exception& other) noexcept
+    : exception(other)
+{
+    m_State = other.m_State;
+#ifndef COMPILER_MSVC
+    m_Message = other.m_Message;
+#endif
+}
 
 Exception& Exception::operator=(const Exception& other) noexcept
 {
@@ -38,6 +45,9 @@ Exception& Exception::operator=(const Exception& other) noexcept
     exception::operator=(other);
 
     m_State = other.m_State;
+#ifndef COMPILER_MSVC
+    m_Message = other.m_Message;
+#endif
 
     return *this;
 }
@@ -52,7 +62,14 @@ Exception::Exception(const c8* message) noexcept
     SetStateCurrent();
 }
 
-const c8* Exception::GetMessage() const noexcept { return what(); }
+const c8* Exception::GetMessage() const noexcept
+{
+#ifdef COMPILER_MSVC
+    return message;
+#else
+    return m_Message;
+#endif
+}
 
 const ExceptionState& Exception::GetState() const noexcept { return m_State; }
 
