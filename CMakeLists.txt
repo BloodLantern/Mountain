@@ -51,6 +51,10 @@ find_package(imgui CONFIG REQUIRED)
 find_path(MINIMP3_INCLUDE_DIRS "minimp3/minimp3.h")
 find_path(Stb_INCLUDE_DIR "stb_image.h")
 
+if (${CMAKE_BUILD_TYPE} STREQUAL "Debug")
+    add_compile_definitions(_DEBUG)
+endif ()
+
 # Subdirectories
 add_subdirectory(Mountain)
 
