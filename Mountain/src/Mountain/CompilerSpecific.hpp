@@ -1,6 +1,6 @@
 #ifndef COMPILER_SPECIFIC_HPP
 #define COMPILER_SPECIFIC_HPP
-#define linux
+
 #if defined(_WIN32) || defined(__CYGWIN__)
     #define ENVIRONMENT_WINDOWS
 #elifdef linux
