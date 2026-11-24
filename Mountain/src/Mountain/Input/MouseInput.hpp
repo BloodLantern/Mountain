@@ -1,4 +1,5 @@
-#pragma once
+#ifndef MOUSE_INPUT_HPP
+#define MOUSE_INPUT_HPP
 
 #include "Mountain/Core.hpp"
 
@@ -43,3 +44,5 @@ namespace Mountain
         Release
     };
 }
+#endif
+

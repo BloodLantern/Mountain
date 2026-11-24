@@ -1,4 +1,5 @@
-#pragma once
+#ifndef FILE_MANAGER_HPP
+#define FILE_MANAGER_HPP
 
 #include <filesystem>
 #include <map>
@@ -234,3 +235,5 @@ namespace Mountain
             Logger::LogWarning("Attempt to delete an unknown FileManager entry: {}", entry->GetPathString());
     }
 }
+#endif
+

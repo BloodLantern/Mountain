@@ -1,4 +1,5 @@
-#pragma once
+#ifndef VECTOR3_HPP
+#define VECTOR3_HPP
 
 #include <format>
 #include <sstream>
@@ -336,3 +337,5 @@ typename FmtContext::iterator std::formatter<Vector3>::format(Vector3 v, FmtCont
 
     return std::ranges::copy(std::move(out).str(), ctx.out()).out;
 }
+#endif
+

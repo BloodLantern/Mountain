@@ -1,4 +1,5 @@
-#pragma once
+#ifndef TIME_SPAN_HPP
+#define TIME_SPAN_HPP
 
 #include <format>
 #include <sstream>
@@ -373,3 +374,5 @@ namespace Mountain
         return TimeSpan{static_cast<s64>(ticks)};
     }
 }
+#endif
+

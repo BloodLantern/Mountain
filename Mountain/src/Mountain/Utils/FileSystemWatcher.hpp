@@ -1,4 +1,5 @@
-#pragma once
+#ifndef FILE_SYSTEM_WATCHER_HPP
+#define FILE_SYSTEM_WATCHER_HPP
 
 #include <chrono>
 #include <condition_variable>
@@ -97,3 +98,5 @@ namespace Mountain
 }
 
 ENUM_FLAGS(Mountain::FswNotifyFilters)
+#endif
+

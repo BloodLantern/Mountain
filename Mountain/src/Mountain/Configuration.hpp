@@ -1,7 +1,10 @@
-﻿#pragma once
+#ifndef CONFIGURATION_HPP
+#define CONFIGURATION_HPP
 
 //#define MOUNTAIN_USE_PROFILER
 
 #ifdef MOUNTAIN_USE_PROFILER
 #define PROFILING
 #endif
+#endif
+

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef RENDERER_HPP
+#define RENDERER_HPP
 
 #include <chrono>
 #include <stack>
@@ -67,3 +68,5 @@ namespace Mountain
         friend class Game;
     };
 }
+#endif
+

@@ -1,4 +1,5 @@
-﻿#pragma once
+#ifndef REQUIREMENTS_HPP
+#define REQUIREMENTS_HPP
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Containers/FunctionTypes.hpp"
@@ -324,3 +325,5 @@ struct std::hash<HashableT>  // NOLINT(cert-dcl58-cpp)
 
 // ReSharper enable CppMemberFunctionMayBeStatic
 // ReSharper enable CppClangTidyCertDcl58Cpp
+#endif
+

@@ -1,4 +1,5 @@
-﻿#pragma once
+#ifndef LOGGER_HPP
+#define LOGGER_HPP
 
 #include <condition_variable>
 #include <filesystem>
@@ -309,3 +310,5 @@ namespace Mountain
         return level >= minimumConsoleLevel || (HasFileOpen() && level >= minimumFileLevel);
     }
 }
+#endif
+

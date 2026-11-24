@@ -1,4 +1,5 @@
-﻿#pragma once
+#ifndef SCENE_HPP
+#define SCENE_HPP
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Ecs/EntityList.hpp"
@@ -45,3 +46,5 @@ namespace Mountain
         EntityList<Entity> m_Entities;
     };
 }
+#endif
+

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef IM_GUI_UTILS_HPP
+#define IM_GUI_UTILS_HPP
 
 #include <imgui.h>
 #include <imgui_stdlib.h>
@@ -359,3 +360,5 @@ namespace ImGui
     }
     // ReSharper restore CppInconsistentNaming
 }
+#endif
+

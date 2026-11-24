@@ -1,4 +1,5 @@
-#pragma once
+#ifndef DRAW_HPP
+#define DRAW_HPP
 
 #include <magic_enum/magic_enum.hpp>
 
@@ -498,3 +499,5 @@ namespace Mountain
         friend class ParticleSystem;
     };
 }
+#endif
+

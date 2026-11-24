@@ -1,4 +1,5 @@
-﻿#pragma once
+#ifndef STATE_MACHINE_HPP
+#define STATE_MACHINE_HPP
 
 #include "Mountain/Core.hpp"
 
@@ -218,3 +219,5 @@ namespace Mountain
     template <Concepts::Enum T>
     StateMachine<T>::operator T() { return m_State; }
 }
+#endif
+

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef EVENT_HPP
+#define EVENT_HPP
 
 #include "Mountain/Core.hpp"
 
@@ -101,3 +102,5 @@ namespace Mountain
         return *this;
     }
 }
+#endif
+

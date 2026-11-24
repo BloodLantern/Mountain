@@ -1,4 +1,5 @@
-﻿#pragma once
+#ifndef MATH_HPP
+#define MATH_HPP
 
 /// @file Math.hpp
 /// @brief A convenient way to include all math-related headers.
@@ -19,3 +20,5 @@
 #include "Mountain/Math/Vector4.hpp"
 
 #include "Mountain/Math/Quaternion.hpp"
+#endif
+

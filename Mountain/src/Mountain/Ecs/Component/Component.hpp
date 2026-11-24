@@ -1,4 +1,5 @@
-﻿#pragma once
+#ifndef COMPONENT_HPP
+#define COMPONENT_HPP
 
 #include "Mountain/Core.hpp"
 
@@ -57,3 +58,5 @@ namespace Mountain
         Entity* m_Entity = nullptr;
     };
 }
+#endif
+

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef COLLISION_HPP
+#define COLLISION_HPP
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Math/Vector2.hpp"
@@ -10,3 +11,5 @@ namespace Mountain::Collision
     ///         and the second element is the position of the collision.
     MOUNTAIN_API std::pair<bool, Vector2> LinesIntersect(Vector2 p1, Vector2 p2, Vector2 p3, Vector2 p4);
 }
+#endif
+

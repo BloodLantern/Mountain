@@ -1,4 +1,5 @@
-#pragma once
+#ifndef KEYBOARD_INPUT_HPP
+#define KEYBOARD_INPUT_HPP
 
 #include "Mountain/Core.hpp"
 
@@ -365,3 +366,5 @@ namespace Mountain
         Repeat
     };
 }
+#endif
+

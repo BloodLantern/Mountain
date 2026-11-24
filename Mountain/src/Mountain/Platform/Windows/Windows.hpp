@@ -1,4 +1,5 @@
-#pragma once
+#ifndef WINDOWS_HPP
+#define WINDOWS_HPP
 
 #include "Mountain/Core.hpp"
 
@@ -60,3 +61,5 @@ namespace Mountain::Windows
 }
 
 #endif
+#endif
+

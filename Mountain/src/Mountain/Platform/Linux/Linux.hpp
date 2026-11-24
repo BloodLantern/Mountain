@@ -1,4 +1,5 @@
-#pragma once
+#ifndef LINUX_HPP
+#define LINUX_HPP
 
 #include "Mountain/Core.hpp"
 
@@ -27,3 +28,5 @@ namespace Mountain::Linux
 }
 
 #endif
+#endif
+

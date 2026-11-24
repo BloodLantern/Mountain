@@ -1,5 +1,6 @@
-﻿// ReSharper disable CppClangTidyBugproneMacroParentheses
-#pragma once
+// ReSharper disable CppClangTidyBugproneMacroParentheses
+#ifndef CORE_HPP
+#define CORE_HPP
 
 #include <cinttypes>
 #include <cmath>
@@ -232,3 +233,5 @@ namespace Mountain {}
 
 #define MOUNTAIN_VERSION_STRING STRINGIFY(MOUNTAIN_VERSION)
 #define MOUNTAIN_VERSION_WSTRING WSTRINGIFY(MOUNTAIN_VERSION)
+#endif
+

@@ -1,4 +1,5 @@
-﻿#pragma once
+#ifndef PROFILER_HPP
+#define PROFILER_HPP
 
 #include "Mountain/Core.hpp"
 
@@ -8,3 +9,5 @@
 #include <glad/glad.h>
 
 #include <../../Profiler/src/tracy/TracyOpenGL.hpp>
+#endif
+

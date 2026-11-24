@@ -1,4 +1,5 @@
-#pragma once
+#ifndef WINDOW_HPP
+#define WINDOW_HPP
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Graphics/Renderer.hpp"
@@ -145,3 +146,5 @@ namespace Mountain
         friend class Time;
     };
 }
+#endif
+

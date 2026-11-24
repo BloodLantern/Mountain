@@ -1,4 +1,5 @@
-#pragma once
+#ifndef GUID_HPP
+#define GUID_HPP
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Containers/Array.hpp"
@@ -81,3 +82,5 @@ namespace Mountain
 {
     constexpr Guid Guid::Empty() { return {}; }
 }
+#endif
+

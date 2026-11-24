@@ -1,4 +1,5 @@
-#pragma once
+#ifndef GAME_HPP
+#define GAME_HPP
 
 #include "Graphics/Renderer.hpp"
 #include "Mountain/Core.hpp"
@@ -85,3 +86,5 @@ namespace Mountain
         ImGui::SetCurrentContext(Renderer::GetImGuiContext());
     }
 }
+#endif
+

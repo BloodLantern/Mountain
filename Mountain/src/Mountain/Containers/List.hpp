@@ -1,4 +1,5 @@
-#pragma once
+#ifndef LIST_HPP
+#define LIST_HPP
 
 #include <cstring>
 
@@ -1049,3 +1050,5 @@ namespace Mountain
             THROW(ThrowHelper::InvalidIteratorException());
     }
 }
+#endif
+

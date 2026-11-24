@@ -1,4 +1,5 @@
-﻿#pragma once
+#ifndef COMPILER_SPECIFIC_HPP
+#define COMPILER_SPECIFIC_HPP
 #define linux
 #if defined(_WIN32) || defined(__CYGWIN__)
     #define ENVIRONMENT_WINDOWS
@@ -67,4 +68,5 @@
     #define DEBUG_BREAK __debugbreak()
 #elifdef ENVIRONMENT_LINUX
     #define DEBUG_BREAK raise(SIGTRAP)
+#endif
 #endif

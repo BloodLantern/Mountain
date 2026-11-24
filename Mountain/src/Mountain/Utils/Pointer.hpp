@@ -1,4 +1,5 @@
-﻿#pragma once
+#ifndef POINTER_HPP
+#define POINTER_HPP
 
 #include <format>
 #include <utility>
@@ -587,3 +588,5 @@ namespace Mountain
     template <typename T>
     bool operator==(const Pointer<T>& lhs, const nullptr_t) { return !lhs.IsValid(); }
 }
+#endif
+

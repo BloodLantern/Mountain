@@ -1,4 +1,5 @@
-﻿#pragma once
+#ifndef DIRECTORY_HPP
+#define DIRECTORY_HPP
 
 #include <filesystem>
 
@@ -80,3 +81,5 @@ namespace Mountain
 
 // Voluntary include after the class definition because using Pointer<File> means we need to include File at some point
 #include "Mountain/FileSystem/File.hpp"
+#endif
+

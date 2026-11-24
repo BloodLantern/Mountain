@@ -1,4 +1,5 @@
-﻿#pragma once
+#ifndef TS_QUEUE_HPP
+#define TS_QUEUE_HPP
 
 #include <mutex>
 #include <queue>
@@ -150,3 +151,5 @@ namespace Mountain
             m_Queue.pop();
     }
 }
+#endif
+

@@ -1,4 +1,5 @@
-﻿#pragma once
+#ifndef META_PROGRAMMING_HPP
+#define META_PROGRAMMING_HPP
 
 /// @file MetaProgramming.hpp
 ///
@@ -462,3 +463,5 @@ namespace Mountain
         using Flags = UnderlyingEnumType<T>;
     }
 };
+#endif
+

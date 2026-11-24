@@ -1,4 +1,5 @@
-#pragma once
+#ifndef COLLIDER_LIST_HPP
+#define COLLIDER_LIST_HPP
 
 #include "Mountain/Collision/Collider.hpp"
 
@@ -49,3 +50,5 @@ namespace Mountain
 		MOUNTAIN_API Vector2 AbsoluteCenter() const override;
 	};
 }
+#endif
+

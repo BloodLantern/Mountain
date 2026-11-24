@@ -1,4 +1,5 @@
-﻿#pragma once
+#ifndef THROW_HELPER_HPP
+#define THROW_HELPER_HPP
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Exceptions/ArgumentException.hpp"
@@ -93,3 +94,5 @@ namespace Mountain
 }
 
 #undef THROW_HELPER_FUNC
+#endif
+

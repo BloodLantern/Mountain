@@ -1,4 +1,5 @@
-#pragma once
+#ifndef AUDIO_HPP
+#define AUDIO_HPP
 
 #include <functional>
 
@@ -70,3 +71,5 @@ namespace Mountain
         static void IterateAlStringList(const c8* list, const std::function<void(const c8*)>& lambda);
     };
 }
+#endif
+

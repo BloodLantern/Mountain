@@ -1,4 +1,5 @@
-﻿#pragma once
+#ifndef RESOURCE_HPP
+#define RESOURCE_HPP
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Utils/Guid.hpp"
@@ -127,3 +128,5 @@ namespace Mountain
 }
 
 #include "Mountain/FileSystem/File.hpp"
+#endif
+

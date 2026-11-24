@@ -1,4 +1,5 @@
-#pragma once
+#ifndef PLATFORM_HPP
+#define PLATFORM_HPP
 
 #include "Mountain/Core.hpp"
 
@@ -30,3 +31,5 @@ namespace Mountain::Platform
 
     MOUNTAIN_API void Cleanup();
 }
+#endif
+

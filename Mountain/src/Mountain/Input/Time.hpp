@@ -1,4 +1,5 @@
-﻿#pragma once
+#ifndef TIME_HPP
+#define TIME_HPP
 
 #include <cmath>
 
@@ -112,3 +113,5 @@ namespace Mountain
         friend class Game;
     };
 }
+#endif
+

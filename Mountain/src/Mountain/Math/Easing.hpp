@@ -1,4 +1,5 @@
-#pragma once
+#ifndef EASING_HPP
+#define EASING_HPP
 
 #include "Mountain/Core.hpp"
 
@@ -349,3 +350,5 @@ constexpr f32 Easing::BackInOut(f32 t)
         return 1.f + t * t * 2.f * (7.f * t + 2.5f);
     }
 }
+#endif
+

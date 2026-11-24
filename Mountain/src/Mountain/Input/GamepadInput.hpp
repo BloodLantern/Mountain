@@ -1,4 +1,5 @@
-#pragma once
+#ifndef GAMEPAD_INPUT_HPP
+#define GAMEPAD_INPUT_HPP
 
 #include <array>
 #include <cmath>
@@ -268,3 +269,5 @@ namespace Mountain
 }
 
 ENUM_FLAGS(Mountain::GamepadCapabilities)
+#endif
+

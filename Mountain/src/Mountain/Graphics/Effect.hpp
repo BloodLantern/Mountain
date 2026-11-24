@@ -1,4 +1,5 @@
-﻿#pragma once
+#ifndef EFFECT_HPP
+#define EFFECT_HPP
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Graphics/RenderTarget.hpp"
@@ -139,3 +140,5 @@ namespace Mountain
         MOUNTAIN_API void SetIntensity(f32 newIntensity) const;
     };
 }
+#endif
+

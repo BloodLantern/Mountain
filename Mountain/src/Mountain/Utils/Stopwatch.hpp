@@ -1,4 +1,5 @@
-﻿#pragma once
+#ifndef STOPWATCH_HPP
+#define STOPWATCH_HPP
 
 #include <format>
 #include <sstream>
@@ -65,3 +66,5 @@ namespace Mountain
 
     CHECK_REQUIREMENT(Requirements::StringConvertible, Stopwatch);
 }
+#endif
+

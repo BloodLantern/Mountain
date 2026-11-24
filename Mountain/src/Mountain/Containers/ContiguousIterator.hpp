@@ -1,4 +1,5 @@
-﻿#pragma once
+#ifndef CONTIGUOUS_ITERATOR_HPP
+#define CONTIGUOUS_ITERATOR_HPP
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Utils/Requirements.hpp"
@@ -387,3 +388,5 @@ namespace Mountain
         return CheckCompatibleThrow(static_cast<ContiguousConstIterator<T>>(lhs), static_cast<ContiguousConstIterator<T>>(rhs));
     }
 }
+#endif
+

@@ -1,4 +1,5 @@
-﻿#pragma once
+#ifndef ATTRIBUTES_HPP
+#define ATTRIBUTES_HPP
 
 #include "Mountain/CompilerSpecific.hpp"
 
@@ -57,3 +58,5 @@
     /// to mark operator= as having side effects to suppress the "Assigned value is never used" inspection.
     #define ATTRIBUTE_HAS_SIDE_EFFECTS
 #endif
+#endif
+

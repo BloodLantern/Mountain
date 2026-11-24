@@ -1,4 +1,5 @@
-﻿#pragma once
+#ifndef GPU_BUFFER_HPP
+#define GPU_BUFFER_HPP
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Graphics/Graphics.hpp"
@@ -35,3 +36,5 @@ namespace Mountain::Graphics
         u32 m_Id = 0;
     };
 }
+#endif
+

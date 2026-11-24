@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CALC_HPP
+#define CALC_HPP
 
 #include <algorithm>
 #include <numbers>
@@ -578,3 +579,5 @@ constexpr Vector4 Calc::Lerp(const Vector4& value, const Vector4& target, const 
 }
 
 #undef ZERO
+#endif
+

@@ -1,4 +1,5 @@
-﻿#pragma once
+#ifndef RESOURCE_MANAGER_HPP
+#define RESOURCE_MANAGER_HPP
 
 #include <unordered_map>
 
@@ -392,3 +393,5 @@ namespace Mountain
         return Pointer<T>(m_Resources.at(name));
     }
 }
+#endif
+

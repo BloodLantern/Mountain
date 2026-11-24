@@ -1,4 +1,5 @@
-﻿#pragma once
+#ifndef AUDIO_BUFFER_HPP
+#define AUDIO_BUFFER_HPP
 
 #include "Mountain/Core.hpp"
 
@@ -38,3 +39,5 @@ namespace Mountain
         static s32 AlFormatFromData(u16 channels, u16 bitDepth);
     };
 }
+#endif
+

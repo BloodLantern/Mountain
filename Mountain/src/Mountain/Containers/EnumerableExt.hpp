@@ -1,4 +1,5 @@
-﻿#pragma once
+#ifndef ENUMERABLE_EXT_HPP
+#define ENUMERABLE_EXT_HPP
 
 // Because we #include this file kind of in a loop through Array and List
 // Clang seems to wrongly generate errors/warnings on all template type declarations
@@ -509,3 +510,5 @@ namespace Mountain
 }
 
 #endif
+#endif
+

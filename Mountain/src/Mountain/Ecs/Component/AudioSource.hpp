@@ -1,4 +1,5 @@
-#pragma once
+#ifndef AUDIO_SOURCE_HPP
+#define AUDIO_SOURCE_HPP
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Ecs/Component/Component.hpp"
@@ -56,3 +57,5 @@ namespace Mountain
         Vector2 m_LastPosition;
     };
 }
+#endif
+

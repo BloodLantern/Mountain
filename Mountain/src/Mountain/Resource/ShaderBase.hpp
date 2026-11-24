@@ -1,4 +1,5 @@
-﻿#pragma once
+#ifndef SHADER_BASE_HPP
+#define SHADER_BASE_HPP
 
 #include <unordered_set>
 
@@ -81,3 +82,5 @@ namespace Mountain
 	template <Concepts::Enum T>
 	void ShaderBase::SetUniform(const c8* uniformName, T value) const { SetUniform(uniformName, static_cast<u32>(value)); }
 }
+#endif
+

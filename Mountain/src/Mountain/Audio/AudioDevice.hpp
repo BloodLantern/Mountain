@@ -1,4 +1,5 @@
-#pragma once
+#ifndef AUDIO_DEVICE_HPP
+#define AUDIO_DEVICE_HPP
 
 #include <string>
 
@@ -36,3 +37,5 @@ namespace Mountain
         friend class AudioContext;
     };
 }
+#endif
+

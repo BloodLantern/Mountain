@@ -1,4 +1,5 @@
-#pragma once
+#ifndef MATRIX_HPP
+#define MATRIX_HPP
 
 #include <format>
 #include <sstream>
@@ -1047,3 +1048,5 @@ typename FmtContext::iterator std::formatter<Matrix>::format(Matrix m, FmtContex
 
     return std::ranges::copy(std::move(out).str(), ctx.out()).out;
 }
+#endif
+

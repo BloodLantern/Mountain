@@ -1,5 +1,6 @@
-﻿// ReSharper disable CppClangTidyReadabilityRedundantStringInit
-#pragma once
+// ReSharper disable CppClangTidyReadabilityRedundantStringInit
+#ifndef GLOBALS_HPP
+#define GLOBALS_HPP
 
 #include <string>
 
@@ -39,3 +40,5 @@ namespace Mountain
     /// @details This can be used if you want to use another audio API or if you want to manage the audio yourself.
     PUBLIC_GLOBAL(bool, NoBuiltinAudio, false);
 }
+#endif
+

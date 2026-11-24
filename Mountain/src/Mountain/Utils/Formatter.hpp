@@ -1,6 +1,7 @@
-﻿// ReSharper disable CppMemberFunctionMayBeStatic
+// ReSharper disable CppMemberFunctionMayBeStatic
 // ReSharper disable CppClangTidyCertDcl58Cpp
-#pragma once
+#ifndef FORMATTER_HPP
+#define FORMATTER_HPP
 
 #include <filesystem>
 #include <format>
@@ -125,3 +126,5 @@ struct std::formatter<EnumT>
 private:
     bool m_PrintAsInteger = false;
 };
+#endif
+

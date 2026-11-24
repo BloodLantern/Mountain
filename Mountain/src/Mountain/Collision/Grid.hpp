@@ -1,4 +1,5 @@
-#pragma once
+#ifndef GRID_HPP
+#define GRID_HPP
 
 #include "Mountain/Collision/Collider.hpp"
 #include "Mountain/Containers/List.hpp"
@@ -73,3 +74,5 @@ namespace Mountain
         void ResizeGrid();
     };
 }
+#endif
+

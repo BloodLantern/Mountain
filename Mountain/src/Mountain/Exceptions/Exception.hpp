@@ -1,4 +1,5 @@
-﻿#pragma once
+#ifndef EXCEPTION_HPP
+#define EXCEPTION_HPP
 
 #include <exception>
 
@@ -96,3 +97,5 @@ namespace Mountain
     CHECK_REQUIREMENT(Requirements::StringConvertible, ExceptionState);
     CHECK_REQUIREMENT(Requirements::StringConvertible, Exception);
 }
+#endif
+

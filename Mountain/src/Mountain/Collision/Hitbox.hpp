@@ -1,4 +1,5 @@
-#pragma once
+#ifndef HITBOX_HPP
+#define HITBOX_HPP
 
 #include "Mountain/Collision/Collider.hpp"
 #include "Mountain/Utils/Rectangle.hpp"
@@ -67,3 +68,5 @@ namespace Mountain
 {
     constexpr Rectangle Hitbox::ToRectangle() const { return { GetActualPosition(), size }; }
 }
+#endif
+

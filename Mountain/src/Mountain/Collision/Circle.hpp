@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CIRCLE_HPP
+#define CIRCLE_HPP
 
 #include "Mountain/Core.hpp"
 
@@ -77,3 +78,5 @@ namespace Mountain
         Vector2 Size() const override;
     };
 }
+#endif
+

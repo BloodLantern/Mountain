@@ -1,4 +1,5 @@
-﻿#pragma once
+#ifndef OPTIONAL_HPP
+#define OPTIONAL_HPP
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Exceptions/ThrowHelper.hpp"
@@ -215,3 +216,5 @@ namespace Mountain
 }
 
 #undef OPTIONAL_VALUE_BODY
+#endif
+

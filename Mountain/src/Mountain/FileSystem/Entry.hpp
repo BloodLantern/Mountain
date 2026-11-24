@@ -1,4 +1,5 @@
-﻿#pragma once
+#ifndef ENTRY_HPP
+#define ENTRY_HPP
 
 #include <filesystem>
 
@@ -93,3 +94,5 @@ namespace Mountain
 // However, we also need to include this in every file in which we include entry.hpp, as the Entry class contains a Pointer<Directory>
 // which needs the Directory class to be defined at some point so its destructor is defined as well
 #include "Mountain/FileSystem/Directory.hpp"
+#endif
+

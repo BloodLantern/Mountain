@@ -1,4 +1,5 @@
-﻿#pragma once
+#ifndef ENTITY_LIST_HPP
+#define ENTITY_LIST_HPP
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Containers/EnumerableExt.hpp"
@@ -162,3 +163,5 @@ namespace Mountain
         m_Entities.Clear();
     }
 }
+#endif
+

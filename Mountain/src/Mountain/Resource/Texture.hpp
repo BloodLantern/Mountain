@@ -1,4 +1,5 @@
-#pragma once
+#ifndef TEXTURE_HPP
+#define TEXTURE_HPP
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Graphics/GpuTexture.hpp"
@@ -98,3 +99,5 @@ namespace Mountain
     template<typename T>
     T* Texture::GetData() { return reinterpret_cast<T*>(m_Data); }
 }
+#endif
+

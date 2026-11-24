@@ -1,4 +1,5 @@
-#pragma once
+#ifndef AUDIO_TRACK_HPP
+#define AUDIO_TRACK_HPP
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Audio/AudioBuffer.hpp"
@@ -110,3 +111,5 @@ namespace Mountain
     template <typename T>
     T* AudioTrack::GetData() { return reinterpret_cast<T*>(m_Data); }
 }
+#endif
+

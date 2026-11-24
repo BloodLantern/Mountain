@@ -1,4 +1,5 @@
-#pragma once
+#ifndef COLOR_HPP
+#define COLOR_HPP
 
 #include <format>
 #include <sstream>
@@ -1131,3 +1132,5 @@ namespace Mountain
 
     constexpr bool operator!=(const ColorHsva& c1, const ColorHsva& c2) { return !(c1 == c2); }
 }
+#endif
+

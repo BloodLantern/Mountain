@@ -1,4 +1,5 @@
-﻿#pragma once
+#ifndef PARTICLE_SYSTEM_MODULES_HPP
+#define PARTICLE_SYSTEM_MODULES_HPP
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Resource/ComputeShader.hpp"
@@ -221,3 +222,5 @@ namespace Mountain::ParticleSystemModules
 }
 
 ENUM_FLAGS(Mountain::ParticleSystemModules::Types)
+#endif
+

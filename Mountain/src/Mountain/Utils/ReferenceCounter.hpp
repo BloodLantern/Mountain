@@ -1,4 +1,5 @@
-﻿#pragma once
+#ifndef REFERENCE_COUNTER_HPP
+#define REFERENCE_COUNTER_HPP
 
 #include <mutex>
 #include <vector>
@@ -143,3 +144,5 @@ namespace Mountain
         return m_Pointer;
     }
 }
+#endif
+

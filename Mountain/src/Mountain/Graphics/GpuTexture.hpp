@@ -1,4 +1,5 @@
-﻿#pragma once
+#ifndef GPU_TEXTURE_HPP
+#define GPU_TEXTURE_HPP
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Graphics/Graphics.hpp"
@@ -144,3 +145,5 @@ namespace Mountain::Graphics
         u32 m_Id = 0;
     };
 }
+#endif
+

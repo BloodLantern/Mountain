@@ -1,4 +1,5 @@
-#pragma once
+#ifndef AUDIO_LISTENER_HPP
+#define AUDIO_LISTENER_HPP
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Ecs/Component/Component.hpp"
@@ -27,3 +28,5 @@ namespace Mountain
         Vector2 m_LastPosition;
     };
 }
+#endif
+

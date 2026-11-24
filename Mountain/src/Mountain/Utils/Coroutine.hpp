@@ -1,4 +1,5 @@
-#pragma once
+#ifndef COROUTINE_HPP
+#define COROUTINE_HPP
 
 #include <chrono>
 #include <coroutine>
@@ -224,3 +225,5 @@ namespace Mountain
     template <typename... Args>
     using CoroutineFunction = std::function<Coroutine(Args...)>;
 }
+#endif
+

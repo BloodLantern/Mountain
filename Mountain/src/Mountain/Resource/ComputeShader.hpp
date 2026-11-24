@@ -1,4 +1,5 @@
-﻿#pragma once
+#ifndef COMPUTE_SHADER_HPP
+#define COMPUTE_SHADER_HPP
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Containers/Array.hpp"
@@ -49,3 +50,5 @@ namespace Mountain
 	    bool CheckCompileError(u32 id) const;  // NOLINT(modernize-use-nodiscard)
 	};
 }
+#endif
+

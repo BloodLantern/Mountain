@@ -1,4 +1,5 @@
-﻿#pragma once
+#ifndef MOUNTAIN_HPP
+#define MOUNTAIN_HPP
 
 /// @file Mountain.hpp
 /// @brief A convenient way of including every header of this framework.
@@ -99,3 +100,5 @@
 #include "Mountain/Globals.hpp"
 #include "Mountain/Screen.hpp"
 #include "Mountain/Window.hpp"
+#endif
+

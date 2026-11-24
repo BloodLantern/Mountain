@@ -1,4 +1,5 @@
-#pragma once
+#ifndef FONT_HPP
+#define FONT_HPP
 
 #include <map>
 
@@ -54,3 +55,5 @@ namespace Mountain
         friend class Draw;
     };
 }
+#endif
+

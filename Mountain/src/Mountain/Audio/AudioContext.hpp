@@ -1,4 +1,5 @@
-#pragma once
+#ifndef AUDIO_CONTEXT_HPP
+#define AUDIO_CONTEXT_HPP
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Containers/List.hpp"
@@ -47,3 +48,5 @@ namespace Mountain
         List<u32> m_SourcesStereo;
     };
 }
+#endif
+

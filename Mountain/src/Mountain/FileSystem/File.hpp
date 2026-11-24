@@ -1,4 +1,5 @@
-#pragma once
+#ifndef FILE_HPP
+#define FILE_HPP
 
 #include <filesystem>
 
@@ -139,3 +140,5 @@ namespace Mountain
         return reinterpret_cast<T*>(m_Data);
     }
 }
+#endif
+

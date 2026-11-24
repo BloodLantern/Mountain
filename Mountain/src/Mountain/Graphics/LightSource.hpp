@@ -1,4 +1,5 @@
-﻿#pragma once
+#ifndef LIGHT_SOURCE_HPP
+#define LIGHT_SOURCE_HPP
 
 #include "Mountain/Core.hpp"
 
@@ -17,3 +18,5 @@ namespace Mountain
         Vector2 position;
     };
 }
+#endif
+

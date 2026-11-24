@@ -1,4 +1,5 @@
-﻿#pragma once
+#ifndef SPRITE_HPP
+#define SPRITE_HPP
 
 #include <string>
 
@@ -43,3 +44,5 @@ namespace Mountain
         f32 m_UpdateTimer = 0.f;
     };
 }
+#endif
+

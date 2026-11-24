@@ -1,4 +1,5 @@
-﻿#pragma once
+#ifndef ARGUMENT_EXCEPTION_HPP
+#define ARGUMENT_EXCEPTION_HPP
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Exceptions/Exception.hpp"
@@ -31,3 +32,5 @@ namespace Mountain
     /// as defined by the invoked method.
     DECLARE_DEFAULT_EXCEPTION(ArgumentOutOfRangeException, ArgumentException);
 }
+#endif
+

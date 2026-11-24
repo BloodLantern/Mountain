@@ -1,4 +1,5 @@
-﻿#pragma once
+#ifndef SCREEN_HPP
+#define SCREEN_HPP
 
 #include "Mountain/Core.hpp"
 
@@ -50,3 +51,5 @@ namespace Mountain
         friend class Window;
     };
 }
+#endif
+

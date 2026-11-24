@@ -1,4 +1,5 @@
-#pragma once
+#ifndef COLLIDER_HPP
+#define COLLIDER_HPP
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Math/Vector2.hpp"
@@ -103,3 +104,5 @@ namespace Mountain
         virtual Vector2 Size() const;
     };
 }
+#endif
+

@@ -1,4 +1,5 @@
-﻿#pragma once
+#ifndef RECTANGLE_HPP
+#define RECTANGLE_HPP
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Math/Vector2.hpp"
@@ -70,3 +71,5 @@ namespace Mountain
 
     constexpr float Rectangle::Height() const { return size.y; }
 }
+#endif
+

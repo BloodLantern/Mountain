@@ -1,4 +1,5 @@
-#pragma once
+#ifndef PRECOMPILED_HEADER_HPP
+#define PRECOMPILED_HEADER_HPP
 
 #include "Mountain/Core.hpp"
 
@@ -26,3 +27,5 @@
 #include "Mountain/Utils/MetaProgramming.hpp"
 #include "Mountain/Utils/Pointer.hpp"
 #include "Mountain/Utils/Requirements.hpp"
+#endif
+

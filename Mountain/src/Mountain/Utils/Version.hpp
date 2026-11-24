@@ -1,4 +1,5 @@
-#pragma once
+#ifndef VERSION_HPP
+#define VERSION_HPP
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Exceptions/ThrowHelper.hpp"
@@ -93,3 +94,5 @@ namespace Mountain
         return accumulator;
     }
 }
+#endif
+

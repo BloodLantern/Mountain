@@ -1,4 +1,5 @@
-﻿#pragma once
+#ifndef GRAPHICS_HPP
+#define GRAPHICS_HPP
 
 #include "Mountain/Core.hpp"
 
@@ -981,3 +982,5 @@ namespace Mountain::Graphics
         return SetProgramUniform(shaderProgramId, uniformName, static_cast<u32>(value));
     }
 }
+#endif
+

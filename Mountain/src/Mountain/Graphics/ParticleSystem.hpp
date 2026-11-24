@@ -1,4 +1,5 @@
-﻿#pragma once
+#ifndef PARTICLE_SYSTEM_HPP
+#define PARTICLE_SYSTEM_HPP
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Containers/List.hpp"
@@ -259,3 +260,5 @@ namespace Mountain
         else static_assert(false, "Invalid module type");
     }
 }
+#endif
+

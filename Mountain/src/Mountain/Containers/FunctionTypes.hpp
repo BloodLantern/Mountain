@@ -1,4 +1,5 @@
-﻿#pragma once
+#ifndef FUNCTION_TYPES_HPP
+#define FUNCTION_TYPES_HPP
 
 #include <functional>
 
@@ -43,3 +44,5 @@ namespace Mountain
         T operator()(T t) { return t; }
     };
 }
+#endif
+

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef ENTITY_HPP
+#define ENTITY_HPP
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Collision/Collider.hpp"
@@ -133,3 +134,5 @@ namespace Mountain
         return result;
     }
 }
+#endif
+

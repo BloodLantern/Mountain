@@ -1,4 +1,5 @@
-﻿#pragma once
+#ifndef GPU_VERTEX_ARRAY_HPP
+#define GPU_VERTEX_ARRAY_HPP
 
 #include <string_view>
 
@@ -28,3 +29,5 @@ namespace Mountain::Graphics
         u32 m_Id = 0;
     };
 }
+#endif
+

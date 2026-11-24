@@ -1,4 +1,5 @@
-﻿#pragma once
+#ifndef INPUT_HPP
+#define INPUT_HPP
 
 #include <array>
 
@@ -98,3 +99,5 @@ namespace Mountain
         friend class Game;
     };
 }
+#endif
+

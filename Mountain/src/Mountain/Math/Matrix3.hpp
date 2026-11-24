@@ -1,4 +1,5 @@
-#pragma once
+#ifndef MATRIX3_HPP
+#define MATRIX3_HPP
 
 #include <format>
 #include <sstream>
@@ -766,3 +767,5 @@ private:
     std::string m_Format;
     bool m_Multiline = false;
 };
+#endif
+

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SHADER_HPP
+#define SHADER_HPP
 
 #include "Mountain/Core.hpp"
 
@@ -110,3 +111,5 @@ namespace Mountain
 		bool CheckCompileError(u32 id, Graphics::ShaderType type) const;  // NOLINT(modernize-use-nodiscard)
 	};
 }
+#endif
+

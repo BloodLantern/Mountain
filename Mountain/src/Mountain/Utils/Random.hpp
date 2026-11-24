@@ -1,4 +1,5 @@
-#pragma once
+#ifndef RANDOM_HPP
+#define RANDOM_HPP
 
 #include <limits>
 #include <random>
@@ -28,8 +29,12 @@ namespace Mountain
         MOUNTAIN_API f32 Float(f32 minInclusive = std::numeric_limits<f32>::min(), f32 maxExclusive = std::numeric_limits<f32>::max());
         MOUNTAIN_API f64 Double(f64 minInclusive = std::numeric_limits<f64>::min(), f64 maxExclusive = std::numeric_limits<f64>::max());
 
-        MOUNTAIN_API Color Color(Color minValuesInclusive = Color::Black(), Color maxValuesInclusive = Color::White());
-        MOUNTAIN_API ColorHsva ColorHsva(ColorHsva minValuesInclusive = { 0.f, 0.f, 0.f, 0.f }, ColorHsva maxValuesInclusive = { 1.f, 1.f, 1.f, 1.f });
+        // ReSharper sees the Mountain:: specifier as redundant here since it shouldn't be necessary,
+        // but GCC fails to compile this file if they are not present
+        // ReSharper disable CppRedundantQualifier
+        MOUNTAIN_API Mountain::Color Color(Mountain::Color minValuesInclusive = Mountain::Color::Black(), Mountain::Color maxValuesInclusive = Mountain::Color::White());
+        MOUNTAIN_API Mountain::ColorHsva ColorHsva(Mountain::ColorHsva minValuesInclusive = { 0.f, 0.f, 0.f, 0.f }, Mountain::ColorHsva maxValuesInclusive = { 1.f, 1.f, 1.f, 1.f });
+        // ReSharper restore CppRedundantQualifier
 
         /// @brief Returns true if the given probability has been met.
         /// @param probability The probability to check in the range [0, 1].
@@ -47,3 +52,4 @@ namespace Mountain
         std::default_random_engine m_Engine;
     };
 };
+#endif

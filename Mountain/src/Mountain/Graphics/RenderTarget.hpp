@@ -1,4 +1,5 @@
-﻿#pragma once
+#ifndef RENDER_TARGET_HPP
+#define RENDER_TARGET_HPP
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Containers/List.hpp"
@@ -92,3 +93,5 @@ namespace Mountain
         friend class Renderer;
     };
 }
+#endif
+

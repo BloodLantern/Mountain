@@ -1,5 +1,6 @@
-﻿// ReSharper disable CppMemberFunctionMayBeStatic
-#pragma once
+// ReSharper disable CppMemberFunctionMayBeStatic
+#ifndef ARRAY_HPP
+#define ARRAY_HPP
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Containers/ContiguousIterator.hpp"
@@ -179,3 +180,5 @@ namespace Mountain
     template <Concepts::ContainerType T, usize Size>
     constexpr Array<T, Size>::ConstIterator Array<T, Size>::cend() const noexcept { return ConstIterator{data, Size}; }
 }
+#endif
+

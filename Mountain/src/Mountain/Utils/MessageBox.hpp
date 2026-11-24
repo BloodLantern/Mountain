@@ -1,4 +1,5 @@
-#pragma once
+#ifndef MESSAGE_BOX_HPP
+#define MESSAGE_BOX_HPP
 
 #include "Mountain/Core.hpp"
 
@@ -69,3 +70,5 @@ namespace Mountain::MessageBox
     /// @note This function doesn't return until the dialog is closed or a button is pressed on the dialog.
     Result Show(const c8* title, const c8* text, ButtonConfiguration buttonConfiguration = ButtonConfiguration::Ok, Type type = Type::Information);
 }
+#endif
+

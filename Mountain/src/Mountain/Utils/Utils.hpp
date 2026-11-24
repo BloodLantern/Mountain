@@ -1,4 +1,5 @@
-﻿#pragma once
+#ifndef UTILS_HPP
+#define UTILS_HPP
 
 #include <filesystem>
 #include <functional>
@@ -381,3 +382,5 @@ namespace Mountain
     template <Concepts::Enum T>
     constexpr Meta::Flags<T> Utils::ToFlags(T enumValue){ return static_cast<Meta::Flags<T>>(enumValue); }
 }
+#endif
+

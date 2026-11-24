@@ -1,4 +1,5 @@
-﻿#pragma once
+#ifndef DATE_TIME_HPP
+#define DATE_TIME_HPP
 
 #include "Mountain/Core.hpp"
 #include "Mountain/Containers/Array.hpp"
@@ -454,3 +455,5 @@ namespace Mountain
         return dateTime -= timeSpan;
     }
 }
+#endif
+
